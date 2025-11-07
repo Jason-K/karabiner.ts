@@ -615,6 +615,53 @@ let rules: any[] = [
 ];
 
 // ============================================================================
+// DEVICE-SPECIFIC SIMPLE MODIFICATIONS
+// ============================================================================
+/**
+ * Device-specific key remappings that apply hardware-level key substitutions.
+ * These modifications occur before complex_modifications rules are evaluated.
+ *
+ * Configuration includes:
+ * - Keypad remapping for specific keyboard model (vendor 76, product 802)
+ * - Function key ↔ Control key swap for all matching devices
+ *
+ * Note: karabiner.ts only handles complex_modifications, so we manually
+ * update the devices section after writeToProfile() runs.
+ */
+type SimpleModification = {
+  from: { key_code: string };
+  to: Array<{ key_code: string }>;
+};
+
+type DeviceConfig = {
+  identifiers: {
+    vendor_id: number;
+    product_id: number;
+    is_keyboard?: boolean;
+  };
+  simple_modifications: SimpleModification[];
+};
+
+const deviceConfigs: DeviceConfig[] = [
+  {
+    identifiers: {
+      vendor_id: 76,
+      product_id: 802,
+      is_keyboard: true,
+    },
+    simple_modifications: [
+      { from: { key_code: 'keypad_asterisk' }, to: [{ key_code: 'keypad_hyphen' }] },
+      { from: { key_code: 'keypad_equal_sign' }, to: [{ key_code: 'keypad_slash' }] },
+      { from: { key_code: 'keypad_hyphen' }, to: [{ key_code: 'keypad_plus' }] },
+      { from: { key_code: 'keypad_plus' }, to: [{ key_code: 'keypad_equal_sign' }] },
+      { from: { key_code: 'keypad_slash' }, to: [{ key_code: 'keypad_asterisk' }] },
+      { from: { key_code: 'left_control' }, to: [{ key_code: 'fn' }] },
+      { from: { key_code: 'fn' }, to: [{ key_code: 'left_control' }] },
+    ],
+  },
+];
+
+// ============================================================================
 // WRITE TO PROFILE
 // ============================================================================
 /**
@@ -624,6 +671,48 @@ let rules: any[] = [
  * To apply changes:
  * 1. npm run build (runs tsx src/index.ts)
  * 2. Karabiner-Elements automatically detects config changes
+ *
+ * IMPLEMENTATION NOTES:
+ * - writeToProfile() only writes complex_modifications
+ * - Device-specific simple_modifications are added separately below
+ * - We use setTimeout to ensure writeToProfile completes before modifying
  */
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
+
+// First, write the complex_modifications rules
 writeToProfile('Karabiner.ts', rules);
+
+// Wait for writeToProfile to complete, then add device configurations
+setTimeout(() => {
+  try {
+    const configPath = path.join(os.homedir(), '.config', 'karabiner', 'karabiner.json');
+    const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+
+    // Find the Karabiner.ts profile
+    const profile = config.profiles.find((p: any) => p.name === 'Karabiner.ts');
+    if (profile) {
+      // Add or update the devices section (Magic Keyboard keypad + Fn swap)
+      profile.devices = deviceConfigs.map(device => ({
+        identifiers: device.identifiers,
+        simple_modifications: device.simple_modifications,
+      }));
+
+      // Add profile-level Fn↔Ctrl swap for built-in keyboard and others
+      profile.simple_modifications = [
+        { from: { key_code: 'left_control' }, to: [{ key_code: 'fn' }] },
+        { from: { key_code: 'fn' }, to: [{ key_code: 'left_control' }] },
+      ];
+
+      // Write back to file
+      fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
+      console.log('✓ Device-specific simple_modifications updated.');
+    } else {
+      console.error('✗ Karabiner.ts profile not found');
+    }
+  } catch (error) {
+    console.error('Error updating device configurations:', error);
+  }
+}, 1000);
 
