@@ -17,9 +17,9 @@
  */
 
 import type { ToEvent } from 'karabiner.ts';
-import { ifApp, ifVar, map, rule, toKey, toSetVar, writeToProfile } from 'karabiner.ts';
+import { ifApp, ifVar, map, rule, toKey, toSetVar, toStickyModifier, writeToProfile } from 'karabiner.ts';
 import { cmd, tapHold } from './lib/builders';
-import { HYPER, L, MEH, SUPER } from './lib/mods';
+import { HYPER, L, SUPER } from './lib/mods';
 
 // ============================================================================
 // TAP-HOLD KEY DEFINITIONS
@@ -47,14 +47,6 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   a: {
     hold: [toKey('a', SUPER, { repeat: false })],
     description: 'RaycastAI hotkey',
-  },
-  b: {
-    hold: [toKey('b', MEH, { repeat: false })],
-    description: 'search bar apps',
-  },
-  c: {
-    hold: [cmd('open -u cleanshot://capture-text?linebreaks=false')],
-    description: 'OCR via CleanShot',
   },
   d: {
     hold: [
@@ -159,25 +151,18 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
 type SubLayerConfig = {
   layerKey: string;           // Key to activate this sublayer (e.g., 'd' for Downloads)
   layerName: string;          // Human-readable name for documentation
+  releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until space released.
   mappings: Record<string, {  // Key mappings within this sublayer
     path?: string;            // Folder/file path to open
     command?: string;         // Shell command to execute
+    key?: string;             // Key to send
+    stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
+      passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
     description: string;      // Description for this action
   }>;
 };
 
 const spaceLayers: SubLayerConfig[] = [
-  {
-    layerKey: 'd',
-    layerName: 'Downloads',
-    mappings: {
-      p: { path: '/Users/jason/Downloads/PDFs', description: 'PDFs' },
-      a: { path: '/Users/jason/Downloads/Archives', description: 'Archives' },
-      o: { path: '/Users/jason/Downloads/Office', description: 'Office' },
-      '3': { path: '/Users/jason/Downloads/3dPrinting', description: '3dPrinting' },
-      i: { path: '/Users/jason/Downloads/Installs', description: 'Installs' },
-    },
-  },
   {
     layerKey: 'a',
     layerName: 'Applications',
@@ -196,6 +181,32 @@ const spaceLayers: SubLayerConfig[] = [
     },
   },
   {
+    layerKey: 'c',
+    layerName: 'Cursor',
+    releaseLayer: false,        // Keep layer active until space released for continuous cursor movement
+    mappings: {
+      j: { key: 'left_arrow', passModifiers: true, description: 'Left' },
+      k: { key: 'down_arrow', passModifiers: true, description: 'Down' },
+      i: { key: 'up_arrow', passModifiers: true, description: 'Up' },
+      l: { key: 'right_arrow', passModifiers: true, description: 'Right' },
+      u: { key: 'home', passModifiers: true, description: 'Home' },
+      o: { key: 'end', passModifiers: true, description: 'End' },
+      p: { key: 'page_up', passModifiers: true, description: 'Page Up' },
+      ";": { key: 'page_down', passModifiers: true, description: 'Page Down' },
+    },
+  },
+  {
+    layerKey: 'd',
+    layerName: 'Downloads',
+    mappings: {
+      p: { path: '/Users/jason/Downloads/PDFs', description: 'PDFs' },
+      a: { path: '/Users/jason/Downloads/Archives', description: 'Archives' },
+      o: { path: '/Users/jason/Downloads/Office', description: 'Office' },
+      '3': { path: '/Users/jason/Downloads/3dPrinting', description: '3dPrinting' },
+      i: { path: '/Users/jason/Downloads/Installs', description: 'Installs' },
+    },
+  },
+  {
     layerKey: 'f',
     layerName: 'Folders',
     mappings: {
@@ -207,6 +218,17 @@ const spaceLayers: SubLayerConfig[] = [
       v: { path: '/Users/jason/Videos', description: 'Videos' },
       w: { path: '/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP', description: 'Work OneDrive' },
       o: { path: '/Users/jason/Library/CloudStorage/OneDrive-Personal', description: 'Personal OneDrive' },
+    },
+  },
+  {
+    layerKey: 's',
+    layerName: 'screenshots',
+    mappings: {
+      o: { command: 'open "cleanshot://capture-text?linebreaks=false"', description: 'OCR' },
+      a: { command: 'open "cleanshot://capture-area"', description: 'Capture Area' },
+      w: { command: 'open "cleanshot://capture-window"', description: 'Capture Window' },
+      s: { command: 'open "cleanshot://capture-fullscreen"', description: 'Capture Screen' },
+      r: { command: 'open "cleanshot://record-screen"', description: 'Record Screen' },
     },
   },
 ];
@@ -246,17 +268,30 @@ const tapHoldRules = Object.entries(tapHoldKeys).map(([key, config]) => {
     thresholdMs: config.thresholdMs,
   }).build();
 
-  // Add condition to prevent conflict with space layer for any keys that are layer activation keys
-  if (spaceLayerKeys.includes(key)) {
-    manipulators.forEach((m: any) => {
-      m.conditions = m.conditions || [];
+  // Add conditions to prevent conflict with space layer
+  // All tap-hold keys should be disabled when space layer or any sublayer is active
+  const spaceModVar = 'space_mod';
+  const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
+
+  manipulators.forEach((m: any) => {
+    m.conditions = m.conditions || [];
+
+    // Disable tap-hold when space_mod is active
+    m.conditions.push({
+      type: 'variable_unless',
+      name: spaceModVar,
+      value: 1
+    });
+
+    // Disable tap-hold when any sublayer is active
+    allSublayerVars.forEach(sublayerVar => {
       m.conditions.push({
         type: 'variable_unless',
-        name: 'space_mod',
+        name: sublayerVar,
         value: 1
       });
     });
-  }
+  });
 
   return rule(`${key.toUpperCase()} hold -> ${config.description}`).manipulators(manipulators);
 });
@@ -344,7 +379,12 @@ let rules: any[] = [
       .toIfHeldDown(toSetVar(spaceModVar, 1))
       .toAfterKeyUp([
         toSetVar(spaceModVar, 0),
-        ...allSublayerVars.map(v => toSetVar(v, 0))
+        ...allSublayerVars.map(v => toSetVar(v, 0)),
+        // Ensure sticky modifiers are cleared when leaving space mode
+        toStickyModifier(L.shift, 'off'),
+        toStickyModifier(L.opt, 'off'),
+        toStickyModifier(L.cmd, 'off'),
+        toStickyModifier(L.ctrl, 'off'),
       ])
       .toDelayedAction(
         [],
@@ -362,7 +402,7 @@ let rules: any[] = [
     rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
 
     // Generate sublayer rules
-    spaceLayers.forEach(({ layerKey, layerName, mappings }) => {
+    spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true }) => {
       const sublayerVar = `space_${layerKey}_sublayer`;
       const allManipulators: any[] = [];
 
@@ -385,16 +425,37 @@ let rules: any[] = [
           events.push(cmd(`open '${config.path}'`));
         } else if (config.command) {
           events.push(cmd(config.command));
+        } else if (config.stickyModifier) {
+          // Toggle sticky modifier using a/s/d/f
+          const modMap: Record<string, string> = {
+            shift: L.shift,
+            option: L.opt,
+            command: L.cmd,
+            control: L.ctrl,
+          } as any;
+          const stickyKey = modMap[config.stickyModifier];
+          events.push(toStickyModifier(stickyKey as any, 'toggle'));
+        } else if (config.key) {
+          // If passModifiers is true, use 'any' modifiers to pass through from source key
+          if (config.passModifiers) {
+            events.push(toKey(config.key as any, 'any' as any));
+          } else {
+            events.push(toKey(config.key as any));
+          }
         }
 
-        // Clear the sublayer variable after action
-        events.push(toSetVar(sublayerVar, 0));
+        // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
+        if (releaseLayer && !config.stickyModifier) {
+          events.push(toSetVar(sublayerVar, 0));
+        }
+
+        const mappingBuilder = (config.passModifiers
+          ? (map as any)(key as any, '??' as any)
+          : map(key as any)
+        ).condition(ifVar(sublayerVar, 1)).to(events);
 
         allManipulators.push(
-          ...map(key as any)
-            .condition(ifVar(sublayerVar, 1))
-            .to(events)
-            .build()
+          ...mappingBuilder.build()
         );
       });
 
@@ -523,6 +584,39 @@ let rules: any[] = [
       .to(toKey('delete_or_backspace', [], { repeat: false }))
       .build(),
   ]),
+
+  // ESCAPE - Reset all variables and send escape
+  ...(() => {
+    // Collect all layer variables dynamically from spaceLayers config
+    const spaceModVar = 'space_mod';
+    const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
+
+    // Static variables used elsewhere (caps lock, double-tap protection)
+    const otherVars = [
+      'caps_lock_pressed',
+      'command_q_pressed',
+      'ctrl_opt_esc_first',
+      'cmd_d_ready',
+    ];
+
+    return [
+      rule('ESCAPE - reset all variables').manipulators([
+        ...map('escape')
+          .to([
+            toKey('escape'),
+            toSetVar(spaceModVar, 0),
+            ...allSublayerVars.map(v => toSetVar(v, 0)),
+            ...otherVars.map(v => toSetVar(v, 0)),
+            // Also clear sticky modifiers
+            toStickyModifier(L.shift, 'off'),
+            toStickyModifier(L.opt, 'off'),
+            toStickyModifier(L.cmd, 'off'),
+            toStickyModifier(L.ctrl, 'off'),
+          ])
+          .build(),
+      ])
+    ];
+  })(),
 
   // ============================================================================
   // SECURITY & SYSTEM ACCESS RULES
