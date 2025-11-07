@@ -16,108 +16,44 @@
  * - MEH: Command + Option + Shift
  */
 
-import type { ToEvent } from 'karabiner.ts';
-import { ifApp, ifVar, map, rule, toKey, toSetVar, toStickyModifier, writeToProfile } from 'karabiner.ts';
+import { ifApp, ifVar, map, rule, toKey, toSetVar, writeToProfile } from 'karabiner.ts';
 import { cmd, tapHold } from './lib/builders';
+import type { DeviceConfig, SubLayerConfig, TapHoldConfig } from './lib/functions';
+import { generateEscapeRule, generateSpaceLayerRules, generateTapHoldRules, updateDeviceConfigurations } from './lib/functions';
 import { HYPER, L, SUPER } from './lib/mods';
 
 // ============================================================================
 // TAP-HOLD KEY DEFINITIONS
 // ============================================================================
 /**
- * Tap-hold keys provide dual functionality:
  * - Tap: Send the key normally (with halt to prevent accidental holds)
  * - Hold: Execute a custom action (open app, trigger hotkey, etc.)
  *
  * Default timing: 400ms for both timeout and threshold
- * Some keys use faster timing (300ms) for more responsive feel
  *
  * Configuration is declarative - just add entries to the object below.
- * The keys are automatically converted to rules with proper conflict prevention.
  */
 
-type TapHoldConfig = {
-  hold: ToEvent[];           // Actions to perform when key is held
-  description: string;        // Human-readable description for the rule
-  timeoutMs?: number;        // How long to wait before considering it "alone" (default: 400)
-  thresholdMs?: number;      // How long to hold before triggering hold action (default: 400)
-};
-
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: {
-    hold: [toKey('a', SUPER, { repeat: false })],
-    description: 'RaycastAI hotkey',
-  },
-  d: {
-    hold: [
-      toKey('left_arrow', ['option', 'shift']),
-      toKey('x', ['command']),
-      cmd('python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste'),
-    ],
-    description: 'Quick format date',
-  },
-  f: {
-    hold: [toKey('f17', HYPER, { repeat: false })],
-    description: 'search with ProFind',
-  },
-  g: {
-    hold: [cmd('open -b com.openai.chat')],
-    description: 'ChatGPT',
-  },
-  h: {
-    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
-    description: 'Hammerspoon console',
-  },
-  i: {
-    hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")],
-    description: 'indent line',
-  },
-  m: {
-    hold: [toKey('f20', SUPER, { repeat: false })],
-    description: 'unminimize via 1Piece',
-  },
-  q: {
-    hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")],
-    description: 'QSpace Pro',
-  },
-  r: {
-    hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')],
-    description: 'latest Download',
-  },
-  s: {
-    hold: [toKey('s', SUPER, { repeat: false })],
-    description: 'RaycastAI hotkey',
-  },
-  t: {
-    hold: [cmd('osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript')],
-    description: 'iTerm2',
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
-  v: {
-    hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })],
-    description: 'Maccy',
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
-  w: {
-    hold: [toKey('w', ['command', 'shift'], { repeat: false })],
-    description: 'Writing Tools',
-  },
-  '8': {
-    hold: [cmd('open -b com.electron.8x8---virtual-office')],
-    description: 'run/open 8x8',
-  },
-  slash: {
-    hold: [toKey('f17', HYPER, { repeat: false })],
-    description: 'search for files',
-  },
-  tab: {
-    hold: [toKey('mission_control', [], { halt: true, repeat: true })],
-    description: 'Mission Control',
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
+  a: { description: 'RaycastAI hotkey',       hold: [ toKey('a', SUPER, { repeat: false })], },
+  d: { description: 'Quick format date',      hold: [
+        toKey('left_arrow', ['option', 'shift']),
+        toKey('x', ['command']), cmd('python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste'),
+      ], },
+  f: { description: 'ProFind',    hold: [toKey('f17', HYPER, { repeat: false })], },
+  g: { description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
+  h: { description: 'HS console',    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")], },
+  i: { description: 'indent line',            hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
+  m: { description: 'Deminimize',  hold: [toKey('f20', SUPER, { repeat: false })], },
+  q: { description: 'QSpace Pro',             hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")], },
+  r: { description: 'Last d/l',        hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')], },
+  s: { description: 'RaycastAI',       hold: [toKey('s', SUPER, { repeat: false })], },
+  t: { description: 'iTerm2',                 hold: [cmd('osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript')], timeoutMs: 300, thresholdMs: 300, },
+  v: { description: 'Maccy',                  hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })], timeoutMs: 300, thresholdMs: 300, },
+  w: { description: 'Writing Tools',          hold: [toKey('w', ['command', 'shift'], { repeat: false })], },
+  '8': { description: '8x8',                  hold: [cmd('open -b com.electron.8x8---virtual-office')], },
+  slash: { description: 'search for files',   hold: [toKey('f17', HYPER, { repeat: false })], },
+  tab: { description: 'Mission Control',      hold: [toKey('mission_control', [], { halt: true, repeat: true })], timeoutMs: 300, thresholdMs: 300, },
 };
 
 // ============================================================================
@@ -129,55 +65,30 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
  * Usage:
  * 1. Hold Space (200ms threshold)
  * 2. Tap a layer key (d/a/f) to activate that sublayer
- * 3. Space can be released - sublayer stays active
- * 4. Tap an action key to execute and deactivate sublayer
- *
- * Benefits of top-level definition:
- * - Tap-hold rules can detect layer keys and add conflict prevention
- * - Single source of truth for all layer configuration
- * - Easy to add new layers without touching multiple sections
- *
- * Timing:
- * - Space tap → sends spacebar normally
- * - Space + quick key → sends spacebar then key (via to_if_canceled)
- * - Space held → activates layer system
+ * 3. Tap an action key to execute and deactivate sublayer
  *
  * All sublayer variables are cleared when:
  * - Space is tapped alone
  * - Space + key pressed before threshold
- * - Any sublayer action completes
+ * - No hardcoded key lists to maintain
  */
-
-type SubLayerConfig = {
-  layerKey: string;           // Key to activate this sublayer (e.g., 'd' for Downloads)
-  layerName: string;          // Human-readable name for documentation
-  releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until space released.
-  mappings: Record<string, {  // Key mappings within this sublayer
-    path?: string;            // Folder/file path to open
-    command?: string;         // Shell command to execute
-    key?: string;             // Key to send
-    stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
-      passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
-    description: string;      // Description for this action
-  }>;
-};
 
 const spaceLayers: SubLayerConfig[] = [
   {
     layerKey: 'a',
     layerName: 'Applications',
     mappings: {
-      8: { command: 'open -b com.electron.8x8---virtual-office', description: '8x8' },
-      c: { command: 'open -b com.openai.chat', description: 'ChatGPT' },
-      d: { command: "open -a '/System/Volumes/Data/Applications/Dia.app'", description: 'Dia' },
-      f: { command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'", description: 'QSpace Pro' },
-      m: { command: 'open -a "Messages"', description: 'Messages' },
-      o: { command: 'open -a "Microsoft Outlook"', description: 'Microsoft Outlook' },
-      q: { command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'", description: 'QSpace Pro' },
-      s: { command: 'open -a Safari', description: 'Safari' },
-      t: { command: 'open -a "Microsoft Teams"', description: 'Microsoft Teams' },
-      v: { command: 'open -a "Visual Studio Code - Insiders"', description: 'VS Code Insiders' },
-      w: { command: 'open -a "Microsoft Word"', description: 'Microsoft Word' },
+      8: { description: '8x8', command: 'open -b com.electron.8x8---virtual-office' },
+      c: { description: 'ChatGPT', command: 'open -b com.openai.chat' },
+      d: { description: 'Dia', command: "open -a '/System/Volumes/Data/Applications/Dia.app'" },
+      f: { description: 'QSpace Pro', command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'" },
+      m: { description: 'Messages', command: 'open -a "Messages"' },
+      o: { description: 'Microsoft Outlook', command: 'open -a "Microsoft Outlook"' },
+      q: { description: 'QSpace Pro', command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'" },
+      s: { description: 'Safari', command: 'open -a Safari' },
+      t: { description: 'Microsoft Teams', command: 'open -a "Microsoft Teams"' },
+      v: { description: 'VS Code Insiders', command: 'open -a "Visual Studio Code - Insiders"' },
+      w: { description: 'Microsoft Word', command: 'open -a "Microsoft Word"' },
     },
   },
   {
@@ -185,116 +96,56 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Cursor',
     releaseLayer: false,        // Keep layer active until space released for continuous cursor movement
     mappings: {
-      j: { key: 'left_arrow', passModifiers: true, description: 'Left' },
-      k: { key: 'down_arrow', passModifiers: true, description: 'Down' },
-      i: { key: 'up_arrow', passModifiers: true, description: 'Up' },
-      l: { key: 'right_arrow', passModifiers: true, description: 'Right' },
-      u: { key: 'home', passModifiers: true, description: 'Home' },
-      o: { key: 'end', passModifiers: true, description: 'End' },
-      p: { key: 'page_up', passModifiers: true, description: 'Page Up' },
-      ";": { key: 'page_down', passModifiers: true, description: 'Page Down' },
+      j: { description: 'Left', key: 'left_arrow', passModifiers: true },
+      k: { description: 'Down', key: 'down_arrow', passModifiers: true },
+      i: { description: 'Up', key: 'up_arrow', passModifiers: true },
+      l: { description: 'Right', key: 'right_arrow', passModifiers: true },
+      u: { description: 'Home', key: 'home', passModifiers: true },
+      o: { description: 'End', key: 'end', passModifiers: true },
+      p: { description: 'Page Up', key: 'page_up', passModifiers: true },
+      ";": { description: 'Page Down', key: 'page_down', passModifiers: true },
     },
   },
   {
     layerKey: 'd',
     layerName: 'Downloads',
     mappings: {
-      p: { path: '/Users/jason/Downloads/PDFs', description: 'PDFs' },
-      a: { path: '/Users/jason/Downloads/Archives', description: 'Archives' },
-      o: { path: '/Users/jason/Downloads/Office', description: 'Office' },
-      '3': { path: '/Users/jason/Downloads/3dPrinting', description: '3dPrinting' },
-      i: { path: '/Users/jason/Downloads/Installs', description: 'Installs' },
+      p: { description: 'PDFs', path: '/Users/jason/Downloads/PDFs' },
+      a: { description: 'Archives', path: '/Users/jason/Downloads/Archives' },
+      o: { description: 'Office', path: '/Users/jason/Downloads/Office' },
+      '3': { description: '3dPrinting', path: '/Users/jason/Downloads/3dPrinting' },
+      i: { description: 'Installs', path: '/Users/jason/Downloads/Installs' },
     },
   },
   {
     layerKey: 'f',
     layerName: 'Folders',
     mappings: {
-      "`": { path: '/Users/jason/', description: 'Home' },
-      s: { path: '/Users/jason/Scripts', description: 'Scripts' },
-      a: { path: '/Users/jason/Applications', description: 'Applications' },
-      d: { path: '/Users/jason/Downloads', description: 'Downloads' },
-      p: { path: '/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder', description: 'Proton Drive' },
-      v: { path: '/Users/jason/Videos', description: 'Videos' },
-      w: { path: '/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP', description: 'Work OneDrive' },
-      o: { path: '/Users/jason/Library/CloudStorage/OneDrive-Personal', description: 'Personal OneDrive' },
+      "`": { description: 'Home', path: '/Users/jason/' },
+      s: { description: 'Scripts', path: '/Users/jason/Scripts' },
+      a: { description: 'Applications', path: '/Users/jason/Applications' },
+      d: { description: 'Downloads', path: '/Users/jason/Downloads' },
+      p: { description: 'Proton Drive', path: '/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder' },
+      v: { description: 'Videos', path: '/Users/jason/Videos' },
+      w: { description: 'Work OneDrive', path: '/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP' },
+      o: { description: 'Personal OneDrive', path: '/Users/jason/Library/CloudStorage/OneDrive-Personal' },
     },
   },
   {
     layerKey: 's',
     layerName: 'screenshots',
     mappings: {
-      o: { command: 'open "cleanshot://capture-text?linebreaks=false"', description: 'OCR' },
-      a: { command: 'open "cleanshot://capture-area"', description: 'Capture Area' },
-      w: { command: 'open "cleanshot://capture-window"', description: 'Capture Window' },
-      s: { command: 'open "cleanshot://capture-fullscreen"', description: 'Capture Screen' },
-      r: { command: 'open "cleanshot://record-screen"', description: 'Record Screen' },
+      o: { description: 'OCR', command: 'open "cleanshot://capture-text?linebreaks=false"' },
+      a: { description: 'Capture Area', command: 'open "cleanshot://capture-area"' },
+      w: { description: 'Capture Window', command: 'open "cleanshot://capture-window"' },
+      s: { description: 'Capture Screen', command: 'open "cleanshot://capture-fullscreen"' },
+      r: { description: 'Record Screen', command: 'open "cleanshot://record-screen"' },
     },
   },
 ];
 
-// Extract layer keys for use in tap-hold conflict prevention
-// ============================================================================
-// TAP-HOLD RULE GENERATION
-// ============================================================================
-/**
- * This section generates tap-hold rules dynamically from the tapHoldKeys configuration.
- *
- * DYNAMIC CONFLICT PREVENTION:
- * Space layer activation keys (d, a, f) automatically get a condition that prevents
- * their tap-hold behavior from interfering with the space layer:
- * - When space_mod=1, tap-hold is disabled → space layer keys work immediately
- * - When space_mod=0, tap-hold is enabled → normal dual-function behavior
- *
- * IMPLEMENTATION:
- * 1. Extract layer keys from spaceLayers configuration
- * 2. Generate tap-hold manipulators using builders.tapHold()
- * 3. Dynamically add variable_unless conditions for layer keys
- * 4. Wrap in named rules for clarity in Karabiner UI
- *
- * BENEFITS:
- * - Automatically maintains consistency between space layer and tap-hold
- * - Adding new space sublayers automatically updates conflict prevention
- * - No hardcoded key lists to maintain
- */
-const spaceLayerKeys = spaceLayers.map(layer => layer.layerKey);
-
-const tapHoldRules = Object.entries(tapHoldKeys).map(([key, config]) => {
-  const manipulators = tapHold({
-    key,
-    alone: [toKey(key as any, [], { halt: true })],
-    hold: config.hold,
-    timeoutMs: config.timeoutMs,
-    thresholdMs: config.thresholdMs,
-  }).build();
-
-  // Add conditions to prevent conflict with space layer
-  // All tap-hold keys should be disabled when space layer or any sublayer is active
-  const spaceModVar = 'space_mod';
-  const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
-
-  manipulators.forEach((m: any) => {
-    m.conditions = m.conditions || [];
-
-    // Disable tap-hold when space_mod is active
-    m.conditions.push({
-      type: 'variable_unless',
-      name: spaceModVar,
-      value: 1
-    });
-
-    // Disable tap-hold when any sublayer is active
-    allSublayerVars.forEach(sublayerVar => {
-      m.conditions.push({
-        type: 'variable_unless',
-        name: sublayerVar,
-        value: 1
-      });
-    });
-  });
-
-  return rule(`${key.toUpperCase()} hold -> ${config.description}`).manipulators(manipulators);
-});
+// Generate tap-hold rules with automatic conflict prevention
+const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
 
 // ============================================================================
 // SPECIAL RULES
@@ -326,147 +177,8 @@ let rules: any[] = [
       .build(),
   ]),
 
-// ============================================================================
-// SPACE LAYER IMPLEMENTATION
-// ============================================================================
-/**
- * This section creates the space layer system with persistent sublayers.
- *
- * ARCHITECTURE:
- * 1. Space key: tap=space, hold=activate layer (space_mod=1)
- * 2. Layer activation: press space+d/a/f to activate sublayer
- * 3. Sublayer persistence: sublayer stays active after releasing space
- * 4. Key execution: press keys in sublayer → open file/run command → clear sublayer
- * 5. Manual exit: releasing space clears all layer/sublayer variables
- *
- * VARIABLE LIFECYCLE:
- * - space_mod: Set to 1 when space held, cleared when released/tapped
- * - space_d_sublayer/space_a_sublayer/space_f_sublayer: Set to 1 when layer activated,
- *   cleared when action executed or space released
- *
- * TIMING BEHAVIOR:
- * - to_if_alone_timeout: 200ms (tap vs hold detection for space)
- * - to_if_held_down_threshold: 200ms (when to activate space_mod)
- * - to_delayed_action: Handles double-tap space case
- *
- * CONSOLIDATED RULES:
- * Each sublayer generates ONE rule containing ALL manipulators:
- * - Sublayer activation manipulator
- * - All key mapping manipulators
- * This reduces rule count and improves Karabiner performance.
- *
- * EXAMPLE USAGE:
- * - Space tap → " " (space character)
- * - Space hold, d, release space, j → Opens Downloads folder
- * - Space hold, a, release space, c → Opens Calendar app
- */
-
-  // SPACE layer - simple implementation with sublayer persistence
-  ...(() => {
-    const rules: any[] = [];
-    const spaceModVar = 'space_mod';
-
-    // Collect all sublayer variable names
-    const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
-
-    // Space key activates the layer
-    const spaceManipulator = map('spacebar')
-      .toIfAlone([
-        toKey('spacebar', [], { halt: true }),
-        toSetVar(spaceModVar, 0),
-        ...allSublayerVars.map(v => toSetVar(v, 0))
-      ])
-      .toIfHeldDown(toSetVar(spaceModVar, 1))
-      .toAfterKeyUp([
-        toSetVar(spaceModVar, 0),
-        ...allSublayerVars.map(v => toSetVar(v, 0)),
-        // Ensure sticky modifiers are cleared when leaving space mode
-        toStickyModifier(L.shift, 'off'),
-        toStickyModifier(L.opt, 'off'),
-        toStickyModifier(L.cmd, 'off'),
-        toStickyModifier(L.ctrl, 'off'),
-      ])
-      .toDelayedAction(
-        [],
-        [
-          toKey('spacebar'),
-          toSetVar(spaceModVar, 0),
-          ...allSublayerVars.map(v => toSetVar(v, 0))
-        ]
-      )
-      .parameters({
-        'basic.to_if_alone_timeout_milliseconds': 200,
-        'basic.to_if_held_down_threshold_milliseconds': 200,
-      });
-
-    rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
-
-    // Generate sublayer rules
-    spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true }) => {
-      const sublayerVar = `space_${layerKey}_sublayer`;
-      const allManipulators: any[] = [];
-
-      // Sublayer activation - pressing layerKey while space is held
-      allManipulators.push(
-        ...map(layerKey as any)
-          .condition(ifVar(spaceModVar, 1))
-          .to([
-            toSetVar(sublayerVar, 1),
-            toSetVar(spaceModVar, 0)
-          ])
-          .build()
-      );
-
-      // Sublayer key mappings
-      Object.entries(mappings).forEach(([key, config]) => {
-        const events: ToEvent[] = [];
-
-        if (config.path) {
-          events.push(cmd(`open '${config.path}'`));
-        } else if (config.command) {
-          events.push(cmd(config.command));
-        } else if (config.stickyModifier) {
-          // Toggle sticky modifier using a/s/d/f
-          const modMap: Record<string, string> = {
-            shift: L.shift,
-            option: L.opt,
-            command: L.cmd,
-            control: L.ctrl,
-          } as any;
-          const stickyKey = modMap[config.stickyModifier];
-          events.push(toStickyModifier(stickyKey as any, 'toggle'));
-        } else if (config.key) {
-          // If passModifiers is true, use 'any' modifiers to pass through from source key
-          if (config.passModifiers) {
-            events.push(toKey(config.key as any, 'any' as any));
-          } else {
-            events.push(toKey(config.key as any));
-          }
-        }
-
-        // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
-        if (releaseLayer && !config.stickyModifier) {
-          events.push(toSetVar(sublayerVar, 0));
-        }
-
-        const mappingBuilder = (config.passModifiers
-          ? (map as any)(key as any, '??' as any)
-          : map(key as any)
-        ).condition(ifVar(sublayerVar, 1)).to(events);
-
-        allManipulators.push(
-          ...mappingBuilder.build()
-        );
-      });
-
-      // Add single rule with all manipulators for this sublayer
-      rules.push(
-        rule(`SPACE+${layerKey.toUpperCase()} - ${layerName} layer`).manipulators(allManipulators)
-      );
-    });
-
-    return rules;
-  })(),
+  // Generate space layer rules with sublayer persistence
+  ...generateSpaceLayerRules(spaceLayers),
 
 // ============================================================================
 // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
@@ -486,7 +198,6 @@ let rules: any[] = [
  *
  * APPLICATION-SPECIFIC:
  * - CMD+SHIFT+K: Delete line (disabled in VSCode Insiders - native shortcut)
- * - Brave specific bindings (pending implementation)
  */
 
   // HOME/END - Make them work properly on macOS
@@ -585,38 +296,8 @@ let rules: any[] = [
       .build(),
   ]),
 
-  // ESCAPE - Reset all variables and send escape
-  ...(() => {
-    // Collect all layer variables dynamically from spaceLayers config
-    const spaceModVar = 'space_mod';
-    const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
-
-    // Static variables used elsewhere (caps lock, double-tap protection)
-    const otherVars = [
-      'caps_lock_pressed',
-      'command_q_pressed',
-      'ctrl_opt_esc_first',
-      'cmd_d_ready',
-    ];
-
-    return [
-      rule('ESCAPE - reset all variables').manipulators([
-        ...map('escape')
-          .to([
-            toKey('escape'),
-            toSetVar(spaceModVar, 0),
-            ...allSublayerVars.map(v => toSetVar(v, 0)),
-            ...otherVars.map(v => toSetVar(v, 0)),
-            // Also clear sticky modifiers
-            toStickyModifier(L.shift, 'off'),
-            toStickyModifier(L.opt, 'off'),
-            toStickyModifier(L.cmd, 'off'),
-            toStickyModifier(L.ctrl, 'off'),
-          ])
-          .build(),
-      ])
-    ];
-  })(),
+  // Generate escape rule to reset all variables
+  ...generateEscapeRule(spaceLayers),
 
   // ============================================================================
   // SECURITY & SYSTEM ACCESS RULES
@@ -625,12 +306,10 @@ let rules: any[] = [
    * These rules handle privileged operations and security dialogs:
    *
    * DISABLED SHORTCUTS:
-   * - CMD+H, CMD+OPT+H: Hide/Minimize shortcuts disabled (empty to events)
-   * - CMD+M, CMD+OPT+M: Minimize shortcuts disabled
+   * - CMD+H, CMD+OPT+H, CMD+OPT+M: Hide/Minimize shortcuts disabled (empty to events)
    *
    * PASSWORD AUTOMATION (SecurityAgent only):
    * - CMD+/: Auto-fill admin password using Privileges.app + Hammerspoon
-   * - Sequence: Enable admin → select all → type "jason" → tab → trigger password manager
    *
    * APPLICATION-SPECIFIC OVERRIDES:
    * - Skim: Remap CMD+H and CMD+U to use CTRL modifier for Skim-specific functions
@@ -711,30 +390,6 @@ let rules: any[] = [
 // ============================================================================
 // DEVICE-SPECIFIC SIMPLE MODIFICATIONS
 // ============================================================================
-/**
- * Device-specific key remappings that apply hardware-level key substitutions.
- * These modifications occur before complex_modifications rules are evaluated.
- *
- * Configuration includes:
- * - Keypad remapping for specific keyboard model (vendor 76, product 802)
- * - Function key ↔ Control key swap for all matching devices
- *
- * Note: karabiner.ts only handles complex_modifications, so we manually
- * update the devices section after writeToProfile() runs.
- */
-type SimpleModification = {
-  from: { key_code: string };
-  to: Array<{ key_code: string }>;
-};
-
-type DeviceConfig = {
-  identifiers: {
-    vendor_id: number;
-    product_id: number;
-    is_keyboard?: boolean;
-  };
-  simple_modifications: SimpleModification[];
-};
 
 const deviceConfigs: DeviceConfig[] = [
   {
@@ -758,55 +413,11 @@ const deviceConfigs: DeviceConfig[] = [
 // ============================================================================
 // WRITE TO PROFILE
 // ============================================================================
-/**
- * Deploy all rules to the 'Karabiner.ts' profile.
- * This writes directly to ~/.config/karabiner/karabiner.json
- *
- * To apply changes:
- * 1. npm run build (runs tsx src/index.ts)
- * 2. Karabiner-Elements automatically detects config changes
- *
- * IMPLEMENTATION NOTES:
- * - writeToProfile() only writes complex_modifications
- * - Device-specific simple_modifications are added separately below
- * - We use setTimeout to ensure writeToProfile completes before modifying
- */
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
 
 // First, write the complex_modifications rules
 writeToProfile('Karabiner.ts', rules);
 
 // Wait for writeToProfile to complete, then add device configurations
 setTimeout(() => {
-  try {
-    const configPath = path.join(os.homedir(), '.config', 'karabiner', 'karabiner.json');
-    const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-
-    // Find the Karabiner.ts profile
-    const profile = config.profiles.find((p: any) => p.name === 'Karabiner.ts');
-    if (profile) {
-      // Add or update the devices section (Magic Keyboard keypad + Fn swap)
-      profile.devices = deviceConfigs.map(device => ({
-        identifiers: device.identifiers,
-        simple_modifications: device.simple_modifications,
-      }));
-
-      // Add profile-level Fn↔Ctrl swap for built-in keyboard and others
-      profile.simple_modifications = [
-        { from: { key_code: 'left_control' }, to: [{ key_code: 'fn' }] },
-        { from: { key_code: 'fn' }, to: [{ key_code: 'left_control' }] },
-      ];
-
-      // Write back to file
-      fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
-      console.log('✓ Device-specific simple_modifications updated.');
-    } else {
-      console.error('✗ Karabiner.ts profile not found');
-    }
-  } catch (error) {
-    console.error('Error updating device configurations:', error);
-  }
+  updateDeviceConfigurations('Karabiner.ts', deviceConfigs);
 }, 1000);
-
