@@ -36,15 +36,17 @@ import { HYPER, L, SUPER } from './lib/mods';
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
   a: { description: 'RaycastAI hotkey',       hold: [ toKey('a', SUPER, { repeat: false })], },
+  c: { description: 'Copy',                    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')], },
   d: { description: 'Quick format date',      hold: [
         toKey('left_arrow', ['option', 'shift']),
         toKey('x', ['command']), cmd('python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste'),
       ], },
-  f: { description: 'ProFind',    hold: [toKey('f17', HYPER, { repeat: false })], },
+  f: { description: 'cardinal',    hold: [cmd("open -a '/System/Volumes/Data/Applications/Cardinal.app'")], },
   g: { description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
   h: { description: 'HS console',    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")], },
   i: { description: 'indent line',            hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
   m: { description: 'Deminimize',  hold: [toKey('f20', SUPER, { repeat: false })], },
+  p: { description: 'Pin',                   hold: [cmd('open "cleanshot://capture-area"')], },
   q: { description: 'QSpace Pro',             hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")], },
   r: { description: 'Last d/l',        hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')], },
   s: { description: 'RaycastAI',       hold: [toKey('s', SUPER, { repeat: false })], },
@@ -238,17 +240,12 @@ let rules: any[] = [
     ])
   ),
 
-  // CMD alone -> CMD+OPT+CTRL+L
-  rule('CMD alone -> CMD+OPT+CTRL+L').manipulators([
-    ...map('left_command')
-      .to(toKey('left_command'))
+  // CTRL alone -> CMD+OPT+CTRL+L
+  rule('CTRL alone -> CMD+OPT+CTRL+L').manipulators([
+    ...map('left_control')
+      .to(toKey('left_control'))
       .toIfAlone(toKey('l', ['command', 'option', 'control']))
-      .description('Left CMD alone -> CMD+OPT+CTRL+L')
-      .build(),
-    ...map('right_command')
-      .to(toKey('right_command'))
-      .toIfAlone(toKey('l', ['command', 'option', 'control']))
-      .description('Right CMD alone -> CMD+OPT+CTRL+L')
+      .description('Left CTRL alone -> CMD+OPT+CTRL+L')
       .build(),
   ]),
 
