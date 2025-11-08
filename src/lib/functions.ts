@@ -23,11 +23,21 @@ export type SubLayerConfig = {
   layerName: string;          // Human-readable name for documentation
   releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until space released.
   mappings: Record<string, {  // Key mappings within this sublayer
+    // Single action (legacy support)
     path?: string;            // Folder/file path to open
     command?: string;         // Shell command to execute
     key?: string;             // Key to send
     stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
     passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
+
+    // Multiple actions (new)
+    actions?: Array<{
+      type: 'path' | 'command' | 'key' | 'copy' | 'paste' | 'cut';
+      value?: string;         // For path, command, or key types
+      modifiers?: string[];   // For key type
+      passModifiers?: boolean; // For key type
+    }>;
+
     description: string;      // Description for this action
   }>;
 };
@@ -45,6 +55,50 @@ export type DeviceConfig = {
   };
   simple_modifications: SimpleModification[];
 };
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Build layer info object for Hammerspoon display
+ */
+function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string {
+  // Find the layer configuration
+  const layer = spaceLayers.find(l => l.layerKey === layerKey);
+  if (!layer) return '{"label":"?","keys":[]}';
+
+  // Build array of key mappings
+  const keyMappings = Object.entries(layer.mappings).map(([key, config]) => ({
+    key: key.toUpperCase(),
+    desc: config.description
+  }));
+
+  const layerInfo = {
+    label: layer.layerKey.toUpperCase(),
+    keys: keyMappings
+  };
+
+  // Return as JSON string, escaped for shell command
+  return JSON.stringify(layerInfo).replace(/"/g, '\\"');
+}
+
+/**
+ * Build layer info for space_mod layer (shows available sublayers)
+ */
+function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
+  const keyMappings = spaceLayers.map(layer => ({
+    key: layer.layerKey.toUpperCase(),
+    desc: layer.layerName
+  }));
+
+  const layerInfo = {
+    label: '␣',
+    keys: keyMappings
+  };
+
+  return JSON.stringify(layerInfo).replace(/"/g, '\\"');
+}
 
 // ============================================================================
 // TAP-HOLD RULE GENERATION
@@ -106,14 +160,21 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
   const spaceModVar = 'space_mod';
   const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
 
+  // Build layer info for space_mod (list of sublayers)
+  const spaceModInfo = buildSpaceModInfo(spaceLayers);
+
   // Space key activates the layer
   const spaceManipulator = map('spacebar')
     .toIfAlone([
       toKey('spacebar', [], { halt: true }),
       toSetVar(spaceModVar, 0),
-      ...allSublayerVars.map(v => toSetVar(v, 0))
+      ...allSublayerVars.map(v => toSetVar(v, 0)),
+      cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
     ])
-    .toIfHeldDown(toSetVar(spaceModVar, 1))
+    .toIfHeldDown([
+      toSetVar(spaceModVar, 1),
+      cmd(`/opt/homebrew/bin/hs -c "local indicator = require('karabiner_layer_indicator'); indicator.show('${spaceModInfo}')"`)
+    ])
     .toAfterKeyUp([
       toSetVar(spaceModVar, 0),
       ...allSublayerVars.map(v => toSetVar(v, 0)),
@@ -122,13 +183,15 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       toStickyModifier(L.opt, 'off'),
       toStickyModifier(L.cmd, 'off'),
       toStickyModifier(L.ctrl, 'off'),
+      cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
     ])
     .toDelayedAction(
       [],
       [
         toKey('spacebar'),
         toSetVar(spaceModVar, 0),
-        ...allSublayerVars.map(v => toSetVar(v, 0))
+        ...allSublayerVars.map(v => toSetVar(v, 0)),
+        cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
       ]
     )
     .parameters({
@@ -143,13 +206,17 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
     const sublayerVar = `space_${layerKey}_sublayer`;
     const allManipulators: any[] = [];
 
+    // Build layer info JSON for this layer
+    const layerInfo = buildLayerInfo(layerKey, spaceLayers);
+
     // Sublayer activation - pressing layerKey while space is held
     allManipulators.push(
       ...map(layerKey as any)
         .condition(ifVar(spaceModVar, 1))
         .to([
           toSetVar(sublayerVar, 1),
-          toSetVar(spaceModVar, 0)
+          toSetVar(spaceModVar, 0),
+          cmd(`/opt/homebrew/bin/hs -c "local indicator = require('karabiner_layer_indicator'); indicator.show('${layerInfo}')"`)
         ])
         .build()
     );
@@ -158,7 +225,40 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
     Object.entries(mappings).forEach(([key, config]) => {
       const events: ToEvent[] = [];
 
-      if (config.path) {
+      // Support new actions array (multiple sequential actions)
+      if (config.actions && config.actions.length > 0) {
+        config.actions.forEach(action => {
+          switch (action.type) {
+            case 'path':
+              if (action.value) events.push(cmd(`open '${action.value}'`));
+              break;
+            case 'command':
+              if (action.value) events.push(cmd(action.value));
+              break;
+            case 'key':
+              if (action.value) {
+                const mods = action.modifiers || [];
+                if (action.passModifiers) {
+                  events.push(toKey(action.value as any, 'any' as any));
+                } else {
+                  events.push(toKey(action.value as any, mods as any));
+                }
+              }
+              break;
+            case 'copy':
+              events.push(toKey('c', ['left_command']));
+              break;
+            case 'paste':
+              events.push(toKey('v', ['left_command']));
+              break;
+            case 'cut':
+              events.push(toKey('x', ['left_command']));
+              break;
+          }
+        });
+      }
+      // Legacy single action support (backward compatible)
+      else if (config.path) {
         events.push(cmd(`open '${config.path}'`));
       } else if (config.command) {
         events.push(cmd(config.command));
@@ -184,6 +284,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
       if (releaseLayer && !config.stickyModifier) {
         events.push(toSetVar(sublayerVar, 0));
+        events.push(cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\""));
       }
 
       const mappingBuilder = (config.passModifiers

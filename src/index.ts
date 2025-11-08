@@ -35,7 +35,7 @@ import { HYPER, L, SUPER } from './lib/mods';
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: 'RaycastAI hotkey',       hold: [ toKey('a', SUPER, { repeat: false })], },
+  a: { description: 'RaycastAI hotkey',       hold: [cmd('open -a com.apple.apps.launcher')], },
   c: { description: 'Copy',                    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')], },
   d: { description: 'Quick format date',      hold: [
         toKey('left_arrow', ['option', 'shift']),
@@ -81,6 +81,7 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Applications',
     mappings: {
       8: { description: '8x8', command: 'open -b com.electron.8x8---virtual-office' },
+      a: { description: 'Apps', command: 'open com.apple.apps.launcher' },
       c: { description: 'VS Code Insiders', command: 'open -a "Visual Studio Code - Insiders"' },
       d: { description: 'Dia', command: "open -a '/System/Volumes/Data/Applications/Dia.app'" },
       f: { description: 'QSpace Pro', command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'" },
@@ -146,6 +147,17 @@ const spaceLayers: SubLayerConfig[] = [
       r: { description: 'Record Screen', command: 'open "cleanshot://record-screen"' },
       s: { description: 'Capture Screen', command: 'open "cleanshot://capture-fullscreen"' },
       w: { description: 'Capture Window', command: 'open "cleanshot://capture-window"' },
+    },
+  },
+  {
+    layerKey: 'w',
+    layerName: 'Wrap',
+    releaseLayer: false,  // Keep layer active to allow shell commands to complete
+    mappings: {
+      c: { description: 'Curly Braces', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste'}] },
+      p: { description: 'Parentheses', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste'}] },
+      q: { description: 'Quotes', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste'}] },
+      s: { description: 'Square Brackets', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste'}] },
     },
   },
 ];
