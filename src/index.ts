@@ -96,8 +96,8 @@ const spaceLayers: SubLayerConfig[] = [
     },
   },
   {
-    layerKey: 'c',
-    layerName: 'Cursor',
+    layerKey: 'm',
+    layerName: 'Cursor Movement',
     releaseLayer: false,        // Keep layer active until space released for continuous cursor movement
     mappings: {
       ";": { description: 'Page Down', key: 'page_down', passModifiers: true },
@@ -111,6 +111,17 @@ const spaceLayers: SubLayerConfig[] = [
       p: { description: 'Page Up', key: 'page_up', passModifiers: true },
       s: { description: 'Shift', key: 'left_shift', passModifiers: true },
       u: { description: 'Home', key: 'home', passModifiers: true },
+    },
+  },
+  {
+    layerKey: 'c',
+    layerName: 'Case',
+    releaseLayer: false,
+    mappings: {
+      l: { description: 'lowercase', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste'}] },
+      s: { description: 'Sentence case', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste'}] },
+      t: { description: 'Title Case', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py title_case --source clipboard --dest paste'}] },
+      u: { description: 'UPPERCASE', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste'}] },
     },
   },
   {
