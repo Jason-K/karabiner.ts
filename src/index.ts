@@ -79,20 +79,22 @@ const spaceLayers: SubLayerConfig[] = [
   {
     layerKey: 'a',
     layerName: 'Applications',
+    releaseLayer: false,
     mappings: {
       8: { description: '8x8', command: 'open -b com.electron.8x8---virtual-office' },
-      a: { description: 'Apps', command: 'open com.apple.apps.launcher' },
-      c: { description: 'VS Code Insiders', command: 'open -a "Visual Studio Code - Insiders"' },
-      d: { description: 'Dia', command: "open -a '/System/Volumes/Data/Applications/Dia.app'" },
-      f: { description: 'QSpace Pro', command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'" },
+      a: { description: 'Apps', command: 'open -b com.apple.apps.launcher' },
+      c: { description: 'VS Code Insiders', command: 'open -b com.microsoft.VSCodeInsiders' },
+      d: { description: 'Dia', command: "open -b company.thebrowser.dia" },
+      f: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
       g: { description: 'ChatGPT', command: 'open -b com.openai.chat' },
-      m: { description: 'Messages', command: 'open -a "Messages"' },
-      o: { description: 'Microsoft Outlook', command: 'open -a "Microsoft Outlook"' },
-      q: { description: 'QSpace Pro', command: "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'" },
-      s: { description: 'Safari', command: 'open -a Safari' },
-      t: { description: 'Microsoft Teams', command: 'open -a "Microsoft Teams"' },
-      v: { description: 'VS Code Insiders', command: 'open -a "Visual Studio Code - Insiders"' },
-      w: { description: 'Microsoft Word', command: 'open -a "Microsoft Word"' },
+      m: { description: 'Messages', command: 'open -b com.apple.iChat' },
+      o: { description: 'Microsoft Outlook', command: 'open -b com.microsoft.Outlook' },
+      p: { description: 'Proton Mail', command: 'open -b com.protonmail.protonmail' },
+      q: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
+      s: { description: 'Safari', command: 'open -b com.apple.Safari' },
+      t: { description: 'Microsoft Teams', command: 'open -b com.microsoft.teams' },
+      v: { description: 'VS Code Insiders', command: 'open -b com.microsoft.VSCodeInsiders' },
+      w: { description: 'Microsoft Word', command: 'open -b com.microsoft.Word' },
     },
   },
   {
@@ -127,6 +129,7 @@ const spaceLayers: SubLayerConfig[] = [
   {
     layerKey: 'd',
     layerName: 'Downloads',
+    releaseLayer: false,
     mappings: {
       '3': { description: '3dPrinting', path: '/Users/jason/Downloads/3dPrinting' },
       a: { description: 'Archives', path: '/Users/jason/Downloads/Archives' },
@@ -138,6 +141,7 @@ const spaceLayers: SubLayerConfig[] = [
   {
     layerKey: 'f',
     layerName: 'Folders',
+    releaseLayer: false,
     mappings: {
       "`": { description: 'Home', path: '/Users/jason/' },
       a: { description: 'Applications', path: '/Users/jason/Applications' },
@@ -151,7 +155,8 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: 's',
-    layerName: 'screenshots',
+    layerName: 'Screenshots',
+    releaseLayer: false,
     mappings: {
       a: { description: 'Capture Area', command: 'open "cleanshot://capture-area"' },
       o: { description: 'OCR', command: 'open "cleanshot://capture-text?linebreaks=false"' },
@@ -165,10 +170,10 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Wrap',
     releaseLayer: false,  // Keep layer active to allow shell commands to complete
     mappings: {
-      c: { description: 'Curly Braces', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste'}] },
-      p: { description: 'Parentheses', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste'}] },
-      q: { description: 'Quotes', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste'}] },
-      s: { description: 'Square Brackets', actions: [ {type: 'cut'}, {type: 'command', value: 'python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste'}] },
+      c: { description: 'Curly Braces', actions: [ {type: 'cut'}, {type: 'command', value: 'sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste'}] },
+      p: { description: 'Parentheses', actions: [ {type: 'cut'}, {type: 'command', value: 'sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste'}] },
+      q: { description: 'Quotes', actions: [ {type: 'cut'}, {type: 'command', value: 'sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste'}] },
+      s: { description: 'Square Brackets', actions: [ {type: 'cut'}, {type: 'command', value: 'sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste'}] },
     },
   },
 ];
