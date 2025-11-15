@@ -16,6 +16,20 @@ export type TapHoldConfig = {
   description: string;        // Human-readable description for the rule
   timeoutMs?: number;        // How long to wait before considering it "alone" (default: 400)
   thresholdMs?: number;      // How long to hold before triggering hold action (default: 400)
+  // Optional app-specific overrides. Each entry can specify an app matcher (string or RegExp)
+  // and alternate `alone` / `hold` event arrays or timing overrides. These are forwarded
+  // to the `tapHold` builder which will emit per-app manipulators using
+  // `foremost_application_if` / `foremost_application_unless` conditions.
+  appOverrides?: Array<{
+    app: string | RegExp;
+    unless?: boolean;
+    alone?: ToEvent[];
+    hold?: ToEvent[];
+    timeoutMs?: number;
+    thresholdMs?: number;
+    cancel?: ToEvent[];
+    invoked?: ToEvent[];
+  }>;
 };
 
 export type SubLayerConfig = {
@@ -63,6 +77,37 @@ export type DeviceConfig = {
 /**
  * Build layer info object for Hammerspoon display
  */
+function escapeForShell(str: string): string {
+  // Escape for inclusion inside a double-quoted shell string and single-quoted Lua string
+  // Order matters: escape backslash first
+  return str
+    .replace(/\\/g, "\\\\")   // backslash
+    .replace(/"/g, '\\"')        // double quote
+    .replace(/`/g, '\\`')          // backtick (command substitution)
+    .replace(/\$/g, '\\$');        // dollar (var expansion)
+}
+
+function prettyKeyLabel(key: string): string {
+  const specials: Record<string, string> = {
+    '`': 'Grave',
+    '-': 'Hyphen',
+    '=': 'Equals',
+    '[': 'Left Bracket',
+    ']': 'Right Bracket',
+    '\\': 'Backslash',
+    ';': 'Semicolon',
+    "'": 'Quote',
+    ',': 'Comma',
+    '.': 'Period',
+    '/': 'Slash',
+    ' ': 'Space',
+  };
+  if (specials[key] !== undefined) return specials[key];
+  // Single letter/digit fallbacks
+  if (key.length === 1) return key.toUpperCase();
+  return key.toUpperCase();
+}
+
 function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string {
   // Find the layer configuration
   const layer = spaceLayers.find(l => l.layerKey === layerKey);
@@ -70,17 +115,27 @@ function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string
 
   // Build array of key mappings
   const keyMappings = Object.entries(layer.mappings).map(([key, config]) => ({
-    key: key.toUpperCase(),
+    key: prettyKeyLabel(key),
     desc: config.description
   }));
 
+  // Width hint: approximate width based on max "KEY — DESC" string length
+  const approxCharPx = 9; // conservative average glyph width in px
+  const paddingPx = 64;   // left/right padding and margins
+  const maxChars = keyMappings.reduce((m, k) => {
+    const len = (k.key + ' — ' + k.desc).length;
+    return Math.max(m, len);
+  }, 0);
+  const widthHintPx = Math.ceil(maxChars * approxCharPx + paddingPx);
+
   const layerInfo = {
     label: layer.layerKey.toUpperCase(),
-    keys: keyMappings
+    keys: keyMappings,
+    widthHintPx
   };
 
   // Return as JSON string, escaped for shell command
-  return JSON.stringify(layerInfo).replace(/"/g, '\\"');
+  return escapeForShell(JSON.stringify(layerInfo));
 }
 
 /**
@@ -92,12 +147,21 @@ function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
     desc: layer.layerName
   }));
 
+  const approxCharPx = 9;
+  const paddingPx = 64;
+  const maxChars = keyMappings.reduce((m, k) => {
+    const len = (k.key + ' — ' + k.desc).length;
+    return Math.max(m, len);
+  }, 0);
+  const widthHintPx = Math.ceil(maxChars * approxCharPx + paddingPx);
+
   const layerInfo = {
     label: '␣',
-    keys: keyMappings
+    keys: keyMappings,
+    widthHintPx
   };
 
-  return JSON.stringify(layerInfo).replace(/"/g, '\\"');
+  return escapeForShell(JSON.stringify(layerInfo));
 }
 
 // ============================================================================
@@ -121,6 +185,7 @@ export function generateTapHoldRules(
       hold: config.hold,
       timeoutMs: config.timeoutMs,
       thresholdMs: config.thresholdMs,
+      appOverrides: config.appOverrides,
     }).build();
 
     // Add conditions to prevent conflict with space layer

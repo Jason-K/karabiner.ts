@@ -20,7 +20,7 @@ import { ifApp, ifVar, map, rule, toKey, toSetVar, writeToProfile } from 'karabi
 import { cmd, tapHold } from './lib/builders';
 import type { DeviceConfig, SubLayerConfig, TapHoldConfig } from './lib/functions';
 import { generateEscapeRule, generateSpaceLayerRules, generateTapHoldRules, updateDeviceConfigurations } from './lib/functions';
-import { HYPER, L, SUPER } from './lib/mods';
+import { HYPER, L, MEH, SUPER } from './lib/mods';
 
 // ============================================================================
 // TAP-HOLD KEY DEFINITIONS
@@ -35,15 +35,22 @@ import { HYPER, L, SUPER } from './lib/mods';
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: 'RaycastAI hotkey',       hold: [cmd('open -a com.apple.apps.launcher')], },
+  a: { description: 'App launcher',       hold: [cmd('open -a com.apple.apps.launcher')], },
   c: { description: 'Copy',                    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')], },
-  d: { description: 'Quick format date',      hold: [
-        toKey('left_arrow', ['option', 'shift']),
-        toKey('x', ['command']), cmd('python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste'),
-      ], },
+  d: { description: 'Dato',      hold: [toKey('d', MEH, { repeat: false })], },
+  e: { description: 'Dato - new event', hold: [toKey('e', MEH, { repeat: false })], },
   f: { description: 'cardinal',    hold: [cmd("open -a '/System/Volumes/Data/Applications/Cardinal.app'")], },
   g: { description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
-  h: { description: 'HS console',    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")], },
+  h: {
+    description: 'HS console',
+    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
+    appOverrides: [
+      {
+        app: /^net\.sourceforge\.skim-app\.skim$/,
+        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript')],
+      }
+    ]
+  },
   i: { description: 'indent line',            hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
   m: { description: 'Deminimize',  hold: [toKey('f20', SUPER, { repeat: false })], },
   p: { description: 'Pin',                   hold: [cmd('open "cleanshot://capture-area"')], },
@@ -54,8 +61,41 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   v: { description: 'Maccy',                  hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })], timeoutMs: 300, thresholdMs: 300, },
   w: { description: 'Writing Tools',          hold: [toKey('w', ['command', 'shift'], { repeat: false })], },
   '8': { description: '8x8',                  hold: [cmd('open -b com.electron.8x8---virtual-office')], },
+  escape: { description: 'Escape',                hold: [cmd('open -b com.itone.ProcessSpy')], },
   slash: { description: 'search for files',   hold: [toKey('f17', HYPER, { repeat: false })], },
   tab: { description: 'Mission Control',      hold: [toKey('mission_control', [], { halt: true, repeat: true })], timeoutMs: 300, thresholdMs: 300, },
+  b: {
+    description: 'Skim: create anchored note',
+    hold: [toKey('b')],
+    appOverrides: [
+      {
+        app: /^net\.sourceforge\.skim-app\.skim$/,
+        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript')],
+      }
+    ]
+  },
+  n: {
+    description: 'Skim: add extended text to anchored note',
+    hold: [toKey('n')],
+    appOverrides: [
+      {
+        app: /^net\.sourceforge\.skim-app\.skim$/,
+        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript')],
+      }
+    ]
+  },
+  // Example: per-application override for hold behavior
+  // When VSCode is frontmost, holding `x` will send Right Arrow instead.
+  x: {
+    description: 'Example per-app override',
+    hold: [toKey('left_arrow')],
+    appOverrides: [
+      {
+        app: /^com\.microsoft\.VSCode$/, // bundle id regex
+        hold: [toKey('right_arrow')],
+      }
+    ]
+  },
 };
 
 // ============================================================================
@@ -87,12 +127,12 @@ const spaceLayers: SubLayerConfig[] = [
       d: { description: 'Dia', command: "open -b company.thebrowser.dia" },
       f: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
       g: { description: 'ChatGPT', command: 'open -b com.openai.chat' },
-      m: { description: 'Messages', command: 'open -b com.apple.iChat' },
+      m: { description: 'Messages', command: 'open -b com.apple.MobileSMS' },
       o: { description: 'Microsoft Outlook', command: 'open -b com.microsoft.Outlook' },
-      p: { description: 'Proton Mail', command: 'open -b com.protonmail.protonmail' },
+      p: { description: 'Proton Mail', command: 'open -b ch.protonmail.desktop' },
       q: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
       s: { description: 'Safari', command: 'open -b com.apple.Safari' },
-      t: { description: 'Microsoft Teams', command: 'open -b com.microsoft.teams' },
+      t: { description: 'Microsoft Teams', command: 'open -b com.microsoft.teams2' },
       v: { description: 'VS Code Insiders', command: 'open -b com.microsoft.VSCodeInsiders' },
       w: { description: 'Microsoft Word', command: 'open -b com.microsoft.Word' },
     },
@@ -131,11 +171,11 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Downloads',
     releaseLayer: false,
     mappings: {
-      '3': { description: '3dPrinting', path: '/Users/jason/Downloads/3dPrinting' },
-      a: { description: 'Archives', path: '/Users/jason/Downloads/Archives' },
-      i: { description: 'Installs', path: '/Users/jason/Downloads/Installs' },
-      o: { description: 'Office', path: '/Users/jason/Downloads/Office' },
-      p: { description: 'PDFs', path: '/Users/jason/Downloads/PDFs' },
+      '3': { description: '3dPrinting', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/3dPrinting' },
+      a: { description: 'Archives', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Archives' },
+      i: { description: 'Installs', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Installs' },
+      o: { description: 'Office', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Office' },
+      p: { description: 'PDFs', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/PDFs' },
     },
   },
   {
@@ -143,14 +183,14 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Folders',
     releaseLayer: false,
     mappings: {
-      "`": { description: 'Home', path: '/Users/jason/' },
-      a: { description: 'Applications', path: '/Users/jason/Applications' },
-      d: { description: 'Downloads', path: '/Users/jason/Downloads' },
-      o: { description: 'Personal OneDrive', path: '/Users/jason/Library/CloudStorage/OneDrive-Personal' },
-      p: { description: 'Proton Drive', path: '/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder' },
-      s: { description: 'Scripts', path: '/Users/jason/Scripts' },
-      v: { description: 'Videos', path: '/Users/jason/Videos' },
-      w: { description: 'Work OneDrive', path: '/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP' },
+      "`": { description: 'Home', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/' },
+      a: { description: 'Applications', command: 'open -b com.jinghaoshe.qspace.pro  /Applications' },
+      d: { description: 'Downloads', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads' },
+      o: { description: 'Personal OneDrive', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-Personal' },
+      p: { description: 'Proton Drive', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder' },
+      s: { description: 'Scripts', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Scripts' },
+      v: { description: 'Videos', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Videos' },
+      w: { description: 'Work OneDrive', command: 'open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP' },
     },
   },
   {
@@ -450,3 +490,17 @@ writeToProfile('Karabiner.ts', rules);
 setTimeout(() => {
   updateDeviceConfigurations('Karabiner.ts', deviceConfigs);
 }, 1000);
+
+// Also write generated rules to workspace for inspection
+import('fs').then(fs => {
+  import('path').then(path => {
+    try {
+      const outPath = path.join(process.cwd(), 'karabiner-output.json');
+      const payload = { complex_modifications: { rules } };
+      fs.writeFileSync(outPath, JSON.stringify(payload, null, 2));
+      console.log(`✓ Wrote workspace copy: ${outPath}`);
+    } catch (e) {
+      console.error('✗ Failed to write workspace karabiner-output.json', e);
+    }
+  });
+});

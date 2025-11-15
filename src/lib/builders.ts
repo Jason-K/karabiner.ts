@@ -11,7 +11,7 @@
  */
 
 import type { BasicManipulator, Modifier, ToEvent } from 'karabiner.ts';
-import { ifVar, map, toSetVar } from 'karabiner.ts';
+import { ifApp, ifVar, map, toSetVar } from 'karabiner.ts';
 
 /**
  * Configuration for basic tap-hold behavior
@@ -26,6 +26,20 @@ interface TapHoldOpts {
   cancel?: ToEvent[];         // to_if_canceled
   invoked?: ToEvent[];        // to_if_invoked
   variable?: string;          // optional variable to set while held
+  // App-specific overrides. Each entry can specify an app matcher (string or regex)
+  // and optional negation. If present, a separate manipulator will be generated
+  // that applies only when the foremost application matches (or does not match)
+  // the provided matcher.
+  appOverrides?: Array<{
+    app: string | RegExp;
+    unless?: boolean; // if true, use foremost_application_unless
+    alone?: ToEvent[];
+    hold?: ToEvent[];
+    timeoutMs?: number;
+    thresholdMs?: number;
+    cancel?: ToEvent[];
+    invoked?: ToEvent[];
+  }>;
 }
 
 /**
@@ -54,22 +68,43 @@ interface TapHoldOpts {
  * @param opts Configuration object
  * @returns map() builder with tap-hold configuration applied
  */
-export function tapHold({ key, alone, hold, timeoutMs = 400, thresholdMs = 400, description, cancel, invoked }: TapHoldOpts) {
-  const m = map(key).parameters({
-    'basic.to_if_alone_timeout_milliseconds': timeoutMs,
-    'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
-  });
-  if (alone) alone.forEach(e => m.toIfAlone(e));
-  if (hold) hold.forEach(e => m.toIfHeldDown(e));
+export function tapHold({ key, alone, hold, timeoutMs = 300, thresholdMs = 300, description, cancel, invoked, appOverrides }: TapHoldOpts) {
+  // We'll build one or more map builders (one per override + the default)
+  const builders: any[] = [];
 
-  // Always add to_delayed_action for tap-hold behavior
-  // If not specified, use the 'alone' events for to_if_canceled
-  const cancelEvents = cancel ?? alone ?? [];
-  const invokedEvents = invoked ?? [];
-  m.toDelayedAction(invokedEvents, cancelEvents);
+  const makeBuilder = (opts: { alone?: ToEvent[]; hold?: ToEvent[]; timeoutMs?: number; thresholdMs?: number; cancel?: ToEvent[]; invoked?: ToEvent[]; cond?: any }) => {
+    const m = map(key).parameters({
+      'basic.to_if_alone_timeout_milliseconds': opts.timeoutMs ?? timeoutMs,
+      'basic.to_if_held_down_threshold_milliseconds': opts.thresholdMs ?? thresholdMs,
+    });
+    if (opts.cond) m.condition(opts.cond);
+    if (opts.alone) opts.alone.forEach((e: ToEvent) => m.toIfAlone(e));
+    if (opts.hold) opts.hold.forEach((e: ToEvent) => m.toIfHeldDown(e));
 
-  // Don't add description to manipulator - it's redundant with rule description
-  return m;
+    const cancelEvents = opts.cancel ?? cancel ?? alone ?? [];
+    const invokedEvents = opts.invoked ?? invoked ?? [];
+    m.toDelayedAction(invokedEvents, cancelEvents);
+    return m;
+  };
+
+  // App-specific overrides (generate builders with app conditions)
+  if (appOverrides && Array.isArray(appOverrides)) {
+    appOverrides.forEach(ov => {
+      const matcher = ov.app;
+      // ifApp accepts string or regex; use it directly
+      let cond = ifApp(matcher as any);
+      if (ov.unless) cond = cond.unless();
+      builders.push(makeBuilder({ alone: ov.alone, hold: ov.hold, timeoutMs: ov.timeoutMs, thresholdMs: ov.thresholdMs, cancel: ov.cancel, invoked: ov.invoked, cond }));
+    });
+  }
+
+  // Default builder (no app condition)
+  builders.push(makeBuilder({ alone, hold }));
+
+  // Return an object compatible with existing usage: .build() should return all manipulators
+  return {
+    build: () => builders.flatMap(b => b.build()),
+  };
 }
 
 /**
