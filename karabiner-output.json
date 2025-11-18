@@ -83,7 +83,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "A hold -> App launcher",
+        "ruleDescription": "A hold -> Launcher",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -164,7 +164,161 @@
         "conditions": []
       },
       {
-        "ruleDescription": "C hold -> Copy",
+        "ruleDescription": "B hold -> Anchored note",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "b"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                ]
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "b",
+                  "modifiers": []
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "b"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "b",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "key_code": "b"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "b",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "C hold -> OCR",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -332,7 +486,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "E hold -> Dato - new event",
+        "ruleDescription": "E hold -> New event",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -419,7 +573,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "F hold -> cardinal",
+        "ruleDescription": "F hold -> Houdah",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -439,7 +593,14 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -a '/System/Volumes/Data/Applications/Cardinal.app'"
+                "repeat": false,
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -735,7 +896,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "I hold -> indent line",
+        "ruleDescription": "I hold -> Indent",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -904,7 +1065,161 @@
         "conditions": []
       },
       {
-        "ruleDescription": "P hold -> Pin",
+        "ruleDescription": "N hold -> Highlight",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "n"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                ]
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "n",
+                  "modifiers": []
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "n"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "n",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "key_code": "n"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "n",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "P hold -> Paletro",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -924,7 +1239,13 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open \"cleanshot://capture-area\""
+                "repeat": false,
+                "key_code": "p",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -1147,7 +1468,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "S hold -> RaycastAI",
+        "ruleDescription": "S hold -> Screenshot",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1167,14 +1488,7 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "s",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
+                "shell_command": "open \"cleanshot://capture-area\""
               }
             ],
             "to_delayed_action": {
@@ -1688,468 +2002,6 @@
                 {
                   "halt": true,
                   "key_code": "tab",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "B hold -> Skim: create anchored note",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "b"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "b",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "b"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "b",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "b"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "b",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "N hold -> Skim: add extended text to anchored note",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "n"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "n",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "n"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "n",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "n"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "n",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "X hold -> Example per-app override",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "x"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "^com\\.microsoft\\.VSCode$"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "right_arrow"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "x",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "x"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "x",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "left_arrow"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "x",
                   "modifiers": []
                 }
               ]

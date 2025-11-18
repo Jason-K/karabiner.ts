@@ -35,67 +35,41 @@ import { HYPER, L, MEH, SUPER } from './lib/mods';
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: 'App launcher',       hold: [cmd('open -a com.apple.apps.launcher')], },
-  c: { description: 'Copy',                    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')], },
-  d: { description: 'Dato',      hold: [toKey('d', MEH, { repeat: false })], },
-  e: { description: 'Dato - new event', hold: [toKey('e', MEH, { repeat: false })], },
-  f: { description: 'cardinal',    hold: [cmd("open -a '/System/Volumes/Data/Applications/Cardinal.app'")], },
-  g: { description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
-  h: {
-    description: 'HS console',
-    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript')],
-      }
-    ]
-  },
-  i: { description: 'indent line',            hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
-  m: { description: 'Deminimize',  hold: [toKey('f20', SUPER, { repeat: false })], },
-  p: { description: 'Pin',                   hold: [cmd('open "cleanshot://capture-area"')], },
-  q: { description: 'QSpace Pro',             hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")], },
-  r: { description: 'Last d/l',        hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')], },
-  s: { description: 'RaycastAI',       hold: [toKey('s', SUPER, { repeat: false })], },
-  t: { description: 'iTerm2',                 hold: [cmd('osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript')], timeoutMs: 300, thresholdMs: 300, },
-  v: { description: 'Maccy',                  hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })], timeoutMs: 300, thresholdMs: 300, },
-  w: { description: 'Writing Tools',          hold: [toKey('w', ['command', 'shift'], { repeat: false })], },
-  '8': { description: '8x8',                  hold: [cmd('open -b com.electron.8x8---virtual-office')], },
-  escape: { description: 'Escape',                hold: [cmd('open -b com.itone.ProcessSpy')], },
-  slash: { description: 'search for files',   hold: [toKey('f17', HYPER, { repeat: false })], },
-  tab: { description: 'Mission Control',      hold: [toKey('mission_control', [], { halt: true, repeat: true })], timeoutMs: 300, thresholdMs: 300, },
-  b: {
-    description: 'Skim: create anchored note',
-    hold: [toKey('b')],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript')],
-      }
-    ]
-  },
-  n: {
-    description: 'Skim: add extended text to anchored note',
-    hold: [toKey('n')],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript')],
-      }
-    ]
-  },
-  // Example: per-application override for hold behavior
-  // When VSCode is frontmost, holding `x` will send Right Arrow instead.
-  x: {
-    description: 'Example per-app override',
-    hold: [toKey('left_arrow')],
-    appOverrides: [
-      {
-        app: /^com\.microsoft\.VSCode$/, // bundle id regex
-        hold: [toKey('right_arrow')],
-      }
-    ]
-  },
+  a: {      description: 'Launcher',       hold: [cmd('open -a com.apple.apps.launcher')], },
+  b: {      description: 'Anchored note',
+            hold: [toKey('b')],
+            appOverrides: [ {
+              app: /^net\.sourceforge\.skim-app\.skim$/,
+              hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript')],
+            } ] },
+  c: {      description: 'OCR',                    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')], },
+  d: {      description: 'Dato',                   hold: [toKey('d', MEH, { repeat: false })], },
+  e: {      description: 'New event',              hold: [toKey('e', MEH, { repeat: false })], },
+  f: {      description: 'Houdah',                 hold: [toKey('h', SUPER, { repeat: false })], },
+  g: {      description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
+  h: {      description: 'HS console',             hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
+            appOverrides: [ {
+                app: /^net\.sourceforge\.skim-app\.skim$/,
+                hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript')],
+              } ] },
+  i: {      description: 'Indent',                 hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
+  m: {      description: 'Deminimize',             hold: [toKey('f20', SUPER, { repeat: false })], },
+  n: {      description: 'Highlight',              hold: [toKey('n')],
+            appOverrides: [ {
+              app: /^net\.sourceforge\.skim-app\.skim$/,
+              hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript')],
+            } ] },
+  p: {      description: 'Paletro',                hold: [toKey('p', HYPER, { repeat: false })], },
+  q: {      description: 'QSpace Pro',             hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")], },
+  r: {      description: 'Last d/l',               hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')], },
+  s: {      description: 'Screenshot',             hold: [cmd('open "cleanshot://capture-area"')], },
+  t: {      description: 'iTerm2',                 hold: [cmd('osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript')], timeoutMs: 300, thresholdMs: 300, },
+  v: {      description: 'Maccy',                  hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })], timeoutMs: 300, thresholdMs: 300, },
+  w: {      description: 'Writing Tools',          hold: [toKey('w', ['command', 'shift'], { repeat: false })], },
+  '8': {    description: '8x8',                    hold: [cmd('open -b com.electron.8x8---virtual-office')], },
+  escape: { description: 'Escape',                 hold: [cmd('open -b com.itone.ProcessSpy')], },
+  slash: {  description: 'search for files',       hold: [toKey('f17', HYPER, { repeat: false })], },
+  tab: {    description: 'Mission Control',        hold: [toKey('mission_control', [], { halt: true, repeat: true })], timeoutMs: 300, thresholdMs: 300, },
 };
 
 // ============================================================================
