@@ -17,7 +17,7 @@
  */
 
 import { ifApp, ifVar, map, rule, toKey, toSetVar, writeToProfile } from 'karabiner.ts';
-import { cmd, tapHold } from './lib/builders';
+import { cmd, openApp, tapHold } from './lib/builders';
 import type { DeviceConfig, SubLayerConfig, TapHoldConfig } from './lib/functions';
 import { generateEscapeRule, generateSpaceLayerRules, generateTapHoldRules, updateDeviceConfigurations } from './lib/functions';
 import { HYPER, L, MEH, SUPER } from './lib/mods';
@@ -35,9 +35,9 @@ import { HYPER, L, MEH, SUPER } from './lib/mods';
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: {      description: 'Launcher',       hold: [cmd('open -a com.apple.apps.launcher')], },
-  b: {      description: 'Anchored note',
-            hold: [toKey('b')],
+  a: {      description: 'Launcher',       hold: [openApp({ bundleIdentifier: 'com.apple.apps.launcher' })], },
+  b: {      description: 'Search Bar Apps / Create note in Skim',
+            hold: [toKey('b', SUPER, { repeat: false })],
             appOverrides: [ {
               app: /^net\.sourceforge\.skim-app\.skim$/,
               hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript')],
@@ -46,28 +46,28 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   d: {      description: 'Dato',                   hold: [toKey('d', MEH, { repeat: false })], },
   e: {      description: 'New event',              hold: [toKey('e', MEH, { repeat: false })], },
   f: {      description: 'Houdah',                 hold: [toKey('h', SUPER, { repeat: false })], },
-  g: {      description: 'ChatGPT',                hold: [cmd('open -b com.openai.chat')], },
+  g: {      description: 'ChatGPT',                hold: [openApp({ bundleIdentifier: 'com.openai.chat' })], },
   h: {      description: 'HS console',             hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
             appOverrides: [ {
                 app: /^net\.sourceforge\.skim-app\.skim$/,
                 hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript')],
               } ] },
   i: {      description: 'Indent',                 hold: [cmd("/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'")], },
-  m: {      description: 'Deminimize',             hold: [toKey('f20', SUPER, { repeat: false })], },
+  m: {      description: 'Deminimize',             hold: [toKey('m', HYPER, { repeat: false })], },
   n: {      description: 'Highlight',              hold: [toKey('n')],
             appOverrides: [ {
               app: /^net\.sourceforge\.skim-app\.skim$/,
               hold: [cmd('osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript')],
             } ] },
   p: {      description: 'Paletro',                hold: [toKey('p', HYPER, { repeat: false })], },
-  q: {      description: 'QSpace Pro',             hold: [cmd("open -a '/System/Volumes/Data/Applications/QSpace Pro.app'")], },
+  q: {      description: 'QSpace Pro',             hold: [openApp({ filePath: '/System/Volumes/Data/Applications/QSpace Pro.app' })], },
   r: {      description: 'Last d/l',               hold: [cmd('latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"')], },
   s: {      description: 'Screenshot',             hold: [cmd('open "cleanshot://capture-area"')], },
   t: {      description: 'iTerm2',                 hold: [cmd('osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript')], timeoutMs: 300, thresholdMs: 300, },
   v: {      description: 'Maccy',                  hold: [toKey('grave_accent_and_tilde', ['control'], { halt: true, repeat: false })], timeoutMs: 300, thresholdMs: 300, },
   w: {      description: 'Writing Tools',          hold: [toKey('w', ['command', 'shift'], { repeat: false })], },
-  '8': {    description: '8x8',                    hold: [cmd('open -b com.electron.8x8---virtual-office')], },
-  escape: { description: 'Escape',                 hold: [cmd('open -b com.itone.ProcessSpy')], },
+  '8': {    description: '8x8',                    hold: [openApp({ bundleIdentifier: 'com.electron.8x8---virtual-office' })], },
+  escape: { description: 'Escape',                 hold: [openApp({ bundleIdentifier: 'com.itone.ProcessSpy' })], },
   slash: {  description: 'search for files',       hold: [toKey('f17', HYPER, { repeat: false })], },
   tab: {    description: 'Mission Control',        hold: [toKey('mission_control', [], { halt: true, repeat: true })], timeoutMs: 300, thresholdMs: 300, },
 };
@@ -95,20 +95,20 @@ const spaceLayers: SubLayerConfig[] = [
     layerName: 'Applications',
     releaseLayer: false,
     mappings: {
-      8: { description: '8x8', command: 'open -b com.electron.8x8---virtual-office' },
-      a: { description: 'Apps', command: 'open -b com.apple.apps.launcher' },
-      c: { description: 'VS Code Insiders', command: 'open -b com.microsoft.VSCodeInsiders' },
-      d: { description: 'Dia', command: "open -b company.thebrowser.dia" },
-      f: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
-      g: { description: 'ChatGPT', command: 'open -b com.openai.chat' },
-      m: { description: 'Messages', command: 'open -b com.apple.MobileSMS' },
-      o: { description: 'Microsoft Outlook', command: 'open -b com.microsoft.Outlook' },
-      p: { description: 'Proton Mail', command: 'open -b ch.protonmail.desktop' },
-      q: { description: 'QSpace Pro', command: "open -b com.jinghaoshe.qspace.pro" },
-      s: { description: 'Safari', command: 'open -b com.apple.Safari' },
-      t: { description: 'Microsoft Teams', command: 'open -b com.microsoft.teams2' },
-      v: { description: 'VS Code Insiders', command: 'open -b com.microsoft.VSCodeInsiders' },
-      w: { description: 'Microsoft Word', command: 'open -b com.microsoft.Word' },
+      8: { description: '8x8', openAppOpts: { bundleIdentifier: 'com.electron.8x8---virtual-office' } },
+      a: { description: 'Apps', openAppOpts: { bundleIdentifier: 'com.apple.apps.launcher' } },
+      c: { description: 'VS Code Insiders', openAppOpts: { bundleIdentifier: 'com.microsoft.VSCodeInsiders' } },
+      d: { description: 'Dia', openAppOpts: { bundleIdentifier: 'company.thebrowser.dia' } },
+      f: { description: 'QSpace Pro', openAppOpts: { bundleIdentifier: 'com.jinghaoshe.qspace.pro' } },
+      g: { description: 'ChatGPT', openAppOpts: { bundleIdentifier: 'com.openai.chat' } },
+      m: { description: 'Messages', openAppOpts: { bundleIdentifier: 'com.apple.MobileSMS' } },
+      o: { description: 'Microsoft Outlook', openAppOpts: { bundleIdentifier: 'com.microsoft.Outlook' } },
+      p: { description: 'Proton Mail', openAppOpts: { bundleIdentifier: 'ch.protonmail.desktop' } },
+      q: { description: 'QSpace Pro', openAppOpts: { bundleIdentifier: 'com.jinghaoshe.qspace.pro' } },
+      s: { description: 'Safari', openAppOpts: { bundleIdentifier: 'com.apple.Safari' } },
+      t: { description: 'Microsoft Teams', openAppOpts: { bundleIdentifier: 'com.microsoft.teams2' } },
+      v: { description: 'VS Code Insiders', openAppOpts: { bundleIdentifier: 'com.microsoft.VSCodeInsiders' } },
+      w: { description: 'Microsoft Word', openAppOpts: { bundleIdentifier: 'com.microsoft.Word' } },
     },
   },
   {

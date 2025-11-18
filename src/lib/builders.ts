@@ -184,3 +184,70 @@ export function cmd(shell: string): ToEvent {
   return { shell_command: shell } as ToEvent;
 }
 
+/**
+ * Configuration for open_application software function
+ */
+interface OpenAppOpts {
+  bundleIdentifier?: string;              // Bundle ID (e.g., 'com.apple.Safari')
+  filePath?: string;                      // File path (e.g., '/Applications/Safari.app')
+  historyIndex?: number;                  // Frontmost app history index (1 = most recent)
+  exclusionBundleIdentifiers?: string[];  // Regex patterns to exclude (with historyIndex)
+  exclusionFilePaths?: string[];          // Regex patterns to exclude (with historyIndex)
+}
+
+/**
+ * Creates an open_application software_function ToEvent.
+ *
+ * Opens an application or brings it to focus using Karabiner's native function.
+ * This is faster and more reliable than using shell commands.
+ *
+ * USAGE:
+ * ```typescript
+ * // Open by bundle ID
+ * openApp({ bundleIdentifier: 'com.apple.Safari' })
+ *
+ * // Open by file path
+ * openApp({ filePath: '/Applications/Safari.app' })
+ *
+ * // Switch to most recently used app
+ * openApp({ historyIndex: 1 })
+ *
+ * // Switch to most recent app excluding certain apps
+ * openApp({
+ *   historyIndex: 1,
+ *   exclusionBundleIdentifiers: ['^com\\.apple\\.Safari$', '^com\\.apple\\.Preview$']
+ * })
+ * ```
+ *
+ * NOTE: Either bundleIdentifier, filePath, or historyIndex must be specified.
+ * When multiple are specified, the highest-priority one is used (bundleIdentifier > filePath > historyIndex).
+ *
+ * @param opts Configuration object
+ * @returns ToEvent object with software_function.open_application
+ */
+export function openApp(opts: OpenAppOpts): ToEvent {
+  const openAppConfig: any = {};
+
+  if (opts.bundleIdentifier) {
+    openAppConfig.bundle_identifier = opts.bundleIdentifier;
+  }
+  if (opts.filePath) {
+    openAppConfig.file_path = opts.filePath;
+  }
+  if (opts.historyIndex !== undefined) {
+    openAppConfig.frontmost_application_history_index = opts.historyIndex;
+  }
+  if (opts.exclusionBundleIdentifiers) {
+    openAppConfig.frontmost_application_history_exclusion_bundle_identifiers = opts.exclusionBundleIdentifiers;
+  }
+  if (opts.exclusionFilePaths) {
+    openAppConfig.frontmost_application_history_exclusion_file_paths = opts.exclusionFilePaths;
+  }
+
+  return {
+    software_function: {
+      open_application: openAppConfig
+    }
+  } as ToEvent;
+}
+

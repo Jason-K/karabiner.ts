@@ -22,7 +22,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -b com.electron.8x8---virtual-office"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.electron.8x8---virtual-office"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -103,7 +107,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -a com.apple.apps.launcher"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.apps.launcher"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -164,7 +172,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "B hold -> Anchored note",
+        "ruleDescription": "B hold -> Search Bar Apps / Create note in Skim",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -257,7 +265,14 @@
             ],
             "to_if_held_down": [
               {
-                "key_code": "b"
+                "repeat": false,
+                "key_code": "b",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -681,7 +696,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -b com.openai.chat"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.openai.chat"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -998,12 +1017,11 @@
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "f20",
+                "key_code": "m",
                 "modifiers": [
                   "command",
                   "option",
-                  "control",
-                  "shift"
+                  "control"
                 ]
               }
             ],
@@ -1326,7 +1344,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -a '/System/Volumes/Data/Applications/QSpace Pro.app'"
+                "software_function": {
+                  "open_application": {
+                    "file_path": "/System/Volumes/Data/Applications/QSpace Pro.app"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -1822,7 +1844,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -b com.itone.ProcessSpy"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.itone.ProcessSpy"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -2408,7 +2434,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.electron.8x8---virtual-office"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.electron.8x8---virtual-office"
+                  }
+                }
               }
             ]
           },
@@ -2426,7 +2456,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.apple.apps.launcher"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.apps.launcher"
+                  }
+                }
               }
             ]
           },
@@ -2444,7 +2478,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.microsoft.VSCodeInsiders"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.microsoft.VSCodeInsiders"
+                  }
+                }
               }
             ]
           },
@@ -2462,7 +2500,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b company.thebrowser.dia"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "company.thebrowser.dia"
+                  }
+                }
               }
             ]
           },
@@ -2480,7 +2522,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
+                  }
+                }
               }
             ]
           },
@@ -2498,7 +2544,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.openai.chat"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.openai.chat"
+                  }
+                }
               }
             ]
           },
@@ -2516,7 +2566,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.apple.MobileSMS"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.MobileSMS"
+                  }
+                }
               }
             ]
           },
@@ -2534,7 +2588,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.microsoft.Outlook"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.microsoft.Outlook"
+                  }
+                }
               }
             ]
           },
@@ -2552,7 +2610,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b ch.protonmail.desktop"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "ch.protonmail.desktop"
+                  }
+                }
               }
             ]
           },
@@ -2570,7 +2632,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
+                  }
+                }
               }
             ]
           },
@@ -2588,7 +2654,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.apple.Safari"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.Safari"
+                  }
+                }
               }
             ]
           },
@@ -2606,7 +2676,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.microsoft.teams2"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.microsoft.teams2"
+                  }
+                }
               }
             ]
           },
@@ -2624,7 +2698,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.microsoft.VSCodeInsiders"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.microsoft.VSCodeInsiders"
+                  }
+                }
               }
             ]
           },
@@ -2642,7 +2720,11 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.microsoft.Word"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.microsoft.Word"
+                  }
+                }
               }
             ]
           }

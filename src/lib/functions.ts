@@ -4,7 +4,7 @@
 
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { cmd, tapHold } from './builders';
+import { cmd, openApp, tapHold, type OpenAppOpts } from './builders';
 import { L } from './mods';
 
 // ============================================================================
@@ -43,6 +43,7 @@ export type SubLayerConfig = {
     key?: string;             // Key to send
     stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
     passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
+    openAppOpts?: OpenAppOpts; // Use native open_application (preferred over command for apps)
 
     // Multiple actions (new)
     actions?: Array<{
@@ -323,7 +324,9 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
         });
       }
       // Legacy single action support (backward compatible)
-      else if (config.path) {
+      else if (config.openAppOpts) {
+        events.push(openApp(config.openAppOpts));
+      } else if (config.path) {
         events.push(cmd(`open '${config.path}'`));
       } else if (config.command) {
         events.push(cmd(config.command));
@@ -427,11 +430,40 @@ export function updateDeviceConfigurations(profileName: string, deviceConfigs: D
           // Find the profile
           const profile = config.profiles.find((p: any) => p.name === profileName);
           if (profile) {
-            // Add or update the devices section
-            profile.devices = deviceConfigs.map(device => ({
-              identifiers: device.identifiers,
-              simple_modifications: device.simple_modifications,
-            }));
+            // Get all existing devices from the config
+            const existingDevices = profile.devices || [];
+
+            // Create a Set of defined device identifiers for quick lookup
+            const definedDeviceKeys = new Set(
+              deviceConfigs.map(d =>
+                `${d.identifiers.vendor_id}_${d.identifiers.product_id}`
+              )
+            );
+
+            // Build new devices array:
+            // 1. Include explicitly configured devices with their modifications
+            // 2. For all other existing devices, preserve existing settings but ensure modify_events is false
+            profile.devices = [
+              // Add explicitly configured devices with modify_events explicitly enabled
+              ...deviceConfigs.map(device => ({
+                identifiers: device.identifiers,
+                simple_modifications: device.simple_modifications,
+                ignore: false,
+                manipulate_caps_lock_led: false,
+                disable_built_in_keyboard_if_exists: false,
+              })),
+              // Add existing devices that aren't explicitly configured, preserving their settings but forcing modify_events to false
+              ...existingDevices
+                .filter((d: any) => {
+                  const key = `${d.identifiers.vendor_id}_${d.identifiers.product_id}`;
+                  return !definedDeviceKeys.has(key);
+                })
+                .map((d: any) => ({
+                  ...d, // Preserve all existing settings
+                  // Explicitly disable event modification for unspecified devices
+                  modify_events: false,
+                }))
+            ];
 
             // Add profile-level Fn↔Ctrl swap for built-in keyboard and others
             profile.simple_modifications = [
