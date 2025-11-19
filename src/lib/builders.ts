@@ -11,7 +11,7 @@
  */
 
 import type { BasicManipulator, Modifier, ToEvent } from 'karabiner.ts';
-import { ifApp, ifVar, map, toSetVar } from 'karabiner.ts';
+import { ifApp, ifVar, map, toKey, toSetVar } from 'karabiner.ts';
 
 /**
  * Configuration for basic tap-hold behavior
@@ -73,7 +73,7 @@ export function tapHold({ key, alone, hold, timeoutMs = 300, thresholdMs = 300, 
   const builders: any[] = [];
 
   const makeBuilder = (opts: { alone?: ToEvent[]; hold?: ToEvent[]; timeoutMs?: number; thresholdMs?: number; cancel?: ToEvent[]; invoked?: ToEvent[]; cond?: any }) => {
-    const m = map(key).parameters({
+    const m = map(key as any).parameters({
       'basic.to_if_alone_timeout_milliseconds': opts.timeoutMs ?? timeoutMs,
       'basic.to_if_held_down_threshold_milliseconds': opts.thresholdMs ?? thresholdMs,
     });
@@ -139,7 +139,7 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
   const manip: BasicManipulator[] = [];
   // First condition manipulator (when variable==1)
   manip.push(
-    ...map(key)
+    ...map(key as any)
       .condition(ifVar(firstVar, 1))
       .to(toSetVar(firstVar, 0))
       .toIfAlone(aloneEvents)
@@ -149,14 +149,14 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
   );
   // Basic tap/hold (variable independent)
   manip.push(
-    ...map(key)
+    ...map(key as any)
       .toIfAlone(aloneEvents)
       .toIfHeldDown(holdEvents)
       .build()
   );
   // Delayed action setting/resetting variable
   manip.push(
-    ...map(key)
+    ...map(key as any)
       .parameters({ 'basic.to_delayed_action_delay_milliseconds': thresholdMs })
       .to(toSetVar(firstVar, 1))
       .toDelayedAction([toSetVar(firstVar, 0)], [toSetVar(firstVar, 0)])
@@ -249,5 +249,162 @@ export function openApp(opts: OpenAppOpts): ToEvent {
       open_application: openAppConfig
     }
   } as ToEvent;
+}
+
+/**
+ * Configuration for notification messages
+ */
+interface NotifyOpts {
+  message: string;  // Text to display in notification
+  id?: string;      // Optional identifier for notification
+}
+
+/**
+ * Creates a set_notification_message ToEvent to display native macOS notifications.
+ *
+ * Useful for providing feedback on mode changes, sticky modifier states, etc.
+ *
+ * USAGE:
+ * ```typescript
+ * notify({ message: 'Layer Active', id: 'layer_status' })
+ * notify({ message: 'Caps Lock Enabled' })
+ * ```
+ *
+ * @param opts Notification configuration
+ * @returns ToEvent object with set_notification_message
+ */
+export function notify(opts: NotifyOpts): ToEvent {
+  const config: any = { text: opts.message };
+  if (opts.id) config.id = opts.id;
+  return { set_notification_message: config } as ToEvent;
+}
+
+/**
+ * Configuration for mouse cursor positioning
+ */
+interface MouseJumpOpts {
+  x: number;        // X coordinate (pixels from left edge)
+  y: number;        // Y coordinate (pixels from top edge)
+  screen?: number;  // Screen index (0 = primary, 1 = secondary, etc.)
+}
+
+/**
+ * Creates a set_mouse_cursor_position software_function ToEvent.
+ *
+ * Moves the mouse cursor to absolute screen coordinates.
+ *
+ * USAGE:
+ * ```typescript
+ * // Center of primary screen (assuming 1920x1080)
+ * mouseJump({ x: 960, y: 540 })
+ *
+ * // Top-left corner of secondary screen
+ * mouseJump({ x: 0, y: 0, screen: 1 })
+ * ```
+ *
+ * @param opts Cursor position configuration
+ * @returns ToEvent object with software_function.set_mouse_cursor_position
+ */
+export function mouseJump(opts: MouseJumpOpts): ToEvent {
+  const config: any = { x: opts.x, y: opts.y };
+  if (opts.screen !== undefined) config.screen = opts.screen;
+  return {
+    software_function: {
+      set_mouse_cursor_position: config
+    }
+  } as ToEvent;
+}
+
+/**
+ * Creates an iokit_power_management_sleep_system software_function ToEvent.
+ *
+ * Puts the Mac to sleep immediately.
+ *
+ * USAGE:
+ * ```typescript
+ * sleepSystem()
+ * ```
+ *
+ * @returns ToEvent object with software_function.iokit_power_management_sleep_system
+ */
+export function sleepSystem(): ToEvent {
+  return {
+    software_function: {
+      iokit_power_management_sleep_system: {}
+    }
+  } as ToEvent;
+}
+
+/**
+ * Creates a cg_event_double_click software_function ToEvent.
+ *
+ * Triggers a system double-click at the current cursor position.
+ * Useful for keyboard-driven file opening.
+ *
+ * USAGE:
+ * ```typescript
+ * doubleClick({ button: 0 })  // Left button (button 0)
+ * ```
+ *
+ * @param button Mouse button number (0 = left, 1 = right, 2 = middle)
+ * @returns ToEvent object with software_function.cg_event_double_click
+ */
+export function doubleClick(button: number = 0): ToEvent {
+  return {
+    software_function: {
+      cg_event_double_click: { button }
+    }
+  } as ToEvent;
+}
+
+// ============================================================================
+// EXPRESSION SUPPORT (Phase 3)
+// ============================================================================
+/**
+ * Creates a set_variable event using expression-based assignment (Karabiner v15.6.0+).
+ *
+ * When expression mode is used, value is ignored and the expression string is evaluated
+ * by Karabiner using the Mustache-like template syntax (e.g. {{ var + 1 }}).
+ *
+ * @param name Variable name to set
+ * @param expression Expression string (without surrounding spaces requirement)
+ * @param keyUpExpression Optional expression evaluated on key up
+ */
+export function setVarExpr(name: string, expression: string, keyUpExpression?: string): ToEvent {
+  const payload: any = { name };
+  if (expression) payload.expression = expression;
+  if (keyUpExpression) payload.key_up_expression = keyUpExpression;
+  return { set_variable: payload } as ToEvent;
+}
+
+/** Create an expression_if condition object */
+export function exprIf(expression: string): any {
+  return { type: 'expression_if', value: expression };
+}
+/** Create an expression_unless condition object */
+export function exprUnless(expression: string): any {
+  return { type: 'expression_unless', value: expression };
+}
+
+// ============================================================================
+// PER-TO EVENT CONDITIONS (Phase 4)
+// ============================================================================
+/**
+ * Attach conditions to a key event (per-`to` conditional branching).
+ * This helper wraps toKey and injects the `conditions` array directly on the returned event.
+ */
+export function toKeyCond(key: string, mods: Modifier[] = [], opts: any = {}, conditions: any[] = []): ToEvent {
+  const ev = toKey(key as any, mods as any, opts);
+  (ev as any).conditions = conditions;
+  return ev as ToEvent;
+}
+
+/**
+ * Generic helper to attach conditions to any ToEvent (non-key events).
+ */
+export function withConditions(event: ToEvent, conditions: any[] = []): ToEvent {
+  const cloned: any = { ...event };
+  if (conditions.length) cloned.conditions = conditions;
+  return cloned as ToEvent;
 }
 

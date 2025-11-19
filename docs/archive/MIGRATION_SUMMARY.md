@@ -7,11 +7,13 @@ Successfully converted all JSON rules from `src/inputRules.json` to TypeScript f
 ## Files Created
 
 ### Core Files
+
 - **`src/index.ts`** - All 20+ rules converted with abstractions (450+ lines)
 - **`src/lib/mods.ts`** - Custom modifier constants (HYPER, SUPER, MEH)
 - **`src/lib/builders.ts`** - Helper functions for tap-hold patterns
 
 ### Preserved
+
 - **`src/inputRules.json`** - Original JSON kept as reference
 
 ## Custom Modifiers
@@ -27,7 +29,9 @@ MEH   = ['command', 'option', 'shift']
 ## Abstraction Helpers
 
 ### `tapHold()`
+
 Simplified tap-hold pattern for most keys (A-Z, special keys):
+
 ```typescript
 tapHold({
   key: 'g',
@@ -38,10 +42,13 @@ tapHold({
 ```
 
 ### `varTapTapHold()`
+
 Complex variable-based double-tap-hold pattern (currently unused but available)
 
 ### `cmd()`
+
 Shell command wrapper:
+
 ```typescript
 cmd('open -a "QSpace Pro.app"')
 ```
@@ -69,21 +76,27 @@ cmd('open -a "QSpace Pro.app"')
 ## Testing & Deployment
 
 ### Test (dry-run)
+
 ```bash
 npm run build
 ```
 
 ### Deploy to Karabiner
+
 Edit `src/index.ts`, change line:
+
 ```typescript
 writeToProfile('--dry-run', rules);
 ```
+
 to:
+
 ```typescript
 writeToProfile('JJK_Default', rules);
 ```
 
 Then run:
+
 ```bash
 npm run build
 ```
@@ -91,6 +104,7 @@ npm run build
 ## Next Steps
 
 Ready to implement layer abstractions using karabiner.ts native layer helpers:
+
 - `layer()` for simple modifier layers
 - `simlayer()` for simultaneous key layers
 - `duoLayer()` for two-key activation layers

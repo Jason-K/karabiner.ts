@@ -2080,6 +2080,116 @@
         "conditions": []
       },
       {
+        "ruleDescription": "HYPER+TAB - Toggle to most recent app",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "tab",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "System Utilities (HYPER+S/M/N)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "m",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "software_function": {
+                  "set_mouse_cursor_position": {
+                    "x": 960,
+                    "y": 540
+                  }
+                }
+              },
+              {
+                "set_notification_message": {
+                  "text": "Cursor Centered",
+                  "id": "sys"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "n",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "set_notification_message": {
+                  "text": "Utility Triggered",
+                  "id": "demo"
+                },
+                "conditions": [
+                  {
+                    "type": "expression_if",
+                    "value": "{{ apps_toggle_uses < 5 }}"
+                  }
+                ]
+              },
+              {
+                "set_notification_message": {
+                  "text": "Apps Toggle Active Often",
+                  "id": "demo2"
+                },
+                "conditions": [
+                  {
+                    "type": "expression_if",
+                    "value": "{{ apps_toggle_uses >= 5 }}"
+                  }
+                ]
+              },
+              {
+                "set_variable": {
+                  "name": "hyper_n_uses",
+                  "expression": "{{ hyper_n_uses + 1 }}"
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)",
         "manipulatorSources": [
           {
@@ -2416,7 +2526,13 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"8x8\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Microsoft Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Microsoft Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Microsoft Word\\\"}],\\\"widthHintPx\\\":253}')\""
+                "set_variable": {
+                  "name": "space_a_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"8x8\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Microsoft Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Microsoft Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Microsoft Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Toggle Last App\\\"}],\\\"widthHintPx\\\":253}')\""
               }
             ]
           },
@@ -2727,6 +2843,34 @@
                 }
               }
             ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "tab"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "apps_toggle_uses",
+                  "expression": "{{ apps_toggle_uses + 1 }}"
+                }
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -2758,6 +2902,12 @@
                 "set_variable": {
                   "name": "space_mod",
                   "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_m_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
                 }
               },
               {
@@ -3084,6 +3234,12 @@
                 }
               },
               {
+                "set_variable": {
+                  "name": "space_c_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
                 "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"C\\\",\\\"keys\\\":[{\\\"key\\\":\\\"L\\\",\\\"desc\\\":\\\"lowercase\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Sentence case\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Title Case\\\"},{\\\"key\\\":\\\"U\\\",\\\"desc\\\":\\\"UPPERCASE\\\"}],\\\"widthHintPx\\\":217}')\""
               }
             ]
@@ -3217,6 +3373,12 @@
                 }
               },
               {
+                "set_variable": {
+                  "name": "space_d_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
                 "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"D\\\",\\\"keys\\\":[{\\\"key\\\":\\\"3\\\",\\\"desc\\\":\\\"3dPrinting\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Archives\\\"},{\\\"key\\\":\\\"I\\\",\\\"desc\\\":\\\"Installs\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Office\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"PDFs\\\"}],\\\"widthHintPx\\\":190}')\""
               }
             ]
@@ -3341,6 +3503,12 @@
                 "set_variable": {
                   "name": "space_mod",
                   "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
                 }
               },
               {
@@ -3525,6 +3693,12 @@
                 }
               },
               {
+                "set_variable": {
+                  "name": "space_s_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
                 "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"S\\\",\\\"keys\\\":[{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Capture Area\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"OCR\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"Record Screen\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Capture Screen\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Capture Window\\\"}],\\\"widthHintPx\\\":226}')\""
               }
             ]
@@ -3649,6 +3823,12 @@
                 "set_variable": {
                   "name": "space_mod",
                   "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
                 }
               },
               {

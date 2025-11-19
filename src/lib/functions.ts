@@ -4,7 +4,7 @@
 
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { cmd, openApp, tapHold, type OpenAppOpts } from './builders';
+import { cmd, openApp, setVarExpr, tapHold, type OpenAppOpts } from './builders';
 import { L } from './mods';
 
 // ============================================================================
@@ -44,6 +44,8 @@ export type SubLayerConfig = {
     stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
     passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
     openAppOpts?: OpenAppOpts; // Use native open_application (preferred over command for apps)
+    toEvents?: ToEvent[];      // Directly supply ToEvents (advanced usage, Phase 4)
+    usageCounterVar?: string;  // Variable to increment each time this mapping runs (Phase 3)
 
     // Multiple actions (new)
     actions?: Array<{
@@ -270,6 +272,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
   // Generate sublayer rules
   spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true }) => {
     const sublayerVar = `space_${layerKey}_sublayer`;
+    const sublayerActivateTimeVar = `space_${layerKey}_activate_ms`;
     const allManipulators: any[] = [];
 
     // Build layer info JSON for this layer
@@ -282,6 +285,8 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
         .to([
           toSetVar(sublayerVar, 1),
           toSetVar(spaceModVar, 0),
+          // Record activation timestamp (Phase 3 expression support)
+          setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
           cmd(`/opt/homebrew/bin/hs -c "local indicator = require('karabiner_layer_indicator'); indicator.show('${layerInfo}')"`)
         ])
         .build()
@@ -326,6 +331,8 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       // Legacy single action support (backward compatible)
       else if (config.openAppOpts) {
         events.push(openApp(config.openAppOpts));
+      } else if (config.toEvents) {
+        events.push(...config.toEvents);
       } else if (config.path) {
         events.push(cmd(`open '${config.path}'`));
       } else if (config.command) {
@@ -347,6 +354,11 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
         } else {
           events.push(toKey(config.key as any));
         }
+      }
+
+      // Increment usage counter if configured (Phase 3)
+      if (config.usageCounterVar) {
+        events.push(setVarExpr(config.usageCounterVar, `{{ ${config.usageCounterVar} + 1 }}`));
       }
 
       // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle

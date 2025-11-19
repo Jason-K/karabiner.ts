@@ -68,13 +68,16 @@ Successfully converted your JSON ruleset to karabiner.ts TypeScript format. The 
 ## Key Differences from JSON
 
 ### Architecture
+
 - **Modular Functions**: Each rule category is its own function for better organization
 - **Type Safety**: TypeScript provides autocomplete and error checking
 - **Maintainability**: Easy to add/remove/modify rules
 - **Comments**: Clear documentation of what each rule does
 
 ### Karabiner.ts Approach
+
 The conversion uses a hybrid approach:
+
 - **Simple remappings**: Use `map()` helper for clean syntax
 - **Complex manipulators**: Use raw JSON structures for advanced features like:
   - `to_if_alone` / `to_if_held_down` / `to_delayed_action`
@@ -86,6 +89,7 @@ This approach provides the best of both worlds: readability for simple rules and
 ## How to Use
 
 ### Build Configuration
+
 ```bash
 npm run build
 ```
@@ -93,6 +97,7 @@ npm run build
 This writes to the "Default" profile in `~/.config/karabiner/karabiner.json`. Karabiner-Elements automatically reloads when the file changes.
 
 ### Modify Rules
+
 Edit `/Users/jason/karabiner-config/src/index.ts`:
 
 1. **Add a new key hold action**: Add to `globalKeyHoldActions()` function
@@ -131,7 +136,7 @@ These can be added later if needed. The double-tap functionality would use karab
 
 ## Files Structure
 
-```
+```BASH
 /Users/jason/karabiner-config/
 ├── src/
 │   ├── index.ts         # New TypeScript rules
