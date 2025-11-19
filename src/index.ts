@@ -17,7 +17,7 @@
  */
 
 import { ifApp, ifVar, map, rule, toKey, toSetVar, writeToProfile } from 'karabiner.ts';
-import { cmd, exprIf, mouseJump, notify, openApp, setVarExpr, tapHold, withConditions } from './lib/builders';
+import { cmd, openApp, tapHold } from './lib/builders';
 import type { DeviceConfig, SubLayerConfig, TapHoldConfig } from './lib/functions';
 import { generateEscapeRule, generateSpaceLayerRules, generateTapHoldRules, updateDeviceConfigurations } from './lib/functions';
 import { HYPER, L, MEH, SUPER } from './lib/mods';
@@ -206,24 +206,24 @@ const appToggleRule = rule('HYPER+TAB - Toggle to most recent app').manipulators
     .build()
 ]);
 
-// Example: System utilities on HYPER layer
-const systemUtilsRule = rule('System Utilities (HYPER+S/M/N)').manipulators([
+// // Example: System utilities on HYPER layer
+// const systemUtilsRule = rule('System Utilities (HYPER+S/M/N)').manipulators([
 
-  // HYPER+M: Center mouse cursor (assuming 1920x1080 primary screen)
-  ...map('m', ['left_command', 'left_option', 'left_control'])
-    .to([mouseJump({ x: 960, y: 540 }), notify({ message: 'Cursor Centered', id: 'sys' })])
-    .build(),
+//   // HYPER+M: Center mouse cursor (assuming 1920x1080 primary screen)
+//   ...map('m', ['left_command', 'left_option', 'left_control'])
+//     .to([mouseJump({ x: 960, y: 540 }), notify({ message: 'Cursor Centered', id: 'sys' })])
+//     .build(),
 
-  // // HYPER+N: Show notification demo
-  ...map('n', ['left_command', 'left_option', 'left_control'])
-    .to([
-      // Per-to event conditional demo: show different notification if usage counter > 5
-      withConditions(notify({ message: 'Utility Triggered', id: 'demo' }), [exprIf('{{ apps_toggle_uses < 5 }}')]),
-      withConditions(notify({ message: 'Apps Toggle Active Often', id: 'demo2' }), [exprIf('{{ apps_toggle_uses >= 5 }}')]),
-      setVarExpr('hyper_n_uses', '{{ hyper_n_uses + 1 }}')
-    ])
-    .build(),
-]);
+//   // // HYPER+N: Show notification demo
+//   ...map('n', ['left_command', 'left_option', 'left_control'])
+//     .to([
+//       // Per-to event conditional demo: show different notification if usage counter > 5
+//       withConditions(notify({ message: 'Utility Triggered', id: 'demo' }), [exprIf('{{ apps_toggle_uses < 5 }}')]),
+//       withConditions(notify({ message: 'Apps Toggle Active Often', id: 'demo2' }), [exprIf('{{ apps_toggle_uses >= 5 }}')]),
+//       setVarExpr('hyper_n_uses', '{{ hyper_n_uses + 1 }}')
+//     ])
+//     .build(),
+// ]);
 
 // ============================================================================
 // SPECIAL RULES
@@ -235,7 +235,7 @@ let rules: any[] = [
 
   // New utility rules demonstrating v15.x features
   appToggleRule,
-  systemUtilsRule,
+  // systemUtilsRule,
 
   // CAPS LOCK - Multiple behaviors
   rule('CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)').manipulators([

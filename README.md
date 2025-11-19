@@ -33,67 +33,74 @@ npm run build
 ## Rules Implemented
 
 ### Tap-Hold Keys
-- **A** → RaycastAI (hold)
-- **B** → MEH+B (hold)
-- **C** → OCR via CleanShot (hold)
-- **D** → Quick date format (hold)
-- **F** → ProFind search (hold)
-- **G** → ChatGPT (hold)
-- **H** → Hammerspoon console (hold)
-- **I** → Indent line (hold)
-- **M** → Unminimize window (hold)
-- **Q** → QSpace Pro (hold)
-- **R** → Latest Download (hold)
-- **S** → RaycastAI (hold)
-- **T** → iTerm2 (hold)
-- **V** → Maccy clipboard (hold)
-- **W** → Writing Tools (hold)
-- **8** → 8x8 app (hold)
-- **/** → File search (hold)
-- **=** → Quick date (hold)
-- **Enter** → Quick format (hold)
-- **Tab** → Mission Control (hold)
+# karabiner.ts — Minimal Guide
 
-### Caps Lock System
-- Tap alone → HSLauncher (F15+HYPER)
-- Hold → HYPER modifier
-- Hold + Shift → SUPER modifier
-- Hold + Ctrl → MEH modifier
+Focused, type-safe Karabiner-Elements configuration with small builder utilities and clean layering.
 
-### Space Layer
-Hold Space to activate, then:
-- **D** (hold) opens Downloads sublayer:
-  - **P** → PDFs folder
-  - **A** → Archives folder
-  - **O** → Office folder
-  - **3** → 3dPrinting folder
-  - **I** → Installs folder
+## Build
 
-### Special Behaviors
-- **HOME/END** → Mac-style navigation (Cmd+arrows)
-- **CMD+Q** → Requires double-tap (300ms window)
-- **CTRL+OPT+ESC** → Activity Monitor (tap) or Force Quit (tap-tap)
-- **CMD+SHIFT+K** → Delete line (except VSCode Insiders)
-- **CMD+H/M** → Disabled (hide/minimize prevention)
+```bash
+npm run build   # writes to your Karabiner profile and karabiner-output.json
+```
 
-### App-Specific
-- **Passwords** (SecurityAgent): CMD+/ → Quick fill
-- **Skim**: CMD+H/U remapped
-- **Antinote**: CMD+D double-tap to delete note
+## Where Things Live
 
-## Next Steps
+- `src/index.ts`: Main rules (tap-hold, space layers, specials)
+- `src/lib/builders.ts`: Builders (shell, apps, mouse, notifications, expressions)
+- `src/lib/functions.ts`: Generators (tap-hold rules, space layers, escape rule, device updates)
+- `src/lib/mods.ts`: Mod constants (`HYPER`, `SUPER`, `MEH`)
 
-Now that all rules are converted, you can:
+## Builders (1-line each + tiny example)
 
-1. **Test the configuration**: Run `npm run build` to verify output
-2. **Deploy to Karabiner**: Change `'--dry-run'` to `'JJK_Default'` in `src/index.ts`
-3. **Implement layer abstractions**: Use karabiner.ts layer helpers for cleaner layer definitions
-4. **Add new rules**: Use the abstraction helpers in `src/lib/builders.ts`
+- `cmd(cmd)`: Run a shell command. Example: `cmd("open -b com.apple.Safari")`
+- `openApp(opts)`: Native app focus/launch (`bundleIdentifier` | `filePath` | `historyIndex`). Example: `openApp({ historyIndex: 1 })`
+- `notify({ message, id? })`: macOS notification. Example: `notify({ message: 'Layer Active', id: 'mode' })`
+- `mouseJump({ x, y, screen? })`: Move cursor. Example: `mouseJump({ x: 960, y: 540 })`
+- `sleepSystem()`: Sleep the Mac. Example: `sleepSystem()`
+- `doubleClick(button?)`: System double-click. Example: `doubleClick()`
+- `setVarExpr(name, expr, keyUpExpr?)`: Expression variables. Example: `setVarExpr('uses', '{{ uses + 1 }}')`
+- `exprIf(expr)` / `exprUnless(expr)`: Expression conditions. Example: `exprIf('{{ uses > 5 }}')`
+- `withConditions(event, conds)`: Attach conditions to a single `to` event. Example: `withConditions(notify({message:'Hi'}), [exprIf('{{ uses<5 }}')])`
 
-## Benefits
+## Patterns You’ll Reuse
 
-- ✅ **Type-safe**: TypeScript catches errors before build
-- ✅ **Maintainable**: Helper functions reduce boilerplate
-- ✅ **Custom modifiers**: HYPER/SUPER/MEH under your control
-- ✅ **Documented**: Clear rule descriptions and comments
-- ✅ **Version-controllable**: Human-readable diffs
+- Tap-Hold: `tapHold({ key:'x', alone:[toKey('x')], hold:[openApp({...})] })`
+- Per-To Conditions: `map('n', HYPER).to([ withConditions(notify({...}), [exprIf('...')]) ])`
+- App Toggle: `map('tab', HYPER).to([ openApp({ historyIndex: 1 }) ])`
+
+## Space Layer Enhancements
+
+- Direct events: any mapping may use `toEvents: ToEvent[]` (advanced)
+- Usage counters: `usageCounterVar: 'apps_toggle_uses'` auto-increments via expressions
+- Activation timestamp: `space_<layerKey>_activate_ms` set on layer entry
+
+Example (Applications layer snippet):
+
+```ts
+tab: {
+  description: 'Toggle Last App',
+  openAppOpts: { historyIndex: 1 },
+  usageCounterVar: 'apps_toggle_uses'
+}
+```
+
+## Guardrails & Notes
+
+- The file `/Library/.../karabiner_environment` sets shell env only; it does not create Karabiner variables. Use `set_variable`/expressions for runtime state.
+- Expression support (`set_variable.expression`, `expression_if`) requires Karabiner v15.6.0+.
+
+## Practical Next Steps
+
+- Idle auto-clear example: use `expression_if` comparing `system.now.milliseconds` to `space_<layer>_activate_ms`.
+- Consider `integer_value` in `from` (v15.6.0) if you add unusual HID sources.
+
+## Quick Verify
+
+```bash
+grep -n "frontmost_application_history_index" karabiner-output.json
+grep -n "set_notification_message" karabiner-output.json
+grep -n "set_mouse_cursor_position" karabiner-output.json
+grep -n "iokit_power_management_sleep_system" karabiner-output.json
+```
+
+That’s it—keep `src/index.ts` readable, prefer builders, and iterate.

@@ -172,7 +172,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "B hold -> Search Bar Apps / Create note in Skim",
+        "ruleDescription": "B hold -> Search menu apps / Skim note",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -761,7 +761,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "H hold -> HS console",
+        "ruleDescription": "H hold -> HS console / Skim heading",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1083,7 +1083,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "N hold -> Highlight",
+        "ruleDescription": "N hold -> New note / Skim highlight",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2109,87 +2109,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "System Utilities (HYPER+S/M/N)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "m",
-              "modifiers": {
-                "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
-                ]
-              }
-            },
-            "to": [
-              {
-                "software_function": {
-                  "set_mouse_cursor_position": {
-                    "x": 960,
-                    "y": 540
-                  }
-                }
-              },
-              {
-                "set_notification_message": {
-                  "text": "Cursor Centered",
-                  "id": "sys"
-                }
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "n",
-              "modifiers": {
-                "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
-                ]
-              }
-            },
-            "to": [
-              {
-                "set_notification_message": {
-                  "text": "Utility Triggered",
-                  "id": "demo"
-                },
-                "conditions": [
-                  {
-                    "type": "expression_if",
-                    "value": "{{ apps_toggle_uses < 5 }}"
-                  }
-                ]
-              },
-              {
-                "set_notification_message": {
-                  "text": "Apps Toggle Active Often",
-                  "id": "demo2"
-                },
-                "conditions": [
-                  {
-                    "type": "expression_if",
-                    "value": "{{ apps_toggle_uses >= 5 }}"
-                  }
-                ]
-              },
-              {
-                "set_variable": {
-                  "name": "hyper_n_uses",
-                  "expression": "{{ hyper_n_uses + 1 }}"
-                }
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)",
         "manipulatorSources": [
           {
@@ -2532,7 +2451,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"8x8\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Microsoft Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace Pro\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Microsoft Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"VS Code Insiders\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Microsoft Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Toggle Last App\\\"}],\\\"widthHintPx\\\":253}')\""
+                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"8x8\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Last App\\\"}],\\\"widthHintPx\\\":199}')\""
               }
             ]
           },
@@ -3512,7 +3431,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"F\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Grave\\\",\\\"desc\\\":\\\"Home\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Personal OneDrive\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Drive\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Scripts\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Videos\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Work OneDrive\\\"}],\\\"widthHintPx\\\":253}')\""
+                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"F\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Grave\\\",\\\"desc\\\":\\\"Home\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"My OneDrive\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Drive\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Scripts\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Videos\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Work OneDrive\\\"}],\\\"widthHintPx\\\":217}')\""
               }
             ]
           },
