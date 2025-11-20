@@ -518,25 +518,6 @@ const appToggleRule = rule(
     .build(),
 ]);
 
-// // Example: System utilities on HYPER layer
-// const systemUtilsRule = rule('System Utilities (HYPER+S/M/N)').manipulators([
-
-//   // HYPER+M: Center mouse cursor (assuming 1920x1080 primary screen)
-//   ...map('m', ['left_command', 'left_option', 'left_control'])
-//     .to([mouseJump({ x: 960, y: 540 }), notify({ message: 'Cursor Centered', id: 'sys' })])
-//     .build(),
-
-//   // // HYPER+N: Show notification demo
-//   ...map('n', ['left_command', 'left_option', 'left_control'])
-//     .to([
-//       // Per-to event conditional demo: show different notification if usage counter > 5
-//       withConditions(notify({ message: 'Utility Triggered', id: 'demo' }), [exprIf('{{ apps_toggle_uses < 5 }}')]),
-//       withConditions(notify({ message: 'Apps Toggle Active Often', id: 'demo2' }), [exprIf('{{ apps_toggle_uses >= 5 }}')]),
-//       setVarExpr('hyper_n_uses', '{{ hyper_n_uses + 1 }}')
-//     ])
-//     .build(),
-// ]);
-
 // ============================================================================
 // SPECIAL RULES
 // ============================================================================
@@ -548,6 +529,15 @@ let rules: any[] = [
   // New utility rules demonstrating v15.x features
   appToggleRule,
   // systemUtilsRule,
+
+  // LEFT COMMAND - Last app (tap alone)
+  rule("LCMD alone - Last app").manipulators([
+    ...map("left_command")
+      .to(toKey("left_command"))
+      .toIfAlone([openApp({ historyIndex: 1 })])
+      .description("Left CMD alone - Last app")
+      .build(),
+  ]),
 
   // CAPS LOCK - Multiple behaviors
   rule(
@@ -731,6 +721,9 @@ let rules: any[] = [
       .build(),
     ...map("p", "right_command")
       .to([openApp({ bundleIdentifier: "net.sourceforge.skim-app.skim" })])
+      .build(),
+    ...map("q", "right_command")
+      .to([openApp({ bundleIdentifier: "com.jinghaoshe.qspace.pro" })])
       .build(),
     ...map("r", "right_command")
       .to([openApp({ bundleIdentifier: "com.ringcentral.glip" })])

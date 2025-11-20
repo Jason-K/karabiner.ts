@@ -2109,6 +2109,34 @@
         "conditions": []
       },
       {
+        "ruleDescription": "LCMD alone - Last app",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command"
+            },
+            "to": [
+              {
+                "key_code": "left_command"
+              }
+            ],
+            "to_if_alone": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
+              }
+            ],
+            "description": "Left CMD alone - Last app"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)",
         "manipulatorSources": [
           {
@@ -4361,6 +4389,26 @@
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "net.sourceforge.skim-app.skim"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q",
+              "modifiers": {
+                "mandatory": [
+                  "right_command"
+                ]
+              }
+            },
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
                   }
                 }
               }
