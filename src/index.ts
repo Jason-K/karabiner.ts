@@ -25,7 +25,7 @@ import {
   toSetVar,
   writeToProfile,
 } from "karabiner.ts";
-import { cmd, openApp, tapHold } from "./lib/builders";
+import { cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
   DeviceConfig,
   SubLayerConfig,
@@ -506,19 +506,6 @@ const spaceLayers: SubLayerConfig[] = [
 const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
 
 // ============================================================================
-// UTILITY RULES (Demonstrating New Builders)
-// ============================================================================
-
-// Example: Quick app toggle (most recent app)
-const appToggleRule = rule(
-  "HYPER+TAB - Toggle to most recent app"
-).manipulators([
-  ...map("tab", ["left_command", "left_option", "left_control"])
-    .to([openApp({ historyIndex: 1 })])
-    .build(),
-]);
-
-// ============================================================================
 // SPECIAL RULES
 // ============================================================================
 
@@ -526,16 +513,24 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-  // New utility rules demonstrating v15.x features
-  appToggleRule,
-  // systemUtilsRule,
+    // LEFT COMMAND - Tap/Double-Tap/Hold pattern using varTapTapHold
+  rule("LCMD - CMD (tap), Last app (double-tap), CMD+TAB (tap-tap-hold)").manipulators(
+    varTapTapHold({
+      key: "left_command",
+      firstVar: "lcmd_first_tap",
+      aloneEvents: [openApp({ historyIndex: 1 })],
+      holdEvents: [toKey("tab", ["left_command"], { repeat: false })],
+      thresholdMs: 250,
+      description: "Left CMD tap/double-tap/hold",
+    })
+  ),
 
-  // LEFT COMMAND - Last app (tap alone)
-  rule("LCMD alone - Last app").manipulators([
-    ...map("left_command")
-      .to(toKey("left_command"))
+  // LEFT SHIFT - Last app (tap alone)
+  rule("LSHIFT alone - Last app").manipulators([
+    ...map("left_shift")
+      .to(toKey("left_shift"))
       .toIfAlone([openApp({ historyIndex: 1 })])
-      .description("Left CMD alone - Last app")
+      .description("Left SHIFT alone - Last app")
       .build(),
   ]),
 

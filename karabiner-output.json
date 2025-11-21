@@ -2080,45 +2080,118 @@
         "conditions": []
       },
       {
-        "ruleDescription": "HYPER+TAB - Toggle to most recent app",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "tab",
-              "modifiers": {
-                "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
-                ]
-              }
-            },
-            "to": [
-              {
-                "software_function": {
-                  "open_application": {
-                    "frontmost_application_history_index": 1
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "LCMD alone - Last app",
+        "ruleDescription": "LCMD - CMD (tap), Last app (double-tap), CMD+TAB (tap-tap-hold)",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
               "key_code": "left_command"
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_first_tap",
+                "value": 1
+              }
+            ],
+            "to_if_alone": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "description": "Left CMD tap/double-tap/hold"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command"
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "lcmd_first_tap",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 250
+            },
             "to": [
               {
                 "key_code": "left_command"
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "lcmd_first_tap",
+                  "value": 1
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "key_code": "left_command"
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "lcmd_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            },
+            "description": "Left CMD tap/double-tap/hold"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "LSHIFT alone - Last app",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift"
+            },
+            "to": [
+              {
+                "key_code": "left_shift"
               }
             ],
             "to_if_alone": [
@@ -2130,7 +2203,7 @@
                 }
               }
             ],
-            "description": "Left CMD alone - Last app"
+            "description": "Left SHIFT alone - Last app"
           }
         ],
         "allowEmptyManipulators": false,
@@ -2436,8 +2509,8 @@
               ]
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 200,
-              "basic.to_if_held_down_threshold_milliseconds": 200
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             }
           }
         ],

@@ -137,31 +137,40 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  */
 export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods, thresholdMs = 300, description }: VarTapTapHoldOpts) {
   const manip: BasicManipulator[] = [];
-  // First condition manipulator (when variable==1)
+
+  // SECOND TAP / HOLD (variable already set)
   manip.push(
-    ...map(key as any)
-      .condition(ifVar(firstVar, 1))
-      .to(toSetVar(firstVar, 0))
-      .toIfAlone(aloneEvents)
-      .toIfHeldDown(holdEvents)
-      .description(description || `${key} varTapTapHold active`)
-      .build()
+    ...(() => {
+      const m = map(key as any).condition(ifVar(firstVar, 1));
+      aloneEvents.forEach(e => m.toIfAlone(e));
+      m.toIfAlone(toSetVar(firstVar, 0));
+      holdEvents.forEach(e => m.toIfHeldDown(e));
+      m.toIfHeldDown(toSetVar(firstVar, 0));
+      return m.description(description || `${key} varTapTapHold active`).build();
+    })()
   );
-  // Basic tap/hold (variable independent)
+
+  // FIRST TAP (variable not set yet) - set variable and pass key through
+  // Use variable_unless via .unless() to detect first tap window
   manip.push(
     ...map(key as any)
-      .toIfAlone(aloneEvents)
-      .toIfHeldDown(holdEvents)
-      .build()
-  );
-  // Delayed action setting/resetting variable
-  manip.push(
-    ...map(key as any)
+      .condition(ifVar(firstVar, 1).unless())
       .parameters({ 'basic.to_delayed_action_delay_milliseconds': thresholdMs })
-      .to(toSetVar(firstVar, 1))
-      .toDelayedAction([toSetVar(firstVar, 0)], [toSetVar(firstVar, 0)])
+      // Pass through modifier so CMD+<key> chords work during prime window
+      .to(toKey(key as any))
+      // Only set variable on tap alone (NOT while starting a chord or hold)
+      .toIfAlone(toSetVar(firstVar, 1))
+      // Delayed action: if held past delay invoke path re-inserts key then clears var; canceled clears var
+      .toDelayedAction([
+        toKey(key as any),
+        toSetVar(firstVar, 0)
+      ], [
+        toSetVar(firstVar, 0)
+      ])
+      .description(description || `${key} varTapTapHold prime`)
       .build()
   );
+
   return manip;
 }
 
@@ -180,6 +189,7 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
  * @param shell Shell command to execute
  * @returns ToEvent object with shell_command
  */
+
 export function cmd(shell: string): ToEvent {
   return { shell_command: shell } as ToEvent;
 }
@@ -187,7 +197,7 @@ export function cmd(shell: string): ToEvent {
 /**
  * Configuration for open_application software function
  */
-interface OpenAppOpts {
+export interface OpenAppOpts {
   bundleIdentifier?: string;              // Bundle ID (e.g., 'com.apple.Safari')
   filePath?: string;                      // File path (e.g., '/Applications/Safari.app')
   historyIndex?: number;                  // Frontmost app history index (1 = most recent)
