@@ -506,7 +506,7 @@ const spaceLayers: SubLayerConfig[] = [
 const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
 
 // ============================================================================
-// SPECIAL RULES
+// SPECIAL RULESf
 // ============================================================================
 
 let rules: any[] = [
@@ -524,15 +524,6 @@ let rules: any[] = [
       description: "Left CMD tap/double-tap/hold",
     })
   ),
-
-  // LEFT SHIFT - Last app (tap alone)
-  rule("LSHIFT alone - Last app").manipulators([
-    ...map("left_shift")
-      .to(toKey("left_shift"))
-      .toIfAlone([openApp({ historyIndex: 1 })])
-      .description("Left SHIFT alone - Last app")
-      .build(),
-  ]),
 
   // CAPS LOCK - Multiple behaviors
   rule(

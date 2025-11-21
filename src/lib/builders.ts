@@ -11,7 +11,7 @@
  */
 
 import type { BasicManipulator, Modifier, ToEvent } from 'karabiner.ts';
-import { ifApp, ifVar, map, toKey, toSetVar } from 'karabiner.ts';
+import { ifApp, map, toKey, toSetVar } from 'karabiner.ts';
 
 /**
  * Configuration for basic tap-hold behavior
@@ -136,42 +136,56 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  * @returns Array of BasicManipulator objects
  */
 export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods, thresholdMs = 300, description }: VarTapTapHoldOpts) {
-  const manip: BasicManipulator[] = [];
+  // New implementation matches requested JSON exactly:
+  // Two manipulators:
+  // 1. Second tap (variable_if firstVar=1) with to_if_alone / to_if_held_down ordering: clear var then action
+  // 2. First tap (no variable yet) sets variable then passes through key, with delayed action resetting var
 
-  // SECOND TAP / HOLD (variable already set)
-  manip.push(
-    ...(() => {
-      const m = map(key as any).condition(ifVar(firstVar, 1));
-      aloneEvents.forEach(e => m.toIfAlone(e));
-      m.toIfAlone(toSetVar(firstVar, 0));
-      holdEvents.forEach(e => m.toIfHeldDown(e));
-      m.toIfHeldDown(toSetVar(firstVar, 0));
-      return m.description(description || `${key} varTapTapHold active`).build();
-    })()
-  );
+  const secondTap: BasicManipulator = {
+    type: 'basic',
+    from: {
+      key_code: key as any,
+      modifiers: { optional: ['any'] },
+    },
+    conditions: [
+      { type: 'variable_if', name: firstVar, value: 1 },
+    ],
+    parameters: {
+      'basic.to_if_alone_timeout_milliseconds': thresholdMs,
+      'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
+    },
+    description: description || `${key} tap-tap active`,
+    to_if_alone: [
+      toSetVar(firstVar, 0),
+      ...aloneEvents,
+    ],
+    to_if_held_down: [
+      toSetVar(firstVar, 0),
+      ...holdEvents,
+    ],
+  } as any;
 
-  // FIRST TAP (variable not set yet) - set variable and pass key through
-  // Use variable_unless via .unless() to detect first tap window
-  manip.push(
-    ...map(key as any)
-      .condition(ifVar(firstVar, 1).unless())
-      .parameters({ 'basic.to_delayed_action_delay_milliseconds': thresholdMs })
-      // Pass through modifier so CMD+<key> chords work during prime window
-      .to(toKey(key as any))
-      // Only set variable on tap alone (NOT while starting a chord or hold)
-      .toIfAlone(toSetVar(firstVar, 1))
-      // Delayed action: if held past delay invoke path re-inserts key then clears var; canceled clears var
-      .toDelayedAction([
-        toKey(key as any),
-        toSetVar(firstVar, 0)
-      ], [
-        toSetVar(firstVar, 0)
-      ])
-      .description(description || `${key} varTapTapHold prime`)
-      .build()
-  );
+  const firstTap: BasicManipulator = {
+    type: 'basic',
+    from: {
+      key_code: key as any,
+      modifiers: { optional: ['any'] },
+    },
+    parameters: {
+      'basic.to_delayed_action_delay_milliseconds': thresholdMs,
+    },
+    description: description || `${key} tap-tap prime`,
+    to: [
+      toSetVar(firstVar, 1),
+      toKey(key as any),
+    ],
+    to_delayed_action: {
+      to_if_invoked: [toSetVar(firstVar, 0)],
+      to_if_canceled: [toSetVar(firstVar, 0)],
+    },
+  } as any;
 
-  return manip;
+  return [secondTap, firstTap];
 }
 
 /**
