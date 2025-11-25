@@ -123,7 +123,7 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  *
  * BEHAVIOR:
  * 1. First tap: Sets firstVar=1 for thresholdMs window
- * 2. Second tap within window: Executes different behavior
+ * 2. Second tap within window: Executes different behaviorx
  * 3. Hold: Executes hold events
  *
  * This pattern is used for advanced sequences like the original "M" rule

@@ -53,8 +53,8 @@ import { HYPER, L, MEH, SUPER } from "./lib/mods";
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
   a: {
-    description: "Launcher",
-    hold: [openApp({ bundleIdentifier: "com.apple.apps.launcher" })],
+    description: "Antinote",
+    hold: [openApp({ bundleIdentifier: "com.chabomakers.Antinote-setapp" })],
   },
   b: {
     description: "Search menu apps / Skim note",
@@ -79,7 +79,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   f: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
   g: {
     description: "ChatGPT",
-    hold: [openApp({ bundleIdentifier: "com.openai.chat" })],
+    hold: [toKey("g", HYPER, { repeat: false })],
   },
   h: {
     description: "HS console / Skim heading",
@@ -141,7 +141,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     hold: [cmd('open "cleanshot://capture-area"')],
   },
   t: {
-    description: "iTerm2",
+    description: "Terminal Here",
     hold: [
       cmd(
         "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
@@ -168,10 +168,6 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "8": {
     description: "8x8",
     hold: [openApp({ bundleIdentifier: "com.electron.8x8---virtual-office" })],
-  },
-  escape: {
-    description: "Escape",
-    hold: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
   },
   slash: {
     description: "search for files",
@@ -514,7 +510,7 @@ let rules: any[] = [
   ...tapHoldRules,
 
     // LEFT COMMAND - Tap/Double-Tap/Hold pattern using varTapTapHold
-  rule("LCMD - CMD (tap), Last app (double-tap), CMD+TAB (tap-tap-hold)").manipulators(
+  rule("LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)").manipulators(
     varTapTapHold({
       key: "left_command",
       firstVar: "lcmd_first_tap",
@@ -522,6 +518,18 @@ let rules: any[] = [
       holdEvents: [toKey("tab", ["left_command"], { repeat: false })],
       thresholdMs: 250,
       description: "Left CMD tap/double-tap/hold",
+    })
+  ),
+
+  // ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)
+  rule("ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)").manipulators(
+    varTapTapHold({
+      key: "escape",
+      firstVar: "escape_first_tap",
+      aloneEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
+      holdEvents: [cmd("osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'")],
+      thresholdMs: 250,
+      description: "ESC tap/double-tap/hold",
     })
   ),
 
@@ -620,15 +628,6 @@ let rules: any[] = [
     ])
   ),
 
-  // CTRL alone -> CMD+OPT+CTRL+L
-  rule("CTRL alone -> CMD+OPT+CTRL+L").manipulators([
-    ...map("left_control")
-      .to(toKey("left_control"))
-      .toIfAlone(toKey("l", ["command", "option", "control"]))
-      .description("Left CTRL alone -> CMD+OPT+CTRL+L")
-      .build(),
-  ]),
-
   // CMD+Q double-tap protection (simplified - no optional any support in map())
   rule("CMD-Q requires double-tap (300ms window)").manipulators([
     // When variable is set (within window), allow quit
@@ -644,30 +643,6 @@ let rules: any[] = [
       .toDelayedAction(
         [toSetVar("command_q_pressed", 0)],
         [toSetVar("command_q_pressed", 0)]
-      )
-      .build(),
-  ]),
-
-  // CTRL+OPT+ESC - Activity Monitor (tap) or Force Quit (tap-tap)
-  rule(
-    "CTRL+OPT+ESC - Activity Monitor (tap) or Force Quit (tap-tap)"
-  ).manipulators([
-    // When first tap variable set, second tap = Force Quit
-    ...map("escape", ["left_control", "left_option"])
-      .condition(ifVar("ctrl_opt_esc_first", 1))
-      .to(toSetVar("ctrl_opt_esc_first", 0))
-      .to(toKey("escape", ["command", "option"]))
-      .build(),
-    // First tap sets variable with delayed action
-    ...map("escape", ["left_control", "left_option"])
-      .parameters({ "basic.to_delayed_action_delay_milliseconds": 300 })
-      .to(toSetVar("ctrl_opt_esc_first", 1))
-      .toDelayedAction(
-        [toSetVar("ctrl_opt_esc_first", 0)],
-        [
-          cmd("/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa"),
-          toSetVar("ctrl_opt_esc_first", 0),
-        ]
       )
       .build(),
   ]),
@@ -755,11 +730,11 @@ let rules: any[] = [
 
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   rule("PASSWORDS - CMD+/ quick fill").manipulators([
-    ...map("slash", L.cmd)
+    ...map("slash", "command")
       .condition(ifApp(/^com\.apple\.SecurityAgent$/))
       .to(
         cmd(
-          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 2"
+          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
         )
       )
       .to(toKey("a", [L.cmd]))
@@ -782,6 +757,58 @@ let rules: any[] = [
     ...map("u", "command")
       .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
       .to(toKey("u", [L.cmd, L.ctrl]))
+      .build(),
+  ]),
+
+  // SKIM - Number row 1/2/3 hold AppleScripts
+  rule("SKIM - 1/2/3 hold AppleScripts").manipulators([
+    // 1 hold -> create anchored note
+    ...map("1")
+      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .parameters({
+        "basic.to_if_alone_timeout_milliseconds": 300,
+        "basic.to_if_held_down_threshold_milliseconds": 300,
+      })
+      .toIfAlone(toKey("1", [], { halt: true }))
+      .toIfHeldDown(
+        cmd(
+          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+        )
+      )
+      .toDelayedAction([], [toKey("1", [], { halt: true })])
+      .description("SKIM 1 hold -> anchored note")
+      .build(),
+    // 2 hold -> add heading
+    ...map("2")
+      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .parameters({
+        "basic.to_if_alone_timeout_milliseconds": 300,
+        "basic.to_if_held_down_threshold_milliseconds": 300,
+      })
+      .toIfAlone(toKey("2", [], { halt: true }))
+      .toIfHeldDown(
+        cmd(
+          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+        )
+      )
+      .toDelayedAction([], [toKey("2", [], { halt: true })])
+      .description("SKIM 2 hold -> add heading")
+      .build(),
+    // 3 hold -> add extended text
+    ...map("3")
+      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .parameters({
+        "basic.to_if_alone_timeout_milliseconds": 300,
+        "basic.to_if_held_down_threshold_milliseconds": 300,
+      })
+      .toIfAlone(toKey("3", [], { halt: true }))
+      .toIfHeldDown(
+        cmd(
+          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+        )
+      )
+      .toDelayedAction([], [toKey("3", [], { halt: true })])
+      .description("SKIM 3 hold -> add extended text")
       .build(),
   ]),
 

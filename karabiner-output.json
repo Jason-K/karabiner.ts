@@ -87,7 +87,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "A hold -> Launcher",
+        "ruleDescription": "A hold -> Antinote",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -109,7 +109,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.apple.apps.launcher"
+                    "bundle_identifier": "com.chabomakers.Antinote-setapp"
                   }
                 }
               }
@@ -696,11 +696,13 @@
             ],
             "to_if_held_down": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.openai.chat"
-                  }
-                }
+                "repeat": false,
+                "key_code": "g",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -1571,7 +1573,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "T hold -> iTerm2",
+        "ruleDescription": "T hold -> Terminal Here",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1824,91 +1826,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "ESCAPE hold -> Escape",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "escape",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.itone.ProcessSpy"
-                  }
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "escape",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "SLASH hold -> search for files",
         "manipulatorSources": [
           {
@@ -2080,7 +1997,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "LCMD - CMD (tap), Last app (double-tap), CMD+TAB (tap-tap-hold)",
+        "ruleDescription": "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2173,6 +2090,106 @@
                 {
                   "set_variable": {
                     "name": "lcmd_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "escape_first_tap",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 250,
+              "basic.to_if_held_down_threshold_milliseconds": 250
+            },
+            "description": "ESC tap/double-tap/hold",
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "escape_first_tap",
+                  "value": 0
+                }
+              },
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.itone.ProcessSpy"
+                  }
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "escape_first_tap",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 250
+            },
+            "description": "ESC tap/double-tap/hold",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "escape_first_tap",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "escape"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "escape_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "escape_first_tap",
                     "value": 0
                   }
                 }
@@ -4038,35 +4055,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "CTRL alone -> CMD+OPT+CTRL+L",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_control"
-            },
-            "to": [
-              {
-                "key_code": "left_control"
-              }
-            ],
-            "to_if_alone": [
-              {
-                "key_code": "l",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "description": "Left CTRL alone -> CMD+OPT+CTRL+L"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "CMD-Q requires double-tap (300ms window)",
         "manipulatorSources": [
           {
@@ -4135,91 +4123,6 @@
                 {
                   "set_variable": {
                     "name": "command_q_pressed",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "CTRL+OPT+ESC - Activity Monitor (tap) or Force Quit (tap-tap)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {
-                "mandatory": [
-                  "left_control",
-                  "left_option"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "ctrl_opt_esc_first",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "set_variable": {
-                  "name": "ctrl_opt_esc_first",
-                  "value": 0
-                }
-              },
-              {
-                "key_code": "escape",
-                "modifiers": [
-                  "command",
-                  "option"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {
-                "mandatory": [
-                  "left_control",
-                  "left_option"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "ctrl_opt_esc_first",
-                  "value": 1
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "ctrl_opt_esc_first",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa"
-                },
-                {
-                  "set_variable": {
-                    "name": "ctrl_opt_esc_first",
                     "value": 0
                   }
                 }
@@ -4726,7 +4629,7 @@
               "key_code": "slash",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -4740,7 +4643,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 2"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
               },
               {
                 "key_code": "a",
@@ -4842,6 +4745,136 @@
                 ]
               }
             ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "SKIM - 1/2/3 hold AppleScripts",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "1"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                ]
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "1",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "1",
+                  "modifiers": []
+                }
+              ]
+            },
+            "description": "SKIM 1 hold -> anchored note"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "2"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                ]
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "2",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "2",
+                  "modifiers": []
+                }
+              ]
+            },
+            "description": "SKIM 2 hold -> add heading"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "3"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                ]
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "3",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "3",
+                  "modifiers": []
+                }
+              ]
+            },
+            "description": "SKIM 3 hold -> add extended text"
           }
         ],
         "allowEmptyManipulators": false,
