@@ -8,8 +8,8 @@
         "strictFunctionTypes": true,
         "strict": true,
         "sourceMap": true,
-        "allowImportingTsExtensions": true,
-        "noEmit": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
         "baseUrl": ".",
         "paths": {
             "karabiner.ts": ["../karabiner.ts-upstream/src/index.ts"],
