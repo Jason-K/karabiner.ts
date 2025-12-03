@@ -25,7 +25,7 @@ import {
   toSetVar,
   writeToProfile,
 } from "karabiner.ts";
-import { cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
+import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
   DeviceConfig,
   SubLayerConfig,
@@ -38,6 +38,7 @@ import {
   updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
+import { indentLine } from "./lib/text";
 
 // ============================================================================
 // TAP-HOLD KEY DEFINITIONS
@@ -52,133 +53,51 @@ import { HYPER, L, MEH, SUPER } from "./lib/mods";
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: {
-    description: "Antinote",
-    hold: [openApp({ bundleIdentifier: "com.chabomakers.Antinote-setapp" })],
-  },
-  b: {
-    description: "Search menu apps / Skim note",
-    hold: [toKey("b", SUPER, { repeat: false })],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [
-          cmd(
-            "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
-          ),
+  a: {  description: "Antinote", hold: [openApp({ bundleIdentifier: "com.chabomakers.Antinote-setapp" })],},
+  b: {  description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
+        appOverrides: [
+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd( "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript" ) ],},
         ],
-      },
-    ],
   },
-  c: {
-    description: "OCR",
-    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')],
-  },
-  d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
-  e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-  f: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
-  g: {
-    description: "ChatGPT",
-    hold: [toKey("g", HYPER, { repeat: false })],
-  },
-  h: {
-    description: "HS console / Skim heading",
-    hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [
-          cmd(
-            "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
-          ),
+  c: {  description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
+  d: {  description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
+  e: {  description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
+  f: {  description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
+  g: {  description: "ChatGPT", hold: [toKey("g", HYPER, { repeat: false })] },
+  h: {  description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
+        appOverrides: [
+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript") ] },
         ],
-      },
-    ],
-  },
-  i: {
-    description: "Indent",
-    hold: [
-      cmd(
-        '/opt/homebrew/bin/hs -c \'local ev=require("hs.eventtap"); local t=require("hs.timer"); ev.keyStroke({}, "home"); t.usleep(120000); ev.keyStroke({}, "tab"); t.usleep(120000); ev.keyStroke({}, "end")\''
-      ),
-    ],
-  },
-  m: {
-    description: "Deminimize",
-    hold: [toKey("m", HYPER, { repeat: false })],
-  },
-  n: {
-    description: "New note / Skim highlight",
-    hold: [toKey("n")],
-    appOverrides: [
-      {
-        app: /^net\.sourceforge\.skim-app\.skim$/,
-        hold: [
-          cmd(
-            "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
-          ),
+    },
+  i: {  description: "Indent", hold: indentLine() },
+  m: {  description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
+  n: {  description: "New note / Skim highlight", hold: [toKey("n")],
+        appOverrides: [
+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript") ] },
         ],
-      },
-    ],
-  },
+     },
+  o: {  description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
-  q: {
-    description: "QSpace Pro",
-    hold: [
-      openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" }),
-    ],
-  },
-  r: {
-    description: "Last d/l",
-    hold: [
-      cmd(
-        'latest=$(ls -t "$HOME/Downloads" | head -n1); [ -n "$latest" ] && open -R "$HOME/Downloads/$latest"'
-      ),
-    ],
-  },
-  s: {
-    description: "Screenshot",
-    hold: [cmd('open "cleanshot://capture-area"')],
-  },
-  t: {
-    description: "Terminal Here",
-    hold: [
-      cmd(
-        "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
-      ),
-    ],
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
-  v: {
-    description: "Maccy",
-    hold: [
-      toKey("grave_accent_and_tilde", ["control"], {
-        halt: true,
-        repeat: false,
-      }),
-    ],
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
-  w: {
-    description: "Writing Tools",
-    hold: [toKey("w", ["command", "shift"], { repeat: false })],
-  },
-  "8": {
-    description: "8x8",
-    hold: [openApp({ bundleIdentifier: "com.electron.8x8---virtual-office" })],
-  },
-  slash: {
-    description: "search for files",
-    hold: [toKey("f17", HYPER, { repeat: false })],
-  },
-  tab: {
-    description: "Mission Control",
-    hold: [toKey("mission_control", [], { halt: true, repeat: true })],
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
+  q: { description: "QSpace Pro", hold: [openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" })] },
+  r: { description: "Last d/l", hold: [toKey("z", ["option"], { repeat: false })] },
+  s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
+  t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
+  v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
+  w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
+  "8": { description: "RingCentral", hold: [openApp({ bundleIdentifier: "com.ringcentral.glip" })] },
+  "f1": {description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })]},
+  "f2": {description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })]},
+  "f3": {description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })]},
+  "f4": {description: "Launchpad", hold: [toKey("launchpad", [], { repeat: false })]},
+  "f5": {description: "Dictation", hold: [toKey("fn", [], { repeat: false })]},
+  "f7": {description: "Rewind", hold: [toKey("rewind", [], { repeat: true })]},
+  "f8": {description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })]},
+  "f9": {description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })]},
+  "f10": {description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })]},
+  "f11": {description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })]},
+  "f12": {description: "Mute", hold: [toKey("mute", [], { repeat: false })]},
+  slash: { description: "search for files", hold: [toKey("f17", HYPER, { repeat: false })] },
+  tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 
 // ============================================================================
@@ -205,12 +124,16 @@ const spaceLayers: SubLayerConfig[] = [
     releaseLayer: false,
     mappings: {
       8: {
-        description: "8x8",
-        openAppOpts: { bundleIdentifier: "com.electron.8x8---virtual-office" },
+        description: "RingCentral",
+        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
       a: {
         description: "Apps",
         openAppOpts: { bundleIdentifier: "com.apple.apps.launcher" },
+      },
+      b: {
+        description: "Busycal",
+        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
       },
       c: {
         description: "Code",
@@ -219,6 +142,10 @@ const spaceLayers: SubLayerConfig[] = [
       d: {
         description: "Dia",
         openAppOpts: { bundleIdentifier: "company.thebrowser.dia" },
+      },
+      e: {
+        description: "Proton Mail",
+        openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
       },
       f: {
         description: "QSpace",
@@ -237,12 +164,16 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { bundleIdentifier: "com.microsoft.Outlook" },
       },
       p: {
-        description: "Proton Mail",
-        openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
+        description: "Phone",
+        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
       q: {
         description: "QSpace",
         openAppOpts: { bundleIdentifier: "com.jinghaoshe.qspace.pro" },
+      },
+      r: {
+        description: "RingCentral",
+        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
       s: {
         description: "Safari",
@@ -265,6 +196,7 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { historyIndex: 1 },
         usageCounterVar: "apps_toggle_uses",
       },
+
     },
   },
   {
@@ -509,8 +441,10 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-    // LEFT COMMAND - Tap/Double-Tap/Hold pattern using varTapTapHold
-  rule("LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)").manipulators(
+  // LEFT COMMAND - Tap/Double-Tap/Hold pattern using varTapTapHold
+  rule(
+    "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)"
+  ).manipulators(
     varTapTapHold({
       key: "left_command",
       firstVar: "lcmd_first_tap",
@@ -522,12 +456,18 @@ let rules: any[] = [
   ),
 
   // ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)
-  rule("ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)").manipulators(
+  rule(
+    "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)"
+  ).manipulators(
     varTapTapHold({
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
-      holdEvents: [cmd("osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'")],
+      holdEvents: [
+        cmd(
+          "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
+        ),
+      ],
       thresholdMs: 250,
       description: "ESC tap/double-tap/hold",
     })
@@ -650,7 +590,7 @@ let rules: any[] = [
   // CMD+SHIFT+K - Delete line (except in VSCode Insiders)
   rule("CMD+SHIFT+K - delete line").manipulators([
     ...map("k", ["left_command", "left_shift"])
-      .condition(ifApp(/^com\.microsoft\.VSCodeInsiders$/).unless())
+      .condition(ifApp("com.microsoft.VSCodeInsiders").unless())
       .to(toKey("a", [L.ctrl], { repeat: false }))
       .to(toKey("k", [L.ctrl], { repeat: false }))
       .to(toKey("delete_or_backspace", [], { repeat: false }))
@@ -731,7 +671,7 @@ let rules: any[] = [
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   rule("PASSWORDS - CMD+/ quick fill").manipulators([
     ...map("slash", "command")
-      .condition(ifApp(/^com\.apple\.SecurityAgent$/))
+      .condition(ifApp("com.apple.SecurityAgent"))
       .to(
         cmd(
           "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
@@ -751,11 +691,11 @@ let rules: any[] = [
   // SKIM - CMD+H/U remapping
   rule("SKIM - CMD+H/U").manipulators([
     ...map("h", "command")
-      .condition(ifApp(/^net\.sourceforge\.skim/))
+      .condition(ifApp("net.sourceforge.skim-app.skim"))
       .to(toKey("h", [L.cmd, L.ctrl]))
       .build(),
     ...map("u", "command")
-      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .condition(ifApp("net.sourceforge.skim-app.skim"))
       .to(toKey("u", [L.cmd, L.ctrl]))
       .build(),
   ]),
@@ -764,7 +704,7 @@ let rules: any[] = [
   rule("SKIM - 1/2/3 hold AppleScripts").manipulators([
     // 1 hold -> create anchored note
     ...map("1")
-      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .condition(ifApp("net.sourceforge.skim-app.skim"))
       .parameters({
         "basic.to_if_alone_timeout_milliseconds": 300,
         "basic.to_if_held_down_threshold_milliseconds": 300,
@@ -780,15 +720,15 @@ let rules: any[] = [
       .build(),
     // 2 hold -> add heading
     ...map("2")
-      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .condition(ifApp("net.sourceforge.skim-app.skim"))
       .parameters({
         "basic.to_if_alone_timeout_milliseconds": 300,
         "basic.to_if_held_down_threshold_milliseconds": 300,
       })
       .toIfAlone(toKey("2", [], { halt: true }))
       .toIfHeldDown(
-        cmd(
-          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+        applescript(
+          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
         )
       )
       .toDelayedAction([], [toKey("2", [], { halt: true })])
@@ -796,15 +736,15 @@ let rules: any[] = [
       .build(),
     // 3 hold -> add extended text
     ...map("3")
-      .condition(ifApp(/^net\.sourceforge\.skim-app\.skim$/))
+      .condition(ifApp("net.sourceforge.skim-app.skim"))
       .parameters({
         "basic.to_if_alone_timeout_milliseconds": 300,
         "basic.to_if_held_down_threshold_milliseconds": 300,
       })
       .toIfAlone(toKey("3", [], { halt: true }))
       .toIfHeldDown(
-        cmd(
-          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+        applescript(
+          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
         )
       )
       .toDelayedAction([], [toKey("3", [], { halt: true })])
@@ -829,24 +769,14 @@ let rules: any[] = [
   rule("ANTINOTE - CMD+D+D to delete note").manipulators([
     // When ready variable set, execute delete
     ...map("d", "command")
-      .condition(
-        ifApp([
-          /^com\.chabomakers\.Antinote-setapp$/,
-          /^com\.chabomakers\.Antinote$/,
-        ])
-      )
+      .condition(ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]))
       .condition(ifVar("cmd_d_ready", 1))
       .to(toKey("d", ["command"]))
       .to(toSetVar("cmd_d_ready", 0))
       .build(),
     // First press sets ready variable with delay
     ...map("d", "command")
-      .condition(
-        ifApp([
-          /^com\.chabomakers\.Antinote-setapp$/,
-          /^com\.chabomakers\.Antinote$/,
-        ])
-      )
+      .condition(ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]))
       .condition(ifVar("cmd_d_ready", 0))
       .to(toSetVar("cmd_d_ready", 1))
       .toDelayedAction(

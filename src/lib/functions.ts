@@ -21,7 +21,8 @@ export type TapHoldConfig = {
   // to the `tapHold` builder which will emit per-app manipulators using
   // `foremost_application_if` / `foremost_application_unless` conditions.
   appOverrides?: Array<{
-    app: string | RegExp;
+    // Bundle ID string (e.g., 'net.sourceforge.skim-app.skim')
+    app: string;
     unless?: boolean;
     alone?: ToEvent[];
     hold?: ToEvent[];
