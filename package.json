@@ -3,7 +3,8 @@
   "description": "karabiner config in karabiner.ts",
   "scripts": {
     "build": "tsx src/index.ts",
-    "update": "npm update karabiner.ts"
+    "update": "npm update karabiner.ts",
+    "lint": "eslint . --max-warnings=0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
