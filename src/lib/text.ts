@@ -1,3 +1,16 @@
+/**
+ * @file text.ts
+ * @description Text manipulation and shell command helpers.
+ *
+ * ⚠️ LOCAL EXTENSION: This file contains project-specific text utilities.
+ * - Upstream equivalent: None
+ * - Safe to modify: YES - add your own text processing functions
+ * - Takes precedence: YES - supplements upstream with domain-specific logic
+ *
+ * Provides helpers for common text transformations using external scripts
+ * and system commands.
+ */
+
 import type { ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 

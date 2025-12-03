@@ -17,25 +17,25 @@
  */
 
 import {
-  ifApp,
-  ifVar,
-  map,
-  rule,
-  toKey,
-  toSetVar,
-  writeToProfile,
+    ifApp,
+    ifVar,
+    map,
+    rule,
+    toKey,
+    toSetVar,
+    writeToProfile,
 } from "karabiner.ts";
 import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
-  DeviceConfig,
-  SubLayerConfig,
-  TapHoldConfig,
+    DeviceConfig,
+    SubLayerConfig,
+    TapHoldConfig,
 } from "./lib/functions";
 import {
-  generateEscapeRule,
-  generateSpaceLayerRules,
-  generateTapHoldRules,
-  updateDeviceConfigurations,
+    generateEscapeRule,
+    generateSpaceLayerRules,
+    generateTapHoldRules,
+    updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 import { indentLine } from "./lib/text";

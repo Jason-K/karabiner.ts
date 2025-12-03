@@ -1,3 +1,15 @@
+/**
+ * @file consumer.ts
+ * @description Consumer key definitions for media and system control.
+ *
+ * ⚠️ LOCAL EXTENSION: This file extends upstream consumer key support.
+ * - Upstream equivalent: config/to.ts (toConsumerKey partial)
+ * - Safe to modify: YES - add custom consumer key mappings
+ * - Takes precedence: YES - provides convenient aliases for your config
+ *
+ * Provides user-friendly names for HID consumer usage codes.
+ */
+
 import type { ToEvent } from 'karabiner.ts';
 
 /**
