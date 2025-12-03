@@ -31,7 +31,8 @@ interface TapHoldOpts {
   // that applies only when the foremost application matches (or does not match)
   // the provided matcher.
   appOverrides?: Array<{
-    app: string | RegExp;
+    // Bundle ID string (e.g., 'net.sourceforge.skim-app.skim')
+    app: string;
     unless?: boolean; // if true, use foremost_application_unless
     alone?: ToEvent[];
     hold?: ToEvent[];
@@ -91,8 +92,8 @@ export function tapHold({ key, alone, hold, timeoutMs = 300, thresholdMs = 300, 
   if (appOverrides && Array.isArray(appOverrides)) {
     appOverrides.forEach(ov => {
       const matcher = ov.app;
-      // ifApp accepts string or regex; use it directly
-      let cond = ifApp(matcher as any);
+      // ifApp accepts bundle ID strings; use it directly
+      let cond = ifApp(matcher);
       if (ov.unless) cond = cond.unless();
       builders.push(makeBuilder({ alone: ov.alone, hold: ov.hold, timeoutMs: ov.timeoutMs, thresholdMs: ov.thresholdMs, cancel: ov.cancel, invoked: ov.invoked, cond }));
     });
@@ -206,6 +207,70 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
 
 export function cmd(shell: string): ToEvent {
   return { shell_command: shell } as ToEvent;
+}
+
+// ----------------------------------------------------------------------------
+// Script helper utilities
+// ----------------------------------------------------------------------------
+
+function shellSingleQuote(str: string): string {
+  // Wrap in single quotes, escaping any single quotes inside using the POSIX pattern
+  return `'${str.replace(/'/g, `'"'"'`)}'`;
+}
+
+function normalizePathForShell(path: string): string {
+  // Expand leading ~/ to $HOME/ and wrap in double quotes to allow $HOME expansion
+  if (path.startsWith('~/')) {
+    return `"$HOME/${path.slice(2)}"`;
+  }
+  // If already contains $HOME or other vars, keep as-is but quote for spaces
+  if (path.startsWith('$HOME/')) {
+    return `"${path}"`;
+  }
+  // Default: quote in double quotes to preserve spaces
+  return `"${path}"`;
+}
+
+/**
+ * Run an AppleScript file via osascript.
+ * Example: applescript('~/Scripts/foo.applescript', 'arg1', 'arg2')
+ */
+export function applescript(scriptPath: string, ...args: string[]): ToEvent {
+  const p = normalizePathForShell(scriptPath);
+  const parts = ['osascript', p, ...args.map(a => shellSingleQuote(a))];
+  return cmd(parts.join(' '));
+}
+
+/**
+ * Execute inline Hammerspoon Lua code using the hs CLI.
+ * Example: hs("hs.openConsole()")
+ */
+export function hs(code: string): ToEvent {
+  const codeQuoted = shellSingleQuote(code);
+  return cmd(`/opt/homebrew/bin/hs -c ${codeQuoted}`);
+}
+
+/**
+ * Run Python (python3) with provided script/arguments.
+ * Example: python('~/Scripts/tool.py --flag value')
+ */
+export function python(spec: string | string[], opts?: { useEnv?: boolean; pythonBin?: string }): ToEvent {
+  const pythonBin = opts?.pythonBin ?? 'python3';
+  if (Array.isArray(spec)) {
+    const joined = spec.map(s => s.includes(' ') ? shellSingleQuote(s) : s).join(' ');
+    return cmd(`${pythonBin} ${joined}`);
+  }
+  // Pass through as-is to preserve things like ~ expansion and flags
+  return cmd(`${pythonBin} ${spec}`);
+}
+
+/**
+ * Run Lua code via the system lua interpreter (-e).
+ * Example: lua('print("hello")')
+ */
+export function lua(code: string): ToEvent {
+  const codeQuoted = shellSingleQuote(code);
+  return cmd(`lua -e ${codeQuoted}`);
 }
 
 /**
@@ -430,5 +495,45 @@ export function withConditions(event: ToEvent, conditions: any[] = []): ToEvent 
   const cloned: any = { ...event };
   if (conditions.length) cloned.conditions = conditions;
   return cloned as ToEvent;
+}
+
+// ---------------------------------------------------------------------------
+// Upstream-aligned helpers (naming compatibility)
+// ---------------------------------------------------------------------------
+/**
+ * Upstream naming compatibility: withCondition(...conds)(manipulatorsOrEvents)
+ * - If given Basic manipulators, append conditions to each.
+ * - If given ToEvents, append conditions to those events.
+ * Returns an object with build(): any[] for convenience.
+ */
+export function withCondition(...conditions: any[]) {
+  return (items: any | any[]) => {
+    const list = Array.isArray(items) ? items : [items];
+    const updated = list.map((it) => {
+      if (it && typeof it === 'object') {
+        // BasicManipulator shape
+        if ((it as any).type === 'basic') {
+          const m = { ...(it as any) };
+          m.conditions = [...(m.conditions || []), ...conditions];
+          return m;
+        }
+        // ToEvent shape
+        if ('shell_command' in it || 'set_notification_message' in it || 'software_function' in it || 'set_variable' in it) {
+          const e: any = { ...it };
+          e.conditions = [...(e.conditions || []), ...conditions];
+          return e;
+        }
+      }
+      return it;
+    });
+    return { build: () => updated } as any;
+  };
+}
+
+/**
+ * Alias for clarity: toKeyWithConditions mirrors toKeyCond behavior.
+ */
+export function toKeyWithConditions(key: string, mods: Modifier[] = [], opts: any = {}, conditions: any[] = []): ToEvent {
+  return toKeyCond(key, mods, opts, conditions);
 }
 
