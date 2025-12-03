@@ -1,5 +1,19 @@
 /**
- * Helper functions for generating Karabiner rules
+ * @file functions.ts
+ * @description Generator functions for complex rule patterns.
+ *
+ * ⚠️ LOCAL EXTENSION: This file contains high-level rule generators.
+ * - Upstream equivalent: None (custom rule generation logic)
+ * - Safe to modify: YES - customize your space layers and tap-hold system
+ * - Takes precedence: YES - wraps upstream builders with your patterns
+ *
+ * Key functions:
+ * - generateTapHoldRules(): Batch-generate tap-hold manipulators with app overrides
+ * - generateSpaceLayerRules(): Multi-sublayer system with sticky modifiers
+ * - generateEscapeRule(): Variable reset on escape
+ * - updateDeviceConfigurations(): Device-specific simple_modifications
+ *
+ * These generators keep src/index.ts clean and declarative.
  */
 
 import type { ToEvent } from 'karabiner.ts';

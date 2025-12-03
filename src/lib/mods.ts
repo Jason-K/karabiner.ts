@@ -2,6 +2,11 @@
  * @file mods.ts
  * @description Custom modifier definitions and keyboard layer constants.
  *
+ * ⚠️ LOCAL EXTENSION: This file is a local project extension.
+ * - Upstream equivalent: config/modifier.ts (partial)
+ * - Safe to modify: YES - this is your custom modifier set
+ * - Takes precedence: YES - overrides any upstream defaults
+ *
  * This module defines the "hyper key" concept and other custom modifiers that enable
  * more ergonomic keyboard shortcuts without conflicts with existing system shortcuts.
  *

@@ -17,25 +17,25 @@
  */
 
 import {
-  ifApp,
-  ifVar,
-  map,
-  rule,
-  toKey,
-  toSetVar,
-  writeToProfile,
+    ifApp,
+    ifVar,
+    map,
+    rule,
+    toKey,
+    toSetVar,
+    writeToProfile,
 } from "karabiner.ts";
 import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
-  DeviceConfig,
-  SubLayerConfig,
-  TapHoldConfig,
+    DeviceConfig,
+    SubLayerConfig,
+    TapHoldConfig,
 } from "./lib/functions";
 import {
-  generateEscapeRule,
-  generateSpaceLayerRules,
-  generateTapHoldRules,
-  updateDeviceConfigurations,
+    generateEscapeRule,
+    generateSpaceLayerRules,
+    generateTapHoldRules,
+    updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 import { indentLine } from "./lib/text";
@@ -829,12 +829,19 @@ const deviceConfigs: DeviceConfig[] = [
 // WRITE TO PROFILE
 // ============================================================================
 
-// First, write the complex_modifications rules
-writeToProfile("Karabiner.ts", rules);
+// Detect CI/Linux environment and avoid writing to ~/.config/karabiner
+const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
+const isDarwin = process.platform === "darwin";
+const canWriteProfile = isDarwin && !isCI;
 
-// Wait for writeToProfile to complete, then add device configurations
+// Write rules: use real profile locally, dry-run in CI/non-macOS
+writeToProfile(canWriteProfile ? "Karabiner.ts" : "--dry-run", rules);
+
+// Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
-  updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
+  if (canWriteProfile) {
+    updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
+  }
 }, 1000);
 
 // Also write generated rules to workspace for inspection

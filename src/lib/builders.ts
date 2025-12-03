@@ -2,10 +2,20 @@
  * @file builders.ts
  * @description Helper functions for constructing Karabiner-Elements manipulators.
  *
+ * ⚠️ LOCAL EXTENSION: This file contains custom builder functions.
+ * - Upstream equivalent: None (these are convenience wrappers)
+ * - Safe to modify: YES - add your own helpers as needed
+ * - Takes precedence: YES - wraps upstream APIs for easier usage
+ *
  * This module provides reusable patterns that eliminate boilerplate in rule definitions:
  * - tapHold(): Standard tap-hold behavior with to_delayed_action support
  * - varTapTapHold(): Complex double-tap-hold patterns using variables
  * - cmd(): Convenient wrapper for shell_command events
+ * - openApp(): Native frontmost_application_if actions
+ * - applescript(): Execute AppleScript files
+ * - notify/mouseJump/sleepSystem/doubleClick: System integration helpers
+ * - setVarExpr/exprIf/exprUnless: Expression-based conditions (Karabiner 15.6.0+)
+ * - withConditions(): Attach conditions to individual to-events
  *
  * These abstractions make the main configuration file more readable and maintainable.
  */
