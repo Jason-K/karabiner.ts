@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, ci/* ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Type check
+        run: |
+          npx tsc -p tsconfig.json --noEmit
+
+      - name: Lint
+        run: |
+          npx eslint . --max-warnings=0 || npx eslint . --exit-on-fatal-error
+
+      - name: Build config
+        run: |
+          npm run build
+
+      - name: Upload karabiner-output.json
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karabiner-output
+          path: karabiner-output.json
+          if-no-files-found: warn
