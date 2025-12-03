@@ -8,8 +8,13 @@
         "strictFunctionTypes": true,
         "strict": true,
         "sourceMap": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
+<<<<<<< HEAD
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
+=======
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
+>>>>>>> ed2fdce (fix: enable .ts imports, map local upstream, exclude docs; fix Modifier import)
         "baseUrl": ".",
         "paths": {
             "karabiner.ts": ["../karabiner.ts-upstream/src/index.ts"],
