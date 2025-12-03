@@ -829,12 +829,19 @@ const deviceConfigs: DeviceConfig[] = [
 // WRITE TO PROFILE
 // ============================================================================
 
-// First, write the complex_modifications rules
-writeToProfile("Karabiner.ts", rules);
+// Detect CI/Linux environment and avoid writing to ~/.config/karabiner
+const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
+const isDarwin = process.platform === "darwin";
+const canWriteProfile = isDarwin && !isCI;
 
-// Wait for writeToProfile to complete, then add device configurations
+// Write rules: use real profile locally, dry-run in CI/non-macOS
+writeToProfile(canWriteProfile ? "Karabiner.ts" : "--dry-run", rules);
+
+// Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
-  updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
+  if (canWriteProfile) {
+    updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
+  }
 }, 1000);
 
 // Also write generated rules to workspace for inspection
