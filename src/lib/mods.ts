@@ -11,7 +11,7 @@
  * don't conflict with anything, perfect for custom automation and window management.
  */
 
-import type { Modifier } from 'karabiner.ts/dist';
+import type { Modifier } from 'karabiner.ts';
 
 /**
  * HYPER: CMD + OPT + CTRL
