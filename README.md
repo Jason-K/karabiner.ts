@@ -27,6 +27,7 @@ See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff sum
 ## Custom Modifier Definitions
 
 Your local definitions in `src/lib/mods.ts`:
+
 - **HYPER** = `command + option + control`
 - **SUPER** = `command + option + control + shift`
 - **MEH** = `command + option + shift`
