@@ -2,7 +2,7 @@
   "complex_modifications": {
     "rules": [
       {
-        "ruleDescription": "8 hold -> 8x8",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -24,7 +24,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.electron.8x8---virtual-office"
+                    "bundle_identifier": "com.ringcentral.glip"
                   }
                 }
               }
@@ -84,10 +84,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "8 hold -> RingCentral"
       },
       {
-        "ruleDescription": "A hold -> Antinote",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -169,10 +169,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "A hold -> Antinote"
       },
       {
-        "ruleDescription": "B hold -> Search menu apps / Skim note",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -187,7 +187,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               },
               {
@@ -330,10 +330,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "B hold -> Search menu apps / Skim note"
       },
       {
-        "ruleDescription": "C hold -> OCR",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -353,7 +353,13 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open \"cleanshot://capture-text?linebreaks=false\""
+                "repeat": false,
+                "key_code": "7",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -411,10 +417,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "C hold -> Calendar"
       },
       {
-        "ruleDescription": "D hold -> Dato",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -498,10 +504,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "D hold -> Dato"
       },
       {
-        "ruleDescription": "E hold -> New event",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -585,10 +591,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "E hold -> New event"
       },
       {
-        "ruleDescription": "F hold -> Houdah",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -673,10 +679,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "F hold -> Houdah"
       },
       {
-        "ruleDescription": "G hold -> ChatGPT",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -760,10 +766,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "G hold -> ChatGPT"
       },
       {
-        "ruleDescription": "H hold -> HS console / Skim heading",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -778,7 +784,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               },
               {
@@ -914,10 +920,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "H hold -> HS (global) / New heading (Skim)"
       },
       {
-        "ruleDescription": "I hold -> Indent",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -937,7 +943,19 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local ev=require(\"hs.eventtap\"); local t=require(\"hs.timer\"); ev.keyStroke({}, \"home\"); t.usleep(120000); ev.keyStroke({}, \"tab\"); t.usleep(120000); ev.keyStroke({}, \"end\")'"
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "command"
+                ]
+              },
+              {
+                "key_code": "tab"
+              },
+              {
+                "key_code": "right_arrow",
+                "modifiers": [
+                  "command"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -995,10 +1013,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "I hold -> Indent"
       },
       {
-        "ruleDescription": "M hold -> Deminimize",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1082,10 +1100,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "M hold -> Deminimize"
       },
       {
-        "ruleDescription": "N hold -> New note / Skim highlight",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1100,7 +1118,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               },
               {
@@ -1236,10 +1254,91 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "N hold -> New note / Skim highlight"
       },
       {
-        "ruleDescription": "P hold -> Paletro",
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "o"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "o",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open \"cleanshot://capture-text?linebreaks=false\""
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "o",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "O hold -> OCR"
+      },
+      {
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1323,10 +1422,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "P hold -> Paletro"
       },
       {
-        "ruleDescription": "Q hold -> QSpace Pro",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1408,10 +1507,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "Q hold -> QSpace Pro"
       },
       {
-        "ruleDescription": "R hold -> Last d/l",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1431,7 +1530,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "latest=$(ls -t \"$HOME/Downloads\" | head -n1); [ -n \"$latest\" ] && open -R \"$HOME/Downloads/$latest\""
+                "repeat": false,
+                "key_code": "z",
+                "modifiers": [
+                  "option"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -1489,10 +1592,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "R hold -> Last d/l"
       },
       {
-        "ruleDescription": "S hold -> Screenshot",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1570,10 +1673,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "S hold -> Screenshot"
       },
       {
-        "ruleDescription": "T hold -> Terminal Here",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1651,10 +1754,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "T hold -> Terminal Here"
       },
       {
-        "ruleDescription": "V hold -> Maccy",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1737,10 +1840,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "V hold -> Maccy"
       },
       {
-        "ruleDescription": "W hold -> Writing Tools",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1823,10 +1926,923 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "W hold -> Writing Tools"
       },
       {
-        "ruleDescription": "SLASH hold -> search for files",
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f1"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f1",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "display_brightness_decrement",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f1",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F1 hold -> Decrease brightness"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f2"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f2",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "display_brightness_increment",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f2",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F2 hold -> Increase brightness"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f3"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f3",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "mission_control",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f3",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F3 hold -> Mission Control"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f4"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f4",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "launchpad",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f4",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F4 hold -> Launchpad"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f5"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f5",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "fn",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f5",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F5 hold -> Dictation"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f7"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f7",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "rewind",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f7",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F7 hold -> Rewind"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f8"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f8",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "play_or_pause",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f8",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F8 hold -> Play/Pause"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f9"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f9",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "fastforward",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f9",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F9 hold -> Fast Forward"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f10"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f10",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "volume_decrement",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f10",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F10 hold -> Volume Down"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f11"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f11",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": true,
+                "key_code": "volume_increment",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f11",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F11 hold -> Volume Up"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f12"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "f12",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "mute",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f12",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "F12 hold -> Mute"
+      },
+      {
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1910,10 +2926,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SLASH hold -> search for files"
       },
       {
-        "ruleDescription": "TAB hold -> Mission Control",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1994,10 +3010,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "TAB hold -> Mission Control"
       },
       {
-        "ruleDescription": "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2098,10 +3114,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)"
       },
       {
-        "ruleDescription": "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2198,10 +3214,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)"
       },
       {
-        "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2288,10 +3304,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)"
       },
       {
-        "ruleDescription": "SPACE - tap for space, hold for layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2506,10 +3522,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE - tap for space, hold for layer"
       },
       {
-        "ruleDescription": "SPACE+A - Applications layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2543,7 +3559,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"8x8\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Last App\\\"}],\\\"widthHintPx\\\":199}')\""
+                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"B\\\",\\\"desc\\\":\\\"Busycal\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"E\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Phone\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Last App\\\"}],\\\"widthHintPx\\\":199}')\""
               }
             ]
           },
@@ -2563,7 +3579,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.electron.8x8---virtual-office"
+                    "bundle_identifier": "com.ringcentral.glip"
                   }
                 }
               }
@@ -2586,6 +3602,28 @@
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.apple.apps.launcher"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "b"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.busymac.busycal-setapp"
                   }
                 }
               }
@@ -2630,6 +3668,28 @@
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "company.thebrowser.dia"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "e"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "ch.protonmail.desktop"
                   }
                 }
               }
@@ -2739,7 +3799,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "ch.protonmail.desktop"
+                    "bundle_identifier": "com.ringcentral.glip"
                   }
                 }
               }
@@ -2762,6 +3822,28 @@
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.jinghaoshe.qspace.pro"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "r"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.ringcentral.glip"
                   }
                 }
               }
@@ -2885,10 +3967,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+A - Applications layer"
       },
       {
-        "ruleDescription": "SPACE+M - Cursor Movement layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3214,10 +4296,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+M - Cursor Movement layer"
       },
       {
-        "ruleDescription": "SPACE+C - Case layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3353,10 +4435,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+C - Case layer"
       },
       {
-        "ruleDescription": "SPACE+D - Downloads layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3486,10 +4568,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+D - Downloads layer"
       },
       {
-        "ruleDescription": "SPACE+F - Folders layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3673,10 +4755,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+F - Folders layer"
       },
       {
-        "ruleDescription": "SPACE+S - Screenshots layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3806,10 +4888,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+S - Screenshots layer"
       },
       {
-        "ruleDescription": "SPACE+W - Wrap layer",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3945,10 +5027,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SPACE+W - Wrap layer"
       },
       {
-        "ruleDescription": "HOME/END - Mac-style navigation",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4020,42 +5102,42 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "HOME/END - Mac-style navigation"
       },
       {
-        "ruleDescription": "keypad_enter hold -> quick format",
+        "conditions": [],
         "manipulatorSources": [
           {}
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "keypad_enter hold -> quick format"
       },
       {
-        "ruleDescription": "return_or_enter hold -> quick format",
+        "conditions": [],
         "manipulatorSources": [
           {}
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "return_or_enter hold -> quick format"
       },
       {
-        "ruleDescription": "keypad_equal_sign hold -> Quick Date",
+        "conditions": [],
         "manipulatorSources": [
           {}
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "keypad_equal_sign hold -> Quick Date"
       },
       {
-        "ruleDescription": "equal_sign hold -> Quick Date",
+        "conditions": [],
         "manipulatorSources": [
           {}
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "equal_sign hold -> Quick Date"
       },
       {
-        "ruleDescription": "CMD-Q requires double-tap (300ms window)",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4131,10 +5213,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "CMD-Q requires double-tap (300ms window)"
       },
       {
-        "ruleDescription": "CMD+SHIFT+K - delete line",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4151,7 +5233,7 @@
               {
                 "type": "frontmost_application_unless",
                 "bundle_identifiers": [
-                  "^com\\.microsoft\\.VSCodeInsiders$"
+                  "com.microsoft.VSCodeInsiders"
                 ]
               }
             ],
@@ -4179,10 +5261,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "CMD+SHIFT+K - delete line"
       },
       {
-        "ruleDescription": "RCMD + Key - App launch or focus",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4466,10 +5548,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "RCMD + Key - App launch or focus"
       },
       {
-        "ruleDescription": "ESCAPE - reset all variables",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4576,10 +5658,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "ESCAPE - reset all variables"
       },
       {
-        "ruleDescription": "DISABLE - Hide/Minimize shortcuts",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4618,10 +5700,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "DISABLE - Hide/Minimize shortcuts"
       },
       {
-        "ruleDescription": "PASSWORDS - CMD+/ quick fill",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4637,7 +5719,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^com\\.apple\\.SecurityAgent$"
+                  "com.apple.SecurityAgent"
                 ]
               }
             ],
@@ -4685,10 +5767,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "PASSWORDS - CMD+/ quick fill"
       },
       {
-        "ruleDescription": "SKIM - CMD+H/U",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4704,7 +5786,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim"
+                  "net.sourceforge.skim-app.skim"
                 ]
               }
             ],
@@ -4732,7 +5814,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               }
             ],
@@ -4748,10 +5830,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SKIM - CMD+H/U"
       },
       {
-        "ruleDescription": "SKIM - 1/2/3 hold AppleScripts",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4762,7 +5844,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               }
             ],
@@ -4803,7 +5885,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               }
             ],
@@ -4820,7 +5902,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+                "shell_command": "osascript \"$HOME/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript\""
               }
             ],
             "to_delayed_action": {
@@ -4844,7 +5926,7 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^net\\.sourceforge\\.skim-app\\.skim$"
+                  "net.sourceforge.skim-app.skim"
                 ]
               }
             ],
@@ -4861,7 +5943,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+                "shell_command": "osascript \"$HOME/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript\""
               }
             ],
             "to_delayed_action": {
@@ -4878,10 +5960,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "SKIM - 1/2/3 hold AppleScripts"
       },
       {
-        "ruleDescription": "ANTINOTE - CMD+D+D to delete note",
+        "conditions": [],
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4897,8 +5979,8 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^com\\.chabomakers\\.Antinote-setapp$",
-                  "^com\\.chabomakers\\.Antinote$"
+                  "com.chabomakers.Antinote-setapp",
+                  "com.chabomakers.Antinote"
                 ]
               },
               {
@@ -4936,8 +6018,8 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "^com\\.chabomakers\\.Antinote-setapp$",
-                  "^com\\.chabomakers\\.Antinote$"
+                  "com.chabomakers.Antinote-setapp",
+                  "com.chabomakers.Antinote"
                 ]
               },
               {
@@ -4975,7 +6057,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "conditions": []
+        "ruleDescription": "ANTINOTE - CMD+D+D to delete note"
       }
     ]
   }

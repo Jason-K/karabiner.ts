@@ -17,6 +17,16 @@ Our local extensions take precedence over upstream files. When adopting upstream
 
 See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff summary.
 
+### Local Upstream Mapping
+
+For local development, imports of `karabiner.ts` resolve to the upstream mirror via TypeScript path mapping.
+
+- Config: see `tsconfig.json` `compilerOptions.paths` where `karabiner.ts` and `karabiner.ts/*` point to `../karabiner.ts-upstream/src`.
+- Typechecking only: `compilerOptions.noEmit` is enabled alongside `allowImportingTsExtensions` to support upstream’s `.ts` import style without producing build outputs.
+- Usage: write local code that imports `karabiner.ts` APIs; the compiler will typecheck against upstream sources in `karabiner.ts-upstream/src`.
+
+This keeps runtime artifacts unchanged while enabling tight local iteration against upstream APIs.
+
 ## Files
 
 - **`src/index.ts`** - All rules converted to TypeScript using abstractions
