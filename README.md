@@ -1,8 +1,21 @@
 # Karabiner.ts Configuration
 
-## ✅ Conversion Complete!
+## Source Project
 
-All JSON rules from `src/inputRules.json` have been successfully converted to TypeScript with abstraction helpers.
+This project is an extension of the node module, Karabiner.ts [Git repo](https://github.com/evan-liu/karabiner.ts). It is a focused, type-safe Karabiner-Elements configuration with small builder utilities and clean layering.
+
+### Upstream Integration
+
+We vendor the upstream Karabiner.ts project for reference and diffing:
+
+- Upstream source, docs, and workflows are mirrored under `../karabiner.ts-upstream/` at the parent repo level.
+- Inside this project, upstream assets are copied into safe, non-active locations:
+  - Upstream GitHub workflows are stored in `.github/upstream-workflows/` so they do not alter CI by default.
+  - Upstream docs are available under `docs/upstream/`.
+
+Our local extensions take precedence over upstream files. When adopting upstream changes, we selectively merge while preserving our `package.json`, build scripts, eslint settings, and source overrides under `src/`.
+
+See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff summary.
 
 ## Files
 
@@ -23,24 +36,8 @@ These override upstream defaults and remain stable under your control.
 ## Build & Deploy
 
 ```bash
-# Test (dry-run to console)
-npm run build
-
 # Deploy to Karabiner (edit src/index.ts, change '--dry-run' to 'JJK_Default')
 npm run build
-```
-
-## Rules Implemented
-
-### Tap-Hold Keys
-# karabiner.ts — Minimal Guide
-
-Focused, type-safe Karabiner-Elements configuration with small builder utilities and clean layering.
-
-## Build
-
-```bash
-npm run build   # writes to your Karabiner profile and karabiner-output.json
 ```
 
 ## Where Things Live
