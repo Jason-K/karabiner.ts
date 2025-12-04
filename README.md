@@ -17,6 +17,35 @@ Our local extensions take precedence over upstream files. When adopting upstream
 
 See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff summary.
 
+## Integration Status
+
+The upstream integration is complete and merged to main. Your local extensions and main config are isolated from upstream, with TypeScript path mapping providing IDE support against the mirrored upstream sources.
+
+- Upstream mirror lives at `../karabiner.ts-upstream/` in the parent repo.
+- Local extensions: `src/lib/*.ts` are owned here and marked with LOCAL EXTENSION headers.
+- Main config: `src/index.ts` is the authoritative configuration you edit.
+- CI: Typecheck, lint, and build run on main.
+
+Daily workflow:
+
+```bash
+cd karabiner.ts
+npm run build
+```
+
+Upstream sync (optional, when you want new features):
+
+```bash
+cd ../karabiner.ts-upstream && git pull origin main
+cd ../karabiner.ts && npm run typecheck && npm run build
+```
+
+Documentation:
+
+- `docs/INTEGRATION_SUMMARY.md` – Architecture overview
+- `docs/UPSTREAM_SYNC.md` – Sync workflow
+- `docs/MERGE_CHECKLIST.md` – Validation steps
+
 ### Local Upstream Mapping
 
 For local development, imports of `karabiner.ts` resolve to the upstream mirror via TypeScript path mapping.
