@@ -3369,7 +3369,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'"
               }
             ],
             "to_if_held_down": [
@@ -3380,7 +3380,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"␣\\\",\\\"keys\\\":[{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Cursor Movement\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Case\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"Folders\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Screenshots\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Wrap\\\"}],\\\"widthHintPx\\\":235}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"␣\\\",\\\"keys\\\":[{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Cursor Movement\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Case\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"Folders\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Screenshots\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Wrap\\\"}],\\\"widthHintPx\\\":235}')\"'"
               }
             ],
             "to_after_key_up": [
@@ -3453,7 +3453,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'"
               }
             ],
             "to_delayed_action": {
@@ -3511,7 +3511,7 @@
                   }
                 },
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\""
+                  "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'"
                 }
               ]
             },
@@ -3559,7 +3559,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"B\\\",\\\"desc\\\":\\\"Busycal\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"E\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Phone\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Last App\\\"}],\\\"widthHintPx\\\":199}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"A\\\",\\\"keys\\\":[{\\\"key\\\":\\\"8\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Apps\\\"},{\\\"key\\\":\\\"B\\\",\\\"desc\\\":\\\"Busycal\\\"},{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Dia\\\"},{\\\"key\\\":\\\"E\\\",\\\"desc\\\":\\\"Proton Mail\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"G\\\",\\\"desc\\\":\\\"ChatGPT\\\"},{\\\"key\\\":\\\"M\\\",\\\"desc\\\":\\\"Messages\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Outlook\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Phone\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"QSpace\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"RingCentral\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Safari\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Teams\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Code\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Word\\\"},{\\\"key\\\":\\\"TAB\\\",\\\"desc\\\":\\\"Last App\\\"}],\\\"widthHintPx\\\":199}')\"'"
               }
             ]
           },
@@ -4004,7 +4004,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"M\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Semicolon\\\",\\\"desc\\\":\\\"Page Down\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Delete\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"Forward Delete\\\"},{\\\"key\\\":\\\"I\\\",\\\"desc\\\":\\\"Up\\\"},{\\\"key\\\":\\\"J\\\",\\\"desc\\\":\\\"Left\\\"},{\\\"key\\\":\\\"K\\\",\\\"desc\\\":\\\"Down\\\"},{\\\"key\\\":\\\"L\\\",\\\"desc\\\":\\\"Right\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"End\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Page Up\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Shift\\\"},{\\\"key\\\":\\\"U\\\",\\\"desc\\\":\\\"Home\\\"}],\\\"widthHintPx\\\":253}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"M\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Semicolon\\\",\\\"desc\\\":\\\"Page Down\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Delete\\\"},{\\\"key\\\":\\\"F\\\",\\\"desc\\\":\\\"Forward Delete\\\"},{\\\"key\\\":\\\"I\\\",\\\"desc\\\":\\\"Up\\\"},{\\\"key\\\":\\\"J\\\",\\\"desc\\\":\\\"Left\\\"},{\\\"key\\\":\\\"K\\\",\\\"desc\\\":\\\"Down\\\"},{\\\"key\\\":\\\"L\\\",\\\"desc\\\":\\\"Right\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"End\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Page Up\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Shift\\\"},{\\\"key\\\":\\\"U\\\",\\\"desc\\\":\\\"Home\\\"}],\\\"widthHintPx\\\":253}')\"'"
               }
             ]
           },
@@ -4333,7 +4333,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"C\\\",\\\"keys\\\":[{\\\"key\\\":\\\"L\\\",\\\"desc\\\":\\\"lowercase\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Sentence case\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Title Case\\\"},{\\\"key\\\":\\\"U\\\",\\\"desc\\\":\\\"UPPERCASE\\\"}],\\\"widthHintPx\\\":217}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"C\\\",\\\"keys\\\":[{\\\"key\\\":\\\"L\\\",\\\"desc\\\":\\\"lowercase\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Sentence case\\\"},{\\\"key\\\":\\\"T\\\",\\\"desc\\\":\\\"Title Case\\\"},{\\\"key\\\":\\\"U\\\",\\\"desc\\\":\\\"UPPERCASE\\\"}],\\\"widthHintPx\\\":217}')\"'"
               }
             ]
           },
@@ -4472,7 +4472,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"D\\\",\\\"keys\\\":[{\\\"key\\\":\\\"3\\\",\\\"desc\\\":\\\"3dPrinting\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Archives\\\"},{\\\"key\\\":\\\"I\\\",\\\"desc\\\":\\\"Installs\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Office\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"PDFs\\\"}],\\\"widthHintPx\\\":190}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"D\\\",\\\"keys\\\":[{\\\"key\\\":\\\"3\\\",\\\"desc\\\":\\\"3dPrinting\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Archives\\\"},{\\\"key\\\":\\\"I\\\",\\\"desc\\\":\\\"Installs\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"Office\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"PDFs\\\"}],\\\"widthHintPx\\\":190}')\"'"
               }
             ]
           },
@@ -4605,7 +4605,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"F\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Grave\\\",\\\"desc\\\":\\\"Home\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"My OneDrive\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Drive\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Scripts\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Videos\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Work OneDrive\\\"}],\\\"widthHintPx\\\":217}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"F\\\",\\\"keys\\\":[{\\\"key\\\":\\\"Grave\\\",\\\"desc\\\":\\\"Home\\\"},{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Applications\\\"},{\\\"key\\\":\\\"D\\\",\\\"desc\\\":\\\"Downloads\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"My OneDrive\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Proton Drive\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Scripts\\\"},{\\\"key\\\":\\\"V\\\",\\\"desc\\\":\\\"Videos\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Work OneDrive\\\"}],\\\"widthHintPx\\\":217}')\"'"
               }
             ]
           },
@@ -4792,7 +4792,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"S\\\",\\\"keys\\\":[{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Capture Area\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"OCR\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"Record Screen\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Capture Screen\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Capture Window\\\"}],\\\"widthHintPx\\\":226}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"S\\\",\\\"keys\\\":[{\\\"key\\\":\\\"A\\\",\\\"desc\\\":\\\"Capture Area\\\"},{\\\"key\\\":\\\"O\\\",\\\"desc\\\":\\\"OCR\\\"},{\\\"key\\\":\\\"R\\\",\\\"desc\\\":\\\"Record Screen\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Capture Screen\\\"},{\\\"key\\\":\\\"W\\\",\\\"desc\\\":\\\"Capture Window\\\"}],\\\"widthHintPx\\\":226}')\"'"
               }
             ]
           },
@@ -4925,7 +4925,7 @@
                 }
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.show('{\\\"label\\\":\\\"W\\\",\\\"keys\\\":[{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Curly Braces\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Parentheses\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"Quotes\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Square Brackets\\\"}],\\\"widthHintPx\\\":235}')\""
+                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').show('{\\\"label\\\":\\\"W\\\",\\\"keys\\\":[{\\\"key\\\":\\\"C\\\",\\\"desc\\\":\\\"Curly Braces\\\"},{\\\"key\\\":\\\"P\\\",\\\"desc\\\":\\\"Parentheses\\\"},{\\\"key\\\":\\\"Q\\\",\\\"desc\\\":\\\"Quotes\\\"},{\\\"key\\\":\\\"S\\\",\\\"desc\\\":\\\"Square Brackets\\\"}],\\\"widthHintPx\\\":235}')\"'"
               }
             ]
           },

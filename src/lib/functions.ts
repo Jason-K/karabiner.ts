@@ -93,16 +93,21 @@ export type DeviceConfig = {
 // ============================================================================
 
 /**
- * Build layer info object for Hammerspoon display
+ * Escape JSON string for safe inclusion in AppleScript double-quoted strings
  */
-function escapeForShell(str: string): string {
-  // Escape for inclusion inside a double-quoted shell string and single-quoted Lua string
-  // Order matters: escape backslash first
+function escapeForAppleScript(str: string): string {
   return str
-    .replace(/\\/g, "\\\\")   // backslash
-    .replace(/"/g, '\\"')        // double quote
-    .replace(/`/g, '\\`')          // backtick (command substitution)
-    .replace(/\$/g, '\\$');        // dollar (var expansion)
+    .replace(/\\/g, '\\\\')  // backslash
+    .replace(/"/g, '\\"')      // double quote
+    .replace(/`/g, '\\`');      // backtick (shouldn't appear in JSON, but safe)
+}
+
+/**
+ * Convert layer info to JSON string safe for AppleScript
+ */
+function encodeLayerInfo(layerInfo: any): string {
+  const json = JSON.stringify(layerInfo);
+  return escapeForAppleScript(json);
 }
 
 function prettyKeyLabel(key: string): string {
@@ -152,8 +157,8 @@ function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string
     widthHintPx
   };
 
-  // Return as JSON string, escaped for shell command
-  return escapeForShell(JSON.stringify(layerInfo));
+  // Return as encoded JSON for URL
+  return encodeLayerInfo(layerInfo);
 }
 
 /**
@@ -179,7 +184,7 @@ function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
     widthHintPx
   };
 
-  return escapeForShell(JSON.stringify(layerInfo));
+  return encodeLayerInfo(layerInfo);
 }
 
 // ============================================================================
@@ -252,11 +257,11 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       toKey('spacebar', [], { halt: true }),
       toSetVar(spaceModVar, 0),
       ...allSublayerVars.map(v => toSetVar(v, 0)),
-      cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
+      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
     ])
     .toIfHeldDown([
       toSetVar(spaceModVar, 1),
-      cmd(`/opt/homebrew/bin/hs -c "local indicator = require('karabiner_layer_indicator'); indicator.show('${spaceModInfo}')"`)
+      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').show('${spaceModInfo}')"'`)
     ])
     .toAfterKeyUp([
       toSetVar(spaceModVar, 0),
@@ -266,7 +271,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       toStickyModifier(L.opt, 'off'),
       toStickyModifier(L.cmd, 'off'),
       toStickyModifier(L.ctrl, 'off'),
-      cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
+      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
     ])
     .toDelayedAction(
       [],
@@ -274,7 +279,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
         toKey('spacebar'),
         toSetVar(spaceModVar, 0),
         ...allSublayerVars.map(v => toSetVar(v, 0)),
-        cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\"")
+        cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
       ]
     )
     .parameters({
@@ -302,7 +307,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
           toSetVar(spaceModVar, 0),
           // Record activation timestamp (Phase 3 expression support)
           setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          cmd(`/opt/homebrew/bin/hs -c "local indicator = require('karabiner_layer_indicator'); indicator.show('${layerInfo}')"`)
+          cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').show('${layerInfo}')"'`)
         ])
         .build()
     );
@@ -379,7 +384,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
       if (releaseLayer && !config.stickyModifier) {
         events.push(toSetVar(sublayerVar, 0));
-        events.push(cmd("/opt/homebrew/bin/hs -c \"local indicator = require('karabiner_layer_indicator'); indicator.hide()\""));
+        events.push(cmd(`osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'`));
       }
 
       const mappingBuilder = (config.passModifiers
