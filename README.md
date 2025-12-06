@@ -56,6 +56,13 @@ For local development, imports of `karabiner.ts` resolve to the upstream mirror 
 
 This keeps runtime artifacts unchanged while enabling tight local iteration against upstream APIs.
 
+### Layer Indicator (Hammerspoon URL Scheme)
+
+- Layer popups now use the Hammerspoon URL handler instead of the `hs` CLI.
+- Karabiner sends background URL events: `open -g 'hammerspoon://layer_indicator?action=show&layer=space_*'` and `action=hide` on release.
+- The handler lives in Hammerspoon at `karabiner_layer_indicator_url.lua` (symlinked into `src/` for reference).
+- Benefit: no helper processes, faster updates, and no focus stealing.
+
 ## Files
 
 - **`src/index.ts`** - All rules converted to TypeScript using abstractions
