@@ -257,7 +257,6 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       toKey('spacebar', [], { halt: true }),
       toSetVar(spaceModVar, 0),
       ...allSublayerVars.map(v => toSetVar(v, 0)),
-      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
     ])
     .toIfHeldDown([
       toSetVar(spaceModVar, 1),
@@ -279,7 +278,6 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
         toKey('spacebar'),
         toSetVar(spaceModVar, 0),
         ...allSublayerVars.map(v => toSetVar(v, 0)),
-        cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
       ]
     )
     .parameters({
@@ -384,7 +382,6 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
       if (releaseLayer && !config.stickyModifier) {
         events.push(toSetVar(sublayerVar, 0));
-        events.push(cmd(`osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'`));
       }
 
       const mappingBuilder = (config.passModifiers

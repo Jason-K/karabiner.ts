@@ -3367,9 +3367,6 @@
                   "name": "space_w_sublayer",
                   "value": 0
                 }
-              },
-              {
-                "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'"
               }
             ],
             "to_if_held_down": [
@@ -3509,9 +3506,6 @@
                     "name": "space_w_sublayer",
                     "value": 0
                   }
-                },
-                {
-                  "shell_command": "osascript -e 'tell application \"Hammerspoon\" to execute lua code \"require('karabiner_layer_indicator').hide()\"'"
                 }
               ]
             },
