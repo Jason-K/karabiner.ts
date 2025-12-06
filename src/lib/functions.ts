@@ -93,98 +93,18 @@ export type DeviceConfig = {
 // ============================================================================
 
 /**
- * Escape JSON string for safe inclusion in AppleScript double-quoted strings
+ * Get the layer name for URL scheme
  */
-function escapeForAppleScript(str: string): string {
-  return str
-    .replace(/\\/g, '\\\\')  // backslash
-    .replace(/"/g, '\\"')      // double quote
-    .replace(/`/g, '\\`');      // backtick (shouldn't appear in JSON, but safe)
-}
-
-/**
- * Convert layer info to JSON string safe for AppleScript
- */
-function encodeLayerInfo(layerInfo: any): string {
-  const json = JSON.stringify(layerInfo);
-  return escapeForAppleScript(json);
-}
-
-function prettyKeyLabel(key: string): string {
-  const specials: Record<string, string> = {
-    '`': 'Grave',
-    '-': 'Hyphen',
-    '=': 'Equals',
-    '[': 'Left Bracket',
-    ']': 'Right Bracket',
-    '\\': 'Backslash',
-    ';': 'Semicolon',
-    "'": 'Quote',
-    ',': 'Comma',
-    '.': 'Period',
-    '/': 'Slash',
-    ' ': 'Space',
-  };
-  if (specials[key] !== undefined) return specials[key];
-  // Single letter/digit fallbacks
-  if (key.length === 1) return key.toUpperCase();
-  return key.toUpperCase();
-}
-
 function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string {
-  // Find the layer configuration
-  const layer = spaceLayers.find(l => l.layerKey === layerKey);
-  if (!layer) return '{"label":"?","keys":[]}';
-
-  // Build array of key mappings
-  const keyMappings = Object.entries(layer.mappings).map(([key, config]) => ({
-    key: prettyKeyLabel(key),
-    desc: config.description
-  }));
-
-  // Width hint: approximate width based on max "KEY — DESC" string length
-  const approxCharPx = 9; // conservative average glyph width in px
-  const paddingPx = 64;   // left/right padding and margins
-  const maxChars = keyMappings.reduce((m, k) => {
-    const len = (k.key + ' — ' + k.desc).length;
-    return Math.max(m, len);
-  }, 0);
-  const widthHintPx = Math.ceil(maxChars * approxCharPx + paddingPx);
-
-  const layerInfo = {
-    label: layer.layerKey.toUpperCase(),
-    keys: keyMappings,
-    widthHintPx
-  };
-
-  // Return as encoded JSON for URL
-  return encodeLayerInfo(layerInfo);
+  return `space_${layerKey.toUpperCase()}`;
 }
 
 /**
  * Build layer info for space_mod layer (shows available sublayers)
  */
 function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
-  const keyMappings = spaceLayers.map(layer => ({
-    key: layer.layerKey.toUpperCase(),
-    desc: layer.layerName
-  }));
-
-  const approxCharPx = 9;
-  const paddingPx = 64;
-  const maxChars = keyMappings.reduce((m, k) => {
-    const len = (k.key + ' — ' + k.desc).length;
-    return Math.max(m, len);
-  }, 0);
-  const widthHintPx = Math.ceil(maxChars * approxCharPx + paddingPx);
-
-  const layerInfo = {
-    label: '␣',
-    keys: keyMappings,
-    widthHintPx
-  };
-
-  return encodeLayerInfo(layerInfo);
+  // Return the space layer name for URL scheme
+  return 'space';
 }
 
 // ============================================================================
@@ -260,7 +180,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
     ])
     .toIfHeldDown([
       toSetVar(spaceModVar, 1),
-      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').show('${spaceModInfo}')"'`)
+      cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space'`)
     ])
     .toAfterKeyUp([
       toSetVar(spaceModVar, 0),
@@ -270,7 +190,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       toStickyModifier(L.opt, 'off'),
       toStickyModifier(L.cmd, 'off'),
       toStickyModifier(L.ctrl, 'off'),
-      cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').hide()"'`)
+      cmd(`open -g 'hammerspoon://layer_indicator?action=hide'`)
     ])
     .toDelayedAction(
       [],
@@ -305,7 +225,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
           toSetVar(spaceModVar, 0),
           // Record activation timestamp (Phase 3 expression support)
           setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          cmd(`osascript -e 'tell application "Hammerspoon" to execute lua code "require('karabiner_layer_indicator').show('${layerInfo}')"'`)
+          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}'`)
         ])
         .build()
     );
