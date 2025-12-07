@@ -17,25 +17,26 @@
  */
 
 import {
-    ifApp,
-    ifVar,
-    map,
-    rule,
-    toKey,
-    toSetVar,
-    writeToProfile,
+  ifApp,
+  ifVar,
+  map,
+  rule,
+  toKey,
+  toSetVar,
+  writeToProfile,
 } from "karabiner.ts";
 import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
-    DeviceConfig,
-    SubLayerConfig,
-    TapHoldConfig,
+  DeviceConfig,
+  SubLayerConfig,
+  TapHoldConfig,
 } from "./lib/functions";
 import {
-    generateEscapeRule,
-    generateSpaceLayerRules,
-    generateTapHoldRules,
-    updateDeviceConfigurations,
+  emitLayerDefinitions,
+  generateEscapeRule,
+  generateSpaceLayerRules,
+  generateTapHoldRules,
+  updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 import { indentLine } from "./lib/text";
@@ -107,7 +108,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
  * Space layer system provides access to sublayers for quick actions:
  *
  * Usage:
- * 1. Hold Space (200ms threshold)
+ * 1. Hold Space (150ms threshold)
  * 2. Tap a layer key (d/a/f) to activate that sublayer
  * 3. Tap an action key to execute and deactivate sublayer
  *
@@ -432,6 +433,10 @@ const spaceLayers: SubLayerConfig[] = [
 
 // Generate tap-hold rules with automatic conflict prevention
 const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
+
+// Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
+const debugMode = process.env.KARABINER_DEBUG === 'true';
+emitLayerDefinitions(spaceLayers, undefined, debugMode);
 
 // ============================================================================
 // SPECIAL RULESf

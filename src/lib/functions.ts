@@ -16,8 +16,10 @@
  * These generators keep src/index.ts clean and declarative.
  */
 
+import fs from 'fs';
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toSetVar, toStickyModifier } from 'karabiner.ts';
+import path from 'path';
 import { cmd, openApp, setVarExpr, tapHold, type OpenAppOpts } from './builders';
 import { L } from './mods';
 
@@ -91,6 +93,94 @@ export type DeviceConfig = {
 // ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
+
+/**
+ * Emit space layer definitions to JSON file for Hammerspoon consumption
+ *
+ * This function generates a JSON file containing all space layer definitions,
+ * allowing Hammerspoon to dynamically build its layer indicator display without
+ * needing manual synchronization when layers change.
+ *
+ * @param spaceLayers - Array of space layer configurations
+ * @param outputPath - Path where JSON should be written (defaults to hammerspoon directory)
+ * @param debugMode - If true, logs detailed information about the emission process
+ */
+export function emitLayerDefinitions(
+  spaceLayers: SubLayerConfig[],
+  outputPath?: string,
+  debugMode: boolean = false
+): void {
+  try {
+    // Default output path: ~/dotfiles/hammerspoon/src/space_layers.json
+    const finalPath = outputPath || path.join(
+      process.env.HOME || '/Users/jason',
+      'dotfiles/hammerspoon/src/space_layers.json'
+    );
+
+    if (debugMode) {
+      console.log(`[LayerEmit Debug] Starting emission to: ${finalPath}`);
+    }
+
+    // Build layer definitions object
+    const layers: Record<string, any> = {};
+
+    // Add main space layer
+    layers['space'] = {
+      label: '␣',
+      keys: spaceLayers.map(layer => ({
+        key: layer.layerKey.toUpperCase(),
+        desc: layer.layerName,
+      })),
+      widthHintPx: 235,
+    };
+
+    // Add each sublayer with its mappings
+    spaceLayers.forEach(({ layerKey, layerName, mappings }) => {
+      const layerId = `space_${layerKey.toUpperCase()}`;
+      const keys = Object.entries(mappings).map(([key, config]) => ({
+        key: key.toUpperCase(),
+        desc: config.description,
+      }));
+
+      layers[layerId] = {
+        label: layerKey.toUpperCase(),
+        keys,
+        widthHintPx: 235,
+      };
+
+      if (debugMode) {
+        console.log(
+          `[LayerEmit Debug] Emitted layer ${layerId} with ${keys.length} keys`
+        );
+      }
+    });
+
+    // Ensure directory exists
+    const dir = path.dirname(finalPath);
+    if (!fs.existsSync(dir)) {
+      if (debugMode) {
+        console.log(`[LayerEmit Debug] Creating directory: ${dir}`);
+      }
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // Write JSON file
+    fs.writeFileSync(finalPath, JSON.stringify(layers, null, 2));
+
+    console.log(
+      `✓ Emitted ${Object.keys(layers).length} layer definitions to ${finalPath}`
+    );
+
+    if (debugMode) {
+      console.log(`[LayerEmit Debug] Emission complete. Layers:`, Object.keys(layers));
+    }
+  } catch (error) {
+    console.error('✗ Failed to emit layer definitions:', error);
+    if (debugMode) {
+      console.error('[LayerEmit Debug] Full error:', error);
+    }
+  }
+}
 
 /**
  * Get the layer name for URL scheme
@@ -201,8 +291,8 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       ]
     )
     .parameters({
-      'basic.to_if_alone_timeout_milliseconds': 300,
-      'basic.to_if_held_down_threshold_milliseconds': 300,
+      'basic.to_if_alone_timeout_milliseconds': 150,
+      'basic.to_if_held_down_threshold_milliseconds': 150,
     });
 
   rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
