@@ -124,8 +124,10 @@ export function tapHold({ key, alone, hold, timeoutMs = 300, thresholdMs = 300, 
 interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
   key: string;
   firstVar: string; // variable marking first tap
-  holdEvents: ToEvent[]; // events when held
-  aloneEvents: ToEvent[]; // events when alone
+  aloneEvents?: ToEvent[]; // events when tapped alone (tap)
+  holdEvents?: ToEvent[]; // events when held after first tap or alone (tap-hold)
+  tapTapEvents?: ToEvent[]; // events when tapped twice (tap-tap)
+  tapTapHoldEvents?: ToEvent[]; // events when held after second tap (tap-tap-hold)
   holdMods?: Modifier[]; // optional modifiers for hold using key repeat
 }
 
@@ -133,24 +135,25 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  * Creates a complex double-tap-hold pattern using variable tracking.
  *
  * BEHAVIOR:
- * 1. First tap: Sets firstVar=1 for thresholdMs window
- * 2. Second tap within window: Executes different behaviorx
- * 3. Hold: Executes hold events
+ * 1. First tap alone: Executes aloneEvents
+ * 2. First tap held: Executes holdEvents
+ * 3. Second tap (within thresholdMs): Executes tapTapEvents
+ * 4. Second tap held: Executes tapTapHoldEvents
  *
- * This pattern is used for advanced sequences like the original "M" rule
- * where tapping once vs twice vs holding all have different behaviors.
+ * This pattern is used for advanced sequences where tapping once vs twice
+ * vs holding all have different behaviors.
  *
- * NOTE: This is kept for reference but not currently used in the main config.
- * The simpler tapHold() function handles most use cases more cleanly.
+ * MANIPULATOR STRUCTURE:
+ * - secondTap: Detects when variable is set; handles tap-tap and tap-tap-hold
+ * - firstTap: Detects initial keystroke; sets variable and handles tap/tap-hold
  *
  * @param opts Configuration object with variable tracking
  * @returns Array of BasicManipulator objects
  */
-export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods, thresholdMs = 300, description }: VarTapTapHoldOpts) {
-  // New implementation matches requested JSON exactly:
+export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEvents, tapTapHoldEvents, holdMods, thresholdMs = 300, description }: VarTapTapHoldOpts) {
   // Two manipulators:
-  // 1. Second tap (variable_if firstVar=1) with to_if_alone / to_if_held_down ordering: clear var then action
-  // 2. First tap (no variable yet) sets variable then passes through key, with delayed action resetting var
+  // 1. secondTap (variable_if firstVar=1): Handles tap-tap and tap-tap-hold
+  // 2. firstTap (no condition): Sets variable and passes through key with delayed action
 
   const secondTap: BasicManipulator = {
     type: 'basic',
@@ -165,14 +168,14 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
       'basic.to_if_alone_timeout_milliseconds': thresholdMs,
       'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
     },
-    description: description || `${key} tap-tap active`,
+    description: description || `${key} tap-tap/tap-tap-hold`,
     to_if_alone: [
       toSetVar(firstVar, 0),
-      ...aloneEvents,
+      ...(tapTapEvents ?? []),
     ],
     to_if_held_down: [
       toSetVar(firstVar, 0),
-      ...holdEvents,
+      ...(tapTapHoldEvents ?? []),
     ],
   } as any;
 
@@ -185,7 +188,7 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
     parameters: {
       'basic.to_delayed_action_delay_milliseconds': thresholdMs,
     },
-    description: description || `${key} tap-tap prime`,
+    description: description || `${key} tap/tap-hold prime`,
     to: [
       toSetVar(firstVar, 1),
       toKey(key as any),
@@ -196,7 +199,33 @@ export function varTapTapHold({ key, firstVar, holdEvents, aloneEvents, holdMods
     },
   } as any;
 
-  return [secondTap, firstTap];
+  // If aloneEvents or holdEvents are defined, add them via a separate manipulator
+  // to avoid conflicts with the modifier passthrough behavior
+  const manipulators: BasicManipulator[] = [secondTap, firstTap];
+
+  if ((aloneEvents && aloneEvents.length > 0) || (holdEvents && holdEvents.length > 0)) {
+    const tapHandlerTap: BasicManipulator = {
+      type: 'basic',
+      from: {
+        key_code: key as any,
+        modifiers: { optional: ['any'] },
+      },
+      conditions: [
+        { type: 'variable_if', name: firstVar, value: 1 },
+      ],
+      parameters: {
+        'basic.to_if_alone_timeout_milliseconds': thresholdMs,
+        'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
+      },
+      description: description || `${key} tap/tap-hold handler`,
+      to_if_alone: aloneEvents ?? [],
+      to_if_held_down: holdEvents ?? [],
+    } as any;
+    // Insert before secondTap so it has higher priority
+    manipulators.unshift(tapHandlerTap);
+  }
+
+  return manipulators;
 }
 
 /**

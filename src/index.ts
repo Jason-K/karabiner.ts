@@ -71,6 +71,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
         ],
     },
   i: {  description: "Indent", hold: indentLine() },
+  j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh')] },
   m: {  description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
   n: {  description: "New note / Skim highlight", hold: [toKey("n")],
         appOverrides: [
@@ -80,7 +81,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   o: {  description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
   q: { description: "QSpace Pro", hold: [openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" })] },
-  r: { description: "Last d/l", hold: [toKey("z", ["option"], { repeat: false })] },
+  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
   t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
   v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
@@ -460,21 +461,25 @@ let rules: any[] = [
     })
   ),
 
-  // ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)
+  // ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)
   rule(
-    "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)"
+    "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)"
   ).manipulators(
     varTapTapHold({
       key: "escape",
       firstVar: "escape_first_tap",
-      aloneEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
+      aloneEvents: [toKey("escape")],
       holdEvents: [
+        cmd("bash ~/Scripts/Metascripts/kill_foreground.sh")
+      ],
+      tapTapEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
+      tapTapHoldEvents: [
         cmd(
           "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
         ),
       ],
       thresholdMs: 250,
-      description: "ESC tap/double-tap/hold",
+      description: "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
     })
   ),
 

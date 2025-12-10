@@ -291,8 +291,8 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
       ]
     )
     .parameters({
-      'basic.to_if_alone_timeout_milliseconds': 150,
-      'basic.to_if_held_down_threshold_milliseconds': 150,
+      'basic.to_if_alone_timeout_milliseconds': 200,
+      'basic.to_if_held_down_threshold_milliseconds': 200,
     });
 
   rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
