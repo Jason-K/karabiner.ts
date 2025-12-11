@@ -71,7 +71,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
         ],
     },
   i: {  description: "Indent", hold: indentLine() },
-  j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh')] },
+  j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   m: {  description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
   n: {  description: "New note / Skim highlight", hold: [toKey("n")],
         appOverrides: [
@@ -81,7 +81,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   o: {  description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
   q: { description: "QSpace Pro", hold: [openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" })] },
-  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh')] },
+  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
   t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
   v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
@@ -95,10 +95,10 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "f7": {description: "Rewind", hold: [toKey("rewind", [], { repeat: true })]},
   "f8": {description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })]},
   "f9": {description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })]},
-  "f10": {description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })]},
-  "f11": {description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })]},
-  "f12": {description: "Mute", hold: [toKey("mute", [], { repeat: false })]},
-  slash: { description: "search for files", hold: [toKey("f17", HYPER, { repeat: false })] },
+  "f10": {description: "Mute", hold: [toKey("mute", [], { repeat: false })]},
+  "f11": {description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })]},
+  "f12": {description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })]},
+  slash: { description: "search for files", hold: [toKey("spacebar",  ["left_command" , "left_shift"] , { repeat: false })] },
   tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 

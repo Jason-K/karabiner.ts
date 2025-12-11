@@ -1036,7 +1036,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh"
+                "shell_command": "bash ~/Scripts/Metascripts/recent_dl.sh"
               }
             ],
             "to_delayed_action": {
@@ -1611,7 +1611,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "bash ~/Scripts/Metascripts/recent-dl/recent_dl.sh"
+                "shell_command": "bash ~/Scripts/Metascripts/recent_dl.sh"
               }
             ],
             "to_delayed_action": {
@@ -2690,8 +2690,8 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": true,
-                "key_code": "volume_decrement",
+                "repeat": false,
+                "key_code": "mute",
                 "modifiers": []
               }
             ],
@@ -2750,7 +2750,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F10 hold -> Volume Down"
+        "ruleDescription": "F10 hold -> Mute"
       },
       {
         "conditions": [],
@@ -2774,7 +2774,7 @@
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "volume_increment",
+                "key_code": "volume_decrement",
                 "modifiers": []
               }
             ],
@@ -2833,7 +2833,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F11 hold -> Volume Up"
+        "ruleDescription": "F11 hold -> Volume Down"
       },
       {
         "conditions": [],
@@ -2856,8 +2856,8 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "mute",
+                "repeat": true,
+                "key_code": "volume_increment",
                 "modifiers": []
               }
             ],
@@ -2916,7 +2916,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F12 hold -> Mute"
+        "ruleDescription": "F12 hold -> Volume Up"
       },
       {
         "conditions": [],
@@ -2940,11 +2940,10 @@
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "f17",
+                "key_code": "spacebar",
                 "modifiers": [
-                  "command",
-                  "option",
-                  "control"
+                  "left_command",
+                  "left_shift"
                 ]
               }
             ],
