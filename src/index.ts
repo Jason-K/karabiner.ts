@@ -546,6 +546,27 @@ let rules: any[] = [
       .build(),
   ]),
 
+  // GRAVE ACCENT & TILDE - Tap sends tilde, hold sends hyper+f5 with deferred release
+  rule("grave_accent_and_tilde tap/hold -> grave or hyper+f5").manipulators([
+    {
+      type: "basic" as const,
+      from: {
+        key_code: "grave_accent_and_tilde" as any,
+      },
+      parameters: {
+        "basic.to_if_alone_timeout_milliseconds": 400,
+        "basic.to_if_held_down_threshold_milliseconds": 400,
+      },
+      to_if_alone: [
+        toKey("grave_accent_and_tilde", [], { halt: true }),
+      ],
+      to_if_held_down: [
+        toKey("f5", HYPER, { halt: false }),
+      ],
+      description: "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)"
+    } as any,
+  ]),
+
   // ENTER/RETURN - Hold for quick format (both keypad and regular)
   ...["keypad_enter", "return_or_enter"].map((key) =>
     rule(`${key} hold -> quick format`).manipulators([

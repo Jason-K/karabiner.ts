@@ -5237,6 +5237,42 @@
       {
         "conditions": [],
         "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "grave_accent_and_tilde"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "grave_accent_and_tilde",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": false,
+                "key_code": "f5",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "description": "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "grave_accent_and_tilde tap/hold -> grave or hyper+f5"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {}
         ],
         "allowEmptyManipulators": false,
