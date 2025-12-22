@@ -54,7 +54,7 @@ import { indentLine } from "./lib/text";
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: {  description: "Antinote", hold: [openApp({ bundleIdentifier: "com.chabomakers.Antinote-setapp" })],},
+  a: {  description: "Antinote", hold: [cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.chabomakers.Antinote-setapp'")] },
   b: {  description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
         appOverrides: [
           { app: "net.sourceforge.skim-app.skim", hold: [ cmd( "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript" ) ],},
@@ -64,7 +64,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   d: {  description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: {  description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
   f: {  description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
-  g: {  description: "ChatGPT", hold: [toKey("g", HYPER, { repeat: false })] },
+  g: {  description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.openai.chat'")] },
   h: {  description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
         appOverrides: [
           { app: "net.sourceforge.skim-app.skim", hold: [ cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript") ] },
@@ -80,18 +80,18 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
      },
   o: {  description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
-  q: { description: "QSpace Pro", hold: [openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" })] },
+  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'")] },
   r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
   t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
   v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
   w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
-  "8": { description: "RingCentral", hold: [openApp({ bundleIdentifier: "com.ringcentral.glip" })] },
+  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'")] },
   "f1": {description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })]},
   "f2": {description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })]},
   "f3": {description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })]},
   "f4": {description: "Launchpad", hold: [toKey("launchpad", [], { repeat: false })]},
-  "f5": {description: "Dictation", hold: [toKey("fn", [], { repeat: false })]},
+  "f5": {description: "Dictation", hold: [toKey("f5", ['command','option','control'], { repeat: false })]},
   "f7": {description: "Rewind", hold: [toKey("rewind", [], { repeat: true })]},
   "f8": {description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })]},
   "f9": {description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })]},
@@ -469,15 +469,9 @@ let rules: any[] = [
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [toKey("escape")],
-      holdEvents: [
-        cmd("bash ~/Scripts/Metascripts/kill_foreground.sh")
-      ],
-      tapTapEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
-      tapTapHoldEvents: [
-        cmd(
-          "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
-        ),
-      ],
+      holdEvents: [cmd("execute-kill.sh --foreground")],
+      tapTapEvents: [cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.itone.ProcessSpy'")],
+      tapTapHoldEvents: [cmd("execute-kill.sh"),],
       thresholdMs: 250,
       description: "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
     })
@@ -631,46 +625,49 @@ let rules: any[] = [
   // RCMD + __ - App launch or focus
   rule("RCMD + Key - App launch or focus").manipulators([
     ...map("a", "right_command")
-      .to([openApp({ bundleIdentifier: "com.adobe.Acrobat.Pro" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.adobe.Acrobat.Pro'"))
+      .build(),
+    ...map("b", "right_command")
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.imput.helium'"))
       .build(),
     ...map("c", "right_command")
-      .to([openApp({ bundleIdentifier: "com.microsoft.VSCodeInsiders" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.VSCodeInsiders'"))
       .build(),
     ...map("d", "right_command")
-      .to([openApp({ bundleIdentifier: "company.thebrowser.dia" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'company.thebrowser.dia'"))
       .build(),
     ...map("e", "right_command")
-      .to([openApp({ bundleIdentifier: "ch.protonmail.desktop" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'ch.protonmail.desktop'"))
       .build(),
     ...map("f", "right_command")
-      .to([openApp({ bundleIdentifier: "com.jinghaoshe.qspace.pro" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"))
       .build(),
     ...map("m", "right_command")
-      .to([openApp({ bundleIdentifier: "com.apple.MobileSMS" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.MobileSMS'"))
       .build(),
     ...map("o", "right_command")
-      .to([openApp({ bundleIdentifier: "com.microsoft.Outlook" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Outlook'"))
       .build(),
     ...map("p", "right_command")
-      .to([openApp({ bundleIdentifier: "net.sourceforge.skim-app.skim" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.sourceforge.skim-app.skim'"))
       .build(),
     ...map("q", "right_command")
-      .to([openApp({ bundleIdentifier: "com.jinghaoshe.qspace.pro" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"))
       .build(),
     ...map("r", "right_command")
-      .to([openApp({ bundleIdentifier: "com.ringcentral.glip" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"))
       .build(),
     ...map("s", "right_command")
-      .to([openApp({ bundleIdentifier: "com.apple.Safari" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.Safari'"))
       .build(),
     ...map("t", "right_command")
-      .to([openApp({ bundleIdentifier: "com.microsoft.teams2" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.teams2'"))
       .build(),
     ...map("w", "right_command")
-      .to([openApp({ bundleIdentifier: "com.microsoft.Word" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Word'"))
       .build(),
     ...map("8", "right_command")
-      .to([openApp({ bundleIdentifier: "com.electron.8x8---virtual-office" })])
+      .to(cmd("/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"))
       .build(),
   ]),
   // Generate escape rule to reset all variables

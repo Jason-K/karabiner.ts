@@ -22,11 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.ringcentral.glip"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -107,11 +103,7 @@
             ],
             "to_if_held_down": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.chabomakers.Antinote-setapp"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.chabomakers.Antinote-setapp'"
               }
             ],
             "to_delayed_action": {
@@ -702,13 +694,7 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "g",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.openai.chat'"
               }
             ],
             "to_delayed_action": {
@@ -1526,11 +1512,7 @@
             ],
             "to_if_held_down": [
               {
-                "software_function": {
-                  "open_application": {
-                    "file_path": "/System/Volumes/Data/Applications/QSpace Pro.app"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
               }
             ],
             "to_delayed_action": {
@@ -2359,8 +2341,12 @@
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "fn",
-                "modifiers": []
+                "key_code": "f5",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -3251,7 +3237,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "bash ~/Scripts/Metascripts/kill_foreground.sh"
+                "shell_command": "execute-kill.sh --foreground"
               }
             ]
           },
@@ -3285,11 +3271,7 @@
                 }
               },
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.itone.ProcessSpy"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.itone.ProcessSpy'"
               }
             ],
             "to_if_held_down": [
@@ -3300,7 +3282,7 @@
                 }
               },
               {
-                "shell_command": "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
+                "shell_command": "execute-kill.sh"
               }
             ]
           },
@@ -5444,11 +5426,23 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.adobe.Acrobat.Pro"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.adobe.Acrobat.Pro'"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "b",
+              "modifiers": {
+                "mandatory": [
+                  "right_command"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.imput.helium'"
               }
             ]
           },
@@ -5464,11 +5458,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.microsoft.VSCodeInsiders"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.VSCodeInsiders'"
               }
             ]
           },
@@ -5484,11 +5474,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "company.thebrowser.dia"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'company.thebrowser.dia'"
               }
             ]
           },
@@ -5504,11 +5490,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "ch.protonmail.desktop"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'ch.protonmail.desktop'"
               }
             ]
           },
@@ -5524,11 +5506,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
               }
             ]
           },
@@ -5544,11 +5522,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.apple.MobileSMS"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.MobileSMS'"
               }
             ]
           },
@@ -5564,11 +5538,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.microsoft.Outlook"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Outlook'"
               }
             ]
           },
@@ -5584,11 +5554,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "net.sourceforge.skim-app.skim"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.sourceforge.skim-app.skim'"
               }
             ]
           },
@@ -5604,11 +5570,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
               }
             ]
           },
@@ -5624,11 +5586,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.ringcentral.glip"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
               }
             ]
           },
@@ -5644,11 +5602,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.apple.Safari"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.Safari'"
               }
             ]
           },
@@ -5664,11 +5618,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.microsoft.teams2"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.teams2'"
               }
             ]
           },
@@ -5684,11 +5634,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.microsoft.Word"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Word'"
               }
             ]
           },
@@ -5704,11 +5650,7 @@
             },
             "to": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.electron.8x8---virtual-office"
-                  }
-                }
+                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
               }
             ]
           }
