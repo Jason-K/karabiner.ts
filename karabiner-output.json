@@ -22,7 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
               }
             ],
             "to_delayed_action": {
@@ -103,7 +103,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'"
               }
             ],
             "to_delayed_action": {
@@ -694,7 +694,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.openai.chat'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.openai.chat' && echo 'ChatGPT launched'"
               }
             ],
             "to_delayed_action": {
@@ -848,7 +848,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'hs.openConsole()'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'"
               }
             ],
             "to_delayed_action": {
@@ -1512,7 +1512,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
               }
             ],
             "to_delayed_action": {
@@ -2925,7 +2925,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one' && echo 'Cardinal One launched'"
               }
             ],
             "to_delayed_action": {
@@ -3096,6 +3096,12 @@
             "description": "Left CMD tap/double-tap/hold",
             "to_if_alone": [
               {
+                "set_variable": {
+                  "name": "lcmd_first_tap",
+                  "value": 0
+                }
+              },
+              {
                 "software_function": {
                   "open_application": {
                     "frontmost_application_history_index": 1
@@ -3105,52 +3111,37 @@
             ],
             "to_if_held_down": [
               {
+                "set_variable": {
+                  "name": "lcmd_first_tap",
+                  "value": 0
+                }
+              },
+              {
                 "repeat": false,
                 "key_code": "tab",
                 "modifiers": [
                   "left_command"
                 ]
               }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_first_tap",
-                "value": 1
-              }
             ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 250,
-              "basic.to_if_held_down_threshold_milliseconds": 250
-            },
-            "description": "Left CMD tap/double-tap/hold",
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "lcmd_first_tap",
-                  "value": 0
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "lcmd_first_tap",
+                    "value": 0
+                  }
                 }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "lcmd_first_tap",
-                  "value": 0
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "lcmd_first_tap",
+                    "value": 0
+                  }
                 }
-              }
-            ]
+              ]
+            }
           },
           {
             "type": "basic",
@@ -3227,46 +3218,13 @@
             "description": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
             "to_if_alone": [
               {
-                "key_code": "escape"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app --foreground"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "escape_first_tap",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 250,
-              "basic.to_if_held_down_threshold_milliseconds": 250
-            },
-            "description": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
-            "to_if_alone": [
-              {
                 "set_variable": {
                   "name": "escape_first_tap",
                   "value": 0
                 }
               },
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
               }
             ],
             "to_if_held_down": [
@@ -3279,7 +3237,25 @@
               {
                 "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app"
               }
-            ]
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "escape_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "escape_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            }
           },
           {
             "type": "basic",
@@ -3292,7 +3268,9 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 250
+              "basic.to_delayed_action_delay_milliseconds": 250,
+              "basic.to_if_held_down_threshold_milliseconds": 250,
+              "basic.to_if_alone_timeout_milliseconds": 250
             },
             "description": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
             "to": [
@@ -3301,9 +3279,28 @@
                   "name": "escape_first_tap",
                   "value": 1
                 }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "escape_first_tap",
+                  "value": 1
+                }
               },
               {
                 "key_code": "escape"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "escape_first_tap",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app --foreground"
               }
             ],
             "to_delayed_action": {

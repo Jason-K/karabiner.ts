@@ -129,6 +129,7 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
   tapTapEvents?: ToEvent[]; // events when tapped twice (tap-tap)
   tapTapHoldEvents?: ToEvent[]; // events when held after second tap (tap-tap-hold)
   holdMods?: Modifier[]; // optional modifiers for hold using key repeat
+  allowPassThrough?: boolean; // if true, emits the key immediately (needed for modifiers like LCMD)
 }
 
 /**
@@ -150,11 +151,8 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  * @param opts Configuration object with variable tracking
  * @returns Array of BasicManipulator objects
  */
-export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEvents, tapTapHoldEvents, holdMods, thresholdMs = 300, description }: VarTapTapHoldOpts) {
-  // Two manipulators:
-  // 1. secondTap (variable_if firstVar=1): Handles tap-tap and tap-tap-hold
-  // 2. firstTap (no condition): Sets variable and passes through key with delayed action
-
+export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEvents, tapTapHoldEvents, holdMods, thresholdMs = 300, description, allowPassThrough }: VarTapTapHoldOpts) {
+  // 1. Second Tap Manipulator: Handles tap-tap (alone) and tap-tap-hold (held)
   const secondTap: BasicManipulator = {
     type: 'basic',
     from: {
@@ -166,66 +164,87 @@ export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEv
     ],
     parameters: {
       'basic.to_if_alone_timeout_milliseconds': thresholdMs,
+      // Use thresholdMs for held down threshold as well
       'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
     },
-    description: description || `${key} tap-tap/tap-tap-hold`,
+    description: description || `${key} second tap (tap-tap / tap-tap-hold)`,
+    // Tap-Tap detected
     to_if_alone: [
       toSetVar(firstVar, 0),
       ...(tapTapEvents ?? []),
     ],
+    // Tap-Tap-Hold detected
     to_if_held_down: [
       toSetVar(firstVar, 0),
       ...(tapTapHoldEvents ?? []),
     ],
-  } as any;
-
-  const firstTap: BasicManipulator = {
-    type: 'basic',
-    from: {
-      key_code: key as any,
-      modifiers: { optional: ['any'] },
-    },
-    parameters: {
-      'basic.to_delayed_action_delay_milliseconds': thresholdMs,
-    },
-    description: description || `${key} tap/tap-hold prime`,
-    to: [
-      toSetVar(firstVar, 1),
-      toKey(key as any),
-    ],
+    // Cleanup
     to_delayed_action: {
       to_if_invoked: [toSetVar(firstVar, 0)],
       to_if_canceled: [toSetVar(firstVar, 0)],
     },
   } as any;
 
-  // If aloneEvents or holdEvents are defined, add them via a separate manipulator
-  // to avoid conflicts with the modifier passthrough behavior
-  const manipulators: BasicManipulator[] = [secondTap, firstTap];
+  // 2. First Tap Manipulator
+  let firstTap: BasicManipulator;
 
-  if ((aloneEvents && aloneEvents.length > 0) || (holdEvents && holdEvents.length > 0)) {
-    const tapHandlerTap: BasicManipulator = {
+  if (allowPassThrough) {
+    // PASS-THROUGH MODE (Corrected based on User's JSON)
+    // - No to_if_alone / to_if_held_down (prevents suppression)
+    // - Immediate emission of key
+    // - Variable reset via delayed action
+    firstTap = {
       type: 'basic',
       from: {
         key_code: key as any,
         modifiers: { optional: ['any'] },
       },
-      conditions: [
-        { type: 'variable_if', name: firstVar, value: 1 },
-      ],
       parameters: {
-        'basic.to_if_alone_timeout_milliseconds': thresholdMs,
-        'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
+        'basic.to_delayed_action_delay_milliseconds': thresholdMs,
       },
-      description: description || `${key} tap/tap-hold handler`,
-      to_if_alone: aloneEvents ?? [],
-      to_if_held_down: holdEvents ?? [],
+      description: description || `${key} first tap (pass-through)`,
+      to: [
+        toSetVar(firstVar, 1),
+        toKey(key as any), // Immediate emission
+      ],
+      to_delayed_action: {
+        to_if_invoked: [toSetVar(firstVar, 0)],
+        to_if_canceled: [toSetVar(firstVar, 0)],
+      },
     } as any;
-    // Insert before secondTap so it has higher priority
-    manipulators.unshift(tapHandlerTap);
+  } else {
+    // STANDARD MODE (Hold/Alone support)
+    firstTap = {
+      type: 'basic',
+      from: {
+        key_code: key as any,
+        modifiers: { optional: ['any'] },
+      },
+      parameters: {
+        'basic.to_delayed_action_delay_milliseconds': thresholdMs,
+        'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
+        'basic.to_if_alone_timeout_milliseconds': thresholdMs,
+      },
+      description: description || `${key} first tap (tap / tap-hold)`,
+      to: [
+        toSetVar(firstVar, 1),
+      ],
+      to_if_alone: [
+        toSetVar(firstVar, 1), // Refresh var to keep window open
+        ...(aloneEvents ?? []),
+      ],
+      to_if_held_down: [
+        toSetVar(firstVar, 0),
+        ...(holdEvents ?? []),
+      ],
+      to_delayed_action: {
+        to_if_invoked: [toSetVar(firstVar, 0)],
+        to_if_canceled: [toSetVar(firstVar, 0)],
+      },
+    } as any;
   }
 
-  return manipulators;
+  return [secondTap, firstTap];
 }
 
 /**
