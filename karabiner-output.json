@@ -22,7 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -103,7 +103,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.chabomakers.Antinote-setapp'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp'"
               }
             ],
             "to_delayed_action": {
@@ -694,7 +694,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.openai.chat'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.openai.chat'"
               }
             ],
             "to_delayed_action": {
@@ -1512,7 +1512,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"
               }
             ],
             "to_delayed_action": {
@@ -2925,12 +2925,7 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "spacebar",
-                "modifiers": [
-                  "left_command",
-                  "left_shift"
-                ]
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one'"
               }
             ],
             "to_delayed_action": {
@@ -3237,7 +3232,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "execute-kill.sh --foreground"
+                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app --foreground"
               }
             ]
           },
@@ -3271,7 +3266,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.itone.ProcessSpy'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy'"
               }
             ],
             "to_if_held_down": [
@@ -3282,7 +3277,7 @@
                 }
               },
               {
-                "shell_command": "execute-kill.sh"
+                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app"
               }
             ]
           },
@@ -5426,7 +5421,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.adobe.Acrobat.Pro'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro' && echo 'Acrobat Pro launched'"
               }
             ]
           },
@@ -5442,7 +5437,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.imput.helium'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"
               }
             ]
           },
@@ -5458,7 +5453,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.VSCodeInsiders'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders' && echo 'VSCode Insiders launched'"
               }
             ]
           },
@@ -5474,7 +5469,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'company.thebrowser.dia'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia' && echo 'The Browser launched'"
               }
             ]
           },
@@ -5490,7 +5485,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'ch.protonmail.desktop'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop' && echo 'ProtonMail launched'"
               }
             ]
           },
@@ -5506,7 +5501,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
               }
             ]
           },
@@ -5522,7 +5517,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.MobileSMS'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"
               }
             ]
           },
@@ -5538,7 +5533,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Outlook'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook' && echo 'Outlook launched'"
               }
             ]
           },
@@ -5554,7 +5549,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'net.sourceforge.skim-app.skim'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim' && echo 'Skim launched'"
               }
             ]
           },
@@ -5570,7 +5565,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.jinghaoshe.qspace.pro'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
               }
             ]
           },
@@ -5586,7 +5581,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
               }
             ]
           },
@@ -5602,7 +5597,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.apple.Safari'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari' && echo 'Safari launched'"
               }
             ]
           },
@@ -5618,7 +5613,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.teams2'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2' && echo 'Teams launched'"
               }
             ]
           },
@@ -5634,7 +5629,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.microsoft.Word'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word' && echo 'Word launched'"
               }
             ]
           },
@@ -5650,7 +5645,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/launch_or_activate/launch-or-activate 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
               }
             ]
           }
