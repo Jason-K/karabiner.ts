@@ -42,6 +42,46 @@ import { HYPER, L, MEH, SUPER } from "./lib/mods";
 import { indentLine } from "./lib/text";
 
 // ============================================================================
+// CONFIGURATION
+// ============================================================================
+/**
+ * Folder/Finder replacement app selection
+ * Set to 'bloom' or 'qspace' to choose which app opens folders
+ *
+ * Note: Bloom requires 'open -a Bloom' with escaped paths, while QspacePro uses bundle ID
+ */
+const FOLDER_OPENER: 'bloom' | 'qspace' = 'bloom';
+
+/**
+ * Generate the correct open command for the selected folder opener app
+ * Bloom: uses 'open -a Bloom' with escaped path
+ * QspacePro: uses 'open -b' with bundle ID
+ */
+const getOpenFolderCommand = (folderPath: string): string => {
+  if (FOLDER_OPENER === 'bloom') {
+    // Bloom requires 'open -a' with escaped path (spaces escaped with backslash)
+    const escapedPath = folderPath.replace(/ /g, '\\ ');
+    return `open -a Bloom ${escapedPath}`;
+  } else {
+    // QspacePro uses bundle ID
+    return `open -b com.jinghaoshe.qspace.pro '${folderPath}'`;
+  }
+};
+
+/**
+ * Get the bundle ID for the selected folder opener (used for openAppOpts)
+ * Falls back to QspacePro if Bloom is selected, as QspacePro has proper bundle ID support
+ */
+const getFolderOpenerBundleId = (): string => {
+  if (FOLDER_OPENER === 'bloom') {
+    // Bloom doesn't work well with bundle ID, so use QspacePro as fallback for openAppOpts
+    return 'com.jinghaoshe.qspace.pro';
+  } else {
+    return 'com.jinghaoshe.qspace.pro';
+  }
+};
+
+// ============================================================================
 // TAP-HOLD KEY DEFINITIONS
 // ============================================================================
 /**
@@ -132,17 +172,13 @@ const spaceLayers: SubLayerConfig[] = [
         description: "RingCentral",
         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
-      a: {
-        description: "Apps",
-        openAppOpts: { bundleIdentifier: "com.apple.apps.launcher" },
-      },
-      b: {
-        description: "Busycal",
-        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
+      b : {
+        description: "Browser",
+        openAppOpts: { bundleIdentifier: "net.imput.helium" },
       },
       c: {
-        description: "Code",
-        openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
+        description: "Calendar",
+        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
       },
       d: {
         description: "Dia",
@@ -153,8 +189,8 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
       },
       f: {
-        description: "QSpace",
-        openAppOpts: { bundleIdentifier: "com.jinghaoshe.qspace.pro" },
+        description: "Finder",
+        openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
       },
       g: {
         description: "ChatGPT",
@@ -195,6 +231,10 @@ const spaceLayers: SubLayerConfig[] = [
       w: {
         description: "Word",
         openAppOpts: { bundleIdentifier: "com.microsoft.Word" },
+      },
+      "=": {
+        description: "Calculator",
+        openAppOpts: { bundleIdentifier: "com.nikolaeu.numi-setapp" },
       },
       tab: {
         description: "Last App",
@@ -288,28 +328,23 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       "3": {
         description: "3dPrinting",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/3dPrinting",
+        command: getOpenFolderCommand('/Users/jason/Downloads/3dPrinting'),
       },
       a: {
         description: "Archives",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Archives",
+        command: getOpenFolderCommand('/Users/jason/Downloads/Archives'),
       },
       i: {
         description: "Installs",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Installs",
+        command: getOpenFolderCommand('/Users/jason/Downloads/Installs'),
       },
       o: {
         description: "Office",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Office",
+        command: getOpenFolderCommand('/Users/jason/Downloads/Office'),
       },
       p: {
         description: "PDFs",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/PDFs",
+        command: getOpenFolderCommand('/Users/jason/Downloads/PDFs'),
       },
     },
   },
@@ -320,38 +355,47 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       "`": {
         description: "Home",
-        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/",
+        command: getOpenFolderCommand('/Users/jason/'),
       },
       a: {
         description: "Applications",
-        command: "open -b com.jinghaoshe.qspace.pro  /Applications",
+        command: getOpenFolderCommand('/Applications'),
+      },
+      c: {
+        description: "Code Workspaces",
+        command: getOpenFolderCommand('/Users/jason/Scripts/Workspaces'),
       },
       d: {
         description: "Downloads",
-        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads",
+        command: getOpenFolderCommand('/Users/jason/Downloads'),
+      },
+      g: {
+        description: "GitHub",
+        command: getOpenFolderCommand('/Users/jason/Gits'),
       },
       o: {
         description: "My OneDrive",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-Personal",
+        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal'),
       },
       p: {
         description: "Proton Drive",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder",
+        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder'),
       },
       s: {
         description: "Scripts",
-        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Scripts",
+        command: getOpenFolderCommand('/Users/jason/Scripts'),
       },
       v: {
         description: "Videos",
-        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Videos",
+        command: getOpenFolderCommand('/Users/jason/Videos'),
       },
       w: {
         description: "Work OneDrive",
-        command:
-          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP",
+        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
+      },
+      ".": {
+        description: "Dotfiles",
+        command: getOpenFolderCommand('/Users/jason/dotfiles'),
       },
     },
   },
@@ -645,7 +689,7 @@ let rules: any[] = [
       .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop' && echo 'ProtonMail launched'"))
       .build(),
     ...map("f", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"))
+      .to(cmd(`${getOpenFolderCommand('/Users/jason')}`))
       .build(),
     ...map("m", "right_command")
       .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"))
@@ -704,7 +748,10 @@ let rules: any[] = [
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   rule("PASSWORDS - CMD+/ quick fill").manipulators([
     ...map("slash", "command")
-      .condition(ifApp("com.apple.SecurityAgent"))
+      .condition(ifApp({
+        bundle_identifiers: ["com.apple.SecurityAgent"],
+        file_paths: ["/Applications/Cork.app/Contents/Resources/Sudo Helper"]
+      }))
       .to(
         cmd(
           "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
@@ -868,12 +915,12 @@ const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
 
 // Write rules: use real profile locally, dry-run in CI/non-macOS
-writeToProfile(canWriteProfile ? "Karabiner.ts" : "--dry-run", rules);
+writeToProfile(canWriteProfile ? "JJK_Default" : "--dry-run", rules);
 
 // Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
   if (canWriteProfile) {
-    updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
+    updateDeviceConfigurations("JJK_Default", deviceConfigs);
   }
 }, 1000);
 

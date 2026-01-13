@@ -3692,28 +3692,6 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "a"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_a_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.apple.apps.launcher"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
               "key_code": "b"
             },
             "conditions": [
@@ -3727,7 +3705,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.busymac.busycal-setapp"
+                    "bundle_identifier": "net.imput.helium"
                   }
                 }
               }
@@ -3749,7 +3727,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.microsoft.VSCodeInsiders"
+                    "bundle_identifier": "com.busymac.busycal-setapp"
                   }
                 }
               }
@@ -4036,6 +4014,28 @@
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.microsoft.Word"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "equal_sign"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.nikolaeu.numi-setapp"
                   }
                 }
               }
@@ -4594,7 +4594,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/3dPrinting"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/3dPrinting"
               }
             ]
           },
@@ -4612,7 +4612,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Archives"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/Archives"
               }
             ]
           },
@@ -4630,7 +4630,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Installs"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/Installs"
               }
             ]
           },
@@ -4648,7 +4648,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Office"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/Office"
               }
             ]
           },
@@ -4666,7 +4666,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/PDFs"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/PDFs"
               }
             ]
           }
@@ -4727,7 +4727,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/"
+                "shell_command": "open -a Bloom /Users/jason/"
               }
             ]
           },
@@ -4745,7 +4745,25 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro  /Applications"
+                "shell_command": "open -a Bloom /Applications"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "c"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Scripts/Workspaces"
               }
             ]
           },
@@ -4763,7 +4781,25 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads"
+                "shell_command": "open -a Bloom /Users/jason/Downloads"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "g"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Gits"
               }
             ]
           },
@@ -4781,7 +4817,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-Personal"
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-Personal"
               }
             ]
           },
@@ -4799,7 +4835,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder"
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder"
               }
             ]
           },
@@ -4817,7 +4853,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Scripts"
+                "shell_command": "open -a Bloom /Users/jason/Scripts"
               }
             ]
           },
@@ -4835,7 +4871,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Videos"
+                "shell_command": "open -a Bloom /Users/jason/Videos"
               }
             ]
           },
@@ -4853,7 +4889,25 @@
             ],
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP"
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "period"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/dotfiles"
               }
             ]
           }
@@ -5498,7 +5552,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
+                "shell_command": "open -a Bloom /Users/jason"
               }
             ]
           },
@@ -5818,6 +5872,9 @@
             "conditions": [
               {
                 "type": "frontmost_application_if",
+                "file_paths": [
+                  "/Applications/Cork.app/Contents/Resources/Sudo Helper"
+                ],
                 "bundle_identifiers": [
                   "com.apple.SecurityAgent"
                 ]
