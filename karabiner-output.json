@@ -104,6 +104,13 @@
             "to_if_held_down": [
               {
                 "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'"
+              },
+              {
+                "repeat": false,
+                "key_code": "n",
+                "modifiers": [
+                  "command"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -3198,11 +3205,7 @@
             "type": "basic",
             "from": {
               "key_code": "escape",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
+              "modifiers": {}
             },
             "conditions": [
               {
@@ -3215,16 +3218,13 @@
               "basic.to_if_alone_timeout_milliseconds": 250,
               "basic.to_if_held_down_threshold_milliseconds": 250
             },
-            "description": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
+            "description": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
             "to_if_alone": [
               {
                 "set_variable": {
                   "name": "escape_first_tap",
                   "value": 0
                 }
-              },
-              {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
               }
             ],
             "to_if_held_down": [
@@ -3261,18 +3261,14 @@
             "type": "basic",
             "from": {
               "key_code": "escape",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
+              "modifiers": {}
             },
             "parameters": {
               "basic.to_delayed_action_delay_milliseconds": 250,
               "basic.to_if_held_down_threshold_milliseconds": 250,
               "basic.to_if_alone_timeout_milliseconds": 250
             },
-            "description": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
+            "description": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
             "to": [
               {
                 "set_variable": {
@@ -3324,7 +3320,48 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)"
+        "ruleDescription": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+                }
+              ]
+            },
+            "description": "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
       },
       {
         "conditions": [],

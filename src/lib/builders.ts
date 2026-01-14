@@ -130,6 +130,7 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
   tapTapHoldEvents?: ToEvent[]; // events when held after second tap (tap-tap-hold)
   holdMods?: Modifier[]; // optional modifiers for hold using key repeat
   allowPassThrough?: boolean; // if true, emits the key immediately (needed for modifiers like LCMD)
+  mods?: Modifier[]; // optional modifiers required for this rule (empty array = no modifiers allowed)
 }
 
 /**
@@ -151,13 +152,14 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, 'alone' | 'hold'> {
  * @param opts Configuration object with variable tracking
  * @returns Array of BasicManipulator objects
  */
-export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEvents, tapTapHoldEvents, holdMods, thresholdMs = 300, description, allowPassThrough }: VarTapTapHoldOpts) {
+export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEvents, tapTapHoldEvents, holdMods, thresholdMs = 300, description, allowPassThrough, mods }: VarTapTapHoldOpts) {
   // 1. Second Tap Manipulator: Handles tap-tap (alone) and tap-tap-hold (held)
+  const modifiers = mods !== undefined ? (mods.length === 0 ? {} : { mandatory: mods }) : { optional: ['any'] };
   const secondTap: BasicManipulator = {
     type: 'basic',
     from: {
       key_code: key as any,
-      modifiers: { optional: ['any'] },
+      modifiers,
     },
     conditions: [
       { type: 'variable_if', name: firstVar, value: 1 },
@@ -197,7 +199,7 @@ export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEv
       type: 'basic',
       from: {
         key_code: key as any,
-        modifiers: { optional: ['any'] },
+        modifiers,
       },
       parameters: {
         'basic.to_delayed_action_delay_milliseconds': thresholdMs,
@@ -218,7 +220,7 @@ export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEv
       type: 'basic',
       from: {
         key_code: key as any,
-        modifiers: { optional: ['any'] },
+        modifiers,
       },
       parameters: {
         'basic.to_delayed_action_delay_milliseconds': thresholdMs,

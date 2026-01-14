@@ -94,7 +94,7 @@ const getFolderOpenerBundleId = (): string => {
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: "Antinote", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'")] },
+  a: { description: "Antinote", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'"), toKey("n", "command", {repeat: false})] },
   b: {
     description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
     appOverrides: [
@@ -510,21 +510,40 @@ let rules: any[] = [
     })
   ),
 
-  // ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)
+  // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
   rule(
-    "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)"
+    "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)"
   ).manipulators(
     varTapTapHold({
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [toKey("escape")],
       holdEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app --foreground")],
-      tapTapEvents: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'")],
-      tapTapHoldEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app"),],
+      tapTapHoldEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app")],
       thresholdMs: 250,
-      description: "ESCAPE - ESC (tap), kill foreground (tap-hold), Process Spy (tap-tap), kill unresponsive (tap-tap-hold)",
+      description: "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+      mods: [],
     })
   ),
+
+  // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
+  rule(
+    "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
+  ).manipulators([
+    ...map("escape", "left_control")
+      .parameters({
+        "basic.to_if_alone_timeout_milliseconds": 300,
+        "basic.to_if_held_down_threshold_milliseconds": 300,
+      })
+      .toIfAlone(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"))
+      .toIfHeldDown(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"))
+      .toDelayedAction(
+        [],
+        [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'")]
+      )
+      .description("LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)")
+      .build(),
+  ]),
 
   // CAPS LOCK - Multiple behaviors
   rule(
