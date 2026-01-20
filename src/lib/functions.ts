@@ -77,7 +77,7 @@ export type SubLayerConfig = {
 };
 
 export type SimpleModification = {
-  from: { key_code: string };
+from: { key_code: string };
   to: Array<{ key_code: string }>;
 };
 

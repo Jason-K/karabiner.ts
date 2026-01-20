@@ -1,6 +1,6 @@
 # Integration Conflict Report (upstream vs local)
 
-Date: Wed Dec  3 12:45:45 PST 2025
+Date: Fri Jan 16 17:26:37 PST 2026
 
 ## Summary
 
@@ -9,12 +9,12 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 ### package.json
 
 ```diff
---- ../karabiner.ts-upstream/package.json	2025-12-03 11:34:09
-+++ package.json	2025-12-03 12:43:02
-@@ -1,44 +1,18 @@
+--- ../karabiner.ts-upstream/package.json	2026-01-16 17:26:36
++++ package.json	2025-12-22 11:35:20
+@@ -1,44 +1,19 @@
  {
 -  "name": "karabiner.ts",
--  "version": "1.35.1",
+-  "version": "1.36.0",
 -  "description": "Karabiner-Elements configuration in TypeScript",
 -  "license": "MIT",
 -  "author": "Evan Liu",
@@ -46,7 +46,8 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 -    "test": "vitest run",
 -    "test:coverage": "vitest run --coverage"
 +    "build": "tsx src/index.ts",
-+    "update": "npm update karabiner.ts"
++    "update": "npm update karabiner.ts",
++    "lint": "eslint src --ignore-pattern docs --max-warnings=0"
    },
    "devDependencies": {
 -    "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
@@ -73,9 +74,9 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 ### tsconfig.json
 
 ```diff
---- ../karabiner.ts-upstream/tsconfig.json	2025-12-03 11:34:09
-+++ tsconfig.json	2025-12-02 14:12:09
-@@ -1,19 +1,16 @@
+--- ../karabiner.ts-upstream/tsconfig.json	2026-01-16 17:26:36
++++ tsconfig.json	2025-12-03 15:43:01
+@@ -1,19 +1,28 @@
  {
 -  "compilerOptions": {
 -    "module": "ESNext",
@@ -102,11 +103,23 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +        "strictNullChecks": true,
 +        "strictFunctionTypes": true,
 +        "strict": true,
-+        "sourceMap": true
++        "sourceMap": true,
++        "noEmit": true,
++        "allowImportingTsExtensions": true,
++        "baseUrl": ".",
++        "paths": {
++            "karabiner.ts": ["../karabiner.ts-upstream/src/index.ts"],
++            "karabiner.ts/*": ["../karabiner.ts-upstream/src/*"]
++        }
 +    },
++    "include": [
++        "src"
++    ],
 +    "exclude": [
 +        "node_modules",
-+        "**/node_modules/*"
++        "**/node_modules/*",
++        "docs",
++        "docs/**"
 +    ]
  }
 ```
@@ -114,9 +127,9 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 ### README.md
 
 ```diff
---- ../karabiner.ts-upstream/README.md	2025-12-03 11:34:09
-+++ README.md	2025-12-03 12:07:13
-@@ -1,96 +1,103 @@
+--- ../karabiner.ts-upstream/README.md	2026-01-16 17:26:36
++++ README.md	2025-12-06 12:52:48
+@@ -1,96 +1,150 @@
 -# karabiner.ts
 +# Karabiner.ts Configuration
  
@@ -156,55 +169,123 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 -([hyperLayer](https://evan-liu.github.io/karabiner.ts/rules/hyper-layer),
 -[duoLayer](https://evan-liu.github.io/karabiner.ts/rules/duo-layer),
 -[leaderMode](https://evan-liu.github.io/karabiner.ts/rules/leader-mode), ...).
-+## Files
++## Integration Status
  
 -## Learn More
-+- **`src/index.ts`** - All rules converted to TypeScript using abstractions
-+- **`src/lib/mods.ts`** - Custom modifier definitions (HYPER, SUPER, MEH)
-+- **`src/lib/builders.ts`** - Helper functions (`tapHold`, `varTapTapHold`, `cmd`)
-+- **`src/inputRules.json`** - Original JSON (preserved for reference)
++The upstream integration is complete and merged to main. Your local extensions and main config are isolated from upstream, with TypeScript path mapping providing IDE support against the mirrored upstream sources.
  
 -- [📝 Docs](https://karabiner.ts.evanliu.dev)
 -- [🔧 My Config](https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts)
 -- [💡 In-the-wild usage](https://github.com/evan-liu/karabiner.ts/network/dependents)
-+## Custom Modifier Definitions
++- Upstream mirror lives at `../karabiner.ts-upstream/` in the parent repo.
++- Local extensions: `src/lib/*.ts` are owned here and marked with LOCAL EXTENSION headers.
++- Main config: `src/index.ts` is the authoritative configuration you edit.
++- CI: Typecheck, lint, and build run on main.
  
 -## Using the Online Editor
-+Your local definitions in `src/lib/mods.ts`:
-+- **HYPER** = `command + option + control`
-+- **SUPER** = `command + option + control + shift`
-+- **MEH** = `command + option + shift`
++Daily workflow:
  
 -1. Write config in the [online editor](https://karabiner.ts.evanliu.dev/editor).
 -2. Copy the generated JSON then [add to Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/configuration/add-your-own-complex-modifications/).
-+These override upstream defaults and remain stable under your control.
++```bash
++cd karabiner.ts
++npm run build
++```
  
 -> [!NOTE]
 -> Importing JSON to Karabiner-Elements is only needed when using the Online Editor.
 -> `karabiner.ts` writes to `~/.config/karabiner/karabiner.json` if using with Node.js or Deno.
 ->
 -> > Karabiner-Elements watches ~/.config/karabiner/karabiner.json and reloads it if updated.
-+## Build & Deploy
++Upstream sync (optional, when you want new features):
  
 -## Using Node.js
++```bash
++cd ../karabiner.ts-upstream && git pull origin main
++cd ../karabiner.ts && npm run typecheck && npm run build
++```
+ 
+-[![npm](https://img.shields.io/npm/v/karabiner.ts.svg)](https://www.npmjs.com/package/karabiner.ts)
++Documentation:
+ 
+-### Option 1
++- `docs/INTEGRATION_SUMMARY.md` – Architecture overview
++- `docs/UPSTREAM_SYNC.md` – Sync workflow
++- `docs/MERGE_CHECKLIST.md` – Validation steps
+ 
+-    npx create-karabiner-config@latest
++### Local Upstream Mapping
+ 
+-The default directory name is `karabiner-config`. You can pass another `project-name`:
++For local development, imports of `karabiner.ts` resolve to the upstream mirror via TypeScript path mapping.
+ 
+-    npx create-karabiner-config@latest [project-name]
++- Config: see `tsconfig.json` `compilerOptions.paths` where `karabiner.ts` and `karabiner.ts/*` point to `../karabiner.ts-upstream/src`.
++- Typechecking only: `compilerOptions.noEmit` is enabled alongside `allowImportingTsExtensions` to support upstream’s `.ts` import style without producing build outputs.
++- Usage: write local code that imports `karabiner.ts` APIs; the compiler will typecheck against upstream sources in `karabiner.ts-upstream/src`.
+ 
+-Then:
++This keeps runtime artifacts unchanged while enabling tight local iteration against upstream APIs.
+ 
+-1. Write your key mapping in `src/index.ts`.
+-2. Set the profile name. Create a new Karabiner-Elements profile if needed.
+-3. Run `npm run build`.
++### Layer Indicator (Hammerspoon URL Scheme)
+ 
+-To update to the latest version, run `npm run update` (or `npm update karabiner.ts`).
++- Layer popups now use the Hammerspoon URL handler instead of the `hs` CLI.
++- Karabiner sends background URL events: `open -g 'hammerspoon://layer_indicator?action=show&layer=space_*'` and `action=hide` on release.
++- The handler lives in Hammerspoon at `karabiner_layer_indicator_url.lua` (symlinked into `src/` for reference).
++- Benefit: no helper processes, faster updates, and no focus stealing.
+ 
+-### Option 2
++## Files
+ 
+-1. [Download](https://github.com/evan-liu/karabiner.ts.examples/archive/refs/heads/main.zip) (or clone | [fork](https://github.com/evan-liu/karabiner.ts.examples/fork)) the [examples/starter repo](https://github.com/evan-liu/karabiner.ts.examples).
+-2. Run `npm install`.
++- **`src/index.ts`** - All rules converted to TypeScript using abstractions
++- **`src/lib/mods.ts`** - Custom modifier definitions (HYPER, SUPER, MEH)
++- **`src/lib/builders.ts`** - Helper functions (`tapHold`, `varTapTapHold`, `cmd`)
++- **`src/inputRules.json`** - Original JSON (preserved for reference)
+ 
+-Then write and build the config same as Option 1.
++## Custom Modifier Definitions
+ 
+-### Option 3
++Your local definitions in `src/lib/mods.ts`:
+ 
+-    npm install karabiner.ts
++- **HYPER** = `command + option + control`
++- **SUPER** = `command + option + control + shift`
++- **MEH** = `command + option + shift`
+ 
+-(or install with `yarn`, `pnpm`, etc) then call `writeToProfile()` from any Node.js script in your preferred way.
++These override upstream defaults and remain stable under your control.
+ 
+-## Using Deno
++## Build & Deploy
+ 
+-[![deno module](https://shield.deno.dev/x/karabinerts)](https://deno.land/x/karabinerts)
 +```bash
 +# Deploy to Karabiner (edit src/index.ts, change '--dry-run' to 'JJK_Default')
 +npm run build
 +```
  
--[![npm](https://img.shields.io/npm/v/karabiner.ts.svg)](https://www.npmjs.com/package/karabiner.ts)
+-In a Deno script file (replace `{version}`):
 +## Where Things Live
  
--### Option 1
+-```typescript
+-import { writeToProfile } from 'https://deno.land/x/karabinerts@{version}/deno.ts'
 +- `src/index.ts`: Main rules (tap-hold, space layers, specials)
 +- `src/lib/builders.ts`: Builders (shell, apps, mouse, notifications, expressions)
 +- `src/lib/functions.ts`: Generators (tap-hold rules, space layers, escape rule, device updates)
 +- `src/lib/mods.ts`: Mod constants (`HYPER`, `SUPER`, `MEH`)
  
--    npx create-karabiner-config@latest
+-writeToProfile('Default', [
+-  // rule(...
+-])
 +## Builders (1-line each + tiny example)
- 
--The default directory name is `karabiner-config`. You can pass another `project-name`:
++
 +- `cmd(cmd)`: Run a shell command. Example: `cmd("open -b com.apple.Safari")`
 +- `openApp(opts)`: Native app focus/launch (`bundleIdentifier` | `filePath` | `historyIndex`). Example: `openApp({ historyIndex: 1 })`
 +- `notify({ message, id? })`: macOS notification. Example: `notify({ message: 'Layer Active', id: 'mode' })`
@@ -214,84 +295,59 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +- `setVarExpr(name, expr, keyUpExpr?)`: Expression variables. Example: `setVarExpr('uses', '{{ uses + 1 }}')`
 +- `exprIf(expr)` / `exprUnless(expr)`: Expression conditions. Example: `exprIf('{{ uses > 5 }}')`
 +- `withConditions(event, conds)`: Attach conditions to a single `to` event. Example: `withConditions(notify({message:'Hi'}), [exprIf('{{ uses<5 }}')])`
- 
--    npx create-karabiner-config@latest [project-name]
++
 +## Patterns You’ll Reuse
- 
--Then:
++
 +- Tap-Hold: `tapHold({ key:'x', alone:[toKey('x')], hold:[openApp({...})] })`
 +- Per-To Conditions: `map('n', HYPER).to([ withConditions(notify({...}), [exprIf('...')]) ])`
 +- App Toggle: `map('tab', HYPER).to([ openApp({ historyIndex: 1 }) ])`
- 
--1. Write your key mapping in `src/index.ts`.
--2. Set the profile name. Create a new Karabiner-Elements profile if needed.
--3. Run `npm run build`.
++
 +## Space Layer Enhancements
- 
--To update to the latest version, run `npm run update` (or `npm update karabiner.ts`).
++
 +- Direct events: any mapping may use `toEvents: ToEvent[]` (advanced)
 +- Usage counters: `usageCounterVar: 'apps_toggle_uses'` auto-increments via expressions
 +- Activation timestamp: `space_<layerKey>_activate_ms` set on layer entry
- 
--### Option 2
++
 +Example (Applications layer snippet):
- 
--1. [Download](https://github.com/evan-liu/karabiner.ts.examples/archive/refs/heads/main.zip) (or clone | [fork](https://github.com/evan-liu/karabiner.ts.examples/fork)) the [examples/starter repo](https://github.com/evan-liu/karabiner.ts.examples).
--2. Run `npm install`.
++
 +```ts
 +tab: {
 +  description: 'Toggle Last App',
 +  openAppOpts: { historyIndex: 1 },
 +  usageCounterVar: 'apps_toggle_uses'
 +}
-+```
+ ```
  
--Then write and build the config same as Option 1.
+-Then run it with:
 +## Guardrails & Notes
  
--### Option 3
+-    deno run --allow-env --allow-read --allow-write {filename}
 +- The file `/Library/.../karabiner_environment` sets shell env only; it does not create Karabiner variables. Use `set_variable`/expressions for runtime state.
 +- Expression support (`set_variable.expression`, `expression_if`) requires Karabiner v15.6.0+.
- 
--    npm install karabiner.ts
++
 +## Practical Next Steps
- 
--(or install with `yarn`, `pnpm`, etc) then call `writeToProfile()` from any Node.js script in your preferred way.
++
 +- Idle auto-clear example: use `expression_if` comparing `system.now.milliseconds` to `space_<layer>_activate_ms`.
 +- Consider `integer_value` in `from` (v15.6.0) if you add unusual HID sources.
- 
--## Using Deno
++
 +## Quick Verify
- 
--[![deno module](https://shield.deno.dev/x/karabinerts)](https://deno.land/x/karabinerts)
--
--In a Deno script file (replace `{version}`):
--
--```typescript
--import { writeToProfile } from 'https://deno.land/x/karabinerts@{version}/deno.ts'
--
--writeToProfile('Default', [
--  // rule(...
--])
++
 +```bash
 +grep -n "frontmost_application_history_index" karabiner-output.json
 +grep -n "set_notification_message" karabiner-output.json
 +grep -n "set_mouse_cursor_position" karabiner-output.json
 +grep -n "iokit_power_management_sleep_system" karabiner-output.json
- ```
- 
--Then run it with:
--
--    deno run --allow-env --allow-read --allow-write {filename}
++```
++
 +That’s it—keep `src/index.ts` readable, prefer builders, and iterate.
 ```
 
 ### src/index.ts
 
 ```diff
---- ../karabiner.ts-upstream/src/index.ts	2025-12-03 11:34:09
-+++ src/index.ts	2025-12-03 10:28:01
-@@ -1,81 +1,852 @@
+--- ../karabiner.ts-upstream/src/index.ts	2026-01-16 17:26:36
++++ src/index.ts	2026-01-15 12:14:56
+@@ -1,82 +1,958 @@
 -// Karabiner
 -export * from './karabiner/key-code.ts'
 -export * from './karabiner/consumer-key-code.ts'
@@ -335,6 +391,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  TapHoldConfig,
 +} from "./lib/functions";
 +import {
++  emitLayerDefinitions,
 +  generateEscapeRule,
 +  generateSpaceLayerRules,
 +  generateTapHoldRules,
@@ -370,6 +427,59 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 -  BasicManipulatorBuilder,
 -} from './config/manipulator.ts'
 +// ============================================================================
++// CONFIGURATION
++// ============================================================================
++/**
++ * Folder/Finder replacement app selection
++ * Set to 'bloom' or 'qspace' to choose which app opens folders
++ *
++ * Note: Bloom requires 'open -a Bloom' with escaped paths, while QspacePro uses bundle ID
++ */
++const FOLDER_OPENER: 'bloom' | 'qspace' = 'bloom';
+ 
+-// Utils
+-export { withCondition } from './utils/with-condition.ts'
+-export { withMapper } from './utils/with-mapper.ts'
+-export { withModifier } from './utils/with-modifier.ts'
++/**
++ * Generate the correct open command for the selected folder opener app
++ * Bloom: uses 'open -a Bloom' with escaped path
++ * QspacePro: uses 'open -b' with bundle ID
++ */
++const getOpenFolderCommand = (folderPath: string): string => {
++  if (FOLDER_OPENER === 'bloom') {
++    // Bloom requires 'open -a' with escaped path (spaces escaped with backslash)
++    const escapedPath = folderPath.replace(/ /g, '\\ ');
++    return `open -a Bloom ${escapedPath}`;
++  } else {
++    // QspacePro uses bundle ID
++    return `open -b com.jinghaoshe.qspace.pro '${folderPath}'`;
++  }
++};
+ 
+-// From
+-export * from './config/from.ts'
+-export { mapSimultaneous } from './config/simultaneous.ts'
+-export type { DoubleTapParam } from './config/double-tap.ts'
+-export { mapDoubleTap } from './config/double-tap.ts'
+-export { mouseMotionToScroll } from './config/mouse-motion-to-scroll.ts'
++/**
++ * Get the bundle ID for the selected folder opener (used for openAppOpts)
++ * Falls back to QspacePro if Bloom is selected, as QspacePro has proper bundle ID support
++ */
++const getFolderOpenerBundleId = (): string => {
++  if (FOLDER_OPENER === 'bloom') {
++    // Bloom doesn't work well with bundle ID, so use QspacePro as fallback for openAppOpts
++    return 'com.jinghaoshe.qspace.pro';
++  } else {
++    return 'com.jinghaoshe.qspace.pro';
++  }
++};
+ 
+-// To
+-export * from './config/to.ts'
+-export * from './config/to-type-sequence.ts'
++// ============================================================================
 +// TAP-HOLD KEY DEFINITIONS
 +// ============================================================================
 +/**
@@ -381,64 +491,68 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + * Configuration is declarative - just add entries to the object below.
 + */
  
--// Utils
--export { withCondition } from './utils/with-condition.ts'
--export { withMapper } from './utils/with-mapper.ts'
--export { withModifier } from './utils/with-modifier.ts'
+-// Condition
+-export * from './config/condition.ts'
 +const tapHoldKeys: Record<string, TapHoldConfig> = {
-+  a: {  description: "Antinote", hold: [openApp({ bundleIdentifier: "com.chabomakers.Antinote-setapp" })],},
-+  b: {  description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
-+        appOverrides: [
-+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd( "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript" ) ],},
-+        ],
++  a: { description: "Antinote", hold: [cmd("open -u 'antinote://x-callback-url/hotkey' && echo 'Antinote launched'")] },
++  b: {
++    description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
++    appOverrides: [
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
++    ],
 +  },
-+  c: {  description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
-+  d: {  description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
-+  e: {  description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-+  f: {  description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
-+  g: {  description: "ChatGPT", hold: [toKey("g", HYPER, { repeat: false })] },
-+  h: {  description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()'")],
-+        appOverrides: [
-+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript") ] },
-+        ],
-+    },
-+  i: {  description: "Indent", hold: indentLine() },
-+  m: {  description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
-+  n: {  description: "New note / Skim highlight", hold: [toKey("n")],
-+        appOverrides: [
-+          { app: "net.sourceforge.skim-app.skim", hold: [ cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript") ] },
-+        ],
-+     },
-+  o: {  description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
++  c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
++  d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
++  e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
++  f: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
++  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'")] },
++  h: {
++    description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
++    appOverrides: [
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
++    ],
++  },
++  i: { description: "Indent", hold: indentLine() },
++  j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
++  m: { description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
++  n: {
++    description: "New note / Skim highlight", hold: [toKey("n")],
++    appOverrides: [
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
++    ],
++  },
++  o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
 +  p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
-+  q: { description: "QSpace Pro", hold: [openApp({ filePath: "/System/Volumes/Data/Applications/QSpace Pro.app" })] },
-+  r: { description: "Last d/l", hold: [toKey("z", ["option"], { repeat: false })] },
++  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'")] },
++  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
 +  s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
 +  t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
 +  v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
 +  w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
-+  "8": { description: "RingCentral", hold: [openApp({ bundleIdentifier: "com.ringcentral.glip" })] },
-+  "f1": {description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })]},
-+  "f2": {description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })]},
-+  "f3": {description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })]},
-+  "f4": {description: "Launchpad", hold: [toKey("launchpad", [], { repeat: false })]},
-+  "f5": {description: "Dictation", hold: [toKey("fn", [], { repeat: false })]},
-+  "f7": {description: "Rewind", hold: [toKey("rewind", [], { repeat: true })]},
-+  "f8": {description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })]},
-+  "f9": {description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })]},
-+  "f10": {description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })]},
-+  "f11": {description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })]},
-+  "f12": {description: "Mute", hold: [toKey("mute", [], { repeat: false })]},
-+  slash: { description: "search for files", hold: [toKey("f17", HYPER, { repeat: false })] },
++  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'")] },
++  "f1": { description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })] },
++  "f2": { description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })] },
++  "f3": { description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })] },
++  "f4": { description: "Launchpad", hold: [toKey("launchpad", [], { repeat: false })] },
++  "f5": { description: "Dictation", hold: [toKey("f5", ['command', 'option', 'control'], { repeat: false })] },
++  "f7": { description: "Rewind", hold: [toKey("rewind", [], { repeat: true })] },
++  "f8": { description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })] },
++  "f9": { description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })] },
++  "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
++  "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
++  "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
++  slash: { description: "search for files", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one' && echo 'Cardinal One launched'")] },
 +  tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 +};
  
--// From
--export * from './config/from.ts'
--export { mapSimultaneous } from './config/simultaneous.ts'
--export type { DoubleTapParam } from './config/double-tap.ts'
--export { mapDoubleTap } from './config/double-tap.ts'
--export { mouseMotionToScroll } from './config/mouse-motion-to-scroll.ts'
+-// Rules
+-export type { BuildContext } from './utils/build-context.ts'
+-export type { RuleBuilder } from './config/rule.ts'
+-export { rule } from './config/rule.ts'
+-export type { LayerKeyCode, LayerKeyParam } from './config/layer.ts'
+-export { layer, hyperLayer, modifierLayer } from './config/layer.ts'
+-export { simlayer } from './config/simlayer.ts'
+-export { duoLayer } from './config/duo-layer.ts'
 +// ============================================================================
 +// SPACE LAYER CONFIGURATION
 +// ============================================================================
@@ -446,7 +560,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + * Space layer system provides access to sublayers for quick actions:
 + *
 + * Usage:
-+ * 1. Hold Space (200ms threshold)
++ * 1. Hold Space (150ms threshold)
 + * 2. Tap a layer key (d/a/f) to activate that sublayer
 + * 3. Tap an action key to execute and deactivate sublayer
 + *
@@ -456,9 +570,13 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + * - No hardcoded key lists to maintain
 + */
  
--// To
--export * from './config/to.ts'
--export * from './config/to-type-sequence.ts'
+-// Configs
+-export type { ModificationParameters } from './config/complex-modifications.ts'
+-export { defaultComplexModificationsParameters } from './config/complex-modifications.ts'
+-export { defaultDoubleTapParameters } from './config/double-tap.ts'
+-export { defaultSimlayerParameters } from './config/simlayer.ts'
+-export { defaultDuoLayerParameters } from './config/duo-layer.ts'
+-export { defaultLayerParameters } from './config/layer.ts'
 +const spaceLayers: SubLayerConfig[] = [
 +  {
 +    layerKey: "a",
@@ -469,17 +587,13 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +        description: "RingCentral",
 +        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
 +      },
-+      a: {
-+        description: "Apps",
-+        openAppOpts: { bundleIdentifier: "com.apple.apps.launcher" },
-+      },
-+      b: {
-+        description: "Busycal",
-+        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
++      b : {
++        description: "Browser",
++        openAppOpts: { bundleIdentifier: "net.imput.helium" },
 +      },
 +      c: {
-+        description: "Code",
-+        openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
++        description: "Calendar",
++        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
 +      },
 +      d: {
 +        description: "Dia",
@@ -490,8 +604,8 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +        openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
 +      },
 +      f: {
-+        description: "QSpace",
-+        openAppOpts: { bundleIdentifier: "com.jinghaoshe.qspace.pro" },
++        description: "Finder",
++        openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
 +      },
 +      g: {
 +        description: "ChatGPT",
@@ -533,32 +647,16 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +        description: "Word",
 +        openAppOpts: { bundleIdentifier: "com.microsoft.Word" },
 +      },
++      "=": {
++        description: "Calculator",
++        openAppOpts: { bundleIdentifier: "com.nikolaeu.numi-setapp" },
++      },
 +      tab: {
 +        description: "Last App",
 +        openAppOpts: { historyIndex: 1 },
 +        usageCounterVar: "apps_toggle_uses",
 +      },
  
--// Condition
--export * from './config/condition.ts'
--
--// Rules
--export type { BuildContext } from './utils/build-context.ts'
--export type { RuleBuilder } from './config/rule.ts'
--export { rule } from './config/rule.ts'
--export type { LayerKeyCode, LayerKeyParam } from './config/layer.ts'
--export { layer, hyperLayer, modifierLayer } from './config/layer.ts'
--export { simlayer } from './config/simlayer.ts'
--export { duoLayer } from './config/duo-layer.ts'
--
--// Configs
--export type { ModificationParameters } from './config/complex-modifications.ts'
--export { defaultComplexModificationsParameters } from './config/complex-modifications.ts'
--export { defaultDoubleTapParameters } from './config/double-tap.ts'
--export { defaultSimlayerParameters } from './config/simlayer.ts'
--export { defaultDuoLayerParameters } from './config/duo-layer.ts'
--export { defaultLayerParameters } from './config/layer.ts'
--
 -// Imports
 -export { importJson } from './imports/import-json.ts'
 -export { importProfile } from './imports/import-profile.ts'
@@ -648,28 +746,23 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    mappings: {
 +      "3": {
 +        description: "3dPrinting",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/3dPrinting",
++        command: getOpenFolderCommand('/Users/jason/Downloads/3dPrinting'),
 +      },
 +      a: {
 +        description: "Archives",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Archives",
++        command: getOpenFolderCommand('/Users/jason/Downloads/Archives'),
 +      },
 +      i: {
 +        description: "Installs",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Installs",
++        command: getOpenFolderCommand('/Users/jason/Downloads/Installs'),
 +      },
 +      o: {
 +        description: "Office",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/Office",
++        command: getOpenFolderCommand('/Users/jason/Downloads/Office'),
 +      },
 +      p: {
 +        description: "PDFs",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads/PDFs",
++        command: getOpenFolderCommand('/Users/jason/Downloads/PDFs'),
 +      },
 +    },
 +  },
@@ -680,38 +773,47 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    mappings: {
 +      "`": {
 +        description: "Home",
-+        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/",
++        command: getOpenFolderCommand('/Users/jason/'),
 +      },
 +      a: {
 +        description: "Applications",
-+        command: "open -b com.jinghaoshe.qspace.pro  /Applications",
++        command: getOpenFolderCommand('/Applications'),
++      },
++      c: {
++        description: "Code Workspaces",
++        command: getOpenFolderCommand('/Users/jason/Scripts/Workspaces'),
 +      },
 +      d: {
 +        description: "Downloads",
-+        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Downloads",
++        command: getOpenFolderCommand('/Users/jason/Downloads'),
++      },
++      g: {
++        description: "GitHub",
++        command: getOpenFolderCommand('/Users/jason/Gits'),
 +      },
 +      o: {
 +        description: "My OneDrive",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-Personal",
++        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal'),
 +      },
 +      p: {
 +        description: "Proton Drive",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder",
++        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder'),
 +      },
 +      s: {
 +        description: "Scripts",
-+        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Scripts",
++        command: getOpenFolderCommand('/Users/jason/Scripts'),
 +      },
 +      v: {
 +        description: "Videos",
-+        command: "open -b com.jinghaoshe.qspace.pro /Users/jason/Videos",
++        command: getOpenFolderCommand('/Users/jason/Videos'),
 +      },
 +      w: {
 +        description: "Work OneDrive",
-+        command:
-+          "open -b com.jinghaoshe.qspace.pro /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP",
++        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
++      },
++      ".": {
++        description: "Dotfiles",
++        command: getOpenFolderCommand('/Users/jason/dotfiles'),
 +      },
 +    },
 +  },
@@ -797,9 +899,14 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
  
 -// Output
 -export { complexModifications } from './config/complex-modifications.ts'
+-export { simpleModifications } from './config/simple-modifications.ts'
 -export { writeToProfile, writeToGlobal } from './output.ts'
 +// Generate tap-hold rules with automatic conflict prevention
 +const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
++
++// Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
++const debugMode = process.env.KARABINER_DEBUG === 'true';
++emitLayerDefinitions(spaceLayers, undefined, debugMode);
 +
 +// ============================================================================
 +// SPECIAL RULESf
@@ -816,30 +923,49 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    varTapTapHold({
 +      key: "left_command",
 +      firstVar: "lcmd_first_tap",
-+      aloneEvents: [openApp({ historyIndex: 1 })],
-+      holdEvents: [toKey("tab", ["left_command"], { repeat: false })],
++      aloneEvents: [],
++      tapTapEvents: [openApp({ historyIndex: 1 })],
++      tapTapHoldEvents: [toKey("tab", ["left_command"], { repeat: false })],
 +      thresholdMs: 250,
 +      description: "Left CMD tap/double-tap/hold",
++      allowPassThrough: true,
 +    })
 +  ),
 +
-+  // ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)
++  // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
 +  rule(
-+    "ESCAPE - ESC (tap), Process Spy (tap-tap), kill unresponsive apps (tap-tap-hold)"
++    "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)"
 +  ).manipulators(
 +    varTapTapHold({
 +      key: "escape",
 +      firstVar: "escape_first_tap",
-+      aloneEvents: [openApp({ bundleIdentifier: "com.itone.ProcessSpy" })],
-+      holdEvents: [
-+        cmd(
-+          "osascript -l JavaScript '/Users/jason/Scripts/Metascripts/kill_unresponsive.jxa'"
-+        ),
-+      ],
++      aloneEvents: [toKey("escape")],
++      holdEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app --foreground")],
++      tapTapHoldEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app")],
 +      thresholdMs: 250,
-+      description: "ESC tap/double-tap/hold",
++      description: "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
++      mods: [],
 +    })
 +  ),
++
++  // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
++  rule(
++    "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
++  ).manipulators([
++    ...map("escape", "left_control")
++      .parameters({
++        "basic.to_if_alone_timeout_milliseconds": 300,
++        "basic.to_if_held_down_threshold_milliseconds": 300,
++      })
++      .toIfAlone(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"))
++      .toIfHeldDown(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"))
++      .toDelayedAction(
++        [],
++        [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'")]
++      )
++      .description("LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)")
++      .build(),
++  ]),
 +
 +  // CAPS LOCK - Multiple behaviors
 +  rule(
@@ -902,6 +1028,27 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    ...map("end", "shift")
 +      .to(toKey("right_arrow", ["command", "shift"]))
 +      .build(),
++  ]),
++
++  // GRAVE ACCENT & TILDE - Tap sends tilde, hold sends hyper+f5 with deferred release
++  rule("grave_accent_and_tilde tap/hold -> grave or hyper+f5").manipulators([
++    {
++      type: "basic" as const,
++      from: {
++        key_code: "grave_accent_and_tilde" as any,
++      },
++      parameters: {
++        "basic.to_if_alone_timeout_milliseconds": 400,
++        "basic.to_if_held_down_threshold_milliseconds": 400,
++      },
++      to_if_alone: [
++        toKey("grave_accent_and_tilde", [], { halt: true }),
++      ],
++      to_if_held_down: [
++        toKey("f5", HYPER, { halt: false }),
++      ],
++      description: "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)"
++    } as any,
 +  ]),
 +
 +  // ENTER/RETURN - Hold for quick format (both keypad and regular)
@@ -968,46 +1115,49 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  // RCMD + __ - App launch or focus
 +  rule("RCMD + Key - App launch or focus").manipulators([
 +    ...map("a", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.adobe.Acrobat.Pro" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro' && echo 'Acrobat Pro launched'"))
++      .build(),
++    ...map("b", "right_command")
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"))
 +      .build(),
 +    ...map("c", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.microsoft.VSCodeInsiders" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders' && echo 'VSCode Insiders launched'"))
 +      .build(),
 +    ...map("d", "right_command")
-+      .to([openApp({ bundleIdentifier: "company.thebrowser.dia" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia' && echo 'The Browser launched'"))
 +      .build(),
 +    ...map("e", "right_command")
-+      .to([openApp({ bundleIdentifier: "ch.protonmail.desktop" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop' && echo 'ProtonMail launched'"))
 +      .build(),
 +    ...map("f", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.jinghaoshe.qspace.pro" })])
++      .to(cmd(`${getOpenFolderCommand('/Users/jason')}`))
 +      .build(),
 +    ...map("m", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.apple.MobileSMS" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"))
 +      .build(),
 +    ...map("o", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.microsoft.Outlook" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook' && echo 'Outlook launched'"))
 +      .build(),
 +    ...map("p", "right_command")
-+      .to([openApp({ bundleIdentifier: "net.sourceforge.skim-app.skim" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim' && echo 'Skim launched'"))
 +      .build(),
 +    ...map("q", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.jinghaoshe.qspace.pro" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"))
 +      .build(),
 +    ...map("r", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.ringcentral.glip" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"))
 +      .build(),
 +    ...map("s", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.apple.Safari" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari' && echo 'Safari launched'"))
 +      .build(),
 +    ...map("t", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.microsoft.teams2" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2' && echo 'Teams launched'"))
 +      .build(),
 +    ...map("w", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.microsoft.Word" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word' && echo 'Word launched'"))
 +      .build(),
 +    ...map("8", "right_command")
-+      .to([openApp({ bundleIdentifier: "com.electron.8x8---virtual-office" })])
++      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"))
 +      .build(),
 +  ]),
 +  // Generate escape rule to reset all variables
@@ -1039,7 +1189,10 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
 +  rule("PASSWORDS - CMD+/ quick fill").manipulators([
 +    ...map("slash", "command")
-+      .condition(ifApp("com.apple.SecurityAgent"))
++      .condition(ifApp({
++        bundle_identifiers: ["com.apple.SecurityAgent"],
++        file_paths: ["/Applications/Cork.app/Contents/Resources/Sudo Helper"]
++      }))
 +      .to(
 +        cmd(
 +          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
@@ -1197,12 +1350,19 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +// WRITE TO PROFILE
 +// ============================================================================
 +
-+// First, write the complex_modifications rules
-+writeToProfile("Karabiner.ts", rules);
++// Detect CI/Linux environment and avoid writing to ~/.config/karabiner
++const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
++const isDarwin = process.platform === "darwin";
++const canWriteProfile = isDarwin && !isCI;
 +
-+// Wait for writeToProfile to complete, then add device configurations
++// Write rules: use real profile locally, dry-run in CI/non-macOS
++writeToProfile(canWriteProfile ? "JJK_Default" : "--dry-run", rules);
++
++// Wait for writeToProfile to complete, then add device configurations (local only)
 +setTimeout(() => {
-+  updateDeviceConfigurations("Karabiner.ts", deviceConfigs);
++  if (canWriteProfile) {
++    updateDeviceConfigurations("JJK_Default", deviceConfigs);
++  }
 +}, 1000);
 +
 +// Also write generated rules to workspace for inspection

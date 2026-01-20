@@ -94,7 +94,7 @@ const getFolderOpenerBundleId = (): string => {
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: "Antinote", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'"), toKey("n", "command", {repeat: false})] },
+  a: { description: "Antinote", hold: [cmd("open -u 'antinote://x-callback-url/hotkey' && echo 'Antinote launched'")] },
   b: {
     description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
     appOverrides: [
@@ -105,7 +105,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
   f: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
-  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.openai.chat' && echo 'ChatGPT launched'")] },
+  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'")] },
   h: {
     description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
     appOverrides: [
@@ -114,6 +114,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   i: { description: "Indent", hold: indentLine() },
   j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
+  k: { description: "Kitty here", hold: [cmd("osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript")] },
   m: { description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
   n: {
     description: "New note / Skim highlight", hold: [toKey("n")],

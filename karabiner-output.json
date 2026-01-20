@@ -103,14 +103,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.chabomakers.Antinote-setapp' && echo 'Antinote launched'"
-              },
-              {
-                "repeat": false,
-                "key_code": "n",
-                "modifiers": [
-                  "command"
-                ]
+                "shell_command": "open -u 'antinote://x-callback-url/hotkey' && echo 'Antinote launched'"
               }
             ],
             "to_delayed_action": {
@@ -701,7 +694,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.openai.chat' && echo 'ChatGPT launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'"
               }
             ],
             "to_delayed_action": {
@@ -1088,6 +1081,87 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "J hold -> Recent download"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "k"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "k",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "k",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "K hold -> Kitty here"
       },
       {
         "conditions": [],
