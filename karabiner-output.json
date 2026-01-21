@@ -606,14 +606,7 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "h",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
+                "shell_command": "open -a Bloom /Users/jason"
               }
             ],
             "to_delayed_action": {
@@ -671,7 +664,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F hold -> Houdah"
+        "ruleDescription": "F hold -> Bloom"
       },
       {
         "conditions": [],
@@ -929,19 +922,7 @@
             ],
             "to_if_held_down": [
               {
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "command"
-                ]
-              },
-              {
-                "key_code": "tab"
-              },
-              {
-                "key_code": "right_arrow",
-                "modifiers": [
-                  "command"
-                ]
+                "shell_command": "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
               }
             ],
             "to_delayed_action": {
@@ -999,7 +980,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "I hold -> Indent"
+        "ruleDescription": "I hold -> iTerm2"
       },
       {
         "conditions": [],
@@ -1507,11 +1488,12 @@
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "p",
+                "key_code": "f9",
                 "modifiers": [
                   "command",
                   "option",
-                  "control"
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1836,7 +1818,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'"
               }
             ],
             "to_delayed_action": {
@@ -1894,7 +1876,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "T hold -> Terminal Here"
+        "ruleDescription": "T hold -> Todoist"
       },
       {
         "conditions": [],
@@ -3006,7 +2988,14 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one' && echo 'Cardinal One launched'"
+                "repeat": false,
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -3064,7 +3053,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SLASH hold -> search for files"
+        "ruleDescription": "SLASH hold -> Houdah"
       },
       {
         "conditions": [],
@@ -5664,6 +5653,22 @@
             "to": [
               {
                 "shell_command": "open -a Bloom /Users/jason"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "h",
+              "modifiers": {
+                "mandatory": [
+                  "right_command"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"
               }
             ]
           },

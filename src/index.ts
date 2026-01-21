@@ -39,7 +39,6 @@ import {
   updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
-import { indentLine } from "./lib/text";
 
 // ============================================================================
 // CONFIGURATION
@@ -104,7 +103,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
   d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-  f: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })] },
+  f: { description: "Bloom", hold: [cmd(`${getOpenFolderCommand('/Users/jason')}`)] },
   g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'")] },
   h: {
     description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
@@ -112,7 +111,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
       { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
     ],
   },
-  i: { description: "Indent", hold: indentLine() },
+  i: { description: "iTerm2", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
   j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   k: { description: "Kitty here", hold: [cmd("osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript")] },
   m: { description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
@@ -123,11 +122,11 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     ],
   },
   o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
-  p: { description: "Paletro", hold: [toKey("p", HYPER, { repeat: false })] },
+  p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
   q: { description: "QSpace Pro", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'")] },
   r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
-  t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
+  t: { description: "Todoist", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'")] },
   v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
   w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
   "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'")] },
@@ -142,7 +141,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
   "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
   "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
-  slash: { description: "search for files", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.cardinal.one' && echo 'Cardinal One launched'")] },
+  slash: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })]  },
   tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 
@@ -710,6 +709,9 @@ let rules: any[] = [
       .build(),
     ...map("f", "right_command")
       .to(cmd(`${getOpenFolderCommand('/Users/jason')}`))
+      .build(),
+    ...map("h", "right_command")
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"))
       .build(),
     ...map("m", "right_command")
       .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"))
