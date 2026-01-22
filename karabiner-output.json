@@ -606,7 +606,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -a Bloom /Users/jason"
+                "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom"
               }
             ],
             "to_delayed_action": {
@@ -1575,7 +1575,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
+                "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace && echo 'QSpace Pro launched'"
               }
             ],
             "to_delayed_action": {

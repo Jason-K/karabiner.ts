@@ -103,7 +103,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
   d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-  f: { description: "Bloom", hold: [cmd(`${getOpenFolderCommand('/Users/jason')}`)] },
+  f: { description: "Bloom", hold: [cmd("/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom")] },
   g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'")] },
   h: {
     description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
@@ -123,7 +123,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
-  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'")] },
+  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace && echo 'QSpace Pro launched'")] },
   r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
   t: { description: "Todoist", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'")] },
