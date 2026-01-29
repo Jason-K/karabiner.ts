@@ -17,26 +17,25 @@
  */
 
 import {
-    ifApp,
-    ifVar,
-    map,
-    rule,
-    toKey,
-    toSetVar,
-    writeToProfile,
+  ifApp,
+  ifVar,
+  map,
+  rule,
+  toKey,
+  toSetVar,
+  writeToProfile,
 } from "karabiner.ts";
-import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
+import { applescript, cmd, openApp, tapHold, toKeyCond, varTapTapHold } from "./lib/builders";
 import type {
-    DeviceConfig,
-    SubLayerConfig,
-    TapHoldConfig,
+  DeviceConfig,
+  SubLayerConfig,
+  TapHoldConfig,
 } from "./lib/functions";
 import {
-    emitLayerDefinitions,
-    generateEscapeRule,
-    generateSpaceLayerRules,
-    generateTapHoldRules,
-    updateDeviceConfigurations,
+  emitLayerDefinitions,
+  generateEscapeRule,
+  generateTapHoldRules,
+  updateDeviceConfigurations
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 
@@ -163,322 +162,329 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
  * - No hardcoded key lists to maintain
  */
 
-const spaceLayers: SubLayerConfig[] = [
+// Keep spaceLayers as empty array to maintain architecture while using external app
+const spaceLayers: SubLayerConfig[] = [];
+
+// Commented out - using external application for space layer functionality
+// Uncomment and reassign to restore karabiner-hammerspoon bridge
+/*
+const spaceLayersConfig: SubLayerConfig[] = [
   {
     layerKey: "a",
     layerName: "Applications",
     releaseLayer: false,
     mappings: {
-      8: {
-        description: "RingCentral",
-        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
-      },
-      b : {
-        description: "Browser",
-        openAppOpts: { bundleIdentifier: "net.imput.helium" },
-      },
-      c: {
-        description: "Calendar",
-        openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
-      },
-      d: {
-        description: "Dia",
-        openAppOpts: { bundleIdentifier: "company.thebrowser.dia" },
-      },
-      e: {
-        description: "Proton Mail",
-        openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
-      },
-      f: {
-        description: "Finder",
-        openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
-      },
-      g: {
-        description: "ChatGPT",
-        openAppOpts: { bundleIdentifier: "com.openai.chat" },
-      },
-      m: {
-        description: "Messages",
-        openAppOpts: { bundleIdentifier: "com.apple.MobileSMS" },
-      },
-      o: {
-        description: "Outlook",
-        openAppOpts: { bundleIdentifier: "com.microsoft.Outlook" },
-      },
-      p: {
-        description: "Phone",
-        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
-      },
-      q: {
-        description: "QSpace",
-        openAppOpts: { bundleIdentifier: "com.jinghaoshe.qspace.pro" },
-      },
-      r: {
-        description: "RingCentral",
-        openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
-      },
-      s: {
-        description: "Safari",
-        openAppOpts: { bundleIdentifier: "com.apple.Safari" },
-      },
-      t: {
-        description: "Teams",
-        openAppOpts: { bundleIdentifier: "com.microsoft.teams2" },
-      },
-      v: {
-        description: "Code",
-        openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
-      },
-      w: {
-        description: "Word",
-        openAppOpts: { bundleIdentifier: "com.microsoft.Word" },
-      },
-      "=": {
-        description: "Calculator",
-        openAppOpts: { bundleIdentifier: "com.nikolaeu.numi-setapp" },
-      },
-      tab: {
-        description: "Last App",
-        openAppOpts: { historyIndex: 1 },
-        usageCounterVar: "apps_toggle_uses",
-      },
+//       8: {
+//         description: "RingCentral",
+//         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
+//       },
+//       b : {
+//         description: "Browser",
+//         openAppOpts: { bundleIdentifier: "net.imput.helium" },
+//       },
+//       c: {
+//         description: "Calendar",
+//         openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
+//       },
+//       d: {
+//         description: "Dia",
+//         openAppOpts: { bundleIdentifier: "company.thebrowser.dia" },
+//       },
+//       e: {
+//         description: "Proton Mail",
+//         openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
+//       },
+//       f: {
+//         description: "Finder",
+//         openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
+//       },
+//       g: {
+//         description: "ChatGPT",
+//         openAppOpts: { bundleIdentifier: "com.openai.chat" },
+//       },
+//       m: {
+//         description: "Messages",
+//         openAppOpts: { bundleIdentifier: "com.apple.MobileSMS" },
+//       },
+//       o: {
+//         description: "Outlook",
+//         openAppOpts: { bundleIdentifier: "com.microsoft.Outlook" },
+//       },
+//       p: {
+//         description: "Phone",
+//         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
+//       },
+//       q: {
+//         description: "QSpace",
+//         openAppOpts: { bundleIdentifier: "com.jinghaoshe.qspace.pro" },
+//       },
+//       r: {
+//         description: "RingCentral",
+//         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
+//       },
+//       s: {
+//         description: "Safari",
+//         openAppOpts: { bundleIdentifier: "com.apple.Safari" },
+//       },
+//       t: {
+//         description: "Teams",
+//         openAppOpts: { bundleIdentifier: "com.microsoft.teams2" },
+//       },
+//       v: {
+//         description: "Code",
+//         openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
+//       },
+//       w: {
+//         description: "Word",
+//         openAppOpts: { bundleIdentifier: "com.microsoft.Word" },
+//       },
+//       "=": {
+//         description: "Calculator",
+//         openAppOpts: { bundleIdentifier: "com.nikolaeu.numi-setapp" },
+//       },
+//       tab: {
+//         description: "Last App",
+//         openAppOpts: { historyIndex: 1 },
+//         usageCounterVar: "apps_toggle_uses",
+//       },
 
-    },
-  },
-  {
-    layerKey: "m",
-    layerName: "Cursor Movement",
-    releaseLayer: false, // Keep layer active until space released for continuous cursor movement
-    mappings: {
-      ";": { description: "Page Down", key: "page_down", passModifiers: true },
-      d: {
-        description: "Delete",
-        key: "delete_or_backspace",
-        passModifiers: true,
-      },
-      f: {
-        description: "Forward Delete",
-        key: "delete_forward",
-        passModifiers: true,
-      },
-      i: { description: "Up", key: "up_arrow", passModifiers: true },
-      j: { description: "Left", key: "left_arrow", passModifiers: true },
-      k: { description: "Down", key: "down_arrow", passModifiers: true },
-      l: { description: "Right", key: "right_arrow", passModifiers: true },
-      o: { description: "End", key: "end", passModifiers: true },
-      p: { description: "Page Up", key: "page_up", passModifiers: true },
-      s: { description: "Shift", key: "left_shift", passModifiers: true },
-      u: { description: "Home", key: "home", passModifiers: true },
-    },
-  },
-  {
-    layerKey: "c",
-    layerName: "Case",
-    releaseLayer: false,
-    mappings: {
-      l: {
-        description: "lowercase",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste",
-          },
-        ],
-      },
-      s: {
-        description: "Sentence case",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste",
-          },
-        ],
-      },
-      t: {
-        description: "Title Case",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py title_case --source clipboard --dest paste",
-          },
-        ],
-      },
-      u: {
-        description: "UPPERCASE",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste",
-          },
-        ],
-      },
-    },
-  },
-  {
-    layerKey: "d",
-    layerName: "Downloads",
-    releaseLayer: false,
-    mappings: {
-      "3": {
-        description: "3dPrinting",
-        command: getOpenFolderCommand('/Users/jason/Downloads/3dPrinting'),
-      },
-      a: {
-        description: "Archives",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Archives'),
-      },
-      i: {
-        description: "Installs",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Installs'),
-      },
-      o: {
-        description: "Office",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Office'),
-      },
-      p: {
-        description: "PDFs",
-        command: getOpenFolderCommand('/Users/jason/Downloads/PDFs'),
-      },
-    },
-  },
-  {
-    layerKey: "f",
-    layerName: "Folders",
-    releaseLayer: false,
-    mappings: {
-      "`": {
-        description: "Home",
-        command: getOpenFolderCommand('/Users/jason/'),
-      },
-      a: {
-        description: "Applications",
-        command: getOpenFolderCommand('/Applications'),
-      },
-      c: {
-        description: "Code Workspaces",
-        command: getOpenFolderCommand('/Users/jason/Scripts/Workspaces'),
-      },
-      d: {
-        description: "Downloads",
-        command: getOpenFolderCommand('/Users/jason/Downloads'),
-      },
-      g: {
-        description: "GitHub",
-        command: getOpenFolderCommand('/Users/jason/Gits'),
-      },
-      o: {
-        description: "My OneDrive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal'),
-      },
-      p: {
-        description: "Proton Drive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder'),
-      },
-      s: {
-        description: "Scripts",
-        command: getOpenFolderCommand('/Users/jason/Scripts'),
-      },
-      v: {
-        description: "Videos",
-        command: getOpenFolderCommand('/Users/jason/Videos'),
-      },
-      w: {
-        description: "Work OneDrive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
-      },
-      ".": {
-        description: "Dotfiles",
-        command: getOpenFolderCommand('/Users/jason/dotfiles'),
-      },
-    },
-  },
-  {
-    layerKey: "s",
-    layerName: "Screenshots",
-    releaseLayer: false,
-    mappings: {
-      a: {
-        description: "Capture Area",
-        command: 'open "cleanshot://capture-area"',
-      },
-      o: {
-        description: "OCR",
-        command: 'open "cleanshot://capture-text?linebreaks=false"',
-      },
-      r: {
-        description: "Record Screen",
-        command: 'open "cleanshot://record-screen"',
-      },
-      s: {
-        description: "Capture Screen",
-        command: 'open "cleanshot://capture-fullscreen"',
-      },
-      w: {
-        description: "Capture Window",
-        command: 'open "cleanshot://capture-window"',
-      },
-    },
-  },
-  {
-    layerKey: "w",
-    layerName: "Wrap",
-    releaseLayer: false, // Keep layer active to allow shell commands to complete
-    mappings: {
-      c: {
-        description: "Curly Braces",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste",
-          },
-        ],
-      },
-      p: {
-        description: "Parentheses",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
-          },
-        ],
-      },
-      q: {
-        description: "Quotes",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste",
-          },
-        ],
-      },
-      s: {
-        description: "Square Brackets",
-        actions: [
-          { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste",
-          },
-        ],
-      },
-    },
-  },
-];
+//     },
+//   },
+//   {
+//     layerKey: "m",
+//     layerName: "Cursor Movement",
+//     releaseLayer: false, // Keep layer active until space released for continuous cursor movement
+//     mappings: {
+//       ";": { description: "Page Down", key: "page_down", passModifiers: true },
+//       d: {
+//         description: "Delete",
+//         key: "delete_or_backspace",
+//         passModifiers: true,
+//       },
+//       f: {
+//         description: "Forward Delete",
+//         key: "delete_forward",
+//         passModifiers: true,
+//       },
+//       i: { description: "Up", key: "up_arrow", passModifiers: true },
+//       j: { description: "Left", key: "left_arrow", passModifiers: true },
+//       k: { description: "Down", key: "down_arrow", passModifiers: true },
+//       l: { description: "Right", key: "right_arrow", passModifiers: true },
+//       o: { description: "End", key: "end", passModifiers: true },
+//       p: { description: "Page Up", key: "page_up", passModifiers: true },
+//       s: { description: "Shift", key: "left_shift", passModifiers: true },
+//       u: { description: "Home", key: "home", passModifiers: true },
+//     },
+//   },
+//   {
+//     layerKey: "c",
+//     layerName: "Case",
+//     releaseLayer: false,
+//     mappings: {
+//       l: {
+//         description: "lowercase",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       s: {
+//         description: "Sentence case",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       t: {
+//         description: "Title Case",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py title_case --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       u: {
+//         description: "UPPERCASE",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//     },
+//   },
+//   {
+//     layerKey: "d",
+//     layerName: "Downloads",
+//     releaseLayer: false,
+//     mappings: {
+//       "3": {
+//         description: "3dPrinting",
+//         command: getOpenFolderCommand('/Users/jason/Downloads/3dPrinting'),
+//       },
+//       a: {
+//         description: "Archives",
+//         command: getOpenFolderCommand('/Users/jason/Downloads/Archives'),
+//       },
+//       i: {
+//         description: "Installs",
+//         command: getOpenFolderCommand('/Users/jason/Downloads/Installs'),
+//       },
+//       o: {
+//         description: "Office",
+//         command: getOpenFolderCommand('/Users/jason/Downloads/Office'),
+//       },
+//       p: {
+//         description: "PDFs",
+//         command: getOpenFolderCommand('/Users/jason/Downloads/PDFs'),
+//       },
+//     },
+//   },
+//   {
+//     layerKey: "f",
+//     layerName: "Folders",
+//     releaseLayer: false,
+//     mappings: {
+//       "`": {
+//         description: "Home",
+//         command: getOpenFolderCommand('/Users/jason/'),
+//       },
+//       a: {
+//         description: "Applications",
+//         command: getOpenFolderCommand('/Applications'),
+//       },
+//       c: {
+//         description: "Code Workspaces",
+//         command: getOpenFolderCommand('/Users/jason/Scripts/Workspaces'),
+//       },
+//       d: {
+//         description: "Downloads",
+//         command: getOpenFolderCommand('/Users/jason/Downloads'),
+//       },
+//       g: {
+//         description: "GitHub",
+//         command: getOpenFolderCommand('/Users/jason/Gits'),
+//       },
+//       o: {
+//         description: "My OneDrive",
+//         command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal'),
+//       },
+//       p: {
+//         description: "Proton Drive",
+//         command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder'),
+//       },
+//       s: {
+//         description: "Scripts",
+//         command: getOpenFolderCommand('/Users/jason/Scripts'),
+//       },
+//       v: {
+//         description: "Videos",
+//         command: getOpenFolderCommand('/Users/jason/Videos'),
+//       },
+//       w: {
+//         description: "Work OneDrive",
+//         command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
+//       },
+//       ".": {
+//         description: "Dotfiles",
+//         command: getOpenFolderCommand('/Users/jason/dotfiles'),
+//       },
+//     },
+//   },
+//   {
+//     layerKey: "s",
+//     layerName: "Screenshots",
+//     releaseLayer: false,
+//     mappings: {
+//       a: {
+//         description: "Capture Area",
+//         command: 'open "cleanshot://capture-area"',
+//       },
+//       o: {
+//         description: "OCR",
+//         command: 'open "cleanshot://capture-text?linebreaks=false"',
+//       },
+//       r: {
+//         description: "Record Screen",
+//         command: 'open "cleanshot://record-screen"',
+//       },
+//       s: {
+//         description: "Capture Screen",
+//         command: 'open "cleanshot://capture-fullscreen"',
+//       },
+//       w: {
+//         description: "Capture Window",
+//         command: 'open "cleanshot://capture-window"',
+//       },
+//     },
+//   },
+//   {
+//     layerKey: "w",
+//     layerName: "Wrap",
+//     releaseLayer: false, // Keep layer active to allow shell commands to complete
+//     mappings: {
+//       c: {
+//         description: "Curly Braces",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       p: {
+//         description: "Parentheses",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       q: {
+//         description: "Quotes",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//       s: {
+//         description: "Square Brackets",
+//         actions: [
+//           { type: "cut" },
+//           {
+//             type: "command",
+//             value:
+//               "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste",
+//           },
+//         ],
+//       },
+//     },
+//   },
+// ];
+*/
 
 // Generate tap-hold rules with automatic conflict prevention
 const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
@@ -495,20 +501,65 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-  // LEFT COMMAND - Hold for window switcher, tap to pass through
-  rule(
-    "LCMD - left ⌘ (hold for switcher)"
-  ).manipulators(
-    varTapTapHold({
-      key: "left_command",
-      firstVar: "lcmd_hold",
-      holdEvents: [toKey("tab", ["left_command"], { repeat: false })],
-      tapTapEvents: [openApp({ historyIndex: 1 })],
-      allowPassThrough: true,
-      thresholdMs: 500,
-      description: "Left CMD hold for window switcher",
-    })
-  ),
+  // LEFT COMMAND - Tap (pass-through), double-tap (last app), hold (f13)
+  rule("LCMD - left ⌘ (tap/double-tap/hold)").manipulators([
+    // Second tap: switch to last app (Karabiner official double-tap pattern)
+    {
+      type: "basic" as const,
+      from: {
+        key_code: "left_command" as any,
+        modifiers: { optional: ["any"] },
+      },
+      conditions: [
+        { type: "variable_if", name: "lcmd_pressed", value: 1 },
+        { type: "variable_unless", name: "space_mod", value: 1 },
+      ],
+      to: [
+        { set_variable: { name: "lcmd_pressed", value: 0 } },
+        openApp({ historyIndex: 1 }),
+      ],
+      description: "Left CMD second tap -> last app",
+    } as any,
+    // First tap: pass-through modifier, hold sends f13
+    {
+      type: "basic" as const,
+      from: {
+        key_code: "left_command" as any,
+        modifiers: { optional: ["any"] },
+      },
+      conditions: [
+        { type: "variable_unless", name: "space_mod", value: 1 },
+      ],
+      parameters: {
+        "basic.to_if_held_down_threshold_milliseconds": 650,
+        "basic.to_delayed_action_delay_milliseconds": 650,
+      },
+      to: [
+        { set_variable: { name: "lcmd_pressed", value: 1 } },
+        toKey("left_command", [], { lazy: true }),
+      ],
+      to_if_held_down: [
+        toSetVar("lcmd_pressed", 0),
+        toSetVar("lcmd_f13_down", 1),
+        toKey("f13", []),
+      ],
+      to_after_key_up: [
+        toKeyCond("f13", [], {}, [{ type: "variable_if", name: "lcmd_f13_down", value: 1 }]),
+        toSetVar("lcmd_f13_down", 0),
+      ],
+      to_delayed_action: {
+        to_if_invoked: [
+          toKeyCond("left_command", [], {}, [{ type: "variable_if", name: "lcmd_pressed", value: 1 }]),
+          toSetVar("lcmd_pressed", 0),
+        ],
+        to_if_canceled: [
+          toKeyCond("left_command", [], {}, [{ type: "variable_if", name: "lcmd_pressed", value: 1 }]),
+          toSetVar("lcmd_pressed", 0),
+        ],
+      },
+      description: "Left CMD first tap (pass-through + hold for f13)",
+    } as any,
+  ]),
 
   // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
   rule(
@@ -570,7 +621,7 @@ let rules: any[] = [
   ]),
 
   // Generate space layer rules with sublayer persistence
-  ...generateSpaceLayerRules(spaceLayers),
+  // ...generateSpaceLayerRules(spaceLayers),
 
   // ============================================================================
   // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
