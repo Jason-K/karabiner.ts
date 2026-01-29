@@ -17,26 +17,26 @@
  */
 
 import {
-  ifApp,
-  ifVar,
-  map,
-  rule,
-  toKey,
-  toSetVar,
-  writeToProfile,
+    ifApp,
+    ifVar,
+    map,
+    rule,
+    toKey,
+    toSetVar,
+    writeToProfile,
 } from "karabiner.ts";
 import { applescript, cmd, openApp, tapHold, varTapTapHold } from "./lib/builders";
 import type {
-  DeviceConfig,
-  SubLayerConfig,
-  TapHoldConfig,
+    DeviceConfig,
+    SubLayerConfig,
+    TapHoldConfig,
 } from "./lib/functions";
 import {
-  emitLayerDefinitions,
-  generateEscapeRule,
-  generateSpaceLayerRules,
-  generateTapHoldRules,
-  updateDeviceConfigurations,
+    emitLayerDefinitions,
+    generateEscapeRule,
+    generateSpaceLayerRules,
+    generateTapHoldRules,
+    updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 
@@ -103,17 +103,17 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
   d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-  f: { description: "Bloom", hold: [cmd("/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom")] },
-  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'")] },
+  f: { description: "Bloom", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action bloom")] },
+  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop'")] },
   h: {
     description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
     appOverrides: [
       { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
     ],
   },
-  i: { description: "iTerm2", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
-  j: { description: "Recent download", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
-  k: { description: "Kitty here", hold: [cmd("osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript")] },
+  i: { description: "iTerm2", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm")] },
+  j: { description: "Recent download", hold: [cmd('raycast://extensions/GastroGeek/recents/recentDownloads')] },
+  k: { description: "Kitty here", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty")] },
   m: { description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
   n: {
     description: "New note / Skim highlight", hold: [toKey("n")],
@@ -123,13 +123,14 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
   p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
-  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace && echo 'QSpace Pro launched'")] },
-  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
+  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action qspace")] },
+  r: { description: "Last d/l", hold: [cmd('open "raycast://extensions/GastroGeek/recents/recentDownloads"')] },
   s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
-  t: { description: "Todoist", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'")] },
+  t: { description: "Todoist", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist'")] },
   v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
   w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
-  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'")] },
+  x: { description: "Copy file", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy")] },
+  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'")] },
   "f1": { description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })] },
   "f2": { description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })] },
   "f3": { description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })] },
@@ -141,7 +142,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
   "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
   "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
-  slash: { description: "Houdah", hold: [toKey("h", SUPER, { repeat: false })]  },
+  slash: { description: "Houdah", hold: [cmd("open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'")]  },
   tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 
@@ -494,19 +495,18 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-  // LEFT COMMAND - Tap/Double-Tap/Hold pattern using varTapTapHold
+  // LEFT COMMAND - Hold for window switcher, tap to pass through
   rule(
-    "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)"
+    "LCMD - left ⌘ (hold for switcher)"
   ).manipulators(
     varTapTapHold({
       key: "left_command",
-      firstVar: "lcmd_first_tap",
-      aloneEvents: [],
+      firstVar: "lcmd_hold",
+      holdEvents: [toKey("tab", ["left_command"], { repeat: false })],
       tapTapEvents: [openApp({ historyIndex: 1 })],
-      tapTapHoldEvents: [toKey("tab", ["left_command"], { repeat: false })],
-      thresholdMs: 250,
-      description: "Left CMD tap/double-tap/hold",
       allowPassThrough: true,
+      thresholdMs: 500,
+      description: "Left CMD hold for window switcher",
     })
   ),
 
@@ -693,52 +693,52 @@ let rules: any[] = [
   // RCMD + __ - App launch or focus
   rule("RCMD + Key - App launch or focus").manipulators([
     ...map("a", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro' && echo 'Acrobat Pro launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro'"))
       .build(),
     ...map("b", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"))
       .build(),
     ...map("c", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders' && echo 'VSCode Insiders launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders'"))
       .build(),
     ...map("d", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia' && echo 'The Browser launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia'"))
       .build(),
     ...map("e", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop' && echo 'ProtonMail launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop'"))
       .build(),
     ...map("f", "right_command")
       .to(cmd(`${getOpenFolderCommand('/Users/jason')}`))
       .build(),
     ...map("h", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"))
       .build(),
     ...map("m", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS'"))
       .build(),
     ...map("o", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook' && echo 'Outlook launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook'"))
       .build(),
     ...map("p", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim' && echo 'Skim launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim'"))
       .build(),
     ...map("q", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"))
       .build(),
     ...map("r", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"))
       .build(),
     ...map("s", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari' && echo 'Safari launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari'"))
       .build(),
     ...map("t", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2' && echo 'Teams launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2'"))
       .build(),
     ...map("w", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word' && echo 'Word launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word'"))
       .build(),
     ...map("8", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"))
+      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"))
       .build(),
   ]),
   // Generate escape rule to reset all variables

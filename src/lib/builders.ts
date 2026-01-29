@@ -191,9 +191,9 @@ export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEv
   let firstTap: BasicManipulator;
 
   if (allowPassThrough) {
-    // PASS-THROUGH MODE (Corrected based on User's JSON)
-    // - No to_if_alone / to_if_held_down (prevents suppression)
-    // - Immediate emission of key
+    // PASS-THROUGH MODE
+    // - Immediate emission of key (lazy modifier)
+    // - Optional hold action
     // - Variable reset via delayed action
     firstTap = {
       type: 'basic',
@@ -203,11 +203,16 @@ export function varTapTapHold({ key, firstVar, aloneEvents, holdEvents, tapTapEv
       },
       parameters: {
         'basic.to_delayed_action_delay_milliseconds': thresholdMs,
+        'basic.to_if_held_down_threshold_milliseconds': thresholdMs,
       },
       description: description || `${key} first tap (pass-through)`,
       to: [
         toSetVar(firstVar, 1),
-        toKey(key as any), // Immediate emission
+        toKey(key as any, [], { lazy: true }),
+      ],
+      to_if_held_down: [
+        toSetVar(firstVar, 0),
+        ...(holdEvents ?? []),
       ],
       to_delayed_action: {
         to_if_invoked: [toSetVar(firstVar, 0)],

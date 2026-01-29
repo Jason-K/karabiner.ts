@@ -22,7 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -606,7 +606,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder bloom"
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action bloom"
               }
             ],
             "to_delayed_action": {
@@ -687,7 +687,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop' && echo 'ChatGPT launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
@@ -922,7 +922,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript"
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm"
               }
             ],
             "to_delayed_action": {
@@ -1003,7 +1003,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "bash ~/Scripts/Metascripts/recent_dl.sh"
+                "shell_command": "raycast://extensions/GastroGeek/recents/recentDownloads"
               }
             ],
             "to_delayed_action": {
@@ -1084,7 +1084,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/kitty/kitty_openHere.applescript"
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
               }
             ],
             "to_delayed_action": {
@@ -1575,7 +1575,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/Metascripts/open_finder_here --finder qspace && echo 'QSpace Pro launched'"
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -1656,7 +1656,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "bash ~/Scripts/Metascripts/recent_dl.sh"
+                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentDownloads\""
               }
             ],
             "to_delayed_action": {
@@ -1818,7 +1818,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist' && echo 'Todoist launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist'"
               }
             ],
             "to_delayed_action": {
@@ -2049,6 +2049,87 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "W hold -> Writing Tools"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "x"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "x",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "x",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "X hold -> Copy file"
       },
       {
         "conditions": [],
@@ -2988,14 +3069,7 @@
             ],
             "to_if_held_down": [
               {
-                "repeat": false,
-                "key_code": "h",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
+                "shell_command": "open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'"
               }
             ],
             "to_delayed_action": {
@@ -3155,19 +3229,19 @@
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "lcmd_first_tap",
+                "name": "lcmd_hold",
                 "value": 1
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 250,
-              "basic.to_if_held_down_threshold_milliseconds": 250
+              "basic.to_if_alone_timeout_milliseconds": 500,
+              "basic.to_if_held_down_threshold_milliseconds": 500
             },
-            "description": "Left CMD tap/double-tap/hold",
+            "description": "Left CMD hold for window switcher",
             "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "lcmd_first_tap",
+                  "name": "lcmd_hold",
                   "value": 0
                 }
               },
@@ -3182,23 +3256,16 @@
             "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "lcmd_first_tap",
+                  "name": "lcmd_hold",
                   "value": 0
                 }
-              },
-              {
-                "repeat": false,
-                "key_code": "tab",
-                "modifiers": [
-                  "left_command"
-                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "lcmd_first_tap",
+                    "name": "lcmd_hold",
                     "value": 0
                   }
                 }
@@ -3206,7 +3273,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "lcmd_first_tap",
+                    "name": "lcmd_hold",
                     "value": 0
                   }
                 }
@@ -3224,25 +3291,43 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 250
+              "basic.to_delayed_action_delay_milliseconds": 500,
+              "basic.to_if_held_down_threshold_milliseconds": 500
             },
-            "description": "Left CMD tap/double-tap/hold",
+            "description": "Left CMD hold for window switcher",
             "to": [
               {
                 "set_variable": {
-                  "name": "lcmd_first_tap",
+                  "name": "lcmd_hold",
                   "value": 1
                 }
               },
               {
-                "key_code": "left_command"
+                "lazy": true,
+                "key_code": "left_command",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "lcmd_hold",
+                  "value": 0
+                }
+              },
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_command"
+                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "lcmd_first_tap",
+                    "name": "lcmd_hold",
                     "value": 0
                   }
                 }
@@ -3250,7 +3335,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "lcmd_first_tap",
+                    "name": "lcmd_hold",
                     "value": 0
                   }
                 }
@@ -3259,7 +3344,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "LCMD - left ⌘ (tap), return to last app (tap-tap), switcher (tap-tap-hold)"
+        "ruleDescription": "LCMD - left ⌘ (hold for switcher)"
       },
       {
         "conditions": [],
@@ -5572,7 +5657,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro' && echo 'Acrobat Pro launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro'"
               }
             ]
           },
@@ -5588,7 +5673,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"
               }
             ]
           },
@@ -5604,7 +5689,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders' && echo 'VSCode Insiders launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders'"
               }
             ]
           },
@@ -5620,7 +5705,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia' && echo 'The Browser launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia'"
               }
             ]
           },
@@ -5636,7 +5721,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop' && echo 'ProtonMail launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop'"
               }
             ]
           },
@@ -5668,7 +5753,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium' && echo 'Helium launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"
               }
             ]
           },
@@ -5684,7 +5769,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS' && echo 'Messages launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS'"
               }
             ]
           },
@@ -5700,7 +5785,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook' && echo 'Outlook launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook'"
               }
             ]
           },
@@ -5716,7 +5801,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim' && echo 'Skim launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim'"
               }
             ]
           },
@@ -5732,7 +5817,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"
               }
             ]
           },
@@ -5748,7 +5833,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
               }
             ]
           },
@@ -5764,7 +5849,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari' && echo 'Safari launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari'"
               }
             ]
           },
@@ -5780,7 +5865,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2' && echo 'Teams launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2'"
               }
             ]
           },
@@ -5796,7 +5881,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word' && echo 'Word launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word'"
               }
             ]
           },
@@ -5812,7 +5897,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'"
+                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
               }
             ]
           }
