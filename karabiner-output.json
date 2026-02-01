@@ -3468,7 +3468,6 @@
               }
             ],
             "parameters": {
-              "basic.to_if_held_down_threshold_milliseconds": 650,
               "basic.to_delayed_action_delay_milliseconds": 650
             },
             "to": [
@@ -3482,43 +3481,6 @@
                 "lazy": true,
                 "key_code": "left_command",
                 "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 0
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_f13_down",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "f13",
-                "modifiers": []
-              }
-            ],
-            "to_after_key_up": [
-              {
-                "key_code": "f13",
-                "modifiers": [],
-                "conditions": [
-                  {
-                    "type": "variable_if",
-                    "name": "lcmd_f13_down",
-                    "value": 1
-                  }
-                ]
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_f13_down",
-                  "value": 0
-                }
               }
             ],
             "to_delayed_action": {
@@ -3561,7 +3523,7 @@
                 }
               ]
             },
-            "description": "Left CMD first tap (pass-through + hold for f13)"
+            "description": "Left CMD first tap (pass-through)"
           }
         ],
         "allowEmptyManipulators": false,

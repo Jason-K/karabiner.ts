@@ -142,7 +142,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
   "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
   "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
-  slash: { description: "Houdah", hold: [cmd("open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'")]  },
+  slash: { description: "Houdah", hold: [cmd("open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'")] },
   tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 
@@ -179,7 +179,7 @@ const spaceLayers: SubLayerConfig[] = [
         description: "RingCentral",
         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
-      b : {
+      b: {
         description: "Browser",
         openAppOpts: { bundleIdentifier: "net.imput.helium" },
       },
@@ -203,9 +203,9 @@ const spaceLayers: SubLayerConfig[] = [
         description: "ChatGPT",
         openAppOpts: { bundleIdentifier: "com.openai.chat" },
       },
-      k : {
-          description: "Kitty here",
-          command: "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
+      k: {
+        description: "Kitty here",
+        command: "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
       },
       m: {
         description: "Messages",
@@ -417,16 +417,20 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       a: {
         description: "Applications",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentApplications"',},
+        command: 'open "raycast://extensions/GastroGeek/recents/recentApplications"',
+      },
       d: {
         description: "Directories",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentFolders"',},
+        command: 'open "raycast://extensions/GastroGeek/recents/recentFolders"',
+      },
       f: {
         description: "Files",
-        command: 'open "raycast://extensions/GastroGeek/recents/recents"',},
+        command: 'open "raycast://extensions/GastroGeek/recents/recents"',
+      },
       j: {
         description: "Downloads",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentDownloads"',},
+        command: 'open "raycast://extensions/GastroGeek/recents/recentDownloads"',
+      },
     },
   },
   {
@@ -543,7 +547,7 @@ let rules: any[] = [
       ],
       description: "Left CMD second tap -> last app",
     } as any,
-    // First tap: pass-through modifier, hold sends f13
+    // First tap: pass-through modifier
     {
       type: "basic" as const,
       from: {
@@ -554,21 +558,11 @@ let rules: any[] = [
         { type: "variable_unless", name: "space_mod", value: 1 },
       ],
       parameters: {
-        "basic.to_if_held_down_threshold_milliseconds": 650,
         "basic.to_delayed_action_delay_milliseconds": 650,
       },
       to: [
         { set_variable: { name: "lcmd_pressed", value: 1 } },
         toKey("left_command", [], { lazy: true }),
-      ],
-      to_if_held_down: [
-        toSetVar("lcmd_pressed", 0),
-        toSetVar("lcmd_f13_down", 1),
-        toKey("f13", []),
-      ],
-      to_after_key_up: [
-        toKeyCond("f13", [], {}, [{ type: "variable_if", name: "lcmd_f13_down", value: 1 }]),
-        toSetVar("lcmd_f13_down", 0),
       ],
       to_delayed_action: {
         to_if_invoked: [
@@ -580,7 +574,7 @@ let rules: any[] = [
           toSetVar("lcmd_pressed", 0),
         ],
       },
-      description: "Left CMD first tap (pass-through + hold for f13)",
+      description: "Left CMD first tap (pass-through)",
     } as any,
   ]),
 
