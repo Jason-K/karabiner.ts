@@ -77,7 +77,7 @@ export type SubLayerConfig = {
 };
 
 export type SimpleModification = {
-from: { key_code: string };
+  from: { key_code: string };
   to: Array<{ key_code: string }>;
 };
 
@@ -114,7 +114,7 @@ export function emitLayerDefinitions(
     // Default output path: ~/dotfiles/hammerspoon/src/space_layers.json
     const finalPath = outputPath || path.join(
       process.env.HOME || '/Users/jason',
-      'dotfiles/hammerspoon/src/space_layers.json'
+      '.hammerspoon/karabiner_layer_gui/space_layers.json'
     );
 
     if (debugMode) {
