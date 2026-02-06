@@ -68,6 +68,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -154,6 +169,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -224,6 +254,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -240,7 +285,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
               }
             ],
             "to_delayed_action": {
@@ -321,6 +366,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -417,6 +477,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -505,6 +580,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -601,6 +691,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -683,6 +788,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -773,6 +893,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -843,6 +978,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -859,7 +1009,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
               }
             ],
             "to_delayed_action": {
@@ -933,6 +1083,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -1023,6 +1188,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1109,6 +1289,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1191,6 +1386,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -1287,6 +1497,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1357,6 +1582,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1373,7 +1613,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
               }
             ],
             "to_delayed_action": {
@@ -1447,6 +1687,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -1533,6 +1788,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -1630,6 +1900,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1712,6 +1997,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -1802,6 +2102,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1888,6 +2203,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -1970,6 +2300,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -2065,6 +2410,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2156,6 +2516,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2238,6 +2613,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -2330,6 +2720,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2414,6 +2819,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -2506,6 +2926,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2590,6 +3025,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -2686,6 +3136,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2770,6 +3235,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -2862,6 +3342,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -2946,6 +3441,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -3038,6 +3548,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -3122,6 +3647,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -3214,6 +3754,21 @@
               },
               {
                 "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
                 "name": "space_r_sublayer",
                 "value": 1
               },
@@ -3254,7 +3809,14 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'"
+                "repeat": false,
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -3296,6 +3858,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -3385,6 +3962,21 @@
               {
                 "type": "variable_unless",
                 "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
                 "value": 1
               },
               {
@@ -3836,6 +4428,24 @@
               },
               {
                 "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
                   "name": "space_r_sublayer",
                   "value": 0
                 }
@@ -3898,6 +4508,24 @@
               {
                 "set_variable": {
                   "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
                   "value": 0
                 }
               },
@@ -3982,6 +4610,24 @@
                 {
                   "set_variable": {
                     "name": "space_f_sublayer",
+                    "value": 0
+                  }
+                },
+                {
+                  "set_variable": {
+                    "name": "space_f_w_sublayer",
+                    "value": 0
+                  }
+                },
+                {
+                  "set_variable": {
+                    "name": "space_f_c_sublayer",
+                    "value": 0
+                  }
+                },
+                {
+                  "set_variable": {
+                    "name": "space_f_p_sublayer",
                     "value": 0
                   }
                 },
@@ -4943,7 +5589,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+C - Case layer"
+        "ruleDescription": "SPACE+C - Case > layer"
       },
       {
         "conditions": [],
@@ -5076,7 +5722,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+D - Downloads layer"
+        "ruleDescription": "SPACE+D - Downloads > layer"
       },
       {
         "conditions": [],
@@ -5120,24 +5766,6 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "grave_accent_and_tilde"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_f_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "open -a Bloom /Users/jason/"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
               "key_code": "a"
             },
             "conditions": [
@@ -5149,25 +5777,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Applications"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "c"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_f_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "open -a Bloom /Users/jason/Scripts/Workspaces"
+                "shell_command": "open -a Bloom /Applications/"
               }
             ]
           },
@@ -5185,14 +5795,14 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads"
+                "shell_command": "open -a Bloom /Users/jason/Downloads/"
               }
             ]
           },
           {
             "type": "basic",
             "from": {
-              "key_code": "g"
+              "key_code": "h"
             },
             "conditions": [
               {
@@ -5203,14 +5813,14 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Gits"
+                "shell_command": "open -a Bloom /Users/jason/"
               }
             ]
           },
           {
             "type": "basic",
             "from": {
-              "key_code": "o"
+              "key_code": "r"
             },
             "conditions": [
               {
@@ -5221,64 +5831,17 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-Personal"
+                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentFolders\""
               }
             ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "p"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_f_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "s"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_f_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "open -a Bloom /Users/jason/Scripts"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "v"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "space_f_sublayer",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "open -a Bloom /Users/jason/Videos"
-              }
-            ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "SPACE+F - Folders > layer"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5293,7 +5856,236 @@
             ],
             "to": [
               {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
+                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_F_W'"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "1"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
                 "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "l"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-Personal/1\\ -\\ Work/----\\ -\\ workers'\\ compensation\\ resources/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "c"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "p"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Downloads/PDFs/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "o"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Downloads/Office/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "SPACE+F+W - Work Folders > layer"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "c"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
+                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_F_C'"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "s"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Scripts/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "w"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Scripts/workspaces/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
               }
             ]
           },
@@ -5305,19 +6097,140 @@
             "conditions": [
               {
                 "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/dotfiles/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "g"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/gits/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "SPACE+F+C - Coding Folders > layer"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "p"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
                 "name": "space_f_sublayer",
                 "value": 1
               }
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/dotfiles"
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_activate_ms",
+                  "expression": "{{ system.now.milliseconds }}"
+                }
+              },
+              {
+                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_F_P'"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "1"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-Personal/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "p"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folders/"
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
               }
             ]
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+F - Folders layer"
+        "ruleDescription": "SPACE+F+P - Personal Cloud > layer"
       },
       {
         "conditions": [],
@@ -5432,7 +6345,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+R - Recent layer"
+        "ruleDescription": "SPACE+R - Recent > layer"
       },
       {
         "conditions": [],
@@ -5565,7 +6478,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+S - Screenshots layer"
+        "ruleDescription": "SPACE+S - Screenshots > layer"
       },
       {
         "conditions": [],
@@ -5704,7 +6617,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+W - Wrap layer"
+        "ruleDescription": "SPACE+W - Wrap > layer"
       },
       {
         "conditions": [],
@@ -5820,18 +6733,202 @@
       {
         "conditions": [],
         "manipulatorSources": [
-          {}
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_enter",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_enter",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "condition": {
+                  "type": "frontmost_application_unless",
+                  "bundle_identifiers": [
+                    "com.microsoft.Excel"
+                  ]
+                }
+              }
+            ]
+          }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "keypad_enter hold -> quick format"
+        "ruleDescription": "keypad_enter hold -> quick format (except Excel)"
       },
       {
         "conditions": [],
         "manipulatorSources": [
-          {}
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_enter",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f2",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_enter",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "condition": {
+                  "type": "frontmost_application_if",
+                  "bundle_identifiers": [
+                    "com.microsoft.Excel"
+                  ]
+                }
+              }
+            ]
+          }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "return_or_enter hold -> quick format"
+        "ruleDescription": "keypad_enter hold -> F2 (Excel)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "return_or_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "return_or_enter",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "condition": {
+                  "type": "frontmost_application_unless",
+                  "bundle_identifiers": [
+                    "com.microsoft.Excel"
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "return_or_enter hold -> quick format (except Excel)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "return_or_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f2",
+                "modifiers": []
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "return_or_enter",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "condition": {
+                  "type": "frontmost_application_if",
+                  "bundle_identifiers": [
+                    "com.microsoft.Excel"
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "return_or_enter hold -> F2 (Excel)"
       },
       {
         "conditions": [],
@@ -6289,6 +7386,24 @@
               },
               {
                 "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
                   "name": "space_r_sublayer",
                   "value": 0
                 }
@@ -6559,7 +7674,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
               }
             ],
             "to_delayed_action": {
@@ -6600,7 +7715,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript\""
+                "shell_command": "osascript \"$HOME/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript\""
               }
             ],
             "to_delayed_action": {
@@ -6641,7 +7756,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript\""
+                "shell_command": "osascript \"$HOME/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript\""
               }
             ],
             "to_delayed_action": {

@@ -498,7 +498,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  b: {
 +    description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
 +    appOverrides: [
-+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
 +    ],
 +  },
 +  c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
@@ -509,7 +509,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  h: {
 +    description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
 +    appOverrides: [
-+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
 +    ],
 +  },
 +  i: { description: "Indent", hold: indentLine() },
@@ -518,7 +518,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  n: {
 +    description: "New note / Skim highlight", hold: [toKey("n")],
 +    appOverrides: [
-+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
++      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
 +    ],
 +  },
 +  o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
@@ -526,7 +526,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro' && echo 'QSpace Pro launched'")] },
 +  r: { description: "Last d/l", hold: [cmd('bash ~/Scripts/Metascripts/recent_dl.sh')] },
 +  s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
-+  t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/Application_Specific/iterm2/iterm2_openHere.applescript")] },
++  t: { description: "Terminal Here", hold: [cmd("osascript ~/Scripts/apps/iterm2/iterm2_openHere.applescript")] },
 +  v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
 +  w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
 +  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip' && echo 'RingCentral launched'")] },
@@ -1233,7 +1233,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +      .toIfAlone(toKey("1", [], { halt: true }))
 +      .toIfHeldDown(
 +        cmd(
-+          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
++          "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
 +        )
 +      )
 +      .toDelayedAction([], [toKey("1", [], { halt: true })])
@@ -1249,7 +1249,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +      .toIfAlone(toKey("2", [], { halt: true }))
 +      .toIfHeldDown(
 +        applescript(
-+          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
++          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
 +        )
 +      )
 +      .toDelayedAction([], [toKey("2", [], { halt: true })])
@@ -1265,7 +1265,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +      .toIfAlone(toKey("3", [], { halt: true }))
 +      .toIfHeldDown(
 +        applescript(
-+          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
++          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
 +        )
 +      )
 +      .toDelayedAction([], [toKey("3", [], { halt: true })])

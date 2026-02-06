@@ -25,7 +25,7 @@ import {
   toSetVar,
   writeToProfile,
 } from "karabiner.ts";
-import { applescript, cmd, openApp, tapHold, toKeyCond, varTapTapHold } from "./lib/builders";
+import { applescript, cmd, openApp, tapHold, toKeyCond, varTapTapHold, withCondition } from "./lib/builders";
 import type {
   DeviceConfig,
   SubLayerConfig,
@@ -97,7 +97,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   b: {
     description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
     appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
     ],
   },
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
@@ -108,7 +108,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   h: {
     description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
     appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
     ],
   },
   i: { description: "iTerm2", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm")] },
@@ -118,7 +118,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   n: {
     description: "New note / Skim highlight", hold: [toKey("n")],
     appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
+      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
     ],
   },
   o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
@@ -142,7 +142,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
   "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
   "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
-  slash: { description: "Houdah", hold: [cmd("open 'raycast://extensions/felixthehat/houdahspot-search/index?arguments=%7B%22searchTerm%22%3A%22%22%7D'")] },
+  slash: { description: "Houdah", hold: [toKey("h",SUPER, { repeat: false })] },
   tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
 };
 
@@ -283,7 +283,7 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: "c",
-    layerName: "Case",
+    layerName: "Case >",
     releaseLayer: false,
     mappings: {
       l: {
@@ -334,7 +334,7 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: "d",
-    layerName: "Downloads",
+    layerName: "Downloads >",
     releaseLayer: false,
     mappings: {
       "3": {
@@ -361,58 +361,94 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: "f",
-    layerName: "Folders",
+    layerName: "Folders >",
     releaseLayer: false,
     mappings: {
-      "`": {
-        description: "Home",
-        command: getOpenFolderCommand('/Users/jason/'),
-      },
       a: {
         description: "Applications",
-        command: getOpenFolderCommand('/Applications'),
-      },
-      c: {
-        description: "Code Workspaces",
-        command: getOpenFolderCommand('/Users/jason/Scripts/Workspaces'),
+        command: getOpenFolderCommand('/Applications/'),
       },
       d: {
         description: "Downloads",
-        command: getOpenFolderCommand('/Users/jason/Downloads'),
+        command: getOpenFolderCommand('/Users/jason/Downloads/'),
       },
-      g: {
-        description: "GitHub",
-        command: getOpenFolderCommand('/Users/jason/Gits'),
+      h: {
+        description: "Home",
+        command: getOpenFolderCommand('/Users/jason/'),
       },
-      o: {
-        description: "My OneDrive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal'),
-      },
-      p: {
-        description: "Proton Drive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folder'),
-      },
-      s: {
-        description: "Scripts",
-        command: getOpenFolderCommand('/Users/jason/Scripts'),
-      },
-      v: {
-        description: "Videos",
-        command: getOpenFolderCommand('/Users/jason/Videos'),
-      },
-      w: {
-        description: "Work OneDrive",
-        command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
-      },
-      ".": {
-        description: "Dotfiles",
-        command: getOpenFolderCommand('/Users/jason/dotfiles'),
+      r: {
+        description: "Recent Folders",
+        command: 'open "raycast://extensions/GastroGeek/recents/recentFolders"',
       },
     },
+    subLayers: [
+      {
+        layerKey: "w",
+        layerName: "Work Folders >",
+        mappings: {
+          "1": {
+            description: "Work OneDrive",
+            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
+          },
+          l: {
+            description: "Library",
+            command: getOpenFolderCommand("/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/---- - workers' compensation resources/"),
+          },
+          c: {
+            description: "Cases",
+            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/'),
+          },
+          p: {
+            description: "PDFs",
+            command: getOpenFolderCommand('/Users/jason/Downloads/PDFs/'),
+          },
+          o: {
+            description: "Office Files",
+            command: getOpenFolderCommand('/Users/jason/Downloads/Office/'),
+          },
+        },
+      },
+      {
+        layerKey: "c",
+        layerName: "Coding Folders >",
+        mappings: {
+          s: {
+            description: "Scripts",
+            command: getOpenFolderCommand('/Users/jason/Scripts/'),
+          },
+          w: {
+            description: "Workspaces",
+            command: getOpenFolderCommand('/Users/jason/Scripts/workspaces/'),
+          },
+          ".": {
+            description: "Dotfiles",
+            command: getOpenFolderCommand('/Users/jason/dotfiles/'),
+          },
+          g: {
+            description: "Gits",
+            command: getOpenFolderCommand('/Users/jason/gits/'),
+          },
+        },
+      },
+      {
+        layerKey: "p",
+        layerName: "Personal Cloud >",
+        mappings: {
+          "1": {
+            description: "Personal OneDrive",
+            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal/'),
+          },
+          p: {
+            description: "Proton Drive",
+            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folders/'),
+          },
+        },
+      },
+    ],
   },
   {
     layerKey: "r",
-    layerName: "Recent",
+    layerName: "Recent >",
     releaseLayer: false,
     mappings: {
       a: {
@@ -435,7 +471,7 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: "s",
-    layerName: "Screenshots",
+    layerName: "Screenshots >",
     releaseLayer: false,
     mappings: {
       a: {
@@ -462,7 +498,7 @@ const spaceLayers: SubLayerConfig[] = [
   },
   {
     layerKey: "w",
-    layerName: "Wrap",
+    layerName: "Wrap >",
     releaseLayer: false, // Keep layer active to allow shell commands to complete
     mappings: {
       c: {
@@ -697,16 +733,27 @@ let rules: any[] = [
     } as any,
   ]),
 
-  // ENTER/RETURN - Hold for quick format (both keypad and regular)
-  ...["keypad_enter", "return_or_enter"].map((key) =>
-    rule(`${key} hold -> quick format`).manipulators([
-      tapHold({
-        key,
-        alone: [toKey(key as any, [], { halt: true })],
-        hold: [cmd("/opt/homebrew/bin/hs -c 'FormatCutSeed()'")],
-      }),
-    ])
-  ),
+  // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel
+  ...["keypad_enter", "return_or_enter"].flatMap((key) => [
+    rule(`${key} hold -> quick format (except Excel)`).manipulators(
+      withCondition(ifApp("com.microsoft.Excel").unless())(
+        tapHold({
+          key,
+          alone: [toKey(key as any, [], { halt: true })],
+          hold: [cmd("/opt/homebrew/bin/hs -c 'FormatCutSeed()'")],
+        }).build()
+      ).build()
+    ),
+    rule(`${key} hold -> F2 (Excel)`).manipulators(
+      withCondition(ifApp("com.microsoft.Excel"))(
+        tapHold({
+          key,
+          alone: [toKey(key as any, [], { halt: true })],
+          hold: [toKey("f2", [], { repeat: false })],
+        }).build()
+      ).build()
+    ),
+  ]),
 
   // EQUALS - Hold for Quick Date (both keypad and regular)
   ...["keypad_equal_sign", "equal_sign"].map((key) =>
@@ -882,7 +929,7 @@ let rules: any[] = [
       .toIfAlone(toKey("1", [], { halt: true }))
       .toIfHeldDown(
         cmd(
-          "osascript ~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
+          "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
         )
       )
       .toDelayedAction([], [toKey("1", [], { halt: true })])
@@ -898,7 +945,7 @@ let rules: any[] = [
       .toIfAlone(toKey("2", [], { halt: true }))
       .toIfHeldDown(
         applescript(
-          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
+          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
         )
       )
       .toDelayedAction([], [toKey("2", [], { halt: true })])
@@ -914,7 +961,7 @@ let rules: any[] = [
       .toIfAlone(toKey("3", [], { halt: true }))
       .toIfHeldDown(
         applescript(
-          "~/Scripts/Application_Specific/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
+          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
         )
       )
       .toDelayedAction([], [toKey("3", [], { halt: true })])

@@ -49,31 +49,41 @@ export type TapHoldConfig = {
   }>;
 };
 
+export type LayerMappingConfig = {
+  // Single action (legacy support)
+  path?: string;            // Folder/file path to open
+  command?: string;         // Shell command to execute
+  key?: string;             // Key to send
+  stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
+  passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
+  openAppOpts?: OpenAppOpts; // Use native open_application (preferred over command for apps)
+  toEvents?: ToEvent[];      // Directly supply ToEvents (advanced usage, Phase 4)
+  usageCounterVar?: string;  // Variable to increment each time this mapping runs (Phase 3)
+
+  // Multiple actions (new)
+  actions?: Array<{
+    type: 'path' | 'command' | 'key' | 'copy' | 'paste' | 'cut';
+    value?: string;         // For path, command, or key types
+    modifiers?: string[];   // For key type
+    passModifiers?: boolean; // For key type
+  }>;
+
+  description: string;      // Description for this action
+};
+
+export type NestedLayerConfig = {
+  layerKey: string;           // Key to activate this nested sublayer (e.g., 'w' for Work)
+  layerName: string;          // Human-readable name for documentation
+  releaseLayer?: boolean;     // If true (default), clear layer after each action
+  mappings: Record<string, LayerMappingConfig>; // Key mappings within this nested sublayer
+};
+
 export type SubLayerConfig = {
   layerKey: string;           // Key to activate this sublayer (e.g., 'd' for Downloads)
   layerName: string;          // Human-readable name for documentation
   releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until space released.
-  mappings: Record<string, {  // Key mappings within this sublayer
-    // Single action (legacy support)
-    path?: string;            // Folder/file path to open
-    command?: string;         // Shell command to execute
-    key?: string;             // Key to send
-    stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
-    passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h → shift+left_arrow)
-    openAppOpts?: OpenAppOpts; // Use native open_application (preferred over command for apps)
-    toEvents?: ToEvent[];      // Directly supply ToEvents (advanced usage, Phase 4)
-    usageCounterVar?: string;  // Variable to increment each time this mapping runs (Phase 3)
-
-    // Multiple actions (new)
-    actions?: Array<{
-      type: 'path' | 'command' | 'key' | 'copy' | 'paste' | 'cut';
-      value?: string;         // For path, command, or key types
-      modifiers?: string[];   // For key type
-      passModifiers?: boolean; // For key type
-    }>;
-
-    description: string;      // Description for this action
-  }>;
+  mappings: Record<string, LayerMappingConfig>; // Key mappings within this sublayer
+  subLayers?: NestedLayerConfig[]; // Optional nested sublayers (second-level)
 };
 
 export type SimpleModification = {
@@ -134,13 +144,20 @@ export function emitLayerDefinitions(
       widthHintPx: 235,
     };
 
-    // Add each sublayer with its mappings
-    spaceLayers.forEach(({ layerKey, layerName, mappings }) => {
+    // Add each sublayer with its mappings (and any nested sublayers)
+    spaceLayers.forEach(({ layerKey, layerName, mappings, subLayers }) => {
       const layerId = `space_${layerKey.toUpperCase()}`;
       const keys = Object.entries(mappings).map(([key, config]) => ({
         key: key.toUpperCase(),
         desc: config.description,
       }));
+
+      (subLayers || []).forEach((subLayer) => {
+        keys.push({
+          key: subLayer.layerKey.toUpperCase(),
+          desc: subLayer.layerName,
+        });
+      });
 
       layers[layerId] = {
         label: layerKey.toUpperCase(),
@@ -153,6 +170,26 @@ export function emitLayerDefinitions(
           `[LayerEmit Debug] Emitted layer ${layerId} with ${keys.length} keys`
         );
       }
+
+      (subLayers || []).forEach((subLayer) => {
+        const nestedId = `space_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`;
+        const nestedKeys = Object.entries(subLayer.mappings).map(([key, config]) => ({
+          key: key.toUpperCase(),
+          desc: config.description,
+        }));
+
+        layers[nestedId] = {
+          label: `${layerKey.toUpperCase()}${subLayer.layerKey.toUpperCase()}`,
+          keys: nestedKeys,
+          widthHintPx: 235,
+        };
+
+        if (debugMode) {
+          console.log(
+            `[LayerEmit Debug] Emitted layer ${nestedId} with ${nestedKeys.length} keys`
+          );
+        }
+      });
     });
 
     // Ensure directory exists
@@ -197,6 +234,19 @@ function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
   return 'space';
 }
 
+function getAllSublayerVars(spaceLayers: SubLayerConfig[]): string[] {
+  const vars: string[] = [];
+
+  spaceLayers.forEach((layer) => {
+    vars.push(`space_${layer.layerKey}_sublayer`);
+    (layer.subLayers || []).forEach((subLayer) => {
+      vars.push(`space_${layer.layerKey}_${subLayer.layerKey}_sublayer`);
+    });
+  });
+
+  return vars;
+}
+
 // ============================================================================
 // TAP-HOLD RULE GENERATION
 // ============================================================================
@@ -209,7 +259,7 @@ export function generateTapHoldRules(
   spaceLayers: SubLayerConfig[]
 ): any[] {
   const spaceModVar = 'space_mod';
-  const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
+  const allSublayerVars = getAllSublayerVars(spaceLayers);
 
   return Object.entries(tapHoldKeys).map(([key, config]) => {
     const manipulators = tapHold({
@@ -256,7 +306,7 @@ export function generateTapHoldRules(
 export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
   const rules: any[] = [];
   const spaceModVar = 'space_mod';
-  const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
+  const allSublayerVars = getAllSublayerVars(spaceLayers);
 
   // Build layer info for space_mod (list of sublayers)
   const spaceModInfo = buildSpaceModInfo(spaceLayers);
@@ -297,30 +347,13 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
 
   rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
 
-  // Generate sublayer rules
-  spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true }) => {
-    const sublayerVar = `space_${layerKey}_sublayer`;
-    const sublayerActivateTimeVar = `space_${layerKey}_activate_ms`;
-    const allManipulators: any[] = [];
+  const buildSublayerManipulators = (
+    mappings: Record<string, LayerMappingConfig>,
+    activeVar: string,
+    releaseLayer: boolean
+  ): any[] => {
+    const manipulators: any[] = [];
 
-    // Build layer info JSON for this layer
-    const layerInfo = buildLayerInfo(layerKey, spaceLayers);
-
-    // Sublayer activation - pressing layerKey while space is held
-    allManipulators.push(
-      ...map(layerKey as any)
-        .condition(ifVar(spaceModVar, 1))
-        .to([
-          toSetVar(sublayerVar, 1),
-          toSetVar(spaceModVar, 0),
-          // Record activation timestamp (Phase 3 expression support)
-          setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}'`)
-        ])
-        .build()
-    );
-
-    // Sublayer key mappings
     Object.entries(mappings).forEach(([key, config]) => {
       const events: ToEvent[] = [];
 
@@ -391,23 +424,85 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
 
       // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
       if (releaseLayer && !config.stickyModifier) {
-        events.push(toSetVar(sublayerVar, 0));
+        events.push(toSetVar(activeVar, 0));
       }
 
       const mappingBuilder = (config.passModifiers
         ? (map as any)(key as any, '??' as any)
         : map(key as any)
-      ).condition(ifVar(sublayerVar, 1)).to(events);
+      ).condition(ifVar(activeVar, 1)).to(events);
 
-      allManipulators.push(
+      manipulators.push(
         ...mappingBuilder.build()
       );
     });
+
+    return manipulators;
+  };
+
+  // Generate sublayer rules
+  spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true, subLayers }) => {
+    const sublayerVar = `space_${layerKey}_sublayer`;
+    const sublayerActivateTimeVar = `space_${layerKey}_activate_ms`;
+    const allManipulators: any[] = [];
+
+    // Build layer info JSON for this layer
+    const layerInfo = buildLayerInfo(layerKey, spaceLayers);
+
+    // Sublayer activation - pressing layerKey while space is held
+    allManipulators.push(
+      ...map(layerKey as any)
+        .condition(ifVar(spaceModVar, 1))
+        .to([
+          toSetVar(sublayerVar, 1),
+          toSetVar(spaceModVar, 0),
+          // Record activation timestamp (Phase 3 expression support)
+          setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
+          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}'`)
+        ])
+        .build()
+    );
+
+    // Sublayer key mappings
+    allManipulators.push(
+      ...buildSublayerManipulators(mappings, sublayerVar, releaseLayer)
+    );
 
     // Add single rule with all manipulators for this sublayer
     rules.push(
       rule(`SPACE+${layerKey.toUpperCase()} - ${layerName} layer`).manipulators(allManipulators)
     );
+
+    // Nested sublayers (second-level)
+    (subLayers || []).forEach((subLayer) => {
+      const nestedVar = `space_${layerKey}_${subLayer.layerKey}_sublayer`;
+      const nestedActivateTimeVar = `space_${layerKey}_${subLayer.layerKey}_activate_ms`;
+      const nestedManipulators: any[] = [];
+
+      nestedManipulators.push(
+        ...map(subLayer.layerKey as any)
+          .condition(ifVar(sublayerVar, 1))
+          .to([
+            toSetVar(nestedVar, 1),
+            toSetVar(sublayerVar, 0),
+            setVarExpr(nestedActivateTimeVar, '{{ system.now.milliseconds }}'),
+            cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}'`)
+          ])
+          .build()
+      );
+
+      nestedManipulators.push(
+        ...buildSublayerManipulators(
+          subLayer.mappings,
+          nestedVar,
+          subLayer.releaseLayer ?? true
+        )
+      );
+
+      rules.push(
+        rule(`SPACE+${layerKey.toUpperCase()}+${subLayer.layerKey.toUpperCase()} - ${subLayer.layerName} layer`).manipulators(nestedManipulators)
+      );
+    });
   });
 
   return rules;
@@ -422,7 +517,7 @@ export function generateSpaceLayerRules(spaceLayers: SubLayerConfig[]): any[] {
  */
 export function generateEscapeRule(spaceLayers: SubLayerConfig[]): any[] {
   const spaceModVar = 'space_mod';
-  const allSublayerVars = spaceLayers.map(({ layerKey }) => `space_${layerKey}_sublayer`);
+  const allSublayerVars = getAllSublayerVars(spaceLayers);
 
   // Static variables used elsewhere (caps lock, double-tap protection)
   const otherVars = [
