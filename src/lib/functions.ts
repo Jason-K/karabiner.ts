@@ -121,10 +121,10 @@ export function emitLayerDefinitions(
   debugMode: boolean = false
 ): void {
   try {
-    // Default output path: ~/dotfiles/hammerspoon/src/space_layers.json
+    // Default output path: /Users/jason/.config/hammerspoon/karabiner_layer_gui/space_layers.json
     const finalPath = outputPath || path.join(
       process.env.HOME || '/Users/jason',
-      '.hammerspoon/karabiner_layer_gui/space_layers.json'
+      '.config/hammerspoon/karabiner_layer_gui/space_layers.json'
     );
 
     if (debugMode) {

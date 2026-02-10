@@ -25,7 +25,15 @@ import {
   toSetVar,
   writeToProfile,
 } from "karabiner.ts";
-import { applescript, cmd, openApp, tapHold, toKeyCond, varTapTapHold, withCondition } from "./lib/builders";
+import {
+  applescript,
+  cmd,
+  openApp,
+  tapHold,
+  toKeyCond,
+  varTapTapHold,
+  withCondition,
+} from "./lib/builders";
 import type {
   DeviceConfig,
   SubLayerConfig,
@@ -36,7 +44,7 @@ import {
   generateEscapeRule,
   generateSpaceLayerRules,
   generateTapHoldRules,
-  updateDeviceConfigurations
+  updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 
@@ -49,7 +57,7 @@ import { HYPER, L, MEH, SUPER } from "./lib/mods";
  *
  * Note: Bloom requires 'open -a Bloom' with escaped paths, while QspacePro uses bundle ID
  */
-const FOLDER_OPENER: 'bloom' | 'qspace' = 'bloom';
+const FOLDER_OPENER: "bloom" | "qspace" = "bloom";
 
 /**
  * Generate the correct open command for the selected folder opener app
@@ -57,9 +65,9 @@ const FOLDER_OPENER: 'bloom' | 'qspace' = 'bloom';
  * QspacePro: uses 'open -b' with bundle ID
  */
 const getOpenFolderCommand = (folderPath: string): string => {
-  if (FOLDER_OPENER === 'bloom') {
+  if (FOLDER_OPENER === "bloom") {
     // Bloom requires 'open -a' with escaped path (spaces escaped with backslash)
-    const escapedPath = folderPath.replace(/ /g, '\\ ');
+    const escapedPath = folderPath.replace(/ /g, "\\ ");
     return `open -a Bloom ${escapedPath}`;
   } else {
     // QspacePro uses bundle ID
@@ -72,11 +80,11 @@ const getOpenFolderCommand = (folderPath: string): string => {
  * Falls back to QspacePro if Bloom is selected, as QspacePro has proper bundle ID support
  */
 const getFolderOpenerBundleId = (): string => {
-  if (FOLDER_OPENER === 'bloom') {
+  if (FOLDER_OPENER === "bloom") {
     // Bloom doesn't work well with bundle ID, so use QspacePro as fallback for openAppOpts
-    return 'com.jinghaoshe.qspace.pro';
+    return "com.jinghaoshe.qspace.pro";
   } else {
-    return 'com.jinghaoshe.qspace.pro';
+    return "com.jinghaoshe.qspace.pro";
   }
 };
 
@@ -93,57 +101,175 @@ const getFolderOpenerBundleId = (): string => {
  */
 
 const tapHoldKeys: Record<string, TapHoldConfig> = {
-  a: { description: "Antinote", hold: [cmd("open -u 'antinote://x-callback-url/hotkey' && echo 'Antinote launched'")] },
-  b: {
-    description: "Search menu apps / Skim note", hold: [toKey("b", SUPER, { repeat: false })],
-    appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript")], },
+  a: {
+    description: "Antinote",
+    hold: [
+      cmd(
+        "open -u 'antinote://x-callback-url/hotkey' && echo 'Antinote launched'",
+      ),
     ],
+  },
+  b: {
+    description: "Search menu apps / Skim note",
+    hold: [toKey("b", SUPER, { repeat: false })],
   },
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
   d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
   e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
-  f: { description: "Bloom", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action bloom")] },
-  g: { description: "ChatGPT", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop'")] },
+  f: {
+    description: "Bloom",
+    hold: [
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action bloom",
+      ),
+    ],
+  },
+  g: {
+    description: "ChatGPT",
+    hold: [
+      cmd(
+        "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'",
+      ),
+    ],
+  },
   h: {
-    description: "HS (global) / New heading (Skim)", hold: [cmd("/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'")],
-    appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript")] },
+    description: "Here",
+    hold: [
+      openApp({ bundleIdentifier: "net.kovidgoyal.kitty" }),
     ],
   },
-  i: { description: "iTerm2", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm")] },
-  j: { description: "Recent download", hold: [cmd('raycast://extensions/GastroGeek/recents/recentDownloads')] },
-  k: { description: "Kitty here", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty")] },
-  m: { description: "Deminimize", hold: [toKey("m", HYPER, { repeat: false })] },
+  i: {
+    description: "iTerm2",
+    hold: [
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm",
+      ),
+    ],
+  },
+  j: {
+    description: "Recent download",
+    hold: [cmd("raycast://extensions/GastroGeek/recents/recentDownloads")],
+  },
+  k: {
+    description: "Kitty here",
+    hold: [
+      openApp({ bundleIdentifier: "net.kovidgoyal.kitty" }),
+    ],
+  },
+  m: {
+    description: "Deminimize",
+    hold: [toKey("m", HYPER, { repeat: false })],
+  },
   n: {
-    description: "New note / Skim highlight", hold: [toKey("n")],
-    appOverrides: [
-      { app: "net.sourceforge.skim-app.skim", hold: [cmd("osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript")] },
+    description: "New note / Skim highlight",
+    hold: [toKey("n")],
+  },
+  o: {
+    description: "OCR",
+    hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')],
+  },
+  p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
+  q: {
+    description: "QSpace Pro",
+    hold: [
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action qspace",
+      ),
     ],
   },
-  o: { description: "OCR", hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')] },
-  p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
-  q: { description: "QSpace Pro", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action qspace")] },
-  r: { description: "Last d/l", hold: [cmd('open "raycast://extensions/GastroGeek/recents/recentDownloads"')] },
-  s: { description: "Screenshot", hold: [cmd('open "cleanshot://capture-area"')] },
-  t: { description: "Todoist", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist'")] },
-  v: { description: "Maccy", hold: [toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false })] },
-  w: { description: "Writing Tools", hold: [toKey("w", ["command", "shift"], { repeat: false })] },
-  x: { description: "Copy file", hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy")] },
-  "8": { description: "RingCentral", hold: [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'")] },
-  "f1": { description: "Decrease brightness", hold: [toKey("display_brightness_decrement", [], { repeat: true })] },
-  "f2": { description: "Increase brightness", hold: [toKey("display_brightness_increment", [], { repeat: true })] },
-  "f3": { description: "Mission Control", hold: [toKey("mission_control", [], { repeat: false })] },
-  "f4": { description: "Launchpad", hold: [toKey("launchpad", [], { repeat: false })] },
-  "f5": { description: "Dictation", hold: [toKey("f5", ['command', 'option', 'control'], { repeat: false })] },
-  "f7": { description: "Rewind", hold: [toKey("rewind", [], { repeat: true })] },
-  "f8": { description: "Play/Pause", hold: [toKey("play_or_pause", [], { repeat: false })] },
-  "f9": { description: "Fast Forward", hold: [toKey("fastforward", [], { repeat: true })] },
-  "f10": { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
-  "f11": { description: "Volume Down", hold: [toKey("volume_decrement", [], { repeat: true })] },
-  "f12": { description: "Volume Up", hold: [toKey("volume_increment", [], { repeat: true })] },
-  slash: { description: "Houdah", hold: [toKey("h",SUPER, { repeat: false })] },
-  tab: { description: "Mission Control", hold: [toKey("mission_control", [], { halt: true, repeat: true })] },
+  r: {
+    description: "Last d/l",
+    hold: [
+      cmd('open "raycast://extensions/GastroGeek/recents/recentCustom"'),
+    ],
+  },
+  s: {
+    description: "Screenshot",
+    hold: [cmd('open "cleanshot://capture-area"')],
+  },
+  t: {
+    description: "Todoist",
+    hold: [
+      cmd(
+        "/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'",
+      ),
+    ],
+  },
+  v: {
+    description: "Maccy",
+    hold: [
+      toKey("grave_accent_and_tilde", ["control"], {
+        halt: true,
+        repeat: false,
+      }),
+    ],
+  },
+  w: {
+    description: "Writing Tools",
+    hold: [toKey("w", ["command", "shift"], { repeat: false })],
+  },
+  x: {
+    description: "Copy file",
+    hold: [
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy",
+      ),
+    ],
+  },
+  "8": {
+    description: "RingCentral",
+    hold: [
+      cmd(
+        "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
+      ),
+    ],
+  },
+  f1: {
+    description: "Decrease brightness",
+    hold: [toKey("display_brightness_decrement", [], { repeat: true })],
+  },
+  f2: {
+    description: "Increase brightness",
+    hold: [toKey("display_brightness_increment", [], { repeat: true })],
+  },
+  f3: {
+    description: "Mission Control",
+    hold: [toKey("mission_control", [], { repeat: false })],
+  },
+  f4: {
+    description: "Launchpad",
+    hold: [toKey("launchpad", [], { repeat: false })],
+  },
+  f5: {
+    description: "Dictation",
+    hold: [toKey("f5", ["command", "option", "control"], { repeat: false })],
+  },
+  f7: { description: "Rewind", hold: [toKey("rewind", [], { repeat: true })] },
+  f8: {
+    description: "Play/Pause",
+    hold: [toKey("play_or_pause", [], { repeat: false })],
+  },
+  f9: {
+    description: "Fast Forward",
+    hold: [toKey("fastforward", [], { repeat: true })],
+  },
+  f10: { description: "Mute", hold: [toKey("mute", [], { repeat: false })] },
+  f11: {
+    description: "Volume Down",
+    hold: [toKey("volume_decrement", [], { repeat: true })],
+  },
+  f12: {
+    description: "Volume Up",
+    hold: [toKey("volume_increment", [], { repeat: true })],
+  },
+  slash: {
+    description: "Houdah",
+    hold: [toKey("h", SUPER, { repeat: false })],
+  },
+  tab: {
+    description: "Mission Control",
+    hold: [toKey("mission_control", [], { halt: true, repeat: true })],
+  },
 };
 
 // ============================================================================
@@ -205,7 +331,8 @@ const spaceLayers: SubLayerConfig[] = [
       },
       k: {
         description: "Kitty here",
-        command: "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
+        command:
+          "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty",
       },
       m: {
         description: "Messages",
@@ -252,7 +379,6 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { historyIndex: 1 },
         usageCounterVar: "apps_toggle_uses",
       },
-
     },
   },
   {
@@ -339,23 +465,23 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       "3": {
         description: "3dPrinting",
-        command: getOpenFolderCommand('/Users/jason/Downloads/3dPrinting'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/3dPrinting"),
       },
       a: {
         description: "Archives",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Archives'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/Archives"),
       },
       i: {
         description: "Installs",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Installs'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/Installs"),
       },
       o: {
         description: "Office",
-        command: getOpenFolderCommand('/Users/jason/Downloads/Office'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/Office"),
       },
       p: {
         description: "PDFs",
-        command: getOpenFolderCommand('/Users/jason/Downloads/PDFs'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/PDFs"),
       },
     },
   },
@@ -366,15 +492,15 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       a: {
         description: "Applications",
-        command: getOpenFolderCommand('/Applications/'),
+        command: getOpenFolderCommand("/Applications/"),
       },
       d: {
         description: "Downloads",
-        command: getOpenFolderCommand('/Users/jason/Downloads/'),
+        command: getOpenFolderCommand("/Users/jason/Downloads/"),
       },
       h: {
         description: "Home",
-        command: getOpenFolderCommand('/Users/jason/'),
+        command: getOpenFolderCommand("/Users/jason/"),
       },
       r: {
         description: "Recent Folders",
@@ -388,23 +514,29 @@ const spaceLayers: SubLayerConfig[] = [
         mappings: {
           "1": {
             description: "Work OneDrive",
-            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP'),
+            command: getOpenFolderCommand(
+              "/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP",
+            ),
           },
           l: {
             description: "Library",
-            command: getOpenFolderCommand("/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/---- - workers' compensation resources/"),
+            command: getOpenFolderCommand(
+              "/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/---- - workers' compensation resources/",
+            ),
           },
           c: {
             description: "Cases",
-            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/'),
+            command: getOpenFolderCommand(
+              "/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/",
+            ),
           },
           p: {
             description: "PDFs",
-            command: getOpenFolderCommand('/Users/jason/Downloads/PDFs/'),
+            command: getOpenFolderCommand("/Users/jason/Downloads/PDFs/"),
           },
           o: {
             description: "Office Files",
-            command: getOpenFolderCommand('/Users/jason/Downloads/Office/'),
+            command: getOpenFolderCommand("/Users/jason/Downloads/Office/"),
           },
         },
       },
@@ -414,19 +546,19 @@ const spaceLayers: SubLayerConfig[] = [
         mappings: {
           s: {
             description: "Scripts",
-            command: getOpenFolderCommand('/Users/jason/Scripts/'),
+            command: getOpenFolderCommand("/Users/jason/Scripts/"),
           },
           w: {
             description: "Workspaces",
-            command: getOpenFolderCommand('/Users/jason/Scripts/workspaces/'),
+            command: getOpenFolderCommand("/Users/jason/Scripts/workspaces/"),
           },
           ".": {
             description: "Dotfiles",
-            command: getOpenFolderCommand('/Users/jason/dotfiles/'),
+            command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
           },
           g: {
             description: "Gits",
-            command: getOpenFolderCommand('/Users/jason/gits/'),
+            command: getOpenFolderCommand("/Users/jason/gits/"),
           },
         },
       },
@@ -436,11 +568,15 @@ const spaceLayers: SubLayerConfig[] = [
         mappings: {
           "1": {
             description: "Personal OneDrive",
-            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/OneDrive-Personal/'),
+            command: getOpenFolderCommand(
+              "/Users/jason/Library/CloudStorage/OneDrive-Personal/",
+            ),
           },
           p: {
             description: "Proton Drive",
-            command: getOpenFolderCommand('/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folders/'),
+            command: getOpenFolderCommand(
+              "/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folders/",
+            ),
           },
         },
       },
@@ -453,7 +589,8 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       a: {
         description: "Applications",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentApplications"',
+        command:
+          'open "raycast://extensions/GastroGeek/recents/recentApplications"',
       },
       d: {
         description: "Directories",
@@ -465,7 +602,8 @@ const spaceLayers: SubLayerConfig[] = [
       },
       j: {
         description: "Downloads",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentDownloads"',
+        command:
+          'open "raycast://extensions/GastroGeek/recents/recentDownloads"',
       },
     },
   },
@@ -553,7 +691,7 @@ const spaceLayers: SubLayerConfig[] = [
 const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
 
 // Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
-const debugMode = process.env.KARABINER_DEBUG === 'true';
+const debugMode = process.env.KARABINER_DEBUG === "true";
 emitLayerDefinitions(spaceLayers, undefined, debugMode);
 
 // ============================================================================
@@ -590,9 +728,7 @@ let rules: any[] = [
         key_code: "left_command" as any,
         modifiers: { optional: ["any"] },
       },
-      conditions: [
-        { type: "variable_unless", name: "space_mod", value: 1 },
-      ],
+      conditions: [{ type: "variable_unless", name: "space_mod", value: 1 }],
       parameters: {
         "basic.to_delayed_action_delay_milliseconds": 650,
       },
@@ -602,11 +738,15 @@ let rules: any[] = [
       ],
       to_delayed_action: {
         to_if_invoked: [
-          toKeyCond("left_command", [], {}, [{ type: "variable_if", name: "lcmd_pressed", value: 1 }]),
+          toKeyCond("left_command", [], {}, [
+            { type: "variable_if", name: "lcmd_pressed", value: 1 },
+          ]),
           toSetVar("lcmd_pressed", 0),
         ],
         to_if_canceled: [
-          toKeyCond("left_command", [], {}, [{ type: "variable_if", name: "lcmd_pressed", value: 1 }]),
+          toKeyCond("left_command", [], {}, [
+            { type: "variable_if", name: "lcmd_pressed", value: 1 },
+          ]),
           toSetVar("lcmd_pressed", 0),
         ],
       },
@@ -616,42 +756,59 @@ let rules: any[] = [
 
   // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
   rule(
-    "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)"
+    "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
   ).manipulators(
     varTapTapHold({
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [toKey("escape")],
-      holdEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app --foreground")],
-      tapTapHoldEvents: [cmd("/Users/jason/dotfiles/bin/kill_app/kill-app")],
+      holdEvents: [
+        cmd("/Users/jason/.local/bin/kill-app --foreground"),
+      ],
+      tapTapHoldEvents: [cmd("/Users/jason/.local/bin/kill-app")],
       thresholdMs: 250,
-      description: "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+      description:
+        "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
       mods: [],
-    })
+    }),
   ),
 
   // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
   rule(
-    "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
+    "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)",
   ).manipulators([
     ...map("escape", "left_control")
       .parameters({
         "basic.to_if_alone_timeout_milliseconds": 300,
         "basic.to_if_held_down_threshold_milliseconds": 300,
       })
-      .toIfAlone(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"))
-      .toIfHeldDown(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"))
+      .toIfAlone(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'",
+        ),
+      )
+      .toIfHeldDown(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'",
+        ),
+      )
       .toDelayedAction(
         [],
-        [cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'")]
+        [
+          cmd(
+            "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'",
+          ),
+        ],
       )
-      .description("LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)")
+      .description(
+        "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)",
+      )
       .build(),
   ]),
 
   // CAPS LOCK - Multiple behaviors
   rule(
-    "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)"
+    "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)",
   ).manipulators([
     // Base caps_lock behavior (hold = hyper)
     ...map("caps_lock")
@@ -712,6 +869,17 @@ let rules: any[] = [
       .build(),
   ]),
 
+  // HYPER + F12 - Edit last Typinator rule (JXA)
+  rule("HYPER+F12 - Edit last Typinator rule").manipulators([
+    ...map("f12", HYPER)
+      .to(
+        cmd(
+          "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit-Last-Typinator-Rule.scptd",
+        ),
+      )
+      .build(),
+  ]),
+
   // GRAVE ACCENT & TILDE - Tap sends tilde, hold sends hyper+f5 with deferred release
   rule("grave_accent_and_tilde tap/hold -> grave or hyper+f5").manipulators([
     {
@@ -723,13 +891,10 @@ let rules: any[] = [
         "basic.to_if_alone_timeout_milliseconds": 400,
         "basic.to_if_held_down_threshold_milliseconds": 400,
       },
-      to_if_alone: [
-        toKey("grave_accent_and_tilde", [], { halt: true }),
-      ],
-      to_if_held_down: [
-        toKey("f5", HYPER, { halt: false }),
-      ],
-      description: "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)"
+      to_if_alone: [toKey("grave_accent_and_tilde", [], { halt: true })],
+      to_if_held_down: [toKey("f5", HYPER, { halt: false })],
+      description:
+        "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)",
     } as any,
   ]),
 
@@ -741,8 +906,8 @@ let rules: any[] = [
           key,
           alone: [toKey(key as any, [], { halt: true })],
           hold: [cmd("/opt/homebrew/bin/hs -c 'FormatCutSeed()'")],
-        }).build()
-      ).build()
+        }).build(),
+      ).build(),
     ),
     rule(`${key} hold -> F2 (Excel)`).manipulators(
       withCondition(ifApp("com.microsoft.Excel"))(
@@ -750,8 +915,8 @@ let rules: any[] = [
           key,
           alone: [toKey(key as any, [], { halt: true })],
           hold: [toKey("f2", [], { repeat: false })],
-        }).build()
-      ).build()
+        }).build(),
+      ).build(),
     ),
   ]),
 
@@ -769,11 +934,11 @@ let rules: any[] = [
           toKey("left_arrow", ["shift", "option"]),
           toKey("c", ["command"]),
           cmd(
-            "/usr/bin/env python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste"
+            "/usr/bin/env python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste",
           ),
         ],
       }),
-    ])
+    ]),
   ),
 
   // CMD+Q double-tap protection (simplified - no optional any support in map())
@@ -790,7 +955,7 @@ let rules: any[] = [
       .to(toSetVar("command_q_pressed", 1))
       .toDelayedAction(
         [toSetVar("command_q_pressed", 0)],
-        [toSetVar("command_q_pressed", 0)]
+        [toSetVar("command_q_pressed", 0)],
       )
       .build(),
   ]),
@@ -808,52 +973,112 @@ let rules: any[] = [
   // RCMD + __ - App launch or focus
   rule("RCMD + Key - App launch or focus").manipulators([
     ...map("a", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.adobe.Acrobat.Pro'",
+        ),
+      )
       .build(),
     ...map("b", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'net.imput.helium'",
+        ),
+      )
       .build(),
     ...map("c", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'",
+        ),
+      )
       .build(),
     ...map("d", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'company.thebrowser.dia'",
+        ),
+      )
       .build(),
     ...map("e", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'ch.protonmail.desktop'",
+        ),
+      )
       .build(),
     ...map("f", "right_command")
-      .to(cmd(`${getOpenFolderCommand('/Users/jason')}`))
+      .to(cmd(`${getOpenFolderCommand("/Users/jason")}`))
       .build(),
     ...map("h", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'net.imput.helium'",
+        ),
+      )
       .build(),
     ...map("m", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.apple.MobileSMS'",
+        ),
+      )
       .build(),
     ...map("o", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.Outlook'",
+        ),
+      )
       .build(),
     ...map("p", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'net.sourceforge.skim-app.skim'",
+        ),
+      )
       .build(),
     ...map("q", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.jinghaoshe.qspace.pro'",
+        ),
+      )
       .build(),
     ...map("r", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
+        ),
+      )
       .build(),
     ...map("s", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.apple.Safari'",
+        ),
+      )
       .build(),
     ...map("t", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.teams2'",
+        ),
+      )
       .build(),
     ...map("w", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.Word'",
+        ),
+      )
       .build(),
     ...map("8", "right_command")
-      .to(cmd("/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"))
+      .to(
+        cmd(
+          "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
+        ),
+      )
       .build(),
   ]),
   // Generate escape rule to reset all variables
@@ -885,14 +1110,16 @@ let rules: any[] = [
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   rule("PASSWORDS - CMD+/ quick fill").manipulators([
     ...map("slash", "command")
-      .condition(ifApp({
-        bundle_identifiers: ["com.apple.SecurityAgent"],
-        file_paths: ["/Applications/Cork.app/Contents/Resources/Sudo Helper"]
-      }))
+      .condition(
+        ifApp({
+          bundle_identifiers: ["com.apple.SecurityAgent"],
+          file_paths: ["/Applications/Cork.app/Contents/Resources/Sudo Helper"],
+        }),
+      )
       .to(
         cmd(
-          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
-        )
+          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3",
+        ),
       )
       .to(toKey("a", [L.cmd]))
       .to(toKey("j", [L.shift]))
@@ -929,8 +1156,8 @@ let rules: any[] = [
       .toIfAlone(toKey("1", [], { halt: true }))
       .toIfHeldDown(
         cmd(
-          "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
-        )
+          "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript",
+        ),
       )
       .toDelayedAction([], [toKey("1", [], { halt: true })])
       .description("SKIM 1 hold -> anchored note")
@@ -945,8 +1172,8 @@ let rules: any[] = [
       .toIfAlone(toKey("2", [], { halt: true }))
       .toIfHeldDown(
         applescript(
-          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
-        )
+          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript",
+        ),
       )
       .toDelayedAction([], [toKey("2", [], { halt: true })])
       .description("SKIM 2 hold -> add heading")
@@ -961,8 +1188,8 @@ let rules: any[] = [
       .toIfAlone(toKey("3", [], { halt: true }))
       .toIfHeldDown(
         applescript(
-          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
-        )
+          "~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript",
+        ),
       )
       .toDelayedAction([], [toKey("3", [], { halt: true })])
       .description("SKIM 3 hold -> add extended text")
@@ -986,19 +1213,23 @@ let rules: any[] = [
   rule("ANTINOTE - CMD+D+D to delete note").manipulators([
     // When ready variable set, execute delete
     ...map("d", "command")
-      .condition(ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]))
+      .condition(
+        ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]),
+      )
       .condition(ifVar("cmd_d_ready", 1))
       .to(toKey("d", ["command"]))
       .to(toSetVar("cmd_d_ready", 0))
       .build(),
     // First press sets ready variable with delay
     ...map("d", "command")
-      .condition(ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]))
+      .condition(
+        ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]),
+      )
       .condition(ifVar("cmd_d_ready", 0))
       .to(toSetVar("cmd_d_ready", 1))
       .toDelayedAction(
         [toSetVar("cmd_d_ready", 0)],
-        [toSetVar("cmd_d_ready", 0)]
+        [toSetVar("cmd_d_ready", 0)],
       )
       .build(),
   ]),

@@ -22,7 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -206,99 +206,6 @@
       {
         "conditions": [],
         "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "b"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_w_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_p_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "b",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
           {
             "type": "basic",
             "from": {
@@ -847,7 +754,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.anthropic.claudefordesktop'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
@@ -939,99 +846,6 @@
               "basic.to_if_alone_timeout_milliseconds": 300,
               "basic.to_if_held_down_threshold_milliseconds": 300
             },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_w_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_p_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "h",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "h"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -1041,7 +855,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'hs.openConsole()' && echo 'HS launched'"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "net.kovidgoyal.kitty"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -1119,7 +937,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "H hold -> HS (global) / New heading (Skim)"
+        "ruleDescription": "H hold -> Here"
       },
       {
         "conditions": [],
@@ -1344,7 +1162,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "net.kovidgoyal.kitty"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -1534,99 +1356,6 @@
       {
         "conditions": [],
         "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "n"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_m_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_w_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_p_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "n",
-                  "modifiers": []
-                }
-              ]
-            }
-          },
           {
             "type": "basic",
             "from": {
@@ -2056,7 +1785,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentDownloads\""
+                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentCustom\""
               }
             ],
             "to_delayed_action": {
@@ -2258,7 +1987,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.todoist.mac.Todoist'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'"
               }
             ],
             "to_delayed_action": {
@@ -4158,7 +3887,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app"
+                "shell_command": "/Users/jason/.local/bin/kill-app"
               }
             ],
             "to_delayed_action": {
@@ -4219,7 +3948,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/dotfiles/bin/kill_app/kill-app --foreground"
+                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
               }
             ],
             "to_delayed_action": {
@@ -4264,19 +3993,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+                  "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
                 }
               ]
             },
@@ -6103,7 +5832,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/dotfiles/"
+                "shell_command": "open -a Bloom /Users/jason/.local/share/chezmoi/"
               },
               {
                 "set_variable": {
@@ -6700,6 +6429,31 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "f12",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit-Last-Typinator-Rule.scptd"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+F12 - Edit last Typinator rule"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "grave_accent_and_tilde"
             },
             "parameters": {
@@ -7088,7 +6842,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.adobe.Acrobat.Pro'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.adobe.Acrobat.Pro'"
               }
             ]
           },
@@ -7104,7 +6858,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'net.imput.helium'"
               }
             ]
           },
@@ -7120,7 +6874,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.VSCodeInsiders'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'"
               }
             ]
           },
@@ -7136,7 +6890,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'company.thebrowser.dia'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'company.thebrowser.dia'"
               }
             ]
           },
@@ -7152,7 +6906,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'ch.protonmail.desktop'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'ch.protonmail.desktop'"
               }
             ]
           },
@@ -7184,7 +6938,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.imput.helium'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'net.imput.helium'"
               }
             ]
           },
@@ -7200,7 +6954,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.MobileSMS'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.MobileSMS'"
               }
             ]
           },
@@ -7216,7 +6970,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Outlook'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.Outlook'"
               }
             ]
           },
@@ -7232,7 +6986,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'net.sourceforge.skim-app.skim'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'net.sourceforge.skim-app.skim'"
               }
             ]
           },
@@ -7248,7 +7002,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.jinghaoshe.qspace.pro'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.jinghaoshe.qspace.pro'"
               }
             ]
           },
@@ -7264,7 +7018,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
               }
             ]
           },
@@ -7280,7 +7034,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.apple.Safari'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.Safari'"
               }
             ]
           },
@@ -7296,7 +7050,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.teams2'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.teams2'"
               }
             ]
           },
@@ -7312,7 +7066,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.microsoft.Word'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.Word'"
               }
             ]
           },
@@ -7328,7 +7082,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/dotfiles/bin/open_app/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
               }
             ]
           }

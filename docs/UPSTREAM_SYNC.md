@@ -31,7 +31,7 @@ karabiner/
 ### 1. Update Upstream Mirror
 
 ```bash
-cd /Users/jason/dotfiles/karabiner/karabiner.ts-upstream
+cd /Users/jason/Scripts/apps/karabiner/karabiner.ts-upstream
 git fetch origin
 git pull origin main
 ```
@@ -39,7 +39,7 @@ git pull origin main
 ### 2. Generate Conflict Report
 
 ```bash
-cd /Users/jason/dotfiles/karabiner/karabiner.ts
+cd /Users/jason/Scripts/apps/karabiner/karabiner.ts
 ./scripts/generate-conflict-report.sh
 ```
 
@@ -71,7 +71,7 @@ Check the conflict report for:
 
 ```bash
 # In parent repo
-cd /Users/jason/dotfiles/karabiner
+cd /Users/jason/Scripts/apps/karabiner
 git add karabiner.ts-upstream
 git commit -m "chore: sync karabiner.ts-upstream to v1.XX.X"
 git push
@@ -117,7 +117,7 @@ If upstream makes breaking changes:
    import type { Modifier } from 'karabiner.ts';  // This might break
    ```
 
-2. **Run typecheck**: 
+2. **Run typecheck**:
    ```bash
    npm run typecheck
    ```
