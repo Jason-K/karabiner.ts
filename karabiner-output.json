@@ -855,11 +855,7 @@
             ],
             "to_if_held_down": [
               {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "net.kovidgoyal.kitty"
-                  }
-                }
+                "shell_command": "open 'raycast://extensions/Jason/here-to-there/activeToTarget'"
               }
             ],
             "to_delayed_action": {
@@ -1061,7 +1057,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "raycast://extensions/GastroGeek/recents/recentDownloads"
+                "shell_command": "open 'raycast://extensions/jason/recents/recentDownloads'"
               }
             ],
             "to_delayed_action": {
@@ -1785,7 +1781,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentCustom\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recentCustom\""
               }
             ],
             "to_delayed_action": {
@@ -2379,6 +2375,107 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "X hold -> Copy file"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "y"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "y",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "y",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Y hold -> Yank file"
       },
       {
         "conditions": [],
@@ -5560,7 +5657,7 @@
             ],
             "to": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentFolders\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recentFolders\""
               }
             ]
           }
@@ -5821,7 +5918,7 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "period"
+              "key_code": "c"
             },
             "conditions": [
               {
@@ -6014,7 +6111,7 @@
             ],
             "to": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentApplications\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recentApplications\""
               }
             ]
           },
@@ -6032,7 +6129,7 @@
             ],
             "to": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentFolders\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recentFolders\""
               }
             ]
           },
@@ -6050,7 +6147,7 @@
             ],
             "to": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recents\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recents\""
               }
             ]
           },
@@ -6068,7 +6165,25 @@
             ],
             "to": [
               {
-                "shell_command": "open \"raycast://extensions/GastroGeek/recents/recentDownloads\""
+                "shell_command": "open \"raycast://extensions/jason/recents/recentDownloads\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "r"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_r_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open \"raycast://extensions/jason/recents/recentCustom\""
               }
             ]
           }

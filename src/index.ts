@@ -135,7 +135,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   h: {
     description: "Here",
     hold: [
-      openApp({ bundleIdentifier: "net.kovidgoyal.kitty" }),
+      cmd("open 'raycast://extensions/Jason/here-to-there/activeToTarget'"),
     ],
   },
   i: {
@@ -148,7 +148,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   j: {
     description: "Recent download",
-    hold: [cmd("raycast://extensions/GastroGeek/recents/recentDownloads")],
+    hold: [cmd("open 'raycast://extensions/jason/recents/recentDownloads'")],
   },
   k: {
     description: "Kitty here",
@@ -180,7 +180,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   r: {
     description: "Last d/l",
     hold: [
-      cmd('open "raycast://extensions/GastroGeek/recents/recentCustom"'),
+      cmd('open "raycast://extensions/jason/recents/recentCustom"'),
     ],
   },
   s: {
@@ -215,6 +215,10 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
         "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy",
       ),
     ],
+  },
+  y: {
+    description: "Yank file",
+    hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy")],
   },
   "8": {
     description: "RingCentral",
@@ -504,7 +508,7 @@ const spaceLayers: SubLayerConfig[] = [
       },
       r: {
         description: "Recent Folders",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentFolders"',
+        command: 'open "raycast://extensions/jason/recents/recentFolders"',
       },
     },
     subLayers: [
@@ -552,8 +556,8 @@ const spaceLayers: SubLayerConfig[] = [
             description: "Workspaces",
             command: getOpenFolderCommand("/Users/jason/Scripts/workspaces/"),
           },
-          ".": {
-            description: "Dotfiles",
+          c: {
+            description: "Chezmoi",
             command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
           },
           g: {
@@ -590,20 +594,24 @@ const spaceLayers: SubLayerConfig[] = [
       a: {
         description: "Applications",
         command:
-          'open "raycast://extensions/GastroGeek/recents/recentApplications"',
+          'open "raycast://extensions/jason/recents/recentApplications"',
       },
       d: {
         description: "Directories",
-        command: 'open "raycast://extensions/GastroGeek/recents/recentFolders"',
+        command: 'open "raycast://extensions/jason/recents/recentFolders"',
       },
       f: {
         description: "Files",
-        command: 'open "raycast://extensions/GastroGeek/recents/recents"',
+        command: 'open "raycast://extensions/jason/recents/recents"',
       },
       j: {
         description: "Downloads",
         command:
-          'open "raycast://extensions/GastroGeek/recents/recentDownloads"',
+          'open "raycast://extensions/jason/recents/recentDownloads"',
+      },
+      r: {
+        description: "Custom",
+        command: 'open "raycast://extensions/jason/recents/recentCustom"',
       },
     },
   },
@@ -695,7 +703,7 @@ const debugMode = process.env.KARABINER_DEBUG === "true";
 emitLayerDefinitions(spaceLayers, undefined, debugMode);
 
 // ============================================================================
-// SPECIAL RULESf
+// SPECIAL RULES
 // ============================================================================
 
 let rules: any[] = [

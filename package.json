@@ -2,7 +2,7 @@
   "name": "karabiner-config",
   "description": "karabiner config in karabiner.ts",
   "scripts": {
-    "build": "tsx src/index.ts",
+    "build": "tsx src/index.ts && hs -c \"hs.reload()\"",
     "update": "npm update karabiner.ts",
     "lint": "eslint src --ignore-pattern docs --max-warnings=0"
   },
