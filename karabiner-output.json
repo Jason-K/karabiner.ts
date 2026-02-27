@@ -1781,7 +1781,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open \"raycast://extensions/jason/recents/recentCustom\""
+                "shell_command": "/Users/jason/Scripts/Metascripts/recent_dl.sh"
               }
             ],
             "to_delayed_action": {
@@ -5337,7 +5337,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste"
+                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste"
               }
             ]
           },
@@ -5361,7 +5361,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste"
+                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste"
               }
             ]
           },
@@ -5385,7 +5385,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py title_case --source clipboard --dest paste"
+                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py title_case --source clipboard --dest paste"
               }
             ]
           },
@@ -5409,7 +5409,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste"
+                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste"
               }
             ]
           }
@@ -6383,7 +6383,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste"
               }
             ]
           },
@@ -6407,7 +6407,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
               }
             ]
           },
@@ -6431,7 +6431,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste"
               }
             ]
           },
@@ -6455,7 +6455,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste"
               }
             ]
           }
@@ -6635,12 +6635,10 @@
             },
             "conditions": [
               {
-                "condition": {
-                  "type": "frontmost_application_unless",
-                  "bundle_identifiers": [
-                    "com.microsoft.Excel"
-                  ]
-                }
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
               }
             ]
           }
@@ -6686,12 +6684,10 @@
             },
             "conditions": [
               {
-                "condition": {
-                  "type": "frontmost_application_if",
-                  "bundle_identifiers": [
-                    "com.microsoft.Excel"
-                  ]
-                }
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
               }
             ]
           }
@@ -6735,12 +6731,10 @@
             },
             "conditions": [
               {
-                "condition": {
-                  "type": "frontmost_application_unless",
-                  "bundle_identifiers": [
-                    "com.microsoft.Excel"
-                  ]
-                }
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
               }
             ]
           }
@@ -6786,12 +6780,10 @@
             },
             "conditions": [
               {
-                "condition": {
-                  "type": "frontmost_application_if",
-                  "bundle_identifiers": [
-                    "com.microsoft.Excel"
-                  ]
-                }
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
               }
             ]
           }

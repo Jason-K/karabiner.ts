@@ -17,34 +17,34 @@
  */
 
 import {
-  ifApp,
-  ifVar,
-  map,
-  rule,
-  toKey,
-  toSetVar,
-  writeToProfile,
+    ifApp,
+    ifVar,
+    map,
+    rule,
+    toKey,
+    toSetVar,
+    writeToProfile,
 } from "karabiner.ts";
 import {
-  applescript,
-  cmd,
-  openApp,
-  tapHold,
-  toKeyCond,
-  varTapTapHold,
-  withCondition,
+    applescript,
+    cmd,
+    openApp,
+    tapHold,
+    toKeyCond,
+    varTapTapHold,
+    withCondition,
 } from "./lib/builders";
 import type {
-  DeviceConfig,
-  SubLayerConfig,
-  TapHoldConfig,
+    DeviceConfig,
+    SubLayerConfig,
+    TapHoldConfig,
 } from "./lib/functions";
 import {
-  emitLayerDefinitions,
-  generateEscapeRule,
-  generateSpaceLayerRules,
-  generateTapHoldRules,
-  updateDeviceConfigurations,
+    emitLayerDefinitions,
+    generateEscapeRule,
+    generateSpaceLayerRules,
+    generateTapHoldRules,
+    updateDeviceConfigurations,
 } from "./lib/functions";
 import { HYPER, L, MEH, SUPER } from "./lib/mods";
 
@@ -180,7 +180,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   r: {
     description: "Last d/l",
     hold: [
-      cmd('open "raycast://extensions/jason/recents/recentCustom"'),
+      cmd('/Users/jason/Scripts/Metascripts/recent_dl.sh'),
     ],
   },
   s: {
@@ -423,7 +423,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste",
+              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste",
           },
         ],
       },
@@ -434,7 +434,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste",
+              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste",
           },
         ],
       },
@@ -445,7 +445,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py title_case --source clipboard --dest paste",
+              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py title_case --source clipboard --dest paste",
           },
         ],
       },
@@ -456,7 +456,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste",
+              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste",
           },
         ],
       },
@@ -654,7 +654,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste",
+              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste",
           },
         ],
       },
@@ -665,7 +665,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
+              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
           },
         ],
       },
@@ -676,7 +676,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste",
+              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste",
           },
         ],
       },
@@ -687,7 +687,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste",
+              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste",
           },
         ],
       },
@@ -942,7 +942,7 @@ let rules: any[] = [
           toKey("left_arrow", ["shift", "option"]),
           toKey("c", ["command"]),
           cmd(
-            "/usr/bin/env python3 ~/Scripts/Text_Manipulation/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste",
+            "/usr/bin/env python3 ~/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste",
           ),
         ],
       }),

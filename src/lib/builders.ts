@@ -549,7 +549,7 @@ export function exprUnless(expression: string): any {
  */
 export function toKeyCond(key: string, mods: Modifier[] = [], opts: any = {}, conditions: any[] = []): ToEvent {
   const ev = toKey(key as any, mods as any, opts);
-  (ev as any).conditions = conditions;
+  (ev as any).conditions = normalizeConditions(conditions);
   return ev as ToEvent;
 }
 
@@ -558,7 +558,7 @@ export function toKeyCond(key: string, mods: Modifier[] = [], opts: any = {}, co
  */
 export function withConditions(event: ToEvent, conditions: any[] = []): ToEvent {
   const cloned: any = { ...event };
-  if (conditions.length) cloned.conditions = conditions;
+  if (conditions.length) cloned.conditions = normalizeConditions(conditions);
   return cloned as ToEvent;
 }
 
@@ -574,18 +574,19 @@ export function withConditions(event: ToEvent, conditions: any[] = []): ToEvent 
 export function withCondition(...conditions: any[]) {
   return (items: any | any[]) => {
     const list = Array.isArray(items) ? items : [items];
+    const builtConditions = normalizeConditions(conditions);
     const updated = list.map((it) => {
       if (it && typeof it === 'object') {
         // BasicManipulator shape
         if ((it as any).type === 'basic') {
           const m = { ...(it as any) };
-          m.conditions = [...(m.conditions || []), ...conditions];
+          m.conditions = [...(m.conditions || []), ...builtConditions];
           return m;
         }
         // ToEvent shape
         if ('shell_command' in it || 'set_notification_message' in it || 'software_function' in it || 'set_variable' in it) {
           const e: any = { ...it };
-          e.conditions = [...(e.conditions || []), ...conditions];
+          e.conditions = [...(e.conditions || []), ...builtConditions];
           return e;
         }
       }
@@ -600,5 +601,11 @@ export function withCondition(...conditions: any[]) {
  */
 export function toKeyWithConditions(key: string, mods: Modifier[] = [], opts: any = {}, conditions: any[] = []): ToEvent {
   return toKeyCond(key, mods, opts, conditions);
+}
+
+function normalizeConditions(conditions: any[]): any[] {
+  return conditions.map((cond) =>
+    cond && typeof cond.build === 'function' ? cond.build() : cond,
+  );
 }
 
