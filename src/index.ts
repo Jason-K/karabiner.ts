@@ -92,10 +92,27 @@ const getFolderOpenerBundleId = (): string => {
 // TAP-HOLD KEY DEFINITIONS
 // ============================================================================
 /**
- * - Tap: Send the key normally (with halt to prevent accidental holds)
+ * Tap-hold behavior for single keys or key combinations:
+ * - Tap: Send the key/combo normally (with halt to prevent accidental holds)
  * - Hold: Execute a custom action (open app, trigger hotkey, etc.)
  *
+ * KEY FORMATS:
+ * - Simple key: "a", "slash", "tab", etc.
+ * - With modifiers: "command+s", "command+shift+k", "option+b"
+ * - Left/right specific: "right_command+s", "left_shift+k"
+ *
+ * MODIFIERS:
+ * - Generic: command, option, control, shift (or shortcuts: cmd, opt, ctrl)
+ * - Specific: left_command, right_command, left_option, right_option,
+ *             left_control, right_control, left_shift, right_shift
+ *
  * Default timing: 400ms for both timeout and threshold
+ *
+ * EXAMPLES:
+ * "a": { ... }                    // Just the 'a' key
+ * "command+s": { ... }            // CMD+S (either CMD key)
+ * "right_command+s": { ... }      // Right CMD+S only
+ * "left_shift+command+k": { ... } // Left Shift + either CMD + K
  *
  * Configuration is declarative - just add entries to the object below.
  */
@@ -151,10 +168,18 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     hold: [cmd("open 'raycast://extensions/jason/recents/recentDownloads'")],
   },
   k: {
-    description: "Kitty here",
+    description: "Kitty",
     hold: [
       openApp({ bundleIdentifier: "net.kovidgoyal.kitty" }),
     ],
+  },
+  "right_command+k": {
+    description: "Kitty here",
+    hold: [
+      cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"),
+    ],
+    timeoutMs: 300,
+    thresholdMs: 300,
   },
   m: {
     description: "Deminimize",
@@ -187,6 +212,12 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     description: "Screenshot",
     hold: [cmd('open "cleanshot://capture-area"')],
   },
+  "right_command+s": {
+    description: "Search spotify",
+    hold: [cmd("open 'raycast://extensions/mattisssa/spotify-player/search'")],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
   t: {
     description: "Todoist",
     hold: [
@@ -194,6 +225,12 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
         "/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'",
       ),
     ],
+  },
+  "right_command+t": {
+    description: "Edit last Typinator expansion",
+    hold: [cmd( "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.scpt",)],
+    timeoutMs: 300,
+    thresholdMs: 300,
   },
   v: {
     description: "Maccy",
@@ -1063,7 +1100,7 @@ let rules: any[] = [
     ...map("s", "right_command")
       .to(
         cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.apple.Safari'",
+          "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi",
         ),
       )
       .build(),

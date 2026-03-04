@@ -254,6 +254,59 @@ function getAllSublayerVars(spaceLayers: SubLayerConfig[]): string[] {
 /**
  * Generate tap-hold rules with automatic conflict prevention for space layers
  */
+/**
+ * Parse a key string that may include modifiers
+ * Format: "modifier+modifier+key" or just "key"
+ * Examples: "command+b", "right_command+s", "left_shift+k", "a"
+ * Returns: { key: string, modifiers: string[] }
+ *
+ * MODIFIER HANDLING:
+ * - Preserves left/right distinctions: "left_command", "right_command" stay as-is
+ * - Shortcuts expand to generic: "cmd" → "command", "opt" → "option"
+ * - Generic modifiers stay generic: "command", "shift", etc.
+ */
+function parseKeyWithModifiers(keyString: string): { key: string; modifiers: string[] } {
+  const parts = keyString.split('+').map(p => p.trim());
+  if (parts.length === 1) {
+    return { key: parts[0], modifiers: [] };
+  }
+
+  // Last part is the key, everything else is modifiers
+  const key = parts[parts.length - 1];
+  const modifiers = parts.slice(0, -1);
+
+  // Normalize ONLY shortcuts, preserve left/right distinctions
+  const normalizedModifiers = modifiers.map(mod => {
+    const lower = mod.toLowerCase();
+
+    // Preserve explicit left/right modifiers
+    if (lower.startsWith('left_') || lower.startsWith('right_')) {
+      return lower;
+    }
+
+    // Normalize shortcuts to generic forms
+    switch (lower) {
+      case 'cmd':
+        return 'command';
+      case 'opt':
+      case 'alt':
+        return 'option';
+      case 'ctrl':
+        return 'control';
+      // Generic forms pass through unchanged
+      case 'command':
+      case 'option':
+      case 'control':
+      case 'shift':
+        return lower;
+      default:
+        return mod;
+    }
+  });
+
+  return { key, modifiers: normalizedModifiers };
+}
+
 export function generateTapHoldRules(
   tapHoldKeys: Record<string, TapHoldConfig>,
   spaceLayers: SubLayerConfig[]
@@ -261,15 +314,26 @@ export function generateTapHoldRules(
   const spaceModVar = 'space_mod';
   const allSublayerVars = getAllSublayerVars(spaceLayers);
 
-  return Object.entries(tapHoldKeys).map(([key, config]) => {
+  return Object.entries(tapHoldKeys).map(([keyString, config]) => {
+    // Parse key string to extract base key and modifiers
+    const { key, modifiers } = parseKeyWithModifiers(keyString);
+
     const manipulators = tapHold({
       key,
-      alone: [toKey(key as any, [], { halt: true })],
+      alone: [toKey(key as any, modifiers as any[], { halt: true })],
       hold: config.hold,
       timeoutMs: config.timeoutMs,
       thresholdMs: config.thresholdMs,
       appOverrides: config.appOverrides,
     }).build();
+
+    // Add mandatory modifiers to the from field if specified
+    if (modifiers.length > 0) {
+      manipulators.forEach((m: any) => {
+        m.from.modifiers = m.from.modifiers || {};
+        m.from.modifiers.mandatory = modifiers;
+      });
+    }
 
     // Add conditions to prevent conflict with space layer
     manipulators.forEach((m: any) => {
@@ -292,7 +356,7 @@ export function generateTapHoldRules(
       });
     });
 
-    return rule(`${key.toUpperCase()} hold -> ${config.description}`).manipulators(manipulators);
+    return rule(`${keyString.toUpperCase()} hold -> ${config.description}`).manipulators(manipulators);
   });
 }
 
