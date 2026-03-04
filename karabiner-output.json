@@ -4823,7 +4823,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.apple.Safari"
+                    "bundle_identifier": "com.spotify.client"
                   }
                 }
               }
@@ -5337,7 +5337,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py lowercase --source clipboard --dest paste"
               }
             ]
           },
@@ -5361,7 +5361,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py sentence_case --source clipboard --dest paste"
               }
             ]
           },
@@ -5385,7 +5385,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py title_case --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py title_case --source clipboard --dest paste"
               }
             ]
           },
@@ -5409,7 +5409,7 @@
                 ]
               },
               {
-                "shell_command": "python3 ~/Scripts/strings/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py uppercase --source clipboard --dest paste"
               }
             ]
           }
@@ -6383,7 +6383,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_braces --source clipboard --dest paste"
               }
             ]
           },
@@ -6407,7 +6407,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
               }
             ]
           },
@@ -6431,7 +6431,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_quotes --source clipboard --dest paste"
               }
             ]
           },
@@ -6455,7 +6455,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_brackets --source clipboard --dest paste"
               }
             ]
           }

@@ -359,8 +359,8 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { bundleIdentifier: "com.ringcentral.glip" },
       },
       s: {
-        description: "Safari",
-        openAppOpts: { bundleIdentifier: "com.apple.Safari" },
+        description: "Spotify",
+        openAppOpts: { bundleIdentifier: "com.spotify.client" },
       },
       t: {
         description: "Teams",
@@ -423,7 +423,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py lowercase --source clipboard --dest paste",
+              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py lowercase --source clipboard --dest paste",
           },
         ],
       },
@@ -434,7 +434,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py sentence_case --source clipboard --dest paste",
+              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py sentence_case --source clipboard --dest paste",
           },
         ],
       },
@@ -445,7 +445,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py title_case --source clipboard --dest paste",
+              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py title_case --source clipboard --dest paste",
           },
         ],
       },
@@ -456,7 +456,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "python3 ~/Scripts/strings/text_processor/interfaces/cli.py uppercase --source clipboard --dest paste",
+              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py uppercase --source clipboard --dest paste",
           },
         ],
       },
@@ -654,7 +654,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_braces --source clipboard --dest paste",
+              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_braces --source clipboard --dest paste",
           },
         ],
       },
@@ -665,7 +665,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
+              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
           },
         ],
       },
@@ -676,7 +676,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_quotes --source clipboard --dest paste",
+              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_quotes --source clipboard --dest paste",
           },
         ],
       },
@@ -687,7 +687,7 @@ const spaceLayers: SubLayerConfig[] = [
           {
             type: "command",
             value:
-              "sleep 0.2 && python3 ~/Scripts/strings/text_processor/interfaces/cli.py wrap_brackets --source clipboard --dest paste",
+              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_brackets --source clipboard --dest paste",
           },
         ],
       },
@@ -942,7 +942,7 @@ let rules: any[] = [
           toKey("left_arrow", ["shift", "option"]),
           toKey("c", ["command"]),
           cmd(
-            "/usr/bin/env python3 ~/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste",
+            "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste",
           ),
         ],
       }),
