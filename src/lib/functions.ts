@@ -663,12 +663,6 @@ export function updateDeviceConfigurations(profileName: string, deviceConfigs: D
                 }))
             ];
 
-            // Add profile-level Fn↔Ctrl swap for built-in keyboard and others
-            profile.simple_modifications = [
-              { from: { key_code: 'left_control' }, to: [{ key_code: 'fn' }] },
-              { from: { key_code: 'fn' }, to: [{ key_code: 'left_control' }] },
-            ];
-
             // Write back to file
             fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
             console.log('✓ Device-specific simple_modifications updated.');

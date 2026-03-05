@@ -13,6 +13,7 @@ This checklist ensures safe integration of upstream karabiner.ts while preservin
 - [x] Conflict documentation generated
 - [x] Sync workflow documented (`UPSTREAM_SYNC.md`)
 - [x] Build verified producing `karabiner-output.json`
+- [x] Upstream mirror intentionally slimmed (removed `/.github` and `/docs`)
 
 ### Open Pull Requests
 
@@ -24,15 +25,15 @@ This checklist ensures safe integration of upstream karabiner.ts while preservin
    - Includes manual workflow dispatch
    - Platform guards for CI/non-macOS environments
 
-2. **PR #9: Examples & API Aliases** (`feat/upstream-examples-and-api-aliases` branch)
-   - Status: Ready to merge  
+1. **PR #9: Examples & API Aliases** (`feat/upstream-examples-and-api-aliases` branch)
+   - Status: Ready to merge
    - Vendors upstream examples under `docs/upstream-examples/`
    - Adds compatibility helpers (if needed)
    - No breaking changes to local code
 
 #### Parent Repo (dotfiles)
 
-3. **PR #1: Upstream Integration** (`integrate-upstream-karabiner-ts` branch)
+1. **PR #1: Upstream Integration** (`integrate-upstream-karabiner-ts` branch)
    - Status: Ready to merge after subproject PRs
    - Updates submodule pointer to include CI/examples
    - Adds upstream mirror sync tooling
@@ -42,7 +43,7 @@ This checklist ensures safe integration of upstream karabiner.ts while preservin
 
 ```text
 1. Merge subproject PR #8 (CI) → main
-2. Merge subproject PR #9 (Examples) → main  
+2. Merge subproject PR #9 (Examples) → main
 3. Update parent PR #1 submodule pointer to latest main
 4. Merge parent PR #1 → main
 ```
@@ -137,6 +138,15 @@ In README.md:
 
 ## Ongoing Maintenance
 
+### Mirror Scope Note
+
+The upstream mirror intentionally excludes:
+
+- `apps/karabiner/karabiner.ts-upstream/.github/**`
+- `apps/karabiner/karabiner.ts-upstream/docs/**`
+
+Reason: reduced repository footprint and no GitHub-side docs/workflow overhead.
+
 ### Weekly: Check for Upstream Updates
 
 ```bash
@@ -205,9 +215,9 @@ Integration is complete when:
 
 - [x] All PRs merged
 - [ ] CI passing on main branch
-- [ ] Local build produces valid `karabiner-output.json`
-- [ ] Documentation updated with upstream sync workflow
-- [ ] No errors from `npm run typecheck`
+- [x] Local build produces valid `karabiner-output.json`
+- [x] Documentation updated with upstream sync workflow
+- [x] No errors from `npm run typecheck`
 - [ ] Local extensions still work as expected
 
 ## Questions Before Merging?

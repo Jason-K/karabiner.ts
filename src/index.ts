@@ -1328,7 +1328,12 @@ const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
 
 // Write rules: use real profile locally, dry-run in CI/non-macOS
-writeToProfile(canWriteProfile ? "JJK_Default" : "--dry-run", rules);
+writeToProfile(canWriteProfile ? "JJK_Default" : "--dry-run", rules, {}, {
+  simple_modifications: [
+    map("left_control").to("fn"),
+    map("fn").to("left_control"),
+  ],
+});
 
 // Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
