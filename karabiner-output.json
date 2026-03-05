@@ -7727,12 +7727,15 @@
             "to": [
               {
                 "shell_command": "osascript \"$HOME/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
+              },
+              {
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
               }
             ]
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "WORD - CMD+/ copy document path"
+        "ruleDescription": "WORD - CMD+/ copy document name and elevate privileges"
       },
       {
         "conditions": [],

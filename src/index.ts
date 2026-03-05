@@ -1152,13 +1152,18 @@ let rules: any[] = [
     ...map("h", "command").build(),
   ]),
 
-  // WORD - CMD+/ copy document path to clipboard
-  rule("WORD - CMD+/ copy document path").manipulators([
+  // WORD - CMD+/ copy document name and elevate privileges
+  rule("WORD - CMD+/ copy document name and elevate privileges").manipulators([
     ...map("slash", "command")
       .condition(ifApp("com.microsoft.Word"))
       .to(
         applescript(
           "~/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript",
+        ),
+      )
+      .to(
+        cmd(
+          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3",
         ),
       )
       .build(),
