@@ -7719,6 +7719,37 @@
             "conditions": [
               {
                 "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Word"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "osascript \"$HOME/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "WORD - CMD+/ copy document path"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "command"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
                 "file_paths": [
                   "/Applications/Cork.app/Contents/Resources/Sudo Helper"
                 ],

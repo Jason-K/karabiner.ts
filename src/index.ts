@@ -1152,6 +1152,18 @@ let rules: any[] = [
     ...map("h", "command").build(),
   ]),
 
+  // WORD - CMD+/ copy document path to clipboard
+  rule("WORD - CMD+/ copy document path").manipulators([
+    ...map("slash", "command")
+      .condition(ifApp("com.microsoft.Word"))
+      .to(
+        applescript(
+          "~/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript",
+        ),
+      )
+      .build(),
+  ]),
+
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   rule("PASSWORDS - CMD+/ quick fill").manipulators([
     ...map("slash", "command")
