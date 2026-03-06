@@ -213,7 +213,12 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     hold: [cmd('open "cleanshot://capture-area"')],
   },
   "right_command+s": {
-    description: "Search spotify",
+    description: "Spotify toggle (tap), search (hold)",
+    alone: [
+      cmd(
+        "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'",
+      ),
+    ],
     hold: [cmd("open 'raycast://extensions/mattisssa/spotify-player/search'")],
     timeoutMs: 300,
     thresholdMs: 300,
@@ -256,6 +261,10 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   y: {
     description: "Yank file",
     hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy")],
+  },
+  z: {
+    description: "Zoxide search via Raycast",
+    hold: [cmd("open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'")],
   },
   "8": {
     description: "RingCentral",
@@ -1094,13 +1103,6 @@ let rules: any[] = [
       .to(
         cmd(
           "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
-        ),
-      )
-      .build(),
-    ...map("s", "right_command")
-      .to(
-        cmd(
-          "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi",
         ),
       )
       .build(),

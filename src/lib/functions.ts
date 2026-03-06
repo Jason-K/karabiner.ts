@@ -28,6 +28,7 @@ import { L } from './mods';
 // ============================================================================
 
 export type TapHoldConfig = {
+  alone?: ToEvent[];          // Optional custom tap behavior (defaults to sending original key)
   hold: ToEvent[];           // Actions to perform when key is held
   description: string;        // Human-readable description for the rule
   timeoutMs?: number;        // How long to wait before considering it "alone" (default: 400)
@@ -320,7 +321,7 @@ export function generateTapHoldRules(
 
     const manipulators = tapHold({
       key,
-      alone: [toKey(key as any, modifiers as any[], { halt: true })],
+      alone: config.alone ?? [toKey(key as any, modifiers as any[], { halt: true })],
       hold: config.hold,
       timeoutMs: config.timeoutMs,
       thresholdMs: config.thresholdMs,

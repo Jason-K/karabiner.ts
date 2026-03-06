@@ -2091,11 +2091,7 @@
             },
             "to_if_alone": [
               {
-                "halt": true,
-                "key_code": "s",
-                "modifiers": [
-                  "right_command"
-                ]
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -2107,11 +2103,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "s",
-                  "modifiers": [
-                    "right_command"
-                  ]
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             },
@@ -2180,7 +2172,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "RIGHT_COMMAND+S hold -> Search spotify"
+        "ruleDescription": "RIGHT_COMMAND+S hold -> Spotify toggle (tap), search (hold)"
       },
       {
         "conditions": [],
@@ -2806,6 +2798,107 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "Y hold -> Yank file"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "z"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "z",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "z",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_m_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Z hold -> Zoxide search via Raycast"
       },
       {
         "conditions": [],
@@ -7456,22 +7549,6 @@
             "to": [
               {
                 "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "s",
-              "modifiers": {
-                "mandatory": [
-                  "right_command"
-                ]
-              }
-            },
-            "to": [
-              {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi"
               }
             ]
           },
