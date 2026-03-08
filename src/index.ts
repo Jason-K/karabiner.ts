@@ -131,8 +131,6 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     hold: [toKey("b", SUPER, { repeat: false })],
   },
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
-  d: { description: "Dato", hold: [toKey("d", MEH, { repeat: false })] },
-  e: { description: "New event", hold: [toKey("e", MEH, { repeat: false })] },
   f: {
     description: "Bloom",
     hold: [
@@ -142,7 +140,7 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     ],
   },
   g: {
-    description: "ChatGPT",
+    description: "Claudé for Desktop",
     hold: [
       cmd(
         "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'",
@@ -155,28 +153,20 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
       cmd("open 'raycast://extensions/Jason/here-to-there/activeToTarget'"),
     ],
   },
-  i: {
-    description: "iTerm2",
-    hold: [
-      cmd(
-        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action iterm",
-      ),
-    ],
-  },
   j: {
     description: "Recent download",
     hold: [cmd("open 'raycast://extensions/jason/recents/recentDownloads'")],
   },
   k: {
     description: "Kitty",
-    hold: [
-      openApp({ bundleIdentifier: "net.kovidgoyal.kitty" }),
-    ],
+    hold: [openApp({ bundleIdentifier: "net.kovidgoyal.kitty" })],
   },
-  "right_command+k": {
+  "right_option+k": {
     description: "Kitty here",
     hold: [
-      cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty"),
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty",
+      ),
     ],
     timeoutMs: 300,
     thresholdMs: 300,
@@ -184,10 +174,6 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   m: {
     description: "Deminimize",
     hold: [toKey("m", HYPER, { repeat: false })],
-  },
-  n: {
-    description: "New note / Skim highlight",
-    hold: [toKey("n")],
   },
   o: {
     description: "OCR",
@@ -204,15 +190,13 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   r: {
     description: "Last d/l",
-    hold: [
-      cmd('/Users/jason/Scripts/Metascripts/recent_dl.sh'),
-    ],
+    hold: [cmd("/Users/jason/Scripts/Metascripts/recent_dl.sh")],
   },
   s: {
     description: "Screenshot",
     hold: [cmd('open "cleanshot://capture-area"')],
   },
-  "right_command+s": {
+  "right_option+s": {
     description: "Spotify toggle (tap), search (hold)",
     alone: [
       cmd(
@@ -220,20 +204,22 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
       ),
     ],
     hold: [cmd("open 'raycast://extensions/mattisssa/spotify-player/search'")],
-    timeoutMs: 300,
-    thresholdMs: 300,
+    timeoutMs: 400,
+    thresholdMs: 400,
   },
   t: {
     description: "Todoist",
     hold: [
-      cmd(
-        "/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'",
-      ),
+      cmd("/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'"),
     ],
   },
-  "right_command+t": {
+  "right_option+t": {
     description: "Edit last Typinator expansion",
-    hold: [cmd( "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.scpt",)],
+    hold: [
+      cmd(
+        "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.scpt",
+      ),
+    ],
     timeoutMs: 300,
     thresholdMs: 300,
   },
@@ -260,19 +246,23 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
   },
   y: {
     description: "Yank file",
-    hold: [cmd("/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy")],
+    hold: [
+      cmd(
+        "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action copy",
+      ),
+    ],
   },
   z: {
     description: "Zoxide search via Raycast",
-    hold: [cmd("open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'")],
+    hold: [
+      cmd(
+        "open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'",
+      ),
+    ],
   },
   "8": {
     description: "RingCentral",
-    hold: [
-      cmd(
-        "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
-      ),
-    ],
+    hold: [cmd("/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'")],
   },
   f1: {
     description: "Decrease brightness",
@@ -363,10 +353,6 @@ const spaceLayers: SubLayerConfig[] = [
         description: "Calendar",
         openAppOpts: { bundleIdentifier: "com.busymac.busycal-setapp" },
       },
-      d: {
-        description: "Dia",
-        openAppOpts: { bundleIdentifier: "company.thebrowser.dia" },
-      },
       e: {
         description: "Proton Mail",
         openAppOpts: { bundleIdentifier: "ch.protonmail.desktop" },
@@ -376,8 +362,8 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
       },
       g: {
-        description: "ChatGPT",
-        openAppOpts: { bundleIdentifier: "com.openai.chat" },
+        description: "Claudé for Desktop",
+        openAppOpts: { bundleIdentifier: "com.anthropic.claudefordesktop" },
       },
       k: {
         description: "Kitty here",
@@ -429,32 +415,6 @@ const spaceLayers: SubLayerConfig[] = [
         openAppOpts: { historyIndex: 1 },
         usageCounterVar: "apps_toggle_uses",
       },
-    },
-  },
-  {
-    layerKey: "m",
-    layerName: "Cursor Movement",
-    releaseLayer: false, // Keep layer active until space released for continuous cursor movement
-    mappings: {
-      ";": { description: "Page Down", key: "page_down", passModifiers: true },
-      d: {
-        description: "Delete",
-        key: "delete_or_backspace",
-        passModifiers: true,
-      },
-      f: {
-        description: "Forward Delete",
-        key: "delete_forward",
-        passModifiers: true,
-      },
-      i: { description: "Up", key: "up_arrow", passModifiers: true },
-      j: { description: "Left", key: "left_arrow", passModifiers: true },
-      k: { description: "Down", key: "down_arrow", passModifiers: true },
-      l: { description: "Right", key: "right_arrow", passModifiers: true },
-      o: { description: "End", key: "end", passModifiers: true },
-      p: { description: "Page Up", key: "page_up", passModifiers: true },
-      s: { description: "Shift", key: "left_shift", passModifiers: true },
-      u: { description: "Home", key: "home", passModifiers: true },
     },
   },
   {
@@ -521,6 +481,10 @@ const spaceLayers: SubLayerConfig[] = [
         description: "Archives",
         command: getOpenFolderCommand("/Users/jason/Downloads/Archives"),
       },
+      d: {
+        description: "Downloads",
+        command: getOpenFolderCommand("/Users/jason/Downloads/"),
+      },
       i: {
         description: "Installs",
         command: getOpenFolderCommand("/Users/jason/Downloads/Installs"),
@@ -543,6 +507,10 @@ const spaceLayers: SubLayerConfig[] = [
       a: {
         description: "Applications",
         command: getOpenFolderCommand("/Applications/"),
+      },
+      ".": {
+        description: "Chezmoi",
+        command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
       },
       d: {
         description: "Downloads",
@@ -571,7 +539,7 @@ const spaceLayers: SubLayerConfig[] = [
           l: {
             description: "Library",
             command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/---- - workers' compensation resources/",
+              "/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/0 - Library/",
             ),
           },
           c: {
@@ -639,8 +607,7 @@ const spaceLayers: SubLayerConfig[] = [
     mappings: {
       a: {
         description: "Applications",
-        command:
-          'open "raycast://extensions/jason/recents/recentApplications"',
+        command: 'open "raycast://extensions/jason/recents/recentApplications"',
       },
       d: {
         description: "Directories",
@@ -652,8 +619,7 @@ const spaceLayers: SubLayerConfig[] = [
       },
       j: {
         description: "Downloads",
-        command:
-          'open "raycast://extensions/jason/recents/recentDownloads"',
+        command: 'open "raycast://extensions/jason/recents/recentDownloads"',
       },
       r: {
         description: "Custom",
@@ -816,9 +782,7 @@ let rules: any[] = [
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [toKey("escape")],
-      holdEvents: [
-        cmd("/Users/jason/.local/bin/kill-app --foreground"),
-      ],
+      holdEvents: [cmd("/Users/jason/.local/bin/kill-app --foreground")],
       tapTapHoldEvents: [cmd("/Users/jason/.local/bin/kill-app")],
       thresholdMs: 250,
       description:
@@ -960,6 +924,8 @@ let rules: any[] = [
           key,
           alone: [toKey(key as any, [], { halt: true })],
           hold: [cmd("/opt/homebrew/bin/hs -c 'FormatCutSeed()'")],
+          timeoutMs: 200,
+          thresholdMs: 200,
         }).build(),
       ).build(),
     ),
@@ -969,6 +935,8 @@ let rules: any[] = [
           key,
           alone: [toKey(key as any, [], { halt: true })],
           hold: [toKey("f2", [], { repeat: false })],
+          timeoutMs: 200,
+          thresholdMs: 200,
         }).build(),
       ).build(),
     ),
@@ -991,6 +959,8 @@ let rules: any[] = [
             "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste",
           ),
         ],
+        timeoutMs: 200,
+        thresholdMs: 200,
       }),
     ]),
   ),
@@ -1014,118 +984,41 @@ let rules: any[] = [
       .build(),
   ]),
 
-  // CMD+SHIFT+K - Delete line (except in VSCode Insiders)
-  rule("CMD+SHIFT+K - delete line").manipulators([
-    ...map("k", ["left_command", "left_shift"])
-      .condition(ifApp("com.microsoft.VSCodeInsiders").unless())
-      .to(toKey("a", [L.ctrl], { repeat: false }))
-      .to(toKey("k", [L.ctrl], { repeat: false }))
-      .to(toKey("delete_or_backspace", [], { repeat: false }))
+  // Right_Option + __ - App launch or focus
+  rule("Right_Option + Key - App launch or focus").manipulators([
+    ...map("a", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.adobe.Acrobat.Pro'"))
       .build(),
-  ]),
-
-  // RCMD + __ - App launch or focus
-  rule("RCMD + Key - App launch or focus").manipulators([
-    ...map("a", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.adobe.Acrobat.Pro'",
-        ),
-      )
+    ...map("b", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'net.imput.helium'"))
       .build(),
-    ...map("b", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'net.imput.helium'",
-        ),
-      )
-      .build(),
-    ...map("c", "right_command")
+    ...map("c", "right_option")
       .to(
         cmd(
           "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'",
         ),
       )
       .build(),
-    ...map("d", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'company.thebrowser.dia'",
-        ),
-      )
+    ...map("e", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'ch.protonmail.desktop'"))
       .build(),
-    ...map("e", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'ch.protonmail.desktop'",
-        ),
-      )
-      .build(),
-    ...map("f", "right_command")
+    ...map("f", "right_option")
       .to(cmd(`${getOpenFolderCommand("/Users/jason")}`))
       .build(),
-    ...map("h", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'net.imput.helium'",
-        ),
-      )
+    ...map("m", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.apple.MobileSMS'"))
       .build(),
-    ...map("m", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.apple.MobileSMS'",
-        ),
-      )
+    ...map("o", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.microsoft.Outlook'"))
       .build(),
-    ...map("o", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.microsoft.Outlook'",
-        ),
-      )
+    ...map("t", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.microsoft.teams2'"))
       .build(),
-    ...map("p", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'net.sourceforge.skim-app.skim'",
-        ),
-      )
+    ...map("w", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.microsoft.Word'"))
       .build(),
-    ...map("q", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.jinghaoshe.qspace.pro'",
-        ),
-      )
-      .build(),
-    ...map("r", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
-        ),
-      )
-      .build(),
-    ...map("t", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.microsoft.teams2'",
-        ),
-      )
-      .build(),
-    ...map("w", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.microsoft.Word'",
-        ),
-      )
-      .build(),
-    ...map("8", "right_command")
-      .to(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'",
-        ),
-      )
+    ...map("8", "right_option")
+      .to(cmd("/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"))
       .build(),
   ]),
   // Generate escape rule to reset all variables
@@ -1347,12 +1240,17 @@ const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
 
 // Write rules: use real profile locally, dry-run in CI/non-macOS
-writeToProfile(canWriteProfile ? "JJK_Default" : "--dry-run", rules, {}, {
-  simple_modifications: [
-    map("left_control").to("fn"),
-    map("fn").to("left_control"),
-  ],
-});
+writeToProfile(
+  canWriteProfile ? "JJK_Default" : "--dry-run",
+  rules,
+  {},
+  {
+    simple_modifications: [
+      map("left_control").to("fn"),
+      map("fn").to("left_control"),
+    ],
+  },
+);
 
 // Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
