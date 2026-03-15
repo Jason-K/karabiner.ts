@@ -179,7 +179,11 @@ const tapHoldKeys: Record<string, TapHoldConfig> = {
     description: "OCR",
     hold: [cmd('open "cleanshot://capture-text?linebreaks=false"')],
   },
-  p: { description: "Paletro", hold: [toKey("f9", SUPER, { repeat: false })] },
+  p: { description: "Popclip", hold: [toKey("f9", SUPER, { repeat: false })] },
+  "left_command+p": {
+    description: "Paletro",
+    hold: [toKey("p", HYPER, { repeat: false })],
+  },
   q: {
     description: "QSpace Pro",
     hold: [
