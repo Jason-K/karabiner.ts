@@ -132,48 +132,48 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 @@ -1,96 +1,150 @@
 -# karabiner.ts
 +# Karabiner.ts Configuration
- 
+
 -[![License](https://img.shields.io/npm/l/karabiner.ts.svg)](LICENSE)
 -[![Coverage Status](https://coveralls.io/repos/github/evan-liu/karabiner.ts/badge.svg)](https://coveralls.io/github/evan-liu/karabiner.ts)
 -[![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=flat&logo=github)](https://wallabyjs.com/oss/)
 -[![npm](https://img.shields.io/npm/v/karabiner.ts.svg)](https://www.npmjs.com/package/karabiner.ts)
 -[![deno module](https://shield.deno.dev/x/karabinerts)](https://deno.land/x/karabinerts)
 +## Source Project
- 
+
 -Write [Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) configuration in TypeScript.
 +This project is an extension of the node module, Karabiner.ts [Git repo](https://github.com/evan-liu/karabiner.ts). It is a focused, type-safe Karabiner-Elements configuration with small builder utilities and clean layering.
- 
+
 -> [!NOTE]
 -> Use of TypeScript is optional. Config can also be written in JavaScript.
 -> Only the basics of JavaScript are needed. Check out my interactive course at [codojo.dev](https://codojo.dev/javascript/basics/hello-world).
 +### Upstream Integration
- 
+
 -<a href="https://www.buymeacoffee.com/evanliu.dev" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 40px;" ></a>
 +We vendor the upstream Karabiner.ts project for reference and diffing:
- 
+
 -## Why karabiner.ts
 +- Upstream source, docs, and workflows are mirrored under `../karabiner.ts-upstream/` at the parent repo level.
 +- Inside this project, upstream assets are copied into safe, non-active locations:
 +  - Upstream GitHub workflows are stored in `.github/upstream-workflows/` so they do not alter CI by default.
 +  - Upstream docs are available under `docs/upstream/`.
- 
+
 -`karabiner.ts` is heavily inspired by [Goku](https://github.com/yqrashawn/GokuRakuJoudo). Compared to the edn format, it allows for:
 +Our local extensions take precedence over upstream files. When adopting upstream changes, we selectively merge while preserving our `package.json`, build scripts, eslint settings, and source overrides under `src/`.
- 
+
 -- Easier-to-understand TypeScript/JavaScript syntax
 -- Strong-typed abstractions and key aliases with IDE support
 -- Structured config files instead of one big file
 +See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff summary.
- 
+
 -And more features (abstractions)
 -([hyperLayer](https://evan-liu.github.io/karabiner.ts/rules/hyper-layer),
 -[duoLayer](https://evan-liu.github.io/karabiner.ts/rules/duo-layer),
 -[leaderMode](https://evan-liu.github.io/karabiner.ts/rules/leader-mode), ...).
 +## Integration Status
- 
+
 -## Learn More
 +The upstream integration is complete and merged to main. Your local extensions and main config are isolated from upstream, with TypeScript path mapping providing IDE support against the mirrored upstream sources.
- 
+
 -- [📝 Docs](https://karabiner.ts.evanliu.dev)
 -- [🔧 My Config](https://github.com/evan-liu/karabiner-config/blob/main/karabiner-config.ts)
 -- [💡 In-the-wild usage](https://github.com/evan-liu/karabiner.ts/network/dependents)
@@ -181,106 +181,106 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +- Local extensions: `src/lib/*.ts` are owned here and marked with LOCAL EXTENSION headers.
 +- Main config: `src/index.ts` is the authoritative configuration you edit.
 +- CI: Typecheck, lint, and build run on main.
- 
+
 -## Using the Online Editor
 +Daily workflow:
- 
+
 -1. Write config in the [online editor](https://karabiner.ts.evanliu.dev/editor).
 -2. Copy the generated JSON then [add to Karabiner-Elements](https://karabiner-elements.pqrs.org/docs/manual/configuration/add-your-own-complex-modifications/).
 +```bash
 +cd karabiner.ts
 +npm run build
 +```
- 
+
 -> [!NOTE]
 -> Importing JSON to Karabiner-Elements is only needed when using the Online Editor.
 -> `karabiner.ts` writes to `~/.config/karabiner/karabiner.json` if using with Node.js or Deno.
 ->
 -> > Karabiner-Elements watches ~/.config/karabiner/karabiner.json and reloads it if updated.
 +Upstream sync (optional, when you want new features):
- 
+
 -## Using Node.js
 +```bash
 +cd ../karabiner.ts-upstream && git pull origin main
 +cd ../karabiner.ts && npm run typecheck && npm run build
 +```
- 
+
 -[![npm](https://img.shields.io/npm/v/karabiner.ts.svg)](https://www.npmjs.com/package/karabiner.ts)
 +Documentation:
- 
+
 -### Option 1
 +- `docs/INTEGRATION_SUMMARY.md` – Architecture overview
 +- `docs/UPSTREAM_SYNC.md` – Sync workflow
 +- `docs/MERGE_CHECKLIST.md` – Validation steps
- 
+
 -    npx create-karabiner-config@latest
 +### Local Upstream Mapping
- 
+
 -The default directory name is `karabiner-config`. You can pass another `project-name`:
 +For local development, imports of `karabiner.ts` resolve to the upstream mirror via TypeScript path mapping.
- 
+
 -    npx create-karabiner-config@latest [project-name]
 +- Config: see `tsconfig.json` `compilerOptions.paths` where `karabiner.ts` and `karabiner.ts/*` point to `../karabiner.ts-upstream/src`.
 +- Typechecking only: `compilerOptions.noEmit` is enabled alongside `allowImportingTsExtensions` to support upstream’s `.ts` import style without producing build outputs.
 +- Usage: write local code that imports `karabiner.ts` APIs; the compiler will typecheck against upstream sources in `karabiner.ts-upstream/src`.
- 
+
 -Then:
 +This keeps runtime artifacts unchanged while enabling tight local iteration against upstream APIs.
- 
+
 -1. Write your key mapping in `src/index.ts`.
 -2. Set the profile name. Create a new Karabiner-Elements profile if needed.
 -3. Run `npm run build`.
 +### Layer Indicator (Hammerspoon URL Scheme)
- 
+
 -To update to the latest version, run `npm run update` (or `npm update karabiner.ts`).
 +- Layer popups now use the Hammerspoon URL handler instead of the `hs` CLI.
 +- Karabiner sends background URL events: `open -g 'hammerspoon://layer_indicator?action=show&layer=space_*'` and `action=hide` on release.
 +- The handler lives in Hammerspoon at `karabiner_layer_indicator_url.lua` (symlinked into `src/` for reference).
 +- Benefit: no helper processes, faster updates, and no focus stealing.
- 
+
 -### Option 2
 +## Files
- 
+
 -1. [Download](https://github.com/evan-liu/karabiner.ts.examples/archive/refs/heads/main.zip) (or clone | [fork](https://github.com/evan-liu/karabiner.ts.examples/fork)) the [examples/starter repo](https://github.com/evan-liu/karabiner.ts.examples).
 -2. Run `npm install`.
 +- **`src/index.ts`** - All rules converted to TypeScript using abstractions
 +- **`src/lib/mods.ts`** - Custom modifier definitions (HYPER, SUPER, MEH)
 +- **`src/lib/builders.ts`** - Helper functions (`tapHold`, `varTapTapHold`, `cmd`)
 +- **`src/inputRules.json`** - Original JSON (preserved for reference)
- 
+
 -Then write and build the config same as Option 1.
 +## Custom Modifier Definitions
- 
+
 -### Option 3
 +Your local definitions in `src/lib/mods.ts`:
- 
+
 -    npm install karabiner.ts
 +- **HYPER** = `command + option + control`
 +- **SUPER** = `command + option + control + shift`
 +- **MEH** = `command + option + shift`
- 
+
 -(or install with `yarn`, `pnpm`, etc) then call `writeToProfile()` from any Node.js script in your preferred way.
 +These override upstream defaults and remain stable under your control.
- 
+
 -## Using Deno
 +## Build & Deploy
- 
+
 -[![deno module](https://shield.deno.dev/x/karabinerts)](https://deno.land/x/karabinerts)
 +```bash
 +# Deploy to Karabiner (edit src/index.ts, change '--dry-run' to 'JJK_Default')
 +npm run build
 +```
- 
+
 -In a Deno script file (replace `{version}`):
 +## Where Things Live
- 
+
 -```typescript
 -import { writeToProfile } from 'https://deno.land/x/karabinerts@{version}/deno.ts'
 +- `src/index.ts`: Main rules (tap-hold, space layers, specials)
 +- `src/lib/builders.ts`: Builders (shell, apps, mouse, notifications, expressions)
 +- `src/lib/functions.ts`: Generators (tap-hold rules, space layers, escape rule, device updates)
 +- `src/lib/mods.ts`: Mod constants (`HYPER`, `SUPER`, `MEH`)
- 
+
 -writeToProfile('Default', [
 -  // rule(...
 -])
@@ -317,10 +317,10 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  usageCounterVar: 'apps_toggle_uses'
 +}
  ```
- 
+
 -Then run it with:
 +## Guardrails & Notes
- 
+
 -    deno run --allow-env --allow-read --allow-write {filename}
 +- The file `/Library/.../karabiner_environment` sets shell env only; it does not create Karabiner variables. Use `set_variable`/expressions for runtime state.
 +- Expression support (`set_variable.expression`, `expression_if`) requires Karabiner v15.6.0+.
@@ -370,7 +370,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + * - SUPER: Command + Option + Control + Shift
 + * - MEH: Command + Option + Shift
 + */
- 
+
 -// Key alias
 -export * from './config/modifier.ts'
 -export * from './utils/key-alias.ts'
@@ -406,7 +406,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    updateDeviceConfigurations,
 +} from "./lib/functions";
 +import { HYPER, L, MEH, SUPER } from "./lib/mods";
- 
+
 -// Types
 -export type {
 -  LeftModifierFlag,
@@ -443,7 +443,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + * Note: Bloom requires 'open -a Bloom' with escaped paths, while QspacePro uses bundle ID
 + */
 +const FOLDER_OPENER: "bloom" | "qspace" = "bloom";
- 
+
 -// Utils
 -export { withCondition } from './utils/with-condition.ts'
 -export { withMapper } from './utils/with-mapper.ts'
@@ -463,7 +463,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    return `open -b com.jinghaoshe.qspace.pro '${folderPath}'`;
 +  }
 +};
- 
+
 -// From
 -export * from './config/from.ts'
 -export { mapSimultaneous } from './config/simultaneous.ts'
@@ -482,7 +482,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    return "com.jinghaoshe.qspace.pro";
 +  }
 +};
- 
+
 -// To
 -export * from './config/to.ts'
 -export * from './config/to-type-sequence.ts'
@@ -514,7 +514,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 + *
 + * Configuration is declarative - just add entries to the object below.
 + */
- 
+
 -// Condition
 -export * from './config/condition.ts'
 -
@@ -733,7 +733,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    hold: [toKey("mission_control", [], { halt: true, repeat: true })],
 +  },
 +};
- 
+
 -// Output
 -export { complexModifications } from './config/complex-modifications.ts'
 -export { simpleModifications } from './config/simple-modifications.ts'
@@ -830,7 +830,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +      },
 +      v: {
 +        description: "Code",
-+        openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
++        openAppOpts: { bundleIdentifier: "com.microsoft.VSCode" },
 +      },
 +      w: {
 +        description: "Word",
@@ -1433,7 +1433,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  // CMD+SHIFT+K - Delete line (except in VSCode Insiders)
 +  rule("CMD+SHIFT+K - delete line").manipulators([
 +    ...map("k", ["left_command", "left_shift"])
-+      .condition(ifApp("com.microsoft.VSCodeInsiders").unless())
++      .condition(ifApp("com.microsoft.VSCode").unless())
 +      .to(toKey("a", [L.ctrl], { repeat: false }))
 +      .to(toKey("k", [L.ctrl], { repeat: false }))
 +      .to(toKey("delete_or_backspace", [], { repeat: false }))
@@ -1459,7 +1459,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +    ...map("c", "right_command")
 +      .to(
 +        cmd(
-+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'",
++          "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCode'",
 +        ),
 +      )
 +      .build(),

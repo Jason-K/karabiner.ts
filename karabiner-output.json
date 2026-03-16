@@ -4760,7 +4760,7 @@
               {
                 "software_function": {
                   "open_application": {
-                    "bundle_identifier": "com.microsoft.VSCodeInsiders"
+                    "bundle_identifier": "com.microsoft.VSCode"
                   }
                 }
               }
@@ -5258,6 +5258,24 @@
             "to": [
               {
                 "shell_command": "open \"raycast://extensions/jason/recents/recentFolders\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "s"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "open -a Bloom /Users/jason/Scripts/"
               }
             ]
           }
@@ -6533,7 +6551,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCode'"
               }
             ]
           },

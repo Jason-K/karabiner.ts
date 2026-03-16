@@ -404,7 +404,7 @@ const spaceLayers: SubLayerConfig[] = [
       },
       v: {
         description: "Code",
-        openAppOpts: { bundleIdentifier: "com.microsoft.VSCodeInsiders" },
+        openAppOpts: { bundleIdentifier: "com.microsoft.VSCode" },
       },
       w: {
         description: "Word",
@@ -527,6 +527,10 @@ const spaceLayers: SubLayerConfig[] = [
       r: {
         description: "Recent Folders",
         command: 'open "raycast://extensions/jason/recents/recentFolders"',
+      },
+      s: {
+        description: "Scripts",
+        command: getOpenFolderCommand("/Users/jason/Scripts/"),
       },
     },
     subLayers: [
@@ -999,7 +1003,7 @@ let rules: any[] = [
     ...map("c", "right_option")
       .to(
         cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCodeInsiders'",
+          "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCode'",
         ),
       )
       .build(),
