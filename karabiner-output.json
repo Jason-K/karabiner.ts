@@ -6087,6 +6087,1674 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_d_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_r_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_s_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "escape"
+              },
+              {
+                "set_variable": {
+                  "name": "space_mod",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_a_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_d_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_c_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_f_p_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_r_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_s_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "space_w_sublayer",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "caps_lock_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "command_q_pressed",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "ctrl_opt_esc_first",
+                  "value": 0
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "cmd_d_ready",
+                  "value": 0
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_shift": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_option": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_command": "off"
+                }
+              },
+              {
+                "sticky_modifier": {
+                  "left_control": "off"
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_a_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_d_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_c_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_f_p_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_r_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_s_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "SPACE layers - swallow unmapped keys"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "home"
             },
             "to": [

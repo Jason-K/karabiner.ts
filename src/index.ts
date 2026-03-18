@@ -59,6 +59,10 @@ import { HYPER, L, MEH, SUPER } from "./lib/mods";
  */
 const FOLDER_OPENER: "bloom" | "qspace" = "bloom";
 
+// Space-layer swallowed key debug logging (default off)
+const SPACE_LAYER_DEBUG = false;
+const SPACE_LAYER_DEBUG_LOG_PATH = "~/.config/hammerspoon/logs/space_layer.log";
+
 /**
  * Generate the correct open command for the selected folder opener app
  * Bloom: uses 'open -a Bloom' with escaped path
@@ -857,7 +861,10 @@ let rules: any[] = [
   ]),
 
   // Generate space layer rules with sublayer persistence
-  ...generateSpaceLayerRules(spaceLayers),
+  ...generateSpaceLayerRules(spaceLayers, {
+    debugSwallowedKeys: SPACE_LAYER_DEBUG,
+    debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
+  }),
 
   // ============================================================================
   // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
