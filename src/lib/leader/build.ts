@@ -4,10 +4,10 @@ import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'kar
 import { cmd, openApp, setVarExpr } from '../builders';
 import { L } from '../mods';
 import {
-  buildSpaceLayerDebugLogCommand,
-  getAllSublayerVars,
-  getNestedSublayerVarName,
-  getSublayerVarName,
+    buildSpaceLayerDebugLogCommand,
+    getAllSublayerVars,
+    getNestedSublayerVarName,
+    getSublayerVarName,
 } from './runtime';
 import type { LayerMappingConfig, LayerRuleOptions, SpaceLayerRuleOptions, SubLayerConfig } from './types';
 

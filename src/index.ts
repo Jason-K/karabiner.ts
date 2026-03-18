@@ -42,7 +42,7 @@ import type {
 import {
     emitLayerDefinitions,
     generateEscapeRule,
-  generateLayerRules,
+    generateLayerRules,
     generateTapHoldRules,
     updateDeviceConfigurations,
 } from "./lib/functions";

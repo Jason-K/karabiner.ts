@@ -27,9 +27,7 @@ import { L } from './mods';
 
 export { generateLayerRules, generateSpaceLayerRules } from './leader';
 export type {
-  LayerRuleOptions,
-    LayerMappingConfig,
-    NestedLayerConfig,
+    LayerMappingConfig, LayerRuleOptions, NestedLayerConfig,
     SpaceLayerRuleOptions,
     SubLayerConfig
 } from './leader';
