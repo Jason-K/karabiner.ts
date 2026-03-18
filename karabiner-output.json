@@ -4399,7 +4399,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE - tap for space, hold for layer"
+        "ruleDescription": "SPACE - tap for key, hold for layer"
       },
       {
         "conditions": [],

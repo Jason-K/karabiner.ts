@@ -39,7 +39,15 @@ export type SubLayerConfig = {
   subLayers?: NestedLayerConfig[]; // Optional nested sublayers (second-level)
 };
 
-export type SpaceLayerRuleOptions = {
+export type LayerRuleOptions = {
+  leaderKey?: string;           // Physical key used to activate leader mode (default: spacebar)
+  layerPrefix?: string;         // Prefix for state variables and indicator layer IDs (default: space)
+  leaderLabel?: string;         // Label used in generated rule descriptions (default: SPACE)
+  indicatorRootLayer?: string;  // Root layer ID sent to hammerspoon://layer_indicator (default: layerPrefix)
+  resetVars?: string[];         // Additional variables to reset on escape while leader mode is active
   debugSwallowedKeys?: boolean; // If true, logs swallowed unmapped key events
   debugLogPath?: string;        // Where swallowed-key debug events are written
 };
+
+// Backward-compatible alias retained for existing callers.
+export type SpaceLayerRuleOptions = LayerRuleOptions;

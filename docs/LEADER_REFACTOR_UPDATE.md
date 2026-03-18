@@ -20,6 +20,12 @@ Confirmed compatibility for:
 
 - `generateSpaceLayerRules(spaceLayers, options)`
 
+Additional generalized API now available:
+
+- `generateLayerRules(spaceLayers, options)`
+
+`src/index.ts` now provides space-specific leader settings (leader key, prefix, label, indicator root), keeping the core leader builder generic.
+
 `src/lib/functions.ts` re-exports the leader API/types, preserving call sites that import from `./lib/functions`.
 
 ## Behavior Parity Checks

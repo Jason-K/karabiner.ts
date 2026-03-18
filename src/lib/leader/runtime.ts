@@ -1,5 +1,13 @@
 import type { SubLayerConfig } from './types';
 
+export function getSublayerVarName(prefix: string, layerKey: string): string {
+  return `${prefix}_${layerKey}_sublayer`;
+}
+
+export function getNestedSublayerVarName(prefix: string, layerKey: string, nestedLayerKey: string): string {
+  return `${prefix}_${layerKey}_${nestedLayerKey}_sublayer`;
+}
+
 function normalizeShellPath(inputPath: string): string {
   if (inputPath.startsWith('~/')) {
     return `$HOME/${inputPath.slice(2)}`;
@@ -22,13 +30,13 @@ export function buildSpaceLayerDebugLogCommand(message: string, logPath: string)
   ].join(' && ');
 }
 
-export function getAllSublayerVars(spaceLayers: SubLayerConfig[]): string[] {
+export function getAllSublayerVars(spaceLayers: SubLayerConfig[], prefix: string = 'space'): string[] {
   const vars: string[] = [];
 
   spaceLayers.forEach((layer) => {
-    vars.push(`space_${layer.layerKey}_sublayer`);
+    vars.push(getSublayerVarName(prefix, layer.layerKey));
     (layer.subLayers || []).forEach((subLayer) => {
-      vars.push(`space_${layer.layerKey}_${subLayer.layerKey}_sublayer`);
+      vars.push(getNestedSublayerVarName(prefix, layer.layerKey, subLayer.layerKey));
     });
   });
 

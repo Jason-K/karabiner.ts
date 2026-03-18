@@ -1,5 +1,6 @@
-export { generateSpaceLayerRules } from './build';
+export { generateLayerRules, generateSpaceLayerRules } from './build';
 export type {
+    LayerRuleOptions,
     LayerMappingConfig,
     NestedLayerConfig,
     SpaceLayerRuleOptions,

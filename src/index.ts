@@ -42,7 +42,7 @@ import type {
 import {
     emitLayerDefinitions,
     generateEscapeRule,
-    generateSpaceLayerRules,
+  generateLayerRules,
     generateTapHoldRules,
     updateDeviceConfigurations,
 } from "./lib/functions";
@@ -62,6 +62,9 @@ const FOLDER_OPENER: "bloom" | "qspace" = "bloom";
 // Space-layer swallowed key debug logging (default off)
 const SPACE_LAYER_DEBUG = false;
 const SPACE_LAYER_DEBUG_LOG_PATH = "~/.config/hammerspoon/logs/space_layer.log";
+const SPACE_LAYER_PREFIX = "space";
+const SPACE_LAYER_LEADER_KEY = "spacebar";
+const SPACE_LAYER_LABEL = "SPACE";
 
 /**
  * Generate the correct open command for the selected folder opener app
@@ -861,7 +864,11 @@ let rules: any[] = [
   ]),
 
   // Generate space layer rules with sublayer persistence
-  ...generateSpaceLayerRules(spaceLayers, {
+  ...generateLayerRules(spaceLayers, {
+    leaderKey: SPACE_LAYER_LEADER_KEY,
+    layerPrefix: SPACE_LAYER_PREFIX,
+    leaderLabel: SPACE_LAYER_LABEL,
+    indicatorRootLayer: SPACE_LAYER_PREFIX,
     debugSwallowedKeys: SPACE_LAYER_DEBUG,
     debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
   }),

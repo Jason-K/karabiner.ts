@@ -25,8 +25,9 @@ import { getAllSublayerVars } from './leader/runtime';
 import type { SubLayerConfig } from './leader/types';
 import { L } from './mods';
 
-export { generateSpaceLayerRules } from './leader';
+export { generateLayerRules, generateSpaceLayerRules } from './leader';
 export type {
+  LayerRuleOptions,
     LayerMappingConfig,
     NestedLayerConfig,
     SpaceLayerRuleOptions,

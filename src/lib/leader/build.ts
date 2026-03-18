@@ -3,17 +3,13 @@ import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'kar
 
 import { cmd, openApp, setVarExpr } from '../builders';
 import { L } from '../mods';
-import { buildSpaceLayerDebugLogCommand, getAllSublayerVars } from './runtime';
-import type { LayerMappingConfig, SpaceLayerRuleOptions, SubLayerConfig } from './types';
-
-function buildLayerInfo(layerKey: string, spaceLayers: SubLayerConfig[]): string {
-  return `space_${layerKey.toUpperCase()}`;
-}
-
-function buildSpaceModInfo(spaceLayers: SubLayerConfig[]): string {
-  // Return the space layer name for URL scheme
-  return 'space';
-}
+import {
+  buildSpaceLayerDebugLogCommand,
+  getAllSublayerVars,
+  getNestedSublayerVarName,
+  getSublayerVarName,
+} from './runtime';
+import type { LayerMappingConfig, LayerRuleOptions, SpaceLayerRuleOptions, SubLayerConfig } from './types';
 
 function buildSublayerManipulators(
   mappings: Record<string, LayerMappingConfig>,
@@ -108,34 +104,41 @@ function buildSublayerManipulators(
   return manipulators;
 }
 
-export function generateSpaceLayerRules(
+export function generateLayerRules(
   spaceLayers: SubLayerConfig[],
-  options: SpaceLayerRuleOptions = {}
+  options: LayerRuleOptions = {}
 ): any[] {
   const rules: any[] = [];
-  const spaceModVar = 'space_mod';
-  const allSublayerVars = getAllSublayerVars(spaceLayers);
+  const layerPrefix = options.layerPrefix ?? 'space';
+  const leaderLabel = options.leaderLabel ?? layerPrefix.toUpperCase();
+  const leaderKey = options.leaderKey ?? 'spacebar';
+  const indicatorRootLayer = options.indicatorRootLayer ?? layerPrefix;
+  const leaderVar = `${layerPrefix}_mod`;
+  const allSublayerVars = getAllSublayerVars(spaceLayers, layerPrefix);
+  const resetVars = options.resetVars ?? [
+    'caps_lock_pressed',
+    'command_q_pressed',
+    'ctrl_opt_esc_first',
+    'cmd_d_ready',
+  ];
   const debugSwallowedKeys = options.debugSwallowedKeys ?? false;
   const debugLogPath = options.debugLogPath ?? '~/.config/hammerspoon/logs/space_layer.log';
 
-  // Build layer info for space_mod (list of sublayers)
-  const spaceModInfo = buildSpaceModInfo(spaceLayers);
-
-  // Space key activates the layer
-  const spaceManipulator = map('spacebar')
+  // Leader key activates the layer
+  const leaderManipulator = map(leaderKey as any)
     .toIfAlone([
-      toKey('spacebar', [], { halt: true }),
-      toSetVar(spaceModVar, 0),
+      toKey(leaderKey as any, [], { halt: true }),
+      toSetVar(leaderVar, 0),
       ...allSublayerVars.map((v) => toSetVar(v, 0)),
     ])
     .toIfHeldDown([
-      toSetVar(spaceModVar, 1),
-      cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space'`)
+      toSetVar(leaderVar, 1),
+      cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}'`)
     ])
     .toAfterKeyUp([
-      toSetVar(spaceModVar, 0),
+      toSetVar(leaderVar, 0),
       ...allSublayerVars.map((v) => toSetVar(v, 0)),
-      // Ensure sticky modifiers are cleared when leaving space mode
+      // Ensure sticky modifiers are cleared when leaving leader mode
       toStickyModifier(L.shift, 'off'),
       toStickyModifier(L.opt, 'off'),
       toStickyModifier(L.cmd, 'off'),
@@ -145,8 +148,8 @@ export function generateSpaceLayerRules(
     .toDelayedAction(
       [],
       [
-        toKey('spacebar'),
-        toSetVar(spaceModVar, 0),
+        toKey(leaderKey as any),
+        toSetVar(leaderVar, 0),
         ...allSublayerVars.map((v) => toSetVar(v, 0)),
       ]
     )
@@ -155,27 +158,24 @@ export function generateSpaceLayerRules(
       'basic.to_if_held_down_threshold_milliseconds': 200,
     });
 
-  rules.push(rule('SPACE - tap for space, hold for layer').manipulators(spaceManipulator.build()));
+  rules.push(rule(`${leaderLabel} - tap for key, hold for layer`).manipulators(leaderManipulator.build()));
 
   // Generate sublayer rules
   spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true, subLayers }) => {
-    const sublayerVar = `space_${layerKey}_sublayer`;
-    const sublayerActivateTimeVar = `space_${layerKey}_activate_ms`;
+    const sublayerVar = getSublayerVarName(layerPrefix, layerKey);
+    const sublayerActivateTimeVar = `${layerPrefix}_${layerKey}_activate_ms`;
     const allManipulators: any[] = [];
 
-    // Build layer info JSON for this layer
-    const layerInfo = buildLayerInfo(layerKey, spaceLayers);
-
-    // Sublayer activation - pressing layerKey while space is held
+    // Sublayer activation - pressing layerKey while leader is held
     allManipulators.push(
       ...map(layerKey as any)
-        .condition(ifVar(spaceModVar, 1))
+        .condition(ifVar(leaderVar, 1))
         .to([
           toSetVar(sublayerVar, 1),
-          toSetVar(spaceModVar, 0),
+          toSetVar(leaderVar, 0),
           // Record activation timestamp (Phase 3 expression support)
           setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}'`)
+          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}_${layerKey.toUpperCase()}'`)
         ])
         .build()
     );
@@ -187,13 +187,13 @@ export function generateSpaceLayerRules(
 
     // Add single rule with all manipulators for this sublayer
     rules.push(
-      rule(`SPACE+${layerKey.toUpperCase()} - ${layerName} layer`).manipulators(allManipulators)
+      rule(`${leaderLabel}+${layerKey.toUpperCase()} - ${layerName} layer`).manipulators(allManipulators)
     );
 
     // Nested sublayers (second-level)
     (subLayers || []).forEach((subLayer) => {
-      const nestedVar = `space_${layerKey}_${subLayer.layerKey}_sublayer`;
-      const nestedActivateTimeVar = `space_${layerKey}_${subLayer.layerKey}_activate_ms`;
+      const nestedVar = getNestedSublayerVarName(layerPrefix, layerKey, subLayer.layerKey);
+      const nestedActivateTimeVar = `${layerPrefix}_${layerKey}_${subLayer.layerKey}_activate_ms`;
       const nestedManipulators: any[] = [];
 
       nestedManipulators.push(
@@ -203,7 +203,7 @@ export function generateSpaceLayerRules(
             toSetVar(nestedVar, 1),
             toSetVar(sublayerVar, 0),
             setVarExpr(nestedActivateTimeVar, '{{ system.now.milliseconds }}'),
-            cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=space_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}'`)
+            cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}'`)
           ])
           .build()
       );
@@ -217,21 +217,18 @@ export function generateSpaceLayerRules(
       );
 
       rules.push(
-        rule(`SPACE+${layerKey.toUpperCase()}+${subLayer.layerKey.toUpperCase()} - ${subLayer.layerName} layer`).manipulators(nestedManipulators)
+        rule(`${leaderLabel}+${layerKey.toUpperCase()}+${subLayer.layerKey.toUpperCase()} - ${subLayer.layerName} layer`).manipulators(nestedManipulators)
       );
     });
   });
 
-  // Swallow any unmapped keystrokes while space mode is active.
+  // Swallow any unmapped keystrokes while leader mode is active.
   // This prevents accidental input from leaking through to the frontmost app.
   const escapeResetEvents: ToEvent[] = [
     toKey('escape'),
-    toSetVar(spaceModVar, 0),
+    toSetVar(leaderVar, 0),
     ...allSublayerVars.map((v) => toSetVar(v, 0)),
-    toSetVar('caps_lock_pressed', 0),
-    toSetVar('command_q_pressed', 0),
-    toSetVar('ctrl_opt_esc_first', 0),
-    toSetVar('cmd_d_ready', 0),
+    ...resetVars.map((resetVar) => toSetVar(resetVar, 0)),
     toStickyModifier(L.shift, 'off'),
     toStickyModifier(L.opt, 'off'),
     toStickyModifier(L.cmd, 'off'),
@@ -244,14 +241,14 @@ export function generateSpaceLayerRules(
     }
 
     return [
-      cmd(buildSpaceLayerDebugLogCommand(`[space-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
+      cmd(buildSpaceLayerDebugLogCommand(`[leader-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
       toNone(),
     ];
   };
 
   const swallowUnmappedManipulators: any[] = [
     ...map('escape')
-      .condition(ifVar(spaceModVar, 1))
+      .condition(ifVar(leaderVar, 1))
       .to(escapeResetEvents)
       .build(),
     ...allSublayerVars.flatMap((sublayerVar) =>
@@ -264,8 +261,8 @@ export function generateSpaceLayerRules(
       any: 'key_code',
       modifiers: { optional: ['any'] },
     })
-      .condition(ifVar(spaceModVar, 1))
-      .to(buildSwallowUnmappedEvents('space_mod'))
+      .condition(ifVar(leaderVar, 1))
+      .to(buildSwallowUnmappedEvents(leaderVar))
       .build(),
     ...allSublayerVars.flatMap((sublayerVar) =>
       map({
@@ -279,8 +276,21 @@ export function generateSpaceLayerRules(
   ];
 
   rules.push(
-    rule('SPACE layers - swallow unmapped keys').manipulators(swallowUnmappedManipulators)
+    rule(`${leaderLabel} layers - swallow unmapped keys`).manipulators(swallowUnmappedManipulators)
   );
 
   return rules;
+}
+
+export function generateSpaceLayerRules(
+  spaceLayers: SubLayerConfig[],
+  options: SpaceLayerRuleOptions = {}
+): any[] {
+  return generateLayerRules(spaceLayers, {
+    leaderKey: 'spacebar',
+    layerPrefix: 'space',
+    leaderLabel: 'SPACE',
+    indicatorRootLayer: 'space',
+    ...options,
+  });
 }
