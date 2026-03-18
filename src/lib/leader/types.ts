@@ -34,20 +34,17 @@ export type NestedLayerConfig = {
 export type SubLayerConfig = {
   layerKey: string;           // Key to activate this sublayer (e.g., 'd' for Downloads)
   layerName: string;          // Human-readable name for documentation
-  releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until space released.
+  releaseLayer?: boolean;     // If true (default), clear layer after each action. If false, layer stays active until leader key is released.
   mappings: Record<string, LayerMappingConfig>; // Key mappings within this sublayer
   subLayers?: NestedLayerConfig[]; // Optional nested sublayers (second-level)
 };
 
 export type LayerRuleOptions = {
-  leaderKey?: string;           // Physical key used to activate leader mode (default: spacebar)
-  layerPrefix?: string;         // Prefix for state variables and indicator layer IDs (default: space)
-  leaderLabel?: string;         // Label used in generated rule descriptions (default: SPACE)
-  indicatorRootLayer?: string;  // Root layer ID sent to hammerspoon://layer_indicator (default: layerPrefix)
+  leaderKey?: string;           // Physical key used to activate leader mode
+  layerPrefix?: string;         // Prefix for state variables and indicator layer IDs
+  leaderLabel?: string;         // Label used in generated rule descriptions
+  indicatorRootLayer?: string;  // Root layer ID sent to hammerspoon://layer_indicator
   resetVars?: string[];         // Additional variables to reset on escape while leader mode is active
   debugSwallowedKeys?: boolean; // If true, logs swallowed unmapped key events
   debugLogPath?: string;        // Where swallowed-key debug events are written
 };
-
-// Backward-compatible alias retained for existing callers.
-export type SpaceLayerRuleOptions = LayerRuleOptions;

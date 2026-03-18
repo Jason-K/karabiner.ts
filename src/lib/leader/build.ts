@@ -4,12 +4,12 @@ import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'kar
 import { cmd, openApp, setVarExpr } from '../builders';
 import { L } from '../mods';
 import {
-    buildSpaceLayerDebugLogCommand,
+    buildLayerDebugLogCommand,
     getAllSublayerVars,
     getNestedSublayerVarName,
     getSublayerVarName,
 } from './runtime';
-import type { LayerMappingConfig, LayerRuleOptions, SpaceLayerRuleOptions, SubLayerConfig } from './types';
+import type { LayerMappingConfig, LayerRuleOptions, SubLayerConfig } from './types';
 
 function buildSublayerManipulators(
   mappings: Record<string, LayerMappingConfig>,
@@ -105,16 +105,16 @@ function buildSublayerManipulators(
 }
 
 export function generateLayerRules(
-  spaceLayers: SubLayerConfig[],
+  layerConfigs: SubLayerConfig[],
   options: LayerRuleOptions = {}
 ): any[] {
   const rules: any[] = [];
-  const layerPrefix = options.layerPrefix ?? 'space';
+  const layerPrefix = options.layerPrefix ?? 'leader';
   const leaderLabel = options.leaderLabel ?? layerPrefix.toUpperCase();
-  const leaderKey = options.leaderKey ?? 'spacebar';
+  const leaderKey = options.leaderKey ?? 'f18';
   const indicatorRootLayer = options.indicatorRootLayer ?? layerPrefix;
   const leaderVar = `${layerPrefix}_mod`;
-  const allSublayerVars = getAllSublayerVars(spaceLayers, layerPrefix);
+  const allSublayerVars = getAllSublayerVars(layerConfigs, layerPrefix);
   const resetVars = options.resetVars ?? [
     'caps_lock_pressed',
     'command_q_pressed',
@@ -122,7 +122,7 @@ export function generateLayerRules(
     'cmd_d_ready',
   ];
   const debugSwallowedKeys = options.debugSwallowedKeys ?? false;
-  const debugLogPath = options.debugLogPath ?? '~/.config/hammerspoon/logs/space_layer.log';
+  const debugLogPath = options.debugLogPath;
 
   // Leader key activates the layer
   const leaderManipulator = map(leaderKey as any)
@@ -161,7 +161,7 @@ export function generateLayerRules(
   rules.push(rule(`${leaderLabel} - tap for key, hold for layer`).manipulators(leaderManipulator.build()));
 
   // Generate sublayer rules
-  spaceLayers.forEach(({ layerKey, layerName, mappings, releaseLayer = true, subLayers }) => {
+  layerConfigs.forEach(({ layerKey, layerName, mappings, releaseLayer = true, subLayers }) => {
     const sublayerVar = getSublayerVarName(layerPrefix, layerKey);
     const sublayerActivateTimeVar = `${layerPrefix}_${layerKey}_activate_ms`;
     const allManipulators: any[] = [];
@@ -236,12 +236,12 @@ export function generateLayerRules(
   ];
 
   const buildSwallowUnmappedEvents = (stateName: string): ToEvent[] => {
-    if (!debugSwallowedKeys) {
+    if (!debugSwallowedKeys || !debugLogPath) {
       return [toNone()];
     }
 
     return [
-      cmd(buildSpaceLayerDebugLogCommand(`[leader-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
+      cmd(buildLayerDebugLogCommand(`[leader-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
       toNone(),
     ];
   };
@@ -280,17 +280,4 @@ export function generateLayerRules(
   );
 
   return rules;
-}
-
-export function generateSpaceLayerRules(
-  spaceLayers: SubLayerConfig[],
-  options: SpaceLayerRuleOptions = {}
-): any[] {
-  return generateLayerRules(spaceLayers, {
-    leaderKey: 'spacebar',
-    layerPrefix: 'space',
-    leaderLabel: 'SPACE',
-    indicatorRootLayer: 'space',
-    ...options,
-  });
 }

@@ -19,7 +19,7 @@ function shellDoubleQuote(input: string): string {
   return `"${input.replace(/"/g, '\\"')}"`;
 }
 
-export function buildSpaceLayerDebugLogCommand(message: string, logPath: string): string {
+export function buildLayerDebugLogCommand(message: string, logPath: string): string {
   const resolvedPath = normalizeShellPath(logPath);
   const escapedMessage = message.replace(/"/g, '\\"');
   const quotedPath = shellDoubleQuote(resolvedPath);
@@ -30,10 +30,10 @@ export function buildSpaceLayerDebugLogCommand(message: string, logPath: string)
   ].join(' && ');
 }
 
-export function getAllSublayerVars(spaceLayers: SubLayerConfig[], prefix: string = 'space'): string[] {
+export function getAllSublayerVars(layerConfigs: SubLayerConfig[], prefix: string): string[] {
   const vars: string[] = [];
 
-  spaceLayers.forEach((layer) => {
+  layerConfigs.forEach((layer) => {
     vars.push(getSublayerVarName(prefix, layer.layerKey));
     (layer.subLayers || []).forEach((subLayer) => {
       vars.push(getNestedSublayerVarName(prefix, layer.layerKey, subLayer.layerKey));

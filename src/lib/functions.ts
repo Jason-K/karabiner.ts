@@ -9,7 +9,7 @@
  *
  * Key functions:
  * - generateTapHoldRules(): Batch-generate tap-hold manipulators with app overrides
- * - generateSpaceLayerRules(): Multi-sublayer system with sticky modifiers
+ * - generateLayerRules(): Multi-sublayer system with sticky modifiers
  * - generateEscapeRule(): Variable reset on escape
  * - updateDeviceConfigurations(): Device-specific simple_modifications
  *
@@ -25,10 +25,9 @@ import { getAllSublayerVars } from './leader/runtime';
 import type { SubLayerConfig } from './leader/types';
 import { L } from './mods';
 
-export { generateLayerRules, generateSpaceLayerRules } from './leader';
+export { generateLayerRules } from './leader';
 export type {
     LayerMappingConfig, LayerRuleOptions, NestedLayerConfig,
-    SpaceLayerRuleOptions,
     SubLayerConfig
 } from './leader';
 
@@ -257,7 +256,7 @@ export function generateTapHoldRules(
   spaceLayers: SubLayerConfig[]
 ): any[] {
   const spaceModVar = 'space_mod';
-  const allSublayerVars = getAllSublayerVars(spaceLayers);
+  const allSublayerVars = getAllSublayerVars(spaceLayers, 'space');
 
   return Object.entries(tapHoldKeys).map(([keyString, config]) => {
     // Parse key string to extract base key and modifiers
@@ -314,7 +313,7 @@ export function generateTapHoldRules(
  */
 export function generateEscapeRule(spaceLayers: SubLayerConfig[]): any[] {
   const spaceModVar = 'space_mod';
-  const allSublayerVars = getAllSublayerVars(spaceLayers);
+  const allSublayerVars = getAllSublayerVars(spaceLayers, 'space');
 
   // Static variables used elsewhere (caps lock, double-tap protection)
   const otherVars = [

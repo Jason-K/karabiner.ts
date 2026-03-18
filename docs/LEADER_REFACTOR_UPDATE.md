@@ -2,7 +2,7 @@
 
 ## Scope
 
-This update finalizes the extraction of `generateSpaceLayerRules(...)` from `src/lib/functions.ts` into `src/lib/leader/*` while preserving runtime behavior.
+This update finalizes leader abstraction in `src/lib/leader/*` by removing space-specific wrappers while preserving runtime behavior.
 
 ## Files in Scope
 
@@ -16,17 +16,13 @@ This update finalizes the extraction of `generateSpaceLayerRules(...)` from `src
 
 ## API Compatibility
 
-Confirmed compatibility for:
+Final API surface:
 
-- `generateSpaceLayerRules(spaceLayers, options)`
-
-Additional generalized API now available:
-
-- `generateLayerRules(spaceLayers, options)`
+- `generateLayerRules(layerConfigs, options)`
 
 `src/index.ts` now provides space-specific leader settings (leader key, prefix, label, indicator root), keeping the core leader builder generic.
 
-`src/lib/functions.ts` re-exports the leader API/types, preserving call sites that import from `./lib/functions`.
+`src/lib/functions.ts` re-exports only the generic leader API/types.
 
 ## Behavior Parity Checks
 
@@ -40,7 +36,7 @@ Confirmed parity for:
 
 ## Debug Path
 
-Default debug log path is preserved:
+Space-layer debug log path is preserved at the `src/index.ts` call site:
 
 - `~/.config/hammerspoon/logs/space_layer.log`
 
@@ -61,12 +57,7 @@ Build side effects observed and expected:
 
 ## Behavior-Affecting Deltas
 
-No unintended behavior-affecting deltas were identified.
-
-Intentional behavior-affecting delta present in generated output:
-
-- Added explicit `SPACE layers - swallow unmapped keys` rule
-- Added explicit escape-reset manipulators for `space_mod` and each active sublayer state
+No behavior-affecting deltas were identified.
 
 ## Merge Readiness
 

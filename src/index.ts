@@ -65,6 +65,7 @@ const SPACE_LAYER_DEBUG_LOG_PATH = "~/.config/hammerspoon/logs/space_layer.log";
 const SPACE_LAYER_PREFIX = "space";
 const SPACE_LAYER_LEADER_KEY = "spacebar";
 const SPACE_LAYER_LABEL = "SPACE";
+const SPACE_LAYER_INDICATOR_ROOT = "space";
 
 /**
  * Generate the correct open command for the selected folder opener app
@@ -868,7 +869,7 @@ let rules: any[] = [
     leaderKey: SPACE_LAYER_LEADER_KEY,
     layerPrefix: SPACE_LAYER_PREFIX,
     leaderLabel: SPACE_LAYER_LABEL,
-    indicatorRootLayer: SPACE_LAYER_PREFIX,
+    indicatorRootLayer: SPACE_LAYER_INDICATOR_ROOT,
     debugSwallowedKeys: SPACE_LAYER_DEBUG,
     debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
   }),
