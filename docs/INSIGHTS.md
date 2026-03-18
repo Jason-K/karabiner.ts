@@ -207,3 +207,78 @@ Both manipulators include `{ type: "variable_unless", name: "space_mod", value: 
 - [Double Press Example](https://karabiner-elements.pqrs.org/docs/json/typical-complex-modifications-examples/#change-double-press-of-q-to-escape)
 - [Complex Modifications Manipulator Definition](https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/)
 - [to_delayed_action Documentation](https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/to-delayed-action/)
+
+---
+
+## Leader Layer Architecture
+
+The leader layer module (`src/lib/leader/`) is fully generic. Space is not a special case — it is
+simply the `leaderKey` wired at the call site in `src/index.ts`. The builder has no knowledge of
+space.
+
+### How the Generics Work
+
+`generateLayerRules(layerConfigs, options)` accepts:
+
+| Option | What it controls |
+| ------ | ---------------- |
+| `leaderKey` | The key that activates the leader layer (`space_bar` in the current config) |
+| `layerPrefix` | Prefix for Karabiner variable names (e.g., `space_`) |
+| `leaderLabel` | Display label for the Hammerspoon layer indicator |
+| `indicatorRootLayer` | Hammerspoon indicator root layer name |
+| `debugSwallowedKeys` | Whether to log swallowed keys to a file |
+| `debugLogPath` | Path for the debug log |
+
+`src/index.ts` provides all space-specific values at the call site. The leader internals are
+unaware of them.
+
+### Adding a Second Leader Layer
+
+Because the builder is fully generic, a second leader layer requires nothing more than a second
+call with different options:
+
+```typescript
+// Space leader (existing)
+const spaceLayers = generateLayerRules(spaceLayerConfigs, {
+  leaderKey: 'space_bar',
+  layerPrefix: 'space_',
+  leaderLabel: 'SPACE',
+  indicatorRootLayer: 'space_root',
+});
+
+// Tab leader (example — system/media actions)
+const tabLayers = generateLayerRules(tabLayerConfigs, {
+  leaderKey: 'tab',
+  layerPrefix: 'tab_',
+  leaderLabel: 'TAB',
+  indicatorRootLayer: 'tab_root',
+});
+```
+
+Both can coexist in the same `rules` array in `src/index.ts`. Variable namespacing (via
+`layerPrefix`) ensures no collisions between leader layers.
+
+### Module Structure
+
+```text
+src/lib/leader/
+├── types.ts    — LayerMappingConfig, NestedLayerConfig, SubLayerConfig, LayerRuleOptions
+├── runtime.ts  — Variable naming helpers, escape reset construction, all-sublayer-var derivation
+├── build.ts    — generateLayerRules() — the single assembly entry point
+└── index.ts    — Barrel exports
+```
+
+`src/lib/functions.ts` re-exports `generateLayerRules` and the leader types so callers don't need
+to import from `leader/` directly.
+
+### Key Insight: Space-Specific Wiring Lives Only in `src/index.ts`
+
+The following are **not** part of the leader module:
+
+- Which key activates the layer
+- What the layer prefix or label is
+- Where debug logs go
+- Whether debug is enabled
+
+These are all passed at the call site. The leader module is stable regardless of how many different
+leader keys the configuration uses.

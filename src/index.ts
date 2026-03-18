@@ -32,16 +32,16 @@ import {
     SPACE_LAYER_PREFIX,
     tapHoldKeys,
 } from "./configs";
-import type {
-    DeviceConfig
-} from "./lib/functions";
 import {
     emitLayerDefinitions,
     generateEscapeRule,
-    generateLayerRules,
     generateTapHoldRules,
     updateDeviceConfigurations,
-} from "./lib/functions";
+} from "./generators";
+import type {
+    DeviceConfig
+} from "./generators/device-config";
+import { generateLayerRules } from "./lib/leader";
 import {
     buildAntinoteDeleteRule,
     buildCapsLockRule,

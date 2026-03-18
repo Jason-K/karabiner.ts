@@ -1,5 +1,6 @@
 import { rule, toKey, toSetVar } from "karabiner.ts";
-import { openApp, toKeyCond } from "../lib/builders";
+import { toKeyCond } from "../lib/conditions";
+import { openApp } from "../lib/software";
 
 export const buildLeftCommandRule = () => {
   return rule("LCMD - left ⌘ (tap/double-tap/hold)").manipulators([

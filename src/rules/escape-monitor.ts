@@ -1,5 +1,6 @@
 import { map, rule, toKey } from "karabiner.ts";
-import { cmd, varTapTapHold } from "../lib/builders";
+import { cmd } from "../lib/scripts";
+import { varTapTapHold } from "../lib/tap-hold";
 
 export const buildEscapeTapTapHoldRule = () => {
   return rule(

@@ -13,9 +13,7 @@ We vendor the upstream Karabiner.ts project for reference and diffing:
   - Upstream GitHub workflows are stored in `.github/upstream-workflows/` so they do not alter CI by default.
   - Upstream docs are available under `docs/upstream/`.
 
-Our local extensions take precedence over upstream files. When adopting upstream changes, we selectively merge while preserving our `package.json`, build scripts, eslint settings, and source overrides under `src/`.
-
-See `docs/INTEGRATION_CONFLICTS.md` for the current conflict report and diff summary.
+Our local extensions take precedence over upstream files. When adopting upstream changes, we selectively merge while preserving our `package.json`, build scripts, eslint settings, and source overrides under `src/`. To review what has drifted from upstream, run `./scripts/generate-conflict-report.sh` and inspect the output.
 
 ## Integration Status
 
@@ -44,7 +42,8 @@ Documentation:
 
 - `docs/INTEGRATION_SUMMARY.md` – Architecture overview
 - `docs/UPSTREAM_SYNC.md` – Sync workflow
-- `docs/MERGE_CHECKLIST.md` – Validation steps
+- `docs/INSIGHTS.md` – Design insights and implementation notes
+- `docs/FUTURE_FEATURES.md` – Unimplemented ideas and roadmap
 
 ### Local Upstream Mapping
 

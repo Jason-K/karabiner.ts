@@ -1,8 +1,10 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
 
-import { cmd, openApp, setVarExpr } from '../builders';
+import { setVarExpr } from '../conditions';
 import { L } from '../mods';
+import { cmd } from '../scripts';
+import { openApp } from '../software';
 import {
     buildLayerDebugLogCommand,
     getAllSublayerVars,

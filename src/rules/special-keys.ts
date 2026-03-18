@@ -1,6 +1,7 @@
-import { ifApp, map, rule, toKey } from "karabiner.ts";
-import { cmd, tapHold, withCondition } from "../lib/builders";
+import { ifApp, map, rule, toKey, withCondition } from "karabiner.ts";
 import { HYPER } from "../lib/mods";
+import { cmd } from "../lib/scripts";
+import { tapHold } from "../lib/tap-hold";
 
 export const buildHomeEndRule = () => {
   return rule("HOME/END - Mac-style navigation").manipulators([

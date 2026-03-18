@@ -1,7 +1,8 @@
 import { toKey } from "karabiner.ts";
-import { cmd, openApp } from "../lib/builders";
-import type { TapHoldConfig } from "../lib/functions";
+import type { TapHoldConfig } from "../generators/tap-hold-rules";
 import { HYPER, MEH, SUPER } from "../lib/mods";
+import { cmd } from "../lib/scripts";
+import { openApp } from "../lib/software";
 
 export const tapHoldKeys: Record<string, TapHoldConfig> = {
   a: {

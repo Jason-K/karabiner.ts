@@ -29,6 +29,15 @@ import type { Modifier } from 'karabiner.ts';
  * - Global application launcher shortcuts
  * - System automation triggers
  */
+// NOTE: Naming intentionally diverges from upstream karabiner.ts conventions:
+//   upstream "Meh"        = option+control+shift        (3-key)
+//   upstream "Hyper"      = cmd+option+control+shift    (4-key)
+//   upstream "SuperHyper" = cmd+option+control+shift+fn (5-key)
+//
+//   This project uses:
+//   MEH   = cmd+option+shift          (no ctrl - easier modifier combo)
+//   HYPER = cmd+option+control        (3-key, no shift)
+//   SUPER = cmd+option+control+shift  (4-key, equiv to upstream Hyper)
 export const HYPER: Modifier[] = ['command', 'option', 'control'];
 
 /**
@@ -92,4 +101,3 @@ export const R = {
  * more self-documenting.
  */
 export type Ms = number;
-

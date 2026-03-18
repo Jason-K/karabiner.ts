@@ -10,11 +10,15 @@ karabiner/
 │   ├── src/
 │   │   ├── index.ts          # Your main config (DO NOT merge upstream)
 │   │   └── lib/              # Your extensions (DO NOT merge upstream)
-│   │       ├── builders.ts   # Local tap-hold, cmd(), openApp() helpers
-│   │       ├── functions.ts  # Space layer generators
+│   │       ├── builders.ts   # tapHold(), openApp(), notify(), cmd(), …
+│   │       ├── functions.ts  # Re-exports generateLayerRules() and generator helpers
 │   │       ├── mods.ts       # Custom HYPER/SUPER/MEH definitions
-│   │       ├── consumer.ts   # Consumer key helpers
-│   │       └── text.ts       # Text manipulation helpers
+│   │       ├── text.ts       # Text manipulation helpers
+│   │       └── leader/       # Generic leader-layer rule builder
+│   │           ├── build.ts
+│   │           ├── runtime.ts
+│   │           ├── types.ts
+│   │           └── index.ts
 │   ├── tsconfig.json         # Path mapping to upstream (DO NOT merge)
 │   ├── package.json          # Local deps (DO NOT merge)
 │   └── eslint.config.mjs     # Local lint rules (DO NOT merge)
@@ -43,7 +47,7 @@ cd /Users/jason/Scripts/apps/karabiner/karabiner.ts
 ./scripts/generate-conflict-report.sh
 ```
 
-This creates/updates `docs/INTEGRATION_CONFLICTS.md` with diffs.
+This writes a diff snapshot to `docs/INTEGRATION_CONFLICTS.md`. It is a **temporary review artifact** — inspect it, then discard it. Do not commit or track it long-term.
 
 ### 3. Review Changes
 
@@ -83,8 +87,9 @@ These files are yours and must never be overwritten by upstream:
 
 ### Core Configuration
 - `src/index.ts` - Your complete Karabiner config
-- `src/lib/*.ts` - All your extensions
-- `src/inputRules.json` - Your original rules
+- `src/configs/*.ts` - Declarative mappings and constants
+- `src/rules/*.ts` - Rule factory modules
+- `src/lib/*.ts` - All your extensions (including `leader/`)
 
 ### Project Files
 - `package.json` - Your build scripts and dependencies

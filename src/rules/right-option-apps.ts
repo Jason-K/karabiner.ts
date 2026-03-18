@@ -1,5 +1,5 @@
 import { map, rule } from "karabiner.ts";
-import { cmd } from "../lib/builders";
+import { cmd } from "../lib/scripts";
 
 export const buildRightOptionAppsRule = (
   getOpenFolderCommand: (folderPath: string) => string,

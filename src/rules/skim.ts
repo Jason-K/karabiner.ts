@@ -1,6 +1,6 @@
 import { ifApp, map, rule, toKey } from "karabiner.ts";
-import { applescript, cmd } from "../lib/builders";
 import { L } from "../lib/mods";
+import { applescript, cmd } from "../lib/scripts";
 
 export const buildSkimCommandRemapRule = () => {
   return rule("SKIM - CMD+H/U").manipulators([
