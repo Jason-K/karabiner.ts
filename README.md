@@ -63,11 +63,39 @@ This keeps runtime artifacts unchanged while enabling tight local iteration agai
 - The handler lives in Hammerspoon at `karabiner_layer_indicator_url.lua` (symlinked into `src/` for reference).
 - Benefit: no helper processes, faster updates, and no focus stealing.
 
+## Refactor Update (March 2026)
+
+The main goal of the recent refactor was to keep `src/index.ts` focused on user customization and top-level composition, while moving reusable logic and large rule blocks into dedicated modules.
+
+### What Changed
+
+- Extracted folder-opener configuration and helpers into `src/configs/folder-opener.ts`.
+- Extracted space-layer constants into `src/configs/space-layer.ts`.
+- Extracted tap-hold mapping declarations into `src/configs/tap-hold-keys.ts`.
+- Extracted space-layer mapping declarations into `src/configs/space-layers.ts`.
+- Extracted rule factories into `src/rules/*` (left command, caps lock, cmd+q, security, skim, escape-monitor, special-keys, antinote).
+- Added test coverage for rule factories and config mappings.
+- Added scripts: `typecheck`, `test`, and `check` in `package.json`.
+
+### Current Role of `src/index.ts`
+
+`src/index.ts` now acts as the composition file:
+
+- imports user mapping/config modules,
+- imports rule factories,
+- composes the ordered `rules` array,
+- calls generation/output functions (`generateTapHoldRules`, `generateLayerRules`, `writeToProfile`, etc.).
+
+It should stay light and orchestration-focused.
+
 ## Files
 
-- **`src/index.ts`** - All rules converted to TypeScript using abstractions
+- **`src/index.ts`** - User-facing composition and orchestration
+- **`src/configs/*.ts`** - Declarative mapping/config data (tap-hold, space layers, opener config)
+- **`src/rules/*.ts`** - Reusable rule factory modules
 - **`src/lib/mods.ts`** - Custom modifier definitions (HYPER, SUPER, MEH)
 - **`src/lib/builders.ts`** - Helper functions (`tapHold`, `varTapTapHold`, `cmd`)
+- **`src/lib/functions.ts`** - Generators and output/update helpers
 - **`src/inputRules.json`** - Original JSON (preserved for reference)
 
 ## Custom Modifier Definitions
@@ -89,10 +117,15 @@ npm run build
 
 ## Where Things Live
 
-- `src/index.ts`: Main rules (tap-hold, space layers, specials)
-- `src/lib/builders.ts`: Builders (shell, apps, mouse, notifications, expressions)
-- `src/lib/functions.ts`: Generators (tap-hold rules, space layers, escape rule, device updates)
-- `src/lib/mods.ts`: Mod constants (`HYPER`, `SUPER`, `MEH`)
+- `src/index.ts`: Rule composition order and profile write/update orchestration
+- `src/configs/tap-hold-keys.ts`: Tap-hold mapping declarations
+- `src/configs/space-layers.ts`: Space-layer and nested sublayer declarations
+- `src/configs/folder-opener.ts`: Folder opener strategy and helper functions
+- `src/configs/space-layer.ts`: Leader/space-layer constants and debug settings
+- `src/rules/`: Behavior modules grouped by concern (security, app-specific, special keys, etc.)
+- `src/lib/builders.ts`: Low-level builder helpers
+- `src/lib/functions.ts`: Generator and persistence helpers
+- `src/lib/mods.ts`: Modifier constants (`HYPER`, `SUPER`, `MEH`)
 
 ## Builders (1-line each + tiny example)
 
@@ -135,8 +168,25 @@ tab: {
 
 ## Practical Next Steps
 
-- Idle auto-clear example: use `expression_if` comparing `system.now.milliseconds` to `space_<layer>_activate_ms`.
-- Consider `integer_value` in `from` (v15.6.0) if you add unusual HID sources.
+- Add barrel exports for `src/configs` and `src/rules` to simplify imports in `src/index.ts`.
+- Add an output-level integration test asserting critical rule descriptions/variables in generated JSON.
+- Keep moving any new complex inline rule blocks into `src/rules` modules, not `src/index.ts`.
+- Update docs when introducing new layer families or variable naming schemes.
+
+## Validation Workflow
+
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run build
+```
+
+Or run all at once:
+
+```bash
+npm run check
+```
 
 ## Quick Verify
 

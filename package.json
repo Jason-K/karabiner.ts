@@ -3,6 +3,9 @@
   "description": "karabiner config in karabiner.ts",
   "scripts": {
     "build": "tsx src/index.ts && hs -c \"hs.reload()\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "tsx --test src/*.test.ts src/**/*.test.ts",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build",
     "update": "npm update karabiner.ts",
     "lint": "eslint src --ignore-pattern docs --max-warnings=0"
   },
