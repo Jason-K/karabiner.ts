@@ -1,4 +1,11 @@
 import type { SubLayerConfig } from "../lib/functions";
+import {
+  cleanShotCommand,
+  raycastExtensionCommand,
+  takeActionHereCommand,
+  textProcessorCommand,
+  withSleep,
+} from "../lib/scripts";
 
 export const buildSpaceLayers = (
   getOpenFolderCommand: (folderPath: string) => string,
@@ -15,7 +22,7 @@ export const buildSpaceLayers = (
       },
       b: {
         description: "Browser",
-        openAppOpts: { bundleIdentifier: "net.imput.helium" },
+        openAppOpts: { bundleIdentifier: "app.zen-browser.zen" },
       },
       c: {
         description: "Calendar",
@@ -30,13 +37,12 @@ export const buildSpaceLayers = (
         openAppOpts: { bundleIdentifier: getFolderOpenerBundleId() },
       },
       g: {
-        description: "Claudé for Desktop",
+        description: "Claude",
         openAppOpts: { bundleIdentifier: "com.anthropic.claudefordesktop" },
       },
       k: {
         description: "Kitty here",
-        command:
-          "/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh --action kitty",
+        command: takeActionHereCommand("kitty"),
       },
       m: {
         description: "Messages",
@@ -94,44 +100,28 @@ export const buildSpaceLayers = (
         description: "lowercase",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py lowercase --source clipboard --dest paste",
-          },
+          { type: "command", value: textProcessorCommand("lowercase") },
         ],
       },
       s: {
         description: "Sentence case",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py sentence_case --source clipboard --dest paste",
-          },
+          { type: "command", value: textProcessorCommand("sentence_case") },
         ],
       },
       t: {
         description: "Title Case",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py title_case --source clipboard --dest paste",
-          },
+          { type: "command", value: textProcessorCommand("title_case") },
         ],
       },
       u: {
         description: "UPPERCASE",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py uppercase --source clipboard --dest paste",
-          },
+          { type: "command", value: textProcessorCommand("uppercase") },
         ],
       },
     },
@@ -172,105 +162,51 @@ export const buildSpaceLayers = (
     layerName: "Folders >",
     releaseLayer: false,
     mappings: {
+      ".": {
+        description: "Chezmoi",
+        command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
+      },
       a: {
         description: "Applications",
         command: getOpenFolderCommand("/Applications/"),
       },
-      ".": {
-        description: "Chezmoi",
-        command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
+      c: {
+        description: "Cases",
+        command: getOpenFolderCommand("/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/"),
       },
       d: {
         description: "Downloads",
         command: getOpenFolderCommand("/Users/jason/Downloads/"),
       },
+      g: {
+        description: "Gits",
+        command: getOpenFolderCommand("/Users/jason/gits/"),
+      },
       h: {
         description: "Home",
         command: getOpenFolderCommand("/Users/jason/"),
       },
+      l: {
+        description: "Library",
+        command: getOpenFolderCommand("/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/0 - Library/"),
+      },
+      p: {
+        description: "PDFs",
+        command: getOpenFolderCommand("/Users/jason/Downloads/PDFs/"),
+      },
       r: {
         description: "Recent Folders",
-        command: 'open "raycast://extensions/jason/recents/recentFolders"',
+        command: raycastExtensionCommand("jason/recents/recentFolders"),
       },
       s: {
         description: "Scripts",
         command: getOpenFolderCommand("/Users/jason/Scripts/"),
       },
+      w: {
+        description: "Workspaces",
+        command: getOpenFolderCommand("/Users/jason/Scripts/workspaces/"),
+      },
     },
-    subLayers: [
-      {
-        layerKey: "w",
-        layerName: "Work Folders >",
-        mappings: {
-          "1": {
-            description: "Work OneDrive",
-            command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP",
-            ),
-          },
-          l: {
-            description: "Library",
-            command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/0 - Library/",
-            ),
-          },
-          c: {
-            description: "Cases",
-            command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/",
-            ),
-          },
-          p: {
-            description: "PDFs",
-            command: getOpenFolderCommand("/Users/jason/Downloads/PDFs/"),
-          },
-          o: {
-            description: "Office Files",
-            command: getOpenFolderCommand("/Users/jason/Downloads/Office/"),
-          },
-        },
-      },
-      {
-        layerKey: "c",
-        layerName: "Coding Folders >",
-        mappings: {
-          s: {
-            description: "Scripts",
-            command: getOpenFolderCommand("/Users/jason/Scripts/"),
-          },
-          w: {
-            description: "Workspaces",
-            command: getOpenFolderCommand("/Users/jason/Scripts/workspaces/"),
-          },
-          c: {
-            description: "Chezmoi",
-            command: getOpenFolderCommand("/Users/jason/.local/share/chezmoi/"),
-          },
-          g: {
-            description: "Gits",
-            command: getOpenFolderCommand("/Users/jason/gits/"),
-          },
-        },
-      },
-      {
-        layerKey: "p",
-        layerName: "Personal Cloud >",
-        mappings: {
-          "1": {
-            description: "Personal OneDrive",
-            command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/OneDrive-Personal/",
-            ),
-          },
-          p: {
-            description: "Proton Drive",
-            command: getOpenFolderCommand(
-              "/Users/jason/Library/CloudStorage/ProtonDrive-jason.j.knox@pm.me-folders/",
-            ),
-          },
-        },
-      },
-    ],
   },
   {
     layerKey: "r",
@@ -279,23 +215,23 @@ export const buildSpaceLayers = (
     mappings: {
       a: {
         description: "Applications",
-        command: 'open "raycast://extensions/jason/recents/recentApplications"',
+        command: raycastExtensionCommand("jason/recents/recentApplications"),
       },
       d: {
         description: "Directories",
-        command: 'open "raycast://extensions/jason/recents/recentFolders"',
+        command: raycastExtensionCommand("jason/recents/recentFolders"),
       },
       f: {
         description: "Files",
-        command: 'open "raycast://extensions/jason/recents/recents"',
+        command: raycastExtensionCommand("jason/recents/recents"),
       },
       j: {
         description: "Downloads",
-        command: 'open "raycast://extensions/jason/recents/recentDownloads"',
+        command: raycastExtensionCommand("jason/recents/recentDownloads"),
       },
       r: {
         description: "Custom",
-        command: 'open "raycast://extensions/jason/recents/recentCustom"',
+        command: raycastExtensionCommand("jason/recents/recentCustom"),
       },
     },
   },
@@ -306,23 +242,23 @@ export const buildSpaceLayers = (
     mappings: {
       a: {
         description: "Capture Area",
-        command: 'open "cleanshot://capture-area"',
+        command: cleanShotCommand("capture-area"),
       },
       o: {
         description: "OCR",
-        command: 'open "cleanshot://capture-text?linebreaks=false"',
+        command: cleanShotCommand("capture-text?linebreaks=false"),
       },
       r: {
         description: "Record Screen",
-        command: 'open "cleanshot://record-screen"',
+        command: cleanShotCommand("record-screen"),
       },
       s: {
         description: "Capture Screen",
-        command: 'open "cleanshot://capture-fullscreen"',
+        command: cleanShotCommand("capture-fullscreen"),
       },
       w: {
         description: "Capture Window",
-        command: 'open "cleanshot://capture-window"',
+        command: cleanShotCommand("capture-window"),
       },
     },
   },
@@ -335,44 +271,28 @@ export const buildSpaceLayers = (
         description: "Curly Braces",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_braces --source clipboard --dest paste",
-          },
+          { type: "command", value: withSleep(0.2, textProcessorCommand("wrap_braces")) },
         ],
       },
       p: {
         description: "Parentheses",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_parentheses --source clipboard --dest paste",
-          },
+          { type: "command", value: withSleep(0.2, textProcessorCommand("wrap_parentheses")) },
         ],
       },
       q: {
         description: "Quotes",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_quotes --source clipboard --dest paste",
-          },
+          { type: "command", value: withSleep(0.2, textProcessorCommand("wrap_quotes")) },
         ],
       },
       s: {
         description: "Square Brackets",
         actions: [
           { type: "cut" },
-          {
-            type: "command",
-            value:
-              "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_brackets --source clipboard --dest paste",
-          },
+          { type: "command", value: withSleep(0.2, textProcessorCommand("wrap_brackets")) },
         ],
       },
     },

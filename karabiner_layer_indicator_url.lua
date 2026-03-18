@@ -368,6 +368,8 @@ local FALLBACK_LAYERS = {
 
 -- Debug mode toggle - enable with: HAMMERSPOON_DEBUG=true hs -c ...
 local DEBUG_MODE = os.getenv("HAMMERSPOON_DEBUG") == "true"
+-- Optional hot reload toggle for development; keep disabled for normal runtime.
+local RELOAD_ON_SHOW = os.getenv("HAMMERSPOON_LAYER_INDICATOR_RELOAD_ON_SHOW") == "true"
 
 local function debug_log(message)
     if DEBUG_MODE then
@@ -378,39 +380,44 @@ end
 -- Load layer definitions from JSON file
 -- Returns dynamically loaded layers, or falls back to hardcoded definitions
 local function loadLayerDefinitions()
-    local json_path = os.getenv("HOME") .. "/dotfiles/hammerspoon/src/space_layers.json"
+    local home = os.getenv("HOME") or ""
+    local json_paths = {
+        home .. "/.hammerspoon/karabiner_layer_gui/space_layers.json",
+        home .. "/.config/hammerspoon/karabiner_layer_gui/space_layers.json",
+        home .. "/dotfiles/hammerspoon/src/space_layers.json",
+    }
 
-    debug_log("Attempting to load layers from: " .. json_path)
+    for _, json_path in ipairs(json_paths) do
+        debug_log("Attempting to load layers from: " .. json_path)
 
-    -- Check if file exists
-    local file = io.open(json_path, "r")
-    if not file then
-        debug_log("JSON file not found, using fallback definitions")
-        return FALLBACK_LAYERS
-    end
+        local file = io.open(json_path, "r")
+        if file then
+            local content = file:read("*a")
+            file:close()
 
-    -- Read and decode JSON
-    local content = file:read("*a")
-    file:close()
+            debug_log("JSON file found, attempting to decode...")
 
-    debug_log("JSON file found, attempting to decode...")
+            local success, loaded_layers = pcall(function()
+                return hs.json.decode(content)
+            end)
 
-    local success, layers = pcall(function()
-        return hs.json.decode(content)
-    end)
+            if success and loaded_layers then
+                debug_log("Successfully loaded layer definitions from: " .. json_path)
+                return loaded_layers
+            end
 
-    if success and layers then
-        debug_log("Successfully loaded " .. tostring(#(layers or {})) .. " layers from JSON")
-        return layers
-    else
-        if not success then
-            debug_log("JSON decode error: " .. tostring(layers))
+            if not success then
+                debug_log("JSON decode error in " .. json_path .. ": " .. tostring(loaded_layers))
+            else
+                debug_log("JSON decode returned nil/empty for: " .. json_path)
+            end
         else
-            debug_log("JSON decode returned nil/empty")
+            debug_log("JSON file not found at: " .. json_path)
         end
-        debug_log("Falling back to hardcoded definitions")
-        return FALLBACK_LAYERS
     end
+
+    debug_log("No valid JSON found, falling back to hardcoded definitions")
+    return FALLBACK_LAYERS
 end
 
 -- Load layers at startup
@@ -418,6 +425,11 @@ local layers = loadLayerDefinitions()
 -- Main URL event handler
 local function showLayerByName(name)
     debug_log("showLayerByName called with: " .. tostring(name))
+    -- Production default is cached definitions loaded at startup.
+    -- Enable live reload only when explicitly requested for debugging.
+    if RELOAD_ON_SHOW then
+        layers = loadLayerDefinitions()
+    end
     local info = layers[name]
     if not info then
         hs.printf("[LayerIndicator] Unknown layer: '%s'", tostring(name))

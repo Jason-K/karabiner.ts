@@ -2,19 +2,35 @@ import fs from 'fs';
 import path from 'path';
 import type { SubLayerConfig } from '../lib/leader/types';
 
+function getDefaultOutputPaths(home: string): string[] {
+  const candidates = [
+    path.join(home, '.hammerspoon/karabiner_layer_gui/space_layers.json'),
+    path.join(home, '.config/hammerspoon/karabiner_layer_gui/space_layers.json'),
+  ];
+
+  const existingDirCandidates = candidates.filter((candidate) =>
+    fs.existsSync(path.dirname(candidate)),
+  );
+
+  if (existingDirCandidates.length > 0) {
+    return existingDirCandidates;
+  }
+
+  return [candidates[0]];
+}
+
 export function emitLayerDefinitions(
   spaceLayers: SubLayerConfig[],
   outputPath?: string,
   debugMode: boolean = false,
 ): void {
   try {
-    const finalPath = outputPath || path.join(
-      process.env.HOME || '/Users/jason',
-      '.config/hammerspoon/karabiner_layer_gui/space_layers.json',
-    );
+    const home = process.env.HOME || '/Users/jason';
+    const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home);
+    const finalPath = outputPaths[0];
 
     if (debugMode) {
-      console.log(`[LayerEmit Debug] Starting emission to: ${finalPath}`);
+      console.log(`[LayerEmit Debug] Starting emission to: ${outputPaths.join(', ')}`);
     }
 
     const layers: Record<string, any> = {};
@@ -75,19 +91,23 @@ export function emitLayerDefinitions(
       });
     });
 
-    const dir = path.dirname(finalPath);
-    if (!fs.existsSync(dir)) {
-      if (debugMode) {
-        console.log(`[LayerEmit Debug] Creating directory: ${dir}`);
+    const serialized = JSON.stringify(layers, null, 2);
+
+    outputPaths.forEach((targetPath) => {
+      const dir = path.dirname(targetPath);
+      if (!fs.existsSync(dir)) {
+        if (debugMode) {
+          console.log(`[LayerEmit Debug] Creating directory: ${dir}`);
+        }
+        fs.mkdirSync(dir, { recursive: true });
       }
-      fs.mkdirSync(dir, { recursive: true });
-    }
 
-    fs.writeFileSync(finalPath, JSON.stringify(layers, null, 2));
+      fs.writeFileSync(targetPath, serialized);
 
-    console.log(
-      `✓ Emitted ${Object.keys(layers).length} layer definitions to ${finalPath}`,
-    );
+      console.log(
+        `✓ Emitted ${Object.keys(layers).length} layer definitions to ${targetPath}`,
+      );
+    });
 
     if (debugMode) {
       console.log('[LayerEmit Debug] Emission complete. Layers:', Object.keys(layers));
