@@ -7,7 +7,7 @@ export function cmd(shell: string): ToEvent {
 const TEXT_PROCESSOR_UV_BIN = '/Users/jason/.local/bin/uv';
 const TEXT_PROCESSOR_DIR = '~/Scripts/strings/text_processor';
 const TEXT_PROCESSOR_ENTRYPOINT = 'interfaces/cli.py';
-const TAKE_ACTION_HERE_SCRIPT = '/Users/jason/Scripts/Metascripts/take_action_here/take_action_here.sh';
+const TAKE_ACTION_HERE_SCRIPT = '/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh';
 const OPEN_APP_BIN = '/Users/jason/.local/bin/open-app';
 
 function shellSingleQuote(str: string): string {
