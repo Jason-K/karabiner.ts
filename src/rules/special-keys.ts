@@ -25,7 +25,7 @@ export const buildHyperF12Rule = () => {
     ...map("f12", HYPER)
       .to(
         cmd(
-          "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit-Last-Typinator-Rule.scptd",
+          "/usr/bin/osascript ~/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt",
         ),
       )
       .build(),
@@ -92,7 +92,7 @@ export const buildEqualsRules = () => {
           toKey("left_arrow", ["shift", "option"]),
           toKey("c", ["command"]),
           cmd(
-            "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste",
+            "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste",
           ),
         ],
         timeoutMs: 200,

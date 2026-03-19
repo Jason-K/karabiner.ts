@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.jason.karabiner-layer-indicator-user-command-server</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/start-layer-indicator-user-command-server.sh</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/jason/Scripts/apps/karabiner/karabiner.ts</string>
+
+  <key>StandardOutPath</key>
+  <string>/Users/jason/Scripts/apps/karabiner/karabiner.ts/logs/layer-indicator-user-command-server.launchd.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/jason/Scripts/apps/karabiner/karabiner.ts/logs/layer-indicator-user-command-server.launchd.err.log</string>
+</dict>
+</plist>

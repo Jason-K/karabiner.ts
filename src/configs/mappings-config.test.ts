@@ -16,9 +16,11 @@ test("space layer config keeps expected top-level layers", () => {
   assert.deepEqual(layerKeys, ["a", "c", "d", "f", "r", "s", "w"]);
 });
 
-test("folders layer keeps nested sublayers", () => {
+test("folders layer keeps expected direct mappings", () => {
   const layers = buildSpaceLayers((p) => p, () => "bundle");
   const folders = layers.find((l) => l.layerKey === "f");
   assert.ok(folders);
-  assert.equal(folders?.subLayers?.length, 3);
+  assert.equal(Object.keys(folders?.mappings ?? {}).length, 11);
+  assert.ok(folders?.mappings.r);
+  assert.ok(folders?.mappings.s);
 });

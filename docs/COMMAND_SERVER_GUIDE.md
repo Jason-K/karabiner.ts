@@ -4,12 +4,12 @@ This guide explains when and how to use the user command server versus tradition
 
 ## Quick Reference: Server vs Shell
 
-| Criterion     | Command Server                            | Shell Command                     |
-| ------------- | ----------------------------------------- | --------------------------------- |
-| **Latency**   | ~50ms (persistent daemon, pre-warmed)     | ~100-200ms (subprocess spawn)     |
-| **Frequency** | High (10+ times/second)                   | Low (occasional, <5/sec)          |
-| **Safety**    | Allowlist-based endpoint registry         | Direct shell execution            |
-| **State**     | Can maintain session state                | Stateless                         |
+| Criterion | Command Server | Shell Command |
+| --- | --- | --- |
+| **Latency** | ~50ms (persistent daemon, pre-warmed) | ~100-200ms (subprocess spawn) |
+| **Frequency** | High (10+ times/second) | Low (occasional, <5/sec) |
+| **Safety** | Allowlist-based endpoint registry | Direct shell execution |
+| **State** | Can maintain session state | Stateless |
 | **Use Cases** | Layer indicator, notifications, app focus | One-off operations, complex logic |
 
 ---
@@ -63,12 +63,15 @@ Start: I need to execute an operation from a Karabiner rule
 **Usage in Rules:**
 
 ```typescript
-import { layerIndicatorCommand } from "../../lib/scripts";
+import { layerIndicatorCommand } from '../../lib/scripts';
 
-rule("Show layer indicator on activation").manipulators([
-  map("space_key").to(layerIndicatorCommand("show", "space_layer")).build(),
-  // ... other manipulators
-]);
+rule('Show layer indicator on activation')
+  .manipulators([
+    map('space_key')
+      .to(layerIndicatorCommand('show', 'space_layer'))
+      .build(),
+    // ... other manipulators
+  ])
 ```
 
 **Characteristics:**
@@ -84,6 +87,14 @@ rule("Show layer indicator on activation").manipulators([
 
 **Purpose:** Execute arbitrary Hammerspoon functions via a safe allowlist.
 
+**⚡ Performance Note:** The common helper functions now use optimized native implementations:
+
+- **showNotification()** — Hammerspoon if available, else `osascript` (~50ms)
+- **focusApp()** — Native `open -b bundleId` (~10-30ms)
+- **copyToClipboard()** — Native `pbcopy` stdin (~2-5ms)
+
+You can still route through the Hammerspoon endpoint for custom behavior via `userCommand('hammerspoon', {...})`.
+
 **Currently Allowed Functions:**
 
 #### a. **showNotification**
@@ -91,16 +102,14 @@ rule("Show layer indicator on activation").manipulators([
 Display a macOS notification.
 
 ```typescript
-import { showNotification } from "../../lib/scripts";
+import { showNotification } from '../../lib/scripts';
 
-map("key_x")
-  .to(
-    showNotification("Alert!", {
-      subtitle: "Something important",
-      informativeText: "More details here",
-    }),
-  )
-  .build();
+map('key_x')
+  .to(showNotification('Alert!', {
+    subtitle: 'Something important',
+    informativeText: 'More details here'
+  }))
+  .build()
 ```
 
 **Payload:**
@@ -122,9 +131,11 @@ map("key_x")
 Bring an application to focus by bundle ID.
 
 ```typescript
-import { focusApp } from "../../lib/scripts";
+import { focusApp } from '../../lib/scripts';
 
-map("cmd", ["ctrl"]).with("n").to(focusApp("com.apple.Safari")).build();
+map('cmd', ['ctrl']).with('n')
+  .to(focusApp('com.apple.Safari'))
+  .build()
 ```
 
 **Payload:**
@@ -142,9 +153,11 @@ map("cmd", ["ctrl"]).with("n").to(focusApp("com.apple.Safari")).build();
 Set clipboard contents.
 
 ```typescript
-import { copyToClipboard } from "../../lib/scripts";
+import { copyToClipboard } from '../../lib/scripts';
 
-map("shift", ["ctrl"]).with("c").to(copyToClipboard("Predefined text")).build();
+map('shift', ['ctrl']).with('c')
+  .to(copyToClipboard('Predefined text'))
+  .build()
 ```
 
 **Payload:**
@@ -212,8 +225,8 @@ Edit `src/lib/scripts.ts`:
 
 ```typescript
 export function myNewFunction(param1: string, param2?: number): ToEvent {
-  return userCommand("hammerspoon", {
-    function: "myNewFunction",
+  return userCommand('hammerspoon', {
+    function: 'myNewFunction',
     args: { param1, param2 },
   });
 }
@@ -282,26 +295,28 @@ Most use cases work well with **fire-and-forget** (current model).
 **Before (shell_command):**
 
 ```typescript
-rule("Example").manipulators([
-  map("key_x").to(cmd("open -g 'hammerspoon://action?param=value'")).build(),
-]);
+rule('Example')
+  .manipulators([
+    map('key_x')
+      .to(cmd("open -g 'hammerspoon://action?param=value'"))
+      .build(),
+  ])
 ```
 
 **After (command server):**
 
 ```typescript
-import { userCommand } from "../../lib/scripts";
+import { userCommand } from '../../lib/scripts';
 
-rule("Example").manipulators([
-  map("key_x")
-    .to(
-      userCommand("hammerspoon", {
-        function: "action",
-        args: { param: "value" },
-      }),
-    )
-    .build(),
-]);
+rule('Example')
+  .manipulators([
+    map('key_x')
+      .to(userCommand('hammerspoon', {
+        function: 'action',
+        args: { param: 'value' },
+      }))
+      .build(),
+  ])
 ```
 
 ---
@@ -347,15 +362,15 @@ SMOKE_MAX_LATENCY_MS=1000 bash scripts/install-layer-indicator-user-command-serv
 Add tests in `src/configs/folder-opener.test.ts` style:
 
 ```typescript
-import test from "node:test";
-import { strict as assert } from "node:assert";
-import { showNotification } from "../lib/scripts";
+import test from 'node:test';
+import { strict as assert } from 'node:assert';
+import { showNotification } from '../lib/scripts';
 
-test("showNotification emits correct payload structure", () => {
-  const result = showNotification("Test", { subtitle: "Sub" });
+test('showNotification emits correct payload structure', () => {
+  const result = showNotification('Test', { subtitle: 'Sub' });
   assert.match(
     JSON.stringify(result),
-    /hammerspoon.*showNotification.*function/,
+    /hammerspoon.*showNotification.*function/
   );
 });
 ```
@@ -399,15 +414,15 @@ When the command server is unavailable, helpers have configurable fallbacks:
 
 ```typescript
 // If server is down, falls back to:
-cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${layer}'`);
+cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${layer}'`)
 ```
 
 **userCommand() and other endpoints:**
 
 ```typescript
 // No fallback available; logs warning
-console.warn(`userCommand: endpoint 'hammerspoon' requires command server`);
-return cmd('open -g "hammerspoon://noop"');
+console.warn(`userCommand: endpoint 'hammerspoon' requires command server`)
+return cmd('open -g "hammerspoon://noop"')
 ```
 
 To ensure reliability:
@@ -461,14 +476,14 @@ open -g 'hammerspoon://layer_indicator?action=show&layer=test'
 
 ## Summary: When to Use What
 
-| Operation       | Best Tool                         | Example                                   |
-| --------------- | --------------------------------- | ----------------------------------------- |
-| Layer show/hide | Command server (fast)             | Space bar indicator                       |
-| Notifications   | Command server (user feedback)    | Key macro confirmations                   |
-| App focus       | Command server (low frequency ok) | Cmd+Alt+S → Safari                        |
-| Clipboard       | Command server (persistent state) | Macro paste templates                     |
-| Complex logic   | Shell command                     | Multi-step scripts, conditional execution |
-| One-off launch  | Shell command                     | `open -a AppName`                         |
-| Error handling  | Shell command                     | Check exit code, conditional flows        |
+| Operation | Best Tool | Example |
+| ----------- | ----------- | --------- |
+| Layer show/hide | Command server (fast) | Space bar indicator |
+| Notifications | Command server (user feedback) | Key macro confirmations |
+| App focus | Command server (low frequency ok) | Cmd+Alt+S → Safari |
+| Clipboard | Command server (persistent state) | Macro paste templates |
+| Complex logic | Shell command | Multi-step scripts, conditional execution |
+| One-off launch | Shell command | `open -a AppName` |
+| Error handling | Shell command | Check exit code, conditional flows |
 
 **Golden rule:** If you're calling Hammerspoon URL schemes from rules, migrate to the command server for better latency and maintainability.

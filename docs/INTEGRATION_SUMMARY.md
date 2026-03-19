@@ -45,6 +45,7 @@
    - Complete history and context
 
 2. **TypeScript Path Mapping**: `tsconfig.json` resolves imports locally
+
    ```json
    {
      "paths": {
@@ -53,6 +54,7 @@
      }
    }
    ```
+
    - No npm dependency on karabiner.ts
    - Direct access to upstream source
    - Typecheck against latest upstream
@@ -70,7 +72,7 @@
 ## File Ownership Matrix
 
 | File | Owner | Can Merge From Upstream? | Notes |
-|------|-------|-------------------------|-------|
+| ------ | ------- | ------------------------- | ------- |
 | `src/index.ts` | You | ❌ Never | Your main config |
 | `src/lib/*.ts` | You | ❌ Never | Your extensions |
 | `package.json` | You | ❌ Never | Different purpose (build vs library) |
@@ -192,6 +194,38 @@ cd ../karabiner.ts
 npm run typecheck  # Verify compatibility
 npm run build      # Test build
 ```
+
+## Beta Feature Adoption Notes
+
+The local config is now carrying a small amount of upstream-adjacent beta support before those fields necessarily land in the released `karabiner.ts` package version.
+
+### Typed locally
+
+- `set_variable.expression`
+- `set_variable.key_up_expression`
+- `expression_if`
+- `expression_unless`
+- `to.send_user_command`
+- `to.from_event`
+- `to_if_other_key_pressed`
+- `from.integer_value`
+
+### Current adoption strategy
+
+1. Keep the schema additions narrow and serialization-focused.
+2. Prototype `to.send_user_command` only on the layer-indicator path first.
+3. Treat `to.from_event` and `to_if_other_key_pressed` as correctness/readability improvements, not performance work.
+4. Delay actual `from.integer_value` usage until a specialty device requires it.
+
+### Why the layer indicator is first
+
+The highest-frequency shell-backed path in the current config is the layer indicator in `src/lib/leader/build.ts`. It currently spawns `open -g 'hammerspoon://...'` repeatedly during layer transitions, which makes it the best initial target for a persistent receiver-based optimization.
+
+### Why most shell commands stay untouched for now
+
+- Raycast and CleanShot launches already hand off to external applications via URL schemes.
+- Text processing commands in `src/configs/space-layers.ts` incur Python startup cost that a Karabiner-side transport change will not remove.
+- Kill-app and app-launch commands do enough downstream work that shell-spawn overhead is less likely to dominate total latency.
 
 ## Benefits Achieved
 

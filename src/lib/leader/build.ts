@@ -3,7 +3,7 @@ import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'kar
 
 import { setVarExpr } from '../conditions';
 import { L } from '../mods';
-import { cmd } from '../scripts';
+import { cmd, layerIndicatorCommand } from '../scripts';
 import { openApp } from '../software';
 import {
     buildLayerDebugLogCommand,
@@ -135,7 +135,7 @@ export function generateLayerRules(
     ])
     .toIfHeldDown([
       toSetVar(leaderVar, 1),
-      cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}'`)
+      layerIndicatorCommand('show', indicatorRootLayer)
     ])
     .toAfterKeyUp([
       toSetVar(leaderVar, 0),
@@ -145,7 +145,7 @@ export function generateLayerRules(
       toStickyModifier(L.opt, 'off'),
       toStickyModifier(L.cmd, 'off'),
       toStickyModifier(L.ctrl, 'off'),
-      cmd(`open -g 'hammerspoon://layer_indicator?action=hide'`)
+      layerIndicatorCommand('hide')
     ])
     .toDelayedAction(
       [],
@@ -177,7 +177,7 @@ export function generateLayerRules(
           toSetVar(leaderVar, 0),
           // Record activation timestamp (Phase 3 expression support)
           setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}_${layerKey.toUpperCase()}'`)
+          layerIndicatorCommand('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}`)
         ])
         .build()
     );
@@ -205,7 +205,7 @@ export function generateLayerRules(
             toSetVar(nestedVar, 1),
             toSetVar(sublayerVar, 0),
             setVarExpr(nestedActivateTimeVar, '{{ system.now.milliseconds }}'),
-            cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${indicatorRootLayer}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}'`)
+            layerIndicatorCommand('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`)
           ])
           .build()
       );

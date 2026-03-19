@@ -23,7 +23,7 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
   o:      { description: "OCR", hold: [cmd(cleanShotCommand("capture-text?linebreaks=false"))],},
   p:      { description: "Popclip", hold: [toKey("f9", SUPER, { repeat: false })],},
   q:      { description: "QSpace Pro", hold: [cmd(takeActionHereCommand("qspace"))],},
-  r:      { description: "Last d/l", hold: [cmd("/Users/jason/Scripts/Metascripts/recent_dl.sh")],},
+  r:      { description: "Last d/l", hold: [cmd("/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh")],},
   s:      { description: "Screenshot", hold: [cmd(cleanShotCommand("capture-area"))],},
   t:      { description: "Todoist",hold: [cmd(openAppBundleCommand("com.todoist.mac.Todoist"))],},
   v:      { description: "Maccy", hold: [ toKey("grave_accent_and_tilde", ["control"], { halt: true, repeat: false,}), ],},
@@ -57,7 +57,7 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
       description: "Edit last Typinator expansion",
       hold: [
           applescript(
-              "/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.scpt",
+          "~/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt",
             ),
         ],
         timeoutMs: 300,
