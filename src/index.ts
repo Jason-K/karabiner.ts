@@ -20,6 +20,7 @@ import {
     map,
     writeToProfile
 } from "karabiner.ts";
+import { readFileSync } from "node:fs";
 import {
     buildSpaceLayers,
     getFolderOpenerBundleId,
@@ -238,10 +239,48 @@ const deviceConfigs: DeviceConfig[] = [
 const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
 const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
+const DEFAULT_PROFILE_NAME = "Default profile";
+const PREFERRED_PROFILE_NAME = "JJK_Default";
+
+function resolveTargetProfileName(): string {
+  if (!isDarwin) {
+    return PREFERRED_PROFILE_NAME;
+  }
+
+  try {
+    const raw = readFileSync("/Users/jason/.config/karabiner/karabiner.json", "utf8");
+    const parsed = JSON.parse(raw) as {
+      profiles?: Array<{ name?: string; selected?: boolean }>;
+    };
+    const profiles = parsed.profiles ?? [];
+
+    const explicit = process.env.KARABINER_PROFILE_NAME?.trim();
+    if (explicit) {
+      return explicit;
+    }
+
+    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE_NAME)?.name;
+    if (preferred) {
+      return preferred;
+    }
+
+    const selected = profiles.find((profile) => profile.selected)?.name;
+    if (selected) {
+      return selected;
+    }
+
+    const first = profiles[0]?.name;
+    return first ?? DEFAULT_PROFILE_NAME;
+  } catch {
+    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE_NAME;
+  }
+}
+
+const targetProfileName = resolveTargetProfileName();
 
 // Write rules: use real profile locally, dry-run in CI/non-macOS
 writeToProfile(
-  canWriteProfile ? "JJK_Default" : "--dry-run",
+  canWriteProfile ? targetProfileName : "--dry-run",
   rules,
   {},
   {
@@ -255,7 +294,7 @@ writeToProfile(
 // Wait for writeToProfile to complete, then add device configurations (local only)
 setTimeout(() => {
   if (canWriteProfile) {
-    updateDeviceConfigurations("JJK_Default", deviceConfigs);
+    updateDeviceConfigurations(targetProfileName, deviceConfigs);
   }
 }, 1000);
 
