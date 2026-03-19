@@ -22,7 +22,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "~/.local/bin/open-app -b 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -271,7 +271,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action bloom"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action bloom"
               }
             ],
             "to_delayed_action": {
@@ -352,7 +352,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
+                "shell_command": "~/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
@@ -936,7 +936,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -1017,7 +1017,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/Metascripts/recent_dl.sh"
+                "shell_command": "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh"
               }
             ],
             "to_delayed_action": {
@@ -1179,7 +1179,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.todoist.mac.Todoist'"
+                "shell_command": "~/.local/bin/open-app -b 'com.todoist.mac.Todoist'"
               }
             ],
             "to_delayed_action": {
@@ -1346,7 +1346,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
               }
             ],
             "to_delayed_action": {
@@ -1427,7 +1427,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
               }
             ],
             "to_delayed_action": {
@@ -2781,7 +2781,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
               }
             ],
             "to_delayed_action": {
@@ -2862,7 +2862,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -2874,7 +2874,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             },
@@ -2953,7 +2953,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.scpt\""
+                "shell_command": "osascript \"$HOME/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt\""
               }
             ],
             "to_delayed_action": {
@@ -3173,7 +3173,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/.local/bin/kill-app"
+                "shell_command": "~/.local/bin/kill-app"
               }
             ],
             "to_delayed_action": {
@@ -3234,7 +3234,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
+                "shell_command": "~/.local/bin/kill-app --foreground"
               }
             ],
             "to_delayed_action": {
@@ -3279,19 +3279,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+                "shell_command": "open -b 'com.apple.ActivityMonitor'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'"
+                "shell_command": "open -b 'com.itone.ProcessSpy'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'"
+                  "shell_command": "open -b 'com.apple.ActivityMonitor'"
                 }
               ]
             },
@@ -3462,7 +3462,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ],
             "to_after_key_up": [
@@ -3535,7 +3541,12 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=hide'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "hide"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ],
             "to_delayed_action": {
@@ -3638,7 +3649,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_A'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_A"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -3788,7 +3805,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
               }
             ]
           },
@@ -4079,7 +4096,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_C'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_C"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4103,7 +4126,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py lowercase --source clipboard --dest paste"
+                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py lowercase --source clipboard --dest paste"
               }
             ]
           },
@@ -4127,7 +4150,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py sentence_case --source clipboard --dest paste"
+                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py sentence_case --source clipboard --dest paste"
               }
             ]
           },
@@ -4151,7 +4174,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py title_case --source clipboard --dest paste"
+                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py title_case --source clipboard --dest paste"
               }
             ]
           },
@@ -4175,7 +4198,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py uppercase --source clipboard --dest paste"
+                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py uppercase --source clipboard --dest paste"
               }
             ]
           }
@@ -4218,7 +4241,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_D'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_D"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4369,7 +4398,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_F'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_F"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4610,7 +4645,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_R'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_R"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4743,7 +4784,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_S'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_S"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4876,7 +4923,13 @@
                 }
               },
               {
-                "shell_command": "open -g 'hammerspoon://layer_indicator?action=show&layer=space_W'"
+                "send_user_command": {
+                  "payload": {
+                    "action": "show",
+                    "layer": "space_W"
+                  },
+                  "endpoint": "/tmp/karabiner-layer-indicator.sock"
+                }
               }
             ]
           },
@@ -4900,7 +4953,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_braces --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && ~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_braces --source clipboard --dest paste"
               }
             ]
           },
@@ -4924,7 +4977,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && ~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_parentheses --source clipboard --dest paste"
               }
             ]
           },
@@ -4948,7 +5001,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_quotes --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && ~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_quotes --source clipboard --dest paste"
               }
             ]
           },
@@ -4972,7 +5025,7 @@
                 ]
               },
               {
-                "shell_command": "sleep 0.2 && /Users/jason/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_brackets --source clipboard --dest paste"
+                "shell_command": "sleep 0.2 && ~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py wrap_brackets --source clipboard --dest paste"
               }
             ]
           }
@@ -6143,7 +6196,7 @@
             },
             "to": [
               {
-                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit-Last-Typinator-Rule.scptd"
+                "shell_command": "/usr/bin/osascript ~/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt"
               }
             ]
           }
@@ -6489,7 +6542,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.adobe.Acrobat.Pro'"
+                "shell_command": "open -b 'com.adobe.Acrobat.Pro'"
               }
             ]
           },
@@ -6505,7 +6558,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'net.imput.helium'"
+                "shell_command": "open -b 'net.imput.helium'"
               }
             ]
           },
@@ -6521,7 +6574,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.VSCode'"
+                "shell_command": "open -b 'com.microsoft.VSCode'"
               }
             ]
           },
@@ -6537,7 +6590,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'ch.protonmail.desktop'"
+                "shell_command": "open -b 'ch.protonmail.desktop'"
               }
             ]
           },
@@ -6569,7 +6622,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.apple.MobileSMS'"
+                "shell_command": "open -b 'com.apple.MobileSMS'"
               }
             ]
           },
@@ -6585,7 +6638,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.Outlook'"
+                "shell_command": "open -b 'com.microsoft.Outlook'"
               }
             ]
           },
@@ -6601,7 +6654,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.teams2'"
+                "shell_command": "open -b 'com.microsoft.teams2'"
               }
             ]
           },
@@ -6617,7 +6670,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.microsoft.Word'"
+                "shell_command": "open -b 'com.microsoft.Word'"
               }
             ]
           },
@@ -6633,7 +6686,7 @@
             },
             "to": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "open -b 'com.ringcentral.glip'"
               }
             ]
           }

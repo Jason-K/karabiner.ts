@@ -1,5 +1,5 @@
 import { map, rule, toKey } from "karabiner.ts";
-import { cmd } from "../lib/scripts";
+import { cmd, focusApp } from "../lib/scripts";
 import { varTapTapHold } from "../lib/tap-hold";
 
 export const buildEscapeTapTapHoldRule = () => {
@@ -10,8 +10,8 @@ export const buildEscapeTapTapHoldRule = () => {
       key: "escape",
       firstVar: "escape_first_tap",
       aloneEvents: [toKey("escape")],
-      holdEvents: [cmd("/Users/jason/.local/bin/kill-app --foreground")],
-      tapTapHoldEvents: [cmd("/Users/jason/.local/bin/kill-app")],
+      holdEvents: [cmd("~/.local/bin/kill-app --foreground")],
+      tapTapHoldEvents: [cmd("~/.local/bin/kill-app")],
       thresholdMs: 250,
       description:
         "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
@@ -30,21 +30,15 @@ export const buildCtrlEscapeMonitorRule = () => {
         "basic.to_if_held_down_threshold_milliseconds": 300,
       })
       .toIfAlone(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'",
-        ),
+        focusApp("com.apple.ActivityMonitor"),
       )
       .toIfHeldDown(
-        cmd(
-          "/Users/jason/.local/bin/open-app -b 'com.itone.ProcessSpy' && echo 'Process Spy launched'",
-        ),
+        focusApp("com.itone.ProcessSpy"),
       )
       .toDelayedAction(
         [],
         [
-          cmd(
-            "/Users/jason/.local/bin/open-app -b 'com.apple.ActivityMonitor' && echo 'Activity Monitor launched'",
-          ),
+          focusApp("com.apple.ActivityMonitor"),
         ],
       )
       .description(
