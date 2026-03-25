@@ -31,28 +31,34 @@ function parseKeyWithModifiers(keyString: string): { key: string; modifiers: str
   const key = parts[parts.length - 1];
   const modifiers = parts.slice(0, -1);
 
-  const normalizedModifiers = modifiers.map((mod) => {
+  const normalizedModifiers = modifiers.flatMap((mod) => {
     const lower = mod.toLowerCase();
 
-    if (lower.startsWith('left_') || lower.startsWith('right_')) {
-      return lower;
+    if (lower.startsWith("left_") || lower.startsWith("right_")) {
+      return [lower];
     }
 
     switch (lower) {
-      case 'cmd':
-        return 'command';
-      case 'opt':
-      case 'alt':
-        return 'option';
-      case 'ctrl':
-        return 'control';
-      case 'command':
-      case 'option':
-      case 'control':
-      case 'shift':
-        return lower;
+      case "hyper":
+        return ["command", "option", "control"];
+      case "super":
+        return ["command", "option", "control", "shift"];
+      case "meh":
+        return ["command", "option", "shift"];
+      case "cmd":
+        return ["command"];
+      case "opt":
+      case "alt":
+        return ["option"];
+      case "ctrl":
+        return ["control"];
+      case "command":
+      case "option":
+      case "control":
+      case "shift":
+        return [lower];
       default:
-        return mod;
+        return [mod];
     }
   });
 

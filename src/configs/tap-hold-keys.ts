@@ -43,9 +43,10 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
     hold: [cmd(cleanShotCommand("capture-text?linebreaks=false"))],
   },
   p: { description: "Popclip", hold: [toKey("f9", SUPER, { repeat: false })] },
-  q: {
-    description: "QSpace Pro",
-    hold: [cmd(takeActionHereCommand("qspace"))],
+  "hyper+q": {
+    description: "Rectangle Pro left",
+    alone: [cmd('open -g "rectangle-pro://execute-action?name=left-half"')],
+    hold: [cmd('open -g "rectangle-pro://execute-action?name=fill-left"')],
   },
   r: {
     description: "Last d/l",
@@ -67,6 +68,11 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
         repeat: false,
       }),
     ],
+  },
+  "hyper+w": {
+    description: "Rectangle Pro right",
+    alone: [cmd('open -g "rectangle-pro://execute-action?name=right-half"')],
+    hold: [cmd('open -g "rectangle-pro://execute-action?name=fill-right"')],
   },
   x: { description: "Copy file", hold: [cmd(takeActionHereCommand("copy"))] },
   y: { description: "Yank file", hold: [cmd(takeActionHereCommand("copy"))] },
@@ -123,6 +129,16 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
   slash: {
     description: "Houdah",
     hold: [toKey("h", SUPER, { repeat: false })],
+  },
+  "hyper+tab": {
+    description: "Rectangle Pro next display/space",
+    alone: [cmd('open -g "rectangle-pro://execute-action?name=next-display"')],
+    hold: [toKey("right_arrow", ["control"], { repeat: false })],
+  },
+  "super+tab": {
+    description: "Rectangle Pro prev display/space",
+    alone: [cmd('open -g "rectangle-pro://execute-action?name=prev-display"')],
+    hold: [toKey("left_arrow", ["control"], { repeat: false })],
   },
   tab: {
     description: "Mission Control",
