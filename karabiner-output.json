@@ -2953,7 +2953,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt\""
               }
             ],
             "to_delayed_action": {
@@ -6196,7 +6196,7 @@
             },
             "to": [
               {
-                "shell_command": "/usr/bin/osascript ~/Scripts/apps/typinator/Edit_Last_Typinator_Expansion.scpt"
+                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt"
               }
             ]
           }
