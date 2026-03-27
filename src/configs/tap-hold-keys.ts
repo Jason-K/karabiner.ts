@@ -169,7 +169,7 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
     description: "Edit last Typinator expansion",
     hold: [
       applescript(
-        "/Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt",
+        "/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
       ),
     ],
     timeoutMs: 300,

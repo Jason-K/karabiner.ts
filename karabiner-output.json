@@ -3217,7 +3217,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
               }
             ],
             "to_delayed_action": {
@@ -6460,7 +6460,7 @@
             },
             "to": [
               {
-                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt"
+                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript"
               }
             ]
           }
@@ -7157,58 +7157,128 @@
                 ]
               }
             },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 3000
+            },
             "conditions": [
               {
                 "type": "frontmost_application_if",
-                "file_paths": [
-                  "/Applications/Cork.app/Contents/Resources/Sudo Helper"
-                ],
                 "bundle_identifiers": [
-                  "com.apple.SecurityAgent"
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension"
                 ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.subrole",
+                "value": "AXSecureTextField"
               }
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
-              },
-              {
-                "key_code": "a",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "key_code": "j",
-                "modifiers": [
-                  "left_shift"
-                ]
-              },
-              {
-                "key_code": "a"
-              },
-              {
-                "key_code": "s"
-              },
-              {
-                "key_code": "o"
-              },
-              {
-                "key_code": "n"
-              },
-              {
-                "key_code": "tab"
-              },
-              {
-                "repeat": false,
-                "key_code": "slash",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
+                "shell_command": "/opt/homebrew/bin/privilegescli -a"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "repeat": false,
+                  "key_code": "slash",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "command"
                 ]
               }
-            ]
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 3000
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_unless",
+                "name": "accessibility.focused_ui_element.subrole",
+                "value": "AXSecureTextField"
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "/opt/homebrew/bin/privilegescli -a"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "key_code": "a",
+                  "modifiers": [
+                    "left_command"
+                  ]
+                },
+                {
+                  "key_code": "j",
+                  "modifiers": [
+                    "left_shift"
+                  ]
+                },
+                {
+                  "key_code": "a"
+                },
+                {
+                  "key_code": "s"
+                },
+                {
+                  "key_code": "o"
+                },
+                {
+                  "key_code": "n"
+                },
+                {
+                  "key_code": "tab"
+                },
+                {
+                  "repeat": false,
+                  "key_code": "slash",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            }
           }
         ],
         "allowEmptyManipulators": false,

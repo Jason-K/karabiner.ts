@@ -25,7 +25,7 @@ export const buildHyperF12Rule = () => {
     ...map("f12", HYPER)
       .to(
         cmd(
-          "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/edit-last-expansion.scpt",
+          "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
         ),
       )
       .build(),

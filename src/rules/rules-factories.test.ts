@@ -69,10 +69,10 @@ test("word privileges factory keeps single guarded manipulator", () => {
   assert.equal(rule.manipulators.length, 1);
 });
 
-test("password quick-fill factory keeps single guarded manipulator", () => {
+test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = buildPasswordsQuickFillRule().build();
   assert.equal(rule.description, "PASSWORDS - CMD+/ quick fill");
-  assert.equal(rule.manipulators.length, 1);
+  assert.equal(rule.manipulators.length, 2);
 });
 
 test("skim command remap factory keeps both remaps", () => {
