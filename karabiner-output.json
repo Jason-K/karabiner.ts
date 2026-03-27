@@ -103,7 +103,13 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -u 'antinote://x-callback-url/hotkey'"
+                "repeat": false,
+                "key_code": "f18",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -161,7 +167,110 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "A hold -> Antinote"
+        "ruleDescription": "A hold -> Raycast AI-quick search"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f18",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+A hold -> Raycast AI-chat"
       },
       {
         "conditions": [],
@@ -3719,6 +3828,13 @@
               }
             ],
             "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "c",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
               {
                 "set_variable": {
                   "name": "space_mod",

@@ -13,8 +13,12 @@ import { openApp } from "../lib/software";
 
 export const tapHoldKeys: Record<string, TapHoldConfig> = {
   a: {
-    description: "Antinote",
-    hold: [cmd("open -u 'antinote://x-callback-url/hotkey'")],
+    description: "Raycast AI-quick search",
+    hold: [toKey("f18", HYPER, { repeat: false })],
+  },
+  "hyper+a": {
+    description: "Raycast AI-chat",
+    hold: [toKey("f18", SUPER, { repeat: false })],
   },
   c: { description: "Calendar", hold: [toKey("7", MEH, { repeat: false })] },
   f: { description: "Bloom", hold: [cmd(takeActionHereCommand("bloom"))] },

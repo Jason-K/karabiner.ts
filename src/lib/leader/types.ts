@@ -40,11 +40,12 @@ export type SubLayerConfig = {
 };
 
 export type LayerRuleOptions = {
-  leaderKey?: string;           // Physical key used to activate leader mode
-  layerPrefix?: string;         // Prefix for state variables and indicator layer IDs
-  leaderLabel?: string;         // Label used in generated rule descriptions
-  indicatorRootLayer?: string;  // Root layer ID sent to hammerspoon://layer_indicator
-  resetVars?: string[];         // Additional variables to reset on escape while leader mode is active
+  leaderKey?: string; // Physical key used to activate leader mode
+  layerPrefix?: string; // Prefix for state variables and indicator layer IDs
+  leaderLabel?: string; // Label used in generated rule descriptions
+  indicatorRootLayer?: string; // Root layer ID sent to hammerspoon://layer_indicator
+  leaderHoldEvents?: ToEvent[]; // Extra events to emit when leader mode activates
+  resetVars?: string[]; // Additional variables to reset on escape while leader mode is active
   debugSwallowedKeys?: boolean; // If true, logs swallowed unmapped key events
-  debugLogPath?: string;        // Where swallowed-key debug events are written
+  debugLogPath?: string; // Where swallowed-key debug events are written
 };

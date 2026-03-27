@@ -16,10 +16,7 @@
  * - MEH: Command + Option + Shift
  */
 
-import {
-    map,
-    writeToProfile
-} from "karabiner.ts";
+import { map, toKey, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
 import {
     buildSpaceLayers,
@@ -98,6 +95,7 @@ let rules: any[] = [
     layerPrefix: SPACE_LAYER_PREFIX,
     leaderLabel: SPACE_LAYER_LABEL,
     indicatorRootLayer: SPACE_LAYER_INDICATOR_ROOT,
+    leaderHoldEvents: [toKey("c", ["left_command"], { repeat: false })],
     debugSwallowedKeys: SPACE_LAYER_DEBUG,
     debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
   }),

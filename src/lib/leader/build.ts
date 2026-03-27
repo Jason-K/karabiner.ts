@@ -117,6 +117,7 @@ export function generateLayerRules(
   const indicatorRootLayer = options.indicatorRootLayer ?? layerPrefix;
   const leaderVar = `${layerPrefix}_mod`;
   const allSublayerVars = getAllSublayerVars(layerConfigs, layerPrefix);
+  const leaderHoldEvents = options.leaderHoldEvents ?? [];
   const resetVars = options.resetVars ?? [
     'caps_lock_pressed',
     'command_q_pressed',
@@ -134,18 +135,19 @@ export function generateLayerRules(
       ...allSublayerVars.map((v) => toSetVar(v, 0)),
     ])
     .toIfHeldDown([
+      ...leaderHoldEvents,
       toSetVar(leaderVar, 1),
-      layerIndicatorCommand('show', indicatorRootLayer)
+      layerIndicatorCommand("show", indicatorRootLayer),
     ])
     .toAfterKeyUp([
       toSetVar(leaderVar, 0),
       ...allSublayerVars.map((v) => toSetVar(v, 0)),
       // Ensure sticky modifiers are cleared when leaving leader mode
-      toStickyModifier(L.shift, 'off'),
-      toStickyModifier(L.opt, 'off'),
-      toStickyModifier(L.cmd, 'off'),
-      toStickyModifier(L.ctrl, 'off'),
-      layerIndicatorCommand('hide')
+      toStickyModifier(L.shift, "off"),
+      toStickyModifier(L.opt, "off"),
+      toStickyModifier(L.cmd, "off"),
+      toStickyModifier(L.ctrl, "off"),
+      layerIndicatorCommand("hide"),
     ])
     .toDelayedAction(
       [],
@@ -153,11 +155,11 @@ export function generateLayerRules(
         toKey(leaderKey as any),
         toSetVar(leaderVar, 0),
         ...allSublayerVars.map((v) => toSetVar(v, 0)),
-      ]
+      ],
     )
     .parameters({
-      'basic.to_if_alone_timeout_milliseconds': 200,
-      'basic.to_if_held_down_threshold_milliseconds': 200,
+      "basic.to_if_alone_timeout_milliseconds": 200,
+      "basic.to_if_held_down_threshold_milliseconds": 200,
     });
 
   rules.push(rule(`${leaderLabel} - tap for key, hold for layer`).manipulators(leaderManipulator.build()));

@@ -130,3 +130,27 @@ test("output contains space layer rules", () => {
     "Missing SPACE+A Applications layer"
   );
 });
+
+test("space layer activation copies current selection before enabling leader mode", () => {
+  const output = loadGeneratedOutput();
+  const rules = output.complex_modifications.rules;
+  const spaceRule = rules.find(
+    (rule: any) =>
+      rule.ruleDescription === "SPACE - tap for key, hold for layer",
+  );
+
+  assert.ok(spaceRule, "Missing SPACE leader rule");
+
+  const holdEvents = spaceRule.manipulatorSources[0]?.to_if_held_down;
+  assert.ok(Array.isArray(holdEvents), "SPACE leader rule missing hold events");
+
+  assert.ok(
+    holdEvents.some(
+      (event: any) =>
+        event.key_code === "c" &&
+        Array.isArray(event.modifiers) &&
+        event.modifiers.includes("left_command"),
+    ),
+    "SPACE leader hold path should send Cmd-C before activating the layer",
+  );
+});
