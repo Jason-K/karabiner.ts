@@ -2,7 +2,8 @@ import { ifApp, map, rule, toKey } from "karabiner.ts";
 import { HYPER, L } from "../lib/mods";
 import { applescript, cmd } from "../lib/scripts";
 
-const QUICK_FILL_ELEVATE_PRIVILEGES_CMD = "/opt/homebrew/bin/privilegescli -a";
+const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
+  "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
 const QUICK_FILL_POST_ELEVATION_DELAY_MS = 3000;
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
   "com.apple.SecurityAgent",
@@ -35,7 +36,7 @@ export const buildWordPrivilegesRule = () => {
       )
       .to(
         cmd(
-          "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3",
+          "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 2",
         ),
       )
       .build(),

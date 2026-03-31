@@ -7252,7 +7252,7 @@
                 "shell_command": "osascript \"$HOME/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
               },
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/privilegescli -a && sleep 3"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 2"
               }
             ]
           }
@@ -7298,7 +7298,7 @@
             ],
             "to": [
               {
-                "shell_command": "/opt/homebrew/bin/privilegescli -a"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a"
               }
             ],
             "to_delayed_action": {
@@ -7351,7 +7351,7 @@
             ],
             "to": [
               {
-                "shell_command": "/opt/homebrew/bin/privilegescli -a"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a"
               }
             ],
             "to_delayed_action": {
