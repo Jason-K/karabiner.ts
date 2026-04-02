@@ -4,8 +4,11 @@ import type { SubLayerConfig } from '../lib/leader/types';
 
 function getDefaultOutputPaths(home: string): string[] {
   const candidates = [
-    path.join(home, '.hammerspoon/karabiner_layer_gui/space_layers.json'),
-    path.join(home, '.config/hammerspoon/karabiner_layer_gui/space_layers.json'),
+    path.join(
+      home,
+      ".config/hammerspoon/modules/karabiner_layer_gui/space_layers.json",
+    ),
+    path.join(home, ".hammerspoon/karabiner_layer_gui/space_layers.json"),
   ];
 
   const existingDirCandidates = candidates.filter((candidate) =>

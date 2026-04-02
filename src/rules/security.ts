@@ -36,7 +36,7 @@ export const buildWordPrivilegesRule = () => {
       )
       .to(
         cmd(
-          "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 2",
+          "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3",
         ),
       )
       .build(),

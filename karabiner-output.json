@@ -3408,27 +3408,1077 @@
                 "value": 1
               },
               {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 1
+              },
+              {
                 "type": "variable_unless",
                 "name": "space_mod",
                 "value": 1
               }
             ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
             "to": [
               {
                 "set_variable": {
                   "name": "lcmd_pressed",
-                  "value": 0
+                  "value": 1
                 }
               },
               {
-                "software_function": {
-                  "open_application": {
-                    "frontmost_application_history_index": 1
-                  }
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 2
                 }
               }
             ],
-            "description": "Left CMD second tap -> last app"
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 1
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 2
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 2
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 2
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 2 -> app history 1"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 2
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 3
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 2
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 3
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 3
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 3
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 3 -> app history 2"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 3
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 4
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 3
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 4
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 4
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 4
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 4 -> app history 3"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 4
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 5
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 4
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 5
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 5
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 5
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 5 -> app history 4"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 5
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 6
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 5
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 6
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 6
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 6
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 6 -> app history 5"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 6
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 7
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 6
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 7
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 7
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 7
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 7 -> app history 6"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 7
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 8
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 7
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 8
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 8
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 8
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 8 -> app history 7"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 8
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 9
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 8
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 9
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 9
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 9
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 9 -> app history 8"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "lcmd_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "lcmd_tap_count",
+                "value": 9
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "lcmd_pressed",
+                  "value": 1
+                }
+              },
+              {
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 10
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "frontmost_application_history_index": 9
+                    }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 10
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 10
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                },
+                {
+                  "set_variable": {
+                    "name": "lcmd_tap_count",
+                    "value": 0
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 10
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
+                }
+              ],
+              "to_if_canceled": []
+            },
+            "description": "Left CMD tap 10 -> app history 9"
           },
           {
             "type": "basic",
@@ -3448,7 +4498,7 @@
               }
             ],
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 650
+              "basic.to_delayed_action_delay_milliseconds": 500
             },
             "to": [
               {
@@ -3458,56 +4508,118 @@
                 }
               },
               {
-                "lazy": true,
-                "key_code": "left_command",
-                "modifiers": []
+                "set_variable": {
+                  "name": "lcmd_tap_count",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "left_command"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [
                 {
-                  "key_code": "left_command",
-                  "modifiers": [],
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
                   "conditions": [
                     {
                       "type": "variable_if",
                       "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
                       "value": 1
                     }
                   ]
                 },
                 {
                   "set_variable": {
-                    "name": "lcmd_pressed",
+                    "name": "lcmd_tap_count",
                     "value": 0
-                  }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
                 }
               ],
               "to_if_canceled": [
                 {
-                  "key_code": "left_command",
-                  "modifiers": [],
+                  "set_variable": {
+                    "name": "lcmd_pressed",
+                    "value": 0
+                  },
                   "conditions": [
                     {
                       "type": "variable_if",
                       "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
                       "value": 1
                     }
                   ]
                 },
                 {
                   "set_variable": {
-                    "name": "lcmd_pressed",
+                    "name": "lcmd_tap_count",
                     "value": 0
-                  }
+                  },
+                  "conditions": [
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_pressed",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_if",
+                      "name": "lcmd_tap_count",
+                      "value": 1
+                    },
+                    {
+                      "type": "variable_unless",
+                      "name": "space_mod",
+                      "value": 1
+                    }
+                  ]
                 }
               ]
             },
-            "description": "Left CMD first tap (pass-through)"
+            "description": "Left CMD first tap/hold (pass-through)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "LCMD - left ⌘ (tap/double-tap/hold)"
+        "ruleDescription": "LCMD - left ⌘ (tap/multi-tap/hold)"
       },
       {
         "conditions": [],
@@ -7252,7 +8364,7 @@
                 "shell_command": "osascript \"$HOME/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
               },
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 2"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3"
               }
             ]
           }
@@ -7462,136 +8574,6 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "SKIM - CMD+H/U"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "1"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "1",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript ~/Scripts/apps/Skim/skim_bookmarker/skim-create-anchored-note.applescript"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "1",
-                  "modifiers": []
-                }
-              ]
-            },
-            "description": "SKIM 1 hold -> anchored note"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "2"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "2",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript \"$HOME/Scripts/apps/Skim/skim_bookmarker/skim-add-heading-to-anchored-note.applescript\""
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "2",
-                  "modifiers": []
-                }
-              ]
-            },
-            "description": "SKIM 2 hold -> add heading"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "3"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "3",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript \"$HOME/Scripts/apps/Skim/skim_bookmarker/skim-add-extended-text-to-anchored-note.applescript\""
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "3",
-                  "modifiers": []
-                }
-              ]
-            },
-            "description": "SKIM 3 hold -> add extended text"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "SKIM - 1/2/3 hold AppleScripts"
       },
       {
         "conditions": [],

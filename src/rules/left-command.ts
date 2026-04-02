@@ -1,25 +1,63 @@
 import { rule, toKey, toSetVar } from "karabiner.ts";
-import { toKeyCond } from "../lib/conditions";
+import { withConditions } from "../lib/conditions";
 import { openApp } from "../lib/software";
 
+const LEFT_COMMAND_TAP_DELAY_MS = 500;
+const LEFT_COMMAND_MAX_HISTORY_INDEX = 9;
+
+const leftCommandAwaitingTapConditions = (tapCount: number) => [
+  { type: "variable_if" as const, name: "lcmd_pressed", value: 1 },
+  { type: "variable_if" as const, name: "lcmd_tap_count", value: tapCount },
+  { type: "variable_unless" as const, name: "space_mod", value: 1 },
+];
+
+const resetLeftCommandTapState = (tapCount: number) => {
+  const conditions = leftCommandAwaitingTapConditions(tapCount);
+
+  return [
+    withConditions(toSetVar("lcmd_pressed", 0), conditions),
+    withConditions(toSetVar("lcmd_tap_count", 0), conditions),
+  ];
+};
+
 export const buildLeftCommandRule = () => {
-  return rule("LCMD - left ⌘ (tap/double-tap/hold)").manipulators([
-    {
-      type: "basic" as const,
-      from: {
-        key_code: "left_command" as any,
-        modifiers: { optional: ["any"] },
-      },
-      conditions: [
-        { type: "variable_if", name: "lcmd_pressed", value: 1 },
-        { type: "variable_unless", name: "space_mod", value: 1 },
-      ],
-      to: [
-        { set_variable: { name: "lcmd_pressed", value: 0 } },
-        openApp({ historyIndex: 1 }),
-      ],
-      description: "Left CMD second tap -> last app",
-    } as any,
+  const multiTapManipulators = Array.from(
+    { length: LEFT_COMMAND_MAX_HISTORY_INDEX },
+    (_, index) => {
+      const tapCount = index + 2;
+      const previousTapCount = tapCount - 1;
+
+      return {
+        type: "basic" as const,
+        from: {
+          key_code: "left_command" as any,
+          modifiers: { optional: ["any"] },
+        },
+        conditions: leftCommandAwaitingTapConditions(previousTapCount),
+        parameters: {
+          "basic.to_delayed_action_delay_milliseconds":
+            LEFT_COMMAND_TAP_DELAY_MS,
+        },
+        to: [
+          { set_variable: { name: "lcmd_pressed", value: 1 } },
+          { set_variable: { name: "lcmd_tap_count", value: tapCount } },
+        ],
+        to_delayed_action: {
+          to_if_invoked: [
+            withConditions(openApp({ historyIndex: tapCount - 1 }), [
+              ...leftCommandAwaitingTapConditions(tapCount),
+            ]),
+            ...resetLeftCommandTapState(tapCount),
+          ],
+          to_if_canceled: [],
+        },
+        description: `Left CMD tap ${tapCount} -> app history ${tapCount - 1}`,
+      } as any;
+    },
+  );
+
+  return rule("LCMD - left ⌘ (tap/multi-tap/hold)").manipulators([
+    ...multiTapManipulators,
     {
       type: "basic" as const,
       from: {
@@ -28,27 +66,18 @@ export const buildLeftCommandRule = () => {
       },
       conditions: [{ type: "variable_unless", name: "space_mod", value: 1 }],
       parameters: {
-        "basic.to_delayed_action_delay_milliseconds": 650,
+        "basic.to_delayed_action_delay_milliseconds": LEFT_COMMAND_TAP_DELAY_MS,
       },
       to: [
         { set_variable: { name: "lcmd_pressed", value: 1 } },
-        toKey("left_command", [], { lazy: true }),
+        { set_variable: { name: "lcmd_tap_count", value: 1 } },
+        toKey("left_command"),
       ],
       to_delayed_action: {
-        to_if_invoked: [
-          toKeyCond("left_command", [], {}, [
-            { type: "variable_if", name: "lcmd_pressed", value: 1 },
-          ]),
-          toSetVar("lcmd_pressed", 0),
-        ],
-        to_if_canceled: [
-          toKeyCond("left_command", [], {}, [
-            { type: "variable_if", name: "lcmd_pressed", value: 1 },
-          ]),
-          toSetVar("lcmd_pressed", 0),
-        ],
+        to_if_invoked: resetLeftCommandTapState(1),
+        to_if_canceled: resetLeftCommandTapState(1),
       },
-      description: "Left CMD first tap (pass-through)",
+      description: "Left CMD first tap/hold (pass-through)",
     } as any,
   ]);
 };

@@ -41,23 +41,22 @@ import type {
 } from "./generators/device-config";
 import { generateLayerRules } from "./lib/leader";
 import {
-    buildAntinoteDeleteRule,
-    buildCapsLockRule,
-    buildCmdQRule,
-    buildCtrlEscapeMonitorRule,
-    buildDisableHideMinimizeRule,
-    buildEnterRules,
-    buildEqualsRules,
-    buildEscapeTapTapHoldRule,
-    buildGraveAccentHoldRule,
-    buildHomeEndRule,
-    buildHyperF12Rule,
-    buildLeftCommandRule,
-    buildPasswordsQuickFillRule,
-    buildRightOptionAppsRule,
-    buildSkimAppleScriptHoldRule,
-    buildSkimCommandRemapRule,
-    buildWordPrivilegesRule,
+  buildAntinoteDeleteRule,
+  buildCapsLockRule,
+  buildCmdQRule,
+  buildCtrlEscapeMonitorRule,
+  buildDisableHideMinimizeRule,
+  buildEnterRules,
+  buildEqualsRules,
+  buildEscapeTapTapHoldRule,
+  buildGraveAccentHoldRule,
+  buildHomeEndRule,
+  buildHyperF12Rule,
+  buildLeftCommandRule,
+  buildPasswordsQuickFillRule,
+  buildRightOptionAppsRule,
+  buildSkimCommandRemapRule,
+  buildWordPrivilegesRule,
 } from "./rules";
 
 const spaceLayers = buildSpaceLayers(getOpenFolderCommand, getFolderOpenerBundleId);
@@ -172,7 +171,7 @@ let rules: any[] = [
   buildSkimCommandRemapRule(),
 
   // SKIM - Number row 1/2/3 hold AppleScripts
-  buildSkimAppleScriptHoldRule(),
+  //   buildSkimAppleScriptHoldRule(),
 
   // ============================================================================
   // APPLICATION-SPECIFIC RULES

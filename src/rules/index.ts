@@ -20,8 +20,8 @@ export {
     buildWordPrivilegesRule
 } from "./security";
 export {
-    buildSkimAppleScriptHoldRule,
-    buildSkimCommandRemapRule
+  // buildSkimAppleScriptHoldRule,
+  buildSkimCommandRemapRule,
 } from "./skim";
 export {
     buildEnterRules,

@@ -203,8 +203,8 @@ map("left_option")
 
 ### Hammerspoon
 
-- `~/.hammerspoon/karabiner_layer_gui/user_command_receiver.lua` — **NEW** — IPC receiver for layer indicator commands
-- `~/.hammerspoon/init.lua` — Integrated user_command_receiver initialization
+- **NEW** — IPC receiver for layer indicator commands (`~/.hammerspoon/karabiner_layer_gui/user_command_receiver.lua` or `~/.config/hammerspoon/modules/karabiner_layer_gui/user_command_receiver.lua`)
+- Integrated user_command_receiver initialization (`~/.hammerspoon/init.lua` or `~/.config/hammerspoon/init.lua`)
 
 ---
 

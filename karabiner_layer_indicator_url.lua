@@ -382,9 +382,8 @@ end
 local function loadLayerDefinitions()
     local home = os.getenv("HOME") or ""
     local json_paths = {
+        home .. "/.config/hammerspoon/modules/karabiner_layer_gui/space_layers.json",
         home .. "/.hammerspoon/karabiner_layer_gui/space_layers.json",
-        home .. "/.config/hammerspoon/karabiner_layer_gui/space_layers.json",
-        home .. "/dotfiles/hammerspoon/src/space_layers.json",
     }
 
     for _, json_path in ipairs(json_paths) do
