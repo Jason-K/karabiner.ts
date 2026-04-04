@@ -7677,6 +7677,81 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "s",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatSelection()'"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+S - Format selection"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "t",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "~/.venv/typinator/python ~/Scripts/apps/Typinator/new_rule.py"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+T - New Typinator rule"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "semicolon",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "open -a '/System/Applications/System Settings.app'"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+; - Open System Settings"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "f12",
               "modifiers": {
                 "mandatory": [

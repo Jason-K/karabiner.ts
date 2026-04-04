@@ -9,22 +9,19 @@ import {
     buildEscapeTapTapHoldRule,
 } from "./escape-monitor";
 import { buildLeftCommandRule } from "./left-command";
+import { buildHyperPlusRules } from "./hyper-plus";
 import { buildRightOptionAppsRule } from "./right-option-apps";
 import {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,
     buildWordPrivilegesRule,
 } from "./security";
-import {
-    buildSkimAppleScriptHoldRule,
-    buildSkimCommandRemapRule,
-} from "./skim";
+import { buildSkimCommandRemapRule } from "./skim";
 import {
     buildEnterRules,
     buildEqualsRules,
     buildGraveAccentHoldRule,
     buildHomeEndRule,
-    buildHyperF12Rule,
 } from "./special-keys";
 
 test("left command factory keeps dual manipulator behavior", () => {
@@ -81,12 +78,6 @@ test("skim command remap factory keeps both remaps", () => {
   assert.equal(rule.manipulators.length, 2);
 });
 
-test("skim hold factory keeps number-row hold actions", () => {
-  const rule = buildSkimAppleScriptHoldRule().build();
-  assert.equal(rule.description, "SKIM - 1/2/3 hold AppleScripts");
-  assert.equal(rule.manipulators.length, 3);
-});
-
 test("antinote delete factory keeps double-tap workflow", () => {
   const rule = buildAntinoteDeleteRule().build();
   assert.equal(rule.description, "ANTINOTE - CMD+D+D to delete note");
@@ -117,12 +108,20 @@ test("home-end factory keeps four navigation mappings", () => {
   assert.equal(rule.manipulators.length, 4);
 });
 
-test("hyper f12 factory keeps single manipulator", () => {
-  const rule = buildHyperF12Rule().build();
-  assert.equal(rule.description, "HYPER+F12 - Edit last Typinator rule");
-  assert.equal(rule.manipulators.length, 1);
+test("hyper plus rules factory keeps grouped mappings", () => {
+  const rules = buildHyperPlusRules().map((r) => r.build());
+  assert.equal(rules.length, 4);
+  assert.deepEqual(
+    rules.map((rule) => rule.description),
+    [
+      "HYPER+S - Format selection",
+      "HYPER+T - New Typinator rule",
+      "HYPER+; - Open System Settings",
+      "HYPER+F12 - Edit last Typinator rule",
+    ],
+  );
+  assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
-
 test("grave accent hold factory keeps single manipulator", () => {
   const rule = buildGraveAccentHoldRule().build();
   assert.equal(

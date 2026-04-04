@@ -51,7 +51,7 @@ import {
   buildEscapeTapTapHoldRule,
   buildGraveAccentHoldRule,
   buildHomeEndRule,
-  buildHyperF12Rule,
+  buildHyperPlusRules,
   buildLeftCommandRule,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
@@ -122,8 +122,8 @@ let rules: any[] = [
   // HOME/END - Make them work properly on macOS
   buildHomeEndRule(),
 
-  // HYPER + F12 - Edit last Typinator rule (JXA)
-  buildHyperF12Rule(),
+  // HYPER + _ - Grouped hyper shortcuts
+  ...buildHyperPlusRules(),
 
   // GRAVE ACCENT & TILDE - Tap sends tilde, hold sends hyper+f5 with deferred release
   buildGraveAccentHoldRule(),

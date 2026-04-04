@@ -1,4 +1,5 @@
 import { ifApp, map, rule, toKey, withCondition } from "karabiner.ts";
+
 import { HYPER } from "../lib/mods";
 import { cmd } from "../lib/scripts";
 import { tapHold } from "../lib/tap-hold";
@@ -16,18 +17,6 @@ export const buildHomeEndRule = () => {
       .build(),
     ...map("end", "shift")
       .to(toKey("right_arrow", ["command", "shift"]))
-      .build(),
-  ]);
-};
-
-export const buildHyperF12Rule = () => {
-  return rule("HYPER+F12 - Edit last Typinator rule").manipulators([
-    ...map("f12", HYPER)
-      .to(
-        cmd(
-          "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
-        ),
-      )
       .build(),
   ]);
 };

@@ -13,6 +13,7 @@ export {
     buildEscapeTapTapHoldRule
 } from "./escape-monitor";
 export { buildLeftCommandRule } from "./left-command";
+export { buildHyperPlusRules } from "./hyper-plus";
 export { buildRightOptionAppsRule } from "./right-option-apps";
 export {
     buildDisableHideMinimizeRule,
@@ -27,6 +28,5 @@ export {
     buildEnterRules,
     buildEqualsRules,
     buildGraveAccentHoldRule,
-    buildHomeEndRule,
-    buildHyperF12Rule
+    buildHomeEndRule
 } from "./special-keys";
