@@ -4,14 +4,15 @@ import { applescript, cmd } from "../lib/scripts";
 
 const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
-const QUICK_FILL_POST_ELEVATION_DELAY_MS = 3000;
+const QUICK_FILL_POST_ELEVATION_DELAY_MS = 1300;
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
   "com.apple.SecurityAgent",
   "com.apple.systempreferences",
   "com.apple.settings.PrivacySecurity.extension",
 ];
-const FOCUSED_UI_ROLE_VARIABLE = "accessibility.focused_ui_element.role";
-const FOCUSED_UI_SUBROLE_VARIABLE = "accessibility.focused_ui_element.subrole";
+const FOCUSED_UI_ROLE_VARIABLE = "accessibility.focused_ui_element.role_string";
+const FOCUSED_UI_SUBROLE_VARIABLE =
+  "accessibility.focused_ui_element.subrole_string";
 const AX_TEXT_FIELD_ROLE = "AXTextField";
 const AX_SECURE_TEXT_FIELD_SUBROLE = "AXSecureTextField";
 

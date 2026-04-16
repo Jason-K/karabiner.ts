@@ -7713,7 +7713,7 @@
             },
             "to": [
               {
-                "shell_command": "~/.venv/typinator/python ~/Scripts/apps/Typinator/new_rule.py"
+                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py"
               }
             ]
           }
@@ -7770,6 +7770,31 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "HYPER+F12 - Edit last Typinator rule"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "open -a 'Activity Monitor'"
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "HYPER+ESC - Open Activity Monitor"
       },
       {
         "conditions": [],
@@ -8461,7 +8486,7 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 3000
+              "basic.to_delayed_action_delay_milliseconds": 1300
             },
             "conditions": [
               {
@@ -8474,12 +8499,12 @@
               },
               {
                 "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role",
+                "name": "accessibility.focused_ui_element.role_string",
                 "value": "AXTextField"
               },
               {
                 "type": "variable_if",
-                "name": "accessibility.focused_ui_element.subrole",
+                "name": "accessibility.focused_ui_element.subrole_string",
                 "value": "AXSecureTextField"
               }
             ],
@@ -8514,7 +8539,7 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 3000
+              "basic.to_delayed_action_delay_milliseconds": 1300
             },
             "conditions": [
               {
@@ -8527,12 +8552,12 @@
               },
               {
                 "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role",
+                "name": "accessibility.focused_ui_element.role_string",
                 "value": "AXTextField"
               },
               {
                 "type": "variable_unless",
-                "name": "accessibility.focused_ui_element.subrole",
+                "name": "accessibility.focused_ui_element.subrole_string",
                 "value": "AXSecureTextField"
               }
             ],

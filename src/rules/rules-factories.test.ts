@@ -8,8 +8,8 @@ import {
     buildCtrlEscapeMonitorRule,
     buildEscapeTapTapHoldRule,
 } from "./escape-monitor";
-import { buildLeftCommandRule } from "./left-command";
 import { buildHyperPlusRules } from "./hyper-plus";
+import { buildLeftCommandRule } from "./left-command";
 import { buildRightOptionAppsRule } from "./right-option-apps";
 import {
     buildDisableHideMinimizeRule,
@@ -70,6 +70,36 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = buildPasswordsQuickFillRule().build();
   assert.equal(rule.description, "PASSWORDS - CMD+/ quick fill");
   assert.equal(rule.manipulators.length, 2);
+
+  const roleConditions = rule.manipulators.map((manipulator) =>
+    manipulator.conditions?.find(
+      (condition) =>
+        "name" in condition &&
+        condition.name.includes("focused_ui_element.role"),
+    ),
+  );
+  const subroleConditions = rule.manipulators.map((manipulator) =>
+    manipulator.conditions?.find(
+      (condition) =>
+        "name" in condition &&
+        condition.name.includes("focused_ui_element.subrole"),
+    ),
+  );
+
+  assert.deepEqual(
+    roleConditions.map((condition) => condition?.name),
+    [
+      "accessibility.focused_ui_element.role_string",
+      "accessibility.focused_ui_element.role_string",
+    ],
+  );
+  assert.deepEqual(
+    subroleConditions.map((condition) => condition?.name),
+    [
+      "accessibility.focused_ui_element.subrole_string",
+      "accessibility.focused_ui_element.subrole_string",
+    ],
+  );
 });
 
 test("skim command remap factory keeps both remaps", () => {

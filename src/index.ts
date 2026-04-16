@@ -170,9 +170,6 @@ let rules: any[] = [
   // SKIM - CMD+H/U remapping
   buildSkimCommandRemapRule(),
 
-  // SKIM - Number row 1/2/3 hold AppleScripts
-  //   buildSkimAppleScriptHoldRule(),
-
   // ============================================================================
   // APPLICATION-SPECIFIC RULES
   // ============================================================================

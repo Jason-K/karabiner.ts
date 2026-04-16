@@ -31,7 +31,8 @@ const hyperShellRules = {
   t: {
     mods: HYPER,
     description: "HYPER+T - New Typinator rule",
-    shellCommand: "~/.venv/typinator/python ~/Scripts/apps/Typinator/new_rule.py",
+    shellCommand:
+      "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py",
   },
   semicolon: {
     mods: HYPER,
@@ -43,6 +44,11 @@ const hyperShellRules = {
     description: "HYPER+F12 - Edit last Typinator rule",
     shellCommand:
       "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
+  },
+  escape: {
+    mods: HYPER,
+    description: "HYPER+ESC - Open Activity Monitor",
+    shellCommand: "open -a 'Activity Monitor'",
   },
 } as const satisfies Record<string, HyperShellRuleDefinition>;
 
