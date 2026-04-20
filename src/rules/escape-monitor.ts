@@ -1,10 +1,11 @@
 import { map, rule, toKey } from "karabiner.ts";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd, focusApp } from "../lib/scripts";
 import { varTapTapHold } from "../lib/tap-hold";
 
 export const buildEscapeTapTapHoldRule = () => {
   return rule(
-    "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+    formatRuleDescription("escape", "Escape / Kill app", "multi-tap"),
   ).manipulators(
     varTapTapHold({
       key: "escape",
@@ -13,8 +14,11 @@ export const buildEscapeTapTapHoldRule = () => {
       holdEvents: [cmd("~/.local/bin/kill-app --foreground")],
       tapTapHoldEvents: [cmd("~/.local/bin/kill-app")],
       thresholdMs: 250,
-      description:
-        "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+      description: formatRuleDescription(
+        "escape",
+        "Escape / Kill app",
+        "multi-tap",
+      ),
       mods: [],
     }),
   );
@@ -22,27 +26,26 @@ export const buildEscapeTapTapHoldRule = () => {
 
 export const buildCtrlEscapeMonitorRule = () => {
   return rule(
-    "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)",
+    formatRuleDescription(
+      ["left_control", "escape"],
+      "Activity Monitor / Process Spy",
+      "hold",
+    ),
   ).manipulators([
     ...map("escape", "left_control")
       .parameters({
         "basic.to_if_alone_timeout_milliseconds": 300,
         "basic.to_if_held_down_threshold_milliseconds": 300,
       })
-      .toIfAlone(
-        focusApp("com.apple.ActivityMonitor"),
-      )
-      .toIfHeldDown(
-        focusApp("com.itone.ProcessSpy"),
-      )
-      .toDelayedAction(
-        [],
-        [
-          focusApp("com.apple.ActivityMonitor"),
-        ],
-      )
+      .toIfAlone(focusApp("com.apple.ActivityMonitor"))
+      .toIfHeldDown(focusApp("com.itone.ProcessSpy"))
+      .toDelayedAction([], [focusApp("com.apple.ActivityMonitor")])
       .description(
-        "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)",
+        formatRuleDescription(
+          ["left_control", "escape"],
+          "Activity Monitor / Process Spy",
+          "hold",
+        ),
       )
       .build(),
   ]);

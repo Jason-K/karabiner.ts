@@ -120,7 +120,7 @@ let rules: any[] = [
    */
 
   // HOME/END - Make them work properly on macOS
-  buildHomeEndRule(),
+  ...buildHomeEndRule(),
 
   // HYPER + _ - Grouped hyper shortcuts
   ...buildHyperPlusRules(),
@@ -138,7 +138,7 @@ let rules: any[] = [
   buildCmdQRule(),
 
   // Right_Option + __ - App launch or focus
-  buildRightOptionAppsRule(getOpenFolderCommand),
+  ...buildRightOptionAppsRule(getOpenFolderCommand),
   // Generate escape rule to reset all variables
   ...generateEscapeRule(spaceLayers),
 
@@ -159,7 +159,7 @@ let rules: any[] = [
    */
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
-  buildDisableHideMinimizeRule(),
+  ...buildDisableHideMinimizeRule(),
 
   // WORD - CMD+/ copy document name and elevate privileges
   buildWordPrivilegesRule(),
@@ -168,7 +168,7 @@ let rules: any[] = [
   buildPasswordsQuickFillRule(),
 
   // SKIM - CMD+H/U remapping
-  buildSkimCommandRemapRule(),
+  ...buildSkimCommandRemapRule(),
 
   // ============================================================================
   // APPLICATION-SPECIFIC RULES

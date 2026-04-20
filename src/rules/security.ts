@@ -1,5 +1,6 @@
 import { ifApp, map, rule, toKey } from "karabiner.ts";
 import { HYPER, L } from "../lib/mods";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 import { applescript, cmd } from "../lib/scripts";
 
 const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
@@ -17,16 +18,36 @@ const AX_TEXT_FIELD_ROLE = "AXTextField";
 const AX_SECURE_TEXT_FIELD_SUBROLE = "AXSecureTextField";
 
 export const buildDisableHideMinimizeRule = () => {
-  return rule("DISABLE - Hide/Minimize shortcuts").manipulators([
-    ...map("h", ["command", "option"]).build(),
-    ...map("m", ["command", "option"]).build(),
-    ...map("h", "command").build(),
-  ]);
+  return [
+    {
+      chord: ["command", "h"],
+      description: "Disabled hide shortcut",
+      manipulator: map("h", "command"),
+    },
+    {
+      chord: ["command", "option", "h"],
+      description: "Disabled hide others shortcut",
+      manipulator: map("h", ["command", "option"]),
+    },
+    {
+      chord: ["command", "option", "m"],
+      description: "Disabled minimize shortcut",
+      manipulator: map("m", ["command", "option"]),
+    },
+  ].map(({ chord, description, manipulator }) =>
+    rule(formatRuleDescription(chord, description, "tap")).manipulators([
+      ...manipulator.build(),
+    ]),
+  );
 };
 
 export const buildWordPrivilegesRule = () => {
   return rule(
-    "WORD - CMD+/ copy document name and elevate privileges",
+    formatRuleDescription(
+      ["command", "slash"],
+      "Copy document name and elevate privileges",
+      "tap",
+    ),
   ).manipulators([
     ...map("slash", "command")
       .condition(ifApp("com.microsoft.Word"))
@@ -49,7 +70,9 @@ export const buildPasswordsQuickFillRule = () => {
     bundle_identifiers: QUICK_FILL_APP_BUNDLE_IDENTIFIERS,
   });
 
-  return rule("PASSWORDS - CMD+/ quick fill").manipulators([
+  return rule(
+    formatRuleDescription(["command", "slash"], "Quick fill password", "tap"),
+  ).manipulators([
     ...map("slash", "command")
       .parameters({
         "basic.to_delayed_action_delay_milliseconds":

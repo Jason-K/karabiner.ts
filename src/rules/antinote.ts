@@ -1,7 +1,10 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 
 export const buildAntinoteDeleteRule = () => {
-  return rule("ANTINOTE - CMD+D+D to delete note").manipulators([
+  return rule(
+    formatRuleDescription(["command", "d"], "Delete note", "multi-tap"),
+  ).manipulators([
     ...map("d", "command")
       .condition(
         ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]),

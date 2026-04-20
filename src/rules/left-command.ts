@@ -1,5 +1,6 @@
 import { rule, toKey, toSetVar } from "karabiner.ts";
 import { withConditions } from "../lib/conditions";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 import { openApp } from "../lib/software";
 
 const LEFT_COMMAND_TAP_DELAY_MS = 500;
@@ -51,12 +52,18 @@ export const buildLeftCommandRule = () => {
           ],
           to_if_canceled: [],
         },
-        description: `Left CMD tap ${tapCount} -> app history ${tapCount - 1}`,
+        description: formatRuleDescription(
+          "left_command",
+          `App history ${tapCount - 1}`,
+          "multi-tap",
+        ),
       } as any;
     },
   );
 
-  return rule("LCMD - left ⌘ (tap/multi-tap/hold)").manipulators([
+  return rule(
+    formatRuleDescription("left_command", "App history switcher", "multi-tap"),
+  ).manipulators([
     ...multiTapManipulators,
     {
       type: "basic" as const,
@@ -77,7 +84,11 @@ export const buildLeftCommandRule = () => {
         to_if_invoked: resetLeftCommandTapState(1),
         to_if_canceled: resetLeftCommandTapState(1),
       },
-      description: "Left CMD first tap/hold (pass-through)",
+      description: formatRuleDescription(
+        "left_command",
+        "Command passthrough",
+        "tap",
+      ),
     } as any,
   ]);
 };

@@ -2,6 +2,7 @@ import type { ToEvent } from 'karabiner.ts';
 import { rule, toKey } from 'karabiner.ts';
 import { getAllSublayerVars } from '../lib/leader/runtime';
 import type { SubLayerConfig } from '../lib/leader/types';
+import { formatRuleDescription } from "../lib/rule-descriptions";
 import { tapHold } from '../lib/tap-hold';
 
 export type TapHoldConfig = {
@@ -109,6 +110,8 @@ export function generateTapHoldRules(
       });
     });
 
-    return rule(`${keyString.toUpperCase()} hold -> ${config.description}`).manipulators(manipulators);
+    return rule(
+      formatRuleDescription(keyString, config.description, "hold"),
+    ).manipulators(manipulators);
   });
 }

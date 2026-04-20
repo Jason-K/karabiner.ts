@@ -134,16 +134,16 @@ export const tapHoldKeys: Record<string, TapHoldConfig> = {
     description: "Houdah",
     hold: [toKey("h", SUPER, { repeat: false })],
   },
-  "hyper+tab": {
-    description: "Rectangle Pro next display/space",
-    alone: [cmd('open -g "rectangle-pro://execute-action?name=next-display"')],
-    hold: [toKey("right_arrow", ["control"], { repeat: false })],
-  },
-  "super+tab": {
-    description: "Rectangle Pro prev display/space",
-    alone: [cmd('open -g "rectangle-pro://execute-action?name=prev-display"')],
-    hold: [toKey("left_arrow", ["control"], { repeat: false })],
-  },
+  //   "hyper+tab": {
+  //     description: "Rectangle Pro next display/space",
+  //     alone: [cmd('open -g "rectangle-pro://execute-action?name=next-display"')],
+  //     hold: [toKey("right_arrow", ["control"], { repeat: false })],
+  //   },
+  //   "super+tab": {
+  //     description: "Rectangle Pro prev display/space",
+  //     alone: [cmd('open -g "rectangle-pro://execute-action?name=prev-display"')],
+  //     hold: [toKey("left_arrow", ["control"], { repeat: false })],
+  //   },
   tab: {
     description: "Mission Control",
     hold: [toKey("mission_control", [], { halt: true, repeat: true })],

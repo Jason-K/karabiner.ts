@@ -80,7 +80,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "8 hold -> RingCentral"
+        "ruleDescription": "[8]        →    RingCentral (on hold)"
       },
       {
         "conditions": [],
@@ -167,7 +167,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "A hold -> Raycast AI-quick search"
+        "ruleDescription": "[A]        →    Raycast AI-quick search (on hold)"
       },
       {
         "conditions": [],
@@ -270,7 +270,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+A hold -> Raycast AI-chat"
+        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)"
       },
       {
         "conditions": [],
@@ -357,7 +357,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "C hold -> Calendar"
+        "ruleDescription": "[C]        →    Calendar (on hold)"
       },
       {
         "conditions": [],
@@ -438,7 +438,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F hold -> Bloom"
+        "ruleDescription": "[F]        →    Bloom (on hold)"
       },
       {
         "conditions": [],
@@ -519,7 +519,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "G hold -> Claude"
+        "ruleDescription": "[G]        →    Claude (on hold)"
       },
       {
         "conditions": [],
@@ -600,7 +600,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "H hold -> Here2There"
+        "ruleDescription": "[H]        →    Here2There (on hold)"
       },
       {
         "conditions": [],
@@ -681,7 +681,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "J hold -> Last d/l"
+        "ruleDescription": "[J]        →    Last d/l (on hold)"
       },
       {
         "conditions": [],
@@ -766,7 +766,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "K hold -> Kitty"
+        "ruleDescription": "[K]        →    Kitty (on hold)"
       },
       {
         "conditions": [],
@@ -853,7 +853,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "M hold -> Deminimize"
+        "ruleDescription": "[M]        →    Deminimize (on hold)"
       },
       {
         "conditions": [],
@@ -934,7 +934,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "O hold -> OCR"
+        "ruleDescription": "[O]        →    OCR (on hold)"
       },
       {
         "conditions": [],
@@ -1022,7 +1022,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "P hold -> Popclip"
+        "ruleDescription": "[P]        →    Popclip (on hold)"
       },
       {
         "conditions": [],
@@ -1106,7 +1106,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+Q hold -> Rectangle Pro left"
+        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)"
       },
       {
         "conditions": [],
@@ -1187,7 +1187,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "R hold -> Last d/l"
+        "ruleDescription": "[R]        →    Last d/l (on hold)"
       },
       {
         "conditions": [],
@@ -1268,7 +1268,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "S hold -> Screenshot"
+        "ruleDescription": "[S]        →    Screenshot (on hold)"
       },
       {
         "conditions": [],
@@ -1349,7 +1349,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "T hold -> Todoist"
+        "ruleDescription": "[T]        →    Todoist (on hold)"
       },
       {
         "conditions": [],
@@ -1435,7 +1435,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "V hold -> Maccy"
+        "ruleDescription": "[V]        →    Maccy (on hold)"
       },
       {
         "conditions": [],
@@ -1519,7 +1519,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+W hold -> Rectangle Pro right"
+        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)"
       },
       {
         "conditions": [],
@@ -1600,7 +1600,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "X hold -> Copy file"
+        "ruleDescription": "[X]        →    Copy file (on hold)"
       },
       {
         "conditions": [],
@@ -1681,7 +1681,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Y hold -> Yank file"
+        "ruleDescription": "[Y]        →    Yank file (on hold)"
       },
       {
         "conditions": [],
@@ -1762,7 +1762,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Z hold -> Zoxide"
+        "ruleDescription": "[Z]        →    Zoxide (on hold)"
       },
       {
         "conditions": [],
@@ -1845,7 +1845,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F1 hold -> Brightness rightness"
+        "ruleDescription": "[F1]        →    Brightness rightness (on hold)"
       },
       {
         "conditions": [],
@@ -1928,7 +1928,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F2 hold -> Increase brightness"
+        "ruleDescription": "[F2]        →    Increase brightness (on hold)"
       },
       {
         "conditions": [],
@@ -2011,7 +2011,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F3 hold -> Mission Control"
+        "ruleDescription": "[F3]        →    Mission Control (on hold)"
       },
       {
         "conditions": [],
@@ -2094,7 +2094,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F4 hold -> Launchpad"
+        "ruleDescription": "[F4]        →    Launchpad (on hold)"
       },
       {
         "conditions": [],
@@ -2181,7 +2181,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F5 hold -> Dictation"
+        "ruleDescription": "[F5]        →    Dictation (on hold)"
       },
       {
         "conditions": [],
@@ -2264,7 +2264,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F7 hold -> Rewind"
+        "ruleDescription": "[F7]        →    Rewind (on hold)"
       },
       {
         "conditions": [],
@@ -2347,7 +2347,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F8 hold -> Play/Pause"
+        "ruleDescription": "[F8]        →    Play/Pause (on hold)"
       },
       {
         "conditions": [],
@@ -2430,7 +2430,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F9 hold -> Fast Forward"
+        "ruleDescription": "[F9]        →    Fast Forward (on hold)"
       },
       {
         "conditions": [],
@@ -2513,7 +2513,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F10 hold -> Mute"
+        "ruleDescription": "[F10]        →    Mute (on hold)"
       },
       {
         "conditions": [],
@@ -2596,7 +2596,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F11 hold -> Volume Down"
+        "ruleDescription": "[F11]        →    Volume Down (on hold)"
       },
       {
         "conditions": [],
@@ -2679,7 +2679,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "F12 hold -> Volume Up"
+        "ruleDescription": "[F12]        →    Volume Up (on hold)"
       },
       {
         "conditions": [],
@@ -2767,184 +2767,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SLASH hold -> Houdah"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "tab",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g \"rectangle-pro://execute-action?name=next-display\""
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "right_arrow",
-                "modifiers": [
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g \"rectangle-pro://execute-action?name=next-display\""
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+TAB hold -> Rectangle Pro next display/space"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "tab",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g \"rectangle-pro://execute-action?name=prev-display\""
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g \"rectangle-pro://execute-action?name=prev-display\""
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "SUPER+TAB hold -> Rectangle Pro prev display/space"
+        "ruleDescription": "[/]        →    Houdah (on hold)"
       },
       {
         "conditions": [],
@@ -3028,7 +2851,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "TAB hold -> Mission Control"
+        "ruleDescription": "[TAB]        →    Mission Control (on hold)"
       },
       {
         "conditions": [],
@@ -3124,7 +2947,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "LEFT_COMMAND+P hold -> Paletro"
+        "ruleDescription": "[←⌘]+[P]        →    Paletro (on hold)"
       },
       {
         "conditions": [],
@@ -3214,7 +3037,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "RIGHT_OPTION+K hold -> Kitty here"
+        "ruleDescription": "[→⌥]+[K]        →    Kitty here (on hold)"
       },
       {
         "conditions": [],
@@ -3296,7 +3119,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "RIGHT_OPTION+S hold -> Spotify toggle (tap), search (hold)"
+        "ruleDescription": "[→⌥]+[S]        →    Spotify toggle (tap), search (hold) (on hold)"
       },
       {
         "conditions": [],
@@ -3386,7 +3209,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "RIGHT_OPTION+T hold -> Edit last Typinator expansion"
+        "ruleDescription": "[→⌥]+[T]        →    Edit last Typinator expansion (on hold)"
       },
       {
         "conditions": [],
@@ -3510,7 +3333,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 2 -> app history 1"
+            "description": "[←⌘]        →    App history 1 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -3631,7 +3454,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 3 -> app history 2"
+            "description": "[←⌘]        →    App history 2 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -3752,7 +3575,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 4 -> app history 3"
+            "description": "[←⌘]        →    App history 3 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -3873,7 +3696,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 5 -> app history 4"
+            "description": "[←⌘]        →    App history 4 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -3994,7 +3817,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 6 -> app history 5"
+            "description": "[←⌘]        →    App history 5 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -4115,7 +3938,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 7 -> app history 6"
+            "description": "[←⌘]        →    App history 6 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -4236,7 +4059,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 8 -> app history 7"
+            "description": "[←⌘]        →    App history 7 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -4357,7 +4180,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 9 -> app history 8"
+            "description": "[←⌘]        →    App history 8 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -4478,7 +4301,7 @@
               ],
               "to_if_canceled": []
             },
-            "description": "Left CMD tap 10 -> app history 9"
+            "description": "[←⌘]        →    App history 9 (on multi-tap)"
           },
           {
             "type": "basic",
@@ -4615,11 +4438,11 @@
                 }
               ]
             },
-            "description": "Left CMD first tap/hold (pass-through)"
+            "description": "[←⌘]        →    Command passthrough (on tap)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "LCMD - left ⌘ (tap/multi-tap/hold)"
+        "ruleDescription": "[←⌘]        →    App history switcher (on multi-tap)"
       },
       {
         "conditions": [],
@@ -4641,7 +4464,7 @@
               "basic.to_if_alone_timeout_milliseconds": 250,
               "basic.to_if_held_down_threshold_milliseconds": 250
             },
-            "description": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+            "description": "[ESC]        →    Escape / Kill app (on multi-tap)",
             "to_if_alone": [
               {
                 "set_variable": {
@@ -4691,7 +4514,7 @@
               "basic.to_if_held_down_threshold_milliseconds": 250,
               "basic.to_if_alone_timeout_milliseconds": 250
             },
-            "description": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)",
+            "description": "[ESC]        →    Escape / Kill app (on multi-tap)",
             "to": [
               {
                 "set_variable": {
@@ -4743,7 +4566,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)"
+        "ruleDescription": "[ESC]        →    Escape / Kill app (on multi-tap)"
       },
       {
         "conditions": [],
@@ -4780,11 +4603,11 @@
                 }
               ]
             },
-            "description": "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
+            "description": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "LEFT CTRL + ESCAPE - Activity Monitor (tap), Process Spy (hold)"
+        "ruleDescription": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)"
       },
       {
         "conditions": [],
@@ -4827,7 +4650,7 @@
                 ]
               }
             ],
-            "description": "CAPS - HSLAUNCHER (alone), HYPER (hold)"
+            "description": "[CAPS]        →    HSLauncher / Hyper (on hold)"
           },
           {
             "type": "basic",
@@ -4849,7 +4672,7 @@
                 ]
               }
             ],
-            "description": "CAPS + Shift = SUPER"
+            "description": "[←⇧]+[CAPS]        →    Super (on hold)"
           },
           {
             "type": "basic",
@@ -4870,11 +4693,11 @@
                 ]
               }
             ],
-            "description": "CAPS + Ctrl = MEH"
+            "description": "[←⌃]+[CAPS]        →    Meh (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "CAPS - HSLAUNCHER (alone), HYPER (hold), SUPER (with shift), MEH (with ctrl)"
+        "ruleDescription": "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)"
       },
       {
         "conditions": [],
@@ -5104,7 +4927,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE - tap for key, hold for layer"
+        "ruleDescription": "[_]        →    SPACE layer (on hold)"
       },
       {
         "conditions": [],
@@ -5551,7 +5374,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+A - Applications layer"
+        "ruleDescription": "[_]+[A]        →    Applications layer (on tap)"
       },
       {
         "conditions": [],
@@ -5696,7 +5519,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+C - Case > layer"
+        "ruleDescription": "[_]+[C]        →    Case > layer (on tap)"
       },
       {
         "conditions": [],
@@ -5853,7 +5676,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+D - Downloads > layer"
+        "ruleDescription": "[_]+[D]        →    Downloads > layer (on tap)"
       },
       {
         "conditions": [],
@@ -6100,7 +5923,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+F - Folders > layer"
+        "ruleDescription": "[_]+[F]        →    Folders > layer (on tap)"
       },
       {
         "conditions": [],
@@ -6239,7 +6062,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+R - Recent > layer"
+        "ruleDescription": "[_]+[R]        →    Recent > layer (on tap)"
       },
       {
         "conditions": [],
@@ -6378,7 +6201,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+S - Screenshots > layer"
+        "ruleDescription": "[_]+[S]        →    Screenshots > layer (on tap)"
       },
       {
         "conditions": [],
@@ -6523,7 +6346,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE+W - Wrap > layer"
+        "ruleDescription": "[_]+[W]        →    Wrap > layer (on tap)"
       },
       {
         "conditions": [],
@@ -7594,7 +7417,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SPACE layers - swallow unmapped keys"
+        "ruleDescription": "[_]        →    SPACE unmapped-key guard (on hold)"
       },
       {
         "conditions": [],
@@ -7612,7 +7435,14 @@
                 ]
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[HOME]        →    Move to line start (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -7632,7 +7462,14 @@
                 ]
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[⇧]+[HOME]        →    Select to line start (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -7646,7 +7483,14 @@
                 ]
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[END]        →    Move to line end (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -7669,7 +7513,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HOME/END - Mac-style navigation"
+        "ruleDescription": "[⇧]+[END]        →    Select to line end (on tap)"
       },
       {
         "conditions": [],
@@ -7694,7 +7538,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+S - Format selection"
+        "ruleDescription": "[✦]+[S]        →    Format selection (on tap)"
       },
       {
         "conditions": [],
@@ -7719,7 +7563,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+T - New Typinator rule"
+        "ruleDescription": "[✦]+[T]        →    New Typinator rule (on tap)"
       },
       {
         "conditions": [],
@@ -7744,7 +7588,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+; - Open System Settings"
+        "ruleDescription": "[✦]+[;]        →    Open System Settings (on tap)"
       },
       {
         "conditions": [],
@@ -7769,7 +7613,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+F12 - Edit last Typinator rule"
+        "ruleDescription": "[✦]+[F12]        →    Edit last Typinator rule (on tap)"
       },
       {
         "conditions": [],
@@ -7794,7 +7638,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "HYPER+ESC - Open Activity Monitor"
+        "ruleDescription": "[✦]+[ESC]        →    Open Activity Monitor (on tap)"
       },
       {
         "conditions": [],
@@ -7826,11 +7670,11 @@
                 ]
               }
             ],
-            "description": "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)"
+            "description": "[~]        →    Hyper F5 (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "grave_accent_and_tilde tap/hold -> grave or hyper+f5"
+        "ruleDescription": "[~]        →    Hyper F5 (on hold)"
       },
       {
         "conditions": [],
@@ -7877,7 +7721,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "keypad_enter hold -> quick format (except Excel)"
+        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)"
       },
       {
         "conditions": [],
@@ -7926,7 +7770,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "keypad_enter hold -> F2 (Excel)"
+        "ruleDescription": "[RETURN]        →    Edit cell (on hold)"
       },
       {
         "conditions": [],
@@ -7973,7 +7817,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "return_or_enter hold -> quick format (except Excel)"
+        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)"
       },
       {
         "conditions": [],
@@ -8022,7 +7866,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "return_or_enter hold -> F2 (Excel)"
+        "ruleDescription": "[RETURN]        →    Edit cell (on hold)"
       },
       {
         "conditions": [],
@@ -8030,7 +7874,7 @@
           {}
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "keypad_equal_sign hold -> Quick Date"
+        "ruleDescription": "[=]        →    Quick date (on hold)"
       },
       {
         "conditions": [],
@@ -8038,7 +7882,7 @@
           {}
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "equal_sign hold -> Quick Date"
+        "ruleDescription": "[=]        →    Quick date (on hold)"
       },
       {
         "conditions": [],
@@ -8117,7 +7961,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "CMD-Q requires double-tap (300ms window)"
+        "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)"
       },
       {
         "conditions": [],
@@ -8134,10 +7978,17 @@
             },
             "to": [
               {
-                "shell_command": "open -b 'com.adobe.Acrobat.Pro'"
+                "shell_command": "open -b 'com.chabomakers.Antinote-setapp' && osascript -e 'delay 0.2\ntell application \"System Events\"\nif exists process \"Antinote\" then\nset windowCount to count of windows of process \"Antinote\"\nif windowCount is 0 then\nkeystroke \"n\" using {command down}\nend if\nend if\nend tell'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[A]        →    Antinote (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8153,7 +8004,14 @@
                 "shell_command": "open -b 'net.imput.helium'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[B]        →    Helium (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8169,7 +8027,14 @@
                 "shell_command": "open -b 'com.microsoft.VSCode'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[C]        →    VS Code (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8185,7 +8050,14 @@
                 "shell_command": "open -b 'ch.protonmail.desktop'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[E]        →    Proton Mail (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8201,7 +8073,14 @@
                 "shell_command": "open -a Bloom /Users/jason"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[F]        →    Home folder (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8217,7 +8096,14 @@
                 "shell_command": "open -b 'com.apple.MobileSMS'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[M]        →    Messages (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8233,7 +8119,14 @@
                 "shell_command": "open -b 'com.microsoft.Outlook'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[O]        →    Outlook (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8249,7 +8142,14 @@
                 "shell_command": "open -b 'com.microsoft.teams2'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[T]        →    Teams (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8265,7 +8165,14 @@
                 "shell_command": "open -b 'com.microsoft.Word'"
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[→⌥]+[W]        →    Word (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8284,7 +8191,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Right_Option + Key - App launch or focus"
+        "ruleDescription": "[→⌥]+[8]        →    RingCentral (on tap)"
       },
       {
         "conditions": [],
@@ -8394,7 +8301,25 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "ESCAPE - reset all variables"
+        "ruleDescription": "[ESC]        →    Reset all variables (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "h",
+              "modifiers": {
+                "mandatory": [
+                  "command"
+                ]
+              }
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[⌘]+[H]        →    Disabled hide shortcut (on tap)"
       },
       {
         "conditions": [],
@@ -8410,7 +8335,14 @@
                 ]
               }
             }
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[⌘⌥]+[H]        →    Disabled hide others shortcut (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8422,21 +8354,10 @@
                 ]
               }
             }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "h",
-              "modifiers": {
-                "mandatory": [
-                  "command"
-                ]
-              }
-            }
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "DISABLE - Hide/Minimize shortcuts"
+        "ruleDescription": "[⌘⌥]+[M]        →    Disabled minimize shortcut (on tap)"
       },
       {
         "conditions": [],
@@ -8470,7 +8391,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "WORD - CMD+/ copy document name and elevate privileges"
+        "ruleDescription": "[⌘]+[/]        →    Copy document name and elevate privileges (on tap)"
       },
       {
         "conditions": [],
@@ -8610,7 +8531,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "PASSWORDS - CMD+/ quick fill"
+        "ruleDescription": "[⌘]+[/]        →    Quick fill password (on tap)"
       },
       {
         "conditions": [],
@@ -8642,7 +8563,14 @@
                 ]
               }
             ]
-          },
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[⌘]+[H]        →    Skim command H remap (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -8673,7 +8601,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "SKIM - CMD+H/U"
+        "ruleDescription": "[⌘]+[U]        →    Skim command U remap (on tap)"
       },
       {
         "conditions": [],
@@ -8770,7 +8698,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "ANTINOTE - CMD+D+D to delete note"
+        "ruleDescription": "[⌘]+[D]        →    Delete note (on multi-tap)"
       }
     ]
   }

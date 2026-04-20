@@ -30,25 +30,38 @@ test("generated output includes all critical rule categories", () => {
 
   // Sample critical rules: tap-hold, space layer, special rules
   assert.ok(
-    descriptions.some((d: string) => d.includes("hold ->")),
-    "Missing tap-hold rules"
+    descriptions.some((d: string) => d.endsWith("(on hold)")),
+    "Missing tap-hold rules",
   );
   assert.ok(
-    descriptions.some((d: string) => d.includes("CAPS")),
-    "Missing CAPS rule"
+    descriptions.some((d: string) => d.startsWith("[CAPS]")),
+    "Missing CAPS rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.includes("ESCAPE")),
-    "Missing ESCAPE rule"
+    descriptions.some((d: string) => d.startsWith("[ESC]")),
+    "Missing ESCAPE rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.includes("CMD-Q")),
-    "Missing CMD-Q rule"
+    descriptions.some((d: string) => d.startsWith("[⌘]+[Q]")),
+    "Missing CMD-Q rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.includes("SPACE")),
-    "Missing SPACE layer rules"
+    descriptions.some((d: string) => d.startsWith("[_]")),
+    "Missing SPACE layer rules",
   );
+});
+
+test("generated output uses standardized rule descriptions", () => {
+  const output = loadGeneratedOutput();
+  const rules = output.complex_modifications.rules;
+
+  rules.forEach((rule: any) => {
+    assert.match(
+      rule.ruleDescription,
+      /^\[[^\]]+\](\+\[[^\]]+\])* {8}→ {4}.+ \(on (tap|hold|multi-tap)\)$/,
+      `Rule description is not standardized: ${rule.ruleDescription}`,
+    );
+  });
 });
 
 test("each rule has required manipulatorSources structure", () => {
@@ -123,7 +136,7 @@ test("output contains space layer rules", () => {
   const rules = output.complex_modifications.rules;
   const descriptions = rules.map((r: any) => r.ruleDescription || "");
 
-  const spaceRules = descriptions.filter((d: string) => d.includes("SPACE+"));
+  const spaceRules = descriptions.filter((d: string) => d.startsWith("[_]+["));
   assert.ok(spaceRules.length > 0, "No SPACE+ layer rules found");
   assert.ok(
     spaceRules.some((d: string) => d.includes("Applications")),
@@ -136,7 +149,7 @@ test("space layer activation copies current selection before enabling leader mod
   const rules = output.complex_modifications.rules;
   const spaceRule = rules.find(
     (rule: any) =>
-      rule.ruleDescription === "SPACE - tap for key, hold for layer",
+      rule.ruleDescription === "[_]        →    SPACE layer (on hold)",
   );
 
   assert.ok(spaceRule, "Missing SPACE leader rule");

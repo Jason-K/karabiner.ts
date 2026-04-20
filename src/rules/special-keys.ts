@@ -1,28 +1,47 @@
 import { ifApp, map, rule, toKey, withCondition } from "karabiner.ts";
 
 import { HYPER } from "../lib/mods";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd } from "../lib/scripts";
 import { tapHold } from "../lib/tap-hold";
 
 export const buildHomeEndRule = () => {
-  return rule("HOME/END - Mac-style navigation").manipulators([
-    ...map("home")
-      .to(toKey("left_arrow", ["command"]))
-      .build(),
-    ...map("home", "shift")
-      .to(toKey("left_arrow", ["command", "shift"]))
-      .build(),
-    ...map("end")
-      .to(toKey("right_arrow", ["command"]))
-      .build(),
-    ...map("end", "shift")
-      .to(toKey("right_arrow", ["command", "shift"]))
-      .build(),
-  ]);
+  return [
+    {
+      chord: ["home"],
+      description: "Move to line start",
+      manipulator: map("home").to(toKey("left_arrow", ["command"])),
+    },
+    {
+      chord: ["shift", "home"],
+      description: "Select to line start",
+      manipulator: map("home", "shift").to(
+        toKey("left_arrow", ["command", "shift"]),
+      ),
+    },
+    {
+      chord: ["end"],
+      description: "Move to line end",
+      manipulator: map("end").to(toKey("right_arrow", ["command"])),
+    },
+    {
+      chord: ["shift", "end"],
+      description: "Select to line end",
+      manipulator: map("end", "shift").to(
+        toKey("right_arrow", ["command", "shift"]),
+      ),
+    },
+  ].map(({ chord, description, manipulator }) =>
+    rule(formatRuleDescription(chord, description, "tap")).manipulators([
+      ...manipulator.build(),
+    ]),
+  );
 };
 
 export const buildGraveAccentHoldRule = () => {
-  return rule("grave_accent_and_tilde tap/hold -> grave or hyper+f5").manipulators([
+  return rule(
+    formatRuleDescription("grave_accent_and_tilde", "Hyper F5", "hold"),
+  ).manipulators([
     {
       type: "basic" as const,
       from: {
@@ -34,15 +53,18 @@ export const buildGraveAccentHoldRule = () => {
       },
       to_if_alone: [toKey("grave_accent_and_tilde", [], { halt: true })],
       to_if_held_down: [toKey("f5", HYPER, { halt: false })],
-      description:
-        "Tilde - self (tap), Hyper+F5 down (tap-hold down), Hyper+F5 up (tap-hold up)",
+      description: formatRuleDescription(
+        "grave_accent_and_tilde",
+        "Hyper F5",
+        "hold",
+      ),
     } as any,
   ]);
 };
 
 export const buildEnterRules = () => {
   return ["keypad_enter", "return_or_enter"].flatMap((key) => [
-    rule(`${key} hold -> quick format (except Excel)`).manipulators(
+    rule(formatRuleDescription(key, "Evaluate selection", "hold")).manipulators(
       withCondition(ifApp("com.microsoft.Excel").unless())(
         tapHold({
           key,
@@ -53,7 +75,7 @@ export const buildEnterRules = () => {
         }).build(),
       ).build(),
     ),
-    rule(`${key} hold -> F2 (Excel)`).manipulators(
+    rule(formatRuleDescription(key, "Edit cell", "hold")).manipulators(
       withCondition(ifApp("com.microsoft.Excel"))(
         tapHold({
           key,
@@ -69,7 +91,7 @@ export const buildEnterRules = () => {
 
 export const buildEqualsRules = () => {
   return ["keypad_equal_sign", "equal_sign"].map((key) =>
-    rule(`${key} hold -> Quick Date`).manipulators([
+    rule(formatRuleDescription(key, "Quick date", "hold")).manipulators([
       tapHold({
         key,
         alone: [

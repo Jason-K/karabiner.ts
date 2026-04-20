@@ -3,6 +3,7 @@ import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'kar
 
 import { setVarExpr } from '../conditions';
 import { L } from '../mods';
+import { formatRuleDescription } from "../rule-descriptions";
 import { cmd, layerIndicatorCommand } from '../scripts';
 import { openApp } from '../software';
 import {
@@ -162,7 +163,11 @@ export function generateLayerRules(
       "basic.to_if_held_down_threshold_milliseconds": 200,
     });
 
-  rules.push(rule(`${leaderLabel} - tap for key, hold for layer`).manipulators(leaderManipulator.build()));
+  rules.push(
+    rule(
+      formatRuleDescription(leaderKey, `${leaderLabel} layer`, "hold"),
+    ).manipulators(leaderManipulator.build()),
+  );
 
   // Generate sublayer rules
   layerConfigs.forEach(({ layerKey, layerName, mappings, releaseLayer = true, subLayers }) => {
@@ -191,7 +196,13 @@ export function generateLayerRules(
 
     // Add single rule with all manipulators for this sublayer
     rules.push(
-      rule(`${leaderLabel}+${layerKey.toUpperCase()} - ${layerName} layer`).manipulators(allManipulators)
+      rule(
+        formatRuleDescription(
+          [leaderKey, layerKey],
+          `${layerName} layer`,
+          "tap",
+        ),
+      ).manipulators(allManipulators),
     );
 
     // Nested sublayers (second-level)
@@ -221,7 +232,13 @@ export function generateLayerRules(
       );
 
       rules.push(
-        rule(`${leaderLabel}+${layerKey.toUpperCase()}+${subLayer.layerKey.toUpperCase()} - ${subLayer.layerName} layer`).manipulators(nestedManipulators)
+        rule(
+          formatRuleDescription(
+            [leaderKey, layerKey, subLayer.layerKey],
+            `${subLayer.layerName} layer`,
+            "tap",
+          ),
+        ).manipulators(nestedManipulators),
       );
     });
   });
@@ -280,7 +297,13 @@ export function generateLayerRules(
   ];
 
   rules.push(
-    rule(`${leaderLabel} layers - swallow unmapped keys`).manipulators(swallowUnmappedManipulators)
+    rule(
+      formatRuleDescription(
+        leaderKey,
+        `${leaderLabel} unmapped-key guard`,
+        "hold",
+      ),
+    ).manipulators(swallowUnmappedManipulators),
   );
 
   return rules;

@@ -1,7 +1,10 @@
 import { ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 
 export const buildCmdQRule = () => {
-  return rule("CMD-Q requires double-tap (300ms window)").manipulators([
+  return rule(
+    formatRuleDescription(["command", "q"], "Quit app", "multi-tap"),
+  ).manipulators([
     ...map("q", "command")
       .condition(ifVar("command_q_pressed", 1))
       .to(toKey("q", ["command"]))

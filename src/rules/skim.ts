@@ -1,18 +1,28 @@
 import { ifApp, map, rule, toKey } from "karabiner.ts";
 import { L } from "../lib/mods";
+import { formatRuleDescription } from "../lib/rule-descriptions";
 // import { applescript, cmd } from "../lib/scripts";
 
 export const buildSkimCommandRemapRule = () => {
-  return rule("SKIM - CMD+H/U").manipulators([
-    ...map("h", "command")
-      .condition(ifApp("net.sourceforge.skim-app.skim"))
-      .to(toKey("h", [L.cmd, L.ctrl]))
-      .build(),
-    ...map("u", "command")
-      .condition(ifApp("net.sourceforge.skim-app.skim"))
-      .to(toKey("u", [L.cmd, L.ctrl]))
-      .build(),
-  ]);
+  return [
+    {
+      key: "h",
+      description: "Skim command H remap",
+    },
+    {
+      key: "u",
+      description: "Skim command U remap",
+    },
+  ].map(({ key, description }) =>
+    rule(
+      formatRuleDescription(["command", key], description, "tap"),
+    ).manipulators([
+      ...map(key, "command")
+        .condition(ifApp("net.sourceforge.skim-app.skim"))
+        .to(toKey(key as any, [L.cmd, L.ctrl]))
+        .build(),
+    ]),
+  );
 };
 
 // export const buildSkimAppleScriptHoldRule = () => {
