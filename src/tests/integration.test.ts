@@ -42,11 +42,11 @@ test("generated output includes all critical rule categories", () => {
     "Missing ESCAPE rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[⌘]+[Q]")),
+    descriptions.some((d: string) => d.startsWith("[←⌘]+[Q]")),
     "Missing CMD-Q rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[_]")),
+    descriptions.some((d: string) => d.startsWith("[SPACE]")),
     "Missing SPACE layer rules",
   );
 });
@@ -136,7 +136,7 @@ test("output contains space layer rules", () => {
   const rules = output.complex_modifications.rules;
   const descriptions = rules.map((r: any) => r.ruleDescription || "");
 
-  const spaceRules = descriptions.filter((d: string) => d.startsWith("[_]+["));
+  const spaceRules = descriptions.filter((d: string) => d.startsWith("[SPACE]+["));
   assert.ok(spaceRules.length > 0, "No SPACE+ layer rules found");
   assert.ok(
     spaceRules.some((d: string) => d.includes("Applications")),
@@ -149,7 +149,7 @@ test("space layer activation copies current selection before enabling leader mod
   const rules = output.complex_modifications.rules;
   const spaceRule = rules.find(
     (rule: any) =>
-      rule.ruleDescription === "[_]        →    SPACE layer (on hold)",
+      rule.ruleDescription === "[SPACE]        →    SPACE layer (on hold)",
   );
 
   assert.ok(spaceRule, "Missing SPACE leader rule");

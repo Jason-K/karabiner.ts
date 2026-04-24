@@ -224,7 +224,7 @@ The highest-frequency shell-backed path in the current config is the layer indic
 ### Why most shell commands stay untouched for now
 
 - Raycast and CleanShot launches already hand off to external applications via URL schemes.
-- Text processing commands in `src/configs/space-layers.ts` incur Python startup cost that a Karabiner-side transport change will not remove.
+- Text processing commands in `src/mappings/space-layers.ts` still incur Python startup cost that a Karabiner-side transport change will not remove.
 - Kill-app and app-launch commands do enough downstream work that shell-spawn overhead is less likely to dominate total latency.
 
 ## Benefits Achieved

@@ -1,263 +1,67 @@
-# Karabiner User Command Server — Development Guide
+# Karabiner Config
 
-This guide explains when and how to use the user command server versus traditional shell commands, and how to extend it with new endpoints.
+Personal Karabiner-Elements configuration written in TypeScript with `karabiner.ts`.
 
-## Quick Reference: Server vs Shell
+## Current Architecture
 
-| Criterion     | Command Server                            | Shell Command                     |
-| ------------- | ----------------------------------------- | --------------------------------- |
-| **Latency**   | ~50ms (persistent daemon, pre-warmed)     | ~100-200ms (subprocess spawn)     |
-| **Frequency** | High (10+ times/second)                   | Low (occasional, <5/sec)          |
-| **Safety**    | Allowlist-based endpoint registry         | Direct shell execution            |
-| **State**     | Can maintain session state                | Stateless                         |
-| **Use Cases** | Layer indicator, notifications, app focus | One-off operations, complex logic |
+The config is now split by responsibility:
 
----
+- `src/mappings`: declarative intent tables only
+- `src/generators`: reusable compilers from mapping data to Karabiner rules
+- `src/rules`: stateful or exceptional adapters that do not yet fit a shared schema cleanly
+- `src/lib`: lower-level helpers, leader-layer internals, and integration utilities
+- `src/tests`: mapping- and generator-level regression coverage
 
-## Decision Tree
+The main entrypoint in `src/index.ts` wires these pieces together.
 
-``` text
-Start: I need to execute an operation from a Karabiner rule
+## Declarative Surfaces
 
-├─ Do I need this > 5 times/second?
-│  └─ YES → Use command server (lower latency, less overhead)
-│  └─ NO → Continue
-│
-├─ Is the operation simple and deterministic? (e.g., open URL, launch app)
-│  └─ YES (but sometimes not) → Can use either; consider frequency
-│  └─ NO (complex logic, error handling) → Use shell_command
-│
-├─ Does the operation need to run asynchronously in background?
-│  └─ YES → Either works; shell_command simpler for this
-│  └─ NO → Continue
-│
-├─ Does the operation read/write system state?
-│  └─ YES (clipboard, window focus, state) → Command server preferred
-│  └─ NO → Either works
-│
-└─ Final: Use command server if the function is registered in allowlist
-   Otherwise: Use fallback shell_command
+The larger mapping-heavy areas extracted during this refactor are now declarative:
+
+- right-option launchers via `src/mappings/right-option-launchers.ts`
+- navigation remaps via `src/mappings/navigation.ts`
+- disabled shortcuts via `src/mappings/disabled-shortcuts.ts`
+- special key holds via `src/mappings/special-key-holds.ts`
+- security slash actions via `src/mappings/security-actions.ts`
+- space layers via `src/mappings/space-layers.ts`
+- tap-hold bindings via `src/mappings/tap-hold.ts`
+
+Space layers and tap-hold mappings now use a shared `ActionSpec` DSL plus central registries for app, folder, Raycast, and CleanShot references.
+
+## Key Files
+
+- `src/mappings/action-dsl.ts`: symbolic action vocabulary used by declarative mappings
+- `src/generators/action-resolver.ts`: shared compiler from `ActionSpec` to Karabiner `ToEvent`s
+- `src/mappings/apps.ts`: app bundle registry
+- `src/mappings/folders.ts`: folder registry
+- `src/mappings/raycast.ts`: Raycast command registry
+- `src/mappings/cleanshot.ts`: CleanShot command registry
+- `docs/DECLARATIVE_CONFIG_PLAN.md`: architecture rules and migration status
+- `docs/COMMAND_SERVER_GUIDE.md`: command-server-specific guidance
+
+## Common Commands
+
+```bash
+npm run typecheck
+npm test
+npm run build
+npm run check
 ```
 
----
+## Documentation
 
-## Existing Endpoints
+- `docs/DECLARATIVE_CONFIG_PLAN.md`: current mappings/generators/rules taxonomy
+- `docs/COMMAND_SERVER_GUIDE.md`: when to use the user command server vs shell commands
+- `docs/INTEGRATION_SUMMARY.md`: upstream integration strategy and local extension layout
+- `docs/UPSTREAM_SYNC.md`: how to update the upstream mirror safely
 
-### 1. **layer_indicator** (Primary)
+## Practical Rule
 
-**Purpose:** Show/hide the karabiner layer indicator UI in Hammerspoon.
+If a file answers "what should this key do?", it should usually live in `src/mappings`.
 
-**Payload Format:**
+If a file answers "how do we turn that declaration into Karabiner JSON?", it should usually live in `src/generators`.
 
-```typescript
-// Show a layer
-{ "action": "show", "layer": "space" }
-
-// Hide the indicator
-{ "action": "hide" }
-
-// Optional: add a marker for latency tracking in logs
-{ "action": "show", "layer": "space", "marker": "rule_id_123" }
-```
-
-**Usage in Rules:**
-
-```typescript
-import { layerIndicatorCommand } from "../../lib/scripts";
-
-rule("Show layer indicator on activation").manipulators([
-  map("space_key").to(layerIndicatorCommand("show", "space_layer")).build(),
-  // ... other manipulators
-]);
-```
-
-**Characteristics:**
-
-- Ultra-low latency requirement (must be <500ms, typically 40-50ms)
-- High frequency (fires on every layer activation/deactivation)
-- Read-only (no state change feedback needed)
-- Hardened against Hammerspoon failures
-
----
-
-### 2. **hammerspoon** (Generic)
-
-**Purpose:** Execute arbitrary Hammerspoon functions via a safe allowlist.
-
-**Currently Allowed Functions:**
-
-#### a. **showNotification**
-
-Display a macOS notification.
-
-```typescript
-import { showNotification } from "../../lib/scripts";
-
-map("key_x")
-  .to(
-    showNotification("Alert!", {
-      subtitle: "Something important",
-      informativeText: "More details here",
-    }),
-  )
-  .build();
-```
-
-**Payload:**
-
-```json
-{
-  "endpoint": "hammerspoon",
-  "function": "showNotification",
-  "args": {
-    "title": "Required title",
-    "subtitle": "Optional subtitle",
-    "informativeText": "Optional details"
-  }
-}
-```
-
-#### b. **focusApp**
-
-Bring an application to focus by bundle ID.
-
-```typescript
-import { focusApp } from "../../lib/scripts";
-
-map("cmd", ["ctrl"]).with("n").to(focusApp("com.apple.Safari")).build();
-```
-
-**Payload:**
-
-```json
-{
-  "endpoint": "hammerspoon",
-  "function": "focusApp",
-  "args": { "bundleId": "com.apple.Safari" }
-}
-```
-
-#### c. **copyToClipboard**
-
-Set clipboard contents.
-
-```typescript
-import { copyToClipboard } from "../../lib/scripts";
-
-map("shift", ["ctrl"]).with("c").to(copyToClipboard("Predefined text")).build();
-```
-
-**Payload:**
-
-```json
-{
-  "endpoint": "hammerspoon",
-  "function": "copyToClipboard",
-  "args": { "text": "Content to copy" }
-}
-```
-
----
-
-## Extending the Command Server
-
-### Adding a New Hammerspoon Function
-
-**Step 1: Verify Safety**
-
-Before adding a function, ask:
-
-- Can arguments be maliciously crafted? (Validate/sanitize)
-- Could the function have side effects? (Acceptable risk?)
-- Is it deterministic? (No implicit external state)
-
-**Step 2: Register in Server Allowlist**
-
-Edit `scripts/layer_indicator_user_command_server.py`, `dispatch_hammerspoon()`:
-
-```python
-allowed_functions = {
-    "showNotification": "showNotification",
-    "focusApp": "focusApp",
-    "copyToClipboard": "copyToClipboard",
-    "myNewFunction": "myNewFunction",  # ← Add here
-}
-```
-
-**Step 3: Implement Argument Marshaling**
-
-The server serializes arguments to URL query parameters:
-
-```python
-# In dispatch_hammerspoon():
-args_encoded = urllib.parse.urlencode({"args": json.dumps(args)})
-url = f"hammerspoon://userCommand/{function}?{args_encoded}"
-```
-
-Your Hammerspoon receiver handler must deserialize. Example in `~/.hammerspoon/`:
-
-```lua
-function userCommandReceiver:userCommand(functionName, argsJson)
-  local args = json.decode(argsJson)
-
-  if functionName == "myNewFunction" then
-    return myNewFunction(args)
-  end
-end
-```
-
-**Step 4: Add TypeScript Helper**
-
-Edit `src/lib/scripts.ts`:
-
-```typescript
-export function myNewFunction(param1: string, param2?: number): ToEvent {
-  return userCommand("hammerspoon", {
-    function: "myNewFunction",
-    args: { param1, param2 },
-  });
-}
-```
-
-**Step 5: Test & Document**
-
-- Test with `observability-bundle` to measure latency
-- Add example to README or this guide
-- Update `dispatch_hammerspoon()` docstring
-
----
-
-### Adding a New Endpoint Type
-
-If your use case doesn't fit the "hammerspoon function call" pattern, create a new endpoint:
-
-**Example: "clipboard" endpoint that returns data**
-
-```python
-# In layer_indicator_user_command_server.py:
-
-def dispatch_clipboard(payload: dict[str, Any], dry_run: bool) -> float:
-  """Handle clipboard read/write operations."""
-  action = payload.get("action", "read")
-
-  if action == "read":
-    # Cannot easily return data over datagram socket
-    # Consider: write to temp file, return path
-    pass
-  elif action == "write":
-    text = payload.get("text", "")
-    # Write to clipboard
-    subprocess.run(["pbcopy"], input=text.encode(), check=False)
-```
-
-For endpoints that need **bidirectional communication** (read responses), consider:
-
-1. **Temp file exchange** — write result to `~/.config/karabiner/command_server/response-{marker}.json`
-2. **Return codes** — limited (0-255 range)
-3. **Side effects** — write to log, clipboard, etc. instead of returning
-4. **New socket** — spawn a response listener (more complex, not recommended)
-
-Most use cases work well with **fire-and-forget** (current model).
+If a file answers "how do we hand-build this unusual behavior that our schemas still do not express?", it belongs in `src/rules`.
 
 ---
 

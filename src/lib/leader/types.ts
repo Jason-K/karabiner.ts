@@ -1,27 +1,24 @@
 import type { ToEvent } from 'karabiner.ts';
 
+import type { ActionSpec } from "../../mappings/action-dsl";
 import type { OpenAppOpts } from '../builders';
 
 export type LayerMappingConfig = {
+  action?: ActionSpec;
   // Single action (legacy support)
-  path?: string;            // Folder/file path to open
-  command?: string;         // Shell command to execute
-  key?: string;             // Key to send
-  stickyModifier?: 'shift' | 'option' | 'command' | 'control'; // Toggle sticky modifier state
-  passModifiers?: boolean;  // If true, pass through modifiers from the source key (e.g., shift+h -> shift+left_arrow)
+  path?: string; // Folder/file path to open
+  command?: string; // Shell command to execute
+  key?: string; // Key to send
+  stickyModifier?: "shift" | "option" | "command" | "control"; // Toggle sticky modifier state
+  passModifiers?: boolean; // If true, pass through modifiers from the source key (e.g., shift+h -> shift+left_arrow)
   openAppOpts?: OpenAppOpts; // Use native open_application (preferred over command for apps)
-  toEvents?: ToEvent[];      // Directly supply ToEvents (advanced usage, Phase 4)
-  usageCounterVar?: string;  // Variable to increment each time this mapping runs (Phase 3)
+  toEvents?: ToEvent[]; // Directly supply ToEvents (advanced usage, Phase 4)
+  usageCounterVar?: string; // Variable to increment each time this mapping runs (Phase 3)
 
   // Multiple actions (new)
-  actions?: Array<{
-    type: 'path' | 'command' | 'key' | 'copy' | 'paste' | 'cut';
-    value?: string;         // For path, command, or key types
-    modifiers?: string[];   // For key type
-    passModifiers?: boolean; // For key type
-  }>;
+  actions?: ActionSpec[];
 
-  description: string;      // Description for this action
+  description: string; // Description for this action
 };
 
 export type NestedLayerConfig = {

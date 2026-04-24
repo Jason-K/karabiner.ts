@@ -1,6 +1,7 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
 
+import { resolveActionToEvents } from "../../generators/action-resolver";
 import { setVarExpr } from '../conditions';
 import { L } from '../mods';
 import { formatRuleDescription } from "../rule-descriptions";
@@ -27,34 +28,10 @@ function buildSublayerManipulators(
     // Support new actions array (multiple sequential actions)
     if (config.actions && config.actions.length > 0) {
       config.actions.forEach((action) => {
-        switch (action.type) {
-          case 'path':
-            if (action.value) events.push(cmd(`open '${action.value}'`));
-            break;
-          case 'command':
-            if (action.value) events.push(cmd(action.value));
-            break;
-          case 'key':
-            if (action.value) {
-              const mods = action.modifiers || [];
-              if (action.passModifiers) {
-                events.push(toKey(action.value as any, 'any' as any));
-              } else {
-                events.push(toKey(action.value as any, mods as any));
-              }
-            }
-            break;
-          case 'copy':
-            events.push(toKey('c', ['left_command']));
-            break;
-          case 'paste':
-            events.push(toKey('v', ['left_command']));
-            break;
-          case 'cut':
-            events.push(toKey('x', ['left_command']));
-            break;
-        }
+        events.push(...resolveActionToEvents(action));
       });
+    } else if (config.action) {
+      events.push(...resolveActionToEvents(config.action));
     }
     // Legacy single action support (backward compatible)
     else if (config.openAppOpts) {
@@ -74,11 +51,11 @@ function buildSublayerManipulators(
         control: L.ctrl,
       } as any;
       const stickyKey = modMap[config.stickyModifier];
-      events.push(toStickyModifier(stickyKey as any, 'toggle'));
+      events.push(toStickyModifier(stickyKey as any, "toggle"));
     } else if (config.key) {
       // If passModifiers is true, use 'any' modifiers to pass through from source key
       if (config.passModifiers) {
-        events.push(toKey(config.key as any, 'any' as any));
+        events.push(toKey(config.key as any, "any" as any));
       } else {
         events.push(toKey(config.key as any));
       }

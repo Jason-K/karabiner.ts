@@ -4,7 +4,7 @@ import test from "node:test";
 import {
     getFolderOpenerBundleIdFor,
     getOpenFolderCommandFor,
-} from "./folder-opener";
+} from "../lib/folder-opener";
 
 test("bloom opener escapes spaces", () => {
   const command = getOpenFolderCommandFor("bloom", "/Users/jason/My Folder");

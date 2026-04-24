@@ -19,27 +19,24 @@
 import { map, toKey, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
 import {
-    buildSpaceLayers,
-    getFolderOpenerBundleId,
-    getOpenFolderCommand,
-    SPACE_LAYER_DEBUG,
-    SPACE_LAYER_DEBUG_LOG_PATH,
-    SPACE_LAYER_INDICATOR_ROOT,
-    SPACE_LAYER_LABEL,
-    SPACE_LAYER_LEADER_KEY,
-    SPACE_LAYER_PREFIX,
-    tapHoldKeys,
-} from "./configs";
-import {
-    emitLayerDefinitions,
-    generateEscapeRule,
-    generateTapHoldRules,
-    updateDeviceConfigurations,
+  emitLayerDefinitions,
+  generateEscapeRule,
+  generateTapHoldRules,
+  updateDeviceConfigurations,
 } from "./generators";
-import type {
-    DeviceConfig
-} from "./generators/device-config";
+import type { DeviceConfig } from "./generators/device-config";
+import { getOpenFolderCommand } from "./lib/folder-opener";
 import { generateLayerRules } from "./lib/leader";
+import {
+  SPACE_LAYER_DEBUG,
+  SPACE_LAYER_DEBUG_LOG_PATH,
+  SPACE_LAYER_INDICATOR_ROOT,
+  SPACE_LAYER_LABEL,
+  SPACE_LAYER_LEADER_KEY,
+  SPACE_LAYER_PREFIX,
+  spaceLayerDefinitions,
+  tapHoldMappings,
+} from "./mappings";
 import {
   buildAntinoteDeleteRule,
   buildCapsLockRule,
@@ -59,10 +56,10 @@ import {
   buildWordPrivilegesRule,
 } from "./rules";
 
-const spaceLayers = buildSpaceLayers(getOpenFolderCommand, getFolderOpenerBundleId);
+const spaceLayers = spaceLayerDefinitions;
 
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = generateTapHoldRules(tapHoldKeys, spaceLayers);
+const tapHoldRules = generateTapHoldRules(tapHoldMappings, spaceLayers);
 
 // Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
 const debugMode = process.env.KARABINER_DEBUG === "true";

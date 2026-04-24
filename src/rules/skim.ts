@@ -3,8 +3,13 @@ import { L } from "../lib/mods";
 import { formatRuleDescription } from "../lib/rule-descriptions";
 // import { applescript, cmd } from "../lib/scripts";
 
+type SkimCommandRemap = {
+  key: "h" | "u";
+  description: string;
+};
+
 export const buildSkimCommandRemapRule = () => {
-  return [
+  const remaps: SkimCommandRemap[] = [
     {
       key: "h",
       description: "Skim command H remap",
@@ -13,11 +18,13 @@ export const buildSkimCommandRemapRule = () => {
       key: "u",
       description: "Skim command U remap",
     },
-  ].map(({ key, description }) =>
+  ];
+
+  return remaps.map(({ key, description }) =>
     rule(
-      formatRuleDescription(["command", key], description, "tap"),
+      formatRuleDescription(["left_command", key], description, "tap"),
     ).manipulators([
-      ...map(key, "command")
+      ...map(key, "left_command")
         .condition(ifApp("net.sourceforge.skim-app.skim"))
         .to(toKey(key as any, [L.cmd, L.ctrl]))
         .build(),

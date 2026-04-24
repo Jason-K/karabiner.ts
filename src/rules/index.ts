@@ -6,15 +6,14 @@
  */
 
 export { buildAntinoteDeleteRule } from "./antinote";
-export { buildCapsLockRule } from "./caps-lock";
-export { buildCmdQRule } from "./cmd-q";
 export {
     buildCtrlEscapeMonitorRule,
     buildEscapeTapTapHoldRule
 } from "./escape-monitor";
-export { buildLeftCommandRule } from "./left-command";
+export { buildCapsLockRule } from "./hyper-chords";
 export { buildHyperPlusRules } from "./hyper-plus";
-export { buildRightOptionAppsRule } from "./right-option-apps";
+export { buildCmdQRule, buildLeftCommandRule } from "./left-command-chords";
+export { buildRightOptionAppsRule } from "./right-option-launchers";
 export {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,

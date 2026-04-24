@@ -1,30 +1,34 @@
-import type { ToEvent } from 'karabiner.ts';
-import { rule, toKey } from 'karabiner.ts';
-import { getAllSublayerVars } from '../lib/leader/runtime';
-import type { SubLayerConfig } from '../lib/leader/types';
+import { rule } from "karabiner.ts";
+import { getAllSublayerVars } from "../lib/leader/runtime";
+import type { SubLayerConfig } from "../lib/leader/types";
 import { formatRuleDescription } from "../lib/rule-descriptions";
-import { tapHold } from '../lib/tap-hold';
+import { tapHold } from "../lib/tap-hold";
+import type { ActionSpec } from "../mappings/action-dsl";
+import { resolveActionToEvents } from "./action-resolver";
 
 export type TapHoldConfig = {
-  alone?: ToEvent[];
-  hold: ToEvent[];
+  alone?: ActionSpec[];
+  hold: ActionSpec[];
   description: string;
   timeoutMs?: number;
   thresholdMs?: number;
   appOverrides?: Array<{
     app: string;
     unless?: boolean;
-    alone?: ToEvent[];
-    hold?: ToEvent[];
+    alone?: ActionSpec[];
+    hold?: ActionSpec[];
     timeoutMs?: number;
     thresholdMs?: number;
-    cancel?: ToEvent[];
-    invoked?: ToEvent[];
+    cancel?: ActionSpec[];
+    invoked?: ActionSpec[];
   }>;
 };
 
-function parseKeyWithModifiers(keyString: string): { key: string; modifiers: string[] } {
-  const parts = keyString.split('+').map((p) => p.trim());
+function parseKeyWithModifiers(keyString: string): {
+  key: string;
+  modifiers: string[];
+} {
+  const parts = keyString.split("+").map((p) => p.trim());
   if (parts.length === 1) {
     return { key: parts[0], modifiers: [] };
   }
@@ -70,19 +74,28 @@ export function generateTapHoldRules(
   tapHoldKeys: Record<string, TapHoldConfig>,
   spaceLayers: SubLayerConfig[],
 ): any[] {
-  const spaceModVar = 'space_mod';
-  const allSublayerVars = getAllSublayerVars(spaceLayers, 'space');
+  const spaceModVar = "space_mod";
+  const allSublayerVars = getAllSublayerVars(spaceLayers, "space");
 
   return Object.entries(tapHoldKeys).map(([keyString, config]) => {
     const { key, modifiers } = parseKeyWithModifiers(keyString);
+    const defaultAlone: ActionSpec[] = [
+      { type: "key", key, modifiers, options: { halt: true } },
+    ];
 
     const manipulators = tapHold({
       key,
-      alone: config.alone ?? [toKey(key as any, modifiers as any[], { halt: true })],
-      hold: config.hold,
+      alone: (config.alone ?? defaultAlone).flatMap(resolveActionToEvents),
+      hold: config.hold.flatMap(resolveActionToEvents),
       timeoutMs: config.timeoutMs,
       thresholdMs: config.thresholdMs,
-      appOverrides: config.appOverrides,
+      appOverrides: config.appOverrides?.map((override) => ({
+        ...override,
+        alone: override.alone?.flatMap(resolveActionToEvents),
+        hold: override.hold?.flatMap(resolveActionToEvents),
+        cancel: override.cancel?.flatMap(resolveActionToEvents),
+        invoked: override.invoked?.flatMap(resolveActionToEvents),
+      })),
     }).build();
 
     if (modifiers.length > 0) {
@@ -96,14 +109,14 @@ export function generateTapHoldRules(
       m.conditions = m.conditions || [];
 
       m.conditions.push({
-        type: 'variable_unless',
+        type: "variable_unless",
         name: spaceModVar,
         value: 1,
       });
 
       allSublayerVars.forEach((sublayerVar) => {
         m.conditions.push({
-          type: 'variable_unless',
+          type: "variable_unless",
           name: sublayerVar,
           value: 1,
         });

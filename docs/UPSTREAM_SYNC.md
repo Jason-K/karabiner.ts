@@ -4,7 +4,7 @@ This document explains how to update from the upstream karabiner.ts project whil
 
 ## Architecture
 
-```
+```text
 karabiner/
 ├── karabiner.ts/              # THIS PROJECT (local extensions)
 │   ├── src/
@@ -52,6 +52,7 @@ This writes a diff snapshot to `docs/INTEGRATION_CONFLICTS.md`. It is a **tempor
 ### 3. Review Changes
 
 Check the conflict report for:
+
 - New upstream APIs you want to adopt
 - Breaking changes that need local code updates
 - Documentation improvements worth copying
@@ -59,15 +60,18 @@ Check the conflict report for:
 ### 4. Selectively Adopt Changes
 
 **If upstream adds new exports (e.g., new rule builders):**
+
 - Your code can import them immediately via `karabiner.ts`
 - No changes needed thanks to path mapping
 
 **If upstream changes existing APIs:**
+
 - Check if your `src/lib/` wrappers need updates
 - Update type imports in `src/lib/mods.ts` if needed
 - Re-run typecheck: `npm run typecheck`
 
 **If upstream docs are useful:**
+
 - Copy to `docs/upstream/` for reference
 - Link from your README if relevant
 
@@ -86,18 +90,22 @@ git push
 These files are yours and must never be overwritten by upstream:
 
 ### Core Configuration
+
 - `src/index.ts` - Your complete Karabiner config
-- `src/configs/*.ts` - Declarative mappings and constants
+- `src/mappings/*.ts` - Declarative mappings, registries, and constants
+- `src/generators/*.ts` - Reusable compilers from declarative intent to rules
 - `src/rules/*.ts` - Rule factory modules
 - `src/lib/*.ts` - All your extensions (including `leader/`)
 
 ### Project Files
+
 - `package.json` - Your build scripts and dependencies
 - `tsconfig.json` - Your path mapping configuration
 - `eslint.config.mjs` - Your lint rules
 - `README.md` - Your documentation (but copy useful sections from upstream)
 
 ### GitHub Actions
+
 - `.github/workflows/ci.yml` - Your CI workflow
 - `.github/upstream-workflows/` - Safe copies of upstream workflows (reference only)
 
@@ -106,10 +114,12 @@ These files are yours and must never be overwritten by upstream:
 These can be updated from upstream if you want:
 
 ### Documentation (reference)
+
 - `docs/upstream/docs/**` - Upstream API documentation
 - `docs/upstream-examples/**` - Example configurations
 
 ### Tooling (optional)
+
 - Upstream linter configs (review before adopting)
 - Upstream test structure (if you add tests)
 
@@ -118,11 +128,13 @@ These can be updated from upstream if you want:
 If upstream makes breaking changes:
 
 1. **Check imports**: Your `src/lib/` files import upstream types
+
    ```typescript
    import type { Modifier } from 'karabiner.ts';  // This might break
    ```
 
 2. **Run typecheck**:
+
    ```bash
    npm run typecheck
    ```
@@ -130,6 +142,7 @@ If upstream makes breaking changes:
 3. **Fix type mismatches**: Update your wrappers to match new upstream types
 
 4. **Test locally**:
+
    ```bash
    npm run build
    # Verify karabiner-output.json is valid
@@ -140,12 +153,14 @@ If upstream makes breaking changes:
 Example: Upstream adds a new `duoLayer()` function
 
 1. **Import it**:
+
    ```typescript
    // In src/index.ts or src/lib/builders.ts
    import { duoLayer } from 'karabiner.ts';
    ```
 
 2. **Use it**:
+
    ```typescript
    rule('Duo layer example').manipulators(
      duoLayer('a', 's').manipulators([

@@ -1,4 +1,4 @@
-import { rule, toKey, toSetVar } from "karabiner.ts";
+import { ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
 import { withConditions } from "../lib/conditions";
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { openApp } from "../lib/software";
@@ -90,5 +90,25 @@ export const buildLeftCommandRule = () => {
         "tap",
       ),
     } as any,
+  ]);
+};
+
+export const buildCmdQRule = () => {
+  return rule(
+    formatRuleDescription(["left_command", "q"], "Quit app", "multi-tap"),
+  ).manipulators([
+    ...map("q", "left_command")
+      .condition(ifVar("command_q_pressed", 1))
+      .to(toKey("q", ["left_command"]))
+      .to(toSetVar("command_q_pressed", 0))
+      .build(),
+    ...map("q", "left_command")
+      .parameters({ "basic.to_delayed_action_delay_milliseconds": 300 })
+      .to(toSetVar("command_q_pressed", 1))
+      .toDelayedAction(
+        [toSetVar("command_q_pressed", 0)],
+        [toSetVar("command_q_pressed", 0)],
+      )
+      .build(),
   ]);
 };
