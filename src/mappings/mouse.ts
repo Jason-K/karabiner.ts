@@ -136,26 +136,31 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_back",
-        description: "Rectangle maximize (tap) / show minimized (hold)",
+        description: "Rectangle maximize (tap) / resize (hold)",
         alone: [
           {
             shell_command:
               "open 'rectangle-pro://execute-action?name=maximize'",
           },
         ],
-        hold: [{ key_code: "m", modifiers: ["left_control", "left_option"] }],
+        hold: [
+          {
+            key_code: "left_command",
+            modifiers: ["left_control", "left_shift"],
+          },
+        ],
         thresholdMs: 300,
         timeoutMs: 300,
       },
       {
         type: "tapHold",
         button: "left_forward",
-        description: "Show menu (tap) / Here2There active-to-target (hold)",
+        description: "Show menu (tap) / move (hold)",
         alone: [{ key_code: "m", modifiers: ["left_option"] }],
         hold: [
           {
-            shell_command:
-              "open 'raycast://extensions/Jason/here-to-there/activeToTarget'",
+            key_code: "left_command",
+            modifiers: ["left_option", "left_shift"],
           },
         ],
         thresholdMs: 250,

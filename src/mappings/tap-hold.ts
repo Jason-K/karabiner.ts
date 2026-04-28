@@ -397,6 +397,17 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
+  fn: {
+    description: "Dictation via Spokenly",
+    hold: [
+      {
+        type: "key",
+        key: "f5",
+        modifiers: ["left_command", "left_option", "left_control"],
+        options: { repeat: false },
+      },
+    ],
+  },
   "left_command+p": {
     description: "Paletro",
     hold: [
