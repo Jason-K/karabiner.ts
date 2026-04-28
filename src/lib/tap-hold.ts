@@ -53,6 +53,7 @@ export function tapHoldFrom({
   description,
   cancel,
   invoked,
+  variable,
   appOverrides,
 }: TapHoldFromOpts) {
   const builders: any[] = [];
@@ -71,6 +72,10 @@ export function tapHoldFrom({
       "basic.to_if_held_down_threshold_milliseconds":
         opts.thresholdMs ?? thresholdMs,
     });
+    if (variable) {
+      m.to(toSetVar(variable, 1));
+      m.toAfterKeyUp(toSetVar(variable, 0));
+    }
     if (opts.cond) m.condition(opts.cond);
     if (opts.alone) opts.alone.forEach((e: ToEvent) => m.toIfAlone(e));
     if (opts.hold) opts.hold.forEach((e: ToEvent) => m.toIfHeldDown(e));
@@ -119,6 +124,7 @@ export function tapHold({
   description,
   cancel,
   invoked,
+  variable,
   appOverrides,
 }: TapHoldOpts) {
   return tapHoldFrom({
@@ -130,6 +136,7 @@ export function tapHold({
     description,
     cancel,
     invoked,
+    variable,
     appOverrides,
   });
 }

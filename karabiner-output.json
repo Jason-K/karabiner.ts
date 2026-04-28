@@ -5988,6 +5988,11 @@
             },
             "conditions": [
               {
+                "type": "variable_unless",
+                "name": "middle_front_pressed",
+                "value": 1
+              },
+              {
                 "type": "device_if",
                 "identifiers": [
                   {
@@ -6034,6 +6039,11 @@
               ]
             },
             "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "middle_front_pressed",
+                "value": 1
+              },
               {
                 "type": "device_if",
                 "identifiers": [
@@ -6109,6 +6119,22 @@
               "basic.to_if_alone_timeout_milliseconds": 300,
               "basic.to_if_held_down_threshold_milliseconds": 300
             },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "middle_front_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "middle_front_pressed",
+                  "value": 0
+                }
+              }
+            ],
             "to_if_alone": [
               {
                 "pointing_button": "button3"

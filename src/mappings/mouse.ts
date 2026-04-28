@@ -10,6 +10,7 @@ export type MouseTapHoldMapping = {
   type: "tapHold";
   button: string;
   description: string;
+  variable?: string;
   alone?: ToEvent[];
   hold?: ToEvent[];
   thresholdMs?: number;
@@ -72,8 +73,18 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "wheel_left",
         description: "Rectangle fill-left (tap) / prev-display (hold)",
-        alone: [{ shell_command: "open 'rectangle-pro://execute-action?name=fill-left'" }],
-        hold: [{ shell_command: "open 'rectangle-pro://execute-action?name=previous-display'" }],
+        alone: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=fill-left'",
+          },
+        ],
+        hold: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=previous-display'",
+          },
+        ],
         thresholdMs: 300,
         timeoutMs: 300,
       },
@@ -81,8 +92,18 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "wheel_right",
         description: "Rectangle fill-right (tap) / next-display (hold)",
-        alone: [{ shell_command: "open 'rectangle-pro://execute-action?name=fill-right'" }],
-        hold: [{ shell_command: "open 'rectangle-pro://execute-action?name=next-display'" }],
+        alone: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=fill-right'",
+          },
+        ],
+        hold: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=next-display'",
+          },
+        ],
         thresholdMs: 300,
         timeoutMs: 300,
       },
@@ -90,7 +111,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "middle_back",
         description: "CleanShot OCR (tap) / area capture (hold)",
-        alone: [{ shell_command: "open 'cleanshot://capture-text?linebreaks=false'" }],
+        alone: [
+          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
+        ],
         hold: [{ shell_command: "open 'cleanshot://capture-area'" }],
         thresholdMs: 300,
         timeoutMs: 300,
@@ -99,17 +122,14 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "middle_front",
         description: "Middle (tap) / Rectangle maximize (hold)",
+        variable: "middle_front_pressed",
         alone: [{ pointing_button: "button3" }],
-        hold: [{ shell_command: "open 'rectangle-pro://execute-action?name=maximize'" }],
-        thresholdMs: 300,
-        timeoutMs: 300,
-      },
-      {
-        type: "tapHold",
-        button: "back",
-        description: "Back (tap) / Last application (hold)",
-        alone: [{ pointing_button: "button4" }],
-        hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+        hold: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=maximize'",
+          },
+        ],
         thresholdMs: 300,
         timeoutMs: 300,
       },
@@ -117,7 +137,12 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "left_back",
         description: "Rectangle maximize (tap) / show minimized (hold)",
-        alone: [{ shell_command: "open 'rectangle-pro://execute-action?name=maximize'" }],
+        alone: [
+          {
+            shell_command:
+              "open 'rectangle-pro://execute-action?name=maximize'",
+          },
+        ],
         hold: [{ key_code: "m", modifiers: ["left_control", "left_option"] }],
         thresholdMs: 300,
         timeoutMs: 300,
@@ -129,7 +154,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         alone: [{ key_code: "m", modifiers: ["left_option"] }],
         hold: [
           {
-            shell_command: "open 'raycast://extensions/Jason/here-to-there/activeToTarget'",
+            shell_command:
+              "open 'raycast://extensions/Jason/here-to-there/activeToTarget'",
           },
         ],
         thresholdMs: 250,

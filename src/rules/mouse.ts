@@ -17,15 +17,33 @@ function applyDeviceScope(manipulators: any[], device: MouseDeviceConfig, descri
   });
 }
 
-function buildTapHoldManipulators(device: MouseDeviceConfig, mapping: MouseTapHoldMapping) {
-  return mouseTapHold({
+function buildTapHoldManipulators(
+  device: MouseDeviceConfig,
+  mapping: MouseTapHoldMapping,
+) {
+  const manipulators = mouseTapHold({
     button: mapping.button,
     buttonMap: device.buttonMap,
     alone: mapping.alone,
     hold: mapping.hold,
+    variable: mapping.variable,
     thresholdMs: mapping.thresholdMs,
     timeoutMs: mapping.timeoutMs,
   }).build();
+
+  // Guard against devices that emit wheel_left/right while middle_front is pressed.
+  if (mapping.button === "wheel_left" || mapping.button === "wheel_right") {
+    manipulators.forEach((m: any) => {
+      m.conditions = m.conditions ?? [];
+      m.conditions.push({
+        type: "variable_unless",
+        name: "middle_front_pressed",
+        value: 1,
+      });
+    });
+  }
+
+  return manipulators;
 }
 
 function buildDoubleTapManipulators(device: MouseDeviceConfig, mapping: MouseDoubleTapMapping) {
