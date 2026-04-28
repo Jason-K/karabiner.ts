@@ -28,6 +28,7 @@ import type { DeviceConfig } from "./generators/device-config";
 import { getOpenFolderCommand } from "./lib/folder-opener";
 import { generateLayerRules } from "./lib/leader";
 import {
+  mouseDeviceMappings,
   SPACE_LAYER_DEBUG,
   SPACE_LAYER_DEBUG_LOG_PATH,
   SPACE_LAYER_INDICATOR_ROOT,
@@ -50,6 +51,7 @@ import {
   buildHomeEndRule,
   buildHyperPlusRules,
   buildLeftCommandRule,
+  buildMouseRules,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
   buildSkimCommandRemapRule,
@@ -81,6 +83,9 @@ let rules: any[] = [
 
   // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
   buildCtrlEscapeMonitorRule(),
+
+  // Mouse mappings (declarative per-device rules)
+  ...buildMouseRules(mouseDeviceMappings),
 
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { mouseDeviceMappings } from "../mappings/mouse";
 import { buildAntinoteDeleteRule } from "../rules/antinote";
 import {
     buildCtrlEscapeMonitorRule,
@@ -14,6 +15,7 @@ import {
     buildCmdQRule,
     buildLeftCommandRule,
 } from "../rules/left-command-chords";
+import { buildMouseRules } from "../rules/mouse";
 import { buildRightOptionAppsRule } from "../rules/right-option-launchers";
 import {
     buildDisableHideMinimizeRule,
@@ -208,4 +210,25 @@ test("equals rules factory keeps keypad and regular mappings", () => {
       "[=]        →    Quick date (on hold)",
     ],
   );
+});
+
+test("mouse rules factory builds declarative per-device mappings", () => {
+  const rules = buildMouseRules(mouseDeviceMappings).map((r) => r.build());
+  assert.equal(rules.length, 8);
+  assert.equal(
+    rules[0]?.description,
+    "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)",
+  );
+  assert.equal(rules[0]?.manipulators.length, 1);
+  assert.deepEqual(rules[0]?.manipulators[0]?.from, {
+    pointing_button: "button5",
+  });
+
+  assert.equal(
+    rules[1]?.description,
+    "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)",
+  );
+  assert.deepEqual(rules[1]?.manipulators[0]?.from, {
+    pointing_button: "button7",
+  });
 });

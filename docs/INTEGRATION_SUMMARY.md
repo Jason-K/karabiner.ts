@@ -163,6 +163,18 @@ Created comprehensive guides:
 
 ## Ongoing Maintenance
 
+### Mouse Binding Infrastructure
+
+Mouse support now follows the same declarative layering pattern as keyboard mappings:
+
+1. `src/mappings/mouse.ts` stores per-device intent (button aliases, tap-hold, double-tap).
+2. `src/lib/mouse.ts` provides reusable button alias resolution and mouse-specific builders.
+3. `src/rules/mouse.ts` compiles mappings into device-scoped Karabiner rules.
+
+This keeps button behavior definitions in data tables while preserving reusable builder logic and device guards in one place.
+
+Known constraint: scroll up/down chord triggers are still tracked as requests in `mouseScrollChordRequests` because they are not represented as direct `from` events in the current declarative pipeline.
+
 ### Weekly (Optional)
 
 Check for upstream updates:

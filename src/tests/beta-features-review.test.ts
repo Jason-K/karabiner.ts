@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { map, toFromEvent, toSetVar } from "karabiner.ts";
-import { exprIf } from "./conditions";
+import { exprIf } from "../lib/conditions";
 
 test("to.from_event: pass-through for conditional remap", () => {
   /**

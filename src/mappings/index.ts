@@ -18,6 +18,7 @@ export { appRegistry } from "./apps";
 export { cleanShotRegistry } from "./cleanshot";
 export { disabledShortcuts } from "./disabled-shortcuts";
 export { folderRegistry } from "./folders";
+export { mouseDeviceMappings } from "./mouse";
 export { homeEndNavigationMappings } from "./navigation";
 export { raycastRegistry } from "./raycast";
 export { rightOptionLaunchers } from "./right-option-launchers";

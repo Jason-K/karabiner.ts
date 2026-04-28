@@ -13,6 +13,7 @@ export {
 export { buildCapsLockRule } from "./hyper-chords";
 export { buildHyperPlusRules } from "./hyper-plus";
 export { buildCmdQRule, buildLeftCommandRule } from "./left-command-chords";
+export { buildMouseDeviceRules, buildMouseRules } from "./mouse";
 export { buildRightOptionAppsRule } from "./right-option-launchers";
 export {
     buildDisableHideMinimizeRule,

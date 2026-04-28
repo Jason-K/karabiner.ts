@@ -278,6 +278,96 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'antinote://'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[⇧]+[A]        →    Antinote (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "c"
             },
             "parameters": {
@@ -1107,6 +1197,1206 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=prev-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / prev-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "spacebar",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=restore'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "tab",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "1",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "1",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and \"rectangle-pro://execute-action?name=left-half\" or \"rectangle-pro://execute-action?name=top-half\"; hs.execute(\"open -g \\\"\" .. url .. \"\\\"\")'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "1",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "2",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "2",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and \"rectangle-pro://execute-action?name=right-half\" or \"rectangle-pro://execute-action?name=bottom-half\"; hs.execute(\"open -g \\\"\" .. url .. \"\\\"\")'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "2",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "3",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "3",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "3",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "4",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "4",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "4",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_1",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_3",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_5",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_7",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_9",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)"
       },
       {
         "conditions": [],
@@ -4608,6 +5898,355 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button5"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "key_code": "up_arrow",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "key_code": "left_control",
+                "modifiers": [
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "key_code": "up_arrow",
+                  "modifiers": [
+                    "left_control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button7"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=fill-left'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=previous-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open 'rectangle-pro://execute-action?name=fill-left'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button8"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=fill-right'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open 'rectangle-pro://execute-action?name=fill-right'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle fill-right (tap) / next-display (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Rectangle fill-right (tap) / next-display (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button9"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'cleanshot://capture-area'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button3"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "pointing_button": "button3"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "pointing_button": "button3"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button11"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "key_code": "m",
+                "modifiers": [
+                  "left_control",
+                  "left_option"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle maximize (tap) / show minimized (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Rectangle maximize (tap) / show minimized (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button10"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 250,
+              "basic.to_if_held_down_threshold_milliseconds": 250
+            },
+            "to_if_alone": [
+              {
+                "key_code": "m",
+                "modifiers": [
+                  "left_option"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'raycast://extensions/Jason/here-to-there/activeToTarget'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "key_code": "m",
+                  "modifiers": [
+                    "left_option"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Show menu (tap) / Here2There active-to-target (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Show menu (tap) / Here2There active-to-target (hold)"
       },
       {
         "conditions": [],

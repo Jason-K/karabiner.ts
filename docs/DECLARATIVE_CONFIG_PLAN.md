@@ -64,6 +64,7 @@ Use this folder only when one of these is true:
 - `src/mappings/disabled-shortcuts.ts`
 - `src/mappings/folders.ts`
 - `src/mappings/navigation.ts`
+- `src/mappings/mouse.ts`
 - `src/mappings/raycast.ts`
 - `src/mappings/right-option-launchers.ts`
 - `src/mappings/security-actions.ts`
@@ -88,9 +89,12 @@ Use this folder only when one of these is true:
 - `src/rules/left-command-chords.ts`
 - `src/rules/escape-monitor.ts`
 - `src/rules/hyper-chords.ts`
+- `src/rules/mouse.ts`
 - `src/rules/security.ts`
 
 These files currently mix state, delayed actions, or complex conditions that do not yet fit a shared declarative schema cleanly.
+
+`src/rules/mouse.ts` is currently a device-scoping adapter that composes declarative mouse mappings into per-device Karabiner rules, including alias resolution and tap-hold/double-tap builders.
 
 ### Current thin adapters
 
@@ -191,6 +195,41 @@ type ActionSpec =
   | { type: "applescript"; scriptPath: string; args?: string[] }
   | { type: "cut" | "copy" | "paste" };
 ```
+
+### Mouse binding schema
+
+Mouse bindings are now split into declarative device mappings plus reusable builders:
+
+- `src/mappings/mouse.ts`: per-device intent (`MouseDeviceConfig`, `MouseTapHoldMapping`, `MouseDoubleTapMapping`)
+- `src/lib/mouse.ts`: alias resolution (`g502xButtons`) and generic helpers (`mouseTapHold`, `mouseVarTapTapHold`)
+- `src/rules/mouse.ts`: compiles mapping tables into device-guarded Karabiner rules
+
+```ts
+type MouseTapHoldMapping = {
+  type: "tapHold";
+  button: string;
+  description: string;
+  alone?: ToEvent[];
+  hold?: ToEvent[];
+  thresholdMs?: number;
+  timeoutMs?: number;
+};
+
+type MouseDoubleTapMapping = {
+  type: "doubleTap";
+  button: string;
+  description: string;
+  firstVar: string;
+  aloneEvents?: ToEvent[];
+  holdEvents?: ToEvent[];
+  tapTapEvents?: ToEvent[];
+  tapTapHoldEvents?: ToEvent[];
+  allowPassThrough?: boolean;
+  thresholdMs?: number;
+};
+```
+
+Current limitation: scroll up/down chord triggers are not expressible as basic `from` events in this pipeline, so `src/mappings/mouse.ts` tracks those as explicit pending requests (`mouseScrollChordRequests`) with external bridge notes.
 
 ## Recommended Sequence
 

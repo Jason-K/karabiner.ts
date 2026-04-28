@@ -57,7 +57,7 @@ map("left_option")
 - ✅ Can be sequenced with other events (emit original + side effect)
 - ✅ **Adoption Status:** READY — Safe for immediate use
 
-**Tests:** 2 dedicated tests in [beta-features-review.test.ts](../../src/lib/beta-features-review.test.ts)
+**Tests:** 2 dedicated tests in [beta-features-review.test.ts](../../src/tests/beta-features-review.test.ts)
 
 ### Feature 2: `to_if_other_key_pressed` ✅
 
@@ -89,7 +89,7 @@ map("left_option")
 - ✅ Respects optional modifiers in trigger
 - ✅ **Adoption Status:** READY — Ideal for modifier patterns
 
-**Tests:** 5 dedicated tests in [beta-features-review.test.ts](../../src/lib/beta-features-review.test.ts)
+**Tests:** 5 dedicated tests in [beta-features-review.test.ts](../../src/tests/beta-features-review.test.ts)
 
 ### Documentation
 
@@ -194,7 +194,7 @@ map("left_option")
 - `src/lib/scripts.ts` — Added `layerIndicatorCommand()` helper (optimizes layer indicator updates)
 - `src/lib/conditions.ts` — Fixed expression helpers (removed `any` casts, typed properly)
 - `src/lib/leader/build.ts` — Integrated `layerIndicatorCommand()` for 4 show/hide calls
-- `src/lib/beta-features-review.test.ts` — **NEW** — 12 comprehensive correctness tests
+- `src/tests/beta-features-review.test.ts` — **NEW** — 12 comprehensive correctness tests
 
 ### Documentation
 
@@ -242,4 +242,4 @@ map("left_option")
 - **Karabiner-Elements:** [Karabiner Homepage](https://karabiner-elements.pqrs.org/)
 - **karabiner.ts upstream:** [Karabiner.ts repo](https://github.com/evan-liu/karabiner.ts)
 - **Local documentation:** [FUTURE_FEATURES.md](../FUTURE_FEATURES.md), [INTEGRATION_SUMMARY.md](../INTEGRATION_SUMMARY.md)
-- **Test suite:** [beta-features-review.test.ts](../../src/lib/beta-features-review.test.ts)
+- **Test suite:** [beta-features-review.test.ts](../../src/tests/beta-features-review.test.ts)

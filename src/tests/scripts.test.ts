@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { focusApp } from "./scripts";
+import { focusApp } from "../lib/scripts";
 
 test("focusApp keeps native open command by default", () => {
   const event = focusApp("com.apple.Safari") as { shell_command: string };

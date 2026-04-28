@@ -276,6 +276,18 @@ Most use cases work well with **fire-and-forget** (current model).
 
 ## Migration Guide: shell_command → Command Server
 
+### Mouse Scroll Chord Context
+
+The declarative mouse infrastructure lives in:
+
+- `src/mappings/mouse.ts`
+- `src/lib/mouse.ts`
+- `src/rules/mouse.ts`
+
+Button tap-hold and double-tap mappings are fully supported there. Scroll up/down chord triggers are currently tracked as pending requests because they are not available as direct basic `from` events in this pipeline.
+
+Use the command server or Hammerspoon-side bridge for scroll-chord behaviors until a native declarative trigger path is adopted.
+
 ### When to Migrate
 
 ✅ **Good candidates:**
@@ -359,7 +371,7 @@ SMOKE_MAX_LATENCY_MS=1000 bash scripts/install-layer-indicator-user-command-serv
 
 ### Unit Tests
 
-Add tests in `src/configs/folder-opener.test.ts` style:
+Add tests in `src/tests/folder-opener.test.ts` style:
 
 ```typescript
 import test from 'node:test';

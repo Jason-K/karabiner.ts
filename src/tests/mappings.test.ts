@@ -5,6 +5,10 @@ import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
 import { disabledShortcuts } from "../mappings/disabled-shortcuts";
 import { folderRegistry } from "../mappings/folders";
+import {
+  mouseDeviceMappings,
+  mouseScrollChordRequests,
+} from "../mappings/mouse";
 import { homeEndNavigationMappings } from "../mappings/navigation";
 import { raycastRegistry } from "../mappings/raycast";
 import { rightOptionLaunchers } from "../mappings/right-option-launchers";
@@ -167,9 +171,55 @@ test("security slash action mappings stay declarative", () => {
 test("tap-hold mappings keep expected anchor keys", () => {
   assert.ok(tapHoldMappings.a);
   assert.ok(tapHoldMappings["hyper+q"]);
+  assert.ok(tapHoldMappings["hyper+left_arrow"]);
+  assert.ok(tapHoldMappings["hyper+right_arrow"]);
+  assert.ok(tapHoldMappings["hyper+spacebar"]);
   assert.ok(tapHoldMappings.tab);
+  assert.ok(tapHoldMappings["hyper+tab"]);
   assert.ok(tapHoldMappings["hyper+w"]);
+  assert.ok(tapHoldMappings["hyper+1"]);
+  assert.ok(tapHoldMappings["hyper+2"]);
+  assert.ok(tapHoldMappings["hyper+3"]);
+  assert.ok(tapHoldMappings["hyper+4"]);
+  assert.ok(tapHoldMappings["hyper+keypad_1"]);
+  assert.ok(tapHoldMappings["hyper+keypad_3"]);
+  assert.ok(tapHoldMappings["hyper+keypad_5"]);
+  assert.ok(tapHoldMappings["hyper+keypad_7"]);
+  assert.ok(tapHoldMappings["hyper+keypad_9"]);
   assert.ok(tapHoldMappings["right_option+s"]);
+});
+
+test("new hyper rectangle mappings stay declarative", () => {
+  assert.deepEqual(tapHoldMappings["hyper+left_arrow"].alone, [
+    {
+      type: "url",
+      url: "rectangle-pro://execute-action?name=fill-left",
+      background: true,
+    },
+  ]);
+  assert.deepEqual(tapHoldMappings["hyper+left_arrow"].hold, [
+    {
+      type: "url",
+      url: "rectangle-pro://execute-action?name=prev-display",
+      background: true,
+    },
+  ]);
+
+  assert.deepEqual(tapHoldMappings["hyper+spacebar"].hold, [
+    {
+      type: "url",
+      url: "rectangle-pro://execute-action?name=restore",
+      background: true,
+    },
+  ]);
+
+  assert.deepEqual(tapHoldMappings["hyper+keypad_9"].hold, [
+    {
+      type: "url",
+      url: "rectangle-pro://execute-action?name=top-right-eighth",
+      background: true,
+    },
+  ]);
 });
 
 test("hyper+q and hyper+w tap-hold mappings stay declarative", () => {
@@ -224,4 +274,97 @@ test("folders layer uses folder and raycast refs", () => {
     description: "Scripts",
     action: { type: "folder", ref: "scripts" },
   });
+});
+
+test("mouse device mappings are declarative and device-scoped", () => {
+  assert.equal(mouseDeviceMappings.length, 1);
+  assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
+  assert.deepEqual(mouseDeviceMappings[0]?.identifiers, {
+    product_id: 49305,
+    vendor_id: 1133,
+  });
+  assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 8);
+
+  const backMapping = mouseDeviceMappings[0]?.mappings.find(
+    (m) => m.type === "tapHold" && m.button === "back",
+  );
+  assert.deepEqual(backMapping, {
+    type: "tapHold",
+    button: "back",
+    description: "Back (tap) / Last application (hold)",
+    alone: [{ pointing_button: "button4" }],
+    hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+    thresholdMs: 300,
+    timeoutMs: 300,
+  });
+
+  assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
+    type: "tapHold",
+    button: "shift",
+    description: "ctrl+up (tap) / ctrl+opt+shift down (hold)",
+    alone: [
+      {
+        key_code: "up_arrow",
+        modifiers: ["left_control"],
+      },
+    ],
+    hold: [
+      {
+        key_code: "left_control",
+        modifiers: ["left_option", "left_shift"],
+      },
+    ],
+    thresholdMs: 300,
+    timeoutMs: 300,
+  });
+
+  assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
+    type: "tapHold",
+    button: "wheel_left",
+    description: "Rectangle fill-left (tap) / prev-display (hold)",
+    alone: [
+      { shell_command: "open 'rectangle-pro://execute-action?name=fill-left'" },
+    ],
+    hold: [
+      {
+        shell_command:
+          "open 'rectangle-pro://execute-action?name=previous-display'",
+      },
+    ],
+    thresholdMs: 300,
+    timeoutMs: 300,
+  });
+
+  const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
+    (m) => m.type === "tapHold" && m.button === "left_forward",
+  );
+  assert.deepEqual(leftForwardMapping, {
+    type: "tapHold",
+    button: "left_forward",
+    description: "Show menu (tap) / Here2There active-to-target (hold)",
+    alone: [{ key_code: "m", modifiers: ["left_option"] }],
+    hold: [
+      {
+        shell_command:
+          "open 'raycast://extensions/Jason/here-to-there/activeToTarget'",
+      },
+    ],
+    thresholdMs: 250,
+    timeoutMs: 250,
+  });
+});
+
+test("mouse scroll chord requests are tracked for follow-up", () => {
+  assert.deepEqual(
+    [...mouseScrollChordRequests],
+    [
+      "forward+scroll_up -> volume_increment",
+      "forward+scroll_down -> volume_decrement",
+      "back+scroll_down -> left_control+tab",
+      "back+scroll_up -> left_control+left_shift+tab",
+      "right+scroll_down -> left_command+tab",
+      "right+scroll_up -> left_command+left_shift+tab",
+    ],
+  );
 });

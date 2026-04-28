@@ -55,10 +55,15 @@ test("generated output uses standardized rule descriptions", () => {
   const output = loadGeneratedOutput();
   const rules = output.complex_modifications.rules;
 
+  const standardDescription =
+    /^\[[^\]]+\](\+\[[^\]]+\])* {8}→ {4}.+ \(on (tap|hold|multi-tap)\)$/;
+  const mouseDeviceDescription =
+    /^[^:]+: .+ \((tap|hold)\)( \/ .+ \((tap|hold)\))*$/;
+
   rules.forEach((rule: any) => {
-    assert.match(
-      rule.ruleDescription,
-      /^\[[^\]]+\](\+\[[^\]]+\])* {8}→ {4}.+ \(on (tap|hold|multi-tap)\)$/,
+    assert.ok(
+      standardDescription.test(rule.ruleDescription) ||
+        mouseDeviceDescription.test(rule.ruleDescription),
       `Rule description is not standardized: ${rule.ruleDescription}`,
     );
   });

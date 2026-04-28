@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { formatRuleDescription } from './rule-descriptions';
+import { formatRuleDescription } from '../lib/rule-descriptions';
 
 test('formats modifier chords with symbol brackets', () => {
   assert.equal(

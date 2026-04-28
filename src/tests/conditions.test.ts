@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { map, toFromEvent, toSendUserCommand } from "karabiner.ts";
 
-import { exprIf, exprUnless, setVarExpr } from "./conditions";
+import { exprIf, exprUnless, setVarExpr } from "../lib/conditions";
 
 test("setVarExpr emits documented expression fields", () => {
   assert.deepEqual(setVarExpr("mode", "mode != 0 ? 0 : 1", "0"), {
