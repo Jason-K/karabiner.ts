@@ -1,5 +1,22 @@
 import type { PointingButton, ToEvent } from "karabiner.ts";
 import { g502xButtons } from "../lib/mouse";
+import {
+  rectangleActionByFocusedWindowOrientationCommand,
+  rectangleActionUrl,
+  rectangleMaxOrRestoreEvents,
+} from "./rectangle";
+
+const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");
+
+const RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("right-half", "bottom-half");
+
+const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-left", "top-half");
+
+const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
 export type MouseIdentifiers = {
   product_id: number;
@@ -17,6 +34,14 @@ export type MouseTapHoldMapping = {
   timeoutMs?: number;
 };
 
+export type MouseSimultaneousMapping = {
+  type: "simultaneous";
+  buttons: string[];
+  description: string;
+  to: ToEvent[];
+  thresholdMs?: number;
+};
+
 export type MouseDoubleTapMapping = {
   type: "doubleTap";
   button: string;
@@ -30,7 +55,10 @@ export type MouseDoubleTapMapping = {
   thresholdMs?: number;
 };
 
-export type MouseMapping = MouseTapHoldMapping | MouseDoubleTapMapping;
+export type MouseMapping =
+  | MouseTapHoldMapping
+  | MouseDoubleTapMapping
+  | MouseSimultaneousMapping;
 
 export type MouseDeviceConfig = {
   buttonMap: Record<string, PointingButton>;
@@ -53,7 +81,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "shift",
-        description: "ctrl+up (tap) / ctrl+opt+shift down (hold)",
+        description: "Mission Control (tap) / Rectangle snap (hold)",
         alone: [
           {
             key_code: "up_arrow",
@@ -72,40 +100,48 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel_left",
-        description: "Rectangle fill-left (tap) / prev-display (hold)",
-        alone: [
-          {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=fill-left'",
-          },
-        ],
+        description: "Rectangle fill-left (hold)",
         hold: [
           {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=previous-display'",
+            shell_command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: 200,
+        timeoutMs: 200,
       },
       {
         type: "tapHold",
         button: "wheel_right",
-        description: "Rectangle fill-right (tap) / next-display (hold)",
-        alone: [
-          {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=fill-right'",
-          },
-        ],
+        description: "Rectangle fill-right (hold)",
         hold: [
           {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=next-display'",
+            shell_command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: 200,
+        timeoutMs: 200,
+      },
+      {
+        type: "simultaneous",
+        buttons: ["right", "wheel_left"],
+        description: "Rectangle previous-display (right+wheel_left)",
+        to: [
+          {
+            shell_command: `open -g '${rectangleActionUrl("previous-display")}'`,
+          },
+        ],
+        thresholdMs: 500,
+      },
+      {
+        type: "simultaneous",
+        buttons: ["right", "wheel_right"],
+        description: "Rectangle next-display (right+wheel_right)",
+        to: [
+          {
+            shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
+          },
+        ],
+        thresholdMs: 500,
       },
       {
         type: "tapHold",
@@ -124,33 +160,22 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         description: "Middle (tap) / Rectangle maximize (hold)",
         variable: "middle_front_pressed",
         alone: [{ pointing_button: "button3" }],
-        hold: [
-          {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=maximize'",
-          },
-        ],
+        hold: rectangleMaxOrRestoreEvents(),
         thresholdMs: 300,
         timeoutMs: 300,
       },
       {
         type: "tapHold",
         button: "left_back",
-        description: "Rectangle maximize (tap) / resize (hold)",
-        alone: [
-          {
-            shell_command:
-              "open 'rectangle-pro://execute-action?name=maximize'",
-          },
-        ],
+        description: "Rectangle Max/Restore (tap) / Next Display (hold)",
+        alone: rectangleMaxOrRestoreEvents(),
         hold: [
           {
-            key_code: "left_command",
-            modifiers: ["left_control", "left_shift"],
+            shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
           },
         ],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: 400,
+        timeoutMs: 400,
       },
       {
         type: "tapHold",
@@ -163,8 +188,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             modifiers: ["left_option", "left_shift"],
           },
         ],
-        thresholdMs: 250,
-        timeoutMs: 250,
+        thresholdMs: 300,
+        timeoutMs: 300,
       },
     ],
   },

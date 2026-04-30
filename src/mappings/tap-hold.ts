@@ -1,10 +1,21 @@
 import type { TapHoldConfig } from "../generators/tap-hold-rules";
+import {
+  rectangleActionByFocusedWindowOrientationCommand,
+  rectangleActionUrl,
+  rectangleMaxOrRestoreCommand,
+} from "./rectangle";
 
 const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
-  '/opt/homebrew/bin/hs -c \'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and "rectangle-pro://execute-action?name=left-half" or "rectangle-pro://execute-action?name=top-half"; hs.execute("open -g \\"" .. url .. "\\"")\'';
+  rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");
 
 const RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION =
-  '/opt/homebrew/bin/hs -c \'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and "rectangle-pro://execute-action?name=right-half" or "rectangle-pro://execute-action?name=bottom-half"; hs.execute("open -g \\"" .. url .. "\\"")\'';
+  rectangleActionByFocusedWindowOrientationCommand("right-half", "bottom-half");
+
+const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-left", "top-half");
+
+const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
 export const tapHoldMappings: Record<string, TapHoldConfig> = {
   a: {
@@ -61,13 +72,13 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [{ type: "raycast", ref: "recentDownloads" }],
   },
   k: { description: "Kitty", hold: [{ type: "app", ref: "kitty" }] },
-  m: {
+  "cmd+m": {
     description: "Deminimize",
     hold: [
       {
         type: "key",
         key: "m",
-        modifiers: ["command", "option", "control"],
+        modifiers: ["option", "control"],
         options: { repeat: false },
       },
     ],
@@ -92,31 +103,30 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=left-half",
+        url: rectangleActionUrl("left-half"),
         background: true,
       },
     ],
     hold: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=fill-left",
+        url: rectangleActionUrl("fill-left"),
         background: true,
       },
     ],
   },
   "hyper+left_arrow": {
-    description: "Rectangle fill-left / prev-display",
+    description: "Rectangle fill-left / previous-display",
     alone: [
       {
-        type: "url",
-        url: "rectangle-pro://execute-action?name=fill-left",
-        background: true,
+        type: "shell",
+        command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
       },
     ],
     hold: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=prev-display",
+        url: rectangleActionUrl("previous-display"),
         background: true,
       },
     ],
@@ -125,129 +135,115 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Rectangle fill-right / next-display",
     alone: [
       {
-        type: "url",
-        url: "rectangle-pro://execute-action?name=fill-right",
-        background: true,
+        type: "shell",
+        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
       },
     ],
     hold: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=next-display",
+        url: rectangleActionUrl("next-display"),
         background: true,
       },
     ],
   },
   "hyper+spacebar": {
     description: "Rectangle maximize / restore",
-    alone: [
-      {
-        type: "url",
-        url: "rectangle-pro://execute-action?name=maximize",
-        background: true,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: "rectangle-pro://execute-action?name=restore",
-        background: true,
-      },
-    ],
+    alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   },
   "hyper+tab": {
     description: "Rectangle next-display / previous-display",
     alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=next-display",
+        url: rectangleActionUrl("next-display"),
         background: true,
       },
     ],
     hold: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=previous-display",
+        url: rectangleActionUrl("previous-display"),
         background: true,
       },
     ],
   },
   "hyper+1": {
     description: "Rectangle left-half/top-half by orientation",
-    hold: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
+    alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
   },
   "hyper+2": {
     description: "Rectangle right-half/bottom-half by orientation",
-    hold: [
+    alone: [
       { type: "shell", command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION },
     ],
   },
   "hyper+3": {
     description: "Rectangle first-third",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=first-third",
+        url: rectangleActionUrl("first-third"),
         background: true,
       },
     ],
   },
   "hyper+4": {
     description: "Rectangle first-fourth",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=first-fourth",
+        url: rectangleActionUrl("first-fourth"),
         background: true,
       },
     ],
   },
   "hyper+keypad_1": {
     description: "Rectangle bottom-left-eighth",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=bottom-left-eighth",
+        url: rectangleActionUrl("bottom-left-eighth"),
         background: true,
       },
     ],
   },
   "hyper+keypad_3": {
     description: "Rectangle bottom-right-eighth",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=bottom-right-eighth",
+        url: rectangleActionUrl("bottom-right-eighth"),
         background: true,
       },
     ],
   },
   "hyper+keypad_5": {
     description: "Rectangle maximize",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=maximize",
+        url: rectangleActionUrl("maximize"),
         background: true,
       },
     ],
   },
   "hyper+keypad_7": {
     description: "Rectangle top-left-eighth",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=top-left-eighth",
+        url: rectangleActionUrl("top-left-eighth"),
         background: true,
       },
     ],
   },
   "hyper+keypad_9": {
     description: "Rectangle top-right-eighth",
-    hold: [
+    alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=top-right-eighth",
+        url: rectangleActionUrl("top-right-eighth"),
         background: true,
       },
     ],
@@ -285,14 +281,14 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     alone: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=right-half",
+        url: rectangleActionUrl("right-half"),
         background: true,
       },
     ],
     hold: [
       {
         type: "url",
-        url: "rectangle-pro://execute-action?name=fill-right",
+        url: rectangleActionUrl("fill-right"),
         background: true,
       },
     ],

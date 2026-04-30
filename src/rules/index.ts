@@ -25,8 +25,9 @@ export {
   buildSkimCommandRemapRule,
 } from "./skim";
 export {
-    buildEnterRules,
-    buildEqualsRules,
-    buildGraveAccentHoldRule,
-    buildHomeEndRule
+  buildEnterRules,
+  buildEqualsRules,
+  buildGraveAccentHoldRule,
+  buildHomeEndRule,
+  buildOnePieceClickEnterRule,
 } from "./special-keys";

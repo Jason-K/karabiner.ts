@@ -864,7 +864,12 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "m"
+              "key_code": "m",
+              "modifiers": {
+                "mandatory": [
+                  "command"
+                ]
+              }
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 300,
@@ -874,7 +879,9 @@
               {
                 "halt": true,
                 "key_code": "m",
-                "modifiers": []
+                "modifiers": [
+                  "command"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -882,7 +889,6 @@
                 "repeat": false,
                 "key_code": "m",
                 "modifiers": [
-                  "command",
                   "option",
                   "control"
                 ]
@@ -894,7 +900,9 @@
                 {
                   "halt": true,
                   "key_code": "m",
-                  "modifiers": []
+                  "modifiers": [
+                    "command"
+                  ]
                 }
               ]
             },
@@ -943,7 +951,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[M]        →    Deminimize (on hold)"
+        "ruleDescription": "[⌘]+[M]        →    Deminimize (on hold)"
       },
       {
         "conditions": [],
@@ -1219,19 +1227,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=prev-display'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -1280,7 +1288,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / prev-display (on hold)"
+        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)"
       },
       {
         "conditions": [],
@@ -1303,7 +1311,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -1315,7 +1323,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -1387,19 +1395,25 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=restore'"
+                "halt": true,
+                "key_code": "spacebar",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -1555,6 +1569,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "1",
                 "modifiers": [
@@ -1564,22 +1583,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and \"rectangle-pro://execute-action?name=left-half\" or \"rectangle-pro://execute-action?name=top-half\"; hs.execute(\"open -g \\\"\" .. url .. \"\\\"\")'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "1",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -1651,6 +1659,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "2",
                 "modifiers": [
@@ -1660,22 +1673,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local f=hs.screen.mainScreen():frame(); local url=(f.w>=f.h) and \"rectangle-pro://execute-action?name=right-half\" or \"rectangle-pro://execute-action?name=bottom-half\"; hs.execute(\"open -g \\\"\" .. url .. \"\\\"\")'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "2",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -1747,6 +1749,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "3",
                 "modifiers": [
@@ -1756,22 +1763,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "3",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
                 }
               ]
             },
@@ -1843,6 +1839,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "4",
                 "modifiers": [
@@ -1852,22 +1853,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "4",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
                 }
               ]
             },
@@ -1939,6 +1929,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "keypad_1",
                 "modifiers": [
@@ -1948,22 +1943,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_1",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
                 }
               ]
             },
@@ -2035,6 +2019,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "keypad_3",
                 "modifiers": [
@@ -2044,22 +2033,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_3",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
                 }
               ]
             },
@@ -2131,6 +2109,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "keypad_5",
                 "modifiers": [
@@ -2140,22 +2123,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_5",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
                 }
               ]
             },
@@ -2227,6 +2199,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "keypad_7",
                 "modifiers": [
@@ -2236,22 +2213,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_7",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
                 }
               ]
             },
@@ -2323,6 +2289,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "halt": true,
                 "key_code": "keypad_9",
                 "modifiers": [
@@ -2332,22 +2303,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_9",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
                 }
               ]
             },
@@ -6037,11 +5997,11 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)"
+            "description": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)"
+        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)"
       },
       {
         "conditions": [],
@@ -6052,26 +6012,17 @@
               "pointing_button": "button7"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
             },
-            "to_if_alone": [
-              {
-                "shell_command": "open 'rectangle-pro://execute-action?name=fill-left'"
-              }
-            ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'rectangle-pro://execute-action?name=previous-display'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open 'rectangle-pro://execute-action?name=fill-left'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -6089,11 +6040,11 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)"
+            "description": "Logitech G502 X: Rectangle fill-left (hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)"
+        "ruleDescription": "Logitech G502 X: Rectangle fill-left (hold)"
       },
       {
         "conditions": [],
@@ -6104,26 +6055,17 @@
               "pointing_button": "button8"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
             },
-            "to_if_alone": [
-              {
-                "shell_command": "open 'rectangle-pro://execute-action?name=fill-right'"
-              }
-            ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open 'rectangle-pro://execute-action?name=fill-right'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -6141,11 +6083,99 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-right (tap) / next-display (hold)"
+            "description": "Logitech G502 X: Rectangle fill-right (hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle fill-right (tap) / next-display (hold)"
+        "ruleDescription": "Logitech G502 X: Rectangle fill-right (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "simultaneous": [
+                {
+                  "pointing_button": "button2"
+                },
+                {
+                  "pointing_button": "button7"
+                }
+              ],
+              "simultaneous_options": {
+                "key_down_order": "insensitive",
+                "key_up_order": "insensitive"
+              }
+            },
+            "parameters": {
+              "basic.simultaneous_threshold_milliseconds": 500
+            },
+            "to": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle previous-display (right+wheel_left)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Rectangle previous-display (right+wheel_left)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "simultaneous": [
+                {
+                  "pointing_button": "button2"
+                },
+                {
+                  "pointing_button": "button8"
+                }
+              ],
+              "simultaneous_options": {
+                "key_down_order": "insensitive",
+                "key_up_order": "insensitive"
+              }
+            },
+            "parameters": {
+              "basic.simultaneous_threshold_milliseconds": 500
+            },
+            "to": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle next-display (right+wheel_right)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "Logitech G502 X: Rectangle next-display (right+wheel_right)"
       },
       {
         "conditions": [],
@@ -6229,7 +6259,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -6266,28 +6296,24 @@
               "pointing_button": "button11"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
-                "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
               {
-                "key_code": "left_command",
-                "modifiers": [
-                  "left_control",
-                  "left_shift"
-                ]
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open 'rectangle-pro://execute-action?name=maximize'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -6302,11 +6328,11 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle maximize (tap) / resize (hold)"
+            "description": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle maximize (tap) / resize (hold)"
+        "ruleDescription": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)"
       },
       {
         "conditions": [],
@@ -6317,8 +6343,8 @@
               "pointing_button": "button10"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 250,
-              "basic.to_if_held_down_threshold_milliseconds": 250
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "to_if_alone": [
               {
@@ -6364,6 +6390,33 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "Logitech G502 X: Show menu (tap) / move (hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1"
+            },
+            "to": [
+              {
+                "key_code": "return_or_enter"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "jp.fuji.1Piece"
+                ]
+              }
+            ],
+            "description": "OnePiece: left click -> enter"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "OnePiece: left click -> enter"
       },
       {
         "conditions": [],

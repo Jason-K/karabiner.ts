@@ -8,7 +8,7 @@ import { resolveActionToEvents } from "./action-resolver";
 
 export type TapHoldConfig = {
   alone?: ActionSpec[];
-  hold: ActionSpec[];
+  hold?: ActionSpec[];
   description: string;
   timeoutMs?: number;
   thresholdMs?: number;
@@ -82,11 +82,13 @@ export function generateTapHoldRules(
     const defaultAlone: ActionSpec[] = [
       { type: "key", key, modifiers, options: { halt: true } },
     ];
+    const resolvedAlone = config.alone ?? defaultAlone;
+    const resolvedHold = config.hold ?? defaultAlone;
 
     const manipulators = tapHold({
       key,
-      alone: (config.alone ?? defaultAlone).flatMap(resolveActionToEvents),
-      hold: config.hold.flatMap(resolveActionToEvents),
+      alone: resolvedAlone.flatMap(resolveActionToEvents),
+      hold: resolvedHold.flatMap(resolveActionToEvents),
       timeoutMs: config.timeoutMs,
       thresholdMs: config.thresholdMs,
       appOverrides: config.appOverrides?.map((override) => ({

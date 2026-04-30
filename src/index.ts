@@ -52,6 +52,7 @@ import {
   buildHyperPlusRules,
   buildLeftCommandRule,
   buildMouseRules,
+  buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
   buildSkimCommandRemapRule,
@@ -86,6 +87,9 @@ let rules: any[] = [
 
   // Mouse mappings (declarative per-device rules)
   ...buildMouseRules(mouseDeviceMappings),
+
+  // ONEPIECE - Left click submits with Enter inside the app
+  buildOnePieceClickEnterRule(),
 
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),

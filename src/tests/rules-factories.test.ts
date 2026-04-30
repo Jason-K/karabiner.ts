@@ -24,10 +24,11 @@ import {
 } from "../rules/security";
 import { buildSkimCommandRemapRule } from "../rules/skim";
 import {
-    buildEnterRules,
-    buildEqualsRules,
-    buildGraveAccentHoldRule,
-    buildHomeEndRule,
+  buildEnterRules,
+  buildEqualsRules,
+  buildGraveAccentHoldRule,
+  buildHomeEndRule,
+  buildOnePieceClickEnterRule,
 } from "../rules/special-keys";
 
 test("left command factory keeps dual manipulator behavior", () => {
@@ -200,6 +201,25 @@ test("enter rules factory keeps two keys across two contexts", () => {
   );
 });
 
+test("onepiece click-enter factory keeps app-scoped left click remap", () => {
+  const rule = buildOnePieceClickEnterRule().build();
+  assert.equal(rule.description, "OnePiece: left click -> enter");
+  assert.equal(rule.manipulators.length, 1);
+  assert.deepEqual(rule.manipulators[0]?.from, {
+    pointing_button: "button1",
+  });
+  assert.deepEqual(rule.manipulators[0]?.to, [
+    { key_code: "return_or_enter", modifiers: undefined },
+  ]);
+  assert.deepEqual(rule.manipulators[0]?.conditions, [
+    {
+      type: "frontmost_application_if",
+      description: undefined,
+      bundle_identifiers: ["jp.fuji.1Piece"],
+    },
+  ]);
+});
+
 test("equals rules factory keeps keypad and regular mappings", () => {
   const rules = buildEqualsRules().map((r) => r.build());
   assert.equal(rules.length, 2);
@@ -214,7 +234,7 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse rules factory builds declarative per-device mappings", () => {
   const rules = buildMouseRules(mouseDeviceMappings).map((r) => r.build());
-  assert.equal(rules.length, 8);
+  assert.equal(rules.length, 7);
   assert.equal(
     rules[0]?.description,
     "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)",

@@ -1,4 +1,4 @@
-import { rule, toKey } from "karabiner.ts";
+import { ifApp, rule, toKey } from "karabiner.ts";
 
 import {
   buildConditionalTapHoldRules,
@@ -42,6 +42,20 @@ export const buildGraveAccentHoldRule = () => {
 
 export const buildEnterRules = () => {
   return buildConditionalTapHoldRules(enterKeyHoldMappings);
+};
+
+export const buildOnePieceClickEnterRule = () => {
+  return rule("OnePiece: left click -> enter").manipulators([
+    {
+      type: "basic" as const,
+      from: {
+        pointing_button: "button1",
+      },
+      to: [toKey("return_or_enter")],
+      conditions: [ifApp("jp.fuji.1Piece").build()],
+      description: "OnePiece: left click -> enter",
+    } as any,
+  ]);
 };
 
 export const buildEqualsRules = () => {

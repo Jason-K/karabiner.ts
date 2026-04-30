@@ -11,6 +11,10 @@ import {
 } from "../mappings/mouse";
 import { homeEndNavigationMappings } from "../mappings/navigation";
 import { raycastRegistry } from "../mappings/raycast";
+import {
+  rectangleActionByFocusedWindowOrientationCommand,
+  rectangleMaxOrRestoreCommand,
+} from "../mappings/rectangle";
 import { rightOptionLaunchers } from "../mappings/right-option-launchers";
 import { securitySlashActionMappings } from "../mappings/security-actions";
 import { spaceLayerDefinitions } from "../mappings/space-layers";
@@ -19,6 +23,41 @@ import {
     equalsKeyHoldMappings,
 } from "../mappings/special-key-holds";
 import { tapHoldMappings } from "../mappings/tap-hold";
+
+test("rectangle focused-window orientation command uses focused display", () => {
+  const command = rectangleActionByFocusedWindowOrientationCommand(
+    "left-half",
+    "top-half",
+  );
+
+  assert.match(command, /hs\.window\.focusedWindow\(\)/);
+  assert.match(command, /win and win:screen\(\)/);
+  assert.match(command, /hs\.urlevent\.openURL\(url\)/);
+  assert.match(
+    command,
+    /\[\[rectangle-pro:\/\/execute-action\?name=left-half\]\]/,
+  );
+  assert.match(
+    command,
+    /\[\[rectangle-pro:\/\/execute-action\?name=top-half\]\]/,
+  );
+  assert.doesNotMatch(command, /hs\.execute\(/);
+  assert.match(command, /rectangle-pro:\/\/execute-action\?name=left-half/);
+  assert.match(command, /rectangle-pro:\/\/execute-action\?name=top-half/);
+});
+
+test("rectangle max-or-restore command uses focused window coverage", () => {
+  const command = rectangleMaxOrRestoreCommand();
+
+  assert.match(command, /hs\.window\.focusedWindow\(\)/);
+  assert.match(command, /screen:frame\(\)/);
+  assert.match(command, /win:frame\(\)/);
+  assert.match(command, /widthCoverage >= 0\.97/);
+  assert.match(command, /heightCoverage >= 0\.9/);
+  assert.match(command, /hs\.urlevent\.openURL\(url\)/);
+  assert.match(command, /rectangle-pro:\/\/execute-action\?name=restore/);
+  assert.match(command, /rectangle-pro:\/\/execute-action\?name=maximize/);
+});
 
 test("registries centralize app folder and integration refs", () => {
   assert.equal(appRegistry.outlook, "com.microsoft.Outlook");
@@ -200,7 +239,7 @@ test("new hyper rectangle mappings stay declarative", () => {
   assert.deepEqual(tapHoldMappings["hyper+left_arrow"].hold, [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=prev-display",
+      url: "rectangle-pro://execute-action?name=previous-display",
       background: true,
     },
   ]);
@@ -213,7 +252,7 @@ test("new hyper rectangle mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["hyper+keypad_9"].hold, [
+  assert.deepEqual(tapHoldMappings["hyper+keypad_9"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=top-right-eighth",
@@ -322,7 +361,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
     type: "tapHold",
     button: "wheel_left",
-    description: "Rectangle fill-left (tap) / prev-display (hold)",
+    description: "Rectangle fill-left (tap) / previous-display (hold)",
     alone: [
       { shell_command: "open 'rectangle-pro://execute-action?name=fill-left'" },
     ],
@@ -339,6 +378,21 @@ test("mouse device mappings are declarative and device-scoped", () => {
   const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "left_forward",
   );
+
+  const leftBackMapping = mouseDeviceMappings[0]?.mappings.find(
+    (m) => m.type === "tapHold" && m.button === "left_back",
+  );
+  assert.equal(
+    leftBackMapping?.description,
+    "Rectangle max-or-restore (tap) / resize (hold)",
+  );
+  const leftBackAlone =
+    leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
+  assert.ok(leftBackAlone);
+  assert.equal(leftBackAlone?.length, 1);
+  assert.deepEqual(leftBackAlone?.[0], {
+    shell_command: rectangleMaxOrRestoreCommand(),
+  });
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
