@@ -6417,6 +6417,206 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "f19"
+            },
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "volume_increment",
+                "modifiers": []
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F19]        →    Scroll chord volume up bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f20"
+            },
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "volume_decrement",
+                "modifiers": []
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F20]        →    Scroll chord volume down bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f21"
+            },
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_command"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F21]        →    Scroll chord next app bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f22"
+            },
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_command",
+                  "left_shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F22]        →    Scroll chord previous app bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f23"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen",
+                  "org.mozilla.firefox",
+                  "com.asiafu.Bloom"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "page_up",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f23"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen",
+                  "org.mozilla.firefox",
+                  "com.asiafu.Bloom"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F23]        →    Scroll chord next tab bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f24"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen",
+                  "org.mozilla.firefox",
+                  "com.asiafu.Bloom"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "page_down",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "f24"
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen",
+                  "org.mozilla.firefox",
+                  "com.asiafu.Bloom"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[F24]        →    Scroll chord previous tab bridge (on tap)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "pointing_button": "button1"
             },
             "to": [

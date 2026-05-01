@@ -22,6 +22,10 @@ export { mouseDeviceMappings } from "./mouse";
 export { homeEndNavigationMappings } from "./navigation";
 export { raycastRegistry } from "./raycast";
 export { rightOptionLaunchers } from "./right-option-launchers";
+export {
+  scrollChordBrowserBundleIds,
+  scrollChordTriggerKeys,
+} from "./scroll-chords";
 export { securitySlashActionMappings } from "./security-actions";
 export { spaceLayerDefinitions } from "./space-layers";
 export { enterKeyHoldMappings, equalsKeyHoldMappings } from "./special-key-holds";
