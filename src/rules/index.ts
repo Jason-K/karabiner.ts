@@ -15,7 +15,6 @@ export { buildHyperPlusRules } from "./hyper-plus";
 export { buildCmdQRule, buildLeftCommandRule } from "./left-command-chords";
 export { buildMouseDeviceRules, buildMouseRules } from "./mouse";
 export { buildRightOptionAppsRule } from "./right-option-launchers";
-export { buildScrollChordRules } from "./scroll-chords";
 export {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,

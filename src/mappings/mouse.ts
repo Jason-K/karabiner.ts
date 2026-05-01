@@ -201,21 +201,3 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
     ],
   },
 ];
-
-/**
- * Scroll-wheel chord requests tracked for follow-up implementation.
- *
- * Karabiner basic `from` events support key_code/consumer_key_code/pointing_button,
- * but not wheel up/down as direct `from` event sources, so these cannot currently be
- * represented in this declarative mapping pipeline without an external scroll event source.
- *
- * NOTE - see ~/.config/hammerspoon/modules/scroll_chords.lua for reference on how these have been implemented in the meantime.
- */
-export const mouseScrollChordRequests = [
-  "forward+scroll_up -> volume_increment",
-  "forward+scroll_down -> volume_decrement",
-  "back+scroll_down -> left_control+tab",
-  "back+scroll_up -> left_control+left_shift+tab",
-  "right+scroll_down -> left_command+tab",
-  "right+scroll_up -> left_command+left_shift+tab",
-] as const;

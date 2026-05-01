@@ -5,10 +5,7 @@ import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
 import { disabledShortcuts } from "../mappings/disabled-shortcuts";
 import { folderRegistry } from "../mappings/folders";
-import {
-  mouseDeviceMappings,
-  mouseScrollChordRequests,
-} from "../mappings/mouse";
+import { mouseDeviceMappings } from "../mappings/mouse";
 import { homeEndNavigationMappings } from "../mappings/navigation";
 import { raycastRegistry } from "../mappings/raycast";
 import {
@@ -407,18 +404,4 @@ test("mouse device mappings are declarative and device-scoped", () => {
     thresholdMs: 300,
     timeoutMs: 300,
   });
-});
-
-test("mouse scroll chord requests are tracked for follow-up", () => {
-  assert.deepEqual(
-    [...mouseScrollChordRequests],
-    [
-      "forward+scroll_up -> volume_increment",
-      "forward+scroll_down -> volume_decrement",
-      "back+scroll_down -> left_control+tab",
-      "back+scroll_up -> left_control+left_shift+tab",
-      "right+scroll_down -> left_command+tab",
-      "right+scroll_up -> left_command+left_shift+tab",
-    ],
-  );
 });

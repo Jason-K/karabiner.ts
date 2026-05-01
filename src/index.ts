@@ -55,7 +55,6 @@ import {
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
-  buildScrollChordRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
 } from "./rules";
@@ -88,9 +87,6 @@ let rules: any[] = [
 
   // Mouse mappings (declarative per-device rules)
   ...buildMouseRules(mouseDeviceMappings),
-
-  // Scroll-chord bridge triggers (Hammerspoon can emit F19-F24 instead of modifier chords)
-  ...buildScrollChordRules(),
 
   // ONEPIECE - Left click submits with Enter inside the app
   buildOnePieceClickEnterRule(),
