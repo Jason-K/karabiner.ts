@@ -55,6 +55,7 @@ function buildTapHoldManipulators(
     buttonMap: device.buttonMap,
     alone: mapping.alone,
     hold: mapping.hold,
+    eventOptions: mapping.eventOptions,
     variable: mapping.variable,
     thresholdMs: mapping.thresholdMs,
     timeoutMs: mapping.timeoutMs,

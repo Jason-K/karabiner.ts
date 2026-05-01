@@ -30,6 +30,10 @@ export type MouseTapHoldMapping = {
   variable?: string;
   alone?: ToEvent[];
   hold?: ToEvent[];
+  eventOptions?: {
+    halt?: boolean;
+    repeat?: boolean;
+  };
   thresholdMs?: number;
   timeoutMs?: number;
 };
@@ -106,8 +110,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 200,
-        timeoutMs: 200,
+        thresholdMs: 140,
+        timeoutMs: 140,
       },
       {
         type: "tapHold",
@@ -118,30 +122,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 200,
-        timeoutMs: 200,
-      },
-      {
-        type: "simultaneous",
-        buttons: ["right", "wheel_left"],
-        description: "Rectangle previous-display (right+wheel_left)",
-        to: [
-          {
-            shell_command: `open -g '${rectangleActionUrl("previous-display")}'`,
-          },
-        ],
-        thresholdMs: 500,
-      },
-      {
-        type: "simultaneous",
-        buttons: ["right", "wheel_right"],
-        description: "Rectangle next-display (right+wheel_right)",
-        to: [
-          {
-            shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
-          },
-        ],
-        thresholdMs: 500,
+        thresholdMs: 140,
+        timeoutMs: 140,
       },
       {
         type: "tapHold",
@@ -188,6 +170,31 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             modifiers: ["left_option", "left_shift"],
           },
         ],
+        thresholdMs: 300,
+        timeoutMs: 300,
+      },
+      {
+        type: "tapHold",
+        button: "back",
+        description: "Back (tap) / CMD+Tab (hold)",
+        alone: [{ pointing_button: "button4" }],
+        hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+        eventOptions: { halt: true, repeat: false },
+        thresholdMs: 300,
+        timeoutMs: 300,
+      },
+      {
+        type: "tapHold",
+        button: "forward",
+        description: "Forward (tap) / CMD+Tab (hold)",
+        alone: [{ pointing_button: "button5" }],
+        hold: [
+          {
+            key_code: "grave_accent_and_tilde",
+            modifiers: ["left_command"],
+          },
+        ],
+        eventOptions: { halt: true, repeat: false },
         thresholdMs: 300,
         timeoutMs: 300,
       },

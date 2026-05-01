@@ -43,6 +43,10 @@ type MouseTapHoldOpts = {
   buttonMap?: MouseButtonMap;
   alone?: ToEvent[];
   hold?: ToEvent[];
+  eventOptions?: {
+    halt?: boolean;
+    repeat?: boolean;
+  };
   variable?: string;
   timeoutMs?: number;
   thresholdMs?: number;

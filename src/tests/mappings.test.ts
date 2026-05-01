@@ -323,7 +323,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
     vendor_id: 1133,
   });
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 8);
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 9);
 
   const backMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "back",
@@ -331,9 +331,10 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(backMapping, {
     type: "tapHold",
     button: "back",
-    description: "Back (tap) / Last application (hold)",
+    description: "Back (tap) / CMD+Tab (hold)",
     alone: [{ pointing_button: "button4" }],
     hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+    eventOptions: { halt: true, repeat: false },
     thresholdMs: 300,
     timeoutMs: 300,
   });
@@ -341,7 +342,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
     type: "tapHold",
     button: "shift",
-    description: "ctrl+up (tap) / ctrl+opt+shift down (hold)",
+    description: "Mission Control (tap) / Rectangle snap (hold)",
     alone: [
       {
         key_code: "up_arrow",
@@ -361,18 +362,17 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
     type: "tapHold",
     button: "wheel_left",
-    description: "Rectangle fill-left (tap) / previous-display (hold)",
-    alone: [
-      { shell_command: "open 'rectangle-pro://execute-action?name=fill-left'" },
-    ],
+    description: "Rectangle fill-left (hold)",
     hold: [
       {
-        shell_command:
-          "open 'rectangle-pro://execute-action?name=previous-display'",
+        shell_command: rectangleActionByFocusedWindowOrientationCommand(
+          "left-half",
+          "top-half",
+        ),
       },
     ],
-    thresholdMs: 300,
-    timeoutMs: 300,
+    thresholdMs: 140,
+    timeoutMs: 140,
   });
 
   const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
@@ -384,7 +384,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   );
   assert.equal(
     leftBackMapping?.description,
-    "Rectangle max-or-restore (tap) / resize (hold)",
+    "Rectangle Max/Restore (tap) / Next Display (hold)",
   );
   const leftBackAlone =
     leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
@@ -396,16 +396,16 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "Show menu (tap) / Here2There active-to-target (hold)",
+    description: "Show menu (tap) / move (hold)",
     alone: [{ key_code: "m", modifiers: ["left_option"] }],
     hold: [
       {
-        shell_command:
-          "open 'raycast://extensions/Jason/here-to-there/activeToTarget'",
+        key_code: "left_command",
+        modifiers: ["left_option", "left_shift"],
       },
     ],
-    thresholdMs: 250,
-    timeoutMs: 250,
+    thresholdMs: 300,
+    timeoutMs: 300,
   });
 });
 

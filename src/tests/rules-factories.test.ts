@@ -234,10 +234,10 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse rules factory builds declarative per-device mappings", () => {
   const rules = buildMouseRules(mouseDeviceMappings).map((r) => r.build());
-  assert.equal(rules.length, 7);
+  assert.equal(rules.length, 9);
   assert.equal(
     rules[0]?.description,
-    "Logitech G502 X: ctrl+up (tap) / ctrl+opt+shift down (hold)",
+    "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)",
   );
   assert.equal(rules[0]?.manipulators.length, 1);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
@@ -246,7 +246,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
 
   assert.equal(
     rules[1]?.description,
-    "Logitech G502 X: Rectangle fill-left (tap) / prev-display (hold)",
+    "Logitech G502 X: Rectangle fill-left (hold)",
   );
   assert.deepEqual(rules[1]?.manipulators[0]?.from, {
     pointing_button: "button7",

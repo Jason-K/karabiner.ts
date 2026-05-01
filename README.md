@@ -148,7 +148,7 @@ SMOKE_MAX_LATENCY_MS=1000 bash scripts/install-layer-indicator-user-command-serv
 
 ### Unit Tests
 
-Add tests in `src/configs/folder-opener.test.ts` style:
+Add tests in `src/tests/scripts.test.ts` style:
 
 ```typescript
 import test from "node:test";

@@ -13,6 +13,10 @@ interface TapHoldOpts {
   key: string;
   alone?: ToEvent[];
   hold?: ToEvent[];
+  eventOptions?: {
+    halt?: boolean;
+    repeat?: boolean;
+  };
   timeoutMs?: number;
   thresholdMs?: number;
   description?: string;
@@ -48,6 +52,7 @@ export function tapHoldFrom({
   from,
   alone,
   hold,
+  eventOptions,
   timeoutMs = 300,
   thresholdMs = 300,
   description,
@@ -57,6 +62,14 @@ export function tapHoldFrom({
   appOverrides,
 }: TapHoldFromOpts) {
   const builders: any[] = [];
+
+  const withEventOptions = (event: ToEvent): ToEvent => {
+    if (!eventOptions) return event;
+    return {
+      ...eventOptions,
+      ...event,
+    } as ToEvent;
+  };
 
   const makeBuilder = (opts: {
     alone?: ToEvent[];
@@ -77,8 +90,12 @@ export function tapHoldFrom({
       m.toAfterKeyUp(toSetVar(variable, 0));
     }
     if (opts.cond) m.condition(opts.cond);
-    if (opts.alone) opts.alone.forEach((e: ToEvent) => m.toIfAlone(e));
-    if (opts.hold) opts.hold.forEach((e: ToEvent) => m.toIfHeldDown(e));
+    if (opts.alone) {
+      opts.alone.forEach((e: ToEvent) => m.toIfAlone(withEventOptions(e)));
+    }
+    if (opts.hold) {
+      opts.hold.forEach((e: ToEvent) => m.toIfHeldDown(withEventOptions(e)));
+    }
 
     const cancelEvents = opts.cancel ?? cancel ?? alone ?? [];
     const invokedEvents = opts.invoked ?? invoked ?? [];
@@ -119,6 +136,7 @@ export function tapHold({
   key,
   alone,
   hold,
+  eventOptions,
   timeoutMs = 300,
   thresholdMs = 300,
   description,
@@ -131,6 +149,7 @@ export function tapHold({
     from: { key_code: key as any },
     alone,
     hold,
+    eventOptions,
     timeoutMs,
     thresholdMs,
     description,

@@ -176,7 +176,7 @@ map('shift', ['ctrl']).with('c')
 
 ### Adding a New Hammerspoon Function
 
-**Step 1: Verify Safety**
+#### Step 1: Verify Safety
 
 Before adding a function, ask:
 
@@ -184,7 +184,7 @@ Before adding a function, ask:
 - Could the function have side effects? (Acceptable risk?)
 - Is it deterministic? (No implicit external state)
 
-**Step 2: Register in Server Allowlist**
+#### Step 2: Register in Server Allowlist
 
 Edit `scripts/layer_indicator_user_command_server.py`, `dispatch_hammerspoon()`:
 
@@ -197,7 +197,7 @@ allowed_functions = {
 }
 ```
 
-**Step 3: Implement Argument Marshaling**
+#### Step 3: Implement Argument Marshaling
 
 The server serializes arguments to URL query parameters:
 
@@ -219,7 +219,7 @@ function userCommandReceiver:userCommand(functionName, argsJson)
 end
 ```
 
-**Step 4: Add TypeScript Helper**
+#### Step 4: Add TypeScript Helper
 
 Edit `src/lib/scripts.ts`:
 
@@ -232,7 +232,7 @@ export function myNewFunction(param1: string, param2?: number): ToEvent {
 }
 ```
 
-**Step 5: Test & Document**
+#### Step 5: Test & Document
 
 - Test with `observability-bundle` to measure latency
 - Add example to README or this guide
@@ -244,7 +244,7 @@ export function myNewFunction(param1: string, param2?: number): ToEvent {
 
 If your use case doesn't fit the "hammerspoon function call" pattern, create a new endpoint:
 
-**Example: "clipboard" endpoint that returns data**
+#### Example: "clipboard" endpoint that returns data
 
 ```python
 # In layer_indicator_user_command_server.py:
@@ -491,9 +491,9 @@ open -g 'hammerspoon://layer_indicator?action=show&layer=test'
 | Operation | Best Tool | Example |
 | ----------- | ----------- | --------- |
 | Layer show/hide | Command server (fast) | Space bar indicator |
-| Notifications | Command server (user feedback) | Key macro confirmations |
-| App focus | Command server (low frequency ok) | Cmd+Alt+S → Safari |
-| Clipboard | Command server (persistent state) | Macro paste templates |
+| Notifications | Hybrid (Hammerspoon + fallback) | Key macro confirmations |
+| App focus | Native `open -b` | Cmd+Alt+S → Safari |
+| Clipboard | Native `pbcopy` | Macro paste templates |
 | Complex logic | Shell command | Multi-step scripts, conditional execution |
 | One-off launch | Shell command | `open -a AppName` |
 | Error handling | Shell command | Check exit code, conditional flows |
