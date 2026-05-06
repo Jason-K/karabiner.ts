@@ -110,8 +110,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 140,
-        timeoutMs: 140,
+        thresholdMs: 200,
+        timeoutMs: 200,
       },
       {
         type: "tapHold",
@@ -122,8 +122,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 140,
-        timeoutMs: 140,
+        thresholdMs: 200,
+        timeoutMs: 200,
       },
       {
         type: "tapHold",
@@ -162,12 +162,11 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "Show menu (tap) / move (hold)",
+        description: "Show menu (tap) / Stash right (hold)",
         alone: [{ key_code: "m", modifiers: ["left_option"] }],
         hold: [
           {
-            key_code: "left_command",
-            modifiers: ["left_option", "left_shift"],
+            shell_command: `open -g '${rectangleActionUrl("stash-right")}'`,
           },
         ],
         thresholdMs: 300,

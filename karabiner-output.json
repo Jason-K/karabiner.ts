@@ -1128,6 +1128,492 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_0"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_0",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash-all'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_0",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 0]        →    Unstash all via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_2",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-down'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_2",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 2]        →    Stash down via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_4",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-left'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_4",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 4]        →    Stash left via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_5",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_5",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 5]        →    Unstash via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_6",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_6",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 6]        →    Stash right via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_8",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-up'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_8",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[KEYPAD 8]        →    Stash up via rectangle (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "q",
               "modifiers": {
                 "mandatory": [
@@ -4554,6 +5040,83 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "application"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=pin'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[APPLICATION]        →    Reflow pinned app (tap), Pin app (hold) (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "left_command",
               "modifiers": {
                 "optional": [
@@ -6012,8 +6575,8 @@
               "pointing_button": "button7"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 140,
-              "basic.to_if_held_down_threshold_milliseconds": 140
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
             },
             "to_if_held_down": [
               {
@@ -6055,8 +6618,8 @@
               "pointing_button": "button8"
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 140,
-              "basic.to_if_held_down_threshold_milliseconds": 140
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
             },
             "to_if_held_down": [
               {
@@ -6268,11 +6831,7 @@
             ],
             "to_if_held_down": [
               {
-                "key_code": "left_command",
-                "modifiers": [
-                  "left_option",
-                  "left_shift"
-                ]
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
               }
             ],
             "to_delayed_action": {
@@ -6297,11 +6856,11 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Show menu (tap) / move (hold)"
+            "description": "Logitech G502 X: Show menu (tap) / Stash right (hold)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Show menu (tap) / move (hold)"
+        "ruleDescription": "Logitech G502 X: Show menu (tap) / Stash right (hold)"
       },
       {
         "conditions": [],
@@ -6410,206 +6969,6 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "Logitech G502 X: Forward (tap) / CMD+Tab (hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f19"
-            },
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "volume_increment",
-                "modifiers": []
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F19]        →    Scroll chord volume up bridge (on tap)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f20"
-            },
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "volume_decrement",
-                "modifiers": []
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F20]        →    Scroll chord volume down bridge (on tap)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f21"
-            },
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "tab",
-                "modifiers": [
-                  "left_command"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F21]        →    Scroll chord next app bridge (on tap)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f22"
-            },
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "tab",
-                "modifiers": [
-                  "left_command",
-                  "left_shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F22]        →    Scroll chord previous app bridge (on tap)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f23"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen",
-                  "org.mozilla.firefox",
-                  "com.asiafu.Bloom"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "page_up",
-                "modifiers": [
-                  "left_control"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f23"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_unless",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen",
-                  "org.mozilla.firefox",
-                  "com.asiafu.Bloom"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "tab",
-                "modifiers": [
-                  "left_control"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F23]        →    Scroll chord next tab bridge (on tap)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f24"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen",
-                  "org.mozilla.firefox",
-                  "com.asiafu.Bloom"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "page_down",
-                "modifiers": [
-                  "left_control"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f24"
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_unless",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen",
-                  "org.mozilla.firefox",
-                  "com.asiafu.Bloom"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "repeat": false,
-                "key_code": "tab",
-                "modifiers": [
-                  "left_control",
-                  "left_shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[F24]        →    Scroll chord previous tab bridge (on tap)"
       },
       {
         "conditions": [],

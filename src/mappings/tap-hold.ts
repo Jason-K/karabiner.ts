@@ -98,6 +98,66 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
+  keypad_0: {
+    description: "Unstash all via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("unstash-all"),
+        background: true,
+      },
+    ],
+  },
+  keypad_2: {
+    description: "Stash down via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-down"),
+        background: true,
+      },
+    ],
+  },
+  keypad_4: {
+    description: "Stash left via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-left"),
+        background: true,
+      },
+    ],
+  },
+  keypad_5: {
+    description: "Unstash via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("unstash"),
+        background: true,
+      },
+    ],
+  },
+  keypad_6: {
+    description: "Stash right via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-right"),
+        background: true,
+      },
+    ],
+  },
+  keypad_8: {
+    description: "Stash up via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-up"),
+        background: true,
+      },
+    ],
+  },
   "hyper+q": {
     description: "Rectangle Pro left",
     alone: [
@@ -441,6 +501,25 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
         type: "applescript",
         scriptPath:
           "/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
+      },
+    ],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
+  application: {
+    description: "Reflow pinned app (tap), Pin app (hold)",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("reflow-pin"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("pin"),
+        background: true,
       },
     ],
     timeoutMs: 300,

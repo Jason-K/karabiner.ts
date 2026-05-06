@@ -70,6 +70,7 @@ export const rectangleActions = [
   "prev-display-ratio",
   "prev-space",
   "previous-display",
+  "pin",
   "quit-app",
   "reflow-pin",
   "restore",
