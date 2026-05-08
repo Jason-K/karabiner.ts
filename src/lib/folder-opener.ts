@@ -3,7 +3,7 @@ export type FolderOpener = "bloom" | "qspace";
 /**
  * Folder/Finder replacement app selection.
  */
-export const FOLDER_OPENER: FolderOpener = "bloom";
+export const FOLDER_OPENER: FolderOpener = "qspace";
 
 export const getOpenFolderCommandFor = (
   opener: FolderOpener,

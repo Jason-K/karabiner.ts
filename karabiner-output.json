@@ -175,199 +175,6 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "a",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "a",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "f18",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "a",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "a",
-              "modifiers": {
-                "mandatory": [
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "a",
-                "modifiers": [
-                  "shift"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'antinote://'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "a",
-                  "modifiers": [
-                    "shift"
-                  ]
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[⇧]+[A]        →    Antinote (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
               "key_code": "c"
             },
             "parameters": {
@@ -470,7 +277,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action bloom"
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -528,7 +335,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F]        →    Bloom (on hold)"
+        "ruleDescription": "[F]        →    QSSpace (on hold)"
       },
       {
         "conditions": [],
@@ -864,101 +671,6 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "m",
-              "modifiers": {
-                "mandatory": [
-                  "command"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "m",
-                "modifiers": [
-                  "command"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "m",
-                "modifiers": [
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "m",
-                  "modifiers": [
-                    "command"
-                  ]
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[⌘]+[M]        →    Deminimize (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
               "key_code": "o"
             },
             "parameters": {
@@ -1121,6 +833,578 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "[P]        →    Popclip (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "r"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "r",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "r",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[R]        →    Last d/l (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "s"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "s",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'cleanshot://capture-area'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "s",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[S]        →    Screenshot (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "t"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "t",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "~/.local/bin/open-app -b 'com.todoist.mac.Todoist'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "t",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[T]        →    Todoist (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "v"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "v",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "repeat": false,
+                "key_code": "grave_accent_and_tilde",
+                "modifiers": [
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "v",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[V]        →    Maccy (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "x"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "x",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "x",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[X]        →    Copy file (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "y"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "y",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "y",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[Y]        →    Yank file (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "z"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "z",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "z",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[Z]        →    Zoxide (on hold)"
       },
       {
         "conditions": [],
@@ -1607,1898 +1891,6 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "[KEYPAD 8]        →    Stash up via rectangle (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "q",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=left-half'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=left-half'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_arrow",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "right_arrow",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "spacebar",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "spacebar",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "tab",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "1",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "1",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "2",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "2",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "3",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "3",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "4",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "4",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_1",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "keypad_1",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_3",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "keypad_3",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_5",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "keypad_5",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_7",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "keypad_7",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_9",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "keypad_9",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "r"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "r",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "r",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[R]        →    Last d/l (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "s"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "s",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open 'cleanshot://capture-area'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "s",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[S]        →    Screenshot (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "t"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "t",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "~/.local/bin/open-app -b 'com.todoist.mac.Todoist'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "t",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[T]        →    Todoist (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "v"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "v",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "repeat": false,
-                "key_code": "grave_accent_and_tilde",
-                "modifiers": [
-                  "control"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "v",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[V]        →    Maccy (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "w",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=right-half'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=right-half'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "x"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "x",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "x",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[X]        →    Copy file (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "y"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "y",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "y",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[Y]        →    Yank file (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "z"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "z",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "z",
-                  "modifiers": []
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[Z]        →    Zoxide (on hold)"
       },
       {
         "conditions": [],
@@ -4511,6 +2903,95 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "grave_accent_and_tilde"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "grave_accent_and_tilde",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "repeat": false,
+                "key_code": "f9",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "grave_accent_and_tilde",
+                  "modifiers": []
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[~]        →    Popclip (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "tab"
             },
             "parameters": {
@@ -4682,6 +3163,1601 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "application"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=pin'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[APPLICATION]        →    Reflow pinned app (tap), Pin app (hold) (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f18",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=left-half'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-left'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=left-half'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "w",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=right-half'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=fill-right'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=right-half'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "1",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "1",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "2",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "2",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "3",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "3",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-third'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "4",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "4",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=first-fourth'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "spacebar",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "spacebar",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "tab",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "m",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "m",
+                "modifiers": [
+                  "left_command"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "m",
+                "modifiers": [
+                  "option",
+                  "control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "m",
+                  "modifiers": [
+                    "left_command"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[←⌘]+[M]        →    Deminimize (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
               "key_code": "p",
               "modifiers": {
                 "mandatory": [
@@ -4771,6 +4847,96 @@
         ],
         "allowEmptyManipulators": false,
         "ruleDescription": "[←⌘]+[P]        →    Paletro (on hold)"
+      },
+      {
+        "conditions": [],
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "left_shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'antinote://'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "left_shift"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "ruleDescription": "[←⇧]+[A]        →    Antinote (on hold)"
       },
       {
         "conditions": [],
@@ -5040,1309 +5206,125 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "application"
+              "key_code": "left_command",
+              "modifiers": {}
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "left_command_detect",
+                "value": 1
+              }
+            ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
+              "basic.to_if_alone_timeout_milliseconds": 500,
+              "basic.to_if_held_down_threshold_milliseconds": 500
             },
+            "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
+                "set_variable": {
+                  "name": "left_command_detect",
+                  "value": 0
+                }
+              },
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=pin'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_a_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_c_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_d_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_f_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_r_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_s_sublayer",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_w_sublayer",
-                "value": 1
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[APPLICATION]        →    Reflow pinned app (tap), Pin app (hold) (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 1
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
                 "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 2
+                  "name": "left_command_detect",
+                  "value": 0
                 }
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [
                 {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 1
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 2
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
                   "set_variable": {
-                    "name": "lcmd_pressed",
+                    "name": "left_command_detect",
                     "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 2
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 2
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 1 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 2
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 3
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 2
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 3
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 3
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 3
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 2 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 3
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 4
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 3
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 4
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 4
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 4
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 3 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 4
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 5
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 4
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 5
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 5
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 5
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 4 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 5
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 6
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 5
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 6
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 6
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 6
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 5 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 6
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 7
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 6
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 7
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 7
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 7
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 6 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 7
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 8
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 7
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 8
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 8
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 8
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 7 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 8
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 9
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 8
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 9
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 9
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 9
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 8 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "lcmd_pressed",
-                "value": 1
-              },
-              {
-                "type": "variable_if",
-                "name": "lcmd_tap_count",
-                "value": 9
-              },
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 10
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "frontmost_application_history_index": 9
-                    }
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 10
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 10
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 10
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                }
-              ],
-              "to_if_canceled": []
-            },
-            "description": "[←⌘]        →    App history 9 (on multi-tap)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {
-                "optional": [
-                  "any"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500
-            },
-            "to": [
-              {
-                "set_variable": {
-                  "name": "lcmd_pressed",
-                  "value": 1
-                }
-              },
-              {
-                "set_variable": {
-                  "name": "lcmd_tap_count",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "left_command"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "lcmd_pressed",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
+                  }
                 }
               ],
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "lcmd_pressed",
+                    "name": "left_command_detect",
                     "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
-                },
-                {
-                  "set_variable": {
-                    "name": "lcmd_tap_count",
-                    "value": 0
-                  },
-                  "conditions": [
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_pressed",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_if",
-                      "name": "lcmd_tap_count",
-                      "value": 1
-                    },
-                    {
-                      "type": "variable_unless",
-                      "name": "space_mod",
-                      "value": 1
-                    }
-                  ]
+                  }
                 }
               ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {}
             },
-            "description": "[←⌘]        →    Command passthrough (on tap)"
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 500,
+              "basic.to_if_held_down_threshold_milliseconds": 500
+            },
+            "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "left_command_detect",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "left_command",
+                "modifiers": []
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "left_command_detect",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "f5",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "left_command_detect",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "left_command_detect",
+                    "value": 0
+                  }
+                }
+              ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]        →    App history switcher (on multi-tap)"
+        "ruleDescription": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)"
       },
       {
         "conditions": [],
@@ -7968,7 +6950,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/3dPrinting"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/3dPrinting'"
               }
             ]
           },
@@ -7986,7 +6968,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/Archives"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/Archives'"
               }
             ]
           },
@@ -8004,7 +6986,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/'"
               }
             ]
           },
@@ -8022,7 +7004,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/Installs"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/Installs'"
               }
             ]
           },
@@ -8040,7 +7022,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/Office"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/Office'"
               }
             ]
           },
@@ -8058,7 +7040,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/PDFs/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/PDFs/'"
               }
             ]
           }
@@ -8125,7 +7107,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/.local/share/chezmoi/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/.local/share/chezmoi/'"
               }
             ]
           },
@@ -8143,7 +7125,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Applications/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Applications/'"
               }
             ]
           },
@@ -8161,7 +7143,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/'"
               }
             ]
           },
@@ -8179,7 +7161,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/'"
               }
             ]
           },
@@ -8197,7 +7179,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/gits/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/gits/'"
               }
             ]
           },
@@ -8215,7 +7197,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/'"
               }
             ]
           },
@@ -8233,7 +7215,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Library/CloudStorage/OneDrive-Personal/1\\ -\\ Work/0\\ -\\ Library/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Library/CloudStorage/OneDrive-Personal/1 - Work/0 - Library/'"
               }
             ]
           },
@@ -8251,7 +7233,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Downloads/PDFs/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Downloads/PDFs/'"
               }
             ]
           },
@@ -8287,7 +7269,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Scripts/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Scripts/'"
               }
             ]
           },
@@ -8305,7 +7287,7 @@
             ],
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason/Scripts/workspaces/"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/Scripts/workspaces/'"
               }
             ]
           }
@@ -10034,42 +9016,6 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "grave_accent_and_tilde"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "grave_accent_and_tilde",
-                "modifiers": []
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": false,
-                "key_code": "f5",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control"
-                ]
-              }
-            ],
-            "description": "[~]        →    Hyper F5 (on hold)"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "ruleDescription": "[~]        →    Hyper F5 (on hold)"
-      },
-      {
-        "conditions": [],
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
               "key_code": "keypad_enter"
             },
             "parameters": {
@@ -10546,7 +9492,7 @@
             },
             "to": [
               {
-                "shell_command": "open -a Bloom /Users/jason"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason'"
               }
             ]
           }

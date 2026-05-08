@@ -17,6 +17,87 @@ const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
 const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
+  //   SINGLE KEY TAP/HOLD RULES
+  //
+  ////   LETTERS:
+  ////
+  //////     a: Raycast AI-quick search
+  //////     c: Calendar
+  //////     f: QSSpace
+  //////     g: Claude
+  //////     h: Here2There
+  //////     j: Last d/l
+  //////     k: Kitty
+  //////     o: OCR
+  //////     p: Popclip
+  //////     r: Last d/l
+  //////     s: Screenshot
+  //////     t: Todoist
+  //////     v: Maccy
+  //////     x: Copy file (takeActionHere)
+  //////     y: Yank file (takeActionHere)
+  //////     z: Zoxide
+  ////
+  ////   NUMBERS:
+  ////
+  //////     8: RingCentral
+  //////     keypad_0: Unstash all via rectangle
+  //////     keypad_2: Stash down via rectangle
+  //////     keypad_4: Stash left via rectangle
+  //////     keypad_5: Unstash via rectangle
+  //////     keypad_6: Stash right via rectangle
+  //////     keypad_8: Stash up via rectangle
+  ////
+  ////   FUNCTION KEYS:
+  ////
+  //////     f1: Brightness decrement
+  //////     f2: Increase brightness
+  //////     f3: Mission Control
+  //////     f4: Launchpad
+  //////     f5: Dictation
+  //////     f7: Rewind
+  //////     f8: Play/Pause
+  //////     f9: Fast Forward
+  //////     f10: Mute
+  //////     f11: Volume Down
+  //////     f12: Volume Up
+  ////
+  ////   OTHER KEYS:
+  ////
+  //////     slash: Houdah
+  //////     tab: Mission Control
+  //////     fn: Dictation via Spokenly
+  //////     application: Reflow pinned app (tap), Pin app (hold)
+  //
+  // HYPER KEY COMBINATIONS:
+  //
+  ////   hyper+a: Raycast AI-chat
+  ////   hyper+q: Rectangle Pro left (half on tap, fill on hold)
+  ////   hyper+w: Rectangle Pro right (half on tap, fill on hold)
+  ////   hyper+1: Rectangle left-half/top-half by orientation
+  ////   hyper+2: Rectangle right-half/bottom-half by orientation
+  ////   hyper+3: Rectangle first-third
+  ////   hyper+4: Rectangle first-fourth
+  ////   hyper+keypad_1: Rectangle bottom-left-eighth
+  ////   hyper+keypad_3: Rectangle bottom-right-eighth
+  ////   hyper+keypad_5: Rectangle maximize
+  ////   hyper+keypad_7: Rectangle top-left-eighth
+  ////   hyper+keypad_9: Rectangle top-right-eighth
+  ////   hyper+spacebar: Rectangle maximize / restore
+  ////   hyper+tab: Rectangle next-display (tap), previous-display (hold)
+  ////   hyper+left_arrow: Rectangle fill-left / previous-display
+  ////   hyper+right_arrow: Rectangle fill-right / next-display
+  //
+  // OTHER COMBINATIONS:
+  //
+  ////   left_command+m: Deminimize
+  ////   left_command+p: Paletro
+  ////   left_shift+a: Antinote
+  ////   right_option+k: Kitty here
+  ////   right_option+s: Spotify toggle (tap), search (hold)
+  ////   right_option+t: Edit last Typinator expansion
+
+
 export const tapHoldMappings: Record<string, TapHoldConfig> = {
   a: {
     description: "Raycast AI-quick search",
@@ -28,21 +109,6 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "hyper+a": {
-    description: "Raycast AI-chat",
-    hold: [
-      {
-        type: "key",
-        key: "f18",
-        modifiers: ["command", "option", "control", "shift"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  "shift+a": {
-    description: "Antinote",
-    hold: [{ type: "url", url: "antinote://", background: true }],
   },
   c: {
     description: "Calendar",
@@ -56,8 +122,8 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     ],
   },
   f: {
-    description: "Bloom",
-    hold: [{ type: "takeActionHere", action: "bloom" }],
+    description: "QSSpace",
+    hold: [{ type: "takeActionHere", action: "qspace" }],
   },
   g: {
     description: "Claude",
@@ -72,17 +138,6 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [{ type: "raycast", ref: "recentDownloads" }],
   },
   k: { description: "Kitty", hold: [{ type: "app", ref: "kitty" }] },
-  "cmd+m": {
-    description: "Deminimize",
-    hold: [
-      {
-        type: "key",
-        key: "m",
-        modifiers: ["option", "control"],
-        options: { repeat: false },
-      },
-    ],
-  },
   o: {
     description: "OCR",
     hold: [{ type: "cleanShot", ref: "captureTextNoLinebreaks" }],
@@ -97,6 +152,51 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
+  },
+
+  r: {
+    description: "Last d/l",
+    hold: [
+      {
+        type: "shell",
+        command: "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh",
+      },
+    ],
+  },
+  s: {
+    description: "Screenshot",
+    hold: [{ type: "cleanShot", ref: "captureArea" }],
+  },
+  t: {
+    description: "Todoist",
+    hold: [{ type: "app", ref: "todoist", mode: "shell" }],
+  },
+  v: {
+    description: "Maccy",
+    hold: [
+      {
+        type: "key",
+        key: "grave_accent_and_tilde",
+        modifiers: ["control"],
+        options: { halt: true, repeat: false },
+      },
+    ],
+  },
+  x: {
+    description: "Copy file",
+    hold: [{ type: "takeActionHere", action: "copy" }],
+  },
+  y: {
+    description: "Yank file",
+    hold: [{ type: "takeActionHere", action: "copy" }],
+  },
+  z: {
+    description: "Zoxide",
+    hold: [{ type: "raycast", ref: "zoxideSearchDirectories" }],
+  },
+  8: {
+    description: "RingCentral",
+    hold: [{ type: "app", ref: "ringCentral", mode: "shell" }],
   },
   keypad_0: {
     description: "Unstash all via rectangle",
@@ -158,6 +258,142 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
+  f1: {
+    description: "Brightness rightness",
+    hold: [
+      {
+        type: "key",
+        key: "display_brightness_decrement",
+        options: { repeat: true },
+      },
+    ],
+  },
+  f2: {
+    description: "Increase brightness",
+    hold: [
+      {
+        type: "key",
+        key: "display_brightness_increment",
+        options: { repeat: true },
+      },
+    ],
+  },
+  f3: {
+    description: "Mission Control",
+    hold: [{ type: "key", key: "mission_control", options: { repeat: false } }],
+  },
+  f4: {
+    description: "Launchpad",
+    hold: [{ type: "key", key: "launchpad", options: { repeat: false } }],
+  },
+  f5: {
+    description: "Dictation",
+    hold: [
+      {
+        type: "key",
+        key: "f5",
+        modifiers: ["command", "option", "control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  f7: {
+    description: "Rewind",
+    hold: [{ type: "key", key: "rewind", options: { repeat: true } }],
+  },
+  f8: {
+    description: "Play/Pause",
+    hold: [{ type: "key", key: "play_or_pause", options: { repeat: false } }],
+  },
+  f9: {
+    description: "Fast Forward",
+    hold: [{ type: "key", key: "fastforward", options: { repeat: true } }],
+  },
+  f10: {
+    description: "Mute",
+    hold: [{ type: "key", key: "mute", options: { repeat: false } }],
+  },
+  f11: {
+    description: "Volume Down",
+    hold: [{ type: "key", key: "volume_decrement", options: { repeat: true } }],
+  },
+  f12: {
+    description: "Volume Up",
+    hold: [{ type: "key", key: "volume_increment", options: { repeat: true } }],
+  },
+  slash: {
+    description: "Houdah",
+    hold: [
+      {
+        type: "key",
+        key: "h",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  grave_accent_and_tilde: {
+    description: "Popclip",
+    hold: [
+      {
+        type: "key",
+        key: "f9",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { halt: true, repeat: false },
+      },
+    ],
+  },
+  tab: {
+    description: "Mission Control",
+    hold: [
+      {
+        type: "key",
+        key: "mission_control",
+        options: { halt: true, repeat: true },
+      },
+    ],
+  },
+  fn: {
+    description: "Dictation via Spokenly",
+    hold: [
+      {
+        type: "key",
+        key: "f5",
+        modifiers: ["left_command", "left_option", "left_control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  application: {
+    description: "Reflow pinned app (tap), Pin app (hold)",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("reflow-pin"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("pin"),
+        background: true,
+      },
+    ],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
+  "hyper+a": {
+    description: "Raycast AI-chat",
+    hold: [
+      {
+        type: "key",
+        key: "f18",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
   "hyper+q": {
     description: "Rectangle Pro left",
     alone: [
@@ -175,55 +411,19 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+left_arrow": {
-    description: "Rectangle fill-left / previous-display",
-    alone: [
-      {
-        type: "shell",
-        command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("previous-display"),
-        background: true,
-      },
-    ],
-  },
-  "hyper+right_arrow": {
-    description: "Rectangle fill-right / next-display",
-    alone: [
-      {
-        type: "shell",
-        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("next-display"),
-        background: true,
-      },
-    ],
-  },
-  "hyper+spacebar": {
-    description: "Rectangle maximize / restore",
-    alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
-  },
-  "hyper+tab": {
-    description: "Rectangle next-display / previous-display",
+  "hyper+w": {
+    description: "Rectangle Pro right",
     alone: [
       {
         type: "url",
-        url: rectangleActionUrl("next-display"),
+        url: rectangleActionUrl("right-half"),
         background: true,
       },
     ],
     hold: [
       {
         type: "url",
-        url: rectangleActionUrl("previous-display"),
+        url: rectangleActionUrl("fill-right"),
         background: true,
       },
     ],
@@ -308,158 +508,66 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  r: {
-    description: "Last d/l",
-    hold: [
-      {
-        type: "shell",
-        command: "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh",
-      },
-    ],
+  "hyper+spacebar": {
+    description: "Rectangle maximize / restore",
+    alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   },
-  s: {
-    description: "Screenshot",
-    hold: [{ type: "cleanShot", ref: "captureArea" }],
-  },
-  t: {
-    description: "Todoist",
-    hold: [{ type: "app", ref: "todoist", mode: "shell" }],
-  },
-  v: {
-    description: "Maccy",
-    hold: [
-      {
-        type: "key",
-        key: "grave_accent_and_tilde",
-        modifiers: ["control"],
-        options: { halt: true, repeat: false },
-      },
-    ],
-  },
-  "hyper+w": {
-    description: "Rectangle Pro right",
+  "hyper+tab": {
+    description: "Rectangle next-display / previous-display",
     alone: [
       {
         type: "url",
-        url: rectangleActionUrl("right-half"),
+        url: rectangleActionUrl("next-display"),
         background: true,
       },
     ],
     hold: [
       {
         type: "url",
-        url: rectangleActionUrl("fill-right"),
+        url: rectangleActionUrl("previous-display"),
         background: true,
       },
     ],
   },
-  x: {
-    description: "Copy file",
-    hold: [{ type: "takeActionHere", action: "copy" }],
-  },
-  y: {
-    description: "Yank file",
-    hold: [{ type: "takeActionHere", action: "copy" }],
-  },
-  z: {
-    description: "Zoxide",
-    hold: [{ type: "raycast", ref: "zoxideSearchDirectories" }],
-  },
-  "8": {
-    description: "RingCentral",
-    hold: [{ type: "app", ref: "ringCentral", mode: "shell" }],
-  },
-  f1: {
-    description: "Brightness rightness",
+  "hyper+left_arrow": {
+    description: "Rectangle fill-left / previous-display",
+    alone: [
+      {
+        type: "shell",
+        command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
+      },
+    ],
     hold: [
       {
-        type: "key",
-        key: "display_brightness_decrement",
-        options: { repeat: true },
+        type: "url",
+        url: rectangleActionUrl("previous-display"),
+        background: true,
       },
     ],
   },
-  f2: {
-    description: "Increase brightness",
+  "hyper+right_arrow": {
+    description: "Rectangle fill-right / next-display",
+    alone: [
+      {
+        type: "shell",
+        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
+      },
+    ],
     hold: [
       {
-        type: "key",
-        key: "display_brightness_increment",
-        options: { repeat: true },
+        type: "url",
+        url: rectangleActionUrl("next-display"),
+        background: true,
       },
     ],
   },
-  f3: {
-    description: "Mission Control",
-    hold: [{ type: "key", key: "mission_control", options: { repeat: false } }],
-  },
-  f4: {
-    description: "Launchpad",
-    hold: [{ type: "key", key: "launchpad", options: { repeat: false } }],
-  },
-  f5: {
-    description: "Dictation",
+  "left_command+m": {
+    description: "Deminimize",
     hold: [
       {
         type: "key",
-        key: "f5",
-        modifiers: ["command", "option", "control"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  f7: {
-    description: "Rewind",
-    hold: [{ type: "key", key: "rewind", options: { repeat: true } }],
-  },
-  f8: {
-    description: "Play/Pause",
-    hold: [{ type: "key", key: "play_or_pause", options: { repeat: false } }],
-  },
-  f9: {
-    description: "Fast Forward",
-    hold: [{ type: "key", key: "fastforward", options: { repeat: true } }],
-  },
-  f10: {
-    description: "Mute",
-    hold: [{ type: "key", key: "mute", options: { repeat: false } }],
-  },
-  f11: {
-    description: "Volume Down",
-    hold: [{ type: "key", key: "volume_decrement", options: { repeat: true } }],
-  },
-  f12: {
-    description: "Volume Up",
-    hold: [{ type: "key", key: "volume_increment", options: { repeat: true } }],
-  },
-  slash: {
-    description: "Houdah",
-    hold: [
-      {
-        type: "key",
-        key: "h",
-        modifiers: ["command", "option", "control", "shift"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  tab: {
-    description: "Mission Control",
-    hold: [
-      {
-        type: "key",
-        key: "mission_control",
-        options: { halt: true, repeat: true },
-      },
-    ],
-  },
-  fn: {
-    description: "Dictation via Spokenly",
-    hold: [
-      {
-        type: "key",
-        key: "f5",
-        modifiers: ["left_command", "left_option", "left_control"],
+        key: "m",
+        modifiers: ["option", "control"],
         options: { repeat: false },
       },
     ],
@@ -474,6 +582,10 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
+  },
+  "left_shift+a": {
+    description: "Antinote",
+    hold: [{ type: "url", url: "antinote://", background: true }],
   },
   "right_option+k": {
     description: "Kitty here",
@@ -501,25 +613,6 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
         type: "applescript",
         scriptPath:
           "/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
-      },
-    ],
-    timeoutMs: 300,
-    thresholdMs: 300,
-  },
-  application: {
-    description: "Reflow pinned app (tap), Pin app (hold)",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("reflow-pin"),
-        background: true,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("pin"),
-        background: true,
       },
     ],
     timeoutMs: 300,

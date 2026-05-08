@@ -26,7 +26,6 @@ import { buildSkimCommandRemapRule } from "../rules/skim";
 import {
   buildEnterRules,
   buildEqualsRules,
-  buildGraveAccentHoldRule,
   buildHomeEndRule,
   buildOnePieceClickEnterRule,
 } from "../rules/special-keys";
@@ -185,11 +184,6 @@ test("hyper plus rules factory keeps grouped mappings", () => {
     ],
   );
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
-});
-test("grave accent hold factory keeps single manipulator", () => {
-  const rule = buildGraveAccentHoldRule().build();
-  assert.equal(rule.description, "[~]        →    Hyper F5 (on hold)");
-  assert.equal(rule.manipulators.length, 1);
 });
 
 test("enter rules factory keeps two keys across two contexts", () => {

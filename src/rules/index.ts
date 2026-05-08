@@ -27,7 +27,6 @@ export {
 export {
   buildEnterRules,
   buildEqualsRules,
-  buildGraveAccentHoldRule,
   buildHomeEndRule,
   buildOnePieceClickEnterRule,
 } from "./special-keys";

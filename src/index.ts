@@ -47,7 +47,6 @@ import {
   buildEnterRules,
   buildEqualsRules,
   buildEscapeTapTapHoldRule,
-  buildGraveAccentHoldRule,
   buildHomeEndRule,
   buildHyperPlusRules,
   buildLeftCommandRule,
@@ -130,9 +129,6 @@ let rules: any[] = [
 
   // HYPER + _ - Grouped hyper shortcuts
   ...buildHyperPlusRules(),
-
-  // GRAVE ACCENT & TILDE - Tap sends tilde, hold sends hyper+f5 with deferred release
-  buildGraveAccentHoldRule(),
 
   // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel
   ...buildEnterRules(),
