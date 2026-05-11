@@ -209,6 +209,7 @@ export function varTapTapHoldFrom({
     },
     description:
       description || `${firstVar} second tap (tap-tap / tap-tap-hold)`,
+    to: [...(passThrough ? [passThrough] : [])],
     to_if_alone: [toSetVar(firstVar, 0), ...(tapTapEvents ?? [])],
     to_if_held_down: [toSetVar(firstVar, 0), ...(tapTapHoldEvents ?? [])],
     to_delayed_action: {
@@ -229,9 +230,11 @@ export function varTapTapHoldFrom({
       parameters: {
         "basic.to_delayed_action_delay_milliseconds": thresholdMs,
         "basic.to_if_held_down_threshold_milliseconds": thresholdMs,
+        "basic.to_if_alone_timeout_milliseconds": thresholdMs,
       },
       description: description || `${firstVar} first tap (pass-through)`,
       to: [toSetVar(firstVar, 1), ...(passThrough ? [passThrough] : [])],
+      to_if_alone: [toSetVar(firstVar, 1), ...(aloneEvents ?? [])],
       to_if_held_down: [toSetVar(firstVar, 0), ...(holdEvents ?? [])],
       to_delayed_action: {
         to_if_invoked: [toSetVar(firstVar, 0)],

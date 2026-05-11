@@ -96,6 +96,26 @@ const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
   ////   right_option+k: Kitty here
   ////   right_option+s: Spotify toggle (tap), search (hold)
   ////   right_option+t: Edit last Typinator expansion
+  //====================================================================
+  // CONFIG OPTIONS:
+  //
+  // triggerKey: {
+  //   description:     string;
+  //   alone?:          ActionConfig[]; // Action(s) to fire on tap
+  //   hold:            ActionConfig[]; // Action(s) to fire on hold (after timeout)
+  //   timeoutMs?:      number; // Time to wait for a hold before firing alone action
+  //   thresholdMs?:    number; // Minimum hold time to fire hold action instead of alone action
+  // }
+  //
+  // ACTION OPTIONS:
+  //        { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean } } |
+  //        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
+  //        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
+  //        { type: "raycast"; ref: string } |
+  //        { type: "takeActionHere"; action: string } |
+  //        { type: "cleanShot"; ref: string } |
+  //        { type: "applescript"; scriptPath: string }
+
 
 
 export const tapHoldMappings: Record<string, TapHoldConfig> = {

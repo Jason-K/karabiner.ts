@@ -34,9 +34,38 @@ test("left command factory keeps dual manipulator behavior", () => {
   const rule = buildLeftCommandRule().build();
   assert.equal(
     rule.description,
-    "[←⌘]        →    App history switcher (on multi-tap)",
+    "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
   );
-  assert.equal(rule.manipulators.length, 10);
+  assert.equal(rule.manipulators.length, 2);
+});
+
+test("left command factory keeps pass-through lcmd and app switch on second tap release", () => {
+  const rule = buildLeftCommandRule().build();
+
+  assert.deepEqual(rule.manipulators[1]?.to_if_alone?.[1], {
+    key_code: "left_command",
+    modifiers: undefined,
+  });
+
+  assert.deepEqual(rule.manipulators[1]?.to?.[1], {
+    lazy: true,
+    modifiers: [],
+    key_code: "left_command",
+  });
+
+  assert.deepEqual(rule.manipulators[0]?.to?.[0], {
+    lazy: true,
+    modifiers: [],
+    key_code: "left_command",
+  });
+
+  assert.deepEqual(rule.manipulators[0]?.to_if_alone?.[1], {
+    software_function: {
+      open_application: {
+        frontmost_application_history_index: 1,
+      },
+    },
+  });
 });
 
 test("caps lock factory keeps three behavior variants", () => {

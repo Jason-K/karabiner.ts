@@ -5217,10 +5217,17 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 500,
-              "basic.to_if_held_down_threshold_milliseconds": 500
+              "basic.to_if_alone_timeout_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600
             },
             "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "left_command",
+                "modifiers": []
+              }
+            ],
             "to_if_alone": [
               {
                 "set_variable": {
@@ -5270,8 +5277,9 @@
               "modifiers": {}
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 500,
-              "basic.to_if_held_down_threshold_milliseconds": 500
+              "basic.to_delayed_action_delay_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600,
+              "basic.to_if_alone_timeout_milliseconds": 600
             },
             "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
             "to": [
@@ -5287,6 +5295,17 @@
                 "modifiers": []
               }
             ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "left_command_detect",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "left_command"
+              }
+            ],
             "to_if_held_down": [
               {
                 "set_variable": {
@@ -5295,12 +5314,7 @@
                 }
               },
               {
-                "key_code": "f5",
-                "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
-                ]
+                "key_code": "left_command"
               }
             ],
             "to_delayed_action": {
@@ -5347,6 +5361,7 @@
               "basic.to_if_held_down_threshold_milliseconds": 250
             },
             "description": "[ESC]        →    Escape / Kill app (on multi-tap)",
+            "to": [],
             "to_if_alone": [
               {
                 "set_variable": {

@@ -3,7 +3,7 @@ import { formatRuleDescription } from "../lib/rule-descriptions";
 import { openApp } from "../lib/software";
 import { varTapTapHold } from "../lib/tap-hold";
 
-const LEFT_COMMAND_TAP_DELAY_MS = 500;
+const LEFT_COMMAND_TAP_DELAY_MS = 600;
 
 export const buildLeftCommandRule = () => {
   return rule(
@@ -17,9 +17,7 @@ export const buildLeftCommandRule = () => {
       key: "left_command",
       firstVar: "left_command_detect",
       aloneEvents: [toKey("left_command")],
-      holdEvents: [
-        toKey("f5", ["left_command", "left_option", "left_control"]),
-      ],
+      holdEvents: [toKey("left_command")],
       tapTapEvents: [openApp({ historyIndex: 1 })],
       thresholdMs: LEFT_COMMAND_TAP_DELAY_MS,
       allowPassThrough: true,
