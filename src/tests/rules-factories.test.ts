@@ -41,25 +41,27 @@ test("left command factory keeps dual manipulator behavior", () => {
 
 test("left command factory keeps pass-through lcmd and app switch on second tap release", () => {
   const rule = buildLeftCommandRule().build();
+  const second: any = rule.manipulators[1];
+  const first: any = rule.manipulators[0];
 
-  assert.deepEqual(rule.manipulators[1]?.to_if_alone?.[1], {
+  assert.deepEqual(second?.to_if_alone?.[1], {
     key_code: "left_command",
     modifiers: undefined,
   });
 
-  assert.deepEqual(rule.manipulators[1]?.to?.[1], {
+  assert.deepEqual(second?.to?.[1], {
     lazy: true,
     modifiers: [],
     key_code: "left_command",
   });
 
-  assert.deepEqual(rule.manipulators[0]?.to?.[0], {
+  assert.deepEqual(first?.to?.[0], {
     lazy: true,
     modifiers: [],
     key_code: "left_command",
   });
 
-  assert.deepEqual(rule.manipulators[0]?.to_if_alone?.[1], {
+  assert.deepEqual(first?.to_if_alone?.[1], {
     software_function: {
       open_application: {
         frontmost_application_history_index: 1,
@@ -226,15 +228,19 @@ test("enter rules factory keeps two keys across two contexts", () => {
 
 test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const rule = buildOnePieceClickEnterRule().build();
-  assert.equal(rule.description, "OnePiece: left click -> enter");
+  const manipulator: any = rule.manipulators[0];
+  assert.equal(
+    rule.description,
+    "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
+  );
   assert.equal(rule.manipulators.length, 1);
-  assert.deepEqual(rule.manipulators[0]?.from, {
+  assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",
   });
-  assert.deepEqual(rule.manipulators[0]?.to, [
+  assert.deepEqual(manipulator?.to, [
     { key_code: "return_or_enter", modifiers: undefined },
   ]);
-  assert.deepEqual(rule.manipulators[0]?.conditions, [
+  assert.deepEqual(manipulator?.conditions, [
     {
       type: "frontmost_application_if",
       description: undefined,

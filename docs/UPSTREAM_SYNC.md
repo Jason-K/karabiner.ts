@@ -19,7 +19,7 @@ karabiner/
 │   │           ├── runtime.ts
 │   │           ├── types.ts
 │   │           └── index.ts
-│   ├── tsconfig.json         # Path mapping to upstream (DO NOT merge)
+│   ├── tsconfig.json         # Local TS config (DO NOT merge)
 │   ├── package.json          # Local deps (DO NOT merge)
 │   └── eslint.config.mjs     # Local lint rules (DO NOT merge)
 │
@@ -61,8 +61,8 @@ Check the conflict report for:
 
 **If upstream adds new exports (e.g., new rule builders):**
 
-- Your code can import them immediately via `karabiner.ts`
-- No changes needed thanks to path mapping
+- Your code can import them via `karabiner.ts` once dependency is updated
+- Run `npm update karabiner.ts` and re-run typecheck/tests
 
 **If upstream changes existing APIs:**
 
@@ -100,7 +100,7 @@ These files are yours and must never be overwritten by upstream:
 ### Project Files
 
 - `package.json` - Your build scripts and dependencies
-- `tsconfig.json` - Your path mapping configuration
+- `tsconfig.json` - Your local compile settings
 - `eslint.config.mjs` - Your lint rules
 - `README.md` - Your documentation (but copy useful sections from upstream)
 
@@ -177,7 +177,7 @@ Example: Upstream adds a new `duoLayer()` function
 
 - Upstream changes should be **additive** to you
 - Your local `src/lib/` files **wrap and extend** upstream
-- TypeScript path mapping lets you import upstream seamlessly
+- Package versioning keeps upstream adoption explicit and reviewable
 - Conflict reports help you **decide** what to adopt, not force merges
 
 ## Automation (Future Enhancement)
@@ -213,7 +213,7 @@ jobs:
 ## Questions?
 
 - **"Should I merge upstream's package.json?"** → No, yours is different (build tool vs library)
-- **"Should I merge upstream's tsconfig?"** → No, yours has path mapping
+- **"Should I merge upstream's tsconfig?"** → No, yours is project-specific
 - **"Can I use upstream's CI?"** → No, but you can copy ideas into your CI
 - **"What if upstream removes an API I use?"** → Check conflict report, find replacement, update wrappers
 - **"Do I need to credit upstream?"** → Yes, see LICENSE and README acknowledgments

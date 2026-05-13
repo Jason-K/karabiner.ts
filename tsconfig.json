@@ -1,20 +1,16 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "target": "ES2024",
-        "jsx": "react-jsx",
-        "strictNullChecks": true,
-        "strictFunctionTypes": true,
-        "strict": true,
-        "sourceMap": true,
-        "noEmit": true,
-        "allowImportingTsExtensions": true,
-        "baseUrl": ".",
-        "paths": {
-            "karabiner.ts": ["../karabiner.ts-upstream/src/index.ts"],
-            "karabiner.ts/*": ["../karabiner.ts-upstream/src/*"]
-        }
+      "module": "ESNext",
+      "moduleResolution": "Bundler",
+      "target": "ES2024",
+      "jsx": "react-jsx",
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strict": true,
+      "sourceMap": true,
+      "noEmit": true,
+      "allowImportingTsExtensions": true,
+      "baseUrl": "."
     },
     "include": [
         "src"

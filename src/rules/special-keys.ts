@@ -21,7 +21,13 @@ export const buildEnterRules = () => {
 };
 
 export const buildOnePieceClickEnterRule = () => {
-  return rule("OnePiece: left click -> enter").manipulators([
+  const description = formatRuleDescription(
+    "button1",
+    "OnePiece left click -> enter",
+    "tap",
+  );
+
+  return rule(description).manipulators([
     {
       type: "basic" as const,
       from: {
@@ -29,7 +35,7 @@ export const buildOnePieceClickEnterRule = () => {
       },
       to: [toKey("return_or_enter")],
       conditions: [ifApp("jp.fuji.1Piece").build()],
-      description: "OnePiece: left click -> enter",
+      description,
     } as any,
   ]);
 };

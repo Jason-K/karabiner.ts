@@ -17,7 +17,7 @@ karabiner/
 │   │   ├── tests/                # unit + output-level tests
 │   │   └── index.ts              # top-level orchestration
 │   └── docs/                     # local architecture and operations docs
-└── karabiner.ts-upstream/        # upstream mirror for reference and type surface
+└── karabiner.ts-upstream/        # upstream mirror for reference, docs, and diffing
 ```
 
 ## Ownership Boundaries
@@ -42,8 +42,8 @@ karabiner/
 
 ## How Integration Works
 
-1. Code imports from `karabiner.ts` APIs.
-2. TypeScript path mapping resolves those imports to `../karabiner.ts-upstream/src`.
+1. Code imports from `karabiner.ts` APIs (npm package dependency).
+2. Local beta shims in `src/lib/beta.ts` provide project-specific compatibility where upstream removes/changes APIs.
 3. Local modules compose those APIs into project-specific mappings/generators/rules.
 4. `src/index.ts` orchestrates assembly and output writes.
 

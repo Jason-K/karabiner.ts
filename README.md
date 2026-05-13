@@ -14,6 +14,12 @@ The config is now split by responsibility:
 
 The main entrypoint in `src/index.ts` wires these pieces together.
 
+## Upstream Integration Notes
+
+- Imports resolve from the installed `karabiner.ts` package, not from mirrored source paths.
+- Local beta compatibility helpers live in `src/lib/beta.ts`.
+- `karabiner.ts-upstream/` and `docs/upstream/` are reference and diff surfaces used by sync workflows.
+
 ## Declarative Surfaces
 
 The larger mapping-heavy areas extracted during this refactor are now declarative:

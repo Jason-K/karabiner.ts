@@ -5,11 +5,15 @@ import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
 import { disabledShortcuts } from "../mappings/disabled-shortcuts";
 import { folderRegistry } from "../mappings/folders";
-import { mouseDeviceMappings } from "../mappings/mouse";
+import {
+  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+  mouseDeviceMappings,
+} from "../mappings/mouse";
 import { homeEndNavigationMappings } from "../mappings/navigation";
 import { raycastRegistry } from "../mappings/raycast";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
+  rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
 } from "../mappings/rectangle";
 import { rightOptionLaunchers } from "../mappings/right-option-launchers";
@@ -228,9 +232,11 @@ test("tap-hold mappings keep expected anchor keys", () => {
 test("new hyper rectangle mappings stay declarative", () => {
   assert.deepEqual(tapHoldMappings["hyper+left_arrow"].alone, [
     {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=fill-left",
-      background: true,
+      type: "shell",
+      command: rectangleActionByFocusedWindowOrientationCommand(
+        "left-half",
+        "top-half",
+      ),
     },
   ]);
   assert.deepEqual(tapHoldMappings["hyper+left_arrow"].hold, [
@@ -241,11 +247,10 @@ test("new hyper rectangle mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["hyper+spacebar"].hold, [
+  assert.deepEqual(tapHoldMappings["hyper+spacebar"].alone, [
     {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=restore",
-      background: true,
+      type: "shell",
+      command: rectangleMaxOrRestoreCommand(),
     },
   ]);
 
@@ -347,6 +352,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       },
     ],
     hold: [
+      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
         key_code: "left_control",
         modifiers: ["left_option", "left_shift"],
@@ -361,6 +367,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
     button: "wheel_left",
     description: "Rectangle fill-left (hold)",
     hold: [
+      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
         shell_command: rectangleActionByFocusedWindowOrientationCommand(
           "left-half",
@@ -368,8 +375,27 @@ test("mouse device mappings are declarative and device-scoped", () => {
         ),
       },
     ],
-    thresholdMs: 140,
-    timeoutMs: 140,
+    thresholdMs: 200,
+    timeoutMs: 200,
+  });
+
+  const middleFrontMapping = mouseDeviceMappings[0]?.mappings.find(
+    (m) => m.type === "tapHold" && m.button === "middle_front",
+  );
+  assert.deepEqual(middleFrontMapping, {
+    type: "tapHold",
+    button: "middle_front",
+    description: "Middle (tap) / Rectangle maximize (hold)",
+    variable: "middle_front_pressed",
+    alone: [{ pointing_button: "button3" }],
+    hold: [
+      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+      {
+        shell_command: rectangleMaxOrRestoreCommand(),
+      },
+    ],
+    thresholdMs: 300,
+    timeoutMs: 300,
   });
 
   const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
@@ -390,15 +416,22 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftBackAlone?.[0], {
     shell_command: rectangleMaxOrRestoreCommand(),
   });
+  const leftBackHold =
+    leftBackMapping?.type === "tapHold" ? leftBackMapping.hold : undefined;
+  assert.deepEqual(leftBackHold, [
+    ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+    {
+      shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
+    },
+  ]);
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "Show menu (tap) / move (hold)",
+    description: "Show menu (tap) / Stash right (hold)",
     alone: [{ key_code: "m", modifiers: ["left_option"] }],
     hold: [
       {
-        key_code: "left_command",
-        modifiers: ["left_option", "left_shift"],
+        shell_command: `open -g '${rectangleActionUrl("stash-right")}'`,
       },
     ],
     thresholdMs: 300,

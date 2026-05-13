@@ -18,6 +18,11 @@ const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
 const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
+export const ACTIVATE_WINDOW_UNDER_CURSOR_EVENT: ToEvent = {
+  pointing_button: "button1",
+  hold_down_milliseconds: 80,
+};
+
 export type MouseIdentifiers = {
   product_id: number;
   vendor_id: number;
@@ -93,6 +98,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             key_code: "left_control",
             modifiers: ["left_option", "left_shift"],
@@ -106,6 +112,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         button: "wheel_left",
         description: "Rectangle fill-left (hold)",
         hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             shell_command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
           },
@@ -118,6 +125,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         button: "wheel_right",
         description: "Rectangle fill-right (hold)",
         hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             shell_command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION,
           },
@@ -142,7 +150,10 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         description: "Middle (tap) / Rectangle maximize (hold)",
         variable: "middle_front_pressed",
         alone: [{ pointing_button: "button3" }],
-        hold: rectangleMaxOrRestoreEvents(),
+        hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          ...rectangleMaxOrRestoreEvents(),
+        ],
         thresholdMs: 300,
         timeoutMs: 300,
       },
@@ -152,6 +163,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         description: "Rectangle Max/Restore (tap) / Next Display (hold)",
         alone: rectangleMaxOrRestoreEvents(),
         hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
           },

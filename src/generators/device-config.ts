@@ -47,7 +47,9 @@ export function updateDeviceConfigurations(profileName: string, deviceConfigs: D
                 })),
             ];
 
-            fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
+            const tmpPath = `${configPath}.tmp`;
+            fs.writeFileSync(tmpPath, JSON.stringify(config, null, 4));
+            fs.renameSync(tmpPath, configPath);
             console.log('✓ Device-specific simple_modifications updated.');
           } else {
             console.error(`✗ ${profileName} profile not found`);

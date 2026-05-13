@@ -2,18 +2,18 @@ import type { Condition, Modifier, ToEvent, ToVariable } from 'karabiner.ts';
 import { toKey } from 'karabiner.ts';
 
 export function setVarExpr(name: string, expression: string, keyUpExpression?: string): ToEvent {
-  const payload: ToVariable = { name };
+  const payload: Record<string, unknown> = { name };
   if (expression) payload.expression = expression;
   if (keyUpExpression) payload.key_up_expression = keyUpExpression;
-  return { set_variable: payload };
+  return { set_variable: payload as ToVariable };
 }
 
 export function exprIf(expression: string): Condition {
-  return { type: 'expression_if', expression };
+  return { type: "expression_if", expression } as unknown as Condition;
 }
 
 export function exprUnless(expression: string): Condition {
-  return { type: 'expression_unless', expression };
+  return { type: "expression_unless", expression } as unknown as Condition;
 }
 
 export function ifExpression(expression: string): Condition {

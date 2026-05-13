@@ -2,7 +2,7 @@
   "complex_modifications": {
     "rules": [
       {
-        "conditions": [],
+        "ruleDescription": "[8]        →    RingCentral (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -80,10 +80,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[8]        →    RingCentral (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[A]        →    Raycast AI-quick search (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -167,10 +167,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[A]        →    Raycast AI-quick search (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[C]        →    Calendar (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -254,10 +254,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[C]        →    Calendar (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F]        →    QSSpace (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -335,10 +335,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F]        →    QSSpace (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[G]        →    Claude (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -416,10 +416,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[G]        →    Claude (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[H]        →    Here2There (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -497,10 +497,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[H]        →    Here2There (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[J]        →    Last d/l (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -578,10 +578,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[J]        →    Last d/l (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[K]        →    Kitty (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -663,10 +663,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[K]        →    Kitty (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[O]        →    OCR (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -744,10 +744,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[O]        →    OCR (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[P]        →    Popclip (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -832,10 +832,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[P]        →    Popclip (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[R]        →    Last d/l (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -913,10 +913,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[R]        →    Last d/l (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[S]        →    Screenshot (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -994,10 +994,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[S]        →    Screenshot (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[T]        →    Todoist (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1075,10 +1075,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[T]        →    Todoist (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[V]        →    Maccy (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1161,10 +1161,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[V]        →    Maccy (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[X]        →    Copy file (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1242,10 +1242,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[X]        →    Copy file (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[Y]        →    Yank file (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1323,10 +1323,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[Y]        →    Yank file (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[Z]        →    Zoxide (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1404,10 +1404,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[Z]        →    Zoxide (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 0]        →    Unstash all via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1485,10 +1485,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 0]        →    Unstash all via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 2]        →    Stash down via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1566,10 +1566,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 2]        →    Stash down via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 4]        →    Stash left via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1647,10 +1647,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 4]        →    Stash left via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 5]        →    Unstash via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1728,10 +1728,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 5]        →    Unstash via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 6]        →    Stash right via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1809,10 +1809,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 6]        →    Stash right via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[KEYPAD 8]        →    Stash up via rectangle (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1890,10 +1890,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[KEYPAD 8]        →    Stash up via rectangle (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F1]        →    Brightness rightness (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1973,10 +1973,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F1]        →    Brightness rightness (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F2]        →    Increase brightness (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2056,10 +2056,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F2]        →    Increase brightness (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F3]        →    Mission Control (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2139,10 +2139,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F3]        →    Mission Control (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F4]        →    Launchpad (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2222,10 +2222,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F4]        →    Launchpad (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F5]        →    Dictation (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2309,10 +2309,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F5]        →    Dictation (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F7]        →    Rewind (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2392,10 +2392,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F7]        →    Rewind (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F8]        →    Play/Pause (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2475,10 +2475,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F8]        →    Play/Pause (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F9]        →    Fast Forward (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2558,10 +2558,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F9]        →    Fast Forward (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F10]        →    Mute (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2641,10 +2641,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F10]        →    Mute (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F11]        →    Volume Down (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2724,10 +2724,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F11]        →    Volume Down (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[F12]        →    Volume Up (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2807,10 +2807,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[F12]        →    Volume Up (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[/]        →    Houdah (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2895,10 +2895,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[/]        →    Houdah (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[~]        →    Popclip (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2984,10 +2984,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[~]        →    Popclip (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[TAB]        →    Mission Control (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3068,10 +3068,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[TAB]        →    Mission Control (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[FN]        →    Dictation via Spokenly (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3155,10 +3155,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[FN]        →    Dictation via Spokenly (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[APPLICATION]        →    Reflow pinned app (tap), Pin app (hold) (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3232,10 +3232,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[APPLICATION]        →    Reflow pinned app (tap), Pin app (hold) (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3335,10 +3335,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3419,10 +3419,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3503,10 +3503,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3593,10 +3593,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3683,10 +3683,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3773,10 +3773,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3863,10 +3863,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3953,10 +3953,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4043,10 +4043,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4133,10 +4133,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4223,10 +4223,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4313,10 +4313,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4403,10 +4403,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4487,10 +4487,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4571,10 +4571,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4655,10 +4655,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[M]        →    Deminimize (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4750,10 +4750,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[M]        →    Deminimize (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[P]        →    Paletro (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4846,10 +4846,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[P]        →    Paletro (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⇧]+[A]        →    Antinote (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4936,10 +4936,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⇧]+[A]        →    Antinote (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[K]        →    Kitty here (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5026,10 +5026,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[K]        →    Kitty here (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[S]        →    Spotify toggle (tap), search (hold) (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5108,10 +5108,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[S]        →    Spotify toggle (tap), search (hold) (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[T]        →    Edit last Typinator expansion (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5198,10 +5198,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[T]        →    Edit last Typinator expansion (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5338,10 +5338,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[ESC]        →    Escape / Kill app (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5463,10 +5463,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[ESC]        →    Escape / Kill app (on multi-tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5504,10 +5504,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5527,6 +5527,10 @@
               }
             ],
             "to_if_held_down": [
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
               {
                 "key_code": "left_control",
                 "modifiers": [
@@ -5561,10 +5565,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Rectangle fill-left (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5576,6 +5580,10 @@
               "basic.to_if_held_down_threshold_milliseconds": 200
             },
             "to_if_held_down": [
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
               {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
@@ -5604,10 +5612,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle fill-left (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Rectangle fill-right (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5619,6 +5627,10 @@
               "basic.to_if_held_down_threshold_milliseconds": 200
             },
             "to_if_held_down": [
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
               {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
@@ -5647,10 +5659,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle fill-right (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5694,10 +5706,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5731,6 +5743,10 @@
             ],
             "to_if_held_down": [
               {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
+              {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -5757,10 +5773,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5777,6 +5793,10 @@
               }
             ],
             "to_if_held_down": [
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
               }
@@ -5804,10 +5824,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Show menu (tap) / Stash right (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5857,10 +5877,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Show menu (tap) / Stash right (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Back (tap) / CMD+Tab (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5911,10 +5931,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Back (tap) / CMD+Tab (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "Logitech G502 X: Forward (tap) / CMD+Tab (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5965,10 +5985,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "Logitech G502 X: Forward (tap) / CMD+Tab (hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5988,14 +6008,14 @@
                 ]
               }
             ],
-            "description": "OnePiece: left click -> enter"
+            "description": "[BUTTON1]        →    OnePiece left click -> enter (on tap)"
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "OnePiece: left click -> enter"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6082,10 +6102,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]        →    SPACE layer (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6312,10 +6332,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]        →    SPACE layer (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[A]        →    Applications layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6759,10 +6779,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[A]        →    Applications layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[C]        →    Case > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6904,10 +6924,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[C]        →    Case > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[D]        →    Downloads > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -7061,10 +7081,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[D]        →    Downloads > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[F]        →    Folders > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -7308,10 +7328,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[F]        →    Folders > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[R]        →    Recent > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -7447,10 +7467,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[R]        →    Recent > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[S]        →    Screenshots > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -7586,10 +7606,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[S]        →    Screenshots > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]+[W]        →    Wrap > layer (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -7731,10 +7751,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]+[W]        →    Wrap > layer (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[SPACE]        →    SPACE unmapped-key guard (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8802,10 +8822,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[SPACE]        →    SPACE unmapped-key guard (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[HOME]        →    Move to line start (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8823,10 +8843,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[HOME]        →    Move to line start (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[⇧]+[HOME]        →    Select to line start (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8850,10 +8870,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[⇧]+[HOME]        →    Select to line start (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[END]        →    Move to line end (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8871,10 +8891,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[END]        →    Move to line end (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[⇧]+[END]        →    Select to line end (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8898,10 +8918,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[⇧]+[END]        →    Select to line end (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[S]        →    Format selection (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8923,10 +8943,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[S]        →    Format selection (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[T]        →    New Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8948,10 +8968,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[T]        →    New Typinator rule (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[;]        →    Open System Settings (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8973,10 +8993,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[;]        →    Open System Settings (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[F12]        →    Edit last Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -8998,10 +9018,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[F12]        →    Edit last Typinator rule (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[✦]+[ESC]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9023,10 +9043,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[✦]+[ESC]        →    Open Activity Monitor (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9070,10 +9090,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[RETURN]        →    Edit cell (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9119,10 +9139,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[RETURN]        →    Edit cell (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9166,10 +9186,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[RETURN]        →    Edit cell (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9215,10 +9235,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[RETURN]        →    Edit cell (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[PAD =]        →    Quick date (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9267,10 +9287,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[PAD =]        →    Quick date (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[=]        →    Quick date (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9319,10 +9339,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[=]        →    Quick date (on hold)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[Q]        →    Quit app (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9398,10 +9418,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[Q]        →    Quit app (on multi-tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[A]        →    Antinote (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9421,10 +9441,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[A]        →    Antinote (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[B]        →    Helium (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9444,10 +9464,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[B]        →    Helium (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[C]        →    VS Code (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9467,10 +9487,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[C]        →    VS Code (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[E]        →    Proton Mail (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9490,10 +9510,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[E]        →    Proton Mail (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[F]        →    Home folder (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9513,10 +9533,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[F]        →    Home folder (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[M]        →    Messages (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9536,10 +9556,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[M]        →    Messages (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[O]        →    Outlook (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9559,10 +9579,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[O]        →    Outlook (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[T]        →    Teams (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9582,10 +9602,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[T]        →    Teams (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[W]        →    Word (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9605,10 +9625,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[W]        →    Word (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[→⌥]+[8]        →    RingCentral (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9628,10 +9648,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[→⌥]+[8]        →    RingCentral (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[ESC]        →    Reset all variables (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9738,10 +9758,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[ESC]        →    Reset all variables (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9756,10 +9776,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[H]        →    Disabled hide shortcut (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘⌥]+[H]        →    Disabled hide others shortcut (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9775,10 +9795,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘⌥]+[H]        →    Disabled hide others shortcut (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘⌥]+[M]        →    Disabled minimize shortcut (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9794,10 +9814,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘⌥]+[M]        →    Disabled minimize shortcut (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9828,10 +9848,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[/]        →    Quick fill password (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9973,10 +9993,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[/]        →    Quick fill password (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[H]        →    Skim command H remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -10008,10 +10028,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[H]        →    Skim command H remap (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[U]        →    Skim command U remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -10043,10 +10063,10 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[U]        →    Skim command U remap (on tap)"
+        "conditions": []
       },
       {
-        "conditions": [],
+        "ruleDescription": "[←⌘]+[D]        →    Delete note (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -10140,7 +10160,7 @@
           }
         ],
         "allowEmptyManipulators": false,
-        "ruleDescription": "[←⌘]+[D]        →    Delete note (on multi-tap)"
+        "conditions": []
       }
     ]
   }

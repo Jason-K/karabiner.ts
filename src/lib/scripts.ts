@@ -3,7 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
-import { toSendUserCommand } from 'karabiner.ts';
+
+import { toSendUserCommand } from "./beta";
 
 export function cmd(shell: string): ToEvent {
   return { shell_command: shell } as ToEvent;
