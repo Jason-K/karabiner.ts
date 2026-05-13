@@ -4,7 +4,6 @@ import {
   buildConditionalTapHoldRules,
   buildSimpleRemapRules,
 } from "../generators";
-import { HYPER } from "../lib/mods";
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import {
   enterKeyHoldMappings,
