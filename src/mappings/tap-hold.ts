@@ -158,6 +158,16 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [{ type: "raycast", ref: "recentDownloads" }],
   },
   k: { description: "Kitty", hold: [{ type: "app", ref: "kitty" }] },
+  n: {
+    description: "New note",
+    hold: [
+      {
+        type: "url",
+        url: "sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A",
+        background: true,
+      },
+    ],
+  },
   o: {
     description: "OCR",
     hold: [{ type: "cleanShot", ref: "captureTextNoLinebreaks" }],
