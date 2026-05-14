@@ -1,4 +1,4 @@
-#!/usr/bin/env -S uv run --python /Users/jason/Scripts/.venv/bin/python
+#!/usr/bin/env -S uv run --python /Users/jason/Scripts/.venv/shared_venv/bin/python
 """
 Karabiner user-command receiver for extensible endpoint dispatch.
 

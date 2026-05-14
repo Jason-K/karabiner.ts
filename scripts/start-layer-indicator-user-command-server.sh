@@ -23,7 +23,7 @@ if [[ ! -x "$UV_BIN" ]]; then
   fi
 fi
 
-PYTHON_BIN="/Users/jason/Scripts/.venv/bin/python"
+PYTHON_BIN="/Users/jason/Scripts/.venv/shared_venv/bin/python"
 if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Python interpreter not found: $PYTHON_BIN" >&2
   exit 1
