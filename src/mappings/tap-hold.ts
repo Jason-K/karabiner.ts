@@ -141,6 +141,17 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
+  d: {
+    description: "Add to Droppy",
+    hold: [
+      {
+        type: "key",
+        key: "f1",
+        modifiers: ["command", "option", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
   f: {
     description: "QSSpace",
     hold: [{ type: "takeActionHere", action: "qspace" }],
