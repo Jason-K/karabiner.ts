@@ -17,7 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 START_SCRIPT="${SCRIPT_DIR}/start-layer-indicator-user-command-server.sh"
 ENDPOINT_FILE="${SCRIPT_DIR}/layer-indicator-user-command-endpoint.txt"
-LOG_DIR="${PROJECT_DIR}/logs"
+LOG_DIR="${HOME}/Library/Logs/Scripts/Karabiner/$(basename "${PROJECT_DIR}")"
 
 LAUNCH_AGENTS_DIR="${HOME}/Library/LaunchAgents"
 PLIST_TARGET="${LAUNCH_AGENTS_DIR}/${LABEL}.plist"
