@@ -1,19 +1,16 @@
-import { DEVICE_IDENTIFIERS, TIMINGS } from "../constants";
-import { g502xButtons } from "../lib/mouse";
+import { g502xButtons } from "../core/mouse";
+import { DEVICE_IDENTIFIERS, TIMINGS } from "../data";
 import {
   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
   type MouseDeviceConfig,
-} from "../mappings/mouse";
+} from "../data/mouse";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreEvents,
-} from "../mappings/rectangle";
+} from "../data/rectangle";
 
-export {
-  buildMouseDeviceRules,
-  buildMouseRules,
-} from "../builders/mouse-rules";
+export { buildMouseDeviceRules, buildMouseRules } from "./mouse-rules";
 
 const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");

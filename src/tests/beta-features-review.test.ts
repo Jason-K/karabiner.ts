@@ -9,8 +9,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { map, toSetVar } from "karabiner.ts";
-import { toFromEvent } from "../lib/beta";
-import { exprIf } from "../lib/conditions";
+import { toFromEvent } from "../core/beta";
+import { exprIf } from "../core/conditions";
 
 const mapAny = map as unknown as (...args: any[]) => any;
 

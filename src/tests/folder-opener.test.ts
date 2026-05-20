@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-    getFolderOpenerBundleIdFor,
-    getOpenFolderCommandFor,
-} from "../lib/folder-opener";
+  getFolderOpenerBundleIdFor,
+  getOpenFolderCommandFor,
+} from "../core/folder-opener";
 
 test("bloom opener escapes spaces", () => {
   const command = getOpenFolderCommandFor("bloom", "/Users/jason/My Folder");

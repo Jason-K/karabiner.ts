@@ -1,0 +1,661 @@
+import { recentDownloadsCommand, spotifyToggleCommand } from "../core/scripts";
+import type { TapHoldConfig } from "../rules";
+import { PATHS } from "./paths";
+import {
+    rectangleActionByFocusedWindowOrientationCommand,
+    rectangleActionUrl,
+    rectangleMaxOrRestoreCommand,
+} from "./rectangle";
+import { TIMINGS } from "./timings";
+
+const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");
+
+const RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("right-half", "bottom-half");
+
+const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-left", "top-half");
+
+const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
+  rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
+
+//   SINGLE KEY TAP/HOLD RULES
+//
+////   LETTERS:
+////
+//////     a: Raycast AI-quick search
+//////     c: Calendar
+//////     f: QSSpace
+//////     g: Claude
+//////     h: Here2There
+//////     j: Last d/l
+//////     k: Kitty
+//////     o: OCR
+//////     p: Popclip
+//////     r: Last d/l
+//////     s: Screenshot
+//////     t: Todoist
+//////     v: Maccy
+//////     x: Copy file (takeActionHere)
+//////     y: Yank file (takeActionHere)
+//////     z: Zoxide
+////
+////   NUMBERS:
+////
+//////     8: RingCentral
+//////     keypad_0: Unstash all via rectangle
+//////     keypad_2: Stash down via rectangle
+//////     keypad_4: Stash left via rectangle
+//////     keypad_5: Unstash via rectangle
+//////     keypad_6: Stash right via rectangle
+//////     keypad_8: Stash up via rectangle
+////
+////   FUNCTION KEYS:
+////
+//////     f1: Brightness decrement
+//////     f2: Increase brightness
+//////     f3: Mission Control
+//////     f4: Launchpad
+//////     f5: Dictation
+//////     f7: Rewind
+//////     f8: Play/Pause
+//////     f9: Fast Forward
+//////     f10: Mute
+//////     f11: Volume Down
+//////     f12: Volume Up
+////
+////   OTHER KEYS:
+////
+//////     slash: Houdah
+//////     tab: Mission Control
+//////     fn: Dictation via Spokenly
+//////     application: Reflow pinned app (tap), Pin app (hold)
+//
+// HYPER KEY COMBINATIONS:
+//
+////   hyper+a: Raycast AI-chat
+////   hyper+q: Rectangle Pro left (half on tap, fill on hold)
+////   hyper+w: Rectangle Pro right (half on tap, fill on hold)
+////   hyper+1: Rectangle left-half/top-half by orientation
+////   hyper+2: Rectangle right-half/bottom-half by orientation
+////   hyper+3: Rectangle first-third
+////   hyper+4: Rectangle first-fourth
+////   hyper+keypad_1: Rectangle bottom-left-eighth
+////   hyper+keypad_3: Rectangle bottom-right-eighth
+////   hyper+keypad_5: Rectangle maximize
+////   hyper+keypad_7: Rectangle top-left-eighth
+////   hyper+keypad_9: Rectangle top-right-eighth
+////   hyper+spacebar: Rectangle maximize / restore
+////   hyper+tab: Rectangle next-display (tap), previous-display (hold)
+////   hyper+left_arrow: Rectangle fill-left / previous-display
+////   hyper+right_arrow: Rectangle fill-right / next-display
+//
+// OTHER COMBINATIONS:
+//
+////   left_command+m: Deminimize
+////   left_command+p: Paletro
+////   left_shift+a: Antinote
+////   right_option+k: Kitty here
+////   right_option+s: Spotify toggle (tap), search (hold)
+////   right_option+t: Edit last Typinator expansion
+//====================================================================
+// CONFIG OPTIONS:
+//
+// triggerKey: {
+//   description:     string;
+//   alone?:          ActionConfig[]; // Action(s) to fire on tap
+//   hold:            ActionConfig[]; // Action(s) to fire on hold (after timeout)
+//   timeoutMs?:      number; // Time to wait for a hold before firing alone action
+//   thresholdMs?:    number; // Minimum hold time to fire hold action instead of alone action
+// }
+//
+// ACTION OPTIONS:
+//        { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean } } |
+//        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
+//        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
+//        { type: "raycast"; ref: string } |
+//        { type: "takeActionHere"; action: string } |
+//        { type: "cleanShot"; ref: string } |
+//        { type: "applescript"; scriptPath: string }
+
+export const tapHoldMappings: Record<string, TapHoldConfig> = {
+  a: {
+    description: "Raycast AI-quick search",
+    hold: [
+      {
+        type: "key",
+        key: "f18",
+        modifiers: ["command", "option", "control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  c: {
+    description: "Calendar",
+    hold: [
+      {
+        type: "key",
+        key: "7",
+        modifiers: ["command", "option", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  d: {
+    description: "Add to Droppy",
+    hold: [
+      {
+        type: "key",
+        key: "f1",
+        modifiers: ["command", "option", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  f: {
+    description: "QSSpace",
+    hold: [{ type: "takeActionHere", action: "qspace" }],
+  },
+  g: {
+    description: "Claude",
+    hold: [{ type: "app", ref: "claude", mode: "shell" }],
+  },
+  h: {
+    description: "Here2There",
+    hold: [{ type: "raycast", ref: "hereToThereActiveToTarget" }],
+  },
+  j: {
+    description: "Last d/l",
+    hold: [{ type: "raycast", ref: "recentDownloads" }],
+  },
+  k: { description: "Kitty", hold: [{ type: "app", ref: "kitty" }] },
+  n: {
+    description: "New note",
+    hold: [
+      {
+        type: "url",
+        url: "sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A",
+        background: true,
+      },
+    ],
+  },
+  o: {
+    description: "OCR",
+    hold: [{ type: "cleanShot", ref: "captureTextNoLinebreaks" }],
+  },
+  p: {
+    description: "Popclip",
+    hold: [
+      {
+        type: "key",
+        key: "f9",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+
+  r: {
+    description: "Last d/l",
+    hold: [
+      {
+        type: "shell",
+        command: recentDownloadsCommand(),
+      },
+    ],
+  },
+  s: {
+    description: "Screenshot",
+    hold: [{ type: "cleanShot", ref: "captureArea" }],
+  },
+  t: {
+    description: "Todoist",
+    hold: [{ type: "app", ref: "todoist", mode: "shell" }],
+  },
+  v: {
+    description: "Maccy",
+    hold: [
+      {
+        type: "key",
+        key: "grave_accent_and_tilde",
+        modifiers: ["control"],
+        options: { halt: true, repeat: false },
+      },
+    ],
+  },
+  x: {
+    description: "Copy file",
+    hold: [{ type: "takeActionHere", action: "copy" }],
+  },
+  y: {
+    description: "Yank file",
+    hold: [{ type: "takeActionHere", action: "copy" }],
+  },
+  z: {
+    description: "Zoxide",
+    hold: [{ type: "raycast", ref: "zoxideSearchDirectories" }],
+  },
+  8: {
+    description: "RingCentral",
+    hold: [{ type: "app", ref: "ringCentral", mode: "shell" }],
+  },
+  keypad_0: {
+    description: "Unstash all via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("unstash-all"),
+        background: true,
+      },
+    ],
+  },
+  keypad_2: {
+    description: "Stash down via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-down"),
+        background: true,
+      },
+    ],
+  },
+  keypad_4: {
+    description: "Stash left via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-left"),
+        background: true,
+      },
+    ],
+  },
+  keypad_5: {
+    description: "Unstash via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("unstash"),
+        background: true,
+      },
+    ],
+  },
+  keypad_6: {
+    description: "Stash right via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-right"),
+        background: true,
+      },
+    ],
+  },
+  keypad_8: {
+    description: "Stash up via rectangle",
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("stash-up"),
+        background: true,
+      },
+    ],
+  },
+  f1: {
+    description: "Brightness rightness",
+    hold: [
+      {
+        type: "key",
+        key: "display_brightness_decrement",
+        options: { repeat: true },
+      },
+    ],
+  },
+  f2: {
+    description: "Increase brightness",
+    hold: [
+      {
+        type: "key",
+        key: "display_brightness_increment",
+        options: { repeat: true },
+      },
+    ],
+  },
+  f3: {
+    description: "Mission Control",
+    hold: [{ type: "key", key: "mission_control", options: { repeat: false } }],
+  },
+  f4: {
+    description: "Launchpad",
+    hold: [{ type: "key", key: "launchpad", options: { repeat: false } }],
+  },
+  f5: {
+    description: "Dictation",
+    hold: [
+      {
+        type: "key",
+        key: "f5",
+        modifiers: ["command", "option", "control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  f7: {
+    description: "Rewind",
+    hold: [{ type: "key", key: "rewind", options: { repeat: true } }],
+  },
+  f8: {
+    description: "Play/Pause",
+    hold: [{ type: "key", key: "play_or_pause", options: { repeat: false } }],
+  },
+  f9: {
+    description: "Fast Forward",
+    hold: [{ type: "key", key: "fastforward", options: { repeat: true } }],
+  },
+  f10: {
+    description: "Mute",
+    hold: [{ type: "key", key: "mute", options: { repeat: false } }],
+  },
+  f11: {
+    description: "Volume Down",
+    hold: [{ type: "key", key: "volume_decrement", options: { repeat: true } }],
+  },
+  f12: {
+    description: "Volume Up",
+    hold: [{ type: "key", key: "volume_increment", options: { repeat: true } }],
+  },
+  slash: {
+    description: "Houdah",
+    hold: [
+      {
+        type: "key",
+        key: "h",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  grave_accent_and_tilde: {
+    description: "Popclip",
+    hold: [
+      {
+        type: "key",
+        key: "f9",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { halt: true, repeat: false },
+      },
+    ],
+  },
+  tab: {
+    description: "Mission Control",
+    hold: [
+      {
+        type: "key",
+        key: "mission_control",
+        options: { halt: true, repeat: true },
+      },
+    ],
+  },
+  fn: {
+    description: "Dictation via Spokenly",
+    hold: [
+      {
+        type: "key",
+        key: "f5",
+        modifiers: ["left_command", "left_option", "left_control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  application: {
+    description: "Reflow pinned app (tap), Pin app (hold)",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("reflow-pin"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("pin"),
+        background: true,
+      },
+    ],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
+  "hyper+a": {
+    description: "Raycast AI-chat",
+    hold: [
+      {
+        type: "key",
+        key: "f18",
+        modifiers: ["command", "option", "control", "shift"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  "hyper+q": {
+    description: "Rectangle Pro left",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("left-half"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("fill-left"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+w": {
+    description: "Rectangle Pro right",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("right-half"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("fill-right"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+1": {
+    description: "Rectangle left-half/top-half by orientation",
+    alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
+  },
+  "hyper+2": {
+    description: "Rectangle right-half/bottom-half by orientation",
+    alone: [
+      { type: "shell", command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION },
+    ],
+  },
+  "hyper+3": {
+    description: "Rectangle first-third",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("first-third"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+4": {
+    description: "Rectangle first-fourth",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("first-fourth"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+keypad_1": {
+    description: "Rectangle bottom-left-eighth",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-left-eighth"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+keypad_3": {
+    description: "Rectangle bottom-right-eighth",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-right-eighth"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+keypad_5": {
+    description: "Rectangle maximize",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("maximize"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+keypad_7": {
+    description: "Rectangle top-left-eighth",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("top-left-eighth"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+keypad_9": {
+    description: "Rectangle top-right-eighth",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("top-right-eighth"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+spacebar": {
+    description: "Rectangle maximize / restore",
+    alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
+  },
+  "hyper+tab": {
+    description: "Rectangle next-display / previous-display",
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("next-display"),
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("previous-display"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+left_arrow": {
+    description: "Rectangle fill-left / previous-display",
+    alone: [
+      {
+        type: "shell",
+        command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("previous-display"),
+        background: true,
+      },
+    ],
+  },
+  "hyper+right_arrow": {
+    description: "Rectangle fill-right / next-display",
+    alone: [
+      {
+        type: "shell",
+        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: rectangleActionUrl("next-display"),
+        background: true,
+      },
+    ],
+  },
+  "left_command+m": {
+    description: "Deminimize",
+    hold: [
+      {
+        type: "key",
+        key: "m",
+        modifiers: ["option", "control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  "left_command+p": {
+    description: "Paletro",
+    hold: [
+      {
+        type: "key",
+        key: "p",
+        modifiers: ["command", "option", "control"],
+        options: { repeat: false },
+      },
+    ],
+  },
+  "left_shift+a": {
+    description: "Antinote",
+    hold: [{ type: "url", url: "antinote://", background: true }],
+  },
+  "right_option+k": {
+    description: "Kitty here",
+    hold: [{ type: "takeActionHere", action: "kitty" }],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
+  "right_option+s": {
+    description: "Spotify toggle (tap), search (hold)",
+    alone: [
+      {
+        type: "shell",
+        command: spotifyToggleCommand(),
+      },
+    ],
+    hold: [{ type: "raycast", ref: "spotifySearch" }],
+    timeoutMs: TIMINGS.spotifyTapHoldMs,
+    thresholdMs: TIMINGS.spotifyTapHoldMs,
+  },
+  "right_option+t": {
+    description: "Edit last Typinator expansion",
+    hold: [
+      {
+        type: "applescript",
+        scriptPath: PATHS.typinatorEditLastAppleScript,
+      },
+    ],
+    timeoutMs: TIMINGS.mouseDefaultMs,
+    thresholdMs: TIMINGS.mouseDefaultMs,
+  },
+};

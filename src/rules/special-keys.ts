@@ -1,11 +1,14 @@
 import { ifApp, rule, toKey } from "karabiner.ts";
-import { TIMINGS, appRegistry } from "../constants";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import {
+  evaluateSelectionCommand,
+  textProcessorCommand,
+} from "../core/scripts";
+import { TIMINGS, appRegistry } from "../data";
 import {
   generateConditionalTapHoldRules,
   type ConditionalTapHoldMapping,
-} from "../generators/conditional-tap-hold-rules";
-import { formatRuleDescription } from "../lib/rule-descriptions";
-import { evaluateSelectionCommand, textProcessorCommand } from "../lib/scripts";
+} from "./conditional-tap-hold-rules";
 
 const EVALUATE_SELECTION_COMMAND = evaluateSelectionCommand();
 const QUICK_DATE_COMMAND = textProcessorCommand("quick_date");

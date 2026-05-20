@@ -1,8 +1,8 @@
 import { ifApp, map, rule, toKey } from "karabiner.ts";
-import { appRegistry } from "../constants";
-import { L } from "../lib/mods";
-import { formatRuleDescription } from "../lib/rule-descriptions";
-// import { applescript, cmd } from "../lib/scripts";
+import { L } from "../core/mods";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import { appRegistry } from "../data";
+// import { applescript, cmd } from "../core/scripts";
 
 type SkimCommandRemap = {
   key: "h" | "u";

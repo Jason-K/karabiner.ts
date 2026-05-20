@@ -1,6 +1,6 @@
 import { map, rule, toKey, toSetVar } from "karabiner.ts";
-import { HYPER, L } from "../lib/mods";
-import { formatRuleDescription } from "../lib/rule-descriptions";
+import { HYPER, L } from "../core/mods";
+import { formatRuleDescription } from "../core/rule-descriptions";
 
 export const buildCapsLockRule = () => {
   return rule(

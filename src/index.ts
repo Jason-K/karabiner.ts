@@ -18,21 +18,7 @@
 
 import { map, toKey, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
-import type { DeviceConfig } from "./builders";
-import {
-  buildDisableHideMinimizeRule,
-  buildEnterRules,
-  buildEqualsRules,
-  buildHomeEndRule,
-  buildMouseRules,
-  buildPasswordsQuickFillRule,
-  buildRightOptionAppsRule,
-  buildWordPrivilegesRule,
-  emitLayerDefinitions,
-  generateEscapeRule,
-  generateTapHoldRules,
-  updateDeviceConfigurations,
-} from "./builders";
+import { generateLayerRules } from "./core/leader";
 import {
   APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
   DEFAULT_PROFILE_NAME,
@@ -45,19 +31,32 @@ import {
   SPACE_LAYER_LABEL,
   SPACE_LAYER_LEADER_KEY,
   SPACE_LAYER_PREFIX,
-} from "./constants";
-import { generateLayerRules } from "./lib/leader";
-import { spaceLayerDefinitions, tapHoldMappings } from "./mappings";
+  spaceLayerDefinitions,
+  tapHoldMappings,
+} from "./data";
+import type { DeviceConfig } from "./rules";
 import {
   buildAntinoteDeleteRule,
   buildCapsLockRule,
   buildCmdQRule,
   buildCtrlEscapeMonitorRule,
+  buildDisableHideMinimizeRule,
+  buildEnterRules,
+  buildEqualsRules,
   buildEscapeTapTapHoldRule,
+  buildHomeEndRule,
   buildHyperPlusRules,
   buildLeftCommandRule,
+  buildMouseRules,
   buildOnePieceClickEnterRule,
+  buildPasswordsQuickFillRule,
+  buildRightOptionAppsRule,
   buildSkimCommandRemapRule,
+  buildWordPrivilegesRule,
+  emitLayerDefinitions,
+  generateEscapeRule,
+  generateTapHoldRules,
+  updateDeviceConfigurations,
 } from "./rules";
 import { mouseDeviceMappings } from "./rules/mouse";
 

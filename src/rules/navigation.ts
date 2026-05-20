@@ -1,7 +1,7 @@
 import {
   generateSimpleRemapRules,
   type SimpleRemapMapping,
-} from "../generators/simple-rules";
+} from "./simple-rules";
 
 export const homeEndNavigationMappings: SimpleRemapMapping[] = [
   {

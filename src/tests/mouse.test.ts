@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
-    g502xButtons,
-    mouseTapHold,
-    mouseVarTapTapHold,
-    resolveMouseButton,
-} from "../lib/mouse";
+  g502xButtons,
+  mouseTapHold,
+  mouseVarTapTapHold,
+  resolveMouseButton,
+} from "../core/mouse";
 
 test("resolveMouseButton supports aliases and raw button ids", () => {
   assert.equal(resolveMouseButton("shift"), "button5");

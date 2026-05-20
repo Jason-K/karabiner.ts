@@ -1,8 +1,8 @@
 import { map, rule, toKey } from "karabiner.ts";
-import { TIMINGS, appRegistry } from "../constants";
-import { formatRuleDescription } from "../lib/rule-descriptions";
-import { cmd, focusApp, killAppCommand } from "../lib/scripts";
-import { varTapTapHold } from "../lib/tap-hold";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import { cmd, focusApp, killAppCommand } from "../core/scripts";
+import { varTapTapHold } from "../core/tap-hold";
+import { TIMINGS, appRegistry } from "../data";
 
 export const buildEscapeTapTapHoldRule = () => {
   return rule(

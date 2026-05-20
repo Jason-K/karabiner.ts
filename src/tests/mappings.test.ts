@@ -1,19 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../constants";
-import { appRegistry } from "../mappings/apps";
-import { cleanShotRegistry } from "../mappings/cleanshot";
-import { folderRegistry } from "../mappings/folders";
-import { ACTIVATE_WINDOW_UNDER_CURSOR_EVENT } from "../mappings/mouse";
-import { raycastRegistry } from "../mappings/raycast";
+import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../data";
+import { appRegistry } from "../data/apps";
+import { cleanShotRegistry } from "../data/cleanshot";
+import { folderRegistry } from "../data/folders";
+import { ACTIVATE_WINDOW_UNDER_CURSOR_EVENT } from "../data/mouse";
+import { raycastRegistry } from "../data/raycast";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
-} from "../mappings/rectangle";
-import { spaceLayerDefinitions } from "../mappings/space-layers";
-import { tapHoldMappings } from "../mappings/tap-hold";
+} from "../data/rectangle";
+import { spaceLayerDefinitions } from "../data/space-layers";
+import { tapHoldMappings } from "../data/tap-hold";
 import { mouseDeviceMappings } from "../rules/mouse";
 import { homeEndNavigationMappings } from "../rules/navigation";
 import { rightOptionLaunchers } from "../rules/right-option-launchers";

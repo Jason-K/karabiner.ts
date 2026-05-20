@@ -1,6 +1,6 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
-import { appRegistry } from "../constants";
-import { formatRuleDescription } from "../lib/rule-descriptions";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import { appRegistry } from "../data";
 
 export const buildAntinoteDeleteRule = () => {
   return rule(

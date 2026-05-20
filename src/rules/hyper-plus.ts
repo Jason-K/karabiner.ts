@@ -1,13 +1,13 @@
 import { map, rule } from "karabiner.ts";
 
-import { PATHS } from "../constants";
-import { HYPER } from "../lib/mods";
-import { formatRuleDescription } from "../lib/rule-descriptions";
+import { HYPER } from "../core/mods";
+import { formatRuleDescription } from "../core/rule-descriptions";
 import {
   cmd,
   formatSelectionCommand,
   typinatorNewRuleCommand,
-} from "../lib/scripts";
+} from "../core/scripts";
+import { PATHS } from "../data";
 
 type HyperShellRuleKey = Parameters<typeof map>[0];
 

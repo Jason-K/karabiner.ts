@@ -4,15 +4,15 @@ import {
   PATHS,
   TIMINGS,
   appRegistry,
-} from "../constants";
+} from "../data";
 import {
   generateConditionalActionRules,
   type ConditionalActionMapping,
-} from "../generators/conditional-action-rules";
+} from "./conditional-action-rules";
 import {
   generateDisabledShortcutRules,
   type DisabledShortcutMapping,
-} from "../generators/simple-rules";
+} from "./simple-rules";
 
 export const disabledShortcuts: DisabledShortcutMapping[] = [
   {

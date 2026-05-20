@@ -1,9 +1,9 @@
-import { HOME_DIR, appRegistry } from "../constants";
+import { getOpenFolderCommand } from "../core/folder-opener";
+import { HOME_DIR, appRegistry } from "../data";
 import {
   generateModifierLauncherRules,
   type ModifierLauncherMapping,
-} from "../generators/launcher-rules";
-import { getOpenFolderCommand } from "../lib/folder-opener";
+} from "./launcher-rules";
 
 export const rightOptionLaunchers: ModifierLauncherMapping<
   "a" | "b" | "c" | "e" | "f" | "m" | "o" | "t" | "w" | "8"

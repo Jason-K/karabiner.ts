@@ -1,7 +1,7 @@
 import { ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
-import { formatRuleDescription } from "../lib/rule-descriptions";
-import { openApp } from "../lib/software";
-import { varTapTapHold } from "../lib/tap-hold";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import { openApp } from "../core/software";
+import { varTapTapHold } from "../core/tap-hold";
 
 const LEFT_COMMAND_TAP_DELAY_MS = 600;
 
