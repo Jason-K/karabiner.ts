@@ -3,10 +3,42 @@ import { ifApp, rule, toKey, withCondition } from "karabiner.ts";
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd } from "../lib/scripts";
 import { tapHold } from "../lib/tap-hold";
-import type {
-    ConditionalTapHoldMapping,
-    TapHoldActionSpec,
-} from "../mappings/special-key-holds";
+
+export type KeyActionSpec = {
+  type: "key";
+  key: string;
+  modifiers?: string[];
+  options?: {
+    halt?: boolean;
+    repeat?: boolean;
+  };
+};
+
+export type ShellActionSpec = {
+  type: "shell";
+  command: string;
+};
+
+export type TapHoldActionSpec = KeyActionSpec | ShellActionSpec;
+
+export type AppConditionSpec = {
+  app: string;
+  unless?: boolean;
+};
+
+export type TapHoldVariantMapping = {
+  description: string;
+  when?: AppConditionSpec;
+  alone: TapHoldActionSpec[];
+  hold: TapHoldActionSpec[];
+  timeoutMs: number;
+  thresholdMs: number;
+};
+
+export type ConditionalTapHoldMapping = {
+  key: string;
+  variants: TapHoldVariantMapping[];
+};
 
 function toTapHoldEvent(action: TapHoldActionSpec) {
   if (action.type === "shell") {

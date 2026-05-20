@@ -46,13 +46,8 @@ import {
   SPACE_LAYER_LEADER_KEY,
   SPACE_LAYER_PREFIX,
 } from "./constants";
-import { getOpenFolderCommand } from "./lib/folder-opener";
 import { generateLayerRules } from "./lib/leader";
-import {
-  mouseDeviceMappings,
-  spaceLayerDefinitions,
-  tapHoldMappings,
-} from "./mappings";
+import { spaceLayerDefinitions, tapHoldMappings } from "./mappings";
 import {
   buildAntinoteDeleteRule,
   buildCapsLockRule,
@@ -64,6 +59,7 @@ import {
   buildOnePieceClickEnterRule,
   buildSkimCommandRemapRule,
 } from "./rules";
+import { mouseDeviceMappings } from "./rules/mouse";
 
 const spaceLayers = spaceLayerDefinitions;
 
@@ -147,7 +143,7 @@ let rules: any[] = [
   buildCmdQRule(),
 
   // Right_Option + __ - App launch or focus
-  ...buildRightOptionAppsRule(getOpenFolderCommand),
+  ...buildRightOptionAppsRule(),
   // Generate escape rule to reset all variables
   ...generateEscapeRule(spaceLayers),
 

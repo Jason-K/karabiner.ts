@@ -2,11 +2,58 @@ import { ifApp, map, rule, toKey } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { applescript, cmd } from "../lib/scripts";
-import type {
-    ConditionalAction,
-    ConditionalActionCondition,
-    ConditionalActionMapping,
-} from "../mappings/security-actions";
+
+export type ConditionalActionCondition =
+  | {
+      type: "frontmostApp";
+      bundleIds: string[];
+      unless?: boolean;
+    }
+  | {
+      type: "variable";
+      name: string;
+      match: "if" | "unless";
+      value: string | number;
+    };
+
+export type ConditionalAction =
+  | {
+      type: "key";
+      key: string;
+      modifiers?: string[];
+      options?: {
+        repeat?: boolean;
+        halt?: boolean;
+      };
+    }
+  | {
+      type: "shell";
+      command: string;
+    }
+  | {
+      type: "applescript";
+      scriptPath: string;
+      args?: string[];
+    };
+
+export type ConditionalActionVariant = {
+  when: ConditionalActionCondition[];
+  actions: ConditionalAction[];
+  delayedAction?: {
+    invoked: ConditionalAction[];
+    canceled: ConditionalAction[];
+  };
+  parameters?: {
+    delayedActionDelayMs?: number;
+  };
+};
+
+export type ConditionalActionMapping = {
+  key: string;
+  modifiers: string[];
+  description: string;
+  variants: ConditionalActionVariant[];
+};
 
 function toCondition(condition: ConditionalActionCondition) {
   if (condition.type === "frontmostApp") {

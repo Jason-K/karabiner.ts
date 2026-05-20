@@ -4,27 +4,27 @@ import test from "node:test";
 import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../constants";
 import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
-import { disabledShortcuts } from "../mappings/disabled-shortcuts";
 import { folderRegistry } from "../mappings/folders";
-import {
-  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-  mouseDeviceMappings,
-} from "../mappings/mouse";
-import { homeEndNavigationMappings } from "../mappings/navigation";
+import { ACTIVATE_WINDOW_UNDER_CURSOR_EVENT } from "../mappings/mouse";
 import { raycastRegistry } from "../mappings/raycast";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
 } from "../mappings/rectangle";
-import { rightOptionLaunchers } from "../mappings/right-option-launchers";
-import { securitySlashActionMappings } from "../mappings/security-actions";
 import { spaceLayerDefinitions } from "../mappings/space-layers";
-import {
-    enterKeyHoldMappings,
-    equalsKeyHoldMappings,
-} from "../mappings/special-key-holds";
 import { tapHoldMappings } from "../mappings/tap-hold";
+import { mouseDeviceMappings } from "../rules/mouse";
+import { homeEndNavigationMappings } from "../rules/navigation";
+import { rightOptionLaunchers } from "../rules/right-option-launchers";
+import {
+  disabledShortcuts,
+  securitySlashActionMappings,
+} from "../rules/security";
+import {
+  enterKeyHoldMappings,
+  equalsKeyHoldMappings,
+} from "../rules/special-keys";
 
 test("rectangle focused-window orientation command uses focused display", () => {
   const command = rectangleActionByFocusedWindowOrientationCommand(

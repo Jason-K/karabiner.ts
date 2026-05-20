@@ -12,7 +12,6 @@ import {
   buildWordPrivilegesRule,
 } from "../builders";
 import { DEVICE_IDENTIFIERS, appRegistry } from "../constants";
-import { mouseDeviceMappings } from "../mappings/mouse";
 import { buildAntinoteDeleteRule } from "../rules/antinote";
 import {
     buildCtrlEscapeMonitorRule,
@@ -26,6 +25,7 @@ import {
   buildCmdQRule,
   buildLeftCommandRule,
 } from "../rules/left-command-chords";
+import { mouseDeviceMappings } from "../rules/mouse";
 import { buildSkimCommandRemapRule } from "../rules/skim";
 import { buildOnePieceClickEnterRule } from "../rules/special-keys";
 
@@ -85,9 +85,7 @@ test("cmd-q factory keeps double-tap protection structure", () => {
 });
 
 test("right-option app factory keeps full launcher set", () => {
-  const rules = buildRightOptionAppsRule((path) => `open ${path}`).map((r) =>
-    r.build(),
-  );
+  const rules = buildRightOptionAppsRule().map((r) => r.build());
   assert.equal(rules.length, 10);
   assert.equal(rules[0]?.description, "[→⌥]+[A]        →    Antinote (on tap)");
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));

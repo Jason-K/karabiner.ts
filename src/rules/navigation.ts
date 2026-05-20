@@ -1,14 +1,7 @@
-export type SimpleRemapMapping = {
-  from: {
-    key: string;
-    modifiers?: string[];
-  };
-  description: string;
-  to: {
-    key: string;
-    modifiers?: string[];
-  };
-};
+import {
+    buildSimpleRemapRules,
+    type SimpleRemapMapping,
+} from "../generators/simple-rules";
 
 export const homeEndNavigationMappings: SimpleRemapMapping[] = [
   {
@@ -32,3 +25,6 @@ export const homeEndNavigationMappings: SimpleRemapMapping[] = [
     to: { key: "right_arrow", modifiers: ["command", "shift"] },
   },
 ];
+
+export const buildHomeEndRule = () =>
+  buildSimpleRemapRules(homeEndNavigationMappings);

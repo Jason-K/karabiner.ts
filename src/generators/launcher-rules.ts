@@ -2,10 +2,22 @@ import { map, rule } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd, focusApp } from "../lib/scripts";
-import type {
-    LauncherAction,
-    ModifierLauncherMapping,
-} from "../mappings/right-option-launchers";
+
+export type LauncherAction =
+  | {
+      type: "focusApp";
+      bundleId: string;
+    }
+  | {
+      type: "openFolder";
+      path: string;
+    };
+
+export type ModifierLauncherMapping<TKey extends string = string> = {
+  key: TKey;
+  description: string;
+  action: LauncherAction;
+};
 
 type LauncherRuleConfig<TKey extends string> = {
   triggerKey: string;

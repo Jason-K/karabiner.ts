@@ -1,10 +1,24 @@
 import { map, rule, toKey } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
-import type {
-    DisabledShortcutMapping,
-} from "../mappings/disabled-shortcuts";
-import type { SimpleRemapMapping } from "../mappings/navigation";
+
+export type SimpleRemapMapping = {
+  from: {
+    key: string;
+    modifiers?: string[];
+  };
+  description: string;
+  to: {
+    key: string;
+    modifiers?: string[];
+  };
+};
+
+export type DisabledShortcutMapping = {
+  key: string;
+  modifiers: string[];
+  description: string;
+};
 
 export function buildSimpleRemapRules(
   mappings: ReadonlyArray<SimpleRemapMapping>,
