@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../constants";
 import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
 import { disabledShortcuts } from "../mappings/disabled-shortcuts";
@@ -62,7 +63,7 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 
 test("registries centralize app folder and integration refs", () => {
   assert.equal(appRegistry.outlook, "com.microsoft.Outlook");
-  assert.equal(folderRegistry.home, "/Users/jason/");
+  assert.equal(folderRegistry.home, `${HOME_DIR}/`);
   assert.equal(raycastRegistry.recentFolders, "jason/recents/recentFolders");
   assert.equal(cleanShotRegistry.captureArea, "capture-area");
 });
@@ -82,7 +83,7 @@ test("right-option launchers stay declarative", () => {
     description: "Home folder",
     action: {
       type: "openFolder",
-      path: "/Users/jason",
+      path: HOME_DIR,
     },
   });
 });
@@ -165,8 +166,7 @@ test("equals key hold mappings stay declarative", () => {
           },
           {
             type: "shell",
-            command:
-              "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste",
+            command: `${PATHS.textProcessorUvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
           },
         ],
         timeoutMs: 200,
@@ -187,14 +187,13 @@ test("security slash action mappings stay declarative", () => {
         when: [
           {
             type: "frontmostApp",
-            bundleIds: ["com.microsoft.Word"],
+            bundleIds: [appRegistry.word],
           },
         ],
         actions: [
           {
             type: "applescript",
-            scriptPath:
-              "~/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript",
+            scriptPath: PATHS.wordDocumentPathAppleScript,
           },
           {
             type: "shell",
@@ -320,12 +319,12 @@ test("folders layer uses folder and raycast refs", () => {
 test("mouse device mappings are declarative and device-scoped", () => {
   assert.equal(mouseDeviceMappings.length, 1);
   assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
-  assert.deepEqual(mouseDeviceMappings[0]?.identifiers, {
-    product_id: 49305,
-    vendor_id: 1133,
-  });
+  assert.deepEqual(
+    mouseDeviceMappings[0]?.identifiers,
+    DEVICE_IDENTIFIERS.logitechG502X,
+  );
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 9);
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 10);
 
   const backMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "back",
@@ -427,11 +426,17 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "Show menu (tap) / Stash right (hold)",
-    alone: [{ key_code: "m", modifiers: ["left_option"] }],
+    description: "Activate Sidenote (tap) / Menu (hold)",
+    alone: [
+      {
+        key_code: "f10",
+        modifiers: ["left_command", "left_option", "left_shift"],
+      },
+    ],
     hold: [
       {
-        shell_command: `open -g '${rectangleActionUrl("stash-right")}'`,
+        key_code: "m",
+        modifiers: ["left_option"],
       },
     ],
     thresholdMs: 300,

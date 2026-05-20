@@ -1,4 +1,5 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
+import { appRegistry } from "../constants";
 import { formatRuleDescription } from "../lib/rule-descriptions";
 
 export const buildAntinoteDeleteRule = () => {
@@ -6,17 +7,13 @@ export const buildAntinoteDeleteRule = () => {
     formatRuleDescription(["left_command", "d"], "Delete note", "multi-tap"),
   ).manipulators([
     ...map("d", "left_command")
-      .condition(
-        ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]),
-      )
+      .condition(ifApp([appRegistry.antinote, appRegistry.antinoteLegacy]))
       .condition(ifVar("cmd_d_ready", 1))
       .to(toKey("d", ["left_command"]))
       .to(toSetVar("cmd_d_ready", 0))
       .build(),
     ...map("d", "left_command")
-      .condition(
-        ifApp(["com.chabomakers.Antinote-setapp", "com.chabomakers.Antinote"]),
-      )
+      .condition(ifApp([appRegistry.antinote, appRegistry.antinoteLegacy]))
       .condition(ifVar("cmd_d_ready", 0))
       .to(toSetVar("cmd_d_ready", 1))
       .toDelayedAction(

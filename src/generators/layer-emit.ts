@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { HOME_DIR } from "../constants";
 import type { SubLayerConfig } from '../lib/leader/types';
 
 function getDefaultOutputPaths(home: string): string[] {
@@ -28,7 +29,7 @@ export function emitLayerDefinitions(
   debugMode: boolean = false,
 ): void {
   try {
-    const home = process.env.HOME || '/Users/jason';
+    const home = HOME_DIR;
     const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home);
     const finalPath = outputPaths[0];
 

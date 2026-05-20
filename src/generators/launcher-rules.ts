@@ -7,6 +7,12 @@ import type {
     ModifierLauncherMapping,
 } from "../mappings/right-option-launchers";
 
+type LauncherRuleConfig<TKey extends string> = {
+  triggerKey: string;
+  launchers: ReadonlyArray<ModifierLauncherMapping<TKey>>;
+  getOpenFolderCommand: (folderPath: string) => string;
+};
+
 function toLauncherEvent(
   action: LauncherAction,
   getOpenFolderCommand: (folderPath: string) => string,
@@ -19,10 +25,10 @@ function toLauncherEvent(
 }
 
 export function buildModifierLauncherRules<TKey extends string>(
-  triggerKey: string,
-  launchers: ReadonlyArray<ModifierLauncherMapping<TKey>>,
-  getOpenFolderCommand: (folderPath: string) => string,
+  config: LauncherRuleConfig<TKey>,
 ) {
+  const { triggerKey, launchers, getOpenFolderCommand } = config;
+
   return launchers.map(({ key, description, action }) =>
     rule(
       formatRuleDescription([triggerKey, key], description, "tap"),

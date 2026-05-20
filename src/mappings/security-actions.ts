@@ -1,3 +1,11 @@
+import {
+  ACCESSIBILITY_VALUES,
+  ACCESSIBILITY_VARIABLES,
+  PATHS,
+  TIMINGS,
+  appRegistry,
+} from "../constants";
+
 export type ConditionalActionCondition =
   | {
       type: "frontmostApp";
@@ -52,17 +60,11 @@ export type ConditionalActionMapping = {
 
 const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
-const QUICK_FILL_POST_ELEVATION_DELAY_MS = 1300;
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
-  "com.apple.SecurityAgent",
-  "com.apple.systempreferences",
-  "com.apple.settings.PrivacySecurity.extension",
+  appRegistry.securityAgent,
+  appRegistry.settings,
+  appRegistry.settingsPrivacySecurityExtension,
 ];
-const FOCUSED_UI_ROLE_VARIABLE = "accessibility.focused_ui_element.role_string";
-const FOCUSED_UI_SUBROLE_VARIABLE =
-  "accessibility.focused_ui_element.subrole_string";
-const AX_TEXT_FIELD_ROLE = "AXTextField";
-const AX_SECURE_TEXT_FIELD_SUBROLE = "AXSecureTextField";
 
 export const securitySlashActionMappings: ConditionalActionMapping[] = [
   {
@@ -74,19 +76,17 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
         when: [
           {
             type: "frontmostApp",
-            bundleIds: ["com.microsoft.Word"],
+            bundleIds: [appRegistry.word],
           },
         ],
         actions: [
           {
             type: "applescript",
-            scriptPath:
-              "~/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript",
+            scriptPath: PATHS.wordDocumentPathAppleScript,
           },
           {
             type: "shell",
-            command:
-              "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3",
+            command: `${QUICK_FILL_ELEVATE_PRIVILEGES_CMD} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
           },
         ],
       },
@@ -105,15 +105,15 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
           },
           {
             type: "variable",
-            name: FOCUSED_UI_ROLE_VARIABLE,
+            name: ACCESSIBILITY_VARIABLES.focusedUiRole,
             match: "if",
-            value: AX_TEXT_FIELD_ROLE,
+            value: ACCESSIBILITY_VALUES.textFieldRole,
           },
           {
             type: "variable",
-            name: FOCUSED_UI_SUBROLE_VARIABLE,
+            name: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
             match: "if",
-            value: AX_SECURE_TEXT_FIELD_SUBROLE,
+            value: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
           },
         ],
         actions: [
@@ -134,7 +134,7 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
           canceled: [],
         },
         parameters: {
-          delayedActionDelayMs: QUICK_FILL_POST_ELEVATION_DELAY_MS,
+          delayedActionDelayMs: TIMINGS.privilegesPostElevationDelayMs,
         },
       },
       {
@@ -145,15 +145,15 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
           },
           {
             type: "variable",
-            name: FOCUSED_UI_ROLE_VARIABLE,
+            name: ACCESSIBILITY_VARIABLES.focusedUiRole,
             match: "if",
-            value: AX_TEXT_FIELD_ROLE,
+            value: ACCESSIBILITY_VALUES.textFieldRole,
           },
           {
             type: "variable",
-            name: FOCUSED_UI_SUBROLE_VARIABLE,
+            name: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
             match: "unless",
-            value: AX_SECURE_TEXT_FIELD_SUBROLE,
+            value: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
           },
         ],
         actions: [
@@ -204,7 +204,7 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
           canceled: [],
         },
         parameters: {
-          delayedActionDelayMs: QUICK_FILL_POST_ELEVATION_DELAY_MS,
+          delayedActionDelayMs: TIMINGS.privilegesPostElevationDelayMs,
         },
       },
     ],

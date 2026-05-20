@@ -1,4 +1,5 @@
 import { type PointingButton, type ToEvent } from "karabiner.ts";
+import { DEVICE_IDENTIFIERS, TIMINGS } from "../constants";
 import { g502xButtons } from "../lib/mouse";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
@@ -81,10 +82,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
   {
     key: "logitech_g502_x",
     name: "Logitech G502 X",
-    identifiers: {
-      product_id: 49305,
-      vendor_id: 1133,
-    },
+    identifiers: DEVICE_IDENTIFIERS.logitechG502X,
     buttonMap: g502xButtons,
     mappings: [
       {
@@ -104,8 +102,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             modifiers: ["left_option", "left_shift"],
           },
         ],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -117,8 +115,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 200,
-        timeoutMs: 200,
+        thresholdMs: TIMINGS.mouseWheelChordMs,
+        timeoutMs: TIMINGS.mouseWheelChordMs,
       },
       {
         type: "tapHold",
@@ -130,8 +128,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
           },
         ],
-        thresholdMs: 200,
-        timeoutMs: 200,
+        thresholdMs: TIMINGS.mouseWheelChordMs,
+        timeoutMs: TIMINGS.mouseWheelChordMs,
       },
       {
         type: "tapHold",
@@ -141,8 +139,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
         ],
         hold: [{ shell_command: "open 'cleanshot://capture-area'" }],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -154,8 +152,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           ...rectangleMaxOrRestoreEvents(),
         ],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -168,8 +166,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
           },
         ],
-        thresholdMs: 400,
-        timeoutMs: 400,
+        thresholdMs: TIMINGS.mouseDisplaySwitchMs,
+        timeoutMs: TIMINGS.mouseDisplaySwitchMs,
       },
       {
         type: "tapHold",
@@ -182,8 +180,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [{ key_code: "m", modifiers: ["left_option"] }],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -192,8 +190,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         alone: [{ pointing_button: "button4" }],
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
         eventOptions: { halt: true, repeat: false },
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -207,8 +205,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         eventOptions: { halt: true, repeat: false },
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
       {
         type: "tapHold",
@@ -217,8 +215,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         variable: "right_button_pressed",
         alone: [{ pointing_button: "button2" }],
         hold: [],
-        thresholdMs: 300,
-        timeoutMs: 300,
+        thresholdMs: TIMINGS.mouseDefaultMs,
+        timeoutMs: TIMINGS.mouseDefaultMs,
       },
     ],
   },

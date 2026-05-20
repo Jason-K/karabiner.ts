@@ -6,9 +6,14 @@ export type {
     SubLayerConfig
 } from './leader';
 
-export { updateDeviceConfigurations } from '../generators/device-config';
-export type { DeviceConfig, SimpleModification } from '../generators/device-config';
-export { generateEscapeRule } from '../generators/escape-rule';
-export { emitLayerDefinitions } from '../generators/layer-emit';
-export { generateTapHoldRules } from '../generators/tap-hold-rules';
-export type { TapHoldConfig } from '../generators/tap-hold-rules';
+export {
+  emitLayerDefinitions,
+  generateEscapeRule,
+  generateTapHoldRules,
+  updateDeviceConfigurations,
+} from "../builders";
+export type {
+  DeviceConfig,
+  SimpleModification,
+  TapHoldConfig,
+} from "../builders";

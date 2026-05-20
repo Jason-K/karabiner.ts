@@ -5306,7 +5306,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
+                "shell_command": "osascript \"$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
               }
             ],
             "to_delayed_action": {
@@ -9319,7 +9319,7 @@
             },
             "to": [
               {
-                "shell_command": "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript"
+                "shell_command": "/usr/bin/osascript ~/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript"
               }
             ]
           }

@@ -1,23 +1,23 @@
 import type { ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
+import { appRegistry, folderRegistry } from "../constants";
 import { getFolderOpenerBundleId, getOpenFolderCommand } from "../lib/folder-opener";
 import {
-    applescript,
-    cleanShotCommand,
-    cmd,
-    openAppBundleCommand,
-    openUrlCommand,
-    raycastExtensionCommand,
-    takeActionHereCommand,
-    textProcessorCommand,
-    withSleep,
+  applescript,
+  cleanShotCommand,
+  cmd,
+  focusApp,
+  openAppBundleCommand,
+  openUrlCommand,
+  raycastExtensionCommand,
+  takeActionHereCommand,
+  textProcessorCommand,
+  withSleep,
 } from "../lib/scripts";
 import { openApp } from "../lib/software";
 import type { ActionSpec } from "../mappings/action-dsl";
-import { appRegistry } from "../mappings/apps";
 import { cleanShotRegistry } from "../mappings/cleanshot";
-import { folderRegistry } from "../mappings/folders";
 import { raycastRegistry } from "../mappings/raycast";
 
 function resolveAppBundleId(ref: keyof typeof appRegistry): string {
@@ -67,7 +67,7 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
       const bundleId = resolveAppBundleId(action.ref);
 
       if (action.mode === "focus") {
-        return [cmd(`open -b '${bundleId}'`)];
+        return [focusApp(bundleId)];
       }
 
       if (action.mode === "shell") {

@@ -1,3 +1,6 @@
+import { TIMINGS, appRegistry } from "../constants";
+import { evaluateSelectionCommand, textProcessorCommand } from "../lib/scripts";
+
 export type KeyActionSpec = {
   type: "key";
   key: string;
@@ -34,9 +37,8 @@ export type ConditionalTapHoldMapping = {
   variants: TapHoldVariantMapping[];
 };
 
-const EVALUATE_SELECTION_COMMAND = "/opt/homebrew/bin/hs -c 'FormatCutSeed()'";
-const QUICK_DATE_COMMAND =
-  "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste";
+const EVALUATE_SELECTION_COMMAND = evaluateSelectionCommand();
+const QUICK_DATE_COMMAND = textProcessorCommand("quick_date");
 
 export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
   {
@@ -44,7 +46,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
     variants: [
       {
         description: "Evaluate selection",
-        when: { app: "com.microsoft.Excel", unless: true },
+        when: { app: appRegistry.excel, unless: true },
         alone: [
           {
             type: "key",
@@ -58,12 +60,12 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
             command: EVALUATE_SELECTION_COMMAND,
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
       {
         description: "Edit cell",
-        when: { app: "com.microsoft.Excel" },
+        when: { app: appRegistry.excel },
         alone: [
           {
             type: "key",
@@ -78,8 +80,8 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
             options: { repeat: false },
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
     ],
   },
@@ -88,7 +90,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
     variants: [
       {
         description: "Evaluate selection",
-        when: { app: "com.microsoft.Excel", unless: true },
+        when: { app: appRegistry.excel, unless: true },
         alone: [
           {
             type: "key",
@@ -102,12 +104,12 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
             command: EVALUATE_SELECTION_COMMAND,
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
       {
         description: "Edit cell",
-        when: { app: "com.microsoft.Excel" },
+        when: { app: appRegistry.excel },
         alone: [
           {
             type: "key",
@@ -122,8 +124,8 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
             options: { repeat: false },
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
     ],
   },
@@ -158,8 +160,8 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
             command: QUICK_DATE_COMMAND,
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
     ],
   },
@@ -191,8 +193,8 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
             command: QUICK_DATE_COMMAND,
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: TIMINGS.conditionalTapHoldMs,
+        thresholdMs: TIMINGS.conditionalTapHoldMs,
       },
     ],
   },

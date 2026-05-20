@@ -6,8 +6,10 @@ Personal Karabiner-Elements configuration written in TypeScript with `karabiner.
 
 The config is now split by responsibility:
 
+- `src/constants.ts`: canonical shared constants for apps, folders, devices, labels, paths, timings, and app-specific behaviors
 - `src/mappings`: declarative intent tables only
 - `src/generators`: reusable compilers from mapping data to Karabiner rules
+- `src/builders`: compatibility-focused assembly layer for grouped rule factories and selected generator exports
 - `src/rules`: stateful or exceptional adapters that do not yet fit a shared schema cleanly
 - `src/lib`: lower-level helpers, leader-layer internals, and integration utilities
 - `src/tests`: mapping- and generator-level regression coverage
@@ -34,12 +36,15 @@ The larger mapping-heavy areas extracted during this refactor are now declarativ
 
 Space layers and tap-hold mappings now use a shared `ActionSpec` DSL plus central registries for app, folder, Raycast, and CleanShot references.
 
+Mappings should reference `src/constants.ts` or symbolic registries instead of embedding bundle IDs, filesystem paths, device identifiers, or timing values inline. Builders and generators own the translation into Karabiner JSON.
+
 ## Key Files
 
 - `src/mappings/action-dsl.ts`: symbolic action vocabulary used by declarative mappings
+- `src/constants.ts`: shared registries and non-user-facing constants consumed by mappings, builders, and rules
 - `src/generators/action-resolver.ts`: shared compiler from `ActionSpec` to Karabiner `ToEvent`s
-- `src/mappings/apps.ts`: app bundle registry
-- `src/mappings/folders.ts`: folder registry
+- `src/mappings/apps.ts`: compatibility re-export for the app registry
+- `src/mappings/folders.ts`: compatibility re-export for the folder registry
 - `src/mappings/raycast.ts`: Raycast command registry
 - `src/mappings/cleanshot.ts`: CleanShot command registry
 - `docs/DECLARATIVE_CONFIG_PLAN.md`: architecture rules and migration status

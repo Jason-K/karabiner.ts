@@ -1,3 +1,5 @@
+import { HOME_DIR, appRegistry } from "../constants";
+
 export type LauncherAction =
   | {
       type: "focusApp";
@@ -22,7 +24,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Antinote",
     action: {
       type: "focusApp",
-      bundleId: "com.chabomakers.Antinote-setapp",
+      bundleId: appRegistry.antinote,
     },
   },
   {
@@ -30,7 +32,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Helium",
     action: {
       type: "focusApp",
-      bundleId: "net.imput.helium",
+      bundleId: appRegistry.helium,
     },
   },
   {
@@ -38,7 +40,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "VS Code",
     action: {
       type: "focusApp",
-      bundleId: "com.microsoft.VSCode",
+      bundleId: appRegistry.code,
     },
   },
   {
@@ -46,7 +48,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Proton Mail",
     action: {
       type: "focusApp",
-      bundleId: "ch.protonmail.desktop",
+      bundleId: appRegistry.protonMail,
     },
   },
   {
@@ -54,7 +56,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Home folder",
     action: {
       type: "openFolder",
-      path: "/Users/jason",
+      path: HOME_DIR,
     },
   },
   {
@@ -62,7 +64,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Messages",
     action: {
       type: "focusApp",
-      bundleId: "com.apple.MobileSMS",
+      bundleId: appRegistry.messages,
     },
   },
   {
@@ -70,7 +72,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Outlook",
     action: {
       type: "focusApp",
-      bundleId: "com.microsoft.Outlook",
+      bundleId: appRegistry.outlook,
     },
   },
   {
@@ -78,7 +80,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Teams",
     action: {
       type: "focusApp",
-      bundleId: "com.microsoft.teams2",
+      bundleId: appRegistry.teams,
     },
   },
   {
@@ -86,7 +88,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "Word",
     action: {
       type: "focusApp",
-      bundleId: "com.microsoft.Word",
+      bundleId: appRegistry.word,
     },
   },
   {
@@ -94,7 +96,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
     description: "RingCentral",
     action: {
       type: "focusApp",
-      bundleId: "com.ringcentral.glip",
+      bundleId: appRegistry.ringCentral,
     },
   },
 ];

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
 
+import { FOCUS_APP_BEHAVIORS, PATHS, appRegistry } from "../constants";
 import { toSendUserCommand } from "./beta";
 
 export function cmd(shell: string): ToEvent {
@@ -46,9 +47,6 @@ export function layerIndicatorCommand(action: 'show' | 'hide', layer?: string): 
 
   return cmd(`open -g 'hammerspoon://layer_indicator?action=hide'`);
 }
-
-const TEXT_PROCESSOR_UV_BIN = '~/.local/bin/uv';
-const TEXT_PROCESSOR_DIR = '~/Scripts/strings/text_processor';
 
 /**
  * Create a generic user command for any registered endpoint.
@@ -106,24 +104,9 @@ export type FocusAppOptions = {
   };
 };
 
-const DEFAULT_FOCUS_APP_OPTIONS: Partial<Record<string, FocusAppOptions>> = {
-  "com.chabomakers.Antinote-setapp": {
-    appName: "Antinote",
-    activationDelaySeconds: 0.2,
-    createWindowShortcut: {
-      key: "n",
-      modifiers: ["command down"],
-    },
-  },
-  "com.chabomakers.Antinote": {
-    appName: "Antinote",
-    activationDelaySeconds: 0.2,
-    createWindowShortcut: {
-      key: "n",
-      modifiers: ["command down"],
-    },
-  },
-};
+function getFocusAppBehavior(bundleId: string): FocusAppOptions | undefined {
+  return FOCUS_APP_BEHAVIORS[bundleId as keyof typeof FOCUS_APP_BEHAVIORS];
+}
 
 /**
  * Focus an application by bundle ID using native macOS `open` command.
@@ -137,12 +120,12 @@ const DEFAULT_FOCUS_APP_OPTIONS: Partial<Record<string, FocusAppOptions>> = {
  */
 export function focusApp(bundleId: string, options?: FocusAppOptions): ToEvent {
   const openCommand = `open -b ${shellSingleQuote(bundleId)}`;
+  const defaultBehavior = getFocusAppBehavior(bundleId);
   const resolvedOptions = {
-    ...DEFAULT_FOCUS_APP_OPTIONS[bundleId],
+    ...defaultBehavior,
     ...options,
     createWindowShortcut:
-      options?.createWindowShortcut ??
-      DEFAULT_FOCUS_APP_OPTIONS[bundleId]?.createWindowShortcut,
+      options?.createWindowShortcut ?? defaultBehavior?.createWindowShortcut,
   };
 
   if (!resolvedOptions.appName || !resolvedOptions.createWindowShortcut) {
@@ -170,10 +153,6 @@ export function copyToClipboard(text: string): ToEvent {
   const quoted = shellSingleQuote(text);
   return cmd(`echo -n ${quoted} | pbcopy`);
 }
-const TEXT_PROCESSOR_ENTRYPOINT = 'interfaces/cli.py';
-const TAKE_ACTION_HERE_SCRIPT = '~/Scripts/active_process/take_action_here/take_action_here.sh';
-const OPEN_APP_BIN = '~/.local/bin/open-app';
-
 function shellSingleQuote(str: string): string {
   return `'${str.replace(/'/g, `"'"'`)}'`;
 }
@@ -228,6 +207,11 @@ export function hs(code: string): ToEvent {
   return cmd(`/opt/homebrew/bin/hs -c ${codeQuoted}`);
 }
 
+export function hammerspoonCommand(code: string): string {
+  const codeQuoted = shellSingleQuote(code);
+  return `/opt/homebrew/bin/hs -c ${codeQuoted}`;
+}
+
 export function pythonCommand(
   spec: string | string[],
   opts?: { useEnv?: boolean; pythonBin?: string }
@@ -246,9 +230,49 @@ export function python(spec: string | string[], opts?: { useEnv?: boolean; pytho
 
 export function textProcessorCommand(action: string): string {
   return pythonCommand(
-    [TEXT_PROCESSOR_ENTRYPOINT, action, '--source', 'clipboard', '--dest', 'paste'],
-    { pythonBin: `${TEXT_PROCESSOR_UV_BIN} --directory ${TEXT_PROCESSOR_DIR} run python` }
+    [
+      PATHS.textProcessorEntrypoint,
+      action,
+      "--source",
+      "clipboard",
+      "--dest",
+      "paste",
+    ],
+    {
+      pythonBin: `${PATHS.textProcessorUvBin} --directory ${PATHS.textProcessorDir} run python`,
+    },
   );
+}
+
+export function evaluateSelectionCommand(): string {
+  return hammerspoonCommand("FormatCutSeed()");
+}
+
+export function formatSelectionCommand(): string {
+  return hammerspoonCommand("FormatSelection()");
+}
+
+export function killAppCommand(scope: "foreground" | "all" = "all"): string {
+  return scope === "foreground"
+    ? `${PATHS.killAppBin} --foreground`
+    : PATHS.killAppBin;
+}
+
+export function recentDownloadsCommand(): string {
+  return PATHS.recentDownloadsScript;
+}
+
+export function spotifyToggleCommand(): string {
+  return [
+    "if pgrep -x 'Spotify' > /dev/null; then",
+    "open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause';",
+    `else ${openAppBundleCommand(appRegistry.spotify)};`,
+    "fi; echo 'Spotify toggled'",
+  ].join(" ");
+}
+
+export function typinatorNewRuleCommand(): string {
+  return `${PATHS.typinatorPythonBin} ${PATHS.typinatorNewRuleScript}`;
 }
 
 export function withSleep(delaySeconds: number, shell: string): string {
@@ -268,11 +292,11 @@ export function cleanShotCommand(route: string): string {
 }
 
 export function takeActionHereCommand(action: string): string {
-  return `${TAKE_ACTION_HERE_SCRIPT} --action ${action}`;
+  return `${PATHS.takeActionHereScript} --action ${action}`;
 }
 
 export function openAppBundleCommand(bundleIdentifier: string): string {
-  return `${OPEN_APP_BIN} -b ${shellSingleQuote(bundleIdentifier)}`;
+  return `${PATHS.openAppBin} -b ${shellSingleQuote(bundleIdentifier)}`;
 }
 
 export function lua(code: string): ToEvent {

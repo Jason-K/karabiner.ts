@@ -18,23 +18,38 @@
 
 import { map, toKey, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
+import type { DeviceConfig } from "./builders";
 import {
+  buildDisableHideMinimizeRule,
+  buildEnterRules,
+  buildEqualsRules,
+  buildHomeEndRule,
+  buildMouseRules,
+  buildPasswordsQuickFillRule,
+  buildRightOptionAppsRule,
+  buildWordPrivilegesRule,
   emitLayerDefinitions,
   generateEscapeRule,
   generateTapHoldRules,
   updateDeviceConfigurations,
-} from "./generators";
-import type { DeviceConfig } from "./generators/device-config";
-import { getOpenFolderCommand } from "./lib/folder-opener";
-import { generateLayerRules } from "./lib/leader";
+} from "./builders";
 import {
-  mouseDeviceMappings,
+  APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
+  DEFAULT_PROFILE_NAME,
+  DEVICE_IDENTIFIERS,
+  PATHS,
+  PREFERRED_PROFILE_NAME,
   SPACE_LAYER_DEBUG,
   SPACE_LAYER_DEBUG_LOG_PATH,
   SPACE_LAYER_INDICATOR_ROOT,
   SPACE_LAYER_LABEL,
   SPACE_LAYER_LEADER_KEY,
   SPACE_LAYER_PREFIX,
+} from "./constants";
+import { getOpenFolderCommand } from "./lib/folder-opener";
+import { generateLayerRules } from "./lib/leader";
+import {
+  mouseDeviceMappings,
   spaceLayerDefinitions,
   tapHoldMappings,
 } from "./mappings";
@@ -43,19 +58,11 @@ import {
   buildCapsLockRule,
   buildCmdQRule,
   buildCtrlEscapeMonitorRule,
-  buildDisableHideMinimizeRule,
-  buildEnterRules,
-  buildEqualsRules,
   buildEscapeTapTapHoldRule,
-  buildHomeEndRule,
   buildHyperPlusRules,
   buildLeftCommandRule,
-  buildMouseRules,
   buildOnePieceClickEnterRule,
-  buildPasswordsQuickFillRule,
-  buildRightOptionAppsRule,
   buildSkimCommandRemapRule,
-  buildWordPrivilegesRule,
 } from "./rules";
 
 const spaceLayers = spaceLayerDefinitions;
@@ -195,35 +202,8 @@ let rules: any[] = [
 
 const deviceConfigs: DeviceConfig[] = [
   {
-    identifiers: {
-      vendor_id: 76,
-      product_id: 802,
-      is_keyboard: true,
-    },
-    simple_modifications: [
-      {
-        from: { key_code: "keypad_asterisk" },
-        to: [{ key_code: "keypad_hyphen" }],
-      },
-      {
-        from: { key_code: "keypad_equal_sign" },
-        to: [{ key_code: "keypad_slash" }],
-      },
-      {
-        from: { key_code: "keypad_hyphen" },
-        to: [{ key_code: "keypad_plus" }],
-      },
-      {
-        from: { key_code: "keypad_plus" },
-        to: [{ key_code: "keypad_equal_sign" }],
-      },
-      {
-        from: { key_code: "keypad_slash" },
-        to: [{ key_code: "keypad_asterisk" }],
-      },
-      { from: { key_code: "left_control" }, to: [{ key_code: "fn" }] },
-      { from: { key_code: "fn" }, to: [{ key_code: "left_control" }] },
-    ],
+    identifiers: DEVICE_IDENTIFIERS.appleNumericKeypad,
+    simple_modifications: [...APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS],
   },
 ];
 
@@ -235,16 +215,13 @@ const deviceConfigs: DeviceConfig[] = [
 const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
 const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
-const DEFAULT_PROFILE_NAME = "Default profile";
-const PREFERRED_PROFILE_NAME = "JJK_Default";
-
 function resolveTargetProfileName(): string {
   if (!isDarwin) {
     return PREFERRED_PROFILE_NAME;
   }
 
   try {
-    const raw = readFileSync("/Users/jason/.config/karabiner/karabiner.json", "utf8");
+    const raw = readFileSync(PATHS.karabinerConfig, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };

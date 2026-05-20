@@ -1,4 +1,6 @@
-import type { TapHoldConfig } from "../generators/tap-hold-rules";
+import type { TapHoldConfig } from "../builders";
+import { PATHS, TIMINGS } from "../constants";
+import { recentDownloadsCommand, spotifyToggleCommand } from "../lib/scripts";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
@@ -17,106 +19,104 @@ const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
 const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
-  //   SINGLE KEY TAP/HOLD RULES
-  //
-  ////   LETTERS:
-  ////
-  //////     a: Raycast AI-quick search
-  //////     c: Calendar
-  //////     f: QSSpace
-  //////     g: Claude
-  //////     h: Here2There
-  //////     j: Last d/l
-  //////     k: Kitty
-  //////     o: OCR
-  //////     p: Popclip
-  //////     r: Last d/l
-  //////     s: Screenshot
-  //////     t: Todoist
-  //////     v: Maccy
-  //////     x: Copy file (takeActionHere)
-  //////     y: Yank file (takeActionHere)
-  //////     z: Zoxide
-  ////
-  ////   NUMBERS:
-  ////
-  //////     8: RingCentral
-  //////     keypad_0: Unstash all via rectangle
-  //////     keypad_2: Stash down via rectangle
-  //////     keypad_4: Stash left via rectangle
-  //////     keypad_5: Unstash via rectangle
-  //////     keypad_6: Stash right via rectangle
-  //////     keypad_8: Stash up via rectangle
-  ////
-  ////   FUNCTION KEYS:
-  ////
-  //////     f1: Brightness decrement
-  //////     f2: Increase brightness
-  //////     f3: Mission Control
-  //////     f4: Launchpad
-  //////     f5: Dictation
-  //////     f7: Rewind
-  //////     f8: Play/Pause
-  //////     f9: Fast Forward
-  //////     f10: Mute
-  //////     f11: Volume Down
-  //////     f12: Volume Up
-  ////
-  ////   OTHER KEYS:
-  ////
-  //////     slash: Houdah
-  //////     tab: Mission Control
-  //////     fn: Dictation via Spokenly
-  //////     application: Reflow pinned app (tap), Pin app (hold)
-  //
-  // HYPER KEY COMBINATIONS:
-  //
-  ////   hyper+a: Raycast AI-chat
-  ////   hyper+q: Rectangle Pro left (half on tap, fill on hold)
-  ////   hyper+w: Rectangle Pro right (half on tap, fill on hold)
-  ////   hyper+1: Rectangle left-half/top-half by orientation
-  ////   hyper+2: Rectangle right-half/bottom-half by orientation
-  ////   hyper+3: Rectangle first-third
-  ////   hyper+4: Rectangle first-fourth
-  ////   hyper+keypad_1: Rectangle bottom-left-eighth
-  ////   hyper+keypad_3: Rectangle bottom-right-eighth
-  ////   hyper+keypad_5: Rectangle maximize
-  ////   hyper+keypad_7: Rectangle top-left-eighth
-  ////   hyper+keypad_9: Rectangle top-right-eighth
-  ////   hyper+spacebar: Rectangle maximize / restore
-  ////   hyper+tab: Rectangle next-display (tap), previous-display (hold)
-  ////   hyper+left_arrow: Rectangle fill-left / previous-display
-  ////   hyper+right_arrow: Rectangle fill-right / next-display
-  //
-  // OTHER COMBINATIONS:
-  //
-  ////   left_command+m: Deminimize
-  ////   left_command+p: Paletro
-  ////   left_shift+a: Antinote
-  ////   right_option+k: Kitty here
-  ////   right_option+s: Spotify toggle (tap), search (hold)
-  ////   right_option+t: Edit last Typinator expansion
-  //====================================================================
-  // CONFIG OPTIONS:
-  //
-  // triggerKey: {
-  //   description:     string;
-  //   alone?:          ActionConfig[]; // Action(s) to fire on tap
-  //   hold:            ActionConfig[]; // Action(s) to fire on hold (after timeout)
-  //   timeoutMs?:      number; // Time to wait for a hold before firing alone action
-  //   thresholdMs?:    number; // Minimum hold time to fire hold action instead of alone action
-  // }
-  //
-  // ACTION OPTIONS:
-  //        { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean } } |
-  //        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
-  //        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
-  //        { type: "raycast"; ref: string } |
-  //        { type: "takeActionHere"; action: string } |
-  //        { type: "cleanShot"; ref: string } |
-  //        { type: "applescript"; scriptPath: string }
-
-
+//   SINGLE KEY TAP/HOLD RULES
+//
+////   LETTERS:
+////
+//////     a: Raycast AI-quick search
+//////     c: Calendar
+//////     f: QSSpace
+//////     g: Claude
+//////     h: Here2There
+//////     j: Last d/l
+//////     k: Kitty
+//////     o: OCR
+//////     p: Popclip
+//////     r: Last d/l
+//////     s: Screenshot
+//////     t: Todoist
+//////     v: Maccy
+//////     x: Copy file (takeActionHere)
+//////     y: Yank file (takeActionHere)
+//////     z: Zoxide
+////
+////   NUMBERS:
+////
+//////     8: RingCentral
+//////     keypad_0: Unstash all via rectangle
+//////     keypad_2: Stash down via rectangle
+//////     keypad_4: Stash left via rectangle
+//////     keypad_5: Unstash via rectangle
+//////     keypad_6: Stash right via rectangle
+//////     keypad_8: Stash up via rectangle
+////
+////   FUNCTION KEYS:
+////
+//////     f1: Brightness decrement
+//////     f2: Increase brightness
+//////     f3: Mission Control
+//////     f4: Launchpad
+//////     f5: Dictation
+//////     f7: Rewind
+//////     f8: Play/Pause
+//////     f9: Fast Forward
+//////     f10: Mute
+//////     f11: Volume Down
+//////     f12: Volume Up
+////
+////   OTHER KEYS:
+////
+//////     slash: Houdah
+//////     tab: Mission Control
+//////     fn: Dictation via Spokenly
+//////     application: Reflow pinned app (tap), Pin app (hold)
+//
+// HYPER KEY COMBINATIONS:
+//
+////   hyper+a: Raycast AI-chat
+////   hyper+q: Rectangle Pro left (half on tap, fill on hold)
+////   hyper+w: Rectangle Pro right (half on tap, fill on hold)
+////   hyper+1: Rectangle left-half/top-half by orientation
+////   hyper+2: Rectangle right-half/bottom-half by orientation
+////   hyper+3: Rectangle first-third
+////   hyper+4: Rectangle first-fourth
+////   hyper+keypad_1: Rectangle bottom-left-eighth
+////   hyper+keypad_3: Rectangle bottom-right-eighth
+////   hyper+keypad_5: Rectangle maximize
+////   hyper+keypad_7: Rectangle top-left-eighth
+////   hyper+keypad_9: Rectangle top-right-eighth
+////   hyper+spacebar: Rectangle maximize / restore
+////   hyper+tab: Rectangle next-display (tap), previous-display (hold)
+////   hyper+left_arrow: Rectangle fill-left / previous-display
+////   hyper+right_arrow: Rectangle fill-right / next-display
+//
+// OTHER COMBINATIONS:
+//
+////   left_command+m: Deminimize
+////   left_command+p: Paletro
+////   left_shift+a: Antinote
+////   right_option+k: Kitty here
+////   right_option+s: Spotify toggle (tap), search (hold)
+////   right_option+t: Edit last Typinator expansion
+//====================================================================
+// CONFIG OPTIONS:
+//
+// triggerKey: {
+//   description:     string;
+//   alone?:          ActionConfig[]; // Action(s) to fire on tap
+//   hold:            ActionConfig[]; // Action(s) to fire on hold (after timeout)
+//   timeoutMs?:      number; // Time to wait for a hold before firing alone action
+//   thresholdMs?:    number; // Minimum hold time to fire hold action instead of alone action
+// }
+//
+// ACTION OPTIONS:
+//        { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean } } |
+//        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
+//        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
+//        { type: "raycast"; ref: string } |
+//        { type: "takeActionHere"; action: string } |
+//        { type: "cleanShot"; ref: string } |
+//        { type: "applescript"; scriptPath: string }
 
 export const tapHoldMappings: Record<string, TapHoldConfig> = {
   a: {
@@ -200,7 +200,7 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [
       {
         type: "shell",
-        command: "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh",
+        command: recentDownloadsCommand(),
       },
     ],
   },
@@ -639,24 +639,22 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     alone: [
       {
         type: "shell",
-        command:
-          "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'",
+        command: spotifyToggleCommand(),
       },
     ],
     hold: [{ type: "raycast", ref: "spotifySearch" }],
-    timeoutMs: 400,
-    thresholdMs: 400,
+    timeoutMs: TIMINGS.spotifyTapHoldMs,
+    thresholdMs: TIMINGS.spotifyTapHoldMs,
   },
   "right_option+t": {
     description: "Edit last Typinator expansion",
     hold: [
       {
         type: "applescript",
-        scriptPath:
-          "/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
+        scriptPath: PATHS.typinatorEditLastAppleScript,
       },
     ],
-    timeoutMs: 300,
-    thresholdMs: 300,
+    timeoutMs: TIMINGS.mouseDefaultMs,
+    thresholdMs: TIMINGS.mouseDefaultMs,
   },
 };

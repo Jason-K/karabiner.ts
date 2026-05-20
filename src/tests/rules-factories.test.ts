@@ -1,6 +1,17 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import {
+  buildDisableHideMinimizeRule,
+  buildEnterRules,
+  buildEqualsRules,
+  buildHomeEndRule,
+  buildMouseRules,
+  buildPasswordsQuickFillRule,
+  buildRightOptionAppsRule,
+  buildWordPrivilegesRule,
+} from "../builders";
+import { DEVICE_IDENTIFIERS, appRegistry } from "../constants";
 import { mouseDeviceMappings } from "../mappings/mouse";
 import { buildAntinoteDeleteRule } from "../rules/antinote";
 import {
@@ -12,23 +23,11 @@ import {
 } from "../rules/hyper-chords";
 import { buildHyperPlusRules } from "../rules/hyper-plus";
 import {
-    buildCmdQRule,
-    buildLeftCommandRule,
+  buildCmdQRule,
+  buildLeftCommandRule,
 } from "../rules/left-command-chords";
-import { buildMouseRules } from "../rules/mouse";
-import { buildRightOptionAppsRule } from "../rules/right-option-launchers";
-import {
-    buildDisableHideMinimizeRule,
-    buildPasswordsQuickFillRule,
-    buildWordPrivilegesRule,
-} from "../rules/security";
 import { buildSkimCommandRemapRule } from "../rules/skim";
-import {
-  buildEnterRules,
-  buildEqualsRules,
-  buildHomeEndRule,
-  buildOnePieceClickEnterRule,
-} from "../rules/special-keys";
+import { buildOnePieceClickEnterRule } from "../rules/special-keys";
 
 test("left command factory keeps dual manipulator behavior", () => {
   const rule = buildLeftCommandRule().build();
@@ -244,7 +243,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: ["jp.fuji.1Piece"],
+      bundle_identifiers: [appRegistry.onePiece],
     },
   ]);
 });
@@ -263,7 +262,7 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse rules factory builds declarative per-device mappings", () => {
   const rules = buildMouseRules(mouseDeviceMappings).map((r) => r.build());
-  assert.equal(rules.length, 9);
+  assert.equal(rules.length, 10);
   assert.equal(
     rules[0]?.description,
     "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)",
@@ -282,21 +281,20 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   assert.deepEqual(rules[1]?.manipulators[0]?.from, {
     pointing_button: "button7",
   });
-  assert.deepEqual(wheelLeftOverride?.to, [
-    {
-      key_code: "open_bracket",
-      modifiers: ["left_control", "left_shift"],
-    },
-  ]);
+    assert.deepEqual(rules[1]?.manipulators[0]?.to, [
+      {
+        shell_command: `osascript -e 'tell application "System Events" to key code 33 using {control down, shift down}'`,
+      },
+    ]);
   assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: ["app.zen-browser.zen"],
+      bundle_identifiers: [appRegistry.browser],
     },
     {
       type: "variable_if",
-      name: "middle_front_pressed",
+      name: "right_button_pressed",
       value: 1,
     },
     {
@@ -304,8 +302,8 @@ test("mouse rules factory builds declarative per-device mappings", () => {
       description: undefined,
       identifiers: [
         {
-          product_id: 49305,
-          vendor_id: 1133,
+          product_id: DEVICE_IDENTIFIERS.logitechG502X.product_id,
+          vendor_id: DEVICE_IDENTIFIERS.logitechG502X.vendor_id,
         },
       ],
     },
@@ -332,8 +330,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   });
   assert.deepEqual(wheelRightOverride?.to, [
     {
-      key_code: "close_bracket",
-      modifiers: ["left_control", "left_shift"],
+      shell_command: `osascript -e 'tell application "System Events" to key code 30 using {control down, shift down}'`,
     },
   ]);
 });

@@ -1,23 +1,11 @@
 import { ifApp, rule, toKey } from "karabiner.ts";
-
-import {
-  buildConditionalTapHoldRules,
-  buildSimpleRemapRules,
-} from "../generators";
+import { appRegistry } from "../constants";
 import { formatRuleDescription } from "../lib/rule-descriptions";
-import {
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-  homeEndNavigationMappings,
-} from "../mappings";
-
-export const buildHomeEndRule = () => {
-  return buildSimpleRemapRules(homeEndNavigationMappings);
-};
-
-export const buildEnterRules = () => {
-  return buildConditionalTapHoldRules(enterKeyHoldMappings);
-};
+export {
+  buildEnterRules,
+  buildEqualsRules,
+  buildHomeEndRule,
+} from "../builders/special-key-rules";
 
 export const buildOnePieceClickEnterRule = () => {
   const description = formatRuleDescription(
@@ -33,12 +21,8 @@ export const buildOnePieceClickEnterRule = () => {
         pointing_button: "button1",
       },
       to: [toKey("return_or_enter")],
-      conditions: [ifApp("jp.fuji.1Piece").build()],
+      conditions: [ifApp(appRegistry.onePiece).build()],
       description,
     } as any,
   ]);
-};
-
-export const buildEqualsRules = () => {
-  return buildConditionalTapHoldRules(equalsKeyHoldMappings);
 };

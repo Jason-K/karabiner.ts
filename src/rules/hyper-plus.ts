@@ -1,8 +1,13 @@
 import { map, rule } from "karabiner.ts";
 
+import { PATHS } from "../constants";
 import { HYPER } from "../lib/mods";
 import { formatRuleDescription } from "../lib/rule-descriptions";
-import { cmd } from "../lib/scripts";
+import {
+  cmd,
+  formatSelectionCommand,
+  typinatorNewRuleCommand,
+} from "../lib/scripts";
 
 type HyperShellRuleKey = Parameters<typeof map>[0];
 
@@ -27,13 +32,12 @@ const hyperShellRules = {
   s: {
     mods: HYPER,
     description: "Format selection",
-    shellCommand: "/opt/homebrew/bin/hs -c 'FormatSelection()'",
+    shellCommand: formatSelectionCommand(),
   },
   t: {
     mods: HYPER,
     description: "New Typinator rule",
-    shellCommand:
-      "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py",
+    shellCommand: typinatorNewRuleCommand(),
   },
   semicolon: {
     mods: HYPER,
@@ -43,8 +47,7 @@ const hyperShellRules = {
   f12: {
     mods: HYPER,
     description: "Edit last Typinator rule",
-    shellCommand:
-      "/usr/bin/osascript /Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
+    shellCommand: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}`,
   },
   escape: {
     mods: HYPER,
