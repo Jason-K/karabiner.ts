@@ -1,6 +1,6 @@
 export type SimpleModification = {
   from: { key_code: string };
-  to: Array<{ key_code: string }>;
+  to: ReadonlyArray<{ key_code: string }>;
 };
 
 export type DeviceConfig = {
@@ -9,7 +9,7 @@ export type DeviceConfig = {
     product_id: number;
     is_keyboard?: boolean;
   };
-  simple_modifications: SimpleModification[];
+  simple_modifications: ReadonlyArray<SimpleModification>;
 };
 
 export function updateDeviceConfigurations(profileName: string, deviceConfigs: DeviceConfig[]): void {

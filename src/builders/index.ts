@@ -6,11 +6,10 @@ export {
     buildWordPrivilegesRule
 } from "./security-rules";
 export {
-    buildEnterRules,
-    buildEqualsRules,
-    buildHomeEndRule
+  buildEnterRules,
+  buildEqualsRules,
+  buildHomeEndRule,
 } from "./special-key-rules";
-export { unifiedTapHold, unifiedVarTapTapHold } from "./tap-hold-primitive";
 
 export * from "../generators/action-resolver";
 export * from "../generators/conditional-action-rules";

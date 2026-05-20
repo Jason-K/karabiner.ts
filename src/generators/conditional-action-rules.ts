@@ -1,7 +1,8 @@
-import { ifApp, map, rule, toKey } from "karabiner.ts";
+import { ifApp, map, toKey } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { applescript, cmd } from "../lib/scripts";
+import { buildRulesWithVariantManipulators } from "./rule-factory-base";
 
 export type ConditionalActionCondition =
   | {
@@ -84,38 +85,40 @@ function toAction(action: ConditionalAction) {
   );
 }
 
-export function buildConditionalActionRules(
+export function generateConditionalActionRules(
   mappings: ReadonlyArray<ConditionalActionMapping>,
 ) {
-  return mappings.map(({ key, modifiers, description, variants }) =>
-    rule(formatRuleDescription([...modifiers, key], description, "tap")).manipulators(
-      variants.flatMap((variant) => {
-        const builder = map(key as any, modifiers as any);
+  return buildRulesWithVariantManipulators({
+    mappings,
+    getVariants: ({ variants }) => variants,
+    toDescription: ({ key, modifiers, description }) =>
+      formatRuleDescription([...modifiers, key], description, "tap"),
+    toManipulators: ({ key, modifiers }, variant) => {
+      const builder = map(key as any, modifiers as any);
 
-        if (variant.parameters?.delayedActionDelayMs !== undefined) {
-          builder.parameters({
-            "basic.to_delayed_action_delay_milliseconds":
-              variant.parameters.delayedActionDelayMs,
-          });
-        }
-
-        variant.when.forEach((condition) => {
-          builder.condition(toCondition(condition));
+      if (variant.parameters?.delayedActionDelayMs !== undefined) {
+        builder.parameters({
+          "basic.to_delayed_action_delay_milliseconds":
+            variant.parameters.delayedActionDelayMs,
         });
+      }
 
-        variant.actions.forEach((action) => {
-          builder.to(toAction(action));
-        });
+      variant.when.forEach((condition) => {
+        builder.condition(toCondition(condition));
+      });
 
-        if (variant.delayedAction) {
-          builder.toDelayedAction(
-            variant.delayedAction.invoked.map(toAction),
-            variant.delayedAction.canceled.map(toAction),
-          );
-        }
+      variant.actions.forEach((action) => {
+        builder.to(toAction(action));
+      });
 
-        return builder.build();
-      }),
-    ),
-  );
+      if (variant.delayedAction) {
+        builder.toDelayedAction(
+          variant.delayedAction.invoked.map(toAction),
+          variant.delayedAction.canceled.map(toAction),
+        );
+      }
+
+      return builder.build();
+    },
+  });
 }

@@ -10,7 +10,9 @@
       "sourceMap": true,
       "noEmit": true,
       "allowImportingTsExtensions": true,
-      "baseUrl": "."
+      "ignoreDeprecations": "6.0",
+      "baseUrl": ".",
+      "types": ["node"]
     },
     "include": [
         "src"

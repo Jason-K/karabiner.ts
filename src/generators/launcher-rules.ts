@@ -1,7 +1,8 @@
-import { map, rule } from "karabiner.ts";
+import { map } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd, focusApp } from "../lib/scripts";
+import { buildRulesFromMappings } from "./rule-factory-base";
 
 export type LauncherAction =
   | {
@@ -36,18 +37,18 @@ function toLauncherEvent(
   return cmd(getOpenFolderCommand(action.path));
 }
 
-export function buildModifierLauncherRules<TKey extends string>(
+export function generateModifierLauncherRules<TKey extends string>(
   config: LauncherRuleConfig<TKey>,
 ) {
   const { triggerKey, launchers, getOpenFolderCommand } = config;
 
-  return launchers.map(({ key, description, action }) =>
-    rule(
+  return buildRulesFromMappings({
+    mappings: launchers,
+    toDescription: ({ key, description }) =>
       formatRuleDescription([triggerKey, key], description, "tap"),
-    ).manipulators([
-      ...map(key as any, triggerKey as any)
+    toManipulators: ({ key, action }) =>
+      map(key as any, triggerKey as any)
         .to(toLauncherEvent(action, getOpenFolderCommand))
         .build(),
-    ]),
-  );
+  });
 }

@@ -1,7 +1,7 @@
 import { ifApp, rule, toKey } from "karabiner.ts";
 import { TIMINGS, appRegistry } from "../constants";
 import {
-  buildConditionalTapHoldRules,
+  generateConditionalTapHoldRules,
   type ConditionalTapHoldMapping,
 } from "../generators/conditional-tap-hold-rules";
 import { formatRuleDescription } from "../lib/rule-descriptions";
@@ -99,10 +99,10 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
 ];
 
 export const buildEnterRules = () =>
-  buildConditionalTapHoldRules(enterKeyHoldMappings);
+  generateConditionalTapHoldRules(enterKeyHoldMappings);
 
 export const buildEqualsRules = () =>
-  buildConditionalTapHoldRules(equalsKeyHoldMappings);
+  generateConditionalTapHoldRules(equalsKeyHoldMappings);
 
 export const buildOnePieceClickEnterRule = () => {
   const description = formatRuleDescription(

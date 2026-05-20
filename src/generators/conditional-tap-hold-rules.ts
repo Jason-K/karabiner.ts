@@ -1,8 +1,10 @@
-import { ifApp, rule, toKey, withCondition } from "karabiner.ts";
+import { ifApp, toKey, withCondition } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
 import { cmd } from "../lib/scripts";
 import { tapHold } from "../lib/tap-hold";
+import { buildRulesWithVariantRules } from "./rule-factory-base";
+import type { AppCondition } from "./variant-types";
 
 export type KeyActionSpec = {
   type: "key";
@@ -21,14 +23,9 @@ export type ShellActionSpec = {
 
 export type TapHoldActionSpec = KeyActionSpec | ShellActionSpec;
 
-export type AppConditionSpec = {
-  app: string;
-  unless?: boolean;
-};
-
 export type TapHoldVariantMapping = {
   description: string;
-  when?: AppConditionSpec;
+  when?: AppCondition;
   alone: TapHoldActionSpec[];
   hold: TapHoldActionSpec[];
   timeoutMs: number;
@@ -52,11 +49,15 @@ function toTapHoldEvent(action: TapHoldActionSpec) {
   );
 }
 
-export function buildConditionalTapHoldRules(
+export function generateConditionalTapHoldRules(
   mappings: ReadonlyArray<ConditionalTapHoldMapping>,
 ) {
-  return mappings.flatMap(({ key, variants }) =>
-    variants.map((variant) => {
+  return buildRulesWithVariantRules({
+    mappings,
+    getVariants: ({ variants }) => variants,
+    toDescription: ({ key }, variant) =>
+      formatRuleDescription(key, variant.description, "hold"),
+    toManipulators: ({ key }, variant) => {
       const manipulator = tapHold({
         key,
         alone: variant.alone.map(toTapHoldEvent),
@@ -65,15 +66,16 @@ export function buildConditionalTapHoldRules(
         thresholdMs: variant.thresholdMs,
       }).build();
 
-      const conditionedManipulator = variant.when
-        ? withCondition(
-            variant.when.unless ? ifApp(variant.when.app).unless() : ifApp(variant.when.app),
-          )(manipulator).build()
-        : manipulator;
+      if (variant.when) {
+        const conditionedManipulator = withCondition(
+          variant.when.unless
+            ? ifApp(variant.when.app).unless()
+            : ifApp(variant.when.app),
+        )(manipulator).build();
+        return conditionedManipulator;
+      }
 
-      return rule(
-        formatRuleDescription(key, variant.description, "hold"),
-      ).manipulators(conditionedManipulator);
-    }),
-  );
+      return manipulator;
+    },
+  });
 }

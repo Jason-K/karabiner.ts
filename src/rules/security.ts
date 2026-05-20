@@ -6,11 +6,11 @@ import {
   appRegistry,
 } from "../constants";
 import {
-  buildConditionalActionRules,
+  generateConditionalActionRules,
   type ConditionalActionMapping,
 } from "../generators/conditional-action-rules";
 import {
-  buildDisabledShortcutRules,
+  generateDisabledShortcutRules,
   type DisabledShortcutMapping,
 } from "../generators/simple-rules";
 
@@ -163,10 +163,10 @@ export const securitySlashActionMappings: ConditionalActionMapping[] = [
 ];
 
 export const buildDisableHideMinimizeRule = () =>
-  buildDisabledShortcutRules(disabledShortcuts);
+  generateDisabledShortcutRules(disabledShortcuts);
 
 export const buildWordPrivilegesRule = () =>
-  buildConditionalActionRules([securitySlashActionMappings[0]!])[0]!;
+  generateConditionalActionRules([securitySlashActionMappings[0]!])[0]!;
 
 export const buildPasswordsQuickFillRule = () =>
-  buildConditionalActionRules([securitySlashActionMappings[1]!])[0]!;
+  generateConditionalActionRules([securitySlashActionMappings[1]!])[0]!;

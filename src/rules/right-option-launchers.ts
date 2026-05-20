@@ -1,6 +1,6 @@
 import { HOME_DIR, appRegistry } from "../constants";
 import {
-  buildModifierLauncherRules,
+  generateModifierLauncherRules,
   type ModifierLauncherMapping,
 } from "../generators/launcher-rules";
 import { getOpenFolderCommand } from "../lib/folder-opener";
@@ -61,7 +61,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
 ];
 
 export const buildRightOptionAppsRule = () =>
-  buildModifierLauncherRules({
+  generateModifierLauncherRules({
     triggerKey: "right_option",
     launchers: rightOptionLaunchers,
     getOpenFolderCommand,

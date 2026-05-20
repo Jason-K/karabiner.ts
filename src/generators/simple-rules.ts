@@ -1,6 +1,7 @@
-import { map, rule, toKey } from "karabiner.ts";
+import { map, toKey } from "karabiner.ts";
 
 import { formatRuleDescription } from "../lib/rule-descriptions";
+import { buildRulesFromMappings } from "./rule-factory-base";
 
 export type SimpleRemapMapping = {
   from: {
@@ -20,26 +21,30 @@ export type DisabledShortcutMapping = {
   description: string;
 };
 
-export function buildSimpleRemapRules(
+export function generateSimpleRemapRules(
   mappings: ReadonlyArray<SimpleRemapMapping>,
 ) {
-  return mappings.map(({ from, description, to }) => {
-    const chord = [...(from.modifiers ?? []), from.key];
-
-    return rule(formatRuleDescription(chord, description, "tap")).manipulators([
-      ...map(from.key as any, (from.modifiers as any) ?? undefined)
+  return buildRulesFromMappings({
+    mappings,
+    toDescription: ({ from, description }) => {
+      const chord = [...(from.modifiers ?? []), from.key];
+      return formatRuleDescription(chord, description, "tap");
+    },
+    toManipulators: ({ from, to }) =>
+      map(from.key as any, (from.modifiers as any) ?? undefined)
         .to(toKey(to.key as any, (to.modifiers as any) ?? []))
         .build(),
-    ]);
   });
 }
 
-export function buildDisabledShortcutRules(
+export function generateDisabledShortcutRules(
   mappings: ReadonlyArray<DisabledShortcutMapping>,
 ) {
-  return mappings.map(({ key, modifiers, description }) =>
-    rule(
+  return buildRulesFromMappings({
+    mappings,
+    toDescription: ({ key, modifiers, description }) =>
       formatRuleDescription([...modifiers, key], description, "tap"),
-    ).manipulators([...map(key as any, modifiers as any).build()]),
-  );
+    toManipulators: ({ key, modifiers }) =>
+      map(key as any, modifiers as any).build(),
+  });
 }
