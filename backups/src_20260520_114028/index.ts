@@ -31,7 +31,10 @@ import {
   SPACE_LAYER_LABEL,
   SPACE_LAYER_LEADER_KEY,
   SPACE_LAYER_PREFIX,
+  spaceLayerDefinitions,
+  tapHoldMappings,
 } from "./data";
+import type { DeviceConfig } from "./rules";
 import {
   buildAntinoteDeleteRule,
   buildCapsLockRule,
@@ -44,23 +47,18 @@ import {
   buildHomeEndRule,
   buildHyperPlusRules,
   buildLeftCommandRule,
+  buildMouseRules,
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
-  mouseDeviceMappings,
-  spaceLayerDefinitions,
-  tapHoldMappings,
-} from "./definitions";
-import type { DeviceConfig } from "./engine";
-import {
-  buildMouseRules,
   emitLayerDefinitions,
   generateEscapeRule,
   generateTapHoldRules,
   updateDeviceConfigurations,
-} from "./engine";
+} from "./rules";
+import { mouseDeviceMappings } from "./rules/mouse";
 
 const spaceLayers = spaceLayerDefinitions;
 

@@ -12,19 +12,19 @@ import {
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
 } from "../data/rectangle";
-import { spaceLayerDefinitions } from "../definitions/space-layers";
-import { tapHoldMappings } from "../definitions/tap-hold";
-import { mouseDeviceMappings } from "../definitions/mouse";
-import { homeEndNavigationMappings } from "../definitions/navigation";
-import { rightOptionLaunchers } from "../definitions/right-option-launchers";
+import { spaceLayerDefinitions } from "../data/space-layers";
+import { tapHoldMappings } from "../data/tap-hold";
+import { mouseDeviceMappings } from "../rules/mouse";
+import { homeEndNavigationMappings } from "../rules/navigation";
+import { rightOptionLaunchers } from "../rules/right-option-launchers";
 import {
   disabledShortcuts,
   securitySlashActionMappings,
-} from "../definitions/security";
+} from "../rules/security";
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
-} from "../definitions/special-keys";
+} from "../rules/special-keys";
 
 test("rectangle focused-window orientation command uses focused display", () => {
   const command = rectangleActionByFocusedWindowOrientationCommand(

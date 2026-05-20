@@ -1,7 +1,7 @@
 /**
  * Barrel export for split data/config modules.
  *
- * Re-exports shared registries/constants consumed by core/engine/definitions.
+ * Re-exports all declarative configuration consumed by core/rules/index.
  */
 
 export {
@@ -32,6 +32,8 @@ export { folderRegistry, type FolderRef } from "./folders";
 export { PATHS } from "./paths";
 export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./profiles";
 export { raycastRegistry } from "./raycast";
+export { spaceLayerDefinitions } from "./space-layers";
+export { tapHoldMappings } from "./tap-hold";
 export { TIMINGS } from "./timings";
 export {
     DESCRIPTION_SEPARATOR,

@@ -6,7 +6,7 @@ import { L } from '../../core/mods';
 import { formatRuleDescription } from "../../core/rule-descriptions";
 import { cmd, layerIndicatorCommand } from '../../core/scripts';
 import { openApp } from '../../core/software';
-import { resolveActionToEvents } from "../../engine/action-resolver";
+import { resolveActionToEvents } from "../../rules/action-resolver";
 import {
     buildLayerDebugLogCommand,
     getAllSublayerVars,

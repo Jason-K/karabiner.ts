@@ -3,25 +3,31 @@ import test from "node:test";
 
 import { DEVICE_IDENTIFIERS, appRegistry } from "../data";
 import {
-  buildAntinoteDeleteRule,
-  buildCapsLockRule,
-  buildCmdQRule,
-  buildCtrlEscapeMonitorRule,
   buildDisableHideMinimizeRule,
   buildEnterRules,
   buildEqualsRules,
-  buildEscapeTapTapHoldRule,
   buildHomeEndRule,
-  buildHyperPlusRules,
-  buildLeftCommandRule,
-  buildOnePieceClickEnterRule,
+  buildMouseRules,
   buildPasswordsQuickFillRule,
   buildRightOptionAppsRule,
-  buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
-  mouseDeviceMappings,
-} from "../definitions";
-import { buildMouseRules } from "../engine";
+} from "../rules";
+import { buildAntinoteDeleteRule } from "../rules/antinote";
+import {
+    buildCtrlEscapeMonitorRule,
+    buildEscapeTapTapHoldRule,
+} from "../rules/escape-monitor";
+import {
+    buildCapsLockRule,
+} from "../rules/hyper-chords";
+import { buildHyperPlusRules } from "../rules/hyper-plus";
+import {
+  buildCmdQRule,
+  buildLeftCommandRule,
+} from "../rules/left-command-chords";
+import { mouseDeviceMappings } from "../rules/mouse";
+import { buildSkimCommandRemapRule } from "../rules/skim";
+import { buildOnePieceClickEnterRule } from "../rules/special-keys";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
