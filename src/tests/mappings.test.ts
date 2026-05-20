@@ -333,7 +333,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(backMapping, {
     type: "tapHold",
     button: "back",
-    description: "Back (tap) / CMD+Tab (hold)",
+    description: "Back (tap) / Window switch (hold)",
     alone: [{ pointing_button: "button4" }],
     hold: [{ key_code: "tab", modifiers: ["left_command"] }],
     eventOptions: { halt: true, repeat: false },
@@ -344,7 +344,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
     type: "tapHold",
     button: "shift",
-    description: "Mission Control (tap) / Rectangle snap (hold)",
+    description: "Mission Control (tap) / Rectangle key (hold)",
     alone: [
       {
         key_code: "up_arrow",
@@ -370,7 +370,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
         shell_command: rectangleActionByFocusedWindowOrientationCommand(
-          "left-half",
+          "fill-left",
           "top-half",
         ),
       },

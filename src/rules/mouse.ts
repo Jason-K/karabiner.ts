@@ -1,15 +1,15 @@
-import { ifDevice, map, rule } from "karabiner.ts";
+import { ifApp, ifDevice, map, rule, to$ } from "karabiner.ts";
 import {
-  mouseTapHold,
-  mouseVarTapTapHold,
-  resolveMouseButton,
+    mouseTapHold,
+    mouseVarTapTapHold,
+    resolveMouseButton,
 } from "../lib/mouse";
 import type {
-  MouseDeviceConfig,
-  MouseDoubleTapMapping,
-  MouseMapping,
-  MouseSimultaneousMapping,
-  MouseTapHoldMapping,
+    MouseDeviceConfig,
+    MouseDoubleTapMapping,
+    MouseMapping,
+    MouseSimultaneousMapping,
+    MouseTapHoldMapping,
 } from "../mappings/mouse";
 
 function applyDeviceScope(
@@ -61,7 +61,17 @@ function buildTapHoldManipulators(
     timeoutMs: mapping.timeoutMs,
   }).build();
 
-  // Guard against devices that emit wheel_left/right while middle_front is pressed.
+  // Use right button as a pure chord modifier when combined with wheel events.
+  // Keep tap-to-right-click via to_if_alone, but suppress cancel fallback clicks.
+  if (mapping.button === "right") {
+    manipulators.forEach((m: any) => {
+      if (m.to_delayed_action?.to_if_canceled) {
+        m.to_delayed_action.to_if_canceled = [];
+      }
+    });
+  }
+
+  // Guard against wheel_left/right firing while middle_front or right_button is pressed.
   if (mapping.button === "wheel_left" || mapping.button === "wheel_right") {
     manipulators.forEach((m: any) => {
       m.conditions = m.conditions ?? [];
@@ -70,7 +80,48 @@ function buildTapHoldManipulators(
         name: "middle_front_pressed",
         value: 1,
       });
+      m.conditions.push({
+        type: "variable_unless",
+        name: "right_button_pressed",
+        value: 1,
+      });
     });
+  }
+
+  if (mapping.button === "wheel_left") {
+    const zenWheelLeftOverride: any = map({
+      pointing_button: resolveMouseButton("wheel_left", device.buttonMap),
+    })
+      .to(to$('osascript -e \'tell application "System Events" to key code 33 using {control down, shift down}\''))
+      .condition(ifApp("app.zen-browser.zen"))
+      .build()[0];
+
+    zenWheelLeftOverride.conditions = zenWheelLeftOverride.conditions ?? [];
+    zenWheelLeftOverride.conditions.push({
+      type: "variable_if",
+      name: "right_button_pressed",
+      value: 1,
+    });
+
+    manipulators.unshift(zenWheelLeftOverride);
+  }
+
+  if (mapping.button === "wheel_right") {
+    const zenWheelRightOverride: any = map({
+      pointing_button: resolveMouseButton("wheel_right", device.buttonMap),
+    })
+      .to(to$('osascript -e \'tell application "System Events" to key code 30 using {control down, shift down}\''))
+      .condition(ifApp("app.zen-browser.zen"))
+      .build()[0];
+
+    zenWheelRightOverride.conditions = zenWheelRightOverride.conditions ?? [];
+    zenWheelRightOverride.conditions.push({
+      type: "variable_if",
+      name: "right_button_pressed",
+      value: 1,
+    });
+
+    manipulators.unshift(zenWheelRightOverride);
   }
 
   return manipulators;

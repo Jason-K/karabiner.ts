@@ -1,4 +1,4 @@
-import type { PointingButton, ToEvent } from "karabiner.ts";
+import { type PointingButton, type ToEvent } from "karabiner.ts";
 import { g502xButtons } from "../lib/mouse";
 import {
   rectangleActionByFocusedWindowOrientationCommand,
@@ -90,7 +90,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "shift",
-        description: "Mission Control (tap) / Rectangle snap (hold)",
+        description: "Mission Control (tap) / Rectangle key (hold)",
         alone: [
           {
             key_code: "up_arrow",
@@ -114,7 +114,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
-            shell_command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION,
+            shell_command: RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION,
           },
         ],
         thresholdMs: 200,
@@ -127,7 +127,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
-            shell_command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION,
+            shell_command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
           },
         ],
         thresholdMs: 200,
@@ -136,7 +136,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "middle_back",
-        description: "CleanShot OCR (tap) / area capture (hold)",
+        description: "OCR area (tap) / Screenshot area (hold)",
         alone: [
           { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
         ],
@@ -174,20 +174,21 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "Show menu (tap) / Stash right (hold)",
-        alone: [{ key_code: "m", modifiers: ["left_option"] }],
-        hold: [
+        description: "Activate Sidenote (tap) / Menu (hold)",
+        alone: [
           {
-            shell_command: `open -g '${rectangleActionUrl("stash-right")}'`,
+            key_code: "f10",
+            modifiers: ["left_command", "left_option", "left_shift"],
           },
         ],
+        hold: [{ key_code: "m", modifiers: ["left_option"] }],
         thresholdMs: 300,
         timeoutMs: 300,
       },
       {
         type: "tapHold",
         button: "back",
-        description: "Back (tap) / CMD+Tab (hold)",
+        description: "Back (tap) / Window switch (hold)",
         alone: [{ pointing_button: "button4" }],
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
         eventOptions: { halt: true, repeat: false },
@@ -197,7 +198,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "forward",
-        description: "Forward (tap) / CMD+Tab (hold)",
+        description: "Forward (tap) / App window switch (hold)",
         alone: [{ pointing_button: "button5" }],
         hold: [
           {
@@ -206,6 +207,16 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         eventOptions: { halt: true, repeat: false },
+        thresholdMs: 300,
+        timeoutMs: 300,
+      },
+      {
+        type: "tapHold",
+        button: "right",
+        description: "Right click (tap) / Zen chord modifier (hold)",
+        variable: "right_button_pressed",
+        alone: [{ pointing_button: "button2" }],
+        hold: [],
         thresholdMs: 300,
         timeoutMs: 300,
       },

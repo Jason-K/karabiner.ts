@@ -266,7 +266,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   assert.equal(rules.length, 9);
   assert.equal(
     rules[0]?.description,
-    "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)",
+    "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)",
   );
   assert.equal(rules[0]?.manipulators.length, 1);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
@@ -277,7 +277,63 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     rules[1]?.description,
     "Logitech G502 X: Rectangle fill-left (hold)",
   );
+  assert.equal(rules[1]?.manipulators.length, 2);
+  const wheelLeftOverride: any = rules[1]?.manipulators[0];
   assert.deepEqual(rules[1]?.manipulators[0]?.from, {
     pointing_button: "button7",
   });
+  assert.deepEqual(wheelLeftOverride?.to, [
+    {
+      key_code: "open_bracket",
+      modifiers: ["left_control", "left_shift"],
+    },
+  ]);
+  assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
+    {
+      type: "frontmost_application_if",
+      description: undefined,
+      bundle_identifiers: ["app.zen-browser.zen"],
+    },
+    {
+      type: "variable_if",
+      name: "middle_front_pressed",
+      value: 1,
+    },
+    {
+      type: "device_if",
+      description: undefined,
+      identifiers: [
+        {
+          product_id: 49305,
+          vendor_id: 1133,
+        },
+      ],
+    },
+  ]);
+  assert.deepEqual(
+    rules[1]?.manipulators[1]?.conditions?.find(
+      (condition: any) => condition?.type === "variable_unless",
+    ),
+    {
+      type: "variable_unless",
+      name: "middle_front_pressed",
+      value: 1,
+    },
+  );
+
+  assert.equal(
+    rules[2]?.description,
+    "Logitech G502 X: Rectangle fill-right (hold)",
+  );
+  assert.equal(rules[2]?.manipulators.length, 2);
+  const wheelRightOverride: any = rules[2]?.manipulators[0];
+  assert.deepEqual(rules[2]?.manipulators[0]?.from, {
+    pointing_button: "button8",
+  });
+  assert.deepEqual(wheelRightOverride?.to, [
+    {
+      key_code: "close_bracket",
+      modifiers: ["left_control", "left_shift"],
+    },
+  ]);
 });

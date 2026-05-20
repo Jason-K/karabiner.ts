@@ -5675,7 +5675,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)",
+        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5729,7 +5729,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Mission Control (tap) / Rectangle snap (hold)"
+            "description": "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -5738,6 +5738,40 @@
       {
         "ruleDescription": "Logitech G502 X: Rectangle fill-left (hold)",
         "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button7"
+            },
+            "to": [
+              {
+                "shell_command": "osascript -e 'tell application \"System Events\" to key code 33 using {control down, shift down}'"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle fill-left (hold)"
+          },
           {
             "type": "basic",
             "from": {
@@ -5753,7 +5787,7 @@
                 "hold_down_milliseconds": 80
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-left]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -5764,6 +5798,11 @@
               {
                 "type": "variable_unless",
                 "name": "middle_front_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "right_button_pressed",
                 "value": 1
               },
               {
@@ -5790,6 +5829,40 @@
             "from": {
               "pointing_button": "button8"
             },
+            "to": [
+              {
+                "shell_command": "osascript -e 'tell application \"System Events\" to key code 30 using {control down, shift down}'"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Rectangle fill-right (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button8"
+            },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 200,
               "basic.to_if_held_down_threshold_milliseconds": 200
@@ -5800,7 +5873,7 @@
                 "hold_down_milliseconds": 80
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -5811,6 +5884,11 @@
               {
                 "type": "variable_unless",
                 "name": "middle_front_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "right_button_pressed",
                 "value": 1
               },
               {
@@ -5830,7 +5908,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)",
+        "ruleDescription": "Logitech G502 X: OCR area (tap) / Screenshot area (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5870,7 +5948,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: CleanShot OCR (tap) / area capture (hold)"
+            "description": "Logitech G502 X: OCR area (tap) / Screenshot area (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -5995,7 +6073,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Show menu (tap) / Stash right (hold)",
+        "ruleDescription": "Logitech G502 X: Activate Sidenote (tap) / Menu (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6008,24 +6086,31 @@
             },
             "to_if_alone": [
               {
+                "key_code": "f10",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "key_code": "m",
                 "modifiers": [
                   "left_option"
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "key_code": "m",
+                  "key_code": "f10",
                   "modifiers": [
-                    "left_option"
+                    "left_command",
+                    "left_option",
+                    "left_shift"
                   ]
                 }
               ]
@@ -6041,14 +6126,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Show menu (tap) / Stash right (hold)"
+            "description": "Logitech G502 X: Activate Sidenote (tap) / Menu (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Back (tap) / CMD+Tab (hold)",
+        "ruleDescription": "Logitech G502 X: Back (tap) / Window switch (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6095,14 +6180,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Back (tap) / CMD+Tab (hold)"
+            "description": "Logitech G502 X: Back (tap) / Window switch (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Forward (tap) / CMD+Tab (hold)",
+        "ruleDescription": "Logitech G502 X: Forward (tap) / App window switch (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6149,7 +6234,61 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Forward (tap) / CMD+Tab (hold)"
+            "description": "Logitech G502 X: Forward (tap) / App window switch (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: Right click (tap) / Zen chord modifier (hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button2"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "right_button_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "right_button_pressed",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "pointing_button": "button2"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": []
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: Right click (tap) / Zen chord modifier (hold)"
           }
         ],
         "allowEmptyManipulators": false,
