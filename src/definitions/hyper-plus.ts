@@ -1,62 +1,45 @@
-import { map, rule } from "karabiner.ts";
-
 import { HYPER } from "../core/mods";
-import { formatRuleDescription } from "../core/rule-descriptions";
 import {
-  cmd,
-  formatSelectionCommand,
-  typinatorNewRuleCommand,
+    formatSelectionCommand,
+    typinatorNewRuleCommand,
 } from "../core/scripts";
 import { PATHS } from "../data";
+import {
+    generateModifierLauncherRules,
+    type ModifierLauncherMapping,
+} from "../engine/launcher-rules";
 
-type HyperShellRuleKey = Parameters<typeof map>[0];
-
-type HyperShellRuleDefinition = {
-  mods: typeof HYPER;
-  description: string;
-  shellCommand: string;
-};
-
-const buildHyperShellRule = (
-  key: HyperShellRuleKey,
-  config: HyperShellRuleDefinition,
-) => {
-  return rule(
-    formatRuleDescription(["hyper", String(key)], config.description, "tap"),
-  ).manipulators([
-    ...map(key, config.mods).to(cmd(config.shellCommand)).build(),
-  ]);
-};
-
-const hyperShellRules = {
-  s: {
-    mods: HYPER,
+export const hyperPlusMappings: ModifierLauncherMapping[] = [
+  {
+    key: "s",
     description: "Format selection",
-    shellCommand: formatSelectionCommand(),
+    action: { type: "shell", command: formatSelectionCommand() },
   },
-  t: {
-    mods: HYPER,
+  {
+    key: "t",
     description: "New Typinator rule",
-    shellCommand: typinatorNewRuleCommand(),
+    action: { type: "shell", command: typinatorNewRuleCommand() },
   },
-  semicolon: {
-    mods: HYPER,
+  {
+    key: "semicolon",
     description: "Open System Settings",
-    shellCommand: "open -a '/System/Applications/System Settings.app'",
+    action: { type: "shell", command: "open -a '/System/Applications/System Settings.app'" },
   },
-  f12: {
-    mods: HYPER,
+  {
+    key: "f12",
     description: "Edit last Typinator rule",
-    shellCommand: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}`,
+    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}` },
   },
-  escape: {
-    mods: HYPER,
+  {
+    key: "escape",
     description: "Open Activity Monitor",
-    shellCommand: "open -a 'Activity Monitor'",
+    action: { type: "shell", command: "open -a 'Activity Monitor'" },
   },
-} as const satisfies Record<string, HyperShellRuleDefinition>;
+];
 
 export const buildHyperPlusRules = () =>
-  (Object.entries(hyperShellRules) as Array<[HyperShellRuleKey, HyperShellRuleDefinition]>).map(
-    ([key, config]) => buildHyperShellRule(key, config),
-  );
+  generateModifierLauncherRules({
+    triggerKey: HYPER,
+    triggerLabel: "hyper",
+    launchers: hyperPlusMappings,
+  });

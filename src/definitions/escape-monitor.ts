@@ -1,53 +1,29 @@
-import { map, rule, toKey } from "karabiner.ts";
-import { formatRuleDescription } from "../core/rule-descriptions";
-import { cmd, focusApp, killAppCommand } from "../core/scripts";
-import { varTapTapHold } from "../core/tap-hold";
-import { TIMINGS, appRegistry } from "../data";
+import { TIMINGS } from "../data";
+import { killAppCommand } from "../core/scripts";
+import { generateMultiTapRule, type MultiTapConfig } from "../engine/multi-tap-rules";
+import { generateTapAloneHoldRule, type TapAloneHoldConfig } from "../engine/tap-alone-hold-rules";
 
-export const buildEscapeTapTapHoldRule = () => {
-  return rule(
-    formatRuleDescription("escape", "Escape / Kill app", "multi-tap"),
-  ).manipulators(
-    varTapTapHold({
-      key: "escape",
-      firstVar: "escape_first_tap",
-      aloneEvents: [toKey("escape")],
-      holdEvents: [cmd(killAppCommand("foreground"))],
-      tapTapHoldEvents: [cmd(killAppCommand())],
-      thresholdMs: TIMINGS.escapeTapHoldMs,
-      description: formatRuleDescription(
-        "escape",
-        "Escape / Kill app",
-        "multi-tap",
-      ),
-      mods: [],
-    }),
-  );
+export const escapeTapTapHold: MultiTapConfig = {
+  key: "escape",
+  description: "Escape / Kill app",
+  alone: [{ type: "key", key: "escape" }],
+  hold: [{ type: "shell", command: killAppCommand("foreground") }],
+  tapTapHold: [{ type: "shell", command: killAppCommand() }],
+  thresholdMs: TIMINGS.escapeTapHoldMs,
+  mods: [],
 };
 
-export const buildCtrlEscapeMonitorRule = () => {
-  return rule(
-    formatRuleDescription(
-      ["left_control", "escape"],
-      "Activity Monitor / Process Spy",
-      "hold",
-    ),
-  ).manipulators([
-    ...map("escape", "left_control")
-      .parameters({
-        "basic.to_if_alone_timeout_milliseconds": TIMINGS.mouseDefaultMs,
-        "basic.to_if_held_down_threshold_milliseconds": TIMINGS.mouseDefaultMs,
-      })
-      .toIfAlone(focusApp(appRegistry.activityMonitor))
-      .toIfHeldDown(focusApp(appRegistry.processSpy))
-      .toDelayedAction([], [focusApp(appRegistry.activityMonitor)])
-      .description(
-        formatRuleDescription(
-          ["left_control", "escape"],
-          "Activity Monitor / Process Spy",
-          "hold",
-        ),
-      )
-      .build(),
-  ]);
+export const ctrlEscapeConfig: TapAloneHoldConfig = {
+  key: "escape",
+  modifiers: ["left_control"],
+  description: "Activity Monitor / Process Spy",
+  alone: [{ type: "app", ref: "activityMonitor" }],
+  hold: [{ type: "app", ref: "processSpy" }],
+  timeoutMs: TIMINGS.mouseDefaultMs,
 };
+
+export const buildEscapeTapTapHoldRule = () =>
+  generateMultiTapRule(escapeTapTapHold);
+
+export const buildCtrlEscapeMonitorRule = () =>
+  generateTapAloneHoldRule(ctrlEscapeConfig);

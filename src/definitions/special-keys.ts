@@ -1,5 +1,3 @@
-import { ifApp, rule, toKey } from "karabiner.ts";
-import { formatRuleDescription } from "../core/rule-descriptions";
 import {
     evaluateSelectionCommand,
     textProcessorCommand,
@@ -9,6 +7,10 @@ import {
     generateConditionalTapHoldRules,
     type ConditionalTapHoldMapping,
 } from "../engine/conditional-tap-hold-rules";
+import {
+    generatePointerRemapRule,
+    type PointerRemapConfig,
+} from "../engine/pointer-remap-rules";
 
 const EVALUATE_SELECTION_COMMAND = evaluateSelectionCommand();
 const QUICK_DATE_COMMAND = textProcessorCommand("quick_date");
@@ -107,22 +109,12 @@ export const buildEnterRules = () =>
 export const buildEqualsRules = () =>
   generateConditionalTapHoldRules(equalsKeyHoldMappings);
 
-export const buildOnePieceClickEnterRule = () => {
-  const description = formatRuleDescription(
-    "button1",
-    "OnePiece left click -> enter",
-    "tap",
-  );
-
-  return rule(description).manipulators([
-    {
-      type: "basic" as const,
-      from: {
-        pointing_button: "button1",
-      },
-      to: [toKey("return_or_enter")],
-      conditions: [ifApp(appRegistry.onePiece).build()],
-      description,
-    } as any,
-  ]);
+export const onePieceClickEnter: PointerRemapConfig = {
+  button: "button1",
+  description: "OnePiece left click -> enter",
+  to: [{ type: "key", key: "return_or_enter" }],
+  ifApp: appRegistry.onePiece,
 };
+
+export const buildOnePieceClickEnterRule = () =>
+  generatePointerRemapRule(onePieceClickEnter);

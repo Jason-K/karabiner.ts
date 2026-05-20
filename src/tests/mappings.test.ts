@@ -74,16 +74,17 @@ test("right-option launchers stay declarative", () => {
     key: "a",
     description: "Antinote",
     action: {
-      type: "focusApp",
-      bundleId: "com.chabomakers.Antinote-setapp",
+      type: "app",
+      ref: "antinote",
+      mode: "focus",
     },
   });
   assert.deepEqual(rightOptionLaunchers[4], {
     key: "f",
     description: "Home folder",
     action: {
-      type: "openFolder",
-      path: HOME_DIR,
+      type: "folder",
+      ref: "home",
     },
   });
 });

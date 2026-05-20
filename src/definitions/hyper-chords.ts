@@ -1,35 +1,60 @@
-import { map, rule, toKey, toSetVar } from "karabiner.ts";
 import { HYPER, L } from "../core/mods";
 import { formatRuleDescription } from "../core/rule-descriptions";
+import {
+    generateModifierChordRules,
+    type ModifierChordConfig,
+} from "../engine/modifier-chord-rules";
 
-export const buildCapsLockRule = () => {
-  return rule(
-    formatRuleDescription(
-      "caps_lock",
-      "HSLauncher / Hyper / Super / Meh",
-      "hold",
-    ),
-  ).manipulators([
-    ...map("caps_lock")
-      .to(toSetVar("caps_lock_pressed", 1))
-      .to(toKey(L.cmd, [L.ctrl, L.opt]))
-      .toAfterKeyUp(toSetVar("caps_lock_pressed", 0))
-      .toIfAlone(toKey("f15", HYPER))
-      .description(
-        formatRuleDescription("caps_lock", "HSLauncher / Hyper", "hold"),
-      )
-      .build(),
-    ...map("caps_lock", "left_shift")
-      .to(toKey(L.shift, [L.cmd, L.opt, L.ctrl]))
-      .description(
-        formatRuleDescription(["left_shift", "caps_lock"], "Super", "hold"),
-      )
-      .build(),
-    ...map("caps_lock", "left_control")
-      .to(toKey(L.cmd, [L.opt, L.shift]))
-      .description(
-        formatRuleDescription(["left_control", "caps_lock"], "Meh", "hold"),
-      )
-      .build(),
-  ]);
+export const capsLockChordConfig: ModifierChordConfig = {
+  ruleName: formatRuleDescription(
+    "caps_lock",
+    "HSLauncher / Hyper / Super / Meh",
+    "hold",
+  ),
+  base: {
+    key: "caps_lock",
+    description: "HSLauncher / Hyper",
+    to: [
+      {
+        type: "key",
+        key: L.cmd,
+        modifiers: [L.ctrl, L.opt],
+      },
+    ],
+    toIfAlone: [
+      {
+        type: "key",
+        key: "f15",
+        modifiers: HYPER,
+      },
+    ],
+    trackVar: "caps_lock_pressed",
+  },
+  variants: [
+    {
+      modifiers: [L.shift],
+      description: "Super",
+      to: [
+        {
+          type: "key",
+          key: L.shift,
+          modifiers: [L.cmd, L.opt, L.ctrl],
+        },
+      ],
+    },
+    {
+      modifiers: [L.ctrl],
+      description: "Meh",
+      to: [
+        {
+          type: "key",
+          key: L.cmd,
+          modifiers: [L.opt, L.shift],
+        },
+      ],
+    },
+  ],
 };
+
+export const buildCapsLockRule = () =>
+  generateModifierChordRules(capsLockChordConfig);

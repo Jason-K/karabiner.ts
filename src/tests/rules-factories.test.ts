@@ -21,7 +21,7 @@ import {
   buildWordPrivilegesRule,
   mouseDeviceMappings,
 } from "../definitions";
-import { buildMouseRules } from "../engine";
+import { buildMouseRules, generateAppScopedRemapRules, resolveActionToEvents } from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -335,4 +335,39 @@ test("mouse rules factory builds declarative per-device mappings", () => {
       shell_command: `osascript -e 'tell application "System Events" to key code 30 using {control down, shift down}'`,
     },
   ]);
+});
+
+test("resolveActionToEvents flattens sequence into multiple events", () => {
+  const events = resolveActionToEvents({
+    type: "sequence",
+    actions: [
+      { type: "key", key: "c", modifiers: ["left_command"] },
+      { type: "shell", command: "echo hello" },
+    ],
+  });
+  assert.equal(events.length, 2);
+  assert.deepEqual(events[0], { key_code: "c", modifiers: ["left_command"] });
+  assert.deepEqual(events[1], { shell_command: "echo hello" });
+});
+
+test("generateAppScopedRemapRules attaches ifApp condition to each rule", () => {
+  const rules = toRules(
+    generateAppScopedRemapRules([
+      {
+        from: { key: "h", modifiers: ["left_command"] },
+        description: "Test remap",
+        to: { key: "h", modifiers: ["left_command", "left_control"] },
+        ifApp: "com.example.App",
+      },
+    ]),
+  );
+  assert.equal(rules.length, 1);
+  assert.equal(rules[0]?.description, "[←⌘]+[H]        →    Test remap (on tap)");
+  const manipulator: any = rules[0]?.manipulators[0];
+  assert.ok(
+    manipulator?.conditions?.some(
+      (c: any) => c.type === "frontmost_application_if",
+    ),
+    "Missing frontmost_application_if condition",
+  );
 });

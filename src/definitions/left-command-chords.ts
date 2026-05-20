@@ -1,52 +1,32 @@
-import { ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
-import { formatRuleDescription } from "../core/rule-descriptions";
-import { openApp } from "../core/software";
-import { varTapTapHold } from "../core/tap-hold";
+import {
+    generateDoubleTapGuardRule,
+    type DoubleTapGuardConfig,
+} from "../engine/double-tap-guard-rules";
+import {
+    generateMultiTapRule,
+    type MultiTapConfig,
+} from "../engine/multi-tap-rules";
 
 const LEFT_COMMAND_TAP_DELAY_MS = 600;
 
-export const buildLeftCommandRule = () => {
-  return rule(
-    formatRuleDescription(
-      "left_command",
-      "Tap/double-tap/hold handler",
-      "multi-tap",
-    ),
-  ).manipulators(
-    varTapTapHold({
-      key: "left_command",
-      firstVar: "left_command_detect",
-      aloneEvents: [toKey("left_command")],
-      holdEvents: [toKey("left_command")],
-      tapTapEvents: [openApp({ historyIndex: 1 })],
-      thresholdMs: LEFT_COMMAND_TAP_DELAY_MS,
-      allowPassThrough: true,
-      description: formatRuleDescription(
-        "left_command",
-        "Tap/double-tap/hold handler",
-        "multi-tap",
-      ),
-      mods: [],
-    }),
-  );
+export const leftCommandMultiTap: MultiTapConfig = {
+  key: "left_command",
+  description: "Tap/double-tap/hold handler",
+  alone: [{ type: "key", key: "left_command" }],
+  hold: [{ type: "key", key: "left_command" }],
+  tapTap: [{ type: "appHistory", index: 1 }],
+  thresholdMs: LEFT_COMMAND_TAP_DELAY_MS,
+  allowPassThrough: true,
+  mods: [],
 };
 
-export const buildCmdQRule = () => {
-  return rule(
-    formatRuleDescription(["left_command", "q"], "Quit app", "multi-tap"),
-  ).manipulators([
-    ...map("q", "left_command")
-      .condition(ifVar("command_q_pressed", 1))
-      .to(toKey("q", ["left_command"]))
-      .to(toSetVar("command_q_pressed", 0))
-      .build(),
-    ...map("q", "left_command")
-      .parameters({ "basic.to_delayed_action_delay_milliseconds": 300 })
-      .to(toSetVar("command_q_pressed", 1))
-      .toDelayedAction(
-        [toSetVar("command_q_pressed", 0)],
-        [toSetVar("command_q_pressed", 0)],
-      )
-      .build(),
-  ]);
+export const buildLeftCommandRule = () => generateMultiTapRule(leftCommandMultiTap);
+
+export const cmdQGuard: DoubleTapGuardConfig = {
+  key: "q",
+  modifiers: ["left_command"],
+  description: "Quit app",
+  timeoutMs: 300,
 };
+
+export const buildCmdQRule = () => generateDoubleTapGuardRule(cmdQGuard);

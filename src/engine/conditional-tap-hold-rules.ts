@@ -1,33 +1,17 @@
-import { ifApp, toKey, withCondition } from "karabiner.ts";
+import { ifApp, withCondition } from "karabiner.ts";
 
+import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { cmd } from "../core/scripts";
 import { tapHold } from "../core/tap-hold";
+import { resolveActionToEvents } from "./action-resolver";
 import { buildRulesWithVariantRules } from "./rule-factory-base";
 import type { AppCondition } from "./variant-types";
-
-export type KeyActionSpec = {
-  type: "key";
-  key: string;
-  modifiers?: string[];
-  options?: {
-    halt?: boolean;
-    repeat?: boolean;
-  };
-};
-
-export type ShellActionSpec = {
-  type: "shell";
-  command: string;
-};
-
-export type TapHoldActionSpec = KeyActionSpec | ShellActionSpec;
 
 export type TapHoldVariantMapping = {
   description: string;
   when?: AppCondition;
-  alone: TapHoldActionSpec[];
-  hold: TapHoldActionSpec[];
+  alone: ActionSpec[];
+  hold: ActionSpec[];
   timeoutMs: number;
   thresholdMs: number;
 };
@@ -36,18 +20,6 @@ export type ConditionalTapHoldMapping = {
   key: string;
   variants: TapHoldVariantMapping[];
 };
-
-function toTapHoldEvent(action: TapHoldActionSpec) {
-  if (action.type === "shell") {
-    return cmd(action.command);
-  }
-
-  return toKey(
-    action.key as any,
-    (action.modifiers as any) ?? [],
-    action.options ?? {},
-  );
-}
 
 export function generateConditionalTapHoldRules(
   mappings: ReadonlyArray<ConditionalTapHoldMapping>,
@@ -60,8 +32,8 @@ export function generateConditionalTapHoldRules(
     toManipulators: ({ key }, variant) => {
       const manipulator = tapHold({
         key,
-        alone: variant.alone.map(toTapHoldEvent),
-        hold: variant.hold.map(toTapHoldEvent),
+        alone: variant.alone.flatMap(resolveActionToEvents),
+        hold: variant.hold.flatMap(resolveActionToEvents),
         timeoutMs: variant.timeoutMs,
         thresholdMs: variant.thresholdMs,
       }).build();

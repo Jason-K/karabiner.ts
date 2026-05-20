@@ -68,4 +68,8 @@ export type ActionSpec =
     }
   | {
       type: "cut" | "copy" | "paste";
+    }
+  | {
+      type: "sequence";
+      actions: ActionSpec[];
     };

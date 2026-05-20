@@ -1,54 +1,42 @@
 import { map } from "karabiner.ts";
 
+import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { cmd, focusApp } from "../core/scripts";
+import { resolveActionToEvents } from "./action-resolver";
 import { buildRulesFromMappings } from "./rule-factory-base";
-
-export type LauncherAction =
-  | {
-      type: "focusApp";
-      bundleId: string;
-    }
-  | {
-      type: "openFolder";
-      path: string;
-    };
 
 export type ModifierLauncherMapping<TKey extends string = string> = {
   key: TKey;
   description: string;
-  action: LauncherAction;
+  action: ActionSpec;
 };
 
 type LauncherRuleConfig<TKey extends string> = {
-  triggerKey: string;
+  triggerKey: string | string[];
+  triggerLabel?: string;
   launchers: ReadonlyArray<ModifierLauncherMapping<TKey>>;
-  getOpenFolderCommand: (folderPath: string) => string;
 };
-
-function toLauncherEvent(
-  action: LauncherAction,
-  getOpenFolderCommand: (folderPath: string) => string,
-) {
-  if (action.type === "focusApp") {
-    return focusApp(action.bundleId);
-  }
-
-  return cmd(getOpenFolderCommand(action.path));
-}
 
 export function generateModifierLauncherRules<TKey extends string>(
   config: LauncherRuleConfig<TKey>,
 ) {
-  const { triggerKey, launchers, getOpenFolderCommand } = config;
+  const { triggerKey, triggerLabel, launchers } = config;
+  const descriptionTrigger = triggerLabel ?? triggerKey;
 
   return buildRulesFromMappings({
     mappings: launchers,
     toDescription: ({ key, description }) =>
-      formatRuleDescription([triggerKey, key], description, "tap"),
-    toManipulators: ({ key, action }) =>
-      map(key as any, triggerKey as any)
-        .to(toLauncherEvent(action, getOpenFolderCommand))
-        .build(),
+      formatRuleDescription(
+        Array.isArray(descriptionTrigger)
+          ? [...descriptionTrigger, key]
+          : [descriptionTrigger, key],
+        description,
+        "tap",
+      ),
+    toManipulators: ({ key, action }) => {
+      const builder = map(key as any, triggerKey as any);
+      resolveActionToEvents(action).forEach((e) => builder.to(e));
+      return builder.build();
+    },
   });
 }

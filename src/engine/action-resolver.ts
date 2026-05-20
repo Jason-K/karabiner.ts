@@ -82,8 +82,10 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
       return [
         toKey(
           action.key as any,
-          (action.modifiers as any) ?? [],
-          action.options ?? {},
+          action.modifiers?.length ? (action.modifiers as any) : undefined,
+          action.options && Object.keys(action.options).length
+            ? (action.options as any)
+            : undefined,
         ),
       ];
     case "applescript":
@@ -97,6 +99,8 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
     case "selectionTransform":
     case "selectionWrap":
       return [toKey("x", ["left_command"]), cmd(resolveShellCommand(action)!)];
+    case "sequence":
+      return action.actions.flatMap(resolveActionToEvents);
     default: {
       const shellCommand = resolveShellCommand(action);
       return shellCommand ? [cmd(shellCommand)] : [];

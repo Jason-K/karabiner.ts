@@ -1,7 +1,8 @@
-import { ifApp, map, toKey } from "karabiner.ts";
+import { ifApp, map } from "karabiner.ts";
 
+import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { applescript, cmd } from "../core/scripts";
+import { resolveActionToEvents } from "./action-resolver";
 import { buildRulesWithVariantManipulators } from "./rule-factory-base";
 
 export type ConditionalActionCondition =
@@ -17,32 +18,12 @@ export type ConditionalActionCondition =
       value: string | number;
     };
 
-export type ConditionalAction =
-  | {
-      type: "key";
-      key: string;
-      modifiers?: string[];
-      options?: {
-        repeat?: boolean;
-        halt?: boolean;
-      };
-    }
-  | {
-      type: "shell";
-      command: string;
-    }
-  | {
-      type: "applescript";
-      scriptPath: string;
-      args?: string[];
-    };
-
 export type ConditionalActionVariant = {
   when: ConditionalActionCondition[];
-  actions: ConditionalAction[];
+  actions: ActionSpec[];
   delayedAction?: {
-    invoked: ConditionalAction[];
-    canceled: ConditionalAction[];
+    invoked: ActionSpec[];
+    canceled: ActionSpec[];
   };
   parameters?: {
     delayedActionDelayMs?: number;
@@ -69,22 +50,6 @@ function toCondition(condition: ConditionalActionCondition) {
   } as const;
 }
 
-function toAction(action: ConditionalAction) {
-  if (action.type === "shell") {
-    return cmd(action.command);
-  }
-
-  if (action.type === "applescript") {
-    return applescript(action.scriptPath, ...(action.args ?? []));
-  }
-
-  return toKey(
-    action.key as any,
-    (action.modifiers as any) ?? [],
-    action.options ?? {},
-  );
-}
-
 export function generateConditionalActionRules(
   mappings: ReadonlyArray<ConditionalActionMapping>,
 ) {
@@ -108,13 +73,13 @@ export function generateConditionalActionRules(
       });
 
       variant.actions.forEach((action) => {
-        builder.to(toAction(action));
+        resolveActionToEvents(action).forEach((e) => builder.to(e));
       });
 
       if (variant.delayedAction) {
         builder.toDelayedAction(
-          variant.delayedAction.invoked.map(toAction),
-          variant.delayedAction.canceled.map(toAction),
+          variant.delayedAction.invoked.flatMap(resolveActionToEvents),
+          variant.delayedAction.canceled.flatMap(resolveActionToEvents),
         );
       }
 
