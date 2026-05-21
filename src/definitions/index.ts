@@ -29,5 +29,5 @@ export {
     buildEqualsRules,
     enterKeyHoldMappings,
     equalsKeyHoldMappings
-} from "./special-keys";
+} from "./enter-equals";
 export { tapHoldMappings } from "./tap-hold";

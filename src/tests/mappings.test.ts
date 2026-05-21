@@ -24,7 +24,7 @@ import {
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
-} from "../definitions/special-keys";
+} from "../definitions/enter-equals";
 
 test("rectangle focused-window orientation command uses focused display", () => {
   const command = rectangleActionByFocusedWindowOrientationCommand(
