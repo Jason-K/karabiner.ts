@@ -16,8 +16,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "8",
-                "modifiers": []
+                "key_code": "8"
               }
             ],
             "to_if_held_down": [
@@ -30,8 +29,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "8",
-                  "modifiers": []
+                  "key_code": "8"
                 }
               ]
             },
@@ -97,8 +95,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "a",
-                "modifiers": []
+                "key_code": "a"
               }
             ],
             "to_if_held_down": [
@@ -117,8 +114,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "a",
-                  "modifiers": []
+                  "key_code": "a"
                 }
               ]
             },
@@ -184,8 +180,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "c",
-                "modifiers": []
+                "key_code": "c"
               }
             ],
             "to_if_held_down": [
@@ -204,8 +199,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "c",
-                  "modifiers": []
+                  "key_code": "c"
                 }
               ]
             },
@@ -271,8 +265,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "d",
-                "modifiers": []
+                "key_code": "d"
               }
             ],
             "to_if_held_down": [
@@ -291,8 +284,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "d",
-                  "modifiers": []
+                  "key_code": "d"
                 }
               ]
             },
@@ -358,8 +350,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f",
-                "modifiers": []
+                "key_code": "f"
               }
             ],
             "to_if_held_down": [
@@ -372,8 +363,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f",
-                  "modifiers": []
+                  "key_code": "f"
                 }
               ]
             },
@@ -439,8 +429,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "g",
-                "modifiers": []
+                "key_code": "g"
               }
             ],
             "to_if_held_down": [
@@ -453,8 +442,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "g",
-                  "modifiers": []
+                  "key_code": "g"
                 }
               ]
             },
@@ -520,8 +508,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "h",
-                "modifiers": []
+                "key_code": "h"
               }
             ],
             "to_if_held_down": [
@@ -534,8 +521,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "h",
-                  "modifiers": []
+                  "key_code": "h"
                 }
               ]
             },
@@ -601,8 +587,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "j",
-                "modifiers": []
+                "key_code": "j"
               }
             ],
             "to_if_held_down": [
@@ -615,8 +600,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "j",
-                  "modifiers": []
+                  "key_code": "j"
                 }
               ]
             },
@@ -682,8 +666,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "k",
-                "modifiers": []
+                "key_code": "k"
               }
             ],
             "to_if_held_down": [
@@ -700,8 +683,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "k",
-                  "modifiers": []
+                  "key_code": "k"
                 }
               ]
             },
@@ -767,8 +749,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "n",
-                "modifiers": []
+                "key_code": "n"
               }
             ],
             "to_if_held_down": [
@@ -781,8 +762,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "n",
-                  "modifiers": []
+                  "key_code": "n"
                 }
               ]
             },
@@ -848,8 +828,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "o",
-                "modifiers": []
+                "key_code": "o"
               }
             ],
             "to_if_held_down": [
@@ -862,8 +841,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "o",
-                  "modifiers": []
+                  "key_code": "o"
                 }
               ]
             },
@@ -929,8 +907,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "p",
-                "modifiers": []
+                "key_code": "p"
               }
             ],
             "to_if_held_down": [
@@ -950,8 +927,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "p",
-                  "modifiers": []
+                  "key_code": "p"
                 }
               ]
             },
@@ -1017,8 +993,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "r",
-                "modifiers": []
+                "key_code": "r"
               }
             ],
             "to_if_held_down": [
@@ -1031,8 +1006,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "r",
-                  "modifiers": []
+                  "key_code": "r"
                 }
               ]
             },
@@ -1098,8 +1072,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "s",
-                "modifiers": []
+                "key_code": "s"
               }
             ],
             "to_if_held_down": [
@@ -1112,8 +1085,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "s",
-                  "modifiers": []
+                  "key_code": "s"
                 }
               ]
             },
@@ -1179,8 +1151,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "t",
-                "modifiers": []
+                "key_code": "t"
               }
             ],
             "to_if_held_down": [
@@ -1193,8 +1164,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "t",
-                  "modifiers": []
+                  "key_code": "t"
                 }
               ]
             },
@@ -1260,8 +1230,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "v",
-                "modifiers": []
+                "key_code": "v"
               }
             ],
             "to_if_held_down": [
@@ -1279,8 +1248,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "v",
-                  "modifiers": []
+                  "key_code": "v"
                 }
               ]
             },
@@ -1346,8 +1314,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "x",
-                "modifiers": []
+                "key_code": "x"
               }
             ],
             "to_if_held_down": [
@@ -1360,8 +1327,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "x",
-                  "modifiers": []
+                  "key_code": "x"
                 }
               ]
             },
@@ -1427,8 +1393,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "y",
-                "modifiers": []
+                "key_code": "y"
               }
             ],
             "to_if_held_down": [
@@ -1441,8 +1406,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "y",
-                  "modifiers": []
+                  "key_code": "y"
                 }
               ]
             },
@@ -1508,8 +1472,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "z",
-                "modifiers": []
+                "key_code": "z"
               }
             ],
             "to_if_held_down": [
@@ -1522,8 +1485,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "z",
-                  "modifiers": []
+                  "key_code": "z"
                 }
               ]
             },
@@ -1589,8 +1551,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_0",
-                "modifiers": []
+                "key_code": "keypad_0"
               }
             ],
             "to_if_held_down": [
@@ -1603,8 +1564,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_0",
-                  "modifiers": []
+                  "key_code": "keypad_0"
                 }
               ]
             },
@@ -1670,8 +1630,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_2",
-                "modifiers": []
+                "key_code": "keypad_2"
               }
             ],
             "to_if_held_down": [
@@ -1684,8 +1643,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_2",
-                  "modifiers": []
+                  "key_code": "keypad_2"
                 }
               ]
             },
@@ -1751,8 +1709,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_4",
-                "modifiers": []
+                "key_code": "keypad_4"
               }
             ],
             "to_if_held_down": [
@@ -1765,8 +1722,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_4",
-                  "modifiers": []
+                  "key_code": "keypad_4"
                 }
               ]
             },
@@ -1832,8 +1788,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_5",
-                "modifiers": []
+                "key_code": "keypad_5"
               }
             ],
             "to_if_held_down": [
@@ -1846,8 +1801,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_5",
-                  "modifiers": []
+                  "key_code": "keypad_5"
                 }
               ]
             },
@@ -1913,8 +1867,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_6",
-                "modifiers": []
+                "key_code": "keypad_6"
               }
             ],
             "to_if_held_down": [
@@ -1927,8 +1880,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_6",
-                  "modifiers": []
+                  "key_code": "keypad_6"
                 }
               ]
             },
@@ -1994,8 +1946,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_8",
-                "modifiers": []
+                "key_code": "keypad_8"
               }
             ],
             "to_if_held_down": [
@@ -2008,8 +1959,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_8",
-                  "modifiers": []
+                  "key_code": "keypad_8"
                 }
               ]
             },
@@ -2075,15 +2025,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f1",
-                "modifiers": []
+                "key_code": "f1"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "display_brightness_decrement",
-                "modifiers": []
+                "key_code": "display_brightness_decrement"
               }
             ],
             "to_delayed_action": {
@@ -2091,8 +2039,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f1",
-                  "modifiers": []
+                  "key_code": "f1"
                 }
               ]
             },
@@ -2158,15 +2105,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f2",
-                "modifiers": []
+                "key_code": "f2"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "display_brightness_increment",
-                "modifiers": []
+                "key_code": "display_brightness_increment"
               }
             ],
             "to_delayed_action": {
@@ -2174,8 +2119,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f2",
-                  "modifiers": []
+                  "key_code": "f2"
                 }
               ]
             },
@@ -2241,15 +2185,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f3",
-                "modifiers": []
+                "key_code": "f3"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "mission_control",
-                "modifiers": []
+                "key_code": "mission_control"
               }
             ],
             "to_delayed_action": {
@@ -2257,8 +2199,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f3",
-                  "modifiers": []
+                  "key_code": "f3"
                 }
               ]
             },
@@ -2324,15 +2265,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f4",
-                "modifiers": []
+                "key_code": "f4"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "launchpad",
-                "modifiers": []
+                "key_code": "launchpad"
               }
             ],
             "to_delayed_action": {
@@ -2340,8 +2279,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f4",
-                  "modifiers": []
+                  "key_code": "f4"
                 }
               ]
             },
@@ -2407,8 +2345,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f5",
-                "modifiers": []
+                "key_code": "f5"
               }
             ],
             "to_if_held_down": [
@@ -2427,8 +2364,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f5",
-                  "modifiers": []
+                  "key_code": "f5"
                 }
               ]
             },
@@ -2494,15 +2430,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f7",
-                "modifiers": []
+                "key_code": "f7"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "rewind",
-                "modifiers": []
+                "key_code": "rewind"
               }
             ],
             "to_delayed_action": {
@@ -2510,8 +2444,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f7",
-                  "modifiers": []
+                  "key_code": "f7"
                 }
               ]
             },
@@ -2577,15 +2510,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f8",
-                "modifiers": []
+                "key_code": "f8"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "play_or_pause",
-                "modifiers": []
+                "key_code": "play_or_pause"
               }
             ],
             "to_delayed_action": {
@@ -2593,8 +2524,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f8",
-                  "modifiers": []
+                  "key_code": "f8"
                 }
               ]
             },
@@ -2660,15 +2590,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f9",
-                "modifiers": []
+                "key_code": "f9"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "fastforward",
-                "modifiers": []
+                "key_code": "fastforward"
               }
             ],
             "to_delayed_action": {
@@ -2676,8 +2604,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f9",
-                  "modifiers": []
+                  "key_code": "f9"
                 }
               ]
             },
@@ -2743,15 +2670,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f10",
-                "modifiers": []
+                "key_code": "f10"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "mute",
-                "modifiers": []
+                "key_code": "mute"
               }
             ],
             "to_delayed_action": {
@@ -2759,8 +2684,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f10",
-                  "modifiers": []
+                  "key_code": "f10"
                 }
               ]
             },
@@ -2826,15 +2750,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f11",
-                "modifiers": []
+                "key_code": "f11"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "volume_decrement",
-                "modifiers": []
+                "key_code": "volume_decrement"
               }
             ],
             "to_delayed_action": {
@@ -2842,8 +2764,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f11",
-                  "modifiers": []
+                  "key_code": "f11"
                 }
               ]
             },
@@ -2909,15 +2830,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "f12",
-                "modifiers": []
+                "key_code": "f12"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": true,
-                "key_code": "volume_increment",
-                "modifiers": []
+                "key_code": "volume_increment"
               }
             ],
             "to_delayed_action": {
@@ -2925,8 +2844,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "f12",
-                  "modifiers": []
+                  "key_code": "f12"
                 }
               ]
             },
@@ -2992,8 +2910,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "slash",
-                "modifiers": []
+                "key_code": "slash"
               }
             ],
             "to_if_held_down": [
@@ -3013,8 +2930,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "slash",
-                  "modifiers": []
+                  "key_code": "slash"
                 }
               ]
             },
@@ -3080,8 +2996,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "grave_accent_and_tilde",
-                "modifiers": []
+                "key_code": "grave_accent_and_tilde"
               }
             ],
             "to_if_held_down": [
@@ -3102,8 +3017,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "grave_accent_and_tilde",
-                  "modifiers": []
+                  "key_code": "grave_accent_and_tilde"
                 }
               ]
             },
@@ -3169,16 +3083,14 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "tab",
-                "modifiers": []
+                "key_code": "tab"
               }
             ],
             "to_if_held_down": [
               {
                 "halt": true,
                 "repeat": true,
-                "key_code": "mission_control",
-                "modifiers": []
+                "key_code": "mission_control"
               }
             ],
             "to_delayed_action": {
@@ -3186,8 +3098,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "tab",
-                  "modifiers": []
+                  "key_code": "tab"
                 }
               ]
             },
@@ -3253,8 +3164,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "fn",
-                "modifiers": []
+                "key_code": "fn"
               }
             ],
             "to_if_held_down": [
@@ -3273,8 +3183,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "fn",
-                  "modifiers": []
+                  "key_code": "fn"
                 }
               ]
             },
@@ -5380,7 +5289,7 @@
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "left_command_detect",
+                "name": "multi_tap_left_command",
                 "value": 1
               }
             ],
@@ -5388,7 +5297,7 @@
               "basic.to_if_alone_timeout_milliseconds": 600,
               "basic.to_if_held_down_threshold_milliseconds": 600
             },
-            "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
+            "description": "multi_tap_left_command second tap (tap-tap / tap-tap-hold)",
             "to": [
               {
                 "lazy": true,
@@ -5399,7 +5308,7 @@
             "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "left_command_detect",
+                  "name": "multi_tap_left_command",
                   "value": 0
                 }
               },
@@ -5414,7 +5323,7 @@
             "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "left_command_detect",
+                  "name": "multi_tap_left_command",
                   "value": 0
                 }
               }
@@ -5423,7 +5332,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "left_command_detect",
+                    "name": "multi_tap_left_command",
                     "value": 0
                   }
                 }
@@ -5431,7 +5340,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "left_command_detect",
+                    "name": "multi_tap_left_command",
                     "value": 0
                   }
                 }
@@ -5449,11 +5358,11 @@
               "basic.to_if_held_down_threshold_milliseconds": 600,
               "basic.to_if_alone_timeout_milliseconds": 600
             },
-            "description": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
+            "description": "multi_tap_left_command first tap (pass-through)",
             "to": [
               {
                 "set_variable": {
-                  "name": "left_command_detect",
+                  "name": "multi_tap_left_command",
                   "value": 1
                 }
               },
@@ -5466,7 +5375,7 @@
             "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "left_command_detect",
+                  "name": "multi_tap_left_command",
                   "value": 1
                 }
               },
@@ -5477,7 +5386,7 @@
             "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "left_command_detect",
+                  "name": "multi_tap_left_command",
                   "value": 0
                 }
               },
@@ -5489,7 +5398,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "left_command_detect",
+                    "name": "multi_tap_left_command",
                     "value": 0
                   }
                 }
@@ -5497,7 +5406,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "left_command_detect",
+                    "name": "multi_tap_left_command",
                     "value": 0
                   }
                 }
@@ -5520,7 +5429,7 @@
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "escape_first_tap",
+                "name": "multi_tap_escape",
                 "value": 1
               }
             ],
@@ -5528,12 +5437,12 @@
               "basic.to_if_alone_timeout_milliseconds": 250,
               "basic.to_if_held_down_threshold_milliseconds": 250
             },
-            "description": "[ESC]        →    Escape / Kill app (on multi-tap)",
+            "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
             "to": [],
             "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "escape_first_tap",
+                  "name": "multi_tap_escape",
                   "value": 0
                 }
               }
@@ -5541,7 +5450,7 @@
             "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "escape_first_tap",
+                  "name": "multi_tap_escape",
                   "value": 0
                 }
               },
@@ -5553,7 +5462,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "escape_first_tap",
+                    "name": "multi_tap_escape",
                     "value": 0
                   }
                 }
@@ -5561,7 +5470,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "escape_first_tap",
+                    "name": "multi_tap_escape",
                     "value": 0
                   }
                 }
@@ -5579,11 +5488,11 @@
               "basic.to_if_held_down_threshold_milliseconds": 250,
               "basic.to_if_alone_timeout_milliseconds": 250
             },
-            "description": "[ESC]        →    Escape / Kill app (on multi-tap)",
+            "description": "multi_tap_escape first tap (tap / tap-hold)",
             "to": [
               {
                 "set_variable": {
-                  "name": "escape_first_tap",
+                  "name": "multi_tap_escape",
                   "value": 1
                 }
               }
@@ -5591,7 +5500,7 @@
             "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "escape_first_tap",
+                  "name": "multi_tap_escape",
                   "value": 1
                 }
               },
@@ -5602,7 +5511,7 @@
             "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "escape_first_tap",
+                  "name": "multi_tap_escape",
                   "value": 0
                 }
               },
@@ -5614,7 +5523,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "escape_first_tap",
+                    "name": "multi_tap_escape",
                     "value": 0
                   }
                 }
@@ -5622,7 +5531,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "escape_first_tap",
+                    "name": "multi_tap_escape",
                     "value": 0
                   }
                 }
@@ -5652,19 +5561,31 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -b 'com.apple.ActivityMonitor'"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.ActivityMonitor"
+                  }
+                }
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -b 'com.itone.ProcessSpy'"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.itone.ProcessSpy"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -b 'com.apple.ActivityMonitor'"
+                  "software_function": {
+                    "open_application": {
+                      "bundle_identifier": "com.apple.ActivityMonitor"
+                    }
+                  }
                 }
               ]
             },
@@ -6307,6 +6228,7 @@
                 "key_code": "return_or_enter"
               }
             ],
+            "description": "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -6314,8 +6236,7 @@
                   "jp.fuji.1Piece"
                 ]
               }
-            ],
-            "description": "[BUTTON1]        →    OnePiece left click -> enter (on tap)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -9367,8 +9288,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_enter",
-                "modifiers": []
+                "key_code": "keypad_enter"
               }
             ],
             "to_if_held_down": [
@@ -9381,8 +9301,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_enter",
-                  "modifiers": []
+                  "key_code": "keypad_enter"
                 }
               ]
             },
@@ -9414,15 +9333,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_enter",
-                "modifiers": []
+                "key_code": "keypad_enter"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "f2",
-                "modifiers": []
+                "key_code": "f2"
               }
             ],
             "to_delayed_action": {
@@ -9430,8 +9347,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_enter",
-                  "modifiers": []
+                  "key_code": "keypad_enter"
                 }
               ]
             },
@@ -9463,8 +9379,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "return_or_enter",
-                "modifiers": []
+                "key_code": "return_or_enter"
               }
             ],
             "to_if_held_down": [
@@ -9477,8 +9392,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "return_or_enter",
-                  "modifiers": []
+                  "key_code": "return_or_enter"
                 }
               ]
             },
@@ -9510,15 +9424,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "return_or_enter",
-                "modifiers": []
+                "key_code": "return_or_enter"
               }
             ],
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "f2",
-                "modifiers": []
+                "key_code": "f2"
               }
             ],
             "to_delayed_action": {
@@ -9526,8 +9438,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "return_or_enter",
-                  "modifiers": []
+                  "key_code": "return_or_enter"
                 }
               ]
             },
@@ -9559,8 +9470,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_equal_sign",
-                "modifiers": []
+                "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
@@ -9586,8 +9496,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_equal_sign",
-                  "modifiers": []
+                  "key_code": "keypad_equal_sign"
                 }
               ]
             }
@@ -9611,8 +9520,7 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_equal_sign",
-                "modifiers": []
+                "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
@@ -9638,8 +9546,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_equal_sign",
-                  "modifiers": []
+                  "key_code": "keypad_equal_sign"
                 }
               ]
             }
@@ -9664,7 +9571,7 @@
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "command_q_pressed",
+                "name": "guard_cmd_q",
                 "value": 1
               }
             ],
@@ -9677,7 +9584,7 @@
               },
               {
                 "set_variable": {
-                  "name": "command_q_pressed",
+                  "name": "guard_cmd_q",
                   "value": 0
                 }
               }
@@ -9696,10 +9603,17 @@
             "parameters": {
               "basic.to_delayed_action_delay_milliseconds": 300
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_q",
+                "value": 0
+              }
+            ],
             "to": [
               {
                 "set_variable": {
-                  "name": "command_q_pressed",
+                  "name": "guard_cmd_q",
                   "value": 1
                 }
               }
@@ -9708,7 +9622,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "command_q_pressed",
+                    "name": "guard_cmd_q",
                     "value": 0
                   }
                 }
@@ -9716,7 +9630,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "command_q_pressed",
+                    "name": "guard_cmd_q",
                     "value": 0
                   }
                 }
@@ -9834,7 +9748,7 @@
             },
             "to": [
               {
-                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason'"
+                "shell_command": "open -b com.jinghaoshe.qspace.pro '/Users/jason/'"
               }
             ]
           }
@@ -10266,24 +10180,19 @@
                   ]
                 },
                 {
-                  "key_code": "a",
-                  "modifiers": []
+                  "key_code": "a"
                 },
                 {
-                  "key_code": "s",
-                  "modifiers": []
+                  "key_code": "s"
                 },
                 {
-                  "key_code": "o",
-                  "modifiers": []
+                  "key_code": "o"
                 },
                 {
-                  "key_code": "n",
-                  "modifiers": []
+                  "key_code": "n"
                 },
                 {
-                  "key_code": "tab",
-                  "modifiers": []
+                  "key_code": "tab"
                 },
                 {
                   "repeat": false,
@@ -10387,16 +10296,16 @@
             },
             "conditions": [
               {
+                "type": "variable_if",
+                "name": "guard_cmd_d",
+                "value": 1
+              },
+              {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
                   "com.chabomakers.Antinote-setapp",
                   "com.chabomakers.Antinote"
                 ]
-              },
-              {
-                "type": "variable_if",
-                "name": "cmd_d_ready",
-                "value": 1
               }
             ],
             "to": [
@@ -10408,7 +10317,7 @@
               },
               {
                 "set_variable": {
-                  "name": "cmd_d_ready",
+                  "name": "guard_cmd_d",
                   "value": 0
                 }
               }
@@ -10434,14 +10343,14 @@
               },
               {
                 "type": "variable_if",
-                "name": "cmd_d_ready",
+                "name": "guard_cmd_d",
                 "value": 0
               }
             ],
             "to": [
               {
                 "set_variable": {
-                  "name": "cmd_d_ready",
+                  "name": "guard_cmd_d",
                   "value": 1
                 }
               }
@@ -10450,7 +10359,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "cmd_d_ready",
+                    "name": "guard_cmd_d",
                     "value": 0
                   }
                 }
@@ -10458,7 +10367,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "cmd_d_ready",
+                    "name": "guard_cmd_d",
                     "value": 0
                   }
                 }
