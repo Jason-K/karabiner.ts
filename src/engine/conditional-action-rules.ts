@@ -1,6 +1,7 @@
 import { ifApp, map } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
+import type { ModifierKey } from "../data/key-aliases";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { resolveActionToEvents } from "./action-resolver";
 import { buildRulesWithVariantManipulators } from "./rule-factory-base";
@@ -32,7 +33,7 @@ export type ConditionalActionVariant = {
 
 export type ConditionalActionMapping = {
   key: string;
-  modifiers: string[];
+  modifiers: ModifierKey[];
   description: string;
   variants: ConditionalActionVariant[];
 };

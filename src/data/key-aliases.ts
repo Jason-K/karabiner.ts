@@ -1,5 +1,8 @@
 import type { Modifier } from "karabiner.ts";
 
+// All valid Karabiner-native modifier keys
+export type ModifierKey = Modifier;
+
 // NOTE: naming intentionally diverges from upstream karabiner.ts conventions:
 //   upstream "Meh"        = option+control+shift        (3-key)
 //   upstream "Hyper"      = cmd+option+control+shift    (4-key)

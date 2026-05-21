@@ -1,16 +1,17 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
 
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { ModifierKey } from "../data/key-aliases";
 
 export type DoubleTapGuardConfig = {
   key: string;
-  modifiers: string[];
+  modifiers: ModifierKey[];
   description: string;
   ifApp?: string | string[];
   timeoutMs?: number;
 };
 
-function normalizeModifier(mod: string): string {
+function normalizeModifier(mod: ModifierKey): string {
   const base = mod.replace(/^(left|right)_/, "");
   const aliases: Record<string, string> = {
     command: "cmd",
@@ -20,7 +21,7 @@ function normalizeModifier(mod: string): string {
   return aliases[base] ?? base;
 }
 
-function deriveGuardVar(key: string, modifiers: string[]): string {
+function deriveGuardVar(key: string, modifiers: ModifierKey[]): string {
   const primaryMod = modifiers[0] ? normalizeModifier(modifiers[0]) : "none";
   return `guard_${primaryMod}_${key}`;
 }

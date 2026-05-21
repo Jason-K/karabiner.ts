@@ -3346,10 +3346,10 @@
                 "repeat": false,
                 "key_code": "f18",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],

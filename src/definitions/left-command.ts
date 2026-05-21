@@ -46,7 +46,7 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "p",
-        modifiers: ["command", "option", "control"],
+        modifiers: ["hyper"],
         options: { repeat: false },
       },
     ],

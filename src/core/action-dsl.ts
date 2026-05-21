@@ -1,15 +1,10 @@
 import type { AppRef } from "../data/apps";
 import type { CleanShotRef } from "../data/cleanshot";
 import type { FolderRef } from "../data/folders";
+import type { ModifierKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
 
-export type ActionKeyModifier =
-  | "command" | "left_command" | "right_command"
-  | "option" | "left_option" | "right_option"
-  | "control" | "left_control" | "right_control"
-  | "shift" | "left_shift" | "right_shift"
-  | "fn" | "caps_lock"
-  | "hyper" | "super" | "meh";
+export type ActionKeyModifier = ModifierKey | "hyper" | "super" | "meh";
 
 export type ActionSpec =
   | {

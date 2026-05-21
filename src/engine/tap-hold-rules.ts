@@ -4,6 +4,7 @@ import { getAllSublayerVars } from "../core/leader/runtime";
 import type { SubLayerConfig } from "../core/leader/types";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { tapHold } from "../core/tap-hold";
+import { MODIFIER_ALIASES } from "../data/key-aliases";
 import { resolveActionToEvents } from "./action-resolver";
 
 export type TapHoldConfig = {
@@ -38,32 +39,13 @@ function parseKeyWithModifiers(keyString: string): {
 
   const normalizedModifiers = modifiers.flatMap((mod) => {
     const lower = mod.toLowerCase();
-
-    if (lower.startsWith("left_") || lower.startsWith("right_")) {
-      return [lower];
-    }
-
+    if (MODIFIER_ALIASES[lower]) return MODIFIER_ALIASES[lower];
     switch (lower) {
-      case "hyper":
-        return ["command", "option", "control"];
-      case "super":
-        return ["command", "option", "control", "shift"];
-      case "meh":
-        return ["command", "option", "shift"];
-      case "cmd":
-        return ["command"];
+      case "cmd": return ["command"];
       case "opt":
-      case "alt":
-        return ["option"];
-      case "ctrl":
-        return ["control"];
-      case "command":
-      case "option":
-      case "control":
-      case "shift":
-        return [lower];
-      default:
-        return [mod];
+      case "alt": return ["option"];
+      case "ctrl": return ["control"];
+      default: return [lower];
     }
   });
 
