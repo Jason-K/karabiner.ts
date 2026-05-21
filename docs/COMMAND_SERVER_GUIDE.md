@@ -4,27 +4,27 @@ This guide explains when and how to use the user command server versus tradition
 
 ## Quick Reference: Server vs Shell
 
-| Criterion | Command Server | Shell Command |
-| --- | --- | --- |
-| **Latency** | ~50ms (persistent daemon, pre-warmed) | ~100-200ms (subprocess spawn) |
-| **Frequency** | High (10+ times/second) | Low (occasional, <5/sec) |
-| **Safety** | Allowlist-based endpoint registry | Direct shell execution |
-| **State** | Can maintain session state | Stateless |
-| **Use Cases** | Layer indicator, notifications, app focus | One-off operations, complex logic |
+| Criterion     | Command Server                            | Shell Command                       |
+| ------------- | ----------------------------------------- | ----------------------------------- |
+| **Latency**   | ~50ms (persistent daemon, pre-warmed)     | ~100–200ms (subprocess spawn)       |
+| **Frequency** | High (10+/second)                         | Low (occasional, <5/second)         |
+| **Safety**    | Allowlist-based endpoint registry         | Direct shell execution              |
+| **State**     | Can maintain session state                | Stateless                           |
+| **Use cases** | Layer indicator, notifications, app focus | One-off operations, complex logic   |
 
 ---
 
 ## Decision Tree
 
-``` text
+```text
 Start: I need to execute an operation from a Karabiner rule
 
 ├─ Do I need this > 5 times/second?
 │  └─ YES → Use command server (lower latency, less overhead)
 │  └─ NO → Continue
 │
-├─ Is the operation simple and deterministic? (e.g., open URL, launch app)
-│  └─ YES (but sometimes not) → Can use either; consider frequency
+├─ Is the operation simple and deterministic? (open URL, launch app)
+│  └─ YES (mostly) → Either works; consider frequency
 │  └─ NO (complex logic, error handling) → Use shell_command
 │
 ├─ Does the operation need to run asynchronously in background?
@@ -43,11 +43,11 @@ Start: I need to execute an operation from a Karabiner rule
 
 ## Existing Endpoints
 
-### 1. **layer_indicator** (Primary)
+### 1. `layer_indicator` (primary)
 
 **Purpose:** Show/hide the karabiner layer indicator UI in Hammerspoon.
 
-**Payload Format:**
+**Payload format:**
 
 ```typescript
 // Show a layer
@@ -60,56 +60,57 @@ Start: I need to execute an operation from a Karabiner rule
 { "action": "show", "layer": "space", "marker": "rule_id_123" }
 ```
 
-**Usage in Rules:**
+**Usage in rules:**
 
 ```typescript
-import { layerIndicatorCommand } from '../../lib/scripts';
+import { layerIndicatorCommand } from "../core/scripts";
 
-rule('Show layer indicator on activation')
-  .manipulators([
-    map('space_key')
-      .to(layerIndicatorCommand('show', 'space_layer'))
-      .build(),
-    // ... other manipulators
-  ])
+rule("Show layer indicator on activation").manipulators([
+  map("space_key")
+    .to(layerIndicatorCommand("show", "space_layer"))
+    .build(),
+  // ... other manipulators
+]);
 ```
 
 **Characteristics:**
 
-- Ultra-low latency requirement (must be <500ms, typically 40-50ms)
+- Ultra-low latency requirement (must be <500ms, typically 40–50ms)
 - High frequency (fires on every layer activation/deactivation)
-- Read-only (no state change feedback needed)
+- Fire-and-forget (no state-change feedback needed)
 - Hardened against Hammerspoon failures
 
 ---
 
-### 2. **hammerspoon** (Generic)
+### 2. `hammerspoon` (generic)
 
 **Purpose:** Execute arbitrary Hammerspoon functions via a safe allowlist.
 
-**⚡ Performance Note:** The common helper functions now use optimized native implementations:
+**Performance note:** The common helper functions now use optimized native implementations:
 
-- **showNotification()** — Hammerspoon if available, else `osascript` (~50ms)
-- **focusApp()** — Native `open -b bundleId` (~10-30ms)
-- **copyToClipboard()** — Native `pbcopy` stdin (~2-5ms)
+- `showNotification()` — Hammerspoon when available, falls back to `osascript` (~50ms)
+- `focusApp()` — Native `open -b bundleId` (~10–30ms)
+- `copyToClipboard()` — Native `pbcopy` stdin (~2–5ms)
 
-You can still route through the Hammerspoon endpoint for custom behavior via `userCommand('hammerspoon', {...})`.
+You can still route through the Hammerspoon endpoint for custom behavior via `userCommand("hammerspoon", {...})`.
 
-**Currently Allowed Functions:**
+**Currently allowed functions:**
 
-#### a. **showNotification**
+#### a. `showNotification`
 
 Display a macOS notification.
 
 ```typescript
-import { showNotification } from '../../lib/scripts';
+import { showNotification } from "../core/scripts";
 
-map('key_x')
-  .to(showNotification('Alert!', {
-    subtitle: 'Something important',
-    informativeText: 'More details here'
-  }))
-  .build()
+map("key_x")
+  .to(
+    showNotification("Alert!", {
+      subtitle: "Something important",
+      informativeText: "More details here",
+    }),
+  )
+  .build();
 ```
 
 **Payload:**
@@ -126,16 +127,14 @@ map('key_x')
 }
 ```
 
-#### b. **focusApp**
+#### b. `focusApp`
 
 Bring an application to focus by bundle ID.
 
 ```typescript
-import { focusApp } from '../../lib/scripts';
+import { focusApp } from "../core/scripts";
 
-map('cmd', ['ctrl']).with('n')
-  .to(focusApp('com.apple.Safari'))
-  .build()
+map("cmd", ["ctrl"]).with("n").to(focusApp("com.apple.Safari")).build();
 ```
 
 **Payload:**
@@ -148,16 +147,14 @@ map('cmd', ['ctrl']).with('n')
 }
 ```
 
-#### c. **copyToClipboard**
+#### c. `copyToClipboard`
 
 Set clipboard contents.
 
 ```typescript
-import { copyToClipboard } from '../../lib/scripts';
+import { copyToClipboard } from "../core/scripts";
 
-map('shift', ['ctrl']).with('c')
-  .to(copyToClipboard('Predefined text'))
-  .build()
+map("shift", ["ctrl"]).with("c").to(copyToClipboard("Predefined text")).build();
 ```
 
 **Payload:**
@@ -176,15 +173,15 @@ map('shift', ['ctrl']).with('c')
 
 ### Adding a New Hammerspoon Function
 
-#### Step 1: Verify Safety
+#### Step 1: Verify safety
 
 Before adding a function, ask:
 
-- Can arguments be maliciously crafted? (Validate/sanitize)
+- Can arguments be maliciously crafted? (Validate/sanitize.)
 - Could the function have side effects? (Acceptable risk?)
-- Is it deterministic? (No implicit external state)
+- Is it deterministic? (No implicit external state.)
 
-#### Step 2: Register in Server Allowlist
+#### Step 2: Register in the server allowlist
 
 Edit `scripts/layer_indicator_user_command_server.py`, `dispatch_hammerspoon()`:
 
@@ -197,7 +194,7 @@ allowed_functions = {
 }
 ```
 
-#### Step 3: Implement Argument Marshaling
+#### Step 3: Implement argument marshaling
 
 The server serializes arguments to URL query parameters:
 
@@ -219,32 +216,32 @@ function userCommandReceiver:userCommand(functionName, argsJson)
 end
 ```
 
-#### Step 4: Add TypeScript Helper
+#### Step 4: Add a TypeScript helper
 
-Edit `src/lib/scripts.ts`:
+Edit `src/core/scripts.ts`:
 
 ```typescript
 export function myNewFunction(param1: string, param2?: number): ToEvent {
-  return userCommand('hammerspoon', {
-    function: 'myNewFunction',
+  return userCommand("hammerspoon", {
+    function: "myNewFunction",
     args: { param1, param2 },
   });
 }
 ```
 
-#### Step 5: Test & Document
+#### Step 5: Test and document
 
-- Test with `observability-bundle` to measure latency
-- Add example to README or this guide
-- Update `dispatch_hammerspoon()` docstring
+- Test with `observability-bundle` to measure latency.
+- Add an example to this guide.
+- Update the `dispatch_hammerspoon()` docstring.
 
 ---
 
 ### Adding a New Endpoint Type
 
-If your use case doesn't fit the "hammerspoon function call" pattern, create a new endpoint:
+If your use case doesn't fit the "Hammerspoon function call" pattern, create a new endpoint:
 
-#### Example: "clipboard" endpoint that returns data
+#### Example: a `clipboard` endpoint that returns data
 
 ```python
 # In layer_indicator_user_command_server.py:
@@ -254,41 +251,41 @@ def dispatch_clipboard(payload: dict[str, Any], dry_run: bool) -> float:
   action = payload.get("action", "read")
 
   if action == "read":
-    # Cannot easily return data over datagram socket
-    # Consider: write to temp file, return path
+    # Cannot easily return data over datagram socket.
+    # Consider: write to a temp file, return path.
     pass
   elif action == "write":
     text = payload.get("text", "")
-    # Write to clipboard
     subprocess.run(["pbcopy"], input=text.encode(), check=False)
 ```
 
-For endpoints that need **bidirectional communication** (read responses), consider:
+For endpoints that need bidirectional communication, consider:
 
-1. **Temp file exchange** — write result to `~/.config/karabiner/command_server/response-{marker}.json`
-2. **Return codes** — limited (0-255 range)
-3. **Side effects** — write to log, clipboard, etc. instead of returning
-4. **New socket** — spawn a response listener (more complex, not recommended)
+1. **Temp-file exchange** — write the result to `~/.config/karabiner/command_server/response-{marker}.json`.
+2. **Return codes** — limited (0–255 range).
+3. **Side effects** — write to log, clipboard, etc. instead of returning.
+4. **A second socket** — spawn a response listener (more complex, not recommended).
 
-Most use cases work well with **fire-and-forget** (current model).
+Most use cases work well with fire-and-forget (the current model).
 
 ---
 
-## Migration Guide: shell_command → Command Server
-
-### Mouse Scroll Chord Context
+## Mouse Behaviors and the Command Server
 
 The declarative mouse infrastructure lives in:
 
-- `src/mappings/mouse.ts`
-- `src/lib/mouse.ts`
-- `src/rules/mouse.ts`
+- `src/data/mouse.ts` — button alias tables and device IDs
+- `src/core/mouse.ts` — alias resolution (e.g. `g502xButtons`) and generic tap-hold/double-tap helpers
+- `src/definitions/mouse.ts` — per-device tap-hold and double-tap mappings (the user edit surface)
+- `src/engine/mouse-rules.ts` — `generateMouseRules` compiles those mappings into device-guarded Karabiner rules
 
-Button tap-hold and double-tap mappings are fully supported there. Scroll up/down chord triggers are currently tracked as pending requests because they are not available as direct basic `from` events in this pipeline.
+Button tap-hold and double-tap mappings are fully supported there. Scroll-up/down chord triggers are not expressible as basic `from` events in Karabiner-Elements, so they live outside the rule pipeline. Use the command server or a Hammerspoon-side bridge for scroll-chord behaviours until a native declarative trigger path is available.
 
-Use the command server or Hammerspoon-side bridge for scroll-chord behaviors until a native declarative trigger path is adopted.
+---
 
-### When to Migrate
+## Migration Guide: `shell_command` → Command Server
+
+### When to migrate
 
 ✅ **Good candidates:**
 
@@ -302,40 +299,38 @@ Use the command server or Hammerspoon-side bridge for scroll-chord behaviors unt
 - Operations needing error handling and feedback
 - One-off operations called <5 times/session
 
-### Migration Pattern
+### Migration pattern
 
-**Before (shell_command):**
+**Before (`shell_command`):**
 
 ```typescript
-rule('Example')
-  .manipulators([
-    map('key_x')
-      .to(cmd("open -g 'hammerspoon://action?param=value'"))
-      .build(),
-  ])
+rule("Example").manipulators([
+  map("key_x").to(cmd("open -g 'hammerspoon://action?param=value'")).build(),
+]);
 ```
 
 **After (command server):**
 
 ```typescript
-import { userCommand } from '../../lib/scripts';
+import { userCommand } from "../core/scripts";
 
-rule('Example')
-  .manipulators([
-    map('key_x')
-      .to(userCommand('hammerspoon', {
-        function: 'action',
-        args: { param: 'value' },
-      }))
-      .build(),
-  ])
+rule("Example").manipulators([
+  map("key_x")
+    .to(
+      userCommand("hammerspoon", {
+        function: "action",
+        args: { param: "value" },
+      }),
+    )
+    .build(),
+]);
 ```
 
 ---
 
 ## Performance Tuning
 
-### Measuring Latency
+### Measuring latency
 
 Use the `smoke-check` command:
 
@@ -350,7 +345,7 @@ Or the bundled diagnostic:
 bash scripts/install-layer-indicator-user-command-server.sh observability-bundle
 ```
 
-### Tuning Thresholds
+### Tuning thresholds
 
 Override latency limits when installing:
 
@@ -358,36 +353,36 @@ Override latency limits when installing:
 SMOKE_MAX_LATENCY_MS=1000 bash scripts/install-layer-indicator-user-command-server.sh smoke-check
 ```
 
-### Why Latency Matters
+### Why latency matters
 
-- Karabiner processes key events with <10ms overhead
-- Layer indicator needs to follow visually instantly (<100ms)
-- Shell spawn background processes: ~150ms startup + execution
-- Command server: ~50ms (daemon already warmth + socket I/O)
+- Karabiner processes key events with <10ms overhead.
+- The layer indicator needs to follow visually instantly (<100ms).
+- Shell-spawn background processes: ~150ms startup + execution.
+- Command server: ~50ms (daemon already warm + socket I/O).
 
 ---
 
 ## Testing Command Server Rules
 
-### Unit Tests
+### Unit tests
 
-Add tests in `src/tests/folder-opener.test.ts` style:
+Add tests under `src/tests/scripts.test.ts` style:
 
 ```typescript
-import test from 'node:test';
-import { strict as assert } from 'node:assert';
-import { showNotification } from '../lib/scripts';
+import test from "node:test";
+import { strict as assert } from "node:assert";
+import { showNotification } from "../core/scripts";
 
-test('showNotification emits correct payload structure', () => {
-  const result = showNotification('Test', { subtitle: 'Sub' });
+test("showNotification emits correct payload structure", () => {
+  const result = showNotification("Test", { subtitle: "Sub" });
   assert.match(
     JSON.stringify(result),
-    /hammerspoon.*showNotification.*function/
+    /hammerspoon.*showNotification.*function/,
   );
 });
 ```
 
-### Integration Tests
+### Integration tests
 
 Manually test with:
 
@@ -406,13 +401,13 @@ bash scripts/install-layer-indicator-user-command-server.sh observability-bundle
 
 All commands are logged to:
 
-``` text
+```text
 ~/.config/karabiner/logs/layer-indicator-user-command-server.log
 ```
 
 Example log line:
 
-``` text
+```text
 2026-03-19 13:25:57,569 INFO dispatched action=show marker=space_layer_show elapsed_ms=49.39
 ```
 
@@ -422,26 +417,26 @@ Example log line:
 
 When the command server is unavailable, helpers have configurable fallbacks:
 
-**layer_indicator_command():**
+**`layerIndicatorCommand()`:**
 
 ```typescript
 // If server is down, falls back to:
-cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${layer}'`)
+cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${layer}'`);
 ```
 
-**userCommand() and other endpoints:**
+**`userCommand()` and other endpoints:**
 
 ```typescript
 // No fallback available; logs warning
-console.warn(`userCommand: endpoint 'hammerspoon' requires command server`)
-return cmd('open -g "hammerspoon://noop"')
+console.warn(`userCommand: endpoint 'hammerspoon' requires command server`);
+return cmd('open -g "hammerspoon://noop"');
 ```
 
 To ensure reliability:
 
-1. Test `install-layer-indicator-user-command-server.sh status --json`
-2. Verify `socket_present: true` and `loaded: true`
-3. Run `observability-bundle` regularly to catch latency regressions
+1. Test `install-layer-indicator-user-command-server.sh status --json`.
+2. Verify `socket_present: true` and `loaded: true`.
+3. Run `observability-bundle` regularly to catch latency regressions.
 
 ---
 
@@ -475,10 +470,10 @@ open -g 'hammerspoon://layer_indicator?action=show&layer=test'
 
 ### New function not working
 
-1. Verify function is in `allowed_functions` dict
-2. Check `observability-bundle` output for errors
-3. Validate JSON payload format in rule builder
-4. Test manually with curl/socket tool:
+1. Verify the function is in the `allowed_functions` dict.
+2. Check the `observability-bundle` output for errors.
+3. Validate the JSON payload format in the rule builder.
+4. Test manually with a socket tool:
 
    ```bash
    echo '{"endpoint":"hammerspoon","function":"showNotification","args":{"title":"Test"}}' | nc -U /tmp/karabiner-layer-indicator.sock
@@ -488,14 +483,14 @@ open -g 'hammerspoon://layer_indicator?action=show&layer=test'
 
 ## Summary: When to Use What
 
-| Operation | Best Tool | Example |
-| ----------- | ----------- | --------- |
-| Layer show/hide | Command server (fast) | Space bar indicator |
-| Notifications | Hybrid (Hammerspoon + fallback) | Key macro confirmations |
-| App focus | Native `open -b` | Cmd+Alt+S → Safari |
-| Clipboard | Native `pbcopy` | Macro paste templates |
-| Complex logic | Shell command | Multi-step scripts, conditional execution |
-| One-off launch | Shell command | `open -a AppName` |
-| Error handling | Shell command | Check exit code, conditional flows |
+| Operation       | Best tool                          | Example                                   |
+| --------------- | ---------------------------------- | ----------------------------------------- |
+| Layer show/hide | Command server (fast)              | Space bar indicator                       |
+| Notifications   | Hybrid (Hammerspoon + fallback)    | Key macro confirmations                   |
+| App focus       | Native `open -b`                   | Cmd+Alt+S → Safari                        |
+| Clipboard       | Native `pbcopy`                    | Macro paste templates                     |
+| Complex logic   | Shell command                      | Multi-step scripts, conditional execution |
+| One-off launch  | Shell command                      | `open -a AppName`                         |
+| Error handling  | Shell command                      | Check exit code, conditional flows        |
 
 **Golden rule:** If you're calling Hammerspoon URL schemes from rules, migrate to the command server for better latency and maintainability.

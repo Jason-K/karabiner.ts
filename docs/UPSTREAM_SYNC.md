@@ -1,6 +1,6 @@
 # Upstream Sync Guide
 
-This document explains how to update from the upstream karabiner.ts project while preserving local extensions.
+This document explains how to update from the upstream `karabiner.ts` project while preserving local extensions.
 
 ## Architecture
 
@@ -9,16 +9,24 @@ karabiner/
 ├── karabiner.ts/              # THIS PROJECT (local extensions)
 │   ├── src/
 │   │   ├── index.ts          # Your main config (DO NOT merge upstream)
-│   │   └── lib/              # Your extensions (DO NOT merge upstream)
-│   │       ├── builders.ts   # tapHold(), openApp(), notify(), cmd(), …
-│   │       ├── functions.ts  # Re-exports generateLayerRules() and generator helpers
-│   │       ├── mods.ts       # Custom HYPER/SUPER/MEH definitions
-│   │       ├── text.ts       # Text manipulation helpers
-│   │       └── leader/       # Generic leader-layer rule builder
-│   │           ├── build.ts
-│   │           ├── runtime.ts
-│   │           ├── types.ts
-│   │           └── index.ts
+│   │   ├── core/             # Low-level builders + shared primitives (DO NOT merge)
+│   │   │   ├── action-dsl.ts # ActionSpec union
+│   │   │   ├── beta.ts       # Project-specific upstream beta shims
+│   │   │   ├── conditions.ts # Condition helpers (expressions, frontmost-app, variables)
+│   │   │   ├── mods.ts       # HYPER / SUPER / MEH modifier sets
+│   │   │   ├── scripts.ts    # userCommand, layerIndicatorCommand, showNotification, focusApp…
+│   │   │   ├── tap-hold.ts   # Generic tap-hold / varTapTapHold builders
+│   │   │   ├── mouse.ts      # Mouse alias resolution and tap-hold helpers
+│   │   │   ├── text.ts       # Text manipulation helpers
+│   │   │   └── leader/       # Generic leader-layer rule builder
+│   │   │       ├── build.ts
+│   │   │       ├── runtime.ts
+│   │   │       ├── types.ts
+│   │   │       └── index.ts
+│   │   ├── data/             # Registries and constants (DO NOT merge)
+│   │   ├── definitions/      # Data configs + engine calls (DO NOT merge)
+│   │   ├── engine/           # Rule-generation functions (DO NOT merge)
+│   │   └── tests/            # Local tests (DO NOT merge)
 │   ├── tsconfig.json         # Local TS config (DO NOT merge)
 │   ├── package.json          # Local deps (DO NOT merge)
 │   └── eslint.config.mjs     # Local lint rules (DO NOT merge)
@@ -61,24 +69,24 @@ Check the conflict report for:
 
 **If upstream adds new exports (e.g., new rule builders):**
 
-- Your code can import them via `karabiner.ts` once dependency is updated
-- Run `npm update karabiner.ts` and re-run typecheck/tests
+- Your code can import them via `karabiner.ts` once the dependency is updated.
+- Run `npm update karabiner.ts` and re-run typecheck/tests.
 
 **If upstream changes existing APIs:**
 
-- Check if your `src/lib/` wrappers need updates
-- Update type imports in `src/lib/mods.ts` if needed
-- Re-run typecheck: `npm run typecheck`
+- Check whether `src/core/` wrappers need updates.
+- Update type imports in `src/core/mods.ts`, `src/core/scripts.ts`, etc. if needed.
+- Re-run typecheck: `npm run typecheck`.
 
 **If upstream docs are useful:**
 
-- Copy to `docs/upstream/` for reference
-- Link from your README if relevant
+- Copy to `docs/upstream/` for reference.
+- Link from your README if relevant.
 
 ### 5. Commit Upstream Updates
 
 ```bash
-# In parent repo
+# In the parent repo
 cd /Users/jason/Scripts/apps/karabiner
 git add karabiner.ts-upstream
 git commit -m "chore: sync karabiner.ts-upstream to v1.XX.X"
@@ -89,98 +97,91 @@ git push
 
 These files are yours and must never be overwritten by upstream:
 
-### Core Configuration
+### Core configuration
 
-- `src/index.ts` - Your complete Karabiner config
-- `src/mappings/*.ts` - Declarative mappings, registries, and constants
-- `src/generators/*.ts` - Reusable compilers from declarative intent to rules
-- `src/rules/*.ts` - Rule factory modules
-- `src/lib/*.ts` - All your extensions (including `leader/`)
+- `src/index.ts` — Your complete Karabiner config
+- `src/core/**` — Low-level builders, shared primitives, leader internals
+- `src/data/**` — Registries and constants
+- `src/definitions/**` — Behaviour data + engine calls
+- `src/engine/**` — Rule-generation functions
+- `src/tests/**` — Local regression coverage
 
-### Project Files
+### Project files
 
-- `package.json` - Your build scripts and dependencies
-- `tsconfig.json` - Your local compile settings
-- `eslint.config.mjs` - Your lint rules
-- `README.md` - Your documentation (but copy useful sections from upstream)
+- `package.json` — Your build scripts and dependencies
+- `tsconfig.json` — Your local compile settings
+- `eslint.config.mjs` — Your lint rules
+- `README.md` — Your documentation (but copy useful sections from upstream)
 
 ### GitHub Actions
 
-- `.github/workflows/ci.yml` - Your CI workflow
-- `.github/upstream-workflows/` - Safe copies of upstream workflows (reference only)
+- `.github/workflows/ci.yml` — Your CI workflow
+- `.github/upstream-workflows/` — Safe copies of upstream workflows (reference only)
 
 ## Safe-to-Adopt Files
 
-These can be updated from upstream if you want:
+These can be updated from upstream:
 
 ### Documentation (reference)
 
-- `docs/upstream/docs/**` - Upstream API documentation
-- `docs/upstream-examples/**` - Example configurations
+- `docs/upstream/docs/**` — Upstream API documentation
+- `docs/upstream-examples/**` — Example configurations
 
 ### Tooling (optional)
 
 - Upstream linter configs (review before adopting)
-- Upstream test structure (if you add tests)
+- Upstream test scaffolding (if you add tests)
 
 ## Handling Breaking Changes
 
 If upstream makes breaking changes:
 
-1. **Check imports**: Your `src/lib/` files import upstream types
+1. **Check imports.** Your `src/core/` files import upstream types.
 
    ```typescript
-   import type { Modifier } from 'karabiner.ts';  // This might break
+   import type { Modifier } from "karabiner.ts"; // This might break
    ```
 
-2. **Run typecheck**:
+2. **Run typecheck.**
 
    ```bash
    npm run typecheck
    ```
 
-3. **Fix type mismatches**: Update your wrappers to match new upstream types
+3. **Fix type mismatches.** Update your wrappers to match the new upstream types. The integration snapshot test (`src/tests/integration.test.ts`) will surface any unintended JSON-output drift after a successful build.
 
-4. **Test locally**:
+4. **Test locally.**
 
    ```bash
    npm run build
-   # Verify karabiner-output.json is valid
+   # Inspect karabiner-output.json for sanity
    ```
 
 ## Adding New Upstream Features
 
-Example: Upstream adds a new `duoLayer()` function
+Example: upstream adds a new `duoLayer()` function.
 
-1. **Import it**:
-
-   ```typescript
-   // In src/index.ts or src/lib/builders.ts
-   import { duoLayer } from 'karabiner.ts';
-   ```
-
-2. **Use it**:
+1. **Import it.**
 
    ```typescript
-   rule('Duo layer example').manipulators(
-     duoLayer('a', 's').manipulators([
-       map('j').to(toKey('left_arrow'))
-     ])
-   )
+   // In src/core/leader/build.ts or a new engine function
+   import { duoLayer } from "karabiner.ts";
    ```
 
-3. **Document it**: Add example to your README or a new section
+2. **Use it.** Wrap it in an engine function under `src/engine/` if you want to expose it as a config-driven behaviour, then call that engine function from a new file in `src/definitions/`.
+
+3. **Document it.** Add the engine function to the inventory in `docs/DECLARATIVE_CONFIG_PLAN.md`.
 
 ## Conflict Resolution Philosophy
 
-**Upstream is the library, your project is the consumer.**
+**Upstream is the library; your project is the consumer.**
 
-- Upstream changes should be **additive** to you
-- Your local `src/lib/` files **wrap and extend** upstream
-- Package versioning keeps upstream adoption explicit and reviewable
-- Conflict reports help you **decide** what to adopt, not force merges
+- Upstream changes should be **additive** to you.
+- Your local `src/core/` files **wrap and extend** upstream.
+- Package versioning keeps upstream adoption explicit and reviewable.
+- Conflict reports help you **decide** what to adopt, not force merges.
 
-## Automation (Future Enhancement)
+## Automation (future enhancement)
 
 Consider adding a GitHub Action:
 
@@ -189,7 +190,7 @@ Consider adding a GitHub Action:
 name: Upstream Sync Check
 on:
   schedule:
-    - cron: '0 9 * * 1'  # Weekly Monday 9am
+    - cron: "0 9 * * 1" # Weekly Monday 9am
   workflow_dispatch:
 
 jobs:
@@ -210,20 +211,20 @@ jobs:
           fi
 ```
 
-## Questions?
+## Questions
 
-- **"Should I merge upstream's package.json?"** → No, yours is different (build tool vs library)
-- **"Should I merge upstream's tsconfig?"** → No, yours is project-specific
-- **"Can I use upstream's CI?"** → No, but you can copy ideas into your CI
-- **"What if upstream removes an API I use?"** → Check conflict report, find replacement, update wrappers
-- **"Do I need to credit upstream?"** → Yes, see LICENSE and README acknowledgments
+- **Should I merge upstream's `package.json`?** No — yours is for a build tool, theirs is for a library.
+- **Should I merge upstream's `tsconfig`?** No — yours is project-specific.
+- **Can I use upstream's CI?** No, but you can copy ideas into your CI.
+- **What if upstream removes an API I use?** Check the conflict report, find a replacement, and update the wrapper in `src/core/`.
+- **Do I need to credit upstream?** Yes — see `LICENSE` and README acknowledgments.
 
 ## Summary
 
-1. Pull upstream updates into mirror
-2. Generate conflict report
-3. Review and selectively adopt
-4. Never merge core config files
-5. Test with `npm run typecheck && npm run build`
+1. Pull upstream updates into the mirror.
+2. Generate a conflict report.
+3. Review and selectively adopt.
+4. Never merge core config files.
+5. Test with `npm run typecheck && npm test && npm run build`.
 
 Your local extensions stay safe. Upstream provides the foundation.

@@ -2,53 +2,34 @@
 
 Personal Karabiner-Elements configuration written in TypeScript with `karabiner.ts`.
 
-## Current Architecture
+## Architecture
 
-The config is now split by responsibility:
+The config is split by responsibility:
 
-- `src/constants.ts`: canonical shared constants for apps, folders, devices, labels, paths, timings, and app-specific behaviors
-- `src/mappings`: declarative intent tables only
-- `src/generators`: reusable compilers from mapping data to Karabiner rules
-- `src/builders`: compatibility-focused assembly layer for grouped rule factories and selected generator exports
-- `src/rules`: stateful or exceptional adapters that do not yet fit a shared schema cleanly
-- `src/lib`: lower-level helpers, leader-layer internals, and integration utilities
-- `src/tests`: mapping- and generator-level regression coverage
+- `src/core/` — low-level builders and shared primitives (`ActionSpec`, mods, conditions, scripts, tap-hold, mouse helpers, leader internals)
+- `src/data/` — registries and constants (apps, folders, raycast, cleanshot, devices, paths, timings, UI labels)
+- `src/definitions/` — data configs + one engine-function call per behaviour; this is the user edit surface
+- `src/engine/` — rule-generation functions; the only layer that constructs manipulators
+- `src/tests/` — unit + integration regression coverage
+- `src/index.ts` — orchestrates the pipeline and writes the profile
 
-The main entrypoint in `src/index.ts` wires these pieces together.
+Every behaviour is a typed config object plus a single engine call. No definition file imports from `karabiner.ts` directly or iterates over its own mappings. All output events flow through one path: `ActionSpec` → `resolveActionToEvents` (in `src/engine/action-resolver.ts`) → karabiner.ts `ToEvent[]`.
 
-## Upstream Integration Notes
+## Upstream Integration
 
 - Imports resolve from the installed `karabiner.ts` package, not from mirrored source paths.
-- Local beta compatibility helpers live in `src/lib/beta.ts`.
-- `karabiner.ts-upstream/` and `docs/upstream/` are reference and diff surfaces used by sync workflows.
+- Local beta compatibility helpers live in `src/core/beta.ts`.
+- `karabiner.ts-upstream/` and `docs/upstream/` are read-only reference and diff surfaces used by sync workflows.
 
-## Declarative Surfaces
-
-The larger mapping-heavy areas extracted during this refactor are now declarative:
-
-- right-option launchers via `src/mappings/right-option-launchers.ts`
-- navigation remaps via `src/mappings/navigation.ts`
-- disabled shortcuts via `src/mappings/disabled-shortcuts.ts`
-- special key holds via `src/mappings/special-key-holds.ts`
-- security slash actions via `src/mappings/security-actions.ts`
-- space layers via `src/mappings/space-layers.ts`
-- tap-hold bindings via `src/mappings/tap-hold.ts`
-
-Space layers and tap-hold mappings now use a shared `ActionSpec` DSL plus central registries for app, folder, Raycast, and CleanShot references.
-
-Mappings should reference `src/constants.ts` or symbolic registries instead of embedding bundle IDs, filesystem paths, device identifiers, or timing values inline. Builders and generators own the translation into Karabiner JSON.
+See `docs/UPSTREAM_SYNC.md` for the sync workflow.
 
 ## Key Files
 
-- `src/mappings/action-dsl.ts`: symbolic action vocabulary used by declarative mappings
-- `src/constants.ts`: shared registries and non-user-facing constants consumed by mappings, builders, and rules
-- `src/generators/action-resolver.ts`: shared compiler from `ActionSpec` to Karabiner `ToEvent`s
-- `src/mappings/apps.ts`: compatibility re-export for the app registry
-- `src/mappings/folders.ts`: compatibility re-export for the folder registry
-- `src/mappings/raycast.ts`: Raycast command registry
-- `src/mappings/cleanshot.ts`: CleanShot command registry
-- `docs/DECLARATIVE_CONFIG_PLAN.md`: architecture rules and migration status
-- `docs/COMMAND_SERVER_GUIDE.md`: command-server-specific guidance
+- `src/core/action-dsl.ts` — the `ActionSpec` union used for every output event
+- `src/engine/action-resolver.ts` — single compiler from `ActionSpec` to Karabiner `ToEvent`s
+- `src/core/leader/build.ts` — generic leader-layer compiler (used by the space leader, ready for additional leaders)
+- `src/data/apps.ts`, `folders.ts`, `raycast.ts`, `cleanshot.ts` — registries referenced by definitions
+- `src/index.ts` — orchestration entry point
 
 ## Common Commands
 
@@ -59,231 +40,23 @@ npm run build
 npm run check
 ```
 
-## Documentation
-
-- `docs/DECLARATIVE_CONFIG_PLAN.md`: current mappings/generators/rules taxonomy
-- `docs/COMMAND_SERVER_GUIDE.md`: when to use the user command server vs shell commands
-- `docs/INTEGRATION_SUMMARY.md`: upstream integration strategy and local extension layout
-- `docs/UPSTREAM_SYNC.md`: how to update the upstream mirror safely
-
 ## Practical Rule
 
-If a file answers "what should this key do?", it should usually live in `src/mappings`.
+If a file answers "what should this key do?", it belongs in `src/definitions/`.
 
-If a file answers "how do we turn that declaration into Karabiner JSON?", it should usually live in `src/generators`.
+If a file answers "how do we turn that declaration into Karabiner JSON?", it belongs in `src/engine/`.
 
-If a file answers "how do we hand-build this unusual behavior that our schemas still do not express?", it belongs in `src/rules`.
+If a file is a low-level builder, a shared helper, or part of the leader runtime, it belongs in `src/core/`.
 
----
+If a file is a plain registry or constant table consumed across layers, it belongs in `src/data/`.
 
-## Migration Guide: shell_command → Command Server
+## Documentation
 
-### When to Migrate
-
-✅ **Good candidates:**
-
-- `open -g 'hammerspoon://...'` calls → Hammerspoon endpoint
-- High-frequency operations (layer indicator, notifications)
-- Operations that benefit from daemon session state
-
-❌ **Don't migrate:**
-
-- Complex shell pipelines
-- Operations needing error handling and feedback
-- One-off operations called <5 times/session
-
-### Migration Pattern
-
-**Before (shell_command):**
-
-```typescript
-rule("Example").manipulators([
-  map("key_x").to(cmd("open -g 'hammerspoon://action?param=value'")).build(),
-]);
-```
-
-**After (command server):**
-
-```typescript
-import { userCommand } from "../../lib/scripts";
-
-rule("Example").manipulators([
-  map("key_x")
-    .to(
-      userCommand("hammerspoon", {
-        function: "action",
-        args: { param: "value" },
-      }),
-    )
-    .build(),
-]);
-```
-
----
-
-## Performance Tuning
-
-### Measuring Latency
-
-Use the `smoke-check` command:
-
-```bash
-bash scripts/install-layer-indicator-user-command-server.sh smoke-check
-# smoke-check: pass show_ms=49.39 hide_ms=45.71 max_allowed_ms=500.00
-```
-
-Or the bundled diagnostic:
-
-```bash
-bash scripts/install-layer-indicator-user-command-server.sh observability-bundle
-```
-
-### Tuning Thresholds
-
-Override latency limits when installing:
-
-```bash
-SMOKE_MAX_LATENCY_MS=1000 bash scripts/install-layer-indicator-user-command-server.sh smoke-check
-```
-
-### Why Latency Matters
-
-- Karabiner processes key events with <10ms overhead
-- Layer indicator needs to follow visually instantly (<100ms)
-- Shell spawn background processes: ~150ms startup + execution
-- Command server: ~50ms (daemon already warmth + socket I/O)
-
----
-
-## Testing Command Server Rules
-
-### Unit Tests
-
-Add tests in `src/tests/scripts.test.ts` style:
-
-```typescript
-import test from "node:test";
-import { strict as assert } from "node:assert";
-import { showNotification } from "../lib/scripts";
-
-test("showNotification emits correct payload structure", () => {
-  const result = showNotification("Test", { subtitle: "Sub" });
-  assert.match(
-    JSON.stringify(result),
-    /hammerspoon.*showNotification.*function/,
-  );
-});
-```
-
-### Integration Tests
-
-Manually test with:
-
-```bash
-# 1. Start command server in background
-bash scripts/install-layer-indicator-user-command-server.sh install
-
-# 2. Test individual commands
-bash scripts/install-layer-indicator-user-command-server.sh status
-
-# 3. Test with bundled diagnostics
-bash scripts/install-layer-indicator-user-command-server.sh observability-bundle
-```
-
-### Logging
-
-All commands are logged to:
-
-``` text
-~/.config/karabiner/logs/layer-indicator-user-command-server.log
-```
-
-Example log line:
-
-``` text
-2026-03-19 13:25:57,569 INFO dispatched action=show marker=space_layer_show elapsed_ms=49.39
-```
-
----
-
-## Fallback Behavior
-
-When the command server is unavailable, helpers have configurable fallbacks:
-
-**layer_indicator_command():**
-
-```typescript
-// If server is down, falls back to:
-cmd(`open -g 'hammerspoon://layer_indicator?action=show&layer=${layer}'`);
-```
-
-**userCommand() and other endpoints:**
-
-```typescript
-// No fallback available; logs warning
-console.warn(`userCommand: endpoint 'hammerspoon' requires command server`);
-return cmd('open -g "hammerspoon://noop"');
-```
-
-To ensure reliability:
-
-1. Test `install-layer-indicator-user-command-server.sh status --json`
-2. Verify `socket_present: true` and `loaded: true`
-3. Run `observability-bundle` regularly to catch latency regressions
-
----
-
-## Troubleshooting
-
-### Command server socket not responsive
-
-```bash
-# Check status
-bash scripts/install-layer-indicator-user-command-server.sh status
-
-# Restart service
-bash scripts/install-layer-indicator-user-command-server.sh restart
-
-# View recent logs
-tail -f ~/.config/karabiner/logs/layer-indicator-user-command-server.log
-```
-
-### High latency (>200ms)
-
-```bash
-# Run periodic auto-rotate to keep logs manageable
-bash scripts/install-layer-indicator-user-command-server.sh enable-auto-rotate
-
-# Benchmark current state
-bash scripts/install-layer-indicator-user-command-server.sh smoke-check
-
-# Check Hammerspoon responsiveness separately:
-open -g 'hammerspoon://layer_indicator?action=show&layer=test'
-```
-
-### New function not working
-
-1. Verify function is in `allowed_functions` dict
-2. Check `observability-bundle` output for errors
-3. Validate JSON payload format in rule builder
-4. Test manually with curl/socket tool:
-
-   ```bash
-   echo '{"endpoint":"hammerspoon","function":"showNotification","args":{"title":"Test"}}' | nc -U /tmp/karabiner-layer-indicator.sock
-   ```
-
----
-
-## Summary: When to Use What
-
-| Operation       | Best Tool                         | Example                                   |
-| --------------- | --------------------------------- | ----------------------------------------- |
-| Layer show/hide | Command server (fast)             | Space bar indicator                       |
-| Notifications   | Command server (user feedback)    | Key macro confirmations                   |
-| App focus       | Command server (low frequency ok) | Cmd+Alt+S → Safari                        |
-| Clipboard       | Command server (persistent state) | Macro paste templates                     |
-| Complex logic   | Shell command                     | Multi-step scripts, conditional execution |
-| One-off launch  | Shell command                     | `open -a AppName`                         |
-| Error handling  | Shell command                     | Check exit code, conditional flows        |
-
-**Golden rule:** If you're calling Hammerspoon URL schemes from rules, migrate to the command server for better latency and maintainability.
+- `docs/DECLARATIVE_CONFIG_PLAN.md` — current architecture, engine-function inventory, and the definition-file contract
+- `docs/COMMAND_SERVER_GUIDE.md` — when to use the user command server vs shell commands, plus migration, performance, testing, and troubleshooting
+- `docs/INTEGRATION_SUMMARY.md` — upstream integration strategy and ownership boundaries
+- `docs/UPSTREAM_SYNC.md` — how to update the upstream mirror safely
+- `docs/INSIGHTS.md` — Karabiner manipulator pattern notes (variable conditions, evaluation order, timing parameters)
+- `docs/FUTURE_FEATURES.md` — tracked unimplemented Karabiner capabilities
+- `docs/BETA_IMPLEMENTATION_SUMMARY.md` — historical snapshot of the v15.6–v15.9 beta features adoption
+- `docs/superpowers/` — design specs and execution plans for in-flight or recently completed refactors

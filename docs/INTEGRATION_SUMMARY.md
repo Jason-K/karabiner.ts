@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This project uses `karabiner.ts` APIs while keeping local behavior, mappings, and generation logic fully owned in this repo.
+This project consumes `karabiner.ts` APIs while keeping all keyboard behaviour, data, and rule generation logic owned locally.
 
 ## Current Layout
 
@@ -10,12 +10,12 @@ This project uses `karabiner.ts` APIs while keeping local behavior, mappings, an
 karabiner/
 ├── karabiner.ts/                 # local source of truth
 │   ├── src/
-│   │   ├── mappings/             # declarative intent data
-│   │   ├── generators/           # reusable compilers/builders
-│   │   ├── rules/                # stateful and exceptional adapters
-│   │   ├── lib/                  # shared helper modules and leader internals
-│   │   ├── tests/                # unit + output-level tests
-│   │   └── index.ts              # top-level orchestration
+│   │   ├── core/                 # low-level builders + shared primitives (action-dsl, mods, scripts, conditions, leader internals)
+│   │   ├── data/                 # registries and constants (apps, folders, raycast, cleanshot, paths, devices, timings, ui labels)
+│   │   ├── definitions/          # data configs + one engine call per behaviour (the user edit surface)
+│   │   ├── engine/               # rule-generation functions; all manipulator construction lives here
+│   │   ├── tests/                # unit + integration regression coverage
+│   │   └── index.ts              # top-level orchestration: imports definitions, runs engine, writes profile
 │   └── docs/                     # local architecture and operations docs
 └── karabiner.ts-upstream/        # upstream mirror for reference, docs, and diffing
 ```
@@ -25,16 +25,17 @@ karabiner/
 ### Local-owned (do not overwrite from upstream)
 
 - `src/index.ts`
-- `src/mappings/**`
-- `src/generators/**`
-- `src/rules/**`
-- `src/lib/**`
+- `src/core/**`
+- `src/data/**`
+- `src/definitions/**`
+- `src/engine/**`
+- `src/tests/**`
 - `package.json`
 - `tsconfig.json`
 - `eslint.config.mjs`
 - `docs/**` (except `docs/upstream/**` mirrors)
 
-### Upstream reference
+### Upstream reference (read-only)
 
 - `../karabiner.ts-upstream/**`
 - `docs/upstream/**`
@@ -42,24 +43,27 @@ karabiner/
 
 ## How Integration Works
 
-1. Code imports from `karabiner.ts` APIs (npm package dependency).
-2. Local beta shims in `src/lib/beta.ts` provide project-specific compatibility where upstream removes/changes APIs.
-3. Local modules compose those APIs into project-specific mappings/generators/rules.
-4. `src/index.ts` orchestrates assembly and output writes.
+1. Code imports from `karabiner.ts` APIs (npm package dependency, mirrored locally for IDE/typecheck).
+2. Local beta shims in `src/core/beta.ts` provide project-specific compatibility where upstream removes or changes APIs.
+3. `src/core/` and `src/engine/` compose those APIs into the project's rule-generation pipeline.
+4. `src/definitions/` files declare *what* each key should do as data, and call exactly one engine function.
+5. `src/index.ts` orchestrates assembly and writes the profile via `writeToProfile`.
 
 ## Why This Structure
 
-- Local behavior remains readable and versioned independently.
-- Upstream evolution stays easy to inspect and adopt selectively.
-- Declarative intent is separated from rule-construction mechanics.
-- Device-specific and stateful logic remains isolated in thin rule adapters.
+- Behaviour data (`src/definitions/`) is separated from rule-construction mechanics (`src/engine/`).
+- Every behaviour is a typed config object — search-friendly, refactor-friendly, and unit-testable in isolation.
+- A single conversion path (`ActionSpec` → `resolveActionToEvents`) means JSON output is reviewable and the integration snapshot is the regression net.
+- Upstream evolution stays easy to inspect: the mirror is read-only and diff-able.
+- Device-specific simple modifications are handled post-write via `updateDeviceConfigurations`, keeping the rule pipeline pure.
 
-## Current Notable Extensions
+## Notable Extensions
 
-- Declarative registries for apps, folders, Raycast, and CleanShot actions.
-- Shared `ActionSpec` resolution in generator layer.
-- Declarative mouse mapping pipeline with device-scoped compilation.
-- Command server transport for low-latency layer-indicator/user-command dispatch.
+- `ActionSpec` DSL (`src/core/action-dsl.ts`) with one shared resolver (`src/engine/action-resolver.ts`) used by every engine function.
+- Engine functions for every recurring pattern: simple remaps, app-scoped remaps, tap-hold, conditional tap-hold, multi-tap, double-tap guards, tap-alone-hold, modifier launchers, modifier chords, pointer remaps, mouse tap-hold/double-tap.
+- Generic leader-layer compiler (`src/core/leader/`) wired by the space leader and ready for a second leader key without code changes.
+- Command server transport for low-latency layer-indicator and user-command dispatch (see `docs/COMMAND_SERVER_GUIDE.md`).
+- Device-scoped simple modifications applied as a post-write patch (`updateDeviceConfigurations`).
 
 ## Maintenance Workflow
 
@@ -87,7 +91,8 @@ cd /Users/jason/Scripts/apps/karabiner/karabiner.ts
 ./scripts/generate-conflict-report.sh
 ```
 
+The conflict report is a temporary review artifact. Inspect it, decide what to adopt, then discard it; do not track it long-term.
+
 ## Operational Principle
 
-Treat `karabiner.ts-upstream/` as an API/reference mirror and `karabiner.ts/src` as the implementation surface.
-Adopt upstream features intentionally, never by blanket overwrite of local modules.
+Treat `karabiner.ts-upstream/` as an API and reference mirror, and `karabiner.ts/src/` as the implementation surface. Adopt upstream features intentionally — never by blanket overwrite of local modules.

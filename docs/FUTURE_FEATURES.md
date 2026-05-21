@@ -14,8 +14,8 @@ This document tracks unimplemented Karabiner-Elements capabilities that may be w
 
 **What was done:**
 
-1. Added `layerIndicatorCommand(action, layer?)` helper in `src/lib/scripts.ts`
-2. Replaced all 4 layer-indicator shell_command calls with `toSendUserCommand()` events in `src/lib/leader/build.ts`
+1. Added `layerIndicatorCommand(action, layer?)` helper in `src/core/scripts.ts`
+2. Replaced all 4 layer-indicator shell_command calls with `toSendUserCommand()` events in `src/core/leader/build.ts`
 3. Created Hammerspoon IPC receiver module (`user_command_receiver.lua`) with JSON payload parsing
 4. Integrated receiver into Hammerspoon initialization (init.lua)
 5. Verified: 9 send_user_command events correctly serialized in output config
@@ -137,17 +137,17 @@ setVarExpr('space_activated_at', '{{ system.now.milliseconds }}')
 exprIf('{{ system.now.milliseconds - space_activated_at > 5000 }}')
 ```
 
-**Implementation note:** The `setVarExpr` and `exprIf` helpers already exist in `src/lib/conditions.ts`. The main change is wiring the timestamp into the leader activation manipulator.
+**Implementation note:** The `setVarExpr` and `exprIf` helpers already exist in `src/core/conditions.ts`. The main change is wiring the timestamp into the leader activation manipulator.
 
 ---
 
 ### Additional Leader Layers
 
-**Background:** `generateLayerRules` is fully generic. Any key can be a leader (see [INSIGHTS.md — Leader Layer Architecture](./INSIGHTS.md)).
+**Background:** `generateLayerRules` (`src/core/leader/build.ts`) is fully generic. Any key can be a leader (see [INSIGHTS.md — Leader Layer Architecture](./INSIGHTS.md#leader-layer-architecture)).
 
 **Potential use case:** A `tab` leader for system/media actions (sleep, cursor jump, app history navigation) that is conceptually separate from the space "apps and folders" leader.
 
-**Implementation:** Add a second `generateLayerRules` call in `src/index.ts` with a new set of `SubLayerConfig` entries and distinct `leaderKey`/`layerPrefix`/`indicatorRootLayer` values.
+**Implementation:** Add a second `generateLayerRules` call in `src/index.ts` with a new set of `SubLayerConfig` entries (declared in `src/definitions/`) and distinct `leaderKey`/`layerPrefix`/`indicatorRootLayer` values.
 
 ---
 

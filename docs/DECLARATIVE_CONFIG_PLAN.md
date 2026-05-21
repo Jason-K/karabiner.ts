@@ -1,183 +1,26 @@
-# Declarative Config Plan
+# Declarative Config Architecture
 
 ## Goal
 
-Move recurring keyboard intent into declarative mapping files and keep imperative Karabiner builder logic in reusable generators.
+Every keyboard behaviour is expressed as a data config plus a single engine-function call. Definition files never call `rule()`, `map()`, or `toKey()` directly and never iterate over their own mappings. All output events flow through a single conversion path: `ActionSpec` → `resolveActionToEvents` → karabiner.ts `ToEvent[]`.
 
-The target split is:
+## Layer Responsibilities
 
-- `src/mappings`: plain intent data only
-- `src/generators`: reusable compilers from intent data to Karabiner rules
-- `src/rules`: thin adapters for exceptional or stateful rules that are not yet covered by a generator
+| Layer            | Responsibility                                                           | Constraint                                                       |
+| ---------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| `src/core/`      | Low-level builders and shared primitives (`tapHold`, `varTapTapHold`, mods, scripts, leader internals) | No user-specific data                                            |
+| `src/engine/`    | Engine functions: convert typed config → `Rule[]`                        | No user-specific data; sole place that builds manipulators       |
+| `src/definitions/` | Data configs + one engine-function call per file                       | No direct `karabiner.ts` imports, no iteration, no manipulator construction |
+| `src/data/`      | App registry, folder registry, timings, paths, device IDs, UI labels     | Plain constants and registry refs only                           |
+| `src/tests/`     | Unit + integration regression coverage                                   | Snapshot of generated config plus per-engine-function tests      |
 
-## Folder Semantics
+`src/index.ts` is the single orchestration point: it imports definitions, runs the engine, and writes the profile.
 
-### `src/mappings`
+## Single Action Vocabulary
 
-Use this folder for declarative definitions only.
+`ActionSpec` (`src/core/action-dsl.ts`) is the one type used for output events across the entire engine. `resolveActionToEvents` (`src/engine/action-resolver.ts`) is the only conversion path from `ActionSpec` to karabiner.ts `ToEvent[]`. The trigger side of a mapping (key, button, modifiers) is not an `ActionSpec` — it remains explicit key/modifier fields.
 
-Allowed:
-
-- trigger keys
-- descriptions
-- bundle IDs
-- folder paths
-- symbolic action descriptors
-- registry references for apps, folders, and integrations
-- per-entry flags and simple metadata
-
-Not allowed:
-
-- `map(...)`
-- `rule(...)`
-- `toKey(...)`
-- `cmd(...)`
-- `focusApp(...)`
-- helper-built command strings from `lib/scripts`
-- direct Karabiner condition objects
-
-### `src/generators`
-
-Use this folder for reusable translation logic.
-
-Responsibilities:
-
-- convert symbolic actions into `ToEvent`s
-- build standard rule shapes from mapping tables
-- centralize common description formatting and boilerplate
-- handle reusable patterns like tap-hold, multi-tap, and launchers
-
-### `src/rules`
-
-Use this folder only when one of these is true:
-
-- the rule is genuinely stateful
-- the rule needs a one-off builder shape
-- the rule is a temporary adapter that composes `mappings` and `generators`
-
-## Current Classification
-
-### Already good mapping candidates
-
-- `src/mappings/apps.ts`
-- `src/mappings/cleanshot.ts`
-- `src/mappings/disabled-shortcuts.ts`
-- `src/mappings/folders.ts`
-- `src/mappings/navigation.ts`
-- `src/mappings/mouse.ts`
-- `src/mappings/raycast.ts`
-- `src/mappings/right-option-launchers.ts`
-- `src/mappings/security-actions.ts`
-- `src/mappings/special-key-holds.ts`
-- `src/mappings/space-layer.ts`
-- `src/mappings/space-layers.ts`
-- `src/mappings/tap-hold.ts`
-
-### Good generator surfaces
-
-- `src/generators/action-resolver.ts`
-- `src/generators/conditional-action-rules.ts`
-- `src/generators/conditional-tap-hold-rules.ts`
-- `src/generators/launcher-rules.ts`
-- `src/generators/simple-rules.ts`
-- `src/generators/tap-hold-rules.ts`
-- `src/generators/layer-emit.ts`
-- `src/generators/escape-rule.ts`
-
-### Should stay in `src/rules` for now
-
-- `src/rules/left-command-chords.ts`
-- `src/rules/escape-monitor.ts`
-- `src/rules/hyper-chords.ts`
-- `src/rules/mouse.ts`
-- `src/rules/security.ts`
-
-These files currently mix state, delayed actions, or complex conditions that do not yet fit a shared declarative schema cleanly.
-
-`src/rules/mouse.ts` is currently a device-scoping adapter that composes declarative mouse mappings into per-device Karabiner rules, including alias resolution and tap-hold/double-tap builders.
-
-### Current thin adapters
-
-- `src/rules/right-option-launchers.ts`
-  - now reduced to a thin adapter over `src/mappings/right-option-launchers.ts` and `src/generators/launcher-rules.ts`
-- `src/rules/special-keys.ts`
-  - `buildHomeEndRule` now delegates to `src/mappings/navigation.ts` and `src/generators/simple-rules.ts`
-  - `buildEnterRules` and `buildEqualsRules` now delegate to `src/mappings/special-key-holds.ts` and `src/generators/conditional-tap-hold-rules.ts`
-- parts of `src/rules/security.ts`
-  - disabled shortcut rules now delegate to `src/mappings/disabled-shortcuts.ts` and `src/generators/simple-rules.ts`
-  - slash-triggered security actions now delegate to `src/mappings/security-actions.ts` and `src/generators/conditional-action-rules.ts`
-
-These are still public call sites from `src/index.ts`, but most of their logic has already moved into reusable mappings and generators.
-
-## Suggested Next Schemas
-
-### Launcher chord schema
-
-Used now by right-option launchers.
-
-```ts
-type LauncherAction =
-  | { type: "focusApp"; bundleId: string }
-  | { type: "openFolder"; path: string };
-
-type ModifierLauncherMapping = {
-  key: string;
-  description: string;
-  action: LauncherAction;
-};
-```
-
-### Navigation remap schema
-
-Good next target for `HOME` / `END` remaps.
-
-```ts
-type NavigationMapping = {
-  from: string;
-  modifiers?: string[];
-  description: string;
-  to: {
-    key: string;
-    modifiers?: string[];
-  };
-};
-```
-
-### Disabled chord schema
-
-Good target for the simple disable rules in `security.ts`.
-
-```ts
-type DisabledChordMapping = {
-  key: string;
-  modifiers: string[];
-  description: string;
-};
-```
-
-### Conditional action schema
-
-Used now by slash-triggered security actions.
-
-```ts
-type ConditionalActionMapping = {
-  key: string;
-  modifiers: string[];
-  description: string;
-  when: Array<
-    | { type: "frontmostApp"; bundleIds: string[] }
-    | { type: "variable"; name: string; match: "if" | "unless"; value: string | number }
-  >;
-  actions: Array<
-    | { type: "key"; key: string; modifiers?: string[] }
-    | { type: "shell"; command: string }
-  >;
-};
-```
-
-### Shared action DSL
-
-Used now by `space-layers.ts` and `tap-hold.ts`.
+Variants of `ActionSpec`:
 
 ```ts
 type ActionSpec =
@@ -187,62 +30,120 @@ type ActionSpec =
   | { type: "raycast"; ref: RaycastRef }
   | { type: "cleanShot"; ref: CleanShotRef }
   | { type: "takeActionHere"; action: string }
-  | { type: "selectionTransform"; operation: string }
-  | { type: "selectionWrap"; operation: string; delaySeconds?: number }
-  | { type: "key"; key: string; modifiers?: string[]; options?: Record<string, boolean> }
+  | { type: "selectionTransform"; operation: "lowercase" | "sentence_case" | "title_case" | "uppercase" }
+  | { type: "selectionWrap"; operation: "wrap_braces" | "wrap_parentheses" | "wrap_quotes" | "wrap_brackets"; delaySeconds?: number }
+  | { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean; lazy?: boolean } }
   | { type: "url"; url: string; background?: boolean }
   | { type: "shell"; command: string }
   | { type: "applescript"; scriptPath: string; args?: string[] }
-  | { type: "cut" | "copy" | "paste" };
+  | { type: "cut" | "copy" | "paste" }
+  | { type: "sequence"; actions: ActionSpec[] };
 ```
 
-### Mouse binding schema
+`sequence` exists for fields that accept a single `ActionSpec` rather than `ActionSpec[]` (for example `ModifierLauncherMapping.action` and `SubLayerConfig` action fields). It is flattened recursively at resolve time.
 
-Mouse bindings are now split into declarative device mappings plus reusable builders:
+## Engine Function Inventory
 
-- `src/mappings/mouse.ts`: per-device intent (`MouseDeviceConfig`, `MouseTapHoldMapping`, `MouseDoubleTapMapping`)
-- `src/lib/mouse.ts`: alias resolution (`g502xButtons`) and generic helpers (`mouseTapHold`, `mouseVarTapTapHold`)
-- `src/rules/mouse.ts`: compiles mapping tables into device-guarded Karabiner rules
+Each engine function takes a typed config and returns one or more `Rule`s. Definitions reach for the engine function whose config shape matches the behaviour they want.
+
+| Engine function                  | File                                          | Purpose                                                                                                 |
+| -------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `resolveActionToEvents`          | `engine/action-resolver.ts`                   | Convert any `ActionSpec` (or `sequence` of them) into karabiner.ts `ToEvent[]`                          |
+| `generateSimpleRemapRules`       | `engine/simple-rules.ts`                      | One-to-one key remaps with optional modifiers and conditions                                            |
+| `generateAppScopedRemapRules`    | `engine/simple-rules.ts`                      | Simple remaps gated on a `frontmost_application_if` condition                                           |
+| `generateTapHoldRules`           | `engine/tap-hold-rules.ts`                    | Tap/hold split with automatic conflict prevention against the space layer                               |
+| `generateConditionalTapHoldRules`| `engine/conditional-tap-hold-rules.ts`        | Tap/hold split where `alone` and `hold` vary by frontmost-app condition                                 |
+| `generateConditionalActionRules` | `engine/conditional-action-rules.ts`          | Direct trigger → `ActionSpec[]` with conditional dispatch (and optional delayed-action handlers)        |
+| `generateMultiTapRule`           | `engine/multi-tap-rules.ts`                   | Single key with `alone`, `hold`, `tapTap`, and `tapTapHold` slots (`tapTap` and `tapTapHold` exclusive) |
+| `generateDoubleTapGuardRule`     | `engine/double-tap-guard-rules.ts`            | Require a chord to be pressed twice within a timeout before passing through; var name auto-derived     |
+| `generateTapAloneHoldRule`       | `engine/tap-alone-hold-rules.ts`              | `toIfAlone`/`toIfHeldDown`/`toDelayedAction` pattern; cancel re-fires the alone action                  |
+| `generateModifierLauncherRules`  | `engine/launcher-rules.ts`                    | Modifier-key launchers; `triggerKey` accepts a single key or a modifier set (e.g. `HYPER`) plus a label |
+| `generateModifierChordRules`     | `engine/modifier-chord-rules.ts`              | Base key with optional `trackVar`/tap/hold plus modifier-variant chord remaps (caps lock → hyper/super/meh) |
+| `generatePointerRemapRule`       | `engine/pointer-remap-rules.ts`               | Pointing-button remap (with optional modifiers and `ifApp`) — builds the raw manipulator since karabiner.ts `map()` does not support pointing buttons |
+| `generateMouseRules`             | `engine/mouse-rules.ts`                       | Per-device mouse tap-hold and double-tap mappings                                                       |
+| `generateLayerRules`             | `core/leader/build.ts`                        | Generic leader-layer compiler (the space leader is its main caller)                                     |
+| `generateEscapeRule`             | `engine/escape-rule.ts`                       | Single rule that resets all layer/state variables when Escape is pressed                                |
+| `emitLayerDefinitions`           | `engine/layer-emit.ts`                        | Emits Hammerspoon layer definitions for the indicator GUI                                               |
+| `updateDeviceConfigurations`     | `engine/device-config.ts`                     | Patches per-device simple modifications into the profile after `writeToProfile`                         |
+
+## Definition File Pattern
+
+Every file in `src/definitions/` follows the same shape:
 
 ```ts
-type MouseTapHoldMapping = {
-  type: "tapHold";
-  button: string;
-  description: string;
-  alone?: ToEvent[];
-  hold?: ToEvent[];
-  thresholdMs?: number;
-  timeoutMs?: number;
+// definitions/antinote.ts
+import { appRegistry } from "../data";
+import {
+  generateDoubleTapGuardRule,
+  type DoubleTapGuardConfig,
+} from "../engine/double-tap-guard-rules";
+
+export const antinoteDeleteGuard: DoubleTapGuardConfig = {
+  key: "d",
+  modifiers: ["left_command"],
+  description: "Delete note",
+  ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
 };
 
-type MouseDoubleTapMapping = {
-  type: "doubleTap";
-  button: string;
-  description: string;
-  firstVar: string;
-  aloneEvents?: ToEvent[];
-  holdEvents?: ToEvent[];
-  tapTapEvents?: ToEvent[];
-  tapTapHoldEvents?: ToEvent[];
-  allowPassThrough?: boolean;
-  thresholdMs?: number;
-};
+export const buildAntinoteDeleteRule = () =>
+  generateDoubleTapGuardRule(antinoteDeleteGuard);
 ```
 
-Current limitation: scroll up/down chord triggers are not expressible as basic `from` events in this pipeline, so `src/mappings/mouse.ts` tracks those as explicit pending requests (`mouseScrollChordRequests`) with external bridge notes.
+The data export is the contract. The `build*` wrapper exists so `src/index.ts` does not have to know which engine function generated the rule.
 
-## Recommended Sequence
+Allowed in `src/definitions/`:
 
-1. Keep new mapping-shaped additions in `src/mappings` first.
-2. Extend existing generators before creating one-off rule builders.
-3. Leave stateful one-offs in `src/rules` until a clean schema emerges.
-4. Collapse thin adapters only when doing so reduces, rather than obscures, the public entrypoint surface.
-5. Prefer registry refs over raw bundle IDs, folder paths, and Raycast routes inside mapping files.
+- trigger keys, modifiers, descriptions
+- registry refs from `src/data/` (apps, folders, raycast, cleanshot)
+- `ActionSpec` literals
+- `ifApp` conditions (string or string[])
+- exactly one engine-function call per behaviour
+
+Not allowed in `src/definitions/`:
+
+- imports from `karabiner.ts`
+- calls to `map()`, `rule()`, `toKey()`, `cmd()`, `focusApp()`
+- iteration over the file's own data
+- manipulator construction
+
+## Definition File Inventory
+
+| File                                       | Engine call(s)                                                            |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| `definitions/antinote.ts`                  | `generateDoubleTapGuardRule`                                              |
+| `definitions/escape-monitor.ts`            | `generateMultiTapRule`, `generateTapAloneHoldRule`                        |
+| `definitions/hyper-chords.ts`              | `generateModifierChordRules`                                              |
+| `definitions/hyper-plus.ts`                | `generateModifierLauncherRules` (with `triggerKey: HYPER`, `triggerLabel: "hyper"`) |
+| `definitions/left-command-chords.ts`       | `generateMultiTapRule`, `generateDoubleTapGuardRule`                      |
+| `definitions/mouse.ts`                     | `generateMouseRules`                                                      |
+| `definitions/navigation.ts`                | `generateSimpleRemapRules`                                                |
+| `definitions/right-option-launchers.ts`    | `generateModifierLauncherRules`                                           |
+| `definitions/security.ts`                  | `generateSimpleRemapRules`, `generateConditionalActionRules`              |
+| `definitions/skim.ts`                      | `generateAppScopedRemapRules`                                             |
+| `definitions/space-layers.ts`              | `generateLayerRules` (via `src/index.ts`)                                 |
+| `definitions/special-keys.ts`              | `generateConditionalTapHoldRules`, `generatePointerRemapRule`             |
+| `definitions/tap-hold.ts`                  | `generateTapHoldRules` (via `src/index.ts`)                               |
 
 ## Practical Rule
 
-If a file answers the question "what should this key do?", it probably belongs in `src/mappings`.
+If a file answers "what should this key do?", it belongs in `src/definitions/`.
 
-If a file answers the question "how do we turn that declaration into Karabiner JSON?", it belongs in `src/generators`.
+If a file answers "how do we turn that declaration into Karabiner JSON?", it belongs in `src/engine/`.
 
-If a file answers the question "how do we hand-build this unusual behavior that our schemas cannot express yet?", it belongs in `src/rules`.
+If a file is a low-level builder, a shared helper, or part of the leader runtime, it belongs in `src/core/`.
+
+If a file is a plain registry or constant table consumed across layers, it belongs in `src/data/`.
+
+## Adding a New Behaviour
+
+1. Pick the engine function whose config shape matches the behaviour. If none fit, extend the closest one or add a new file in `src/engine/` with its own test in `src/tests/`.
+2. Create or edit the file in `src/definitions/` that owns the behaviour. Export a typed data config and a `build*` function that returns the engine call.
+3. Wire the `build*` function into `src/index.ts`.
+4. Run `npm run typecheck && npm test && npm run build`. The integration snapshot test will catch any unintended JSON drift.
+
+## Reference
+
+- `docs/superpowers/specs/2026-05-20-rule-generation-standardization-design.md` — design doc for the most recent standardization
+- `docs/superpowers/plans/2026-05-20-rule-generation-standardization.md` — task-by-task migration plan
+- `docs/INTEGRATION_SUMMARY.md` — upstream/local boundaries
+- `docs/COMMAND_SERVER_GUIDE.md` — when to use the user command server vs shell commands
