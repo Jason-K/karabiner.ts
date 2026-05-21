@@ -56,9 +56,6 @@ import {
 //////     fn: Dictation via Spokenly
 //////     application: Reflow pinned app (tap), Pin app (hold)
 //
-// OTHER COMBINATIONS:
-//
-////   left_shift+a: Antinote
 //====================================================================
 // CONFIG OPTIONS:
 //
@@ -79,7 +76,7 @@ import {
 //        { type: "cleanShot"; ref: string } |
 //        { type: "applescript"; scriptPath: string }
 
-export const tapHoldMappings: Record<string, TapHoldConfig> = {
+export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   a: {
     description: "Raycast AI-quick search",
     hold: [
@@ -384,12 +381,5 @@ export const tapHoldMappings: Record<string, TapHoldConfig> = {
     ],
     timeoutMs: 300,
     thresholdMs: 300,
-  },
-};
-
-export const leftShiftATapHoldMappings: Record<string, TapHoldConfig> = {
-  "left_shift+a": {
-    description: "Antinote",
-    hold: [{ type: "url", url: "antinote://", background: true }],
   },
 };

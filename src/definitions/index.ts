@@ -1,13 +1,11 @@
 // User edit surface: modify files in this directory to customize your Karabiner config.
 
 import type { TapHoldConfig } from "../engine";
+import { antinoteTapHoldMappings } from "./apps/antinote";
 import { hyperTapHoldMappings } from "./hyper";
 import { leftCommandTapHoldMappings } from "./left-command";
 import { rightOptionTapHoldMappings } from "./right-option";
-import {
-    leftShiftATapHoldMappings,
-    tapHoldMappings as singleKeyTapHoldMappings,
-} from "./tap-hold";
+import { singleKeyTapHoldMappings } from "./single-key";
 
 export { buildAntinoteRules } from "./apps/antinote";
 export { buildSkimCommandRemapRule } from "./apps/skim";
@@ -49,10 +47,25 @@ export {
     equalsKeyHoldMappings,
 } from "./enter-equals";
 
-export const tapHoldMappings: Record<string, TapHoldConfig> = {
-  ...singleKeyTapHoldMappings,
-  ...hyperTapHoldMappings,
-  ...leftCommandTapHoldMappings,
-  ...leftShiftATapHoldMappings,
-  ...rightOptionTapHoldMappings,
-};
+function mergeTapHoldRecords(
+  ...records: Array<Record<string, TapHoldConfig>>
+): Record<string, TapHoldConfig> {
+  const merged: Record<string, TapHoldConfig> = {};
+  for (const record of records) {
+    for (const [key, value] of Object.entries(record)) {
+      if (key in merged) {
+        throw new Error(`Duplicate tapHold key across definition files: ${key}`);
+      }
+      merged[key] = value;
+    }
+  }
+  return merged;
+}
+
+export const tapHoldMappings = mergeTapHoldRecords(
+  singleKeyTapHoldMappings,
+  hyperTapHoldMappings,
+  leftCommandTapHoldMappings,
+  antinoteTapHoldMappings,
+  rightOptionTapHoldMappings,
+);
