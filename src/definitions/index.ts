@@ -21,8 +21,8 @@ export {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,
     disabledShortcuts,
-    securitySlashActionMappings
-} from "./security";
+    passwordsQuickFillMapping,
+} from "./system";
 export { spaceLayerDefinitions } from "./space";
 export {
     buildEnterRules,

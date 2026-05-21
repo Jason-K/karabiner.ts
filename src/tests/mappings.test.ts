@@ -19,8 +19,8 @@ import { homeEndNavigationMappings } from "../definitions/home-end";
 import { rightOptionLaunchers } from "../definitions/right-option-launchers";
 import {
   disabledShortcuts,
-  securitySlashActionMappings,
-} from "../definitions/security";
+  passwordsQuickFillMapping,
+} from "../definitions/system";
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
@@ -177,35 +177,11 @@ test("equals key hold mappings stay declarative", () => {
   });
 });
 
-test("security slash action mappings stay declarative", () => {
-  assert.equal(securitySlashActionMappings.length, 2);
-  assert.deepEqual(securitySlashActionMappings[0], {
-    key: "slash",
-    modifiers: ["left_command"],
-    description: "Copy document name and elevate privileges",
-    variants: [
-      {
-        when: [
-          {
-            type: "frontmostApp",
-            bundleIds: [appRegistry.word],
-          },
-        ],
-        actions: [
-          {
-            type: "applescript",
-            scriptPath: PATHS.wordDocumentPathAppleScript,
-          },
-          {
-            type: "shell",
-            command:
-              "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3",
-          },
-        ],
-      },
-    ],
-  });
-  assert.equal(securitySlashActionMappings[1]?.variants.length, 2);
+test("passwords quick fill mapping stays declarative", () => {
+  assert.equal(passwordsQuickFillMapping.key, "slash");
+  assert.deepEqual(passwordsQuickFillMapping.modifiers, ["left_command"]);
+  assert.equal(passwordsQuickFillMapping.description, "Quick fill password");
+  assert.equal(passwordsQuickFillMapping.variants.length, 2);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {
