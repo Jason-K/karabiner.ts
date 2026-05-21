@@ -52,19 +52,19 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     mappings: {
       l: {
         description: "lowercase",
-        action: { type: "selectionTransform", operation: "lowercase" },
+        action: { type: "caseChange", operation: "lowercase" },
       },
       s: {
         description: "Sentence case",
-        action: { type: "selectionTransform", operation: "sentence_case" },
+        action: { type: "caseChange", operation: "sentence_case" },
       },
       t: {
         description: "Title Case",
-        action: { type: "selectionTransform", operation: "title_case" },
+        action: { type: "caseChange", operation: "title_case" },
       },
       u: {
         description: "UPPERCASE",
-        action: { type: "selectionTransform", operation: "uppercase" },
+        action: { type: "caseChange", operation: "uppercase" },
       },
     },
   },
@@ -196,19 +196,19 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     mappings: {
       c: {
         description: "Curly Braces",
-        action: { type: "selectionWrap", operation: "wrap_braces" },
+        action: { type: "wrapString", operation: "wrap_braces" },
       },
       p: {
         description: "Parentheses",
-        action: { type: "selectionWrap", operation: "wrap_parentheses" },
+        action: { type: "wrapString", operation: "wrap_parentheses" },
       },
       q: {
         description: "Quotes",
-        action: { type: "selectionWrap", operation: "wrap_quotes" },
+        action: { type: "wrapString", operation: "wrap_quotes" },
       },
       s: {
         description: "Square Brackets",
-        action: { type: "selectionWrap", operation: "wrap_brackets" },
+        action: { type: "wrapString", operation: "wrap_brackets" },
       },
     },
   },

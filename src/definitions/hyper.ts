@@ -59,12 +59,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f18",
-        modifiers: [
-          "left_command",
-          "left_option",
-          "left_control",
-          "left_shift",
-        ],
+        modifiers: [ "super" ],
         options: { repeat: false },
       },
     ],

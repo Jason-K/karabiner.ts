@@ -63,9 +63,9 @@ function resolveShellCommand(action: ActionSpec): string | null {
       return action.background
         ? `open -g '${action.url}'`
         : openUrlCommand(action.url);
-    case "selectionTransform":
+    case "caseChange":
       return textProcessorCommand(action.operation);
-    case "selectionWrap":
+    case "wrapString":
       return withSleep(
         action.delaySeconds ?? 0.2,
         textProcessorCommand(action.operation),
@@ -126,8 +126,8 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
       return [toKey("c", ["left_command"])];
     case "paste":
       return [toKey("v", ["left_command"])];
-    case "selectionTransform":
-    case "selectionWrap":
+    case "caseChange":
+    case "wrapString":
       return [toKey("x", ["left_command"]), cmd(resolveShellCommand(action)!)];
     case "sequence":
       return action.actions.flatMap(resolveActionToEvents);

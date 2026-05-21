@@ -38,11 +38,11 @@ export type ActionSpec =
       action: string;
     }
   | {
-      type: "selectionTransform";
+      type: "caseChange";
       operation: "lowercase" | "sentence_case" | "title_case" | "uppercase";
     }
   | {
-      type: "selectionWrap";
+      type: "wrapString";
       operation:
         | "wrap_braces"
         | "wrap_parentheses"
