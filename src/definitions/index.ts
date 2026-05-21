@@ -4,12 +4,12 @@ export { buildAntinoteDeleteRule } from "./antinote";
 export {
     buildCtrlEscapeMonitorRule,
     buildEscapeTapTapHoldRule
-} from "./escape-monitor";
-export { buildCapsLockRule } from "./hyper-chords";
+} from "./escape";
+export { buildCapsLockRule } from "./caps-lock";
 export { buildHyperPlusRules } from "./hyper-plus";
 export { buildCmdQRule, buildLeftCommandRule } from "./left-command-chords";
 export { buildMouseRules, mouseDeviceMappings } from "./mouse";
-export { buildHomeEndRule, homeEndNavigationMappings } from "./navigation";
+export { buildHomeEndRule, homeEndNavigationMappings } from "./home-end";
 export {
     buildRightOptionAppsRule,
     rightOptionLaunchers
@@ -22,7 +22,7 @@ export {
     securitySlashActionMappings
 } from "./security";
 export { buildSkimCommandRemapRule } from "./skim";
-export { spaceLayerDefinitions } from "./space-layers";
+export { spaceLayerDefinitions } from "./space";
 export {
     buildEnterRules,
     buildEqualsRules,

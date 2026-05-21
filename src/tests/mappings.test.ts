@@ -12,10 +12,10 @@ import {
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
 } from "../data/rectangle";
-import { spaceLayerDefinitions } from "../definitions/space-layers";
+import { spaceLayerDefinitions } from "../definitions/space";
 import { tapHoldMappings } from "../definitions/tap-hold";
 import { mouseDeviceMappings } from "../definitions/mouse";
-import { homeEndNavigationMappings } from "../definitions/navigation";
+import { homeEndNavigationMappings } from "../definitions/home-end";
 import { rightOptionLaunchers } from "../definitions/right-option-launchers";
 import {
   disabledShortcuts,
