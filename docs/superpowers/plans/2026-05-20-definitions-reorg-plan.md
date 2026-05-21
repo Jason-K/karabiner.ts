@@ -296,7 +296,7 @@ export const wordPrivilegesMapping: ConditionalActionMapping = {
       ],
       actions: [
         {
-          type: "applescript",
+          type: "osascript",
           scriptPath: PATHS.wordDocumentPathAppleScript,
         },
         {
@@ -788,7 +788,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
     key: "f12",
     description: "Edit last Typinator rule",
-    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}` },
+    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastRule}` },
   },
   {
     key: "escape",
@@ -982,7 +982,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
 export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
   "right_option+k": {
     description: "Kitty here",
-    hold: [{ type: "takeActionHere", action: "kitty" }],
+    hold: [{ type: "actHere", action: "kitty" }],
     timeoutMs: 300,
     thresholdMs: 300,
   },
@@ -997,8 +997,8 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Edit last Typinator expansion",
     hold: [
       {
-        type: "applescript",
-        scriptPath: PATHS.typinatorEditLastAppleScript,
+        type: "osascript",
+        scriptPath: PATHS.typinatorEditLastRule,
       },
     ],
     timeoutMs: TIMINGS.mouseDefaultMs,

@@ -336,7 +336,7 @@ export function generateConditionalActionRules(
 
 - [ ] **Step 2: Update `src/definitions/security.ts`**
 
-The data values in `securitySlashActionMappings` use `{ type: "applescript" }`, `{ type: "shell" }`, and `{ type: "key" }` — all valid `ActionSpec` variants. Remove the `ConditionalAction` type import if it exists as an explicit annotation. The type will be inferred from `ConditionalActionVariant.actions: ActionSpec[]`.
+The data values in `securitySlashActionMappings` use `{ type: "osascript" }`, `{ type: "shell" }`, and `{ type: "key" }` — all valid `ActionSpec` variants. Remove the `ConditionalAction` type import if it exists as an explicit annotation. The type will be inferred from `ConditionalActionVariant.actions: ActionSpec[]`.
 
 - [ ] **Step 3: Run tests and typecheck**
 
@@ -472,7 +472,7 @@ export const hyperPlusMappings: ModifierLauncherMapping[] = [
   {
     key: "f12",
     description: "Edit last Typinator rule",
-    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}` },
+    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastRule}` },
   },
   {
     key: "escape",

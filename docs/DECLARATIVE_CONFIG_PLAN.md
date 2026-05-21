@@ -29,13 +29,13 @@ type ActionSpec =
   | { type: "folder"; ref: FolderRef }
   | { type: "raycast"; ref: RaycastRef }
   | { type: "cleanShot"; ref: CleanShotRef }
-  | { type: "takeActionHere"; action: string }
+  | { type: "actHere"; action: string }
   | { type: "selectionTransform"; operation: "lowercase" | "sentence_case" | "title_case" | "uppercase" }
   | { type: "selectionWrap"; operation: "wrap_braces" | "wrap_parentheses" | "wrap_quotes" | "wrap_brackets"; delaySeconds?: number }
   | { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean; lazy?: boolean } }
   | { type: "url"; url: string; background?: boolean }
   | { type: "shell"; command: string }
-  | { type: "applescript"; scriptPath: string; args?: string[] }
+  | { type: "osascript"; scriptPath: string; args?: string[] }
   | { type: "cut" | "copy" | "paste" }
   | { type: "sequence"; actions: ActionSpec[] };
 ```

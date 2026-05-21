@@ -25,7 +25,7 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
 export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
   "right_option+k": {
     description: "Kitty here",
-    hold: [{ type: "takeActionHere", action: "kitty" }],
+    hold: [{ type: "actHere", action: "kitty" }],
     timeoutMs: 300,
     thresholdMs: 300,
   },
@@ -40,8 +40,8 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Edit last Typinator expansion",
     hold: [
       {
-        type: "applescript",
-        scriptPath: PATHS.typinatorEditLastAppleScript,
+        type: "osascript",
+        scriptPath: PATHS.typinatorEditLastRule,
       },
     ],
     timeoutMs: TIMINGS.mouseDefaultMs,

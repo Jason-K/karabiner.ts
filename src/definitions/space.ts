@@ -6,18 +6,33 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Applications",
     releaseLayer: false,
     mappings: {
-      8: { description: "RingCentral", action: { type: "app", ref: "ringCentral" } },
+      8: {
+        description: "RingCentral",
+        action: { type: "app", ref: "ringCentral" },
+      },
       b: { description: "Browser", action: { type: "app", ref: "browser" } },
       c: { description: "Calendar", action: { type: "app", ref: "calendar" } },
-      e: { description: "Proton Mail", action: { type: "app", ref: "protonMail" } },
-      f: { description: "Finder", action: { type: "app", ref: "folderOpener" } },
+      e: {
+        description: "Proton Mail",
+        action: { type: "app", ref: "protonMail" },
+      },
+      f: {
+        description: "Finder",
+        action: { type: "app", ref: "folderOpener" },
+      },
       g: { description: "Claude", action: { type: "app", ref: "claude" } },
-      k: { description: "Kitty here", action: { type: "takeActionHere", action: "kitty" } },
+      k: {
+        description: "Kitty here",
+        action: { type: "actHere", action: "kitty" },
+      },
       m: { description: "Messages", action: { type: "app", ref: "messages" } },
       o: { description: "Outlook", action: { type: "app", ref: "outlook" } },
       p: { description: "Phone", action: { type: "app", ref: "ringCentral" } },
       q: { description: "QSpace", action: { type: "app", ref: "qspace" } },
-      r: { description: "RingCentral", action: { type: "app", ref: "ringCentral" } },
+      r: {
+        description: "RingCentral",
+        action: { type: "app", ref: "ringCentral" },
+      },
       s: { description: "Spotify", action: { type: "app", ref: "spotify" } },
       t: { description: "Teams", action: { type: "app", ref: "teams" } },
       v: { description: "Code", action: { type: "app", ref: "code" } },
@@ -35,10 +50,22 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Case >",
     releaseLayer: false,
     mappings: {
-      l: { description: "lowercase", action: { type: "selectionTransform", operation: "lowercase" } },
-      s: { description: "Sentence case", action: { type: "selectionTransform", operation: "sentence_case" } },
-      t: { description: "Title Case", action: { type: "selectionTransform", operation: "title_case" } },
-      u: { description: "UPPERCASE", action: { type: "selectionTransform", operation: "uppercase" } },
+      l: {
+        description: "lowercase",
+        action: { type: "selectionTransform", operation: "lowercase" },
+      },
+      s: {
+        description: "Sentence case",
+        action: { type: "selectionTransform", operation: "sentence_case" },
+      },
+      t: {
+        description: "Title Case",
+        action: { type: "selectionTransform", operation: "title_case" },
+      },
+      u: {
+        description: "UPPERCASE",
+        action: { type: "selectionTransform", operation: "uppercase" },
+      },
     },
   },
   {
@@ -46,12 +73,30 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Downloads >",
     releaseLayer: false,
     mappings: {
-      "3": { description: "3dPrinting", action: { type: "folder", ref: "downloads3dPrinting" } },
-      a: { description: "Archives", action: { type: "folder", ref: "downloadsArchives" } },
-      d: { description: "Downloads", action: { type: "folder", ref: "downloads" } },
-      i: { description: "Installs", action: { type: "folder", ref: "downloadsInstalls" } },
-      o: { description: "Office", action: { type: "folder", ref: "downloadsOffice" } },
-      p: { description: "PDFs", action: { type: "folder", ref: "downloadsPdfs" } },
+      "3": {
+        description: "3dPrinting",
+        action: { type: "folder", ref: "downloads3dPrinting" },
+      },
+      a: {
+        description: "Archives",
+        action: { type: "folder", ref: "downloadsArchives" },
+      },
+      d: {
+        description: "Downloads",
+        action: { type: "folder", ref: "downloads" },
+      },
+      i: {
+        description: "Installs",
+        action: { type: "folder", ref: "downloadsInstalls" },
+      },
+      o: {
+        description: "Office",
+        action: { type: "folder", ref: "downloadsOffice" },
+      },
+      p: {
+        description: "PDFs",
+        action: { type: "folder", ref: "downloadsPdfs" },
+      },
     },
   },
   {
@@ -59,17 +104,35 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Folders >",
     releaseLayer: false,
     mappings: {
-      ".": { description: "Chezmoi", action: { type: "folder", ref: "chezmoi" } },
-      a: { description: "Applications", action: { type: "folder", ref: "applications" } },
+      ".": {
+        description: "Chezmoi",
+        action: { type: "folder", ref: "chezmoi" },
+      },
+      a: {
+        description: "Applications",
+        action: { type: "folder", ref: "applications" },
+      },
       c: { description: "Cases", action: { type: "folder", ref: "cases" } },
-      d: { description: "Downloads", action: { type: "folder", ref: "downloads" } },
+      d: {
+        description: "Downloads",
+        action: { type: "folder", ref: "downloads" },
+      },
       g: { description: "Gits", action: { type: "folder", ref: "gits" } },
       h: { description: "Home", action: { type: "folder", ref: "home" } },
       l: { description: "Library", action: { type: "folder", ref: "library" } },
-      p: { description: "PDFs", action: { type: "folder", ref: "downloadsPdfs" } },
-      r: { description: "Recent Folders", action: { type: "raycast", ref: "recentFolders" } },
+      p: {
+        description: "PDFs",
+        action: { type: "folder", ref: "downloadsPdfs" },
+      },
+      r: {
+        description: "Recent Folders",
+        action: { type: "raycast", ref: "recentFolders" },
+      },
       s: { description: "Scripts", action: { type: "folder", ref: "scripts" } },
-      w: { description: "Workspaces", action: { type: "folder", ref: "workspaces" } },
+      w: {
+        description: "Workspaces",
+        action: { type: "folder", ref: "workspaces" },
+      },
     },
   },
   {
@@ -77,11 +140,26 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Recent >",
     releaseLayer: false,
     mappings: {
-      a: { description: "Applications", action: { type: "raycast", ref: "recentApplications" } },
-      d: { description: "Directories", action: { type: "raycast", ref: "recentFolders" } },
-      f: { description: "Files", action: { type: "raycast", ref: "recentFiles" } },
-      j: { description: "Downloads", action: { type: "raycast", ref: "recentDownloads" } },
-      r: { description: "Custom", action: { type: "raycast", ref: "recentCustom" } },
+      a: {
+        description: "Applications",
+        action: { type: "raycast", ref: "recentApplications" },
+      },
+      d: {
+        description: "Directories",
+        action: { type: "raycast", ref: "recentFolders" },
+      },
+      f: {
+        description: "Files",
+        action: { type: "raycast", ref: "recentFiles" },
+      },
+      j: {
+        description: "Downloads",
+        action: { type: "raycast", ref: "recentDownloads" },
+      },
+      r: {
+        description: "Custom",
+        action: { type: "raycast", ref: "recentCustom" },
+      },
     },
   },
   {
@@ -89,11 +167,26 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Screenshots >",
     releaseLayer: false,
     mappings: {
-      a: { description: "Capture Area", action: { type: "cleanShot", ref: "captureArea" } },
-      o: { description: "OCR", action: { type: "cleanShot", ref: "captureTextNoLinebreaks" } },
-      r: { description: "Record Screen", action: { type: "cleanShot", ref: "recordScreen" } },
-      s: { description: "Capture Screen", action: { type: "cleanShot", ref: "captureFullscreen" } },
-      w: { description: "Capture Window", action: { type: "cleanShot", ref: "captureWindow" } },
+      a: {
+        description: "Capture Area",
+        action: { type: "cleanShot", ref: "captureArea" },
+      },
+      o: {
+        description: "OCR",
+        action: { type: "cleanShot", ref: "captureTextNoLinebreaks" },
+      },
+      r: {
+        description: "Record Screen",
+        action: { type: "cleanShot", ref: "recordScreen" },
+      },
+      s: {
+        description: "Capture Screen",
+        action: { type: "cleanShot", ref: "captureFullscreen" },
+      },
+      w: {
+        description: "Capture Window",
+        action: { type: "cleanShot", ref: "captureWindow" },
+      },
     },
   },
   {
@@ -101,10 +194,22 @@ export const spaceLayerDefinitions: SubLayerConfig[] = [
     layerName: "Wrap >",
     releaseLayer: false,
     mappings: {
-      c: { description: "Curly Braces", action: { type: "selectionWrap", operation: "wrap_braces" } },
-      p: { description: "Parentheses", action: { type: "selectionWrap", operation: "wrap_parentheses" } },
-      q: { description: "Quotes", action: { type: "selectionWrap", operation: "wrap_quotes" } },
-      s: { description: "Square Brackets", action: { type: "selectionWrap", operation: "wrap_brackets" } },
+      c: {
+        description: "Curly Braces",
+        action: { type: "selectionWrap", operation: "wrap_braces" },
+      },
+      p: {
+        description: "Parentheses",
+        action: { type: "selectionWrap", operation: "wrap_parentheses" },
+      },
+      q: {
+        description: "Quotes",
+        action: { type: "selectionWrap", operation: "wrap_quotes" },
+      },
+      s: {
+        description: "Square Brackets",
+        action: { type: "selectionWrap", operation: "wrap_brackets" },
+      },
     },
   },
 ];

@@ -25,7 +25,7 @@ export const wordPrivilegesMapping: ConditionalActionMapping = {
       ],
       actions: [
         {
-          type: "applescript",
+          type: "osascript",
           scriptPath: PATHS.wordDocumentPathAppleScript,
         },
         {

@@ -38,17 +38,17 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
     key: "semicolon",
     description: "Open System Settings",
-    action: { type: "shell", command: "open -a '/System/Applications/System Settings.app'" },
+    action: { type: "app", ref: "systemSettings" },
   },
   {
     key: "f12",
     description: "Edit last Typinator rule",
-    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastAppleScript}` },
+    action: { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
   },
   {
     key: "escape",
     description: "Open Activity Monitor",
-    action: { type: "shell", command: "open -a 'Activity Monitor'" },
+    action: { type: "app", ref: "activityMonitor" },
   },
 ];
 
@@ -59,10 +59,20 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f18",
-        modifiers: ["command", "option", "control", "shift"],
+        modifiers: [
+          "left_command",
+          "left_option",
+          "left_control",
+          "left_shift",
+        ],
         options: { repeat: false },
       },
     ],
+  },
+  "hyper+t": {
+    description: "Edit last Typinator rule",
+    alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
+    hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
   },
   "hyper+q": {
     description: "Rectangle Pro left",
@@ -101,19 +111,31 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
   "hyper+4": {
     description: "Rectangle first-fourth",
     alone: [
-      { type: "url", url: rectangleActionUrl("first-fourth"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("first-fourth"),
+        background: true,
+      },
     ],
   },
   "hyper+keypad_1": {
     description: "Rectangle bottom-left-eighth",
     alone: [
-      { type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-left-eighth"),
+        background: true,
+      },
     ],
   },
   "hyper+keypad_3": {
     description: "Rectangle bottom-right-eighth",
     alone: [
-      { type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-right-eighth"),
+        background: true,
+      },
     ],
   },
   "hyper+keypad_5": {
@@ -125,13 +147,21 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
   "hyper+keypad_7": {
     description: "Rectangle top-left-eighth",
     alone: [
-      { type: "url", url: rectangleActionUrl("top-left-eighth"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("top-left-eighth"),
+        background: true,
+      },
     ],
   },
   "hyper+keypad_9": {
     description: "Rectangle top-right-eighth",
     alone: [
-      { type: "url", url: rectangleActionUrl("top-right-eighth"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("top-right-eighth"),
+        background: true,
+      },
     ],
   },
   "hyper+spacebar": {
@@ -141,28 +171,45 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
   "hyper+tab": {
     description: "Rectangle next-display / previous-display",
     alone: [
-      { type: "url", url: rectangleActionUrl("next-display"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("next-display"),
+        background: true,
+      },
     ],
     hold: [
-      { type: "url", url: rectangleActionUrl("previous-display"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("previous-display"),
+        background: true,
+      },
     ],
   },
   "hyper+left_arrow": {
     description: "Rectangle fill-left / previous-display",
-    alone: [
-      { type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION },
-    ],
+    alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
     hold: [
-      { type: "url", url: rectangleActionUrl("previous-display"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("previous-display"),
+        background: true,
+      },
     ],
   },
   "hyper+right_arrow": {
     description: "Rectangle fill-right / next-display",
     alone: [
-      { type: "shell", command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION },
+      {
+        type: "shell",
+        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
+      },
     ],
     hold: [
-      { type: "url", url: rectangleActionUrl("next-display"), background: true },
+      {
+        type: "url",
+        url: rectangleActionUrl("next-display"),
+        background: true,
+      },
     ],
   },
 };

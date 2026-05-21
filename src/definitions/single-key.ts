@@ -1,8 +1,6 @@
 import { recentDownloadsCommand } from "../core/scripts";
+import { rectangleActionUrl } from "../data/rectangle";
 import type { TapHoldConfig } from "../engine";
-import {
-    rectangleActionUrl,
-} from "../data/rectangle";
 
 //   SINGLE KEY TAP/HOLD RULES
 //
@@ -21,8 +19,8 @@ import {
 //////     s: Screenshot
 //////     t: Todoist
 //////     v: Maccy
-//////     x: Copy file (takeActionHere)
-//////     y: Yank file (takeActionHere)
+//////     x: Copy file (actHere)
+//////     y: Yank file (actHere)
 //////     z: Zoxide
 ////
 ////   NUMBERS:
@@ -72,9 +70,9 @@ import {
 //        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
 //        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
 //        { type: "raycast"; ref: string } |
-//        { type: "takeActionHere"; action: string } |
+//        { type: "actHere"; action: string } |
 //        { type: "cleanShot"; ref: string } |
-//        { type: "applescript"; scriptPath: string }
+//        { type: "osascript"; scriptPath: string }
 
 export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   a: {
@@ -112,7 +110,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   f: {
     description: "QSSpace",
-    hold: [{ type: "takeActionHere", action: "qspace" }],
+    hold: [{ type: "actHere", action: "qspace" }],
   },
   g: {
     description: "Claude",
@@ -183,11 +181,11 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   x: {
     description: "Copy file",
-    hold: [{ type: "takeActionHere", action: "copy" }],
+    hold: [{ type: "actHere", action: "copy" }],
   },
   y: {
     description: "Yank file",
-    hold: [{ type: "takeActionHere", action: "copy" }],
+    hold: [{ type: "actHere", action: "copy" }],
   },
   z: {
     description: "Zoxide",

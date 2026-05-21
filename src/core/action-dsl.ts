@@ -26,7 +26,7 @@ export type ActionSpec =
       ref: CleanShotRef;
     }
   | {
-      type: "takeActionHere";
+      type: "actHere";
       action: string;
     }
   | {
@@ -62,7 +62,7 @@ export type ActionSpec =
       command: string;
     }
   | {
-      type: "applescript";
+      type: "osascript";
       scriptPath: string;
       args?: string[];
     }

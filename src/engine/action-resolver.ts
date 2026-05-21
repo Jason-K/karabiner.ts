@@ -4,16 +4,16 @@ import { toKey } from "karabiner.ts";
 import type { ActionSpec } from "../core/action-dsl";
 import { getFolderOpenerBundleId, getOpenFolderCommand } from "../core/folder-opener";
 import {
-    applescript,
-    cleanShotCommand,
-    cmd,
-    focusApp,
-    openAppBundleCommand,
-    openUrlCommand,
-    raycastExtensionCommand,
-    takeActionHereCommand,
-    textProcessorCommand,
-    withSleep,
+  actHereCmd,
+  applescript,
+  cleanShotCommand,
+  cmd,
+  focusApp,
+  openAppBundleCommand,
+  openUrlCommand,
+  raycastExtensionCommand,
+  textProcessorCommand,
+  withSleep,
 } from "../core/scripts";
 import { openApp } from "../core/software";
 import { appRegistry, folderRegistry } from "../data";
@@ -36,8 +36,8 @@ function resolveShellCommand(action: ActionSpec): string | null {
       return raycastExtensionCommand(raycastRegistry[action.ref]);
     case "cleanShot":
       return cleanShotCommand(cleanShotRegistry[action.ref]);
-    case "takeActionHere":
-      return takeActionHereCommand(action.action);
+    case "actHere":
+      return actHereCmd(action.action);
     case "url":
       return action.background
         ? `open -g '${action.url}'`
@@ -88,7 +88,7 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
             : undefined,
         ),
       ];
-    case "applescript":
+    case "osascript":
       return [applescript(action.scriptPath, ...(action.args ?? []))];
     case "cut":
       return [toKey("x", ["left_command"])];

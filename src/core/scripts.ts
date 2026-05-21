@@ -293,8 +293,8 @@ export function cleanShotCommand(route: string): string {
   return openUrlCommand(`cleanshot://${route}`);
 }
 
-export function takeActionHereCommand(action: string): string {
-  return `${PATHS.takeActionHereScript} --action ${action}`;
+export function actHereCmd(action: string): string {
+  return `${PATHS.actHereScript} --action ${action}`;
 }
 
 export function openAppBundleCommand(bundleIdentifier: string): string {
