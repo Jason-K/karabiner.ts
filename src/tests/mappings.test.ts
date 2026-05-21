@@ -13,10 +13,10 @@ import {
   rectangleMaxOrRestoreCommand,
 } from "../data/rectangle";
 import { spaceLayerDefinitions } from "../definitions/space";
-import { tapHoldMappings } from "../definitions/tap-hold";
+import { tapHoldMappings } from "../definitions";
 import { mouseDeviceMappings } from "../definitions/mouse";
 import { homeEndNavigationMappings } from "../definitions/home-end";
-import { rightOptionLaunchers } from "../definitions/right-option-launchers";
+import { rightOptionLaunchers } from "../definitions/right-option";
 import {
   disabledShortcuts,
   passwordsQuickFillMapping,

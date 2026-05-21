@@ -1,3 +1,7 @@
+import { spotifyToggleCommand } from "../core/scripts";
+import { PATHS } from "../data/paths";
+import { TIMINGS } from "../data/timings";
+import type { TapHoldConfig } from "../engine";
 import {
     generateModifierLauncherRules,
     type ModifierLauncherMapping,
@@ -18,7 +22,34 @@ export const rightOptionLaunchers: ModifierLauncherMapping<
   { key: "8", description: "RingCentral", action: { type: "app", ref: "ringCentral", mode: "focus" } },
 ];
 
-export const buildRightOptionAppsRule = () =>
+export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
+  "right_option+k": {
+    description: "Kitty here",
+    hold: [{ type: "takeActionHere", action: "kitty" }],
+    timeoutMs: 300,
+    thresholdMs: 300,
+  },
+  "right_option+s": {
+    description: "Spotify toggle (tap), search (hold)",
+    alone: [{ type: "shell", command: spotifyToggleCommand() }],
+    hold: [{ type: "raycast", ref: "spotifySearch" }],
+    timeoutMs: TIMINGS.spotifyTapHoldMs,
+    thresholdMs: TIMINGS.spotifyTapHoldMs,
+  },
+  "right_option+t": {
+    description: "Edit last Typinator expansion",
+    hold: [
+      {
+        type: "applescript",
+        scriptPath: PATHS.typinatorEditLastAppleScript,
+      },
+    ],
+    timeoutMs: TIMINGS.mouseDefaultMs,
+    thresholdMs: TIMINGS.mouseDefaultMs,
+  },
+};
+
+export const buildRightOptionLauncherRules = () =>
   generateModifierLauncherRules({
     triggerKey: "right_option",
     launchers: rightOptionLaunchers,

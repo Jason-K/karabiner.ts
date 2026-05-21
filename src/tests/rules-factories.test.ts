@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { DEVICE_IDENTIFIERS, appRegistry } from "../data";
 import {
-  buildAntinoteDeleteRule,
+  buildAntinoteRules,
   buildCapsLockRule,
   buildCmdQRule,
   buildCtrlEscapeMonitorRule,
@@ -12,11 +12,11 @@ import {
   buildEqualsRules,
   buildEscapeTapTapHoldRule,
   buildHomeEndRule,
-  buildHyperPlusRules,
+  buildHyperLauncherRules,
   buildLeftCommandRule,
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
-  buildRightOptionAppsRule,
+  buildRightOptionLauncherRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   mouseDeviceMappings,
@@ -87,7 +87,7 @@ test("cmd-q factory keeps double-tap protection structure", () => {
 });
 
 test("right-option app factory keeps full launcher set", () => {
-  const rules = toRules(buildRightOptionAppsRule());
+  const rules = toRules(buildRightOptionLauncherRules());
   assert.equal(rules.length, 10);
   assert.equal(rules[0]?.description, "[→⌥]+[A]        →    Antinote (on tap)");
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
@@ -166,7 +166,7 @@ test("skim command remap factory keeps both remaps", () => {
 });
 
 test("antinote delete factory keeps double-tap workflow", () => {
-  const rule = toRule(buildAntinoteDeleteRule());
+  const rule = toRule(buildAntinoteRules()[0]);
   assert.equal(
     rule.description,
     "[←⌘]+[D]        →    Delete note (on multi-tap)",
@@ -203,7 +203,7 @@ test("home-end factory keeps four navigation mappings", () => {
 });
 
 test("hyper plus rules factory keeps grouped mappings", () => {
-  const rules = toRules(buildHyperPlusRules());
+  const rules = toRules(buildHyperLauncherRules());
   assert.equal(rules.length, 5);
   assert.deepEqual(
     rules.map((rule) => rule.description),

@@ -1,22 +1,40 @@
 // User edit surface: modify files in this directory to customize your Karabiner config.
 
-export { buildAntinoteDeleteRule } from "./apps/antinote";
+import type { TapHoldConfig } from "../engine";
+import { hyperTapHoldMappings } from "./hyper";
+import { leftCommandTapHoldMappings } from "./left-command";
+import { rightOptionTapHoldMappings } from "./right-option";
+import {
+    leftShiftATapHoldMappings,
+    tapHoldMappings as singleKeyTapHoldMappings,
+} from "./tap-hold";
+
+export { buildAntinoteRules } from "./apps/antinote";
 export { buildSkimCommandRemapRule } from "./apps/skim";
 export { buildOnePieceClickEnterRule } from "./apps/onepiece";
 export { buildWordPrivilegesRule } from "./apps/word";
 export {
     buildCtrlEscapeMonitorRule,
-    buildEscapeTapTapHoldRule
+    buildEscapeTapTapHoldRule,
 } from "./escape";
 export { buildCapsLockRule } from "./caps-lock";
-export { buildHyperPlusRules } from "./hyper-plus";
-export { buildCmdQRule, buildLeftCommandRule } from "./left-command-chords";
+export {
+    buildHyperLauncherRules,
+    hyperLauncherMappings,
+    hyperTapHoldMappings,
+} from "./hyper";
+export {
+    buildCmdQRule,
+    buildLeftCommandRule,
+    leftCommandTapHoldMappings,
+} from "./left-command";
 export { buildMouseRules, mouseDeviceMappings } from "./mouse";
 export { buildHomeEndRule, homeEndNavigationMappings } from "./home-end";
 export {
-    buildRightOptionAppsRule,
-    rightOptionLaunchers
-} from "./right-option-launchers";
+    buildRightOptionLauncherRules,
+    rightOptionLaunchers,
+    rightOptionTapHoldMappings,
+} from "./right-option";
 export {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,
@@ -28,6 +46,13 @@ export {
     buildEnterRules,
     buildEqualsRules,
     enterKeyHoldMappings,
-    equalsKeyHoldMappings
+    equalsKeyHoldMappings,
 } from "./enter-equals";
-export { tapHoldMappings } from "./tap-hold";
+
+export const tapHoldMappings: Record<string, TapHoldConfig> = {
+  ...singleKeyTapHoldMappings,
+  ...hyperTapHoldMappings,
+  ...leftCommandTapHoldMappings,
+  ...leftShiftATapHoldMappings,
+  ...rightOptionTapHoldMappings,
+};

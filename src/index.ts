@@ -33,7 +33,7 @@ import {
   SPACE_LAYER_PREFIX,
 } from "./data";
 import {
-  buildAntinoteDeleteRule,
+  buildAntinoteRules,
   buildCapsLockRule,
   buildCmdQRule,
   buildCtrlEscapeMonitorRule,
@@ -42,11 +42,11 @@ import {
   buildEqualsRules,
   buildEscapeTapTapHoldRule,
   buildHomeEndRule,
-  buildHyperPlusRules,
+  buildHyperLauncherRules,
   buildLeftCommandRule,
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
-  buildRightOptionAppsRule,
+  buildRightOptionLauncherRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   mouseDeviceMappings,
@@ -132,7 +132,7 @@ let rules: any[] = [
   ...buildHomeEndRule(),
 
   // HYPER + _ - Grouped hyper shortcuts
-  ...buildHyperPlusRules(),
+  ...buildHyperLauncherRules(),
 
   // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel
   ...buildEnterRules(),
@@ -144,7 +144,7 @@ let rules: any[] = [
   buildCmdQRule(),
 
   // Right_Option + __ - App launch or focus
-  ...buildRightOptionAppsRule(),
+  ...buildRightOptionLauncherRules(),
   // Generate escape rule to reset all variables
   ...generateEscapeRule(spaceLayers),
 
@@ -190,7 +190,7 @@ let rules: any[] = [
    */
 
   // ANTINOTE - CMD+D double-tap to delete note
-  buildAntinoteDeleteRule(),
+  ...buildAntinoteRules(),
 ];
 
 // ============================================================================

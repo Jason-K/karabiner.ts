@@ -11,5 +11,6 @@ export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
 };
 
-export const buildAntinoteDeleteRule = () =>
-  generateDoubleTapGuardRule(antinoteDeleteGuard);
+export const buildAntinoteRules = () => [
+  generateDoubleTapGuardRule(antinoteDeleteGuard),
+];
