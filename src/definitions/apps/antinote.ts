@@ -1,8 +1,8 @@
-import { appRegistry } from "../data";
+import { appRegistry } from "../../data";
 import {
     generateDoubleTapGuardRule,
     type DoubleTapGuardConfig,
-} from "../engine/double-tap-guard-rules";
+} from "../../engine/double-tap-guard-rules";
 
 export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",

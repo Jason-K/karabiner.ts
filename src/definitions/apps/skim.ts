@@ -1,9 +1,9 @@
-import { L } from "../core/mods";
-import { appRegistry } from "../data";
+import { L } from "../../core/mods";
+import { appRegistry } from "../../data";
 import {
     generateAppScopedRemapRules,
     type AppScopedRemapMapping,
-} from "../engine/simple-rules";
+} from "../../engine/simple-rules";
 
 export const skimRemapMappings: AppScopedRemapMapping[] = [
   {

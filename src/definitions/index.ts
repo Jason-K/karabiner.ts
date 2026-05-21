@@ -1,6 +1,9 @@
 // User edit surface: modify files in this directory to customize your Karabiner config.
 
-export { buildAntinoteDeleteRule } from "./antinote";
+export { buildAntinoteDeleteRule } from "./apps/antinote";
+export { buildSkimCommandRemapRule } from "./apps/skim";
+export { buildOnePieceClickEnterRule } from "./apps/onepiece";
+export { buildWordPrivilegesRule } from "./apps/word";
 export {
     buildCtrlEscapeMonitorRule,
     buildEscapeTapTapHoldRule
@@ -17,16 +20,13 @@ export {
 export {
     buildDisableHideMinimizeRule,
     buildPasswordsQuickFillRule,
-    buildWordPrivilegesRule,
     disabledShortcuts,
     securitySlashActionMappings
 } from "./security";
-export { buildSkimCommandRemapRule } from "./skim";
 export { spaceLayerDefinitions } from "./space";
 export {
     buildEnterRules,
     buildEqualsRules,
-    buildOnePieceClickEnterRule,
     enterKeyHoldMappings,
     equalsKeyHoldMappings
 } from "./special-keys";
