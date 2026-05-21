@@ -4849,8 +4849,8 @@
                 "repeat": false,
                 "key_code": "m",
                 "modifiers": [
-                  "option",
-                  "control"
+                  "left_option",
+                  "left_control"
                 ]
               }
             ],

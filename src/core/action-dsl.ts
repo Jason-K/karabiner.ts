@@ -4,7 +4,11 @@ import type { FolderRef } from "../data/folders";
 import type { ModifierKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
 
-export type ActionKeyModifier = ModifierKey | "hyper" | "super" | "meh";
+export type ActionKeyModifier =
+  | ModifierKey
+  | "hyper" | "super" | "meh"
+  | "lcmd" | "lopt" | "lctrl" | "lshift"
+  | "rcmd" | "ropt" | "rctrl" | "rshift";
 
 export type ActionSpec =
   | {

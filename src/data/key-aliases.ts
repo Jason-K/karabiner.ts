@@ -20,6 +20,11 @@ export const MODIFIER_ALIASES: Record<string, string[]> = {
   hyper: HYPER,
   super: SUPER,
   meh: MEH,
+  // Short aliases mirroring the L/R objects, usable as quoted strings
+  lcmd: ["left_command"],   lshift: ["left_shift"],
+  lopt: ["left_option"],    lctrl: ["left_control"],
+  rcmd: ["right_command"],  rshift: ["right_shift"],
+  ropt: ["right_option"],   rctrl: ["right_control"],
 };
 
 // Shorthand for left-side modifier keys
