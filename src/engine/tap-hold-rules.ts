@@ -1,5 +1,5 @@
 import { rule } from "karabiner.ts";
-import type { ActionSpec } from "../core/action-dsl";
+import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import { getAllSublayerVars } from "../core/leader/runtime";
 import type { SubLayerConfig } from "../core/leader/types";
 import { formatRuleDescription } from "../core/rule-descriptions";
@@ -80,7 +80,7 @@ export function generateTapHoldRules(
   return Object.entries(tapHoldKeys).map(([keyString, config]) => {
     const { key, modifiers } = parseKeyWithModifiers(keyString);
     const defaultAlone: ActionSpec[] = [
-      { type: "key", key, modifiers, options: { halt: true } },
+      { type: "key", key, modifiers: modifiers as ActionKeyModifier[], options: { halt: true } },
     ];
     const resolvedAlone = config.alone ?? defaultAlone;
     const resolvedHold = config.hold ?? defaultAlone;

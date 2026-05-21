@@ -11,6 +11,7 @@ import {
   focusApp,
   openAppBundleCommand,
   openUrlCommand,
+  pythonScriptCommand,
   raycastExtensionCommand,
   textProcessorCommand,
   withSleep,
@@ -19,6 +20,26 @@ import { openApp } from "../core/software";
 import { appRegistry, folderRegistry } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { raycastRegistry } from "../data/raycast";
+
+const VIRTUAL_MODIFIERS: Record<string, string[]> = {
+  hyper: ["command", "option", "control"],
+  super: ["command", "option", "control", "shift"],
+  meh: ["command", "option", "shift"],
+};
+
+function expandModifiers(modifiers: string[]): string[] {
+  const expanded: string[] = [];
+  const seen = new Set<string>();
+  for (const mod of modifiers) {
+    for (const m of VIRTUAL_MODIFIERS[mod] ?? [mod]) {
+      if (!seen.has(m)) {
+        seen.add(m);
+        expanded.push(m);
+      }
+    }
+  }
+  return expanded;
+}
 
 function resolveAppBundleId(ref: keyof typeof appRegistry): string {
   if (ref === "folderOpener") {
@@ -51,6 +72,11 @@ function resolveShellCommand(action: ActionSpec): string | null {
       );
     case "shell":
       return action.command;
+    case "python":
+      return pythonScriptCommand(action.scriptPath, {
+        venv: action.venv,
+        args: action.args,
+      });
     case "app":
       if (action.mode === "shell") {
         return openAppBundleCommand(resolveAppBundleId(action.ref));
@@ -78,16 +104,20 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
     }
     case "appHistory":
       return [openApp({ historyIndex: action.index })];
-    case "key":
+    case "key": {
+      const modifiers = action.modifiers?.length
+        ? expandModifiers(action.modifiers as string[])
+        : undefined;
       return [
         toKey(
           action.key as any,
-          action.modifiers?.length ? (action.modifiers as any) : undefined,
+          modifiers?.length ? (modifiers as any) : undefined,
           action.options && Object.keys(action.options).length
             ? (action.options as any)
             : undefined,
         ),
       ];
+    }
     case "osascript":
       return [applescript(action.scriptPath, ...(action.args ?? []))];
     case "cut":

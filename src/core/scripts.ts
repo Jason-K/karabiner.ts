@@ -230,6 +230,21 @@ export function python(spec: string | string[], opts?: { useEnv?: boolean; pytho
   return cmd(pythonCommand(spec, opts));
 }
 
+export function pythonScriptCommand(
+  scriptPath: string,
+  opts?: { venv?: string; args?: string[] },
+): string {
+  const parts = [PATHS.uvBin, "run"];
+  if (opts?.venv) {
+    parts.push("--python", normalizePathForShell(`${opts.venv}/bin/python`));
+  }
+  parts.push(normalizePathForShell(scriptPath));
+  if (opts?.args?.length) {
+    parts.push(...opts.args.map(shellSingleQuote));
+  }
+  return parts.join(" ");
+}
+
 export function textProcessorCommand(action: string): string {
   return pythonCommand(
     [

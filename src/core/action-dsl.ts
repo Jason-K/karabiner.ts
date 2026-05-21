@@ -3,6 +3,14 @@ import type { CleanShotRef } from "../data/cleanshot";
 import type { FolderRef } from "../data/folders";
 import type { RaycastRef } from "../data/raycast";
 
+export type ActionKeyModifier =
+  | "command" | "left_command" | "right_command"
+  | "option" | "left_option" | "right_option"
+  | "control" | "left_control" | "right_control"
+  | "shift" | "left_shift" | "right_shift"
+  | "fn" | "caps_lock"
+  | "hyper" | "super" | "meh";
+
 export type ActionSpec =
   | {
       type: "app";
@@ -45,7 +53,7 @@ export type ActionSpec =
   | {
       type: "key";
       key: string;
-      modifiers?: string[];
+      modifiers?: ActionKeyModifier[];
       options?: {
         repeat?: boolean;
         halt?: boolean;
@@ -60,6 +68,12 @@ export type ActionSpec =
   | {
       type: "shell";
       command: string;
+    }
+  | {
+      type: "python";
+      scriptPath: string;
+      venv?: string;
+      args?: string[];
     }
   | {
       type: "osascript";

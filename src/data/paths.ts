@@ -2,6 +2,7 @@ import { HOME_DIR } from "./environment";
 
 export const PATHS = {
   karabinerConfig: `${HOME_DIR}/.config/karabiner/karabiner.json`,
+  uvBin: "~/.local/bin/uv",
   killAppBin: "~/.local/bin/kill-app",
   openAppBin: "~/.local/bin/open-app",
   recentDownloadsScript: `${HOME_DIR}/Scripts/filesystem/recent_changes/recent_dl.sh`,

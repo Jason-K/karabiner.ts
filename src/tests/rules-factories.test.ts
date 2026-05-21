@@ -22,6 +22,7 @@ import {
   mouseDeviceMappings,
 } from "../definitions";
 import { buildMouseRules, generateAppScopedRemapRules, resolveActionToEvents } from "../engine";
+import { pythonScriptCommand } from "../core/scripts";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -370,4 +371,87 @@ test("generateAppScopedRemapRules attaches ifApp condition to each rule", () => 
     ),
     "Missing frontmost_application_if condition",
   );
+});
+
+test("resolveActionToEvents expands hyper/super/meh modifiers in key action", () => {
+  const hyperEvents = resolveActionToEvents({
+    type: "key",
+    key: "a",
+    modifiers: ["hyper"],
+  });
+  assert.deepEqual((hyperEvents[0] as any)?.key_code, "a");
+  assert.deepEqual((hyperEvents[0] as any)?.modifiers, [
+    "command",
+    "option",
+    "control",
+  ]);
+
+  const superEvents = resolveActionToEvents({
+    type: "key",
+    key: "b",
+    modifiers: ["super"],
+  });
+  assert.deepEqual((superEvents[0] as any)?.modifiers, [
+    "command",
+    "option",
+    "control",
+    "shift",
+  ]);
+
+  const mehEvents = resolveActionToEvents({
+    type: "key",
+    key: "c",
+    modifiers: ["meh"],
+  });
+  assert.deepEqual((mehEvents[0] as any)?.modifiers, [
+    "command",
+    "option",
+    "shift",
+  ]);
+
+  const mixedEvents = resolveActionToEvents({
+    type: "key",
+    key: "d",
+    modifiers: ["hyper", "shift"],
+  });
+  assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
+    "command",
+    "option",
+    "control",
+    "shift",
+  ]);
+});
+
+test("pythonScriptCommand builds uv run invocation", () => {
+  const bare = pythonScriptCommand("~/Scripts/foo.py");
+  assert.match(bare, /uv run/);
+  assert.match(bare, /\$HOME\/Scripts\/foo\.py/);
+  assert.doesNotMatch(bare, /--python/);
+
+  const withVenv = pythonScriptCommand("~/Scripts/bar.py", {
+    venv: "~/Scripts/.venv/shared_venv",
+  });
+  assert.match(withVenv, /--python/);
+  assert.match(withVenv, /shared_venv\/bin\/python/);
+  assert.match(withVenv, /\$HOME\/Scripts\/bar\.py/);
+
+  const withArgs = pythonScriptCommand("~/Scripts/baz.py", {
+    args: ["--source", "clipboard"],
+  });
+  assert.match(withArgs, /'--source'/);
+  assert.match(withArgs, /'clipboard'/);
+});
+
+test("resolveActionToEvents handles python action", () => {
+  const events = resolveActionToEvents({
+    type: "python",
+    scriptPath: "~/Scripts/foo.py",
+    args: ["--dest", "paste"],
+  });
+  assert.equal(events.length, 1);
+  const shellCmd = (events[0] as any)?.shell_command as string;
+  assert.match(shellCmd, /uv run/);
+  assert.match(shellCmd, /\$HOME\/Scripts\/foo\.py/);
+  assert.match(shellCmd, /'--dest'/);
+  assert.match(shellCmd, /'paste'/);
 });
