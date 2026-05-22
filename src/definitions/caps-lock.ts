@@ -38,7 +38,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
         {
           type: "key",
           key: L.shift,
-          modifiers: [L.cmd, L.opt, L.ctrl],
+          modifiers: ["hyper"],
         },
       ],
     },

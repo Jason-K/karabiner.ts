@@ -1,8 +1,7 @@
 import {
-    ACCESSIBILITY_VALUES,
-    ACCESSIBILITY_VARIABLES,
-    TIMINGS,
-    appRegistry,
+  ACCESSIBILITY_VALUES,
+  ACCESSIBILITY_VARIABLES,
+  appRegistry,
 } from "../data";
 import {
     generateConditionalActionRules,
@@ -21,18 +20,18 @@ export const disabledShortcuts: DisabledShortcutMapping[] = [
   },
   {
     key: "h",
-    modifiers: ["left_command", "option"],
+    modifiers: ["left_command", "left_option"],
     description: "Disabled hide others shortcut",
   },
   {
     key: "m",
-    modifiers: ["left_command", "option"],
+    modifiers: ["left_command", "left_option"],
     description: "Disabled minimize shortcut",
   },
 ];
 
 const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
-  "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
+  "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3";
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
   appRegistry.securityAgent,
   appRegistry.settings,
@@ -65,24 +64,18 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       ],
       actions: [
         {
-          type: "shell",
-          command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD,
+          type: "sequence",
+          actions: [
+            { type: "shell", command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD },
+            {
+              type: "key",
+              key: "slash",
+              modifiers: ["hyper"],
+              options: { repeat: false },
+            },
+          ],
         },
       ],
-      delayedAction: {
-        invoked: [
-          {
-            type: "key",
-            key: "slash",
-            modifiers: ["command", "option", "control"],
-            options: { repeat: false },
-          },
-        ],
-        canceled: [],
-      },
-      parameters: {
-        delayedActionDelayMs: TIMINGS.privilegesPostElevationDelayMs,
-      },
     },
     {
       when: [
@@ -105,31 +98,25 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       ],
       actions: [
         {
-          type: "shell",
-          command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD,
+          type: "sequence",
+          actions: [
+            { type: "shell", command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD },
+            { type: "key", key: "a", modifiers: ["left_command"] },
+            { type: "key", key: "j", modifiers: ["left_shift"] },
+            { type: "key", key: "a" },
+            { type: "key", key: "s" },
+            { type: "key", key: "o" },
+            { type: "key", key: "n" },
+            { type: "key", key: "tab" },
+            {
+              type: "key",
+              key: "slash",
+              modifiers: ["hyper"],
+              options: { repeat: false },
+            },
+          ],
         },
       ],
-      delayedAction: {
-        invoked: [
-          { type: "key", key: "a", modifiers: ["command"] },
-          { type: "key", key: "j", modifiers: ["shift"] },
-          { type: "key", key: "a" },
-          { type: "key", key: "s" },
-          { type: "key", key: "o" },
-          { type: "key", key: "n" },
-          { type: "key", key: "tab" },
-          {
-            type: "key",
-            key: "slash",
-            modifiers: ["command", "option", "control"],
-            options: { repeat: false },
-          },
-        ],
-        canceled: [],
-      },
-      parameters: {
-        delayedActionDelayMs: TIMINGS.privilegesPostElevationDelayMs,
-      },
     },
   ],
 };

@@ -11,9 +11,18 @@ export type ModifierKey = Modifier;
 //   MEH   = cmd+option+shift         (no ctrl — easier modifier combo)
 //   HYPER = cmd+option+control       (3-key, no shift)
 //   SUPER = cmd+option+control+shift (4-key, equiv to upstream Hyper)
-export const HYPER: Modifier[] = ["command", "option", "control"];
-export const SUPER: Modifier[] = ["command", "option", "control", "shift"];
-export const MEH: Modifier[] = ["command", "option", "shift"];
+export const HYPER: Modifier[] = [
+  "left_command",
+  "left_option",
+  "left_control",
+];
+export const SUPER: Modifier[] = [
+  "left_command",
+  "left_option",
+  "left_control",
+  "left_shift",
+];
+export const MEH: Modifier[] = ["left_command", "left_option", "left_shift"];
 
 // Expansion map for ActionSpec key modifiers — consumed by action-resolver.ts
 export const MODIFIER_ALIASES: Record<string, string[]> = {

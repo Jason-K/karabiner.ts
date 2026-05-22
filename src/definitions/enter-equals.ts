@@ -70,8 +70,8 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
           { type: "key", key: "keypad_equal_sign", options: { halt: true } },
         ],
         hold: [
-          { type: "key", key: "left_arrow", modifiers: ["shift", "option"] },
-          { type: "key", key: "c", modifiers: ["command"] },
+          { type: "key", key: "left_arrow", modifiers: ["left_shift", "left_option"] },
+          { type: "key", key: "c", modifiers: ["left_command"] },
           { type: "shell", command: QUICK_DATE_COMMAND },
         ],
         timeoutMs: TIMINGS.conditionalTapHoldMs,
@@ -88,8 +88,8 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
           { type: "key", key: "keypad_equal_sign", options: { halt: true } },
         ],
         hold: [
-          { type: "key", key: "left_arrow", modifiers: ["shift", "option"] },
-          { type: "key", key: "c", modifiers: ["command"] },
+          { type: "key", key: "left_arrow", modifiers: ["left_shift", "left_option"] },
+          { type: "key", key: "c", modifiers: ["left_command"] },
           { type: "shell", command: QUICK_DATE_COMMAND },
         ],
         timeoutMs: TIMINGS.conditionalTapHoldMs,

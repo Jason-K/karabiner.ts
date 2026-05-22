@@ -81,7 +81,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f18",
-        modifiers: ["command", "option", "control"],
+        modifiers: ["hyper"],
         options: { repeat: false },
       },
     ],
@@ -92,7 +92,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "7",
-        modifiers: ["command", "option", "shift"],
+        modifiers: ["meh"],
         options: { repeat: false },
       },
     ],
@@ -103,7 +103,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f1",
-        modifiers: ["command", "option", "shift"],
+        modifiers: ["meh"],
         options: { repeat: false },
       },
     ],
@@ -145,7 +145,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f9",
-        modifiers: ["command", "option", "control", "shift"],
+        modifiers: ["super"],
         options: { repeat: false },
       },
     ],
@@ -174,7 +174,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "grave_accent_and_tilde",
-        modifiers: ["control"],
+        modifiers: ["left_control"],
         options: { halt: true, repeat: false },
       },
     ],
@@ -289,7 +289,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f5",
-        modifiers: ["command", "option", "control"],
+        modifiers: ["hyper"],
         options: { repeat: false },
       },
     ],
@@ -324,7 +324,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "h",
-        modifiers: ["command", "option", "control", "shift"],
+        modifiers: ["super"],
         options: { repeat: false },
       },
     ],
@@ -335,7 +335,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f9",
-        modifiers: ["command", "option", "control", "shift"],
+        modifiers: ["super"],
         options: { halt: true, repeat: false },
       },
     ],
@@ -356,7 +356,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f5",
-        modifiers: ["left_command", "left_option", "left_control"],
+        modifiers: ["hyper"],
         options: { repeat: false },
       },
     ],
