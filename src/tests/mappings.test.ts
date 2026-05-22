@@ -12,19 +12,19 @@ import {
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
 } from "../data/rectangle";
-import { spaceLayerDefinitions } from "../definitions/space";
 import { tapHoldMappings } from "../definitions";
-import { mouseDeviceMappings } from "../definitions/mouse";
-import { homeEndNavigationMappings } from "../definitions/home-end";
-import { rightOptionLaunchers } from "../definitions/right-option";
-import {
-  disabledShortcuts,
-  passwordsQuickFillMapping,
-} from "../definitions/system";
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "../definitions/enter-equals";
+import { homeEndNavigationMappings } from "../definitions/home-end";
+import { mouseDeviceMappings } from "../definitions/mouse";
+import { rightOptionLaunchers } from "../definitions/right-option";
+import { spaceLayerDefinitions } from "../definitions/space";
+import {
+  disabledShortcuts,
+  passwordsQuickFillMapping,
+} from "../definitions/system";
 
 test("rectangle focused-window orientation command uses focused display", () => {
   const command = rectangleActionByFocusedWindowOrientationCommand(
@@ -94,12 +94,12 @@ test("home-end navigation mappings stay declarative", () => {
   assert.deepEqual(homeEndNavigationMappings[0], {
     from: { key: "home" },
     description: "Move to line start",
-    to: { key: "left_arrow", modifiers: ["command"] },
+    to: { key: "left_arrow", modifiers: ["left_command"] },
   });
   assert.deepEqual(homeEndNavigationMappings[1], {
-    from: { key: "home", modifiers: ["shift"] },
+    from: { key: "home", modifiers: ["left_shift"] },
     description: "Select to line start",
-    to: { key: "left_arrow", modifiers: ["command", "shift"] },
+    to: { key: "left_arrow", modifiers: ["left_command", "left_shift"] },
   });
 });
 
@@ -112,7 +112,7 @@ test("disabled shortcut mappings stay declarative", () => {
   });
   assert.deepEqual(disabledShortcuts[2], {
     key: "m",
-    modifiers: ["left_command", "option"],
+    modifiers: ["left_command", "left_option"],
     description: "Disabled minimize shortcut",
   });
 });
@@ -158,12 +158,12 @@ test("equals key hold mappings stay declarative", () => {
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["shift", "option"],
+            modifiers: ["left_shift", "left_option"],
           },
           {
             type: "key",
             key: "c",
-            modifiers: ["command"],
+            modifiers: ["left_command"],
           },
           {
             type: "shell",

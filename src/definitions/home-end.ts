@@ -7,22 +7,22 @@ export const homeEndNavigationMappings: SimpleRemapMapping[] = [
   {
     from: { key: "home" },
     description: "Move to line start",
-    to: { key: "left_arrow", modifiers: ["command"] },
+    to: { key: "left_arrow", modifiers: ["left_command"] },
   },
   {
-    from: { key: "home", modifiers: ["shift"] },
+    from: { key: "home", modifiers: ["left_shift"] },
     description: "Select to line start",
-    to: { key: "left_arrow", modifiers: ["command", "shift"] },
+    to: { key: "left_arrow", modifiers: ["left_command", "left_shift"] },
   },
   {
     from: { key: "end" },
     description: "Move to line end",
-    to: { key: "right_arrow", modifiers: ["command"] },
+    to: { key: "right_arrow", modifiers: ["left_command"] },
   },
   {
-    from: { key: "end", modifiers: ["shift"] },
+    from: { key: "end", modifiers: ["left_shift"] },
     description: "Select to line end",
-    to: { key: "right_arrow", modifiers: ["command", "shift"] },
+    to: { key: "right_arrow", modifiers: ["left_command", "left_shift"] },
   },
 ];
 

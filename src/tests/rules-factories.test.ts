@@ -381,9 +381,9 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
   });
   assert.deepEqual((hyperEvents[0] as any)?.key_code, "a");
   assert.deepEqual((hyperEvents[0] as any)?.modifiers, [
-    "command",
-    "option",
-    "control",
+    "left_command",
+    "left_option",
+    "left_control",
   ]);
 
   const superEvents = resolveActionToEvents({
@@ -392,10 +392,10 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
     modifiers: ["super"],
   });
   assert.deepEqual((superEvents[0] as any)?.modifiers, [
-    "command",
-    "option",
-    "control",
-    "shift",
+    "left_command",
+    "left_option",
+    "left_control",
+    "left_shift",
   ]);
 
   const mehEvents = resolveActionToEvents({
@@ -404,9 +404,9 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
     modifiers: ["meh"],
   });
   assert.deepEqual((mehEvents[0] as any)?.modifiers, [
-    "command",
-    "option",
-    "shift",
+    "left_command",
+    "left_option",
+    "left_shift",
   ]);
 
   const mixedEvents = resolveActionToEvents({
@@ -415,9 +415,9 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
     modifiers: ["hyper", "shift"],
   });
   assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
-    "command",
-    "option",
-    "control",
+    "left_command",
+    "left_option",
+    "left_control",
     "shift",
   ]);
 });

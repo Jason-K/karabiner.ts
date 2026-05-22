@@ -50,6 +50,7 @@ import {
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   mouseDeviceMappings,
+  simultaneousMappings,
   spaceLayerDefinitions,
   tapHoldMappings,
 } from "./definitions";
@@ -58,6 +59,7 @@ import {
   buildMouseRules,
   emitLayerDefinitions,
   generateEscapeRule,
+  generateSimultaneousRules,
   generateTapHoldRules,
   updateDeviceConfigurations,
 } from "./engine";
@@ -66,6 +68,7 @@ const spaceLayers = spaceLayerDefinitions;
 
 // Generate tap-hold rules with automatic conflict prevention
 const tapHoldRules = generateTapHoldRules(tapHoldMappings, spaceLayers);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, spaceLayers, tapHoldMappings);
 
 // Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
 const debugMode = process.env.KARABINER_DEBUG === "true";
@@ -76,6 +79,8 @@ emitLayerDefinitions(spaceLayers, undefined, debugMode);
 // ============================================================================
 
 let rules: any[] = [
+  // Simultaneous chord rules — must come before tap-hold rules
+  ...simultaneousRules,
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 

@@ -62,6 +62,7 @@ karabiner/
 - `ActionSpec` DSL (`src/core/action-dsl.ts`) with one shared resolver (`src/engine/action-resolver.ts`) used by every engine function.
 - Engine functions for every recurring pattern: simple remaps, app-scoped remaps, tap-hold, conditional tap-hold, multi-tap, double-tap guards, tap-alone-hold, modifier launchers, modifier chords, pointer remaps, mouse tap-hold/double-tap.
 - Generic leader-layer compiler (`src/core/leader/`) wired by the space leader and ready for a second leader key without code changes.
+- Simultaneous-chord framework (`src/engine/simultaneous-rules.ts`, `src/core/simultaneous.ts`) — tap, hold, double-tap, and double-tap-hold on multi-key chords, with full `simultaneous_options` exposure and conflict detection against single-key tap-hold rules.
 - Command server transport for low-latency layer-indicator and user-command dispatch (see `docs/COMMAND_SERVER_GUIDE.md`).
 - Device-scoped simple modifications applied as a post-write patch (`updateDeviceConfigurations`).
 

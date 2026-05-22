@@ -69,3 +69,5 @@ export const tapHoldMappings = mergeTapHoldRecords(
   antinoteTapHoldMappings,
   rightOptionTapHoldMappings,
 );
+
+export { simultaneousMappings } from "./simultaneous";

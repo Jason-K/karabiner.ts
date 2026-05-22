@@ -17,3 +17,4 @@ export * from "./tap-hold-rules";
 export * from "./variant-types";
 export * from "./pointer-remap-rules";
 export * from "./modifier-chord-rules";
+export * from "./simultaneous-rules";

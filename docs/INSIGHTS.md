@@ -71,6 +71,54 @@ Each additional variable widens the state space and makes failure modes harder t
 - Prefer engine functions that auto-derive variable names from the trigger key (`generateDoubleTapGuardRule`, `generateMultiTapRule`) so two rules cannot accidentally collide.
 - Reserve `trackVar` (and similar explicit fields) for cases where the variable is observed elsewhere — for example a hyper chord whose state another rule reads.
 
+## Simultaneous Chord Framework
+
+`generateSimultaneousRules` (`src/engine/simultaneous-rules.ts`) handles rules triggered by pressing two or more keys within Karabiner's simultaneous threshold (default 50 ms).
+
+### Tier Routing
+
+The engine routes each chord to one of two paths:
+
+| Condition | Path | Core function |
+|---|---|---|
+| `tapTap` or `tapTapHold` absent | tap-hold | `simultaneousTapHold` → `mapSimultaneous` builder |
+| `tapTap` or `tapTapHold` present | multi-tap | `simultaneousMultiTap` → `varTapTapHoldFrom` |
+
+The tap-hold path uses `mapSimultaneous` from the upstream library (which handles simultaneous from-event construction internally). The multi-tap path manually builds a raw `FromEvent` via `buildSimultaneousFromEvent` and passes it to `varTapTapHoldFrom`, which treats it like any other raw from event.
+
+### State Variable Naming
+
+Multi-tap chords use `sim_tap_${label}` as the first-tap tracking variable (e.g., label `"jk"` → `sim_tap_jk`). This namespacing avoids collisions with single-key multi-tap rules, which use `multi_tap_${key}`.
+
+### Conflict Detection
+
+Two validation checks run before generating rules:
+
+1. **Duplicate chords** (order-aware): Two entries are duplicates when their normalized key representation AND `key_down_order` setting match. `key_down_order: "insensitive"` (or absent) normalizes by sorting keys; `"strict"` or `"strict_inverse"` preserves array order. Entries with different order modes are never flagged — they represent distinct behavioral contracts.
+
+2. **Tap-hold overlap**: Any key appearing in a simultaneous chord that also appears as a bare (no-modifier) tap-hold key throws an error. Modifier-prefixed tap-hold entries like `"cmd+j"` are not flagged.
+
+### Space-Layer Conditions
+
+Like tap-hold rules, simultaneous manipulators receive `variable_unless` conditions for `space_mod` and all sublayer variables. This prevents chord rules from firing when a space leader layer is active. Injection happens post-build by mutating the raw manipulator objects.
+
+### Adding a Chord
+
+Define the chord in `src/definitions/simultaneous.ts`:
+
+```typescript
+export const simultaneousMappings: Record<string, SimultaneousConfig> = {
+  "jk": {
+    keys: ["j", "k"],
+    description: "J+K chord",
+    alone: [{ type: "key", key: "escape" }],
+    hold:  [{ type: "app", ref: "finder" }],
+  },
+};
+```
+
+The record key is the label — used for rule descriptions and variable naming. No other files need changes; `src/index.ts` already includes `simultaneousMappings` in the generation pipeline, and simultaneous rules are placed before tap-hold rules so Karabiner evaluates chord patterns first.
+
 ## References
 
 - [Karabiner-Elements official examples](https://karabiner-elements.pqrs.org/docs/json/typical-complex-modifications-examples/)

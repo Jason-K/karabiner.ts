@@ -25,7 +25,7 @@ const lineEnd = (): ToEvent => toKey("right_arrow", ["command"]);
 // Select current line (from start to end)
 const selectLine = (): ToEvent[] => [
   lineStart(),
-  toKey("right_arrow", ["command", "shift"]),
+  toKey("right_arrow", ["left_command", "left_shift"]),
 ];
 
 // Indent current line by one tab
@@ -35,7 +35,7 @@ export function indentLine(): ToEvent[] {
 
 // Unindent current line by one tab (shift+tab)
 export function unindentLine(): ToEvent[] {
-  return [lineStart(), toKey("tab", ["shift"]), lineEnd()];
+  return [lineStart(), toKey("tab", ["left_shift"]), lineEnd()];
 }
 
 // Delete the entire current line

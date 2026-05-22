@@ -1,4 +1,4 @@
-export type RuleTrigger = 'tap' | 'hold' | 'multi-tap';
+export type RuleTrigger = 'tap' | 'hold' | 'multi-tap' | 'simultaneous';
 
 import {
     DESCRIPTION_SEPARATOR,
@@ -108,6 +108,8 @@ function triggerLabel(trigger: RuleTrigger): string {
       return '(on hold)';
     case 'multi-tap':
       return '(on multi-tap)';
+    case 'simultaneous':
+      return '(on simultaneous)';
   }
 }
 
