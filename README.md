@@ -60,3 +60,5 @@ If a file is a plain registry or constant table consumed across layers, it belon
 - `docs/FUTURE_FEATURES.md` — tracked unimplemented Karabiner capabilities
 - `docs/BETA_IMPLEMENTATION_SUMMARY.md` — historical snapshot of the v15.6–v15.9 beta features adoption
 - `docs/superpowers/` — design specs and execution plans for in-flight or recently completed refactors
+- `docs/karabiner_docs/` - Karabiner Elements documentation and examples
+- `docs/karabiner_docs/complex-modifications-manipulator-definition/_index.md` - anatomy of a Karabiner JSON rule with links to definitions of each element.

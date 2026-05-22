@@ -4,6 +4,6 @@ export const ACCESSIBILITY_VARIABLES = {
 } as const;
 
 export const ACCESSIBILITY_VALUES = {
-  secureTextFieldSubrole: "AXSecureTextField",
   textFieldRole: "AXTextField",
+  secureTextFieldSubrole: "AXSecureTextField",
 } as const;
