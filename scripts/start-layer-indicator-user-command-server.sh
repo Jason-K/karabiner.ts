@@ -14,17 +14,17 @@ if [[ ! -f "$SERVER_SCRIPT" ]]; then
   exit 1
 fi
 
-UV_BIN="/Users/jason/.local/bin/uv"
+UV_BIN="${HOME}/.local/bin/uv"
 if [[ ! -x "$UV_BIN" ]]; then
   if command -v uv >/dev/null 2>&1; then
     UV_BIN="$(command -v uv)"
   else
-    echo "uv not found. Install uv or ensure /Users/jason/.local/bin/uv exists." >&2
+    echo "uv not found. Install uv or ensure ${HOME}/.local/bin/uv exists." >&2
     exit 1
   fi
 fi
 
-PYTHON_BIN="/Users/jason/Scripts/.venv/shared_venv/bin/python"
+PYTHON_BIN="${HOME}/Scripts/.venv/shared_venv/bin/python"
 if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Python interpreter not found: $PYTHON_BIN" >&2
   exit 1
