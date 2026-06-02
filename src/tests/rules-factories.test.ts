@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { pythonScriptCommand } from "../core/scripts";
 import { DEVICE_IDENTIFIERS, appRegistry } from "../data";
 import {
   buildAntinoteRules,
@@ -21,8 +22,11 @@ import {
   buildWordPrivilegesRule,
   mouseDeviceMappings,
 } from "../definitions";
-import { buildMouseRules, generateAppScopedRemapRules, resolveActionToEvents } from "../engine";
-import { pythonScriptCommand } from "../core/scripts";
+import {
+  buildMouseRules,
+  generateAppScopedRemapRules,
+  resolveActionToEvents,
+} from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -76,7 +80,7 @@ test("caps lock factory keeps three behavior variants", () => {
   const rule = toRule(buildCapsLockRule());
   assert.equal(
     rule.description,
-    "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
   );
   assert.equal(rule.manipulators.length, 3);
 });
@@ -203,17 +207,17 @@ test("home-end factory keeps four navigation mappings", () => {
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
-test("hyper plus rules factory keeps grouped mappings", () => {
+test("vmCOC_ plus rules factory keeps grouped mappings", () => {
   const rules = toRules(buildHyperLauncherRules());
   assert.equal(rules.length, 5);
   assert.deepEqual(
     rules.map((rule) => rule.description),
     [
-      "[✦]+[S]        →    Format selection (on tap)",
-      "[✦]+[T]        →    New Typinator rule (on tap)",
-      "[✦]+[;]        →    Open System Settings (on tap)",
-      "[✦]+[F12]        →    Edit last Typinator rule (on tap)",
-      "[✦]+[ESC]        →    Open Activity Monitor (on tap)",
+      "[vmCOC_]+[S]        →    Format selection (on tap)",
+      "[vmCOC_]+[T]        →    New Typinator rule (on tap)",
+      "[vmCOC_]+[;]        →    Open System Settings (on tap)",
+      "[vmCOC_]+[F12]        →    Edit last Typinator rule (on tap)",
+      "[vmCOC_]+[ESC]        →    Open Activity Monitor (on tap)",
     ],
   );
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
@@ -373,37 +377,37 @@ test("generateAppScopedRemapRules attaches ifApp condition to each rule", () => 
   );
 });
 
-test("resolveActionToEvents expands hyper/super/meh modifiers in key action", () => {
-  const hyperEvents = resolveActionToEvents({
+test("resolveActionToEvents expands vm aliases in key action", () => {
+  const vmCOCEvents = resolveActionToEvents({
     type: "key",
     key: "a",
-    modifiers: ["hyper"],
+    modifiers: ["vmCOC_"],
   });
-  assert.deepEqual((hyperEvents[0] as any)?.key_code, "a");
-  assert.deepEqual((hyperEvents[0] as any)?.modifiers, [
+  assert.deepEqual((vmCOCEvents[0] as any)?.key_code, "a");
+  assert.deepEqual((vmCOCEvents[0] as any)?.modifiers, [
     "left_command",
     "left_option",
     "left_control",
   ]);
 
-  const superEvents = resolveActionToEvents({
+  const vmCOCSEvents = resolveActionToEvents({
     type: "key",
     key: "b",
-    modifiers: ["super"],
+    modifiers: ["vmCOCS"],
   });
-  assert.deepEqual((superEvents[0] as any)?.modifiers, [
+  assert.deepEqual((vmCOCSEvents[0] as any)?.modifiers, [
     "left_command",
     "left_option",
     "left_control",
     "left_shift",
   ]);
 
-  const mehEvents = resolveActionToEvents({
+  const vmCOSEvents = resolveActionToEvents({
     type: "key",
     key: "c",
-    modifiers: ["meh"],
+    modifiers: ["vmCO_S"],
   });
-  assert.deepEqual((mehEvents[0] as any)?.modifiers, [
+  assert.deepEqual((vmCOSEvents[0] as any)?.modifiers, [
     "left_command",
     "left_option",
     "left_shift",
@@ -412,7 +416,7 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
   const mixedEvents = resolveActionToEvents({
     type: "key",
     key: "d",
-    modifiers: ["hyper", "shift"],
+    modifiers: ["vmCOC_", "shift"],
   });
   assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
     "left_command",
@@ -420,6 +424,35 @@ test("resolveActionToEvents expands hyper/super/meh modifiers in key action", ()
     "left_control",
     "shift",
   ]);
+});
+
+test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
+  const vmCases: Array<[string, string[]]> = [
+    ["vmCO__", ["left_command", "left_option"]],
+    ["vmC_C_", ["left_command", "left_control"]],
+    ["vmC__S", ["left_command", "left_shift"]],
+    ["vm_OC_", ["left_option", "left_control"]],
+    ["vm_O_S", ["left_option", "left_shift"]],
+    ["vm__CS", ["left_control", "left_shift"]],
+    ["vmCOC_", ["left_command", "left_option", "left_control"]],
+    ["vmCO_S", ["left_command", "left_option", "left_shift"]],
+    ["vmC_CS", ["left_command", "left_control", "left_shift"]],
+    ["vm_OCS", ["left_option", "left_control", "left_shift"]],
+    ["vmCOCS", ["left_command", "left_option", "left_control", "left_shift"]],
+  ];
+
+  for (const [alias, expected] of vmCases) {
+    const events = resolveActionToEvents({
+      type: "key",
+      key: "a",
+      modifiers: [alias as any],
+    });
+    assert.deepEqual(
+      (events[0] as any)?.modifiers,
+      expected,
+      `Unexpected expansion for ${alias}`,
+    );
+  }
 });
 
 test("pythonScriptCommand builds uv run invocation", () => {

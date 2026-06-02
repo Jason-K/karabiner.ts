@@ -5,6 +5,10 @@ import {
     KEY_LABEL_OVERRIDES,
     MODIFIER_SYMBOLS,
 } from "../data";
+import {
+  getModifierAliasCanonicalKey,
+  isModifierAlias,
+} from "../data/key-aliases";
 
 function normalizeToken(token: string): string {
   return token.trim().toLowerCase().replace(/[\s-]+/g, '_');
@@ -22,7 +26,7 @@ function splitChordTokens(chord: string | string[]): string[] {
 
 function isModifierToken(token: string): boolean {
   const normalized = normalizeToken(token);
-  if (normalized === 'hyper' || normalized === 'super' || normalized === 'meh') {
+  if (isModifierAlias(token) || isModifierAlias(normalized)) {
     return true;
   }
 
@@ -39,19 +43,26 @@ function isModifierToken(token: string): boolean {
 }
 
 function modifierTokenToSymbols(token: string): string {
+  const canonicalAlias = getModifierAliasCanonicalKey(token);
+  if (canonicalAlias) {
+    if (canonicalAlias.startsWith("vm")) {
+      return canonicalAlias;
+    }
+
+    if (canonicalAlias === "super") {
+      return "vmCOCS";
+    }
+
+    if (canonicalAlias === "meh") {
+      return "vmCO_S";
+    }
+
+    if (canonicalAlias === "hyper") {
+      return "vmCOC_";
+    }
+  }
+
   const normalized = normalizeToken(token);
-
-  if (normalized === 'super') {
-    return '✦⇧';
-  }
-
-  if (normalized === 'meh') {
-    return '⌘⌥⇧';
-  }
-
-  if (normalized === 'hyper') {
-    return '✦';
-  }
 
   let sidePrefix = '';
   let base = normalized;

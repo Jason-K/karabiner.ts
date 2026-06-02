@@ -70,7 +70,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
             {
               type: "key",
               key: "slash",
-              modifiers: ["hyper"],
+              modifiers: ["vmCOC_"],
               options: { repeat: false },
             },
           ],
@@ -111,7 +111,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
             {
               type: "key",
               key: "slash",
-              modifiers: ["hyper"],
+              modifiers: ["vmCOC_"],
               options: { repeat: false },
             },
           ],

@@ -13,7 +13,7 @@ karabiner/
 │   │   │   ├── action-dsl.ts # ActionSpec union
 │   │   │   ├── beta.ts       # Project-specific upstream beta shims
 │   │   │   ├── conditions.ts # Condition helpers (expressions, frontmost-app, variables)
-│   │   │   ├── mods.ts       # HYPER / SUPER / MEH modifier sets
+│   │   │   ├── mods.ts       # Virtual modifier alias sets (for example vmCOC_ / vmCOCS / vmCO_S)
 │   │   │   ├── scripts.ts    # userCommand, layerIndicatorCommand, showNotification, focusApp…
 │   │   │   ├── tap-hold.ts   # Generic tap-hold / varTapTapHold builders
 │   │   │   ├── mouse.ts      # Mouse alias resolution and tap-hold helpers

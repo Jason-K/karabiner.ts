@@ -3402,7 +3402,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[A]        →    Raycast AI-chat (on hold)",
+        "ruleDescription": "[vmCOC_]+[A]        →    Raycast AI-chat (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3505,7 +3505,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[T]        →    Edit last Typinator rule (on hold)",
+        "ruleDescription": "[vmCOC_]+[T]        →    Edit last Typinator rule (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3589,7 +3589,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[Q]        →    Rectangle Pro left (on hold)",
+        "ruleDescription": "[vmCOC_]+[Q]        →    Rectangle Pro left (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3673,7 +3673,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[W]        →    Rectangle Pro right (on hold)",
+        "ruleDescription": "[vmCOC_]+[W]        →    Rectangle Pro right (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3757,7 +3757,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[1]        →    Rectangle left-half/top-half by orientation (on hold)",
+        "ruleDescription": "[vmCOC_]+[1]        →    Rectangle left-half/top-half by orientation (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3847,7 +3847,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)",
+        "ruleDescription": "[vmCOC_]+[2]        →    Rectangle right-half/bottom-half by orientation (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3937,7 +3937,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[3]        →    Rectangle first-third (on hold)",
+        "ruleDescription": "[vmCOC_]+[3]        →    Rectangle first-third (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4027,7 +4027,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[4]        →    Rectangle first-fourth (on hold)",
+        "ruleDescription": "[vmCOC_]+[4]        →    Rectangle first-fourth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4117,7 +4117,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
+        "ruleDescription": "[vmCOC_]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4207,7 +4207,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
+        "ruleDescription": "[vmCOC_]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4297,7 +4297,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
+        "ruleDescription": "[vmCOC_]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4387,7 +4387,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
+        "ruleDescription": "[vmCOC_]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4477,7 +4477,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
+        "ruleDescription": "[vmCOC_]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4567,7 +4567,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[SPACE]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOC_]+[SPACE]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4657,7 +4657,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[TAB]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[TAB]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4741,7 +4741,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4825,7 +4825,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6417,7 +6417,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+        "ruleDescription": "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6457,7 +6457,7 @@
                 ]
               }
             ],
-            "description": "[CAPS]        →    HSLauncher / Hyper (on hold)"
+            "description": "[CAPS]        →    VM launcher / vmCOC_ (on hold)"
           },
           {
             "type": "basic",
@@ -6479,7 +6479,7 @@
                 ]
               }
             ],
-            "description": "[←⇧]+[CAPS]        →    Super (on hold)"
+            "description": "[←⇧]+[CAPS]        →    vmCOCS (on hold)"
           },
           {
             "type": "basic",
@@ -6500,7 +6500,7 @@
                 ]
               }
             ],
-            "description": "[←⌃]+[CAPS]        →    Meh (on hold)"
+            "description": "[←⌃]+[CAPS]        →    vmCO_S (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -9323,7 +9323,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[S]        →    Format selection (on tap)",
+        "ruleDescription": "[vmCOC_]+[S]        →    Format selection (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9348,7 +9348,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[T]        →    New Typinator rule (on tap)",
+        "ruleDescription": "[vmCOC_]+[T]        →    New Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9373,7 +9373,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[;]        →    Open System Settings (on tap)",
+        "ruleDescription": "[vmCOC_]+[;]        →    Open System Settings (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9402,7 +9402,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[F12]        →    Edit last Typinator rule (on tap)",
+        "ruleDescription": "[vmCOC_]+[F12]        →    Edit last Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -9427,7 +9427,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[✦]+[ESC]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[vmCOC_]+[ESC]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",

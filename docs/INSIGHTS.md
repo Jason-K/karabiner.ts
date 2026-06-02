@@ -69,7 +69,7 @@ Karabiner's EventViewer shows variable state changes in real time.
 Each additional variable widens the state space and makes failure modes harder to enumerate.
 
 - Prefer engine functions that auto-derive variable names from the trigger key (`generateDoubleTapGuardRule`, `generateMultiTapRule`) so two rules cannot accidentally collide.
-- Reserve `trackVar` (and similar explicit fields) for cases where the variable is observed elsewhere — for example a hyper chord whose state another rule reads.
+- Reserve `trackVar` (and similar explicit fields) for cases where the variable is observed elsewhere — for example a `vmCOC_` chord whose state another rule reads.
 
 ## Simultaneous Chord Framework
 

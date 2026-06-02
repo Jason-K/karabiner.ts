@@ -10,10 +10,10 @@
  * 3. Caps Lock: Multiple modifier behaviors based on how it's pressed
  * 4. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
  *
- * Custom Modifiers:
- * - HYPER: Command + Option + Control
- * - SUPER: Command + Option + Control + Shift
- * - MEH: Command + Option + Shift
+ * Virtual Modifiers:
+ * - vmCOC_: Command + Option + Control
+ * - vmCOCS: Command + Option + Control + Shift
+ * - vmCO_S: Command + Option + Shift
  */
 
 import { map, toKey, writeToProfile } from "karabiner.ts";
@@ -136,7 +136,7 @@ let rules: any[] = [
   // HOME/END - Make them work properly on macOS
   ...buildHomeEndRule(),
 
-  // HYPER + _ - Grouped hyper shortcuts
+  // vmCOC_ + _ - Grouped virtual-mod shortcuts
   ...buildHyperLauncherRules(),
 
   // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel

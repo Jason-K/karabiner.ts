@@ -717,7 +717,7 @@ Enter/Equals conditional tap-hold mappings."
 
 ## Task 5: Merge launcher/chord files with their tap-hold chord slices
 
-**Purpose:** Create three trigger-context files (`hyper.ts`, `left-command.ts`, `right-option.ts`) by combining the existing launcher/chord files with the corresponding `hyper+*`, `left_command+*`, `right_option+*` entries from `tap-hold.ts`. Apply the three build-function renames in the same task.
+**Purpose:** Create three trigger-context files (`hyper.ts`, `left-command.ts`, `right-option.ts`) by combining the existing launcher/chord files with the corresponding `vmCOC_+*`, `left_command+*`, `right_option+*` entries from `tap-hold.ts`. Apply the three build-function renames in the same task.
 
 **Files modified:**
 - Create: `src/definitions/hyper.ts`
@@ -740,7 +740,7 @@ The Antinote rename is applied here even though the `left_shift+a` content arriv
 
 - [ ] **Step 1: Create `src/definitions/hyper.ts`**
 
-Combine `hyper-plus.ts` content with the `hyper+*` entries from `tap-hold.ts`:
+Combine `hyper-plus.ts` content with the `vmCOC_+*` entries from `tap-hold.ts`:
 
 ```ts
 import { HYPER } from "../core/mods";
@@ -798,7 +798,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "hyper+a": {
+  "vmCOC_+a": {
     description: "Raycast AI-chat",
     hold: [
       {
@@ -809,67 +809,67 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+q": {
+  "vmCOC_+q": {
     description: "Rectangle Pro left",
     alone: [{ type: "url", url: rectangleActionUrl("left-half"), background: true }],
     hold: [{ type: "url", url: rectangleActionUrl("fill-left"), background: true }],
   },
-  "hyper+w": {
+  "vmCOC_+w": {
     description: "Rectangle Pro right",
     alone: [{ type: "url", url: rectangleActionUrl("right-half"), background: true }],
     hold: [{ type: "url", url: rectangleActionUrl("fill-right"), background: true }],
   },
-  "hyper+1": {
+  "vmCOC_+1": {
     description: "Rectangle left-half/top-half by orientation",
     alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
   },
-  "hyper+2": {
+  "vmCOC_+2": {
     description: "Rectangle right-half/bottom-half by orientation",
     alone: [{ type: "shell", command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION }],
   },
-  "hyper+3": {
+  "vmCOC_+3": {
     description: "Rectangle first-third",
     alone: [{ type: "url", url: rectangleActionUrl("first-third"), background: true }],
   },
-  "hyper+4": {
+  "vmCOC_+4": {
     description: "Rectangle first-fourth",
     alone: [{ type: "url", url: rectangleActionUrl("first-fourth"), background: true }],
   },
-  "hyper+keypad_1": {
+  "vmCOC_+keypad_1": {
     description: "Rectangle bottom-left-eighth",
     alone: [{ type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true }],
   },
-  "hyper+keypad_3": {
+  "vmCOC_+keypad_3": {
     description: "Rectangle bottom-right-eighth",
     alone: [{ type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true }],
   },
-  "hyper+keypad_5": {
+  "vmCOC_+keypad_5": {
     description: "Rectangle maximize",
     alone: [{ type: "url", url: rectangleActionUrl("maximize"), background: true }],
   },
-  "hyper+keypad_7": {
+  "vmCOC_+keypad_7": {
     description: "Rectangle top-left-eighth",
     alone: [{ type: "url", url: rectangleActionUrl("top-left-eighth"), background: true }],
   },
-  "hyper+keypad_9": {
+  "vmCOC_+keypad_9": {
     description: "Rectangle top-right-eighth",
     alone: [{ type: "url", url: rectangleActionUrl("top-right-eighth"), background: true }],
   },
-  "hyper+spacebar": {
+  "vmCOC_+spacebar": {
     description: "Rectangle maximize / restore",
     alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   },
-  "hyper+tab": {
+  "vmCOC_+tab": {
     description: "Rectangle next-display / previous-display",
     alone: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
     hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
   },
-  "hyper+left_arrow": {
+  "vmCOC_+left_arrow": {
     description: "Rectangle fill-left / previous-display",
     alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
     hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
   },
-  "hyper+right_arrow": {
+  "vmCOC_+right_arrow": {
     description: "Rectangle fill-right / next-display",
     alone: [{ type: "shell", command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION }],
     hold: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
@@ -879,12 +879,12 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({
     triggerKey: HYPER,
-    triggerLabel: "hyper",
+    triggerLabel: "vmCOC_",
     launchers: hyperLauncherMappings,
   });
 ```
 
-Cross-check the `hyper+*` entries against the source in `src/definitions/tap-hold.ts` line-by-line — every key, modifier, option, and `description` must match exactly.
+Cross-check the `vmCOC_+*` entries against the source in `src/definitions/tap-hold.ts` line-by-line — every key, modifier, option, and `description` must match exactly.
 
 - [ ] **Step 2: Create `src/definitions/left-command.ts`**
 
@@ -1015,7 +1015,7 @@ export const buildRightOptionLauncherRules = () =>
 
 - [ ] **Step 4: Remove migrated entries from `tap-hold.ts`**
 
-In `src/definitions/tap-hold.ts`, delete every entry whose key starts with `hyper+`, `left_command+`, `right_option+`. The `left_shift+a` entry stays in `tap-hold.ts` for now (moves in Task 6).
+In `src/definitions/tap-hold.ts`, delete every entry whose key starts with `vmCOC_+`, `left_command+`, `right_option+`. The `left_shift+a` entry stays in `tap-hold.ts` for now (moves in Task 6).
 
 After deletion, the `tapHoldMappings` record contains only:
 - bare letter keys (`a`, `c`, `d`, `f`, `g`, `h`, `j`, `k`, `n`, `o`, `p`, `r`, `s`, `t`, `v`, `x`, `y`, `z`)
@@ -1186,7 +1186,7 @@ with:
 import { rightOptionLaunchers } from "../definitions/right-option";
 ```
 
-The `tapHoldMappings` import currently reads `from "../definitions/tap-hold"`. After Task 6 the source moves, but for now `tap-hold.ts` exports only the bare-key subset — which means the test's assertions on `tapHoldMappings` may need updating. **Audit the test**: any assertion that references a moved key (e.g., looks up `tapHoldMappings["hyper+a"]`) must now import the relevant per-trigger record instead, e.g.:
+The `tapHoldMappings` import currently reads `from "../definitions/tap-hold"`. After Task 6 the source moves, but for now `tap-hold.ts` exports only the bare-key subset — which means the test's assertions on `tapHoldMappings` may need updating. **Audit the test**: any assertion that references a moved key (e.g., looks up `tapHoldMappings["vmCOC_+a"]`) must now import the relevant per-trigger record instead, e.g.:
 
 ```ts
 import { hyperTapHoldMappings } from "../definitions/hyper";
@@ -1220,7 +1220,7 @@ If non-empty: most likely causes are (a) a mistyped key/modifier/description in 
 git add -A src/
 git commit -m "refactor(definitions): merge launcher + chord files by trigger
 
-- hyper.ts combines hyper-plus.ts and hyper+* tap-hold chords
+- hyper.ts combines hyper-plus.ts and vmCOC_+* tap-hold chords
 - left-command.ts combines left-command-chords.ts and left_command+*
 - right-option.ts combines right-option-launchers.ts and right_option+*
 - Rename build functions:

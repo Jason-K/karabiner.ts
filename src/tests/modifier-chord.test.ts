@@ -13,14 +13,26 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
       ruleName: "Test chord rule",
       base: {
         key: "caps_lock",
-        description: "Hyper",
-        to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
+        description: "vmCOC_",
+        to: [
+          {
+            type: "key",
+            key: "left_command",
+            modifiers: ["left_control", "left_option"],
+          },
+        ],
       },
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "Super",
-          to: [{ type: "key", key: "left_shift", modifiers: ["left_command", "left_option", "left_control"] }],
+          description: "vmCOCS",
+          to: [
+            {
+              type: "key",
+              key: "left_shift",
+              modifiers: ["left_command", "left_option", "left_control"],
+            },
+          ],
         },
       ],
     }),
@@ -31,18 +43,25 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
 test("generateModifierChordRules uses ruleName as rule description", () => {
   const rule = toRule(
     generateModifierChordRules({
-      ruleName: "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+      ruleName:
+        "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
       base: {
         key: "caps_lock",
-        description: "Hyper",
-        to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
+        description: "vmCOC_",
+        to: [
+          {
+            type: "key",
+            key: "left_command",
+            modifiers: ["left_control", "left_option"],
+          },
+        ],
       },
       variants: [],
     }),
   );
   assert.equal(
     rule.description,
-    "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
   );
 });
 
@@ -52,8 +71,14 @@ test("generateModifierChordRules trackVar adds setVar and afterKeyUp events", ()
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "Hyper",
-        to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
+        description: "vmCOC_",
+        to: [
+          {
+            type: "key",
+            key: "left_command",
+            modifiers: ["left_control", "left_option"],
+          },
+        ],
         trackVar: "caps_lock_pressed",
       },
       variants: [],
@@ -78,13 +103,19 @@ test("generateModifierChordRules variant uses mandatory modifiers in from", () =
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "Hyper",
-        to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
+        description: "vmCOC_",
+        to: [
+          {
+            type: "key",
+            key: "left_command",
+            modifiers: ["left_control", "left_option"],
+          },
+        ],
       },
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "Super",
+          description: "vmCOCS",
           to: [{ type: "key", key: "left_shift", modifiers: ["left_command"] }],
         },
       ],

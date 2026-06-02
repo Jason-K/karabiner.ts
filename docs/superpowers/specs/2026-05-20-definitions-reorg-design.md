@@ -14,8 +14,8 @@ The current 14 files in `src/definitions/` use three different naming axes simul
 
 Concrete consequences:
 
-1. `tap-hold.ts` is 662 lines and mixes single-key bindings with `hyper+*`, `left_command+*`, `left_shift+*`, and `right_option+*` chords — all because they share the tap-hold engine.
-2. Finding every rule fired by Hyper requires grepping `hyper-plus.ts`, `tap-hold.ts`, and `hyper-chords.ts` (the last being unrelated — it actually defines Caps Lock).
+1. `tap-hold.ts` is 662 lines and mixes single-key bindings with `vmCOC_+*`, `left_command+*`, `left_shift+*`, and `right_option+*` chords — all because they share the tap-hold engine.
+2. Finding every rule fired by the cmd+opt+ctrl virtual modifier required grepping `hyper-plus.ts`, `tap-hold.ts`, and `hyper-chords.ts` (the last being unrelated — it actually defines Caps Lock).
 3. `special-keys.ts` contains Enter/Equals tap-holds and a pointer remap for OnePiece, which belong in different conceptual buckets.
 4. `security.ts` mixes globally disabled shortcuts, a Word-specific binding, and a SecurityAgent password quick-fill.
 5. The naming convention for "where does a new binding go?" is unclear.
@@ -41,8 +41,8 @@ Non-goals:
 src/definitions/
 ├── index.ts                   # barrel: re-exports builders + aggregated tapHoldMappings
 ├── single-key.ts              # bare-key tap-holds (a, c, d, …, f12, slash, tab, application)
-├── hyper.ts                   # hyper launchers + hyper+X tap-hold chords
-├── caps-lock.ts               # Caps Lock as Hyper/Super/Meh
+├── hyper.ts                   # vmCOC_ launchers + vmCOC_+X tap-hold chords
+├── caps-lock.ts               # Caps Lock as vmCOC_ / vmCOCS / vmCO_S
 ├── left-command.ts            # Left CMD tap/double-tap/hold + cmd+m + cmd+p + CMD+Q guard
 ├── right-option.ts            # right_option launchers + right_option+k/s/t
 ├── escape.ts                  # bare escape + ctrl+escape
@@ -82,7 +82,7 @@ src/definitions/
 ### tap-hold.ts split
 
 - **→ `single-key.ts`** (bare keys, no modifier): `a, c, d, f, g, h, j, k, n, o, p, r, s, t, v, x, y, z, 8, keypad_0, keypad_2, keypad_4, keypad_5, keypad_6, keypad_8, f1, f2, f3, f4, f5, f7, f8, f9, f10, f11, f12, slash, grave_accent_and_tilde, tab, fn, application`
-- **→ `hyper.ts`**: `hyper+a, hyper+q, hyper+w, hyper+1, hyper+2, hyper+3, hyper+4, hyper+keypad_1, hyper+keypad_3, hyper+keypad_5, hyper+keypad_7, hyper+keypad_9, hyper+spacebar, hyper+tab, hyper+left_arrow, hyper+right_arrow`
+- **→ `hyper.ts`**: `vmCOC_+a, vmCOC_+q, vmCOC_+w, vmCOC_+1, vmCOC_+2, vmCOC_+3, vmCOC_+4, vmCOC_+keypad_1, vmCOC_+keypad_3, vmCOC_+keypad_5, vmCOC_+keypad_7, vmCOC_+keypad_9, vmCOC_+spacebar, vmCOC_+tab, vmCOC_+left_arrow, vmCOC_+right_arrow`
 - **→ `left-command.ts`**: `left_command+m, left_command+p`
 - **→ `right-option.ts`**: `right_option+k, right_option+s, right_option+t`
 - **→ `apps/antinote.ts`**: `left_shift+a`
@@ -107,15 +107,15 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "hyper+a": { /* … */ },
-  "hyper+q": { /* … */ },
+  "vmCOC_+a": { /* … */ },
+  "vmCOC_+q": { /* … */ },
   // …
 };
 
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({
     triggerKey: HYPER,
-    triggerLabel: "hyper",
+    triggerLabel: "vmCOC_",
     launchers: hyperLauncherMappings,
   });
 ```
@@ -200,7 +200,7 @@ Six steps, each self-contained and runnable. After each step run the full check 
 2. **Create `apps/`.** Move `antinote.ts`, `skim.ts` into `apps/`. Extract `buildOnePieceClickEnterRule` from `special-keys.ts` → `apps/onepiece.ts`. Extract `buildWordPrivilegesRule` from `security.ts` → `apps/word.ts`.
 3. **Create `system.ts`.** Move disabled shortcuts + `buildPasswordsQuickFillRule` out of `security.ts`. Delete now-empty `security.ts`.
 4. **Rename `special-keys.ts → enter-equals.ts`** (now that OnePiece has been extracted).
-5. **Merge into trigger files.** Create `hyper.ts`, `left-command.ts`, `right-option.ts` by combining the existing launcher/chord files with the corresponding `hyper+*` / `left_command+*` / `right_option+*` slices from `tap-hold.ts`. Apply the build-function renames listed above. Each trigger file exports its `*TapHoldMappings` record.
+5. **Merge into trigger files.** Create `hyper.ts`, `left-command.ts`, `right-option.ts` by combining the existing launcher/chord files with the corresponding `vmCOC_+*` / `left_command+*` / `right_option+*` slices from `tap-hold.ts`. Apply the build-function renames listed above. Each trigger file exports its `*TapHoldMappings` record.
 6. **Rename remaining `tap-hold.ts → single-key.ts`** (after all chord slices are moved out). Move `left_shift+a` to `apps/antinote.ts`. Add the `mergeTapHoldRecords` aggregation + duplicate-key assertion in `definitions/index.ts`.
 
 If a step's diff is non-empty, stop, find the typo, fix, re-verify before proceeding.

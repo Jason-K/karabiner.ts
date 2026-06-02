@@ -1,14 +1,10 @@
 import type { AppRef } from "../data/apps";
 import type { CleanShotRef } from "../data/cleanshot";
 import type { FolderRef } from "../data/folders";
-import type { ModifierKey } from "../data/key-aliases";
+import type { ModifierAlias, ModifierKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
 
-export type ActionKeyModifier =
-  | ModifierKey
-  | "hyper" | "super" | "meh"
-  | "lcmd" | "lopt" | "lctrl" | "lshift"
-  | "rcmd" | "ropt" | "rctrl" | "rshift";
+export type ActionKeyModifier = ModifierKey | ModifierAlias;
 
 export type ActionSpec =
   | {

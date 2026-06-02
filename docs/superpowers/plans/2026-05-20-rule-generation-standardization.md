@@ -484,7 +484,7 @@ export const hyperPlusMappings: ModifierLauncherMapping[] = [
 export const buildHyperPlusRules = () =>
   generateModifierLauncherRules({
     triggerKey: HYPER,
-    triggerLabel: "hyper",
+    triggerLabel: "vmCOC_",
     launchers: hyperPlusMappings,
   });
 ```
@@ -494,7 +494,7 @@ export const buildHyperPlusRules = () =>
 ```bash
 npm test && npm run typecheck
 ```
-Expected: all tests pass. The `hyper plus rules factory` test checks descriptions — verify `"[✦]+[S]        →    Format selection (on tap)"` still matches.
+Expected: all tests pass. The launcher factory test checks descriptions — verify `"[vmCOC_]+[S]        →    Format selection (on tap)"` still matches.
 
 - [ ] **Step 5: Commit**
 
@@ -1563,13 +1563,13 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
       ruleName: "Test chord rule",
       base: {
         key: "caps_lock",
-        description: "Hyper",
+        description: "vmCOC_",
         to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
       },
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "Super",
+          description: "vmCOCS",
           to: [{ type: "key", key: "left_shift", modifiers: ["left_command", "left_option", "left_control"] }],
         },
       ],
@@ -1581,10 +1581,10 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
 test("generateModifierChordRules uses ruleName as rule description", () => {
   const rule = toRule(
     generateModifierChordRules({
-      ruleName: "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+      ruleName: "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
       base: {
         key: "caps_lock",
-        description: "Hyper",
+        description: "vmCOC_",
         to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
       },
       variants: [],
@@ -1592,7 +1592,7 @@ test("generateModifierChordRules uses ruleName as rule description", () => {
   );
   assert.equal(
     rule.description,
-    "[CAPS]        →    HSLauncher / Hyper / Super / Meh (on hold)",
+    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
   );
 });
 
@@ -1602,7 +1602,7 @@ test("generateModifierChordRules trackVar adds setVar and afterKeyUp events", ()
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "Hyper",
+        description: "vmCOC_",
         to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
         trackVar: "caps_lock_pressed",
       },
@@ -1628,13 +1628,13 @@ test("generateModifierChordRules variant uses mandatory modifiers in from", () =
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "Hyper",
+        description: "vmCOC_",
         to: [{ type: "key", key: "left_command", modifiers: ["left_control", "left_option"] }],
       },
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "Super",
+          description: "vmCOCS",
           to: [{ type: "key", key: "left_shift", modifiers: ["left_command"] }],
         },
       ],
@@ -1748,12 +1748,12 @@ import {
 export const capsLockChordConfig: ModifierChordConfig = {
   ruleName: formatRuleDescription(
     "caps_lock",
-    "HSLauncher / Hyper / Super / Meh",
+    "VM launcher / vmCOC_ / vmCOCS / vmCO_S",
     "hold",
   ),
   base: {
     key: "caps_lock",
-    description: "HSLauncher / Hyper",
+    description: "VM launcher / vmCOC_",
     to: [
       {
         type: "key",
@@ -1773,7 +1773,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
   variants: [
     {
       modifiers: [L.shift],
-      description: "Super",
+      description: "vmCOCS",
       to: [
         {
           type: "key",
@@ -1784,7 +1784,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: [L.ctrl],
-      description: "Meh",
+      description: "vmCO_S",
       to: [
         {
           type: "key",

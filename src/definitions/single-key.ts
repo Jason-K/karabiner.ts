@@ -81,7 +81,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f18",
-        modifiers: ["hyper"],
+        modifiers: ["vmCOC_"],
         options: { repeat: false },
       },
     ],
@@ -92,7 +92,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "7",
-        modifiers: ["meh"],
+        modifiers: ["vmCO_S"],
         options: { repeat: false },
       },
     ],
@@ -103,7 +103,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f1",
-        modifiers: ["meh"],
+        modifiers: ["vmCO_S"],
         options: { repeat: false },
       },
     ],
@@ -145,7 +145,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f9",
-        modifiers: ["super"],
+        modifiers: ["vmCOCS"],
         options: { repeat: false },
       },
     ],
@@ -293,7 +293,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f5",
-        modifiers: ["hyper"],
+        modifiers: ["vmCOC_"],
         options: { repeat: false },
       },
     ],
@@ -328,7 +328,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "h",
-        modifiers: ["super"],
+        modifiers: ["vmCOCS"],
         options: { repeat: false },
       },
     ],
@@ -339,7 +339,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f9",
-        modifiers: ["super"],
+        modifiers: ["vmCOCS"],
         options: { halt: true, repeat: false },
       },
     ],
@@ -360,7 +360,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f5",
-        modifiers: ["hyper"],
+        modifiers: ["vmCOC_"],
         options: { repeat: false },
       },
     ],

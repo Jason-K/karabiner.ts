@@ -1,12 +1,12 @@
-import type { TapHoldConfig } from "../engine";
 import { L } from "../core/mods";
+import type { TapHoldConfig } from "../engine";
 import {
-    generateDoubleTapGuardRule,
-    type DoubleTapGuardConfig,
+  generateDoubleTapGuardRule,
+  type DoubleTapGuardConfig,
 } from "../engine/double-tap-guard-rules";
 import {
-    generateMultiTapRule,
-    type MultiTapConfig,
+  generateMultiTapRule,
+  type MultiTapConfig,
 } from "../engine/multi-tap-rules";
 
 const LEFT_COMMAND_TAP_DELAY_MS = 600;
@@ -47,12 +47,13 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "p",
-        modifiers: ["hyper"],
+        modifiers: ["vmCOC_"],
         options: { repeat: false },
       },
     ],
   },
 };
 
-export const buildLeftCommandRule = () => generateMultiTapRule(leftCommandMultiTap);
+export const buildLeftCommandRule = () =>
+  generateMultiTapRule(leftCommandMultiTap);
 export const buildCmdQRule = () => generateDoubleTapGuardRule(cmdQGuard);

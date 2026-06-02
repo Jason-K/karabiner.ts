@@ -53,23 +53,23 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "hyper+a": {
+  "vmCOC_+a": {
     description: "Raycast AI-chat",
     hold: [
       {
         type: "key",
         key: "f18",
-        modifiers: [ "super" ],
+        modifiers: ["vmCOCS"],
         options: { repeat: false },
       },
     ],
   },
-  "hyper+t": {
+  "vmCOC_+t": {
     description: "Edit last Typinator rule",
     alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
     hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
   },
-  "hyper+q": {
+  "vmCOC_+q": {
     description: "Rectangle Pro left",
     alone: [
       { type: "url", url: rectangleActionUrl("left-half"), background: true },
@@ -78,7 +78,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       { type: "url", url: rectangleActionUrl("fill-left"), background: true },
     ],
   },
-  "hyper+w": {
+  "vmCOC_+w": {
     description: "Rectangle Pro right",
     alone: [
       { type: "url", url: rectangleActionUrl("right-half"), background: true },
@@ -87,23 +87,23 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       { type: "url", url: rectangleActionUrl("fill-right"), background: true },
     ],
   },
-  "hyper+1": {
+  "vmCOC_+1": {
     description: "Rectangle left-half/top-half by orientation",
     alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
   },
-  "hyper+2": {
+  "vmCOC_+2": {
     description: "Rectangle right-half/bottom-half by orientation",
     alone: [
       { type: "shell", command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION },
     ],
   },
-  "hyper+3": {
+  "vmCOC_+3": {
     description: "Rectangle first-third",
     alone: [
       { type: "url", url: rectangleActionUrl("first-third"), background: true },
     ],
   },
-  "hyper+4": {
+  "vmCOC_+4": {
     description: "Rectangle first-fourth",
     alone: [
       {
@@ -113,7 +113,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+keypad_1": {
+  "vmCOC_+keypad_1": {
     description: "Rectangle bottom-left-eighth",
     alone: [
       {
@@ -123,7 +123,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+keypad_3": {
+  "vmCOC_+keypad_3": {
     description: "Rectangle bottom-right-eighth",
     alone: [
       {
@@ -133,13 +133,13 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+keypad_5": {
+  "vmCOC_+keypad_5": {
     description: "Rectangle maximize",
     alone: [
       { type: "url", url: rectangleActionUrl("maximize"), background: true },
     ],
   },
-  "hyper+keypad_7": {
+  "vmCOC_+keypad_7": {
     description: "Rectangle top-left-eighth",
     alone: [
       {
@@ -149,7 +149,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+keypad_9": {
+  "vmCOC_+keypad_9": {
     description: "Rectangle top-right-eighth",
     alone: [
       {
@@ -159,11 +159,11 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+spacebar": {
+  "vmCOC_+spacebar": {
     description: "Rectangle maximize / restore",
     alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   },
-  "hyper+tab": {
+  "vmCOC_+tab": {
     description: "Rectangle next-display / previous-display",
     alone: [
       {
@@ -180,7 +180,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+left_arrow": {
+  "vmCOC_+left_arrow": {
     description: "Rectangle fill-left / previous-display",
     alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
     hold: [
@@ -191,7 +191,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "hyper+right_arrow": {
+  "vmCOC_+right_arrow": {
     description: "Rectangle fill-right / next-display",
     alone: [
       {
@@ -212,6 +212,6 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({
     triggerKey: HYPER,
-    triggerLabel: "hyper",
+    triggerLabel: "vmCOC_",
     launchers: hyperLauncherMappings,
   });

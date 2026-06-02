@@ -8,12 +8,12 @@ import {
 export const capsLockChordConfig: ModifierChordConfig = {
   ruleName: formatRuleDescription(
     "caps_lock",
-    "HSLauncher / Hyper / Super / Meh",
+    "VM launcher / vmCOC_ / vmCOCS / vmCO_S",
     "hold",
   ),
   base: {
     key: "caps_lock",
-    description: "HSLauncher / Hyper",
+    description: "VM launcher / vmCOC_",
     to: [
       {
         type: "key",
@@ -33,18 +33,18 @@ export const capsLockChordConfig: ModifierChordConfig = {
   variants: [
     {
       modifiers: [L.shift],
-      description: "Super",
+      description: "vmCOCS",
       to: [
         {
           type: "key",
           key: L.shift,
-          modifiers: ["hyper"],
+          modifiers: ["vmCOC_"],
         },
       ],
     },
     {
       modifiers: [L.ctrl],
-      description: "Meh",
+      description: "vmCO_S",
       to: [
         {
           type: "key",

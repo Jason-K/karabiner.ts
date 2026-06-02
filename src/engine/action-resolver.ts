@@ -19,14 +19,14 @@ import {
 import { openApp } from "../core/software";
 import { appRegistry, folderRegistry } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
-import { MODIFIER_ALIASES } from "../data/key-aliases";
+import { resolveModifierAlias } from "../data/key-aliases";
 import { raycastRegistry } from "../data/raycast";
 
 function expandModifiers(modifiers: string[]): string[] {
   const expanded: string[] = [];
   const seen = new Set<string>();
   for (const mod of modifiers) {
-    for (const m of MODIFIER_ALIASES[mod] ?? [mod]) {
+    for (const m of resolveModifierAlias(mod) ?? [mod]) {
       if (!seen.has(m)) {
         seen.add(m);
         expanded.push(m);

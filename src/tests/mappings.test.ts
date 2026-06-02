@@ -186,27 +186,27 @@ test("passwords quick fill mapping stays declarative", () => {
 
 test("tap-hold mappings keep expected anchor keys", () => {
   assert.ok(tapHoldMappings.a);
-  assert.ok(tapHoldMappings["hyper+q"]);
-  assert.ok(tapHoldMappings["hyper+left_arrow"]);
-  assert.ok(tapHoldMappings["hyper+right_arrow"]);
-  assert.ok(tapHoldMappings["hyper+spacebar"]);
+  assert.ok(tapHoldMappings["vmCOC_+q"]);
+  assert.ok(tapHoldMappings["vmCOC_+left_arrow"]);
+  assert.ok(tapHoldMappings["vmCOC_+right_arrow"]);
+  assert.ok(tapHoldMappings["vmCOC_+spacebar"]);
   assert.ok(tapHoldMappings.tab);
-  assert.ok(tapHoldMappings["hyper+tab"]);
-  assert.ok(tapHoldMappings["hyper+w"]);
-  assert.ok(tapHoldMappings["hyper+1"]);
-  assert.ok(tapHoldMappings["hyper+2"]);
-  assert.ok(tapHoldMappings["hyper+3"]);
-  assert.ok(tapHoldMappings["hyper+4"]);
-  assert.ok(tapHoldMappings["hyper+keypad_1"]);
-  assert.ok(tapHoldMappings["hyper+keypad_3"]);
-  assert.ok(tapHoldMappings["hyper+keypad_5"]);
-  assert.ok(tapHoldMappings["hyper+keypad_7"]);
-  assert.ok(tapHoldMappings["hyper+keypad_9"]);
+  assert.ok(tapHoldMappings["vmCOC_+tab"]);
+  assert.ok(tapHoldMappings["vmCOC_+w"]);
+  assert.ok(tapHoldMappings["vmCOC_+1"]);
+  assert.ok(tapHoldMappings["vmCOC_+2"]);
+  assert.ok(tapHoldMappings["vmCOC_+3"]);
+  assert.ok(tapHoldMappings["vmCOC_+4"]);
+  assert.ok(tapHoldMappings["vmCOC_+keypad_1"]);
+  assert.ok(tapHoldMappings["vmCOC_+keypad_3"]);
+  assert.ok(tapHoldMappings["vmCOC_+keypad_5"]);
+  assert.ok(tapHoldMappings["vmCOC_+keypad_7"]);
+  assert.ok(tapHoldMappings["vmCOC_+keypad_9"]);
   assert.ok(tapHoldMappings["right_option+s"]);
 });
 
-test("new hyper rectangle mappings stay declarative", () => {
-  assert.deepEqual(tapHoldMappings["hyper+left_arrow"].alone, [
+test("new vmCOC_ rectangle mappings stay declarative", () => {
+  assert.deepEqual(tapHoldMappings["vmCOC_+left_arrow"].alone, [
     {
       type: "shell",
       command: rectangleActionByFocusedWindowOrientationCommand(
@@ -215,7 +215,7 @@ test("new hyper rectangle mappings stay declarative", () => {
       ),
     },
   ]);
-  assert.deepEqual(tapHoldMappings["hyper+left_arrow"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+left_arrow"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=previous-display",
@@ -223,14 +223,14 @@ test("new hyper rectangle mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["hyper+spacebar"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+spacebar"].alone, [
     {
       type: "shell",
       command: rectangleMaxOrRestoreCommand(),
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["hyper+keypad_9"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+keypad_9"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=top-right-eighth",
@@ -239,18 +239,18 @@ test("new hyper rectangle mappings stay declarative", () => {
   ]);
 });
 
-test("hyper+q and hyper+w tap-hold mappings stay declarative", () => {
-  assert.equal(tapHoldMappings["hyper+q"].description, "Rectangle Pro left");
-  assert.equal(tapHoldMappings["hyper+w"].description, "Rectangle Pro right");
+test("vmCOC_+q and vmCOC_+w tap-hold mappings stay declarative", () => {
+  assert.equal(tapHoldMappings["vmCOC_+q"].description, "Rectangle Pro left");
+  assert.equal(tapHoldMappings["vmCOC_+w"].description, "Rectangle Pro right");
 
-  assert.deepEqual(tapHoldMappings["hyper+q"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+q"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=left-half",
       background: true,
     },
   ]);
-  assert.deepEqual(tapHoldMappings["hyper+q"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+q"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=fill-left",
@@ -258,14 +258,14 @@ test("hyper+q and hyper+w tap-hold mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["hyper+w"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+w"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=right-half",
       background: true,
     },
   ]);
-  assert.deepEqual(tapHoldMappings["hyper+w"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOC_+w"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=fill-right",

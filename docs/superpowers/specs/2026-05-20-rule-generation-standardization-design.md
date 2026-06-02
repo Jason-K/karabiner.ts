@@ -55,7 +55,7 @@ case "sequence":
 
 ### Extended
 
-`generateModifierLauncherRules` gains `triggerKey: string | string[]` and `triggerLabel?: string`. When `triggerKey` is an array (e.g. `HYPER`), `triggerLabel` provides the human-readable label used in rule descriptions. This allows `hyper-plus.ts` to use the same engine function as `right-option-launchers.ts`.
+`generateModifierLauncherRules` gains `triggerKey: string | string[]` and `triggerLabel?: string`. When `triggerKey` is an array (e.g. `HYPER`), `triggerLabel` provides the human-readable label used in rule descriptions. In the current config that label is `vmCOC_`, allowing `hyper.ts` to use the same engine function as `right-option.ts`.
 
 ### `generateAppScopedRemapRules` (new, added to `engine/simple-rules.ts`)
 
@@ -183,7 +183,7 @@ type ModifierChordConfig = {
 function generateModifierChordRules(config: ModifierChordConfig): Rule
 ```
 
-Covers: `hyper-chords.ts` (caps lock → hyper/super/meh).
+Covers: `caps-lock.ts` (caps lock → `vmCOC_` / `vmCOCS` / `vmCO_S`).
 
 ## Per-File Migration Map
 
@@ -200,14 +200,14 @@ Covers: `hyper-chords.ts` (caps lock → hyper/super/meh).
 | File | New config export | Engine call |
 | --- |---| --- |
 | `definitions/skim.ts` | `skimRemapMappings: AppScopedRemapMapping[]` | `generateAppScopedRemapRules` |
-| `definitions/hyper-plus.ts` | `hyperPlusMappings: ModifierLauncherMapping[]` | `generateModifierLauncherRules({ triggerKey: HYPER, triggerLabel: "hyper", ... })` |
+| `definitions/hyper.ts` | `hyperLauncherMappings: ModifierLauncherMapping[]` | `generateModifierLauncherRules({ triggerKey: HYPER, triggerLabel: "vmCOC_", ... })` |
 | `definitions/antinote.ts` | `antinoteDeleteGuard: DoubleTapGuardConfig` | `generateDoubleTapGuardRule` |
 | `definitions/left-command-chords.ts` | `cmdQGuard: DoubleTapGuardConfig` | `generateDoubleTapGuardRule` |
 | `definitions/left-command-chords.ts` | `leftCommandMultiTap: MultiTapConfig` | `generateMultiTapRule` |
 | `definitions/escape-monitor.ts` | `escapeTapTapHold: MultiTapConfig` | `generateMultiTapRule` |
 | `definitions/escape-monitor.ts` | `ctrlEscapeConfig: TapAloneHoldConfig` | `generateTapAloneHoldRule` |
 | `definitions/special-keys.ts` | `onePieceClickEnter: PointerRemapConfig` | `generatePointerRemapRule` |
-| `definitions/hyper-chords.ts` | `capsLockChordConfig: ModifierChordConfig` | `generateModifierChordRules` |
+| `definitions/caps-lock.ts` | `capsLockChordConfig: ModifierChordConfig` | `generateModifierChordRules` |
 
 ### Files with no changes
 
