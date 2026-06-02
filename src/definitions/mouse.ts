@@ -84,7 +84,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         alone: [
           { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
         ],
-        hold: [{ shell_command: "open 'cleanshot://capture-area'" }],
+        hold: [
+          { shell_command: "open 'cleanshot://capture-text?linebreaks=true'" },
+        ],
         thresholdMs: TIMINGS.mouseDefaultMs,
         timeoutMs: TIMINGS.mouseDefaultMs,
       },

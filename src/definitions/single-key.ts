@@ -164,6 +164,10 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Screenshot",
     hold: [{ type: "cleanShot", ref: "captureArea" }],
   },
+  "shift+s": {
+    description: "Screenshot Window",
+    hold: [{ type: "cleanShot", ref: "captureWindow" }],
+  },
   t: {
     description: "Todoist",
     hold: [{ type: "app", ref: "todoist", mode: "shell" }],

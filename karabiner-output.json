@@ -1137,6 +1137,96 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[⇧]+[S]        →    Screenshot Window (on hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "s",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "s",
+                "modifiers": [
+                  "shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open 'cleanshot://capture-window'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "s",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "space_mod",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_a_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_c_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_d_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_f_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_r_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_s_sublayer",
+                "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "space_w_sublayer",
+                "value": 1
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[T]        →    Todoist (on hold)",
         "manipulatorSources": [
           {
@@ -5931,7 +6021,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'cleanshot://capture-area'"
+                "shell_command": "open 'cleanshot://capture-text?linebreaks=true'"
               }
             ],
             "to_delayed_action": {
