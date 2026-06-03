@@ -14,7 +14,7 @@ export const PATHS = {
   typinatorEditLastRule:
     "~/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript",
   typinatorPythonBin: "~/.venv/typinator/bin/python",
-  typinatorNewRuleScript: "~/Scripts/apps/Typinator/new_rule.py",
+  typinatorNewRuleScript: "~/Scripts/apps/Typinator/new_rule/new_rule.py",
   wordDocumentPathAppleScript:
     "~/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript",
 } as const;
