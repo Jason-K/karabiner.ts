@@ -120,14 +120,19 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "Activate Sidenote (tap) / Menu (hold)",
+        description: "Activate Popclip (tap) / Sidenote (hold)",
         alone: [
+          {
+            shell_command:
+              "osascript -e 'tell application \"Popclip\" to appear'",
+          },
+        ],
+        hold: [
           {
             key_code: "f10",
             modifiers: ["left_command", "left_option", "left_shift"],
           },
         ],
-        hold: [{ key_code: "m", modifiers: ["left_option"] }],
         thresholdMs: TIMINGS.mouseDefaultMs,
         timeoutMs: TIMINGS.mouseDefaultMs,
       },

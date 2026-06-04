@@ -301,7 +301,7 @@ export function openUrlCommand(url: string): string {
 }
 
 export function raycastExtensionCommand(route: string): string {
-  return openUrlCommand(`raycast://extensions/${route}`);
+  return openUrlCommand(`raycast-x://extensions/${route}`);
 }
 
 export function cleanShotCommand(route: string): string {

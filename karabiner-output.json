@@ -513,7 +513,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast://extensions/Jason/here-to-there/activeToTarget'"
+                "shell_command": "open 'raycast-x://extensions/Jason/here-to-there/activeToTarget'"
               }
             ],
             "to_delayed_action": {
@@ -592,7 +592,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentDownloads'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentDownloads'"
               }
             ],
             "to_delayed_action": {
@@ -1567,7 +1567,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast://extensions/mrpunkin/raycast-zoxide/search-directories'"
+                "shell_command": "open 'raycast-x://extensions/mrpunkin/raycast-zoxide/search-directories'"
               }
             ],
             "to_delayed_action": {
@@ -3525,7 +3525,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py"
+                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
               }
             ],
             "to_if_held_down": [
@@ -3537,7 +3537,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py"
+                  "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
                 }
               ]
             },
@@ -5303,7 +5303,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast://extensions/mattisssa/spotify-player/search'"
+                "shell_command": "open 'raycast-x://extensions/mattisssa/spotify-player/search'"
               }
             ],
             "to_delayed_action": {
@@ -6168,7 +6168,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Activate Sidenote (tap) / Menu (hold)",
+        "ruleDescription": "Logitech G502 X: Activate Popclip (tap) / Sidenote (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -6181,6 +6181,11 @@
             },
             "to_if_alone": [
               {
+                "shell_command": "osascript -e 'tell application \"Popclip\" to appear'"
+              }
+            ],
+            "to_if_held_down": [
+              {
                 "key_code": "f10",
                 "modifiers": [
                   "left_command",
@@ -6189,24 +6194,11 @@
                 ]
               }
             ],
-            "to_if_held_down": [
-              {
-                "key_code": "m",
-                "modifiers": [
-                  "left_option"
-                ]
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "key_code": "f10",
-                  "modifiers": [
-                    "left_command",
-                    "left_option",
-                    "left_shift"
-                  ]
+                  "shell_command": "osascript -e 'tell application \"Popclip\" to appear'"
                 }
               ]
             },
@@ -6221,7 +6213,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Activate Sidenote (tap) / Menu (hold)"
+            "description": "Logitech G502 X: Activate Popclip (tap) / Sidenote (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -7688,7 +7680,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentFolders'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentFolders'"
               }
             ]
           },
@@ -7791,7 +7783,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentApplications'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentApplications'"
               }
             ]
           },
@@ -7809,7 +7801,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentFolders'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentFolders'"
               }
             ]
           },
@@ -7827,7 +7819,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recents'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recents'"
               }
             ]
           },
@@ -7845,7 +7837,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentDownloads'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentDownloads'"
               }
             ]
           },
@@ -7863,7 +7855,7 @@
             ],
             "to": [
               {
-                "shell_command": "open 'raycast://extensions/jason/recents/recentCustom'"
+                "shell_command": "open 'raycast-x://extensions/jason/recents/recentCustom'"
               }
             ]
           }
@@ -9364,7 +9356,7 @@
             },
             "to": [
               {
-                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule.py"
+                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
               }
             ]
           }
