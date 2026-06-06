@@ -282,7 +282,7 @@ export function recentDownloadsCommand(): string {
 export function spotifyToggleCommand(): string {
   return [
     "if pgrep -x 'Spotify' > /dev/null; then",
-    "open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause';",
+    "open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause';",
     `else ${openAppBundleCommand(appRegistry.spotify)};`,
     "fi; echo 'Spotify toggled'",
   ].join(" ");
