@@ -25,12 +25,12 @@ import {
   DEVICE_IDENTIFIERS,
   PATHS,
   PREFERRED_PROFILE_NAME,
-  SPACE_LAYER_DEBUG,
-  SPACE_LAYER_DEBUG_LOG_PATH,
-  SPACE_LAYER_INDICATOR_ROOT,
-  SPACE_LAYER_LABEL,
-  SPACE_LAYER_LEADER_KEY,
-  SPACE_LAYER_PREFIX,
+  //   SPACE_LAYER_DEBUG,
+  //   SPACE_LAYER_DEBUG_LOG_PATH,
+  //   SPACE_LAYER_INDICATOR_ROOT,
+  //   SPACE_LAYER_LABEL,
+  //   SPACE_LAYER_LEADER_KEY,
+  //   SPACE_LAYER_PREFIX,
 } from "./data";
 import {
   buildAntinoteRules,
@@ -51,7 +51,7 @@ import {
   buildWordPrivilegesRule,
   mouseDeviceMappings,
   simultaneousMappings,
-  spaceLayerDefinitions,
+//   spaceLayerDefinitions,
   tapHoldMappings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
@@ -64,15 +64,15 @@ import {
   updateDeviceConfigurations,
 } from "./engine";
 
-const spaceLayers = spaceLayerDefinitions;
+// const spaceLayers = spaceLayerDefinitions;
 
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = generateTapHoldRules(tapHoldMappings, spaceLayers);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, spaceLayers, tapHoldMappings);
+const tapHoldRules = generateTapHoldRules(tapHoldMappings, undefined);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, undefined, tapHoldMappings);
 
 // Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
 const debugMode = process.env.KARABINER_DEBUG === "true";
-emitLayerDefinitions(spaceLayers, undefined, debugMode);
+// emitLayerDefinitions(spaceLayers, undefined, debugMode);
 
 // ============================================================================
 // SPECIAL RULES
@@ -103,15 +103,15 @@ let rules: any[] = [
   buildCapsLockRule(),
 
   // Generate space layer rules with sublayer persistence
-  ...generateLayerRules(spaceLayers, {
-    leaderKey: SPACE_LAYER_LEADER_KEY,
-    layerPrefix: SPACE_LAYER_PREFIX,
-    leaderLabel: SPACE_LAYER_LABEL,
-    indicatorRootLayer: SPACE_LAYER_INDICATOR_ROOT,
-    leaderHoldEvents: [toKey("c", ["left_command"], { repeat: false })],
-    debugSwallowedKeys: SPACE_LAYER_DEBUG,
-    debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
-  }),
+//   ...generateLayerRules(spaceLayers, {
+//     leaderKey: SPACE_LAYER_LEADER_KEY,
+//     layerPrefix: SPACE_LAYER_PREFIX,
+//     leaderLabel: SPACE_LAYER_LABEL,
+//     indicatorRootLayer: SPACE_LAYER_INDICATOR_ROOT,
+//     leaderHoldEvents: [toKey("c", ["left_command"], { repeat: false })],
+//     debugSwallowedKeys: SPACE_LAYER_DEBUG,
+//     debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
+//   }),
 
   // ============================================================================
   // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
@@ -151,7 +151,7 @@ let rules: any[] = [
   // Right_Option + __ - App launch or focus
   ...buildRightOptionLauncherRules(),
   // Generate escape rule to reset all variables
-  ...generateEscapeRule(spaceLayers),
+//   ...generateEscapeRule(spaceLayers),
 
   // ============================================================================
   // SECURITY & SYSTEM ACCESS RULES

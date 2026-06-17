@@ -87,32 +87,6 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       { type: "url", url: rectangleActionUrl("fill-right"), background: true },
     ],
   },
-  "vmCOC_+1": {
-    description: "Rectangle left-half/top-half by orientation",
-    alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
-  },
-  "vmCOC_+2": {
-    description: "Rectangle right-half/bottom-half by orientation",
-    alone: [
-      { type: "shell", command: RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION },
-    ],
-  },
-  "vmCOC_+3": {
-    description: "Rectangle first-third",
-    alone: [
-      { type: "url", url: rectangleActionUrl("first-third"), background: true },
-    ],
-  },
-  "vmCOC_+4": {
-    description: "Rectangle first-fourth",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("first-fourth"),
-        background: true,
-      },
-    ],
-  },
   "vmCOC_+keypad_1": {
     description: "Rectangle bottom-left-eighth",
     alone: [

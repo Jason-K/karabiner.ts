@@ -8,43 +8,43 @@ import { rightOptionTapHoldMappings } from "./right-option";
 import { singleKeyTapHoldMappings } from "./single-key";
 
 export { buildAntinoteRules } from "./apps/antinote";
-export { buildSkimCommandRemapRule } from "./apps/skim";
 export { buildOnePieceClickEnterRule } from "./apps/onepiece";
+export { buildSkimCommandRemapRule } from "./apps/skim";
 export { buildWordPrivilegesRule } from "./apps/word";
-export {
-    buildCtrlEscapeMonitorRule,
-    buildEscapeTapTapHoldRule,
-} from "./escape";
 export { buildCapsLockRule } from "./caps-lock";
 export {
-    buildHyperLauncherRules,
-    hyperLauncherMappings,
-    hyperTapHoldMappings,
-} from "./hyper";
-export {
-    buildCmdQRule,
-    buildLeftCommandRule,
-    leftCommandTapHoldMappings,
-} from "./left-command";
-export { buildMouseRules, mouseDeviceMappings } from "./mouse";
+  buildCtrlEscapeMonitorRule,
+  buildEscapeTapTapHoldRule,
+} from "./escape";
 export { buildHomeEndRule, homeEndNavigationMappings } from "./home-end";
 export {
-    buildRightOptionLauncherRules,
-    rightOptionLaunchers,
-    rightOptionTapHoldMappings,
+  buildHyperLauncherRules,
+  hyperLauncherMappings,
+  hyperTapHoldMappings,
+} from "./hyper";
+export {
+  buildCmdQRule,
+  buildLeftCommandRule,
+  leftCommandTapHoldMappings,
+} from "./left-command";
+export { buildMouseRules, mouseDeviceMappings } from "./mouse";
+export {
+  buildRightOptionLauncherRules,
+  rightOptionLaunchers,
+  rightOptionTapHoldMappings,
 } from "./right-option";
 export {
-    buildDisableHideMinimizeRule,
-    buildPasswordsQuickFillRule,
-    disabledShortcuts,
-    passwordsQuickFillMapping,
+  buildDisableHideMinimizeRule,
+  buildPasswordsQuickFillRule,
+  disabledShortcuts,
+  passwordsQuickFillMapping,
 } from "./system";
-export { spaceLayerDefinitions } from "./space";
+// export { spaceLayerDefinitions } from "./space";
 export {
-    buildEnterRules,
-    buildEqualsRules,
-    enterKeyHoldMappings,
-    equalsKeyHoldMappings,
+  buildEnterRules,
+  buildEqualsRules,
+  enterKeyHoldMappings,
+  equalsKeyHoldMappings,
 } from "./enter-equals";
 
 function mergeTapHoldRecords(

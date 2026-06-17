@@ -56,15 +56,20 @@ function parseKeyWithModifiers(keyString: string): {
 
 export function generateTapHoldRules(
   tapHoldKeys: Record<string, TapHoldConfig>,
-  spaceLayers: SubLayerConfig[],
+  spaceLayers?: SubLayerConfig[],
 ): any[] {
   const spaceModVar = "space_mod";
-  const allSublayerVars = getAllSublayerVars(spaceLayers, "space");
+  const allSublayerVars = getAllSublayerVars(spaceLayers ?? [], "space");
 
   return Object.entries(tapHoldKeys).map(([keyString, config]) => {
     const { key, modifiers } = parseKeyWithModifiers(keyString);
     const defaultAlone: ActionSpec[] = [
-      { type: "key", key, modifiers: modifiers as ActionKeyModifier[], options: { halt: true } },
+      {
+        type: "key",
+        key,
+        modifiers: modifiers as ActionKeyModifier[],
+        options: { halt: true },
+      },
     ];
     const resolvedAlone = config.alone ?? defaultAlone;
     const resolvedHold = config.hold ?? defaultAlone;

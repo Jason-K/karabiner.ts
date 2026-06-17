@@ -169,8 +169,15 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [{ type: "cleanShot", ref: "captureWindow" }],
   },
   t: {
-    description: "Todoist",
-    hold: [{ type: "app", ref: "todoist", mode: "shell" }],
+    description: "Kitty quick terminal",
+    hold: [
+      {
+        type: "key",
+        key: "f11",
+        modifiers: ["vm_OCS"],
+        options: { repeat: false },
+      },
+    ],
   },
   v: {
     description: "Maccy",
