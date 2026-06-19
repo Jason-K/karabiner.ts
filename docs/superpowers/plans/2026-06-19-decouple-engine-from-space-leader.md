@@ -13,6 +13,10 @@
 - **Verify per task:** every task ends with `npm run typecheck && npm run lint && npm test` locally green for the code it touches (pre-existing failures listed in Task 7 are exempt).
 - **Test runner:** `npm test` runs `tsx --test src/*.test.ts src/**/*.test.ts`. New test files live in `src/tests/` and are auto-discovered.
 - **Lint is strict:** `eslint src --max-warnings=0`. Remove every import that becomes unused (the refactor removes several) — unused imports fail lint.
+- **Pre-existing failures (out of scope — do NOT fix):**
+  - `npm run lint` reports one pre-existing error at `src/core/rule-descriptions.ts:100` (`no-useless-escape`). Unrelated to this work. Task verification = no NEW lint errors in files the task touches; the global `npm run lint` will show this one error throughout.
+  - `npm run typecheck` fails at `src/index.ts:63` until Task 3: the WIP `index.ts` passes `undefined` to `generateSimultaneousRules`'s currently-required param. Task 3 adds a `= []` default so the call typechecks. This is the only typecheck error mid-plan and is not caused by any task diff.
+  - `npm test` has pre-existing failures in mouse-description and `anchor keys` tests (see Task 7 Step 5).
 - **Commit trailer:** every commit message ends with a blank line then `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>`.
 - **Backups:** this is a git repo; per-task commits on branch `refactor/decouple-space-leader` are the backup mechanism. Do **not** create `.bak` files (not this repo's convention).
 - **Branch:** all work is on `refactor/decouple-space-leader` (already created and checked out).
@@ -450,10 +454,12 @@ to:
 ```ts
 export function generateSimultaneousRules(
   mappings: Record<string, SimultaneousConfig>,
-  suppressionVars: string[],
+  suppressionVars: string[] = [],
   tapHoldKeys: Record<string, TapHoldConfig>,
 ): any[] {
 ```
+
+(The `= []` default is intentional — it lets the WIP `src/index.ts` call site `generateSimultaneousRules(simultaneousMappings, undefined, tapHoldMappings)` keep typechecking until Task 7, matching the `generateTapHoldRules` pattern.)
 
 **3d.** Change the call site (currently `injectSpaceLayerConditions(manipulators, spaceLayers);`) to:
 
