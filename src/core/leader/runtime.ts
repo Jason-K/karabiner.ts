@@ -42,3 +42,10 @@ export function getAllSublayerVars(layerConfigs: SubLayerConfig[], prefix: strin
 
   return vars;
 }
+
+export function leaderSuppressionVars(
+  prefix: string,
+  layers: SubLayerConfig[],
+): string[] {
+  return [`${prefix}_mod`, ...getAllSublayerVars(layers, prefix)];
+}
