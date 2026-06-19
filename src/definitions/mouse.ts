@@ -34,7 +34,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "shift",
-        description: "Mission Control (tap) / Rectangle key (hold)",
+        description: "[SHIFT] Mission Control (tap) / Rectangle key (hold)",
         alone: [
           {
             key_code: "up_arrow",
@@ -54,7 +54,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel_left",
-        description: "Rectangle fill-left (hold)",
+        description: "[WHEEL LEFT] Rectangle fill-left (hold)",
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
@@ -67,7 +67,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel_right",
-        description: "Rectangle fill-right (hold)",
+        description: "[WHEEL RIGHT] Rectangle fill-right (hold)",
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
@@ -80,12 +80,15 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "middle_back",
-        description: "OCR area (tap) / Screenshot area (hold)",
+        description: "[G9] Screenshot to text (tap) / markdown (hold)",
         alone: [
           { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
         ],
         hold: [
-          { shell_command: "open 'cleanshot://capture-text?linebreaks=true'" },
+          {
+            shell_command:
+              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
+          },
         ],
         thresholdMs: TIMINGS.mouseDefaultMs,
         timeoutMs: TIMINGS.mouseDefaultMs,
@@ -93,7 +96,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "middle_front",
-        description: "Middle (tap) / Rectangle maximize (hold)",
+        description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
         variable: "middle_front_pressed",
         alone: [{ pointing_button: "button3" }],
         hold: [
@@ -106,7 +109,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_back",
-        description: "Rectangle Max/Restore (tap) / Next Display (hold)",
+        description: "[G7] Rectangle Max/Restore (tap) / Next Display (hold)",
         alone: rectangleMaxOrRestoreEvents(),
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
@@ -120,7 +123,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "Activate Popclip (tap) / Sidenote (hold)",
+        description: "[G8] Activate Popclip (tap) / Sidenote (hold)",
         alone: [
           {
             shell_command:
@@ -139,7 +142,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "back",
-        description: "Back (tap) / Window switch (hold)",
+        description: "[BACK] Back (tap) / Window switch (hold)",
         alone: [{ pointing_button: "button4" }],
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
         eventOptions: { halt: true, repeat: false },
@@ -149,7 +152,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "forward",
-        description: "Forward (tap) / App window switch (hold)",
+        description: "[FORWARD] Forward (tap) / App window switch (hold)",
         alone: [{ pointing_button: "button5" }],
         hold: [
           {
@@ -164,7 +167,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "right",
-        description: "Right click (tap) / Zen chord modifier (hold)",
+        description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
         variable: "right_button_pressed",
         alone: [{ pointing_button: "button2" }],
         hold: [],

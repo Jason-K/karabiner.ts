@@ -752,7 +752,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[V]        →    Maccy (on hold)",
+        "ruleDescription": "[V]        →    Clipboard manager (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -773,9 +773,9 @@
               {
                 "halt": true,
                 "repeat": false,
-                "key_code": "grave_accent_and_tilde",
+                "key_code": "v",
                 "modifiers": [
-                  "left_control"
+                  "left_option"
                 ]
               }
             ],
@@ -3281,7 +3281,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)",
+        "ruleDescription": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3335,14 +3335,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)"
+            "description": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Rectangle fill-left (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3376,7 +3376,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-left (hold)"
+            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
           },
           {
             "type": "basic",
@@ -3421,14 +3421,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-left (hold)"
+            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Rectangle fill-right (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3462,7 +3462,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-right (hold)"
+            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
           },
           {
             "type": "basic",
@@ -3507,14 +3507,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle fill-right (hold)"
+            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: OCR area (tap) / Screenshot area (hold)",
+        "ruleDescription": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3532,7 +3532,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'cleanshot://capture-text?linebreaks=true'"
+                "shell_command": "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py"
               }
             ],
             "to_delayed_action": {
@@ -3554,14 +3554,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: OCR area (tap) / Screenshot area (hold)"
+            "description": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3621,14 +3621,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Middle (tap) / Rectangle maximize (hold)"
+            "description": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)",
+        "ruleDescription": "Logitech G502 X: [G7] Rectangle Max/Restore (tap) / Next Display (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3672,14 +3672,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Rectangle Max/Restore (tap) / Next Display (hold)"
+            "description": "Logitech G502 X: [G7] Rectangle Max/Restore (tap) / Next Display (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Activate Popclip (tap) / Sidenote (hold)",
+        "ruleDescription": "Logitech G502 X: [G8] Activate Popclip (tap) / Sidenote (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3724,14 +3724,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Activate Popclip (tap) / Sidenote (hold)"
+            "description": "Logitech G502 X: [G8] Activate Popclip (tap) / Sidenote (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Back (tap) / Window switch (hold)",
+        "ruleDescription": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3778,14 +3778,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Back (tap) / Window switch (hold)"
+            "description": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Forward (tap) / App window switch (hold)",
+        "ruleDescription": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3832,14 +3832,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Forward (tap) / App window switch (hold)"
+            "description": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: Right click (tap) / Zen chord modifier (hold)",
+        "ruleDescription": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3886,7 +3886,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: Right click (tap) / Zen chord modifier (hold)"
+            "description": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)"
           }
         ],
         "allowEmptyManipulators": false,

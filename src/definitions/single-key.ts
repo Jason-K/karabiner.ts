@@ -180,12 +180,12 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     ],
   },
   v: {
-    description: "Maccy",
+    description: "Clipboard manager",
     hold: [
       {
         type: "key",
-        key: "grave_accent_and_tilde",
-        modifiers: ["left_control"],
+        key: "v",
+        modifiers: ["left_option"],
         options: { halt: true, repeat: false },
       },
     ],
