@@ -1,7 +1,5 @@
 import { rule } from "karabiner.ts";
 import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
-import { getAllSublayerVars } from "../core/leader/runtime";
-import type { SubLayerConfig } from "../core/leader/types";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { tapHold } from "../core/tap-hold";
 import { resolveModifierAlias } from "../data/key-aliases";
@@ -56,10 +54,8 @@ function parseKeyWithModifiers(keyString: string): {
 
 export function generateTapHoldRules(
   tapHoldKeys: Record<string, TapHoldConfig>,
-  spaceLayers?: SubLayerConfig[],
+  suppressionVars: string[] = [],
 ): any[] {
-  const spaceModVar = "space_mod";
-  const allSublayerVars = getAllSublayerVars(spaceLayers ?? [], "space");
 
   return Object.entries(tapHoldKeys).map(([keyString, config]) => {
     const { key, modifiers } = parseKeyWithModifiers(keyString);
@@ -96,23 +92,14 @@ export function generateTapHoldRules(
       });
     }
 
-    manipulators.forEach((m: any) => {
-      m.conditions = m.conditions || [];
-
-      m.conditions.push({
-        type: "variable_unless",
-        name: spaceModVar,
-        value: 1,
-      });
-
-      allSublayerVars.forEach((sublayerVar) => {
-        m.conditions.push({
-          type: "variable_unless",
-          name: sublayerVar,
-          value: 1,
+    if (suppressionVars.length > 0) {
+      manipulators.forEach((m: any) => {
+        m.conditions = m.conditions || [];
+        suppressionVars.forEach((name) => {
+          m.conditions.push({ type: "variable_unless", name, value: 1 });
         });
       });
-    });
+    }
 
     return rule(
       formatRuleDescription(keyString, config.description, "hold"),
