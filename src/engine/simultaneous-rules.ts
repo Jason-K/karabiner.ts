@@ -2,8 +2,6 @@ import { rule } from "karabiner.ts";
 import type { SimultaneousOptions as KarSimultaneousOptions } from "karabiner.ts";
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { getAllSublayerVars } from "../core/leader/runtime";
-import type { SubLayerConfig } from "../core/leader/types";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveActionToEvents } from "./action-resolver";
 import type { TapHoldConfig } from "./tap-hold-rules";
@@ -42,25 +40,23 @@ function resolveKarOptions(
   };
 }
 
-function injectSpaceLayerConditions(
+function injectSuppressionConditions(
   manipulators: any[],
-  spaceLayers: SubLayerConfig[],
+  suppressionVars: string[],
 ): void {
-  const spaceModVar = "space_mod";
-  const allSublayerVars = getAllSublayerVars(spaceLayers, "space");
+  if (suppressionVars.length === 0) return;
 
   manipulators.forEach((m: any) => {
     m.conditions = m.conditions ?? [];
-    m.conditions.push({ type: "variable_unless", name: spaceModVar, value: 1 });
-    allSublayerVars.forEach((v) => {
-      m.conditions.push({ type: "variable_unless", name: v, value: 1 });
+    suppressionVars.forEach((name) => {
+      m.conditions.push({ type: "variable_unless", name, value: 1 });
     });
   });
 }
 
 export function generateSimultaneousRules(
   mappings: Record<string, SimultaneousConfig>,
-  spaceLayers: SubLayerConfig[],
+  suppressionVars: string[] = [],
   tapHoldKeys: Record<string, TapHoldConfig>,
 ): any[] {
   validateMappings(mappings, tapHoldKeys);
@@ -94,7 +90,7 @@ export function generateSimultaneousRules(
           simultaneousThresholdMs: config.simultaneousThresholdMs,
         });
 
-    injectSpaceLayerConditions(manipulators, spaceLayers);
+    injectSuppressionConditions(manipulators, suppressionVars);
 
     return rule(
       formatRuleDescription(config.keys, config.description, "simultaneous"),
