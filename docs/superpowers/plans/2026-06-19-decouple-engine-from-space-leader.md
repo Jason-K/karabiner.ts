@@ -629,7 +629,7 @@ test("layer-emit: writes prefix-keyed layer json to the given path", () => {
   emitLayerDefinitions("leader", "L", layers, tmp, false);
   const written = JSON.parse(fs.readFileSync(tmp, "utf8"));
   assert.ok(written.leader, "root layer key uses the prefix");
-  assert.ok(written.leader_d, "sublayer id is <prefix>_<KEY>");
+  assert.ok(written.leader_D, "sublayer id is <prefix>_<KEY> (layer key is uppercased)");
   assert.equal(written.leader.label, "L");
   fs.unlinkSync(tmp);
 });
