@@ -5,15 +5,6 @@
  */
 
 export {
-    SPACE_LAYER_DEBUG,
-    SPACE_LAYER_DEBUG_LOG_PATH,
-    SPACE_LAYER_INDICATOR_ROOT,
-    SPACE_LAYER_LABEL,
-    SPACE_LAYER_LEADER_KEY,
-    SPACE_LAYER_PREFIX
-} from "./space-layer";
-
-export {
     ACCESSIBILITY_VALUES,
     ACCESSIBILITY_VARIABLES
 } from "./accessibility";

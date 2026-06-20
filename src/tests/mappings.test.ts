@@ -20,7 +20,6 @@ import {
 import { homeEndNavigationMappings } from "../definitions/home-end";
 import { mouseDeviceMappings } from "../definitions/mouse";
 import { rightOptionLaunchers } from "../definitions/right-option";
-import { spaceLayerDefinitions } from "../definitions/space";
 import {
   disabledShortcuts,
   passwordsQuickFillMapping,
@@ -272,25 +271,6 @@ test("vmCOC_+q and vmCOC_+w tap-hold mappings stay declarative", () => {
       background: true,
     },
   ]);
-});
-
-test("space layer definitions keep expected top-level layers", () => {
-  const layerKeys = spaceLayerDefinitions.map((l) => l.layerKey);
-  assert.deepEqual(layerKeys, ["a", "c", "d", "f", "r", "s", "w"]);
-});
-
-test("folders layer uses folder and raycast refs", () => {
-  const folders = spaceLayerDefinitions.find((l) => l.layerKey === "f");
-  assert.ok(folders);
-  assert.equal(Object.keys(folders?.mappings ?? {}).length, 11);
-  assert.deepEqual(folders?.mappings.r, {
-    description: "Recent Folders",
-    action: { type: "raycast", ref: "recentFolders" },
-  });
-  assert.deepEqual(folders?.mappings.s, {
-    description: "Scripts",
-    action: { type: "folder", ref: "scripts" },
-  });
 });
 
 test("mouse device mappings are declarative and device-scoped", () => {

@@ -39,7 +39,6 @@ export {
   disabledShortcuts,
   passwordsQuickFillMapping,
 } from "./system";
-// export { spaceLayerDefinitions } from "./space";
 export {
   buildEnterRules,
   buildEqualsRules,
