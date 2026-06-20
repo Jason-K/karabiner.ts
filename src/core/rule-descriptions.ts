@@ -97,7 +97,7 @@ function keyTokenToLabel(token: string): string {
     return normalized.toUpperCase();
   }
 
-  if (/^[+\-.,/;'\[\]=`~!@#$%^&*()_{}:"<>?\\]$/.test(token)) {
+  if (/^[+\-.,/;'[\]=`~!@#$%^&*()_{}:"<>?\\]$/.test(token)) {
     return token;
   }
 

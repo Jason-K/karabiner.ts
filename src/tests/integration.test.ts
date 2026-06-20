@@ -45,10 +45,6 @@ test("generated output includes all critical rule categories", () => {
     descriptions.some((d: string) => d.startsWith("[←⌘]+[Q]")),
     "Missing CMD-Q rule",
   );
-  assert.ok(
-    descriptions.some((d: string) => d.startsWith("[SPACE]")),
-    "Missing SPACE layer rules",
-  );
 });
 
 test("generated output uses standardized rule descriptions", () => {

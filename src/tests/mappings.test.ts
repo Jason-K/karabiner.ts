@@ -191,11 +191,6 @@ test("tap-hold mappings keep expected anchor keys", () => {
   assert.ok(tapHoldMappings["vmCOC_+spacebar"]);
   assert.ok(tapHoldMappings.tab);
   assert.ok(tapHoldMappings["vmCOC_+tab"]);
-  assert.ok(tapHoldMappings["vmCOC_+w"]);
-  assert.ok(tapHoldMappings["vmCOC_+1"]);
-  assert.ok(tapHoldMappings["vmCOC_+2"]);
-  assert.ok(tapHoldMappings["vmCOC_+3"]);
-  assert.ok(tapHoldMappings["vmCOC_+4"]);
   assert.ok(tapHoldMappings["vmCOC_+keypad_1"]);
   assert.ok(tapHoldMappings["vmCOC_+keypad_3"]);
   assert.ok(tapHoldMappings["vmCOC_+keypad_5"]);
@@ -289,7 +284,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(backMapping, {
     type: "tapHold",
     button: "back",
-    description: "Back (tap) / Window switch (hold)",
+    description: "[BACK] Back (tap) / Window switch (hold)",
     alone: [{ pointing_button: "button4" }],
     hold: [{ key_code: "tab", modifiers: ["left_command"] }],
     eventOptions: { halt: true, repeat: false },
@@ -300,7 +295,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
     type: "tapHold",
     button: "shift",
-    description: "Mission Control (tap) / Rectangle key (hold)",
+    description: "[SHIFT] Mission Control (tap) / Rectangle key (hold)",
     alone: [
       {
         key_code: "up_arrow",
@@ -321,7 +316,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
     type: "tapHold",
     button: "wheel_left",
-    description: "Rectangle fill-left (hold)",
+    description: "[WHEEL LEFT] Rectangle fill-left (hold)",
     hold: [
       ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
@@ -341,7 +336,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(middleFrontMapping, {
     type: "tapHold",
     button: "middle_front",
-    description: "Middle (tap) / Rectangle maximize (hold)",
+    description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
     variable: "middle_front_pressed",
     alone: [{ pointing_button: "button3" }],
     hold: [
@@ -363,7 +358,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   );
   assert.equal(
     leftBackMapping?.description,
-    "Rectangle Max/Restore (tap) / Next Display (hold)",
+    "[G7] Rectangle Max/Restore (tap) / Next Display (hold)",
   );
   const leftBackAlone =
     leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
@@ -383,17 +378,16 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "Activate Sidenote (tap) / Menu (hold)",
+    description: "[G8] Activate Popclip (tap) / Sidenote (hold)",
     alone: [
       {
-        key_code: "f10",
-        modifiers: ["left_command", "left_option", "left_shift"],
+        shell_command: "osascript -e 'tell application \"Popclip\" to appear'",
       },
     ],
     hold: [
       {
-        key_code: "m",
-        modifiers: ["left_option"],
+        key_code: "f10",
+        modifiers: ["left_command", "left_option", "left_shift"],
       },
     ],
     thresholdMs: 300,

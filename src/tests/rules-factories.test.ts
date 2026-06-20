@@ -272,7 +272,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   assert.equal(rules.length, 10);
   assert.equal(
     rules[0]?.description,
-    "Logitech G502 X: Mission Control (tap) / Rectangle key (hold)",
+    "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
   );
   assert.equal(rules[0]?.manipulators.length, 1);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
@@ -281,7 +281,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
 
   assert.equal(
     rules[1]?.description,
-    "Logitech G502 X: Rectangle fill-left (hold)",
+    "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)",
   );
   assert.equal(rules[1]?.manipulators.length, 2);
   const wheelLeftOverride: any = rules[1]?.manipulators[0];
@@ -328,7 +328,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
 
   assert.equal(
     rules[2]?.description,
-    "Logitech G502 X: Rectangle fill-right (hold)",
+    "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)",
   );
   assert.equal(rules[2]?.manipulators.length, 2);
   const wheelRightOverride: any = rules[2]?.manipulators[0];
