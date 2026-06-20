@@ -6,9 +6,8 @@
  * major sections:
  *
  * 1. Tap-Hold Keys: Single keys that perform different actions when tapped vs held
- * 2. Space Layer: Space bar as a layer key for accessing sublayers (Downloads, Apps, Folders)
- * 3. Caps Lock: Multiple modifier behaviors based on how it's pressed
- * 4. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
+ * 2. Caps Lock: Multiple modifier behaviors based on how it's pressed
+ * 3. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
  *
  * Virtual Modifiers:
  * - vmCOC_: Command + Option + Control
@@ -16,21 +15,14 @@
  * - vmCO_S: Command + Option + Shift
  */
 
-import { map, toKey, writeToProfile } from "karabiner.ts";
+import { map, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
-import { generateLayerRules } from "./core/leader";
 import {
   APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
   DEFAULT_PROFILE_NAME,
   DEVICE_IDENTIFIERS,
   PATHS,
   PREFERRED_PROFILE_NAME,
-  //   SPACE_LAYER_DEBUG,
-  //   SPACE_LAYER_DEBUG_LOG_PATH,
-  //   SPACE_LAYER_INDICATOR_ROOT,
-  //   SPACE_LAYER_LABEL,
-  //   SPACE_LAYER_LEADER_KEY,
-  //   SPACE_LAYER_PREFIX,
 } from "./data";
 import {
   buildAntinoteRules,
@@ -51,28 +43,19 @@ import {
   buildWordPrivilegesRule,
   mouseDeviceMappings,
   simultaneousMappings,
-//   spaceLayerDefinitions,
   tapHoldMappings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
   buildMouseRules,
-  emitLayerDefinitions,
-  generateEscapeRule,
   generateSimultaneousRules,
   generateTapHoldRules,
   updateDeviceConfigurations,
 } from "./engine";
 
-// const spaceLayers = spaceLayerDefinitions;
-
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = generateTapHoldRules(tapHoldMappings, undefined);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, undefined, tapHoldMappings);
-
-// Emit layer definitions for Hammerspoon (enable debug mode via KARABINER_DEBUG env var)
-const debugMode = process.env.KARABINER_DEBUG === "true";
-// emitLayerDefinitions(spaceLayers, undefined, debugMode);
+const tapHoldRules = generateTapHoldRules(tapHoldMappings);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, [], tapHoldMappings);
 
 // ============================================================================
 // SPECIAL RULES
@@ -101,17 +84,6 @@ let rules: any[] = [
 
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),
-
-  // Generate space layer rules with sublayer persistence
-//   ...generateLayerRules(spaceLayers, {
-//     leaderKey: SPACE_LAYER_LEADER_KEY,
-//     layerPrefix: SPACE_LAYER_PREFIX,
-//     leaderLabel: SPACE_LAYER_LABEL,
-//     indicatorRootLayer: SPACE_LAYER_INDICATOR_ROOT,
-//     leaderHoldEvents: [toKey("c", ["left_command"], { repeat: false })],
-//     debugSwallowedKeys: SPACE_LAYER_DEBUG,
-//     debugLogPath: SPACE_LAYER_DEBUG_LOG_PATH,
-//   }),
 
   // ============================================================================
   // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
@@ -150,8 +122,6 @@ let rules: any[] = [
 
   // Right_Option + __ - App launch or focus
   ...buildRightOptionLauncherRules(),
-  // Generate escape rule to reset all variables
-//   ...generateEscapeRule(spaceLayers),
 
   // ============================================================================
   // SECURITY & SYSTEM ACCESS RULES

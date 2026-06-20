@@ -28,7 +28,7 @@ test("generated output includes all critical rule categories", () => {
   const rules = output.complex_modifications.rules;
   const descriptions = rules.map((r: any) => r.ruleDescription || "");
 
-  // Sample critical rules: tap-hold, space layer, special rules
+  // Sample critical rules: tap-hold, special rules
   assert.ok(
     descriptions.some((d: string) => d.endsWith("(on hold)")),
     "Missing tap-hold rules",
@@ -96,15 +96,13 @@ test("each rule has required manipulatorSources structure", () => {
   });
 });
 
-test("generated output validates against critical variable names", () => {
+test("generated output contains no leader-suppression pollution", () => {
   const output = loadGeneratedOutput();
   const fullContent = JSON.stringify(output);
 
-  // Check for expected variable references in layer/tap-hold rules
   assert.ok(
-    fullContent.includes("space_a_sublayer") ||
-      fullContent.includes("space_mod"),
-    "Missing expected layer variable references"
+    !fullContent.includes("space_"),
+    "Output should contain no space_ leader variables when no leader is active"
   );
 });
 
@@ -133,42 +131,5 @@ test("generated output includes Phase 3 activation timestamp expressions", () =>
   assert.ok(
     fullContent.includes("{{ system.now.milliseconds }}"),
     "Missing expected system.now.milliseconds expression"
-  );
-});
-
-test("output contains space layer rules", () => {
-  const output = loadGeneratedOutput();
-  const rules = output.complex_modifications.rules;
-  const descriptions = rules.map((r: any) => r.ruleDescription || "");
-
-  const spaceRules = descriptions.filter((d: string) => d.startsWith("[SPACE]+["));
-  assert.ok(spaceRules.length > 0, "No SPACE+ layer rules found");
-  assert.ok(
-    spaceRules.some((d: string) => d.includes("Applications")),
-    "Missing SPACE+A Applications layer"
-  );
-});
-
-test("space layer activation copies current selection before enabling leader mode", () => {
-  const output = loadGeneratedOutput();
-  const rules = output.complex_modifications.rules;
-  const spaceRule = rules.find(
-    (rule: any) =>
-      rule.ruleDescription === "[SPACE]        →    SPACE layer (on hold)",
-  );
-
-  assert.ok(spaceRule, "Missing SPACE leader rule");
-
-  const holdEvents = spaceRule.manipulatorSources[0]?.to_if_held_down;
-  assert.ok(Array.isArray(holdEvents), "SPACE leader rule missing hold events");
-
-  assert.ok(
-    holdEvents.some(
-      (event: any) =>
-        event.key_code === "c" &&
-        Array.isArray(event.modifiers) &&
-        event.modifiers.includes("left_command"),
-    ),
-    "SPACE leader hold path should send Cmd-C before activating the layer",
   );
 });

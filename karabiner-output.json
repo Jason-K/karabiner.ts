@@ -32,14 +32,7 @@
                   "key_code": "8"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -82,14 +75,7 @@
                   "key_code": "a"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -132,14 +118,7 @@
                   "key_code": "c"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -182,14 +161,7 @@
                   "key_code": "d"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -226,14 +198,7 @@
                   "key_code": "f"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -270,14 +235,7 @@
                   "key_code": "g"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -314,14 +272,7 @@
                   "key_code": "h"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -358,14 +309,7 @@
                   "key_code": "j"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -406,14 +350,7 @@
                   "key_code": "k"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -450,14 +387,7 @@
                   "key_code": "n"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -494,14 +424,7 @@
                   "key_code": "o"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -545,14 +468,7 @@
                   "key_code": "p"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -589,14 +505,7 @@
                   "key_code": "r"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -633,14 +542,7 @@
                   "key_code": "s"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -688,14 +590,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -738,14 +633,7 @@
                   "key_code": "t"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -787,14 +675,7 @@
                   "key_code": "v"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -831,14 +712,7 @@
                   "key_code": "x"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -875,14 +749,7 @@
                   "key_code": "y"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -919,14 +786,7 @@
                   "key_code": "z"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -963,14 +823,7 @@
                   "key_code": "keypad_0"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1007,14 +860,7 @@
                   "key_code": "keypad_2"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1051,14 +897,7 @@
                   "key_code": "keypad_4"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1095,14 +934,7 @@
                   "key_code": "keypad_5"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1139,14 +971,7 @@
                   "key_code": "keypad_6"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1183,14 +1008,7 @@
                   "key_code": "keypad_8"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1228,14 +1046,7 @@
                   "key_code": "f1"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1273,14 +1084,7 @@
                   "key_code": "f2"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1318,14 +1122,7 @@
                   "key_code": "f3"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1363,14 +1160,7 @@
                   "key_code": "f4"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1413,14 +1203,7 @@
                   "key_code": "f5"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1458,14 +1241,7 @@
                   "key_code": "f7"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1503,14 +1279,7 @@
                   "key_code": "f8"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1548,14 +1317,7 @@
                   "key_code": "f9"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1593,14 +1355,7 @@
                   "key_code": "f10"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1638,14 +1393,7 @@
                   "key_code": "f11"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1683,14 +1431,7 @@
                   "key_code": "f12"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1734,14 +1475,7 @@
                   "key_code": "slash"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1786,14 +1520,7 @@
                   "key_code": "grave_accent_and_tilde"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1832,14 +1559,7 @@
                   "key_code": "tab"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1882,14 +1602,7 @@
                   "key_code": "fn"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1924,14 +1637,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=reflow-pin'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -1992,14 +1698,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2041,14 +1740,7 @@
                   "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2090,14 +1782,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=left-half'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2139,14 +1824,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=right-half'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2194,14 +1872,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2249,14 +1920,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2304,14 +1968,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2359,14 +2016,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2414,14 +2064,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2469,14 +2112,7 @@
                   "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2518,14 +2154,7 @@
                   "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2567,14 +2196,7 @@
                   "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2616,14 +2238,7 @@
                   "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=fill-right]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2676,14 +2291,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2737,14 +2345,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2792,14 +2393,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2847,14 +2441,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2894,14 +2481,7 @@
                   "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
@@ -2949,14 +2529,7 @@
                   ]
                 }
               ]
-            },
-            "conditions": [
-              {
-                "type": "variable_unless",
-                "name": "space_mod",
-                "value": 1
-              }
-            ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
