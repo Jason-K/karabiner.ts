@@ -3,13 +3,11 @@ import path from 'path';
 import type { SubLayerConfig } from '../core/leader/types';
 import { HOME_DIR } from "../data";
 
-function getDefaultOutputPaths(home: string): string[] {
+function getDefaultOutputPaths(home: string, prefix: string): string[] {
+  const filename = `${prefix}_layers.json`;
   const candidates = [
-    path.join(
-      home,
-      ".config/hammerspoon/modules/karabiner_layer_gui/space_layers.json",
-    ),
-    path.join(home, ".hammerspoon/karabiner_layer_gui/space_layers.json"),
+    path.join(home, `.config/hammerspoon/modules/karabiner_layer_gui/${filename}`),
+    path.join(home, `.hammerspoon/karabiner_layer_gui/${filename}`),
   ];
 
   const existingDirCandidates = candidates.filter((candidate) =>
@@ -24,32 +22,34 @@ function getDefaultOutputPaths(home: string): string[] {
 }
 
 export function emitLayerDefinitions(
-  spaceLayers: SubLayerConfig[],
+  prefix: string,
+  label: string,
+  layers: SubLayerConfig[],
   outputPath?: string,
   debugMode: boolean = false,
 ): void {
   try {
     const home = HOME_DIR;
-    const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home);
+    const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home, prefix);
     const finalPath = outputPaths[0];
 
     if (debugMode) {
       console.log(`[LayerEmit Debug] Starting emission to: ${outputPaths.join(', ')}`);
     }
 
-    const layers: Record<string, any> = {};
+    const layerMap: Record<string, any> = {};
 
-    layers.space = {
-      label: '␣',
-      keys: spaceLayers.map((layer) => ({
+    layerMap[prefix] = {
+      label,
+      keys: layers.map((layer) => ({
         key: layer.layerKey.toUpperCase(),
         desc: layer.layerName,
       })),
       widthHintPx: 235,
     };
 
-    spaceLayers.forEach(({ layerKey, layerName, mappings, subLayers }) => {
-      const layerId = `space_${layerKey.toUpperCase()}`;
+    layers.forEach(({ layerKey, layerName, mappings, subLayers }) => {
+      const layerId = `${prefix}_${layerKey.toUpperCase()}`;
       const keys = Object.entries(mappings).map(([key, config]) => ({
         key: key.toUpperCase(),
         desc: config.description,
@@ -62,7 +62,7 @@ export function emitLayerDefinitions(
         });
       });
 
-      layers[layerId] = {
+      layerMap[layerId] = {
         label: layerKey.toUpperCase(),
         keys,
         widthHintPx: 235,
@@ -75,13 +75,13 @@ export function emitLayerDefinitions(
       }
 
       (subLayers || []).forEach((subLayer) => {
-        const nestedId = `space_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`;
+        const nestedId = `${prefix}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`;
         const nestedKeys = Object.entries(subLayer.mappings).map(([key, config]) => ({
           key: key.toUpperCase(),
           desc: config.description,
         }));
 
-        layers[nestedId] = {
+        layerMap[nestedId] = {
           label: `${layerKey.toUpperCase()}${subLayer.layerKey.toUpperCase()}`,
           keys: nestedKeys,
           widthHintPx: 235,
@@ -95,7 +95,7 @@ export function emitLayerDefinitions(
       });
     });
 
-    const serialized = JSON.stringify(layers, null, 2);
+    const serialized = JSON.stringify(layerMap, null, 2);
 
     outputPaths.forEach((targetPath) => {
       const dir = path.dirname(targetPath);
@@ -109,12 +109,12 @@ export function emitLayerDefinitions(
       fs.writeFileSync(targetPath, serialized);
 
       console.log(
-        `✓ Emitted ${Object.keys(layers).length} layer definitions to ${targetPath}`,
+        `✓ Emitted ${Object.keys(layerMap).length} layer definitions to ${targetPath}`,
       );
     });
 
     if (debugMode) {
-      console.log('[LayerEmit Debug] Emission complete. Layers:', Object.keys(layers));
+      console.log('[LayerEmit Debug] Emission complete. Layers:', Object.keys(layerMap));
     }
   } catch (error) {
     console.error('✗ Failed to emit layer definitions:', error);
