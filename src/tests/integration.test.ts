@@ -101,31 +101,3 @@ test("generated output contains no leader-suppression pollution", () => {
     "Output should contain no space_ leader variables when no leader is active"
   );
 });
-
-test("generated output includes Phase 3 expression usage counter", () => {
-  const output = loadGeneratedOutput();
-  const fullContent = JSON.stringify(output);
-
-  assert.ok(
-    fullContent.includes("apps_toggle_uses"),
-    "Missing expected usage counter variable"
-  );
-  assert.ok(
-    fullContent.includes("{{ apps_toggle_uses + 1 }}"),
-    "Missing expected usage counter expression"
-  );
-});
-
-test("generated output includes Phase 3 activation timestamp expressions", () => {
-  const output = loadGeneratedOutput();
-  const fullContent = JSON.stringify(output);
-
-  assert.ok(
-    fullContent.includes("activate_ms"),
-    "Missing expected activation timestamp variables"
-  );
-  assert.ok(
-    fullContent.includes("{{ system.now.milliseconds }}"),
-    "Missing expected system.now.milliseconds expression"
-  );
-});

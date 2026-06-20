@@ -13,6 +13,12 @@ export { buildSkimCommandRemapRule } from "./apps/skim";
 export { buildWordPrivilegesRule } from "./apps/word";
 export { buildCapsLockRule } from "./caps-lock";
 export {
+  buildEnterRules,
+  buildEqualsRules,
+  enterKeyHoldMappings,
+  equalsKeyHoldMappings,
+} from "./enter-equals";
+export {
   buildCtrlEscapeMonitorRule,
   buildEscapeTapTapHoldRule,
 } from "./escape";
@@ -33,18 +39,13 @@ export {
   rightOptionLaunchers,
   rightOptionTapHoldMappings,
 } from "./right-option";
+export { buildShiftRules } from "./shift";
 export {
   buildDisableHideMinimizeRule,
   buildPasswordsQuickFillRule,
   disabledShortcuts,
   passwordsQuickFillMapping,
 } from "./system";
-export {
-  buildEnterRules,
-  buildEqualsRules,
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-} from "./enter-equals";
 
 function mergeTapHoldRecords(
   ...records: Array<Record<string, TapHoldConfig>>
@@ -53,7 +54,9 @@ function mergeTapHoldRecords(
   for (const record of records) {
     for (const [key, value] of Object.entries(record)) {
       if (key in merged) {
-        throw new Error(`Duplicate tapHold key across definition files: ${key}`);
+        throw new Error(
+          `Duplicate tapHold key across definition files: ${key}`,
+        );
       }
       merged[key] = value;
     }

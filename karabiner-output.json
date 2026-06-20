@@ -4789,6 +4789,278 @@
         ],
         "allowEmptyManipulators": false,
         "conditions": []
+      },
+      {
+        "ruleDescription": "[←⇧]        →    Raycast clipboard history (on multi-tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_left_shift",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600
+            },
+            "description": "multi_tap_left_shift second tap (tap-tap / tap-tap-hold)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "left_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600,
+              "basic.to_if_alone_timeout_milliseconds": 600
+            },
+            "description": "multi_tap_left_shift first tap (pass-through)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "left_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "left_shift"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "left_shift"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[→⇧]        →    Raycast clipboard history (on multi-tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_shift",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_right_shift",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600
+            },
+            "description": "multi_tap_right_shift second tap (tap-tap / tap-tap-hold)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "right_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_shift",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 600,
+              "basic.to_if_held_down_threshold_milliseconds": 600,
+              "basic.to_if_alone_timeout_milliseconds": 600
+            },
+            "description": "multi_tap_right_shift first tap (pass-through)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "right_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "right_shift"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "right_shift"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
       }
     ]
   }

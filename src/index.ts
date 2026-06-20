@@ -39,6 +39,7 @@ import {
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
   buildRightOptionLauncherRules,
+  buildShiftRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   mouseDeviceMappings,
@@ -166,6 +167,9 @@ let rules: any[] = [
 
   // ANTINOTE - CMD+D double-tap to delete note
   ...buildAntinoteRules(),
+
+  // SHIFT - Shift key rules
+  ...buildShiftRules(),
 ];
 
 // ============================================================================
