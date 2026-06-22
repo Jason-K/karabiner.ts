@@ -42,6 +42,7 @@ import {
   buildShiftRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
+  buildZenCommandRemapRule,
   mouseDeviceMappings,
   simultaneousMappings,
   tapHoldMappings,
@@ -151,6 +152,9 @@ let rules: any[] = [
 
   // SKIM - CMD+H/U remapping
   ...buildSkimCommandRemapRule(),
+
+  // ZEN - CMD+SHIFT+H/U remapping
+  ...buildZenCommandRemapRule(),
 
   // ============================================================================
   // APPLICATION-SPECIFIC RULES

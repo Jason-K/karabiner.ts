@@ -326,6 +326,20 @@ test("mouse device mappings are declarative and device-scoped", () => {
         ),
       },
     ],
+    overrides: [
+      {
+        when: [
+          { app: appRegistry.zen },
+          { variable: "right_button_pressed", match: "if", value: 1 },
+        ],
+        to: [
+          {
+            key_code: "left_arrow",
+            modifiers: ["left_command", "left_control", "left_shift"],
+          },
+        ],
+      },
+    ],
     thresholdMs: 200,
     timeoutMs: 200,
   });

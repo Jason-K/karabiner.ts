@@ -2924,7 +2924,12 @@
             },
             "to": [
               {
-                "shell_command": "osascript -e 'tell application \"System Events\" to key code 33 using {control down, shift down}'"
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
               }
             ],
             "conditions": [
@@ -3010,7 +3015,12 @@
             },
             "to": [
               {
-                "shell_command": "osascript -e 'tell application \"System Events\" to key code 30 using {control down, shift down}'"
+                "key_code": "right_arrow",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
               }
             ],
             "conditions": [
@@ -4685,6 +4695,78 @@
                 "modifiers": [
                   "left_command",
                   "left_control"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[←⌘←⇧]+[RIGHT]        →    Zen command H remap (on tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_shift"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "close_bracket",
+                "modifiers": [
+                  "left_command",
+                  "left_shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[←⌘←⇧]+[LEFT]        →    Zen command U remap (on tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_shift"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "open_bracket",
+                "modifiers": [
+                  "left_command",
+                  "left_shift"
                 ]
               }
             ]

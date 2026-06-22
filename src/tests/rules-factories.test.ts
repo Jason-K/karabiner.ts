@@ -290,7 +290,8 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   });
     assert.deepEqual(wheelLeftOverride?.to, [
       {
-        shell_command: `osascript -e 'tell application "System Events" to key code 33 using {control down, shift down}'`,
+        key_code: "left_arrow",
+        modifiers: ["left_command", "left_control", "left_shift"],
       },
     ]);
   assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
@@ -337,7 +338,8 @@ test("mouse rules factory builds declarative per-device mappings", () => {
   });
   assert.deepEqual(wheelRightOverride?.to, [
     {
-      shell_command: `osascript -e 'tell application "System Events" to key code 30 using {control down, shift down}'`,
+      key_code: "right_arrow",
+      modifiers: ["left_command", "left_control", "left_shift"],
     },
   ]);
 });

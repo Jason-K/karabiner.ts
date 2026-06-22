@@ -1,11 +1,11 @@
-import { ifApp, ifDevice, map, rule, to$ } from "karabiner.ts";
+import { ifApp, ifDevice, map, rule } from "karabiner.ts";
 import {
     mouseTapHold,
     mouseVarTapTapHold,
     resolveMouseButton,
 } from "../core/mouse";
-import { appRegistry } from "../data";
 import type {
+    MouseCondition,
     MouseDeviceConfig,
     MouseDoubleTapMapping,
     MouseMapping,
@@ -45,6 +45,35 @@ function buildSimultaneousManipulators(
   });
   mapping.to.forEach((e) => manipulator.to(e));
   return manipulator.build();
+}
+
+function overrideCondition(condition: MouseCondition): any {
+  if ("app" in condition) {
+    return condition.unless
+      ? ifApp(condition.app).unless()
+      : ifApp(condition.app);
+  }
+  return {
+    type: condition.match === "if" ? "variable_if" : "variable_unless",
+    name: condition.variable,
+    value: condition.value,
+  };
+}
+
+function buildOverrideManipulators(
+  device: MouseDeviceConfig,
+  mapping: MouseTapHoldMapping,
+): any[] {
+  if (!mapping.overrides?.length) return [];
+  const pointingButton = resolveMouseButton(mapping.button, device.buttonMap);
+  return mapping.overrides.flatMap((override) => {
+    const builder = map({ pointing_button: pointingButton });
+    override.to.forEach((event) => builder.to(event));
+    override.when
+      .map(overrideCondition)
+      .forEach((condition) => builder.condition(condition));
+    return builder.build();
+  });
 }
 
 function buildTapHoldManipulators(
@@ -89,41 +118,13 @@ function buildTapHoldManipulators(
     });
   }
 
-  if (mapping.button === "wheel_left") {
-    const zenWheelLeftOverride: any = map({
-      pointing_button: resolveMouseButton("wheel_left", device.buttonMap),
-    })
-      .to(to$('osascript -e \'tell application "System Events" to key code 33 using {control down, shift down}\''))
-      .condition(ifApp(appRegistry.browser))
-      .build()[0];
-
-    zenWheelLeftOverride.conditions = zenWheelLeftOverride.conditions ?? [];
-    zenWheelLeftOverride.conditions.push({
-      type: "variable_if",
-      name: "right_button_pressed",
-      value: 1,
-    });
-
-    manipulators.unshift(zenWheelLeftOverride);
-  }
-
-  if (mapping.button === "wheel_right") {
-    const zenWheelRightOverride: any = map({
-      pointing_button: resolveMouseButton("wheel_right", device.buttonMap),
-    })
-      .to(to$('osascript -e \'tell application "System Events" to key code 30 using {control down, shift down}\''))
-      .condition(ifApp(appRegistry.browser))
-      .build()[0];
-
-    zenWheelRightOverride.conditions = zenWheelRightOverride.conditions ?? [];
-    zenWheelRightOverride.conditions.push({
-      type: "variable_if",
-      name: "right_button_pressed",
-      value: 1,
-    });
-
-    manipulators.unshift(zenWheelRightOverride);
-  }
+  // App/variable-conditional overrides, declared as data on the mapping. Built
+  // as standalone manipulators and prepended *after* the wheel guard above, so
+  // an override that targets a chord (e.g. right_button held) is not suppressed
+  // by the guard's variable_unless on that same variable.
+  buildOverrideManipulators(device, mapping).forEach((manipulator) =>
+    manipulators.unshift(manipulator),
+  );
 
   return manipulators;
 }

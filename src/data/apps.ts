@@ -28,6 +28,7 @@ export const appRegistry = {
   teams: "com.microsoft.teams2",
   todoist: "com.todoist.mac.Todoist",
   word: "com.microsoft.Word",
+  zen: "app.zen-browser.zen",
 } as const;
 
 export type AppRef = keyof typeof appRegistry;

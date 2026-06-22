@@ -11,6 +11,7 @@ export { buildAntinoteRules } from "./apps/antinote";
 export { buildOnePieceClickEnterRule } from "./apps/onepiece";
 export { buildSkimCommandRemapRule } from "./apps/skim";
 export { buildWordPrivilegesRule } from "./apps/word";
+export { buildZenCommandRemapRule } from "./apps/zen";
 export { buildCapsLockRule } from "./caps-lock";
 export {
   buildEnterRules,

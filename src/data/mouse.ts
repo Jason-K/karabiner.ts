@@ -9,6 +9,17 @@ export type MouseIdentifiers = {
   vendor_id: number;
 };
 
+export type MouseCondition =
+  | { app: string; unless?: boolean }
+  | { variable: string; match: "if" | "unless"; value: string | number };
+
+export type MouseOverride = {
+  /** Conditions that must all hold (AND) for the override to fire. */
+  when: MouseCondition[];
+  /** Events emitted immediately while the `when` conditions hold. */
+  to: ToEvent[];
+};
+
 export type MouseTapHoldMapping = {
   type: "tapHold";
   button: string;
@@ -22,6 +33,13 @@ export type MouseTapHoldMapping = {
   };
   thresholdMs?: number;
   timeoutMs?: number;
+  /**
+   * App/variable-conditional overrides. Each becomes a standalone manipulator
+   * (prepended before the base) that emits `to` immediately when all its
+   * `when` conditions hold. Declared here so per-app behavior lives next to the
+   * button definition instead of being hardcoded in the engine.
+   */
+  overrides?: MouseOverride[];
 };
 
 export type MouseSimultaneousMapping = {

@@ -1,5 +1,5 @@
 import { g502xButtons } from "../core/mouse";
-import { DEVICE_IDENTIFIERS, TIMINGS } from "../data";
+import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
 import {
     ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
     type MouseDeviceConfig,
@@ -11,12 +11,6 @@ import {
 } from "../data/rectangle";
 
 export { buildMouseDeviceRules, buildMouseRules } from "../engine/mouse-rules";
-
-const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");
-
-const RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("right-half", "bottom-half");
 
 const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("fill-left", "top-half");
@@ -61,6 +55,20 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION,
           },
         ],
+        overrides: [
+          {
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [
+              {
+                key_code: "left_arrow",
+                modifiers: ["left_command", "left_control", "left_shift"],
+              },
+            ],
+          },
+        ],
         thresholdMs: TIMINGS.mouseWheelChordMs,
         timeoutMs: TIMINGS.mouseWheelChordMs,
       },
@@ -72,6 +80,20 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             shell_command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
+          },
+        ],
+        overrides: [
+          {
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [
+              {
+                key_code: "right_arrow",
+                modifiers: ["left_command", "left_control", "left_shift"],
+              },
+            ],
           },
         ],
         thresholdMs: TIMINGS.mouseWheelChordMs,
