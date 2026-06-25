@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVER_SCRIPT="${SCRIPT_DIR}/layer_indicator_user_command_server.py"
 ENDPOINT_FILE="${SCRIPT_DIR}/layer-indicator-user-command-endpoint.txt"
 CONFIG_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-LOG_DIR="${HOME}/Library/Logs/Scripts/Hammerspoon/Layer_Indicator"
+LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/karabiner"
 LOG_PATH="${LOG_DIR}/layer-indicator-user-command-server.log"
 
 if [[ ! -f "$SERVER_SCRIPT" ]]; then

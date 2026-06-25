@@ -31,7 +31,7 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_SOCKET_PATH = "/tmp/karabiner-layer-indicator.sock"
-DEFAULT_LOG_PATH = Path.home() / ".config/karabiner/logs/layer-indicator-user-command-server.log"
+DEFAULT_LOG_PATH = Path.home() / ".local/state/karabiner/layer-indicator-user-command-server.log"
 ENDPOINT_FILE_PATH = Path(__file__).with_name("layer-indicator-user-command-endpoint.txt")
 
 

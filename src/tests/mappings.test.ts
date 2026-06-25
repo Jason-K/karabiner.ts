@@ -166,7 +166,7 @@ test("equals key hold mappings stay declarative", () => {
           },
           {
             type: "shell",
-            command: `${PATHS.textProcessorUvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
+            command: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
           },
         ],
         timeoutMs: 200,

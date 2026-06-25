@@ -21,7 +21,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/.local/bin/open-app -b 'com.ringcentral.glip'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
               }
             ],
             "to_delayed_action": {
@@ -187,7 +187,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
+                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -224,7 +224,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
+                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
@@ -701,7 +701,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
               }
             ],
             "to_delayed_action": {
@@ -738,7 +738,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
               }
             ],
             "to_delayed_action": {
@@ -1725,19 +1725,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
+                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
+                  "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
                 }
               ]
             }
@@ -2427,7 +2427,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "~/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
+                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
               }
             ],
             "to_delayed_action": {
@@ -2466,7 +2466,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -2478,7 +2478,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             }
@@ -2515,7 +2515,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
               }
             ],
             "to_delayed_action": {
@@ -2713,7 +2713,7 @@
                 }
               },
               {
-                "shell_command": "~/.local/bin/kill-app"
+                "shell_command": "/Users/jason/.local/bin/kill-app"
               }
             ],
             "to_delayed_action": {
@@ -2774,7 +2774,7 @@
                 }
               },
               {
-                "shell_command": "~/.local/bin/kill-app --foreground"
+                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
               }
             ],
             "to_delayed_action": {
@@ -3730,7 +3730,7 @@
             },
             "to": [
               {
-                "shell_command": "~/.venv/typinator/bin/python ~/Scripts/apps/Typinator/new_rule/new_rule.py"
+                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
               }
             ]
           }
@@ -3784,7 +3784,7 @@
             },
             "to": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
               }
             ]
           }
@@ -4036,7 +4036,7 @@
                 ]
               },
               {
-                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -4086,7 +4086,7 @@
                 ]
               },
               {
-                "shell_command": "~/.local/bin/uv --directory ~/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
+                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -4498,7 +4498,7 @@
             ],
             "to": [
               {
-                "shell_command": "osascript \"$HOME/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
+                "shell_command": "osascript \"/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
               },
               {
                 "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1.3"

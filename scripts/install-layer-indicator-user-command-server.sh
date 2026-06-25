@@ -5,8 +5,8 @@ trap 'echo "ERROR at line $LINENO" >&2' ERR
 # Installs and bootstraps the Karabiner layer-indicator user-command server
 # as a per-user LaunchAgent.
 
-LABEL="com.jason.karabiner-layer-indicator-user-command-server"
-ROTATE_LABEL="com.jason.karabiner-layer-indicator-user-command-server-log-rotate"
+LABEL="uk.knoxhaus.karabiner-layer-indicator-user-command-server"
+ROTATE_LABEL="uk.knoxhaus.karabiner-layer-indicator-user-command-server-log-rotate"
 MAX_LOG_SIZE_BYTES="${MAX_LOG_SIZE_BYTES:-1048576}"
 MAX_LOG_BACKUPS="${MAX_LOG_BACKUPS:-5}"
 ROTATE_INTERVAL_SECONDS="${ROTATE_INTERVAL_SECONDS:-900}"
@@ -17,7 +17,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 START_SCRIPT="${SCRIPT_DIR}/start-layer-indicator-user-command-server.sh"
 ENDPOINT_FILE="${SCRIPT_DIR}/layer-indicator-user-command-endpoint.txt"
-LOG_DIR="${HOME}/Library/Logs/Scripts/Karabiner/$(basename "${PROJECT_DIR}")"
+LOG_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/karabiner"
 
 LAUNCH_AGENTS_DIR="${HOME}/Library/LaunchAgents"
 PLIST_TARGET="${LAUNCH_AGENTS_DIR}/${LABEL}.plist"

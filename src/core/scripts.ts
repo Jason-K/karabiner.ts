@@ -256,7 +256,7 @@ export function textProcessorCommand(action: string): string {
       "paste",
     ],
     {
-      pythonBin: `${PATHS.textProcessorUvBin} --directory ${PATHS.textProcessorDir} run python`,
+      pythonBin: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python`,
     },
   );
 }
