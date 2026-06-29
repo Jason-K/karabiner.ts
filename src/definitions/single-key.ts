@@ -267,7 +267,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     ],
   },
   f1: {
-    description: "Brightness rightness",
+    description: "Decrease brightness",
     hold: [
       {
         type: "key",
@@ -371,24 +371,5 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  application: {
-    description: "Reflow pinned app (tap), Pin app (hold)",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("reflow-pin"),
-        background: true,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("pin"),
-        background: true,
-      },
-    ],
-    timeoutMs: 300,
-    thresholdMs: 300,
   },
 };

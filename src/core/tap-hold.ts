@@ -5,6 +5,7 @@ import type {
   ToEvent,
 } from "karabiner.ts";
 import { ifApp, map, toKey, toSetVar } from "karabiner.ts";
+import { TIMINGS } from "../data";
 
 /**
  * Configuration for basic tap-hold behavior
@@ -53,8 +54,8 @@ export function tapHoldFrom({
   alone,
   hold,
   eventOptions,
-  timeoutMs = 300,
-  thresholdMs = 300,
+  timeoutMs = TIMINGS.delayHoldMs,
+  thresholdMs = TIMINGS.delayHoldMs,
   description,
   cancel,
   invoked,
@@ -137,8 +138,8 @@ export function tapHold({
   alone,
   hold,
   eventOptions,
-  timeoutMs = 300,
-  thresholdMs = 300,
+  timeoutMs = TIMINGS.delayHoldMs,
+  thresholdMs = TIMINGS.delayHoldMs,
   description,
   cancel,
   invoked,
@@ -183,7 +184,7 @@ export function varTapTapHoldFrom({
   tapTapEvents,
   tapTapHoldEvents,
   holdMods,
-  thresholdMs = 300,
+  thresholdMs = TIMINGS.delayHoldMs,
   description,
   allowPassThrough,
   mods,
@@ -278,7 +279,7 @@ export function varTapTapHold({
   tapTapEvents,
   tapTapHoldEvents,
   holdMods,
-  thresholdMs = 300,
+  thresholdMs = TIMINGS.delayHoldMs,
   description,
   allowPassThrough,
   mods,

@@ -1,7 +1,13 @@
-import { TIMINGS } from "../data";
 import { killAppCommand } from "../core/scripts";
-import { generateMultiTapRule, type MultiTapConfig } from "../engine/multi-tap-rules";
-import { generateTapAloneHoldRule, type TapAloneHoldConfig } from "../engine/tap-alone-hold-rules";
+import { TIMINGS } from "../data";
+import {
+  generateMultiTapRule,
+  type MultiTapConfig,
+} from "../engine/multi-tap-rules";
+import {
+  generateTapAloneHoldRule,
+  type TapAloneHoldConfig,
+} from "../engine/tap-alone-hold-rules";
 
 export const escapeTapTapHold: MultiTapConfig = {
   key: "escape",
@@ -9,7 +15,7 @@ export const escapeTapTapHold: MultiTapConfig = {
   alone: [{ type: "key", key: "escape" }],
   hold: [{ type: "shell", command: killAppCommand("foreground") }],
   tapTapHold: [{ type: "shell", command: killAppCommand() }],
-  thresholdMs: TIMINGS.escapeTapHoldMs,
+  thresholdMs: TIMINGS.delayHoldMs,
   mods: [],
 };
 
@@ -19,7 +25,7 @@ export const ctrlEscapeConfig: TapAloneHoldConfig = {
   description: "Activity Monitor / Process Spy",
   alone: [{ type: "app", ref: "activityMonitor" }],
   hold: [{ type: "app", ref: "processSpy" }],
-  timeoutMs: TIMINGS.mouseDefaultMs,
+  timeoutMs: TIMINGS.delayHoldMs,
 };
 
 export const buildEscapeTapTapHoldRule = () =>

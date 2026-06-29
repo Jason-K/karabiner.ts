@@ -26,15 +26,15 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
   "right_option+k": {
     description: "Kitty here",
     hold: [{ type: "actHere", action: "kitty" }],
-    timeoutMs: 300,
-    thresholdMs: 300,
+    timeoutMs: TIMINGS.delayHoldMs,
+    thresholdMs: TIMINGS.delayHoldMs,
   },
   "right_option+s": {
     description: "Spotify toggle (tap), search (hold)",
     alone: [{ type: "shell", command: spotifyToggleCommand() }],
     hold: [{ type: "raycast", ref: "spotifySearch" }],
-    timeoutMs: TIMINGS.spotifyTapHoldMs,
-    thresholdMs: TIMINGS.spotifyTapHoldMs,
+    timeoutMs: TIMINGS.delayHoldMs,
+    thresholdMs: TIMINGS.delayHoldMs,
   },
   "right_option+t": {
     description: "Edit last Typinator expansion",
@@ -44,8 +44,8 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
         scriptPath: PATHS.typinatorEditLastRule,
       },
     ],
-    timeoutMs: TIMINGS.mouseDefaultMs,
-    thresholdMs: TIMINGS.mouseDefaultMs,
+    timeoutMs: TIMINGS.delayHoldMs,
+    thresholdMs: TIMINGS.delayHoldMs,
   },
 };
 

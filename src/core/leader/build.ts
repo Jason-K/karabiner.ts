@@ -6,6 +6,7 @@ import { L } from '../../core/mods';
 import { formatRuleDescription } from "../../core/rule-descriptions";
 import { cmd, layerIndicatorCommand } from '../../core/scripts';
 import { openApp } from '../../core/software';
+import { TIMINGS } from "../../data";
 import { resolveActionToEvents } from "../../engine/action-resolver";
 import {
     buildLayerDebugLogCommand,
@@ -136,8 +137,8 @@ export function generateLayerRules(
       ],
     )
     .parameters({
-      "basic.to_if_alone_timeout_milliseconds": 200,
-      "basic.to_if_held_down_threshold_milliseconds": 200,
+      "basic.to_if_alone_timeout_milliseconds": TIMINGS.delayLeaderHoldMs,
+      "basic.to_if_held_down_threshold_milliseconds": TIMINGS.delayLeaderHoldMs,
     });
 
   rules.push(

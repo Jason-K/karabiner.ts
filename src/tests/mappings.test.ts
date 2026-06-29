@@ -134,8 +134,8 @@ test("enter key hold mappings stay declarative", () => {
         command: "/opt/homebrew/bin/hs -c 'FormatCutSeed()'",
       },
     ],
-    timeoutMs: 200,
-    thresholdMs: 200,
+    timeoutMs: 400,
+    thresholdMs: 400,
   });
 });
 
@@ -169,8 +169,8 @@ test("equals key hold mappings stay declarative", () => {
             command: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
           },
         ],
-        timeoutMs: 200,
-        thresholdMs: 200,
+        timeoutMs: 400,
+        thresholdMs: 400,
       },
     ],
   });
@@ -288,8 +288,8 @@ test("mouse device mappings are declarative and device-scoped", () => {
     alone: [{ pointing_button: "button4" }],
     hold: [{ key_code: "tab", modifiers: ["left_command"] }],
     eventOptions: { halt: true, repeat: false },
-    thresholdMs: 300,
-    timeoutMs: 300,
+    thresholdMs: 400,
+    timeoutMs: 400,
   });
 
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
@@ -309,8 +309,8 @@ test("mouse device mappings are declarative and device-scoped", () => {
         modifiers: ["left_option", "left_shift"],
       },
     ],
-    thresholdMs: 300,
-    timeoutMs: 300,
+    thresholdMs: 400,
+    timeoutMs: 400,
   });
 
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
@@ -359,8 +359,8 @@ test("mouse device mappings are declarative and device-scoped", () => {
         shell_command: rectangleMaxOrRestoreCommand(),
       },
     ],
-    thresholdMs: 300,
-    timeoutMs: 300,
+    thresholdMs: 400,
+    timeoutMs: 400,
   });
 
   const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
@@ -404,7 +404,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
         modifiers: ["left_command", "left_option", "left_shift"],
       },
     ],
-    thresholdMs: 300,
-    timeoutMs: 300,
+    thresholdMs: 400,
+    timeoutMs: 400,
   });
 });

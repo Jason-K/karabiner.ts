@@ -1,4 +1,5 @@
 import { L } from "../core/mods";
+import { TIMINGS } from "../data";
 import type { TapHoldConfig } from "../engine";
 import {
   generateDoubleTapGuardRule,
@@ -9,15 +10,13 @@ import {
   type MultiTapConfig,
 } from "../engine/multi-tap-rules";
 
-const LEFT_COMMAND_TAP_DELAY_MS = 600;
-
 export const leftCommandMultiTap: MultiTapConfig = {
   key: "left_command",
   description: "Tap/double-tap/hold handler",
   alone: [{ type: "key", key: L.cmd }],
   hold: [{ type: "key", key: L.cmd }],
   tapTap: [{ type: "appHistory", index: 1 }],
-  thresholdMs: LEFT_COMMAND_TAP_DELAY_MS,
+  thresholdMs: TIMINGS.timeoutDoubleTapMs,
   allowPassThrough: true,
   mods: [],
 };
@@ -26,7 +25,7 @@ export const cmdQGuard: DoubleTapGuardConfig = {
   key: "q",
   modifiers: [L.cmd],
   description: "Quit app",
-  timeoutMs: 300,
+  timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };
 
 export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
