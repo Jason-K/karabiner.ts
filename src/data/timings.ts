@@ -4,4 +4,5 @@ export const TIMINGS = {
   timeoutDoubleTapMs: 300,
   delayMouseHoldMs: 400,
   timeoutWheelChordMs: 200,
+  privilegesPostElevationDelayMs: 1000,
 } as const;

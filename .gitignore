@@ -1,13 +1,30 @@
+# System files
 .DS_Store
+Thumbs.db
+
+# Cache files
+.cache/
+.mypy_cache/
+
+# Log files
+logs/
+*.log
+
+# Environment files and secrets
+.env
+
+# Settings
+.vscode/
+.github/
+.superpowers/
+
+# Backup files
+*.bak
+
+# Temporary files
+*.swp
+*.tmp
+
+# Ignore node_modules except for karabiner.ts/dist
 !node_modules/karabiner.ts/dist/
 node_modules/
-dist/
-.env
-.vscode/
-.idea/
-*.log
-coverage/
-*.tmp
-*.bak
-*.swp
-Thumbs.db

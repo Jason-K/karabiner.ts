@@ -139,8 +139,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
           },
         ],
-        thresholdMs: TIMINGS.mouseDisplaySwitchMs,
-        timeoutMs: TIMINGS.mouseDisplaySwitchMs,
+        thresholdMs: TIMINGS.delayMouseHoldMs,
+        timeoutMs: TIMINGS.delayMouseHoldMs,
       },
       {
         type: "tapHold",

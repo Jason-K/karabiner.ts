@@ -4466,7 +4466,7 @@
                 "shell_command": "osascript \"/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
               },
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep NaN"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1"
               }
             ]
           }
