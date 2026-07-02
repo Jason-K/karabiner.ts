@@ -17,6 +17,7 @@ logs/
 .vscode/
 .github/
 .superpowers/
+.claude/
 
 # Backup files
 *.bak
