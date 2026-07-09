@@ -101,13 +101,13 @@ function buildTapHoldManipulators(
     });
   }
 
-  // Guard against wheel_left/right firing while middle_front or right_button is pressed.
+  // Guard against wheel_left/right firing while middle or right_button is pressed.
   if (mapping.button === "wheel_left" || mapping.button === "wheel_right") {
     manipulators.forEach((m: any) => {
       m.conditions = m.conditions ?? [];
       m.conditions.push({
         type: "variable_unless",
-        name: "middle_front_pressed",
+        name: "middle_pressed",
         value: 1,
       });
       m.conditions.push({

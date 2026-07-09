@@ -322,7 +322,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     ),
     {
       type: "variable_unless",
-      name: "middle_front_pressed",
+      name: "middle_pressed",
       value: 1,
     },
   );

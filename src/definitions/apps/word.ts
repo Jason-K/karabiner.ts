@@ -8,7 +8,7 @@ import {
     type ConditionalActionMapping,
 } from "../../engine/conditional-action-rules";
 
-const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
+const GET_PRIVILEGES =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
 
 export const wordPrivilegesMapping: ConditionalActionMapping = {
@@ -30,7 +30,7 @@ export const wordPrivilegesMapping: ConditionalActionMapping = {
         },
         {
           type: "shell",
-          command: `${QUICK_FILL_ELEVATE_PRIVILEGES_CMD} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
+          command: `${GET_PRIVILEGES} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
         },
       ],
     },

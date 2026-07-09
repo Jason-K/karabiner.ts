@@ -12,7 +12,7 @@ export const g502xButtons = {
   left_forward: "button10",
   left_front: "button10",
   middle_back: "button9",
-  middle_front: "button3",
+  middle: "button3",
   right: "button2",
   shift: "button5",
   wheel_left: "button7",

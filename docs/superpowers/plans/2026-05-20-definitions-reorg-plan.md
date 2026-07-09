@@ -279,7 +279,7 @@ import {
     type ConditionalActionMapping,
 } from "../../engine/conditional-action-rules";
 
-const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
+const GET_PRIVILEGES =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
 
 export const wordPrivilegesMapping: ConditionalActionMapping = {
@@ -301,7 +301,7 @@ export const wordPrivilegesMapping: ConditionalActionMapping = {
         },
         {
           type: "shell",
-          command: `${QUICK_FILL_ELEVATE_PRIVILEGES_CMD} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
+          command: `${GET_PRIVILEGES} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
         },
       ],
     },
@@ -441,7 +441,7 @@ export const disabledShortcuts: DisabledShortcutMapping[] = [
   },
 ];
 
-const QUICK_FILL_ELEVATE_PRIVILEGES_CMD =
+const GET_PRIVILEGES =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
   appRegistry.securityAgent,
@@ -476,7 +476,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       actions: [
         {
           type: "shell",
-          command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD,
+          command: GET_PRIVILEGES,
         },
       ],
       delayedAction: {
@@ -516,7 +516,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       actions: [
         {
           type: "shell",
-          command: QUICK_FILL_ELEVATE_PRIVILEGES_CMD,
+          command: GET_PRIVILEGES,
         },
       ],
       delayedAction: {

@@ -13,4 +13,7 @@ export const PATHS = {
   typinatorPythonBin: `${HOME_DIR}/.venv/typinator/bin/python`,
   uvBin: `${HOME_DIR}/.local/bin/uv`,
   wordDocumentPathAppleScript: `${HOME_DIR}/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript`,
+  cliclick: `/opt/homebrew/bin/cliclick`,
+  privCLI: `/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI`,
+  sendkeys: `/opt/homebrew/bin/sendkeys`,
 } as const;
