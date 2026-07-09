@@ -344,14 +344,14 @@ test("mouse device mappings are declarative and device-scoped", () => {
     timeoutMs: 200,
   });
 
-  const middleFrontMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "middle_front",
+  const middleMapping = mouseDeviceMappings[0]?.mappings.find(
+    (m) => m.type === "tapHold" && m.button === "middle",
   );
   assert.deepEqual(middleFrontMapping, {
     type: "tapHold",
-    button: "middle_front",
+    button: "middle",
     description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
-    variable: "middle_front_pressed",
+    variable: "middle_pressed",
     alone: [{ pointing_button: "button3" }],
     hold: [
       ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
