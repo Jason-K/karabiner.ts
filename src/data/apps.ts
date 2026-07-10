@@ -29,6 +29,7 @@ export const appRegistry = {
   todoist: "com.todoist.mac.Todoist",
   word: "com.microsoft.Word",
   zen: "app.zen-browser.zen",
+  brewUpdater: "org.gpgtools.pinentry-mac"
 } as const;
 
 export type AppRef = keyof typeof appRegistry;

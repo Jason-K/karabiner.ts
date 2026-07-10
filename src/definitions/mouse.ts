@@ -36,11 +36,12 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-          {
-            key_code: "left_control",
-            modifiers: ["left_option", "left_shift"],
-          },
+          { pointing_button: "button3", modifiers: ["left_option"] },
+          //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          //   {
+          //     key_code: "left_control",
+          //     modifiers: ["left_option", "left_shift"],
+          //   },
         ],
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
@@ -59,7 +60,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           {
             when: [
               { app: appRegistry.zen },
-            //   { variable: "right_button_pressed", match: "if", value: 1 },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+              { variable: "middle_button_pressed", match: "if", value: 0 },
             ],
             to: [
               {
@@ -86,7 +88,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           {
             when: [
               { app: appRegistry.zen },
-            //   { variable: "right_button_pressed", match: "if", value: 1 },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+              { variable: "middle_button_pressed", match: "if", value: 0 },
             ],
             to: [
               {
@@ -115,23 +118,33 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
-      //   {
-      //     type: "tapHold",
-      //     button: "middle",
-      //     description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
-      //     variable: "middle_pressed",
-      //     alone: [{ pointing_button: "button3" }],
-      //     hold: [
-      //       ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-      //       ...rectangleMaxOrRestoreEvents(),
-      //     ],
-      //     thresholdMs: TIMINGS.delayMouseHoldMs,
-      //     timeoutMs: TIMINGS.delayMouseHoldMs,
-      //   },
+      {
+        type: "tapHold",
+        button: "middle",
+        description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
+        variable: "middle_pressed",
+        alone: [{ pointing_button: "button3" }],
+        overrides: [
+          {
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [{ pointing_button: "button1", modifiers: ["left_option"] }],
+          },
+        ],
+        hold: [
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          ...rectangleMaxOrRestoreEvents(),
+        ],
+        thresholdMs: TIMINGS.delayMouseHoldMs,
+        timeoutMs: TIMINGS.delayMouseHoldMs,
+      },
       {
         type: "tapHold",
         button: "left_back",
-        description: "[G7] Rectangle Max/Restore (tap) / Next Display (hold)",
+        description:
+          "[G7] Maximize window (tap) / Move window to next display (hold)",
         alone: rectangleMaxOrRestoreEvents(),
         hold: [
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
@@ -145,7 +158,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "[G8] Activate Popclip (tap) / Sidenote (hold)",
+        description: "[G8] Popclip (tap) / Sidenote (hold)",
         alone: [
           {
             shell_command:
@@ -186,16 +199,16 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
-    //   {
-    //     type: "tapHold",
-    //     button: "right",
-    //     description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
-    //     variable: "right_button_pressed",
-    //     alone: [{ pointing_button: "button2" }],
-    //     hold: [],
-    //     thresholdMs: TIMINGS.delayMouseHoldMs,
-    //     timeoutMs: TIMINGS.delayMouseHoldMs,
-    //   },
+      {
+        type: "tapHold",
+        button: "right",
+        description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
+        variable: "right_button_pressed",
+        alone: [{ pointing_button: "button2" }],
+        hold: [],
+        thresholdMs: TIMINGS.delayMouseHoldMs,
+        timeoutMs: TIMINGS.delayMouseHoldMs,
+      },
     ],
   },
 ];

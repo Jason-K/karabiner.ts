@@ -32,15 +32,16 @@ export const disabledShortcuts: DisabledShortcutMapping[] = [
 ];
 
 const GET_PRIVILEGES = `${PATHS.privCLI} -a && sleep 1.3`;
-const FILL_UN_PW_CLICLICK = `${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.cliclick} kd:cmd t:a ku:cmd t:Jason w:100 kp:tab w:100 kd:cmd,alt,ctrl t:\/ ku:cmd,alt,ctrl`;
-const FILL_UN_PW_SENDKEYS = `${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:\/:command,option,control>\"`;
 const FILL_PW_CLICLICK = `${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.cliclick} kd:cmd,alt,ctrl t:\/ ku:cmd,alt,ctrl`;
-const FILL_PW_SENDKEYS = `${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --characters \"<c:\/:command,option,control>\"`;
+const FILL_UN_PW_CLICLICK = `${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.cliclick} kd:cmd t:a ku:cmd t:Jason w:100 kp:tab w:100 kd:cmd,alt,ctrl t:\/ ku:cmd,alt,ctrl`;
+const FILL_PW_SENDKEYS = `${PATHS.privCLI} -r && sleep 0.1 && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters \"<c:\/:command,option,control>\"`;
+const FILL_UN_PW_SENDKEYS = `${PATHS.privCLI} -r && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:\/:command,option,control>\"`;
 
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
   appRegistry.securityAgent,
   appRegistry.settings,
   appRegistry.settingsPrivacySecurityExtension,
+  appRegistry.brewUpdater,
 ];
 
 export const passwordsQuickFillMapping: ConditionalActionMapping = {

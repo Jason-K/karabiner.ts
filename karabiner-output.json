@@ -2840,14 +2840,9 @@
             ],
             "to_if_held_down": [
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
-              {
-                "key_code": "left_control",
+                "pointing_button": "button3",
                 "modifiers": [
-                  "left_option",
-                  "left_shift"
+                  "left_option"
                 ]
               }
             ],
@@ -2903,6 +2898,16 @@
                 "bundle_identifiers": [
                   "app.zen-browser.zen"
                 ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "middle_button_pressed",
+                "value": 0
               },
               {
                 "type": "device_if",
@@ -2989,6 +2994,16 @@
                 "bundle_identifiers": [
                   "app.zen-browser.zen"
                 ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "middle_button_pressed",
+                "value": 0
               },
               {
                 "type": "device_if",
@@ -3099,7 +3114,111 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G7] Rectangle Max/Restore (tap) / Next Display (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button3"
+            },
+            "to": [
+              {
+                "pointing_button": "button1",
+                "modifiers": [
+                  "left_option"
+                ]
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button3"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "middle_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "middle_pressed",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "pointing_button": "button3"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "pointing_button": "button3"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: [G7] Maximize window (tap) / Move window to next display (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3143,14 +3262,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [G7] Rectangle Max/Restore (tap) / Next Display (hold)"
+            "description": "Logitech G502 X: [G7] Maximize window (tap) / Move window to next display (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G8] Activate Popclip (tap) / Sidenote (hold)",
+        "ruleDescription": "Logitech G502 X: [G8] Popclip (tap) / Sidenote (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3195,7 +3314,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [G8] Activate Popclip (tap) / Sidenote (hold)"
+            "description": "Logitech G502 X: [G8] Popclip (tap) / Sidenote (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3304,6 +3423,60 @@
               }
             ],
             "description": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button2"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "right_button_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "right_button_pressed",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "pointing_button": "button2"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": []
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -4362,7 +4535,8 @@
                 "bundle_identifiers": [
                   "com.apple.SecurityAgent",
                   "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension"
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac"
                 ]
               },
               {
@@ -4378,7 +4552,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --characters \"<c:/:command,option,control>\""
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.1 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
               }
             ]
           },
@@ -4398,7 +4572,8 @@
                 "bundle_identifiers": [
                   "com.apple.SecurityAgent",
                   "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension"
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac"
                 ]
               },
               {
@@ -4414,7 +4589,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
               }
             ]
           }
