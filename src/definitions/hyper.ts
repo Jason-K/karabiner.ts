@@ -53,7 +53,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "vmCOC_+a": {
+  "vmCOCS+a": {
     description: "Raycast AI-chat",
     hold: [
       {
@@ -64,12 +64,12 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+t": {
+  "vmCOCS+t": {
     description: "Edit last Typinator rule",
     alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
     hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
   },
-  "vmCOC_+q": {
+  "vmCOCS+q": {
     description: "Rectangle Pro left",
     alone: [
       { type: "url", url: rectangleActionUrl("left-half"), background: true },
@@ -78,7 +78,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       { type: "url", url: rectangleActionUrl("fill-left"), background: true },
     ],
   },
-  "vmCOC_+w": {
+  "vmCOCS+w": {
     description: "Rectangle Pro right",
     alone: [
       { type: "url", url: rectangleActionUrl("right-half"), background: true },
@@ -87,7 +87,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       { type: "url", url: rectangleActionUrl("fill-right"), background: true },
     ],
   },
-  "vmCOC_+keypad_1": {
+  "vmCOCS+keypad_1": {
     description: "Rectangle bottom-left-eighth",
     alone: [
       {
@@ -97,7 +97,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+keypad_3": {
+  "vmCOCS+keypad_3": {
     description: "Rectangle bottom-right-eighth",
     alone: [
       {
@@ -107,13 +107,13 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+keypad_5": {
+  "vmCOCS+keypad_5": {
     description: "Rectangle maximize",
     alone: [
       { type: "url", url: rectangleActionUrl("maximize"), background: true },
     ],
   },
-  "vmCOC_+keypad_7": {
+  "vmCOCS+keypad_7": {
     description: "Rectangle top-left-eighth",
     alone: [
       {
@@ -123,7 +123,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+keypad_9": {
+  "vmCOCS+keypad_9": {
     description: "Rectangle top-right-eighth",
     alone: [
       {
@@ -133,11 +133,11 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+spacebar": {
+  "vmCOCS+spacebar": {
     description: "Rectangle maximize / restore",
     alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   },
-  "vmCOC_+tab": {
+  "vmCOCS+tab": {
     description: "Rectangle next-display / previous-display",
     alone: [
       {
@@ -154,7 +154,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+left_arrow": {
+  "vmCOCS+left_arrow": {
     description: "Rectangle fill-left / previous-display",
     alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
     hold: [
@@ -165,7 +165,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
-  "vmCOC_+right_arrow": {
+  "vmCOCS+right_arrow": {
     description: "Rectangle fill-right / next-display",
     alone: [
       {
@@ -185,7 +185,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
 
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({
-    triggerKey: MOD_COMBO.vmCOC_,
-    triggerLabel: "vmCOC_",
+    triggerKey: MOD_COMBO.vmCOCS,
+    triggerLabel: "vmCOCS",
     launchers: hyperLauncherMappings,
   });

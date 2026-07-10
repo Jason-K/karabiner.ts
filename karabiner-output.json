@@ -1609,7 +1609,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[A]        →    Raycast AI-chat (on hold)",
+        "ruleDescription": "[vmCOCS]+[A]        →    Raycast AI-chat (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1619,7 +1619,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1634,7 +1635,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1659,7 +1661,8 @@
                   "modifiers": [
                     "left_command",
                     "left_option",
-                    "left_control"
+                    "left_control",
+                    "left_shift"
                   ]
                 }
               ]
@@ -1670,7 +1673,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[T]        →    Edit last Typinator rule (on hold)",
+        "ruleDescription": "[vmCOCS]+[T]        →    Edit last Typinator rule (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1680,7 +1683,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1712,7 +1716,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[Q]        →    Rectangle Pro left (on hold)",
+        "ruleDescription": "[vmCOCS]+[Q]        →    Rectangle Pro left (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1722,7 +1726,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1754,7 +1759,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[W]        →    Rectangle Pro right (on hold)",
+        "ruleDescription": "[vmCOCS]+[W]        →    Rectangle Pro right (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1764,7 +1769,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1796,7 +1802,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1806,7 +1812,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1826,7 +1833,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1844,7 +1852,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1854,7 +1862,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1874,7 +1883,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1892,7 +1902,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1902,7 +1912,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1922,7 +1933,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1940,7 +1952,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1950,7 +1962,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -1970,7 +1983,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1988,7 +2002,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1998,7 +2012,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -2018,7 +2033,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -2036,7 +2052,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[_]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOCS]+[_]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2046,7 +2062,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -2066,7 +2083,8 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -2084,7 +2102,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2094,7 +2112,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -2126,7 +2145,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[←]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[←]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2136,7 +2155,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -2168,7 +2188,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[→]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[→]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2178,7 +2198,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -3528,7 +3549,8 @@
                 "key_code": "left_command",
                 "modifiers": [
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -3546,11 +3568,12 @@
                 "modifiers": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
-            "description": "[⇪]        →    VM launcher / vmCOC_ (on hold)"
+            "description": "[⇪]        →    VM launcher / vmCOCS (on hold)"
           },
           {
             "type": "basic",
@@ -3564,15 +3587,14 @@
             },
             "to": [
               {
-                "key_code": "left_shift",
+                "key_code": "left_command",
                 "modifiers": [
-                  "left_command",
                   "left_option",
                   "left_control"
                 ]
               }
             ],
-            "description": "[←⇧]+[⇪]        →    vmCOCS (on hold)"
+            "description": "[←⇧]+[⇪]        →    vmCOC_ (on hold)"
           },
           {
             "type": "basic",
@@ -3594,6 +3616,270 @@
               }
             ],
             "description": "[←⌃]+[⇪]        →    vmCO_S (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_command",
+                "modifiers": [
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ],
+            "description": "[←⌥]+[⇪]        →    vmC_CS (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_option",
+                "modifiers": [
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ],
+            "description": "[←⌘]+[⇪]        →    vm_OCS (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_command",
+                "modifiers": [
+                  "left_option"
+                ]
+              }
+            ],
+            "description": "[←⌃←⇧]+[⇪]        →    vmCO__ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_control",
+                  "left_option"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_command",
+                "modifiers": [
+                  "left_shift"
+                ]
+              }
+            ],
+            "description": "[←⌃←⌥]+[⇪]        →    vmC__S (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_control",
+                  "left_command"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_option",
+                "modifiers": [
+                  "left_shift"
+                ]
+              }
+            ],
+            "description": "[←⌃←⌘]+[⇪]        →    vm_O_S (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_control",
+                "modifiers": [
+                  "left_shift"
+                ]
+              }
+            ],
+            "description": "[←⌘←⌥]+[⇪]        →    vm__CS (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_option",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ],
+            "description": "[←⌘←⇧]+[⇪]        →    vm_OC_ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_command",
+                "modifiers": [
+                  "left_control"
+                ]
+              }
+            ],
+            "description": "[←⌥←⇧]+[⇪]        →    vmC_C_ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_option"
+              }
+            ],
+            "description": "[←⌘←⌃←⇧]+[⇪]        →    vm_O__ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_control"
+              }
+            ],
+            "description": "[←⌘←⌥←⇧]+[⇪]        →    vm__C_ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_command"
+              }
+            ],
+            "description": "[←⌥←⌃←⇧]+[⇪]        →    vmC___ (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_shift"
+              }
+            ],
+            "description": "[←⌘←⌥←⌃]+[⇪]        →    vm___S (on hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "caps_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "vk_none"
+              }
+            ],
+            "description": "[←⌘←⌥←⌃←⇧]+[⇪]        →    vm____ (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3696,7 +3982,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[S]        →    Format selection (on tap)",
+        "ruleDescription": "[vmCOCS]+[S]        →    Format selection (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3706,7 +3992,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -3721,7 +4008,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[T]        →    New Typinator rule (on tap)",
+        "ruleDescription": "[vmCOCS]+[T]        →    New Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3731,7 +4018,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -3746,7 +4034,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[;]        →    Open System Settings (on tap)",
+        "ruleDescription": "[vmCOCS]+[;]        →    Open System Settings (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3756,7 +4044,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -3775,7 +4064,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[F12]        →    Edit last Typinator rule (on tap)",
+        "ruleDescription": "[vmCOCS]+[F12]        →    Edit last Typinator rule (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3785,7 +4074,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },
@@ -3800,7 +4090,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[␛]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3810,7 +4100,8 @@
                 "mandatory": [
                   "left_command",
                   "left_option",
-                  "left_control"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             },

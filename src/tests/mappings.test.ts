@@ -185,22 +185,22 @@ test("passwords quick fill mapping stays declarative", () => {
 
 test("tap-hold mappings keep expected anchor keys", () => {
   assert.ok(tapHoldMappings.a);
-  assert.ok(tapHoldMappings["vmCOC_+q"]);
-  assert.ok(tapHoldMappings["vmCOC_+left_arrow"]);
-  assert.ok(tapHoldMappings["vmCOC_+right_arrow"]);
-  assert.ok(tapHoldMappings["vmCOC_+spacebar"]);
+  assert.ok(tapHoldMappings["vmCOCS+q"]);
+  assert.ok(tapHoldMappings["vmCOCS+left_arrow"]);
+  assert.ok(tapHoldMappings["vmCOCS+right_arrow"]);
+  assert.ok(tapHoldMappings["vmCOCS+spacebar"]);
   assert.ok(tapHoldMappings.tab);
-  assert.ok(tapHoldMappings["vmCOC_+tab"]);
-  assert.ok(tapHoldMappings["vmCOC_+keypad_1"]);
-  assert.ok(tapHoldMappings["vmCOC_+keypad_3"]);
-  assert.ok(tapHoldMappings["vmCOC_+keypad_5"]);
-  assert.ok(tapHoldMappings["vmCOC_+keypad_7"]);
-  assert.ok(tapHoldMappings["vmCOC_+keypad_9"]);
+  assert.ok(tapHoldMappings["vmCOCS+tab"]);
+  assert.ok(tapHoldMappings["vmCOCS+keypad_1"]);
+  assert.ok(tapHoldMappings["vmCOCS+keypad_3"]);
+  assert.ok(tapHoldMappings["vmCOCS+keypad_5"]);
+  assert.ok(tapHoldMappings["vmCOCS+keypad_7"]);
+  assert.ok(tapHoldMappings["vmCOCS+keypad_9"]);
   assert.ok(tapHoldMappings["right_option+s"]);
 });
 
-test("new vmCOC_ rectangle mappings stay declarative", () => {
-  assert.deepEqual(tapHoldMappings["vmCOC_+left_arrow"].alone, [
+test("new vmCOCS rectangle mappings stay declarative", () => {
+  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].alone, [
     {
       type: "shell",
       command: rectangleActionByFocusedWindowOrientationCommand(
@@ -209,7 +209,7 @@ test("new vmCOC_ rectangle mappings stay declarative", () => {
       ),
     },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOC_+left_arrow"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=previous-display",
@@ -217,14 +217,14 @@ test("new vmCOC_ rectangle mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOC_+spacebar"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+spacebar"].alone, [
     {
       type: "shell",
       command: rectangleMaxOrRestoreCommand(),
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOC_+keypad_9"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+keypad_9"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=top-right-eighth",
@@ -233,18 +233,18 @@ test("new vmCOC_ rectangle mappings stay declarative", () => {
   ]);
 });
 
-test("vmCOC_+q and vmCOC_+w tap-hold mappings stay declarative", () => {
-  assert.equal(tapHoldMappings["vmCOC_+q"].description, "Rectangle Pro left");
-  assert.equal(tapHoldMappings["vmCOC_+w"].description, "Rectangle Pro right");
+test("vmCOCS+q and vmCOCS+w tap-hold mappings stay declarative", () => {
+  assert.equal(tapHoldMappings["vmCOCS+q"].description, "Rectangle Pro left");
+  assert.equal(tapHoldMappings["vmCOCS+w"].description, "Rectangle Pro right");
 
-  assert.deepEqual(tapHoldMappings["vmCOC_+q"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+q"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=left-half",
       background: true,
     },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOC_+q"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+q"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=fill-left",
@@ -252,14 +252,14 @@ test("vmCOC_+q and vmCOC_+w tap-hold mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOC_+w"].alone, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+w"].alone, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=right-half",
       background: true,
     },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOC_+w"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+w"].hold, [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=fill-right",

@@ -76,13 +76,13 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
   });
 });
 
-test("caps lock factory keeps three behavior variants", () => {
+test("caps lock factory keeps full complement behavior variants", () => {
   const rule = toRule(buildCapsLockRule());
   assert.equal(
     rule.description,
     "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
   );
-  assert.equal(rule.manipulators.length, 3);
+  assert.equal(rule.manipulators.length, 16);
 });
 
 test("cmd-q factory keeps double-tap protection structure", () => {
@@ -213,11 +213,11 @@ test("vmCOC_ plus rules factory keeps grouped mappings", () => {
   assert.deepEqual(
     rules.map((rule) => rule.description),
     [
-      "[vmCOC_]+[S]        →    Format selection (on tap)",
-      "[vmCOC_]+[T]        →    New Typinator rule (on tap)",
-      "[vmCOC_]+[;]        →    Open System Settings (on tap)",
-      "[vmCOC_]+[F12]        →    Edit last Typinator rule (on tap)",
-      "[vmCOC_]+[␛]        →    Open Activity Monitor (on tap)",
+      "[vmCOCS]+[S]        →    Format selection (on tap)",
+      "[vmCOCS]+[T]        →    New Typinator rule (on tap)",
+      "[vmCOCS]+[;]        →    Open System Settings (on tap)",
+      "[vmCOCS]+[F12]        →    Edit last Typinator rule (on tap)",
+      "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
     ],
   );
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));

@@ -124,3 +124,37 @@ test("generateModifierChordRules variant uses mandatory modifiers in from", () =
   const variant: any = rule.manipulators[1];
   assert.deepEqual(variant?.from?.modifiers?.mandatory, ["left_shift"]);
 });
+
+test("generateModifierChordRules can emit vk_none for the full modifier chord", () => {
+  const rule = toRule(
+    generateModifierChordRules({
+      ruleName: "Test",
+      base: {
+        key: "caps_lock",
+        description: "vmCOC_",
+        to: [
+          {
+            type: "key",
+            key: "left_command",
+            modifiers: ["left_control", "left_option"],
+          },
+        ],
+      },
+      variants: [
+        {
+          modifiers: [
+            "left_command",
+            "left_option",
+            "left_control",
+            "left_shift",
+          ],
+          description: "vm____",
+          to: [{ type: "key", key: "vk_none" }],
+        },
+      ],
+    }),
+  );
+
+  const variant: any = rule.manipulators[1];
+  assert.equal(variant?.to?.[0]?.key_code, "vk_none");
+});
