@@ -1,4 +1,4 @@
-import { L } from "../core/mods";
+import { MOD_COMBO } from "../core/mods";
 import { TIMINGS } from "../data";
 import type { TapHoldConfig } from "../engine";
 import {
@@ -13,8 +13,8 @@ import {
 export const leftCommandMultiTap: MultiTapConfig = {
   key: "left_command",
   description: "Tap/double-tap/hold handler",
-  alone: [{ type: "key", key: L.cmd }],
-  hold: [{ type: "key", key: L.cmd }],
+  alone: [{ type: "key", key: "left_command" }],
+  hold: [{ type: "key", key: "left_command" }],
   tapTap: [{ type: "appHistory", index: 1 }],
   thresholdMs: TIMINGS.timeoutDoubleTapMs,
   allowPassThrough: true,
@@ -23,7 +23,7 @@ export const leftCommandMultiTap: MultiTapConfig = {
 
 export const cmdQGuard: DoubleTapGuardConfig = {
   key: "q",
-  modifiers: [L.cmd],
+  modifiers: ["left_command"],
   description: "Quit app",
   timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };
@@ -35,7 +35,7 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "m",
-        modifiers: [L.opt, L.ctrl],
+        modifiers: MOD_COMBO.vm_OC_,
         options: { repeat: false },
       },
     ],
@@ -46,7 +46,7 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "p",
-        modifiers: ["vmCOC_"],
+        modifiers: MOD_COMBO.vmCOC_,
         options: { repeat: false },
       },
     ],

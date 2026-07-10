@@ -1,11 +1,12 @@
 import type { Modifier } from "karabiner.ts";
 
 // All valid Karabiner-native modifier keys
-export type ModifierKey = Modifier;
+export type ModKey = Modifier;
 
+// Expansion map for ActionSpec key modifiers — consumed by action-resolver.ts
 // Virtual modifiers use fixed slots in vmCOCS order:
 // Cmd, Opt, Ctrl, Shift. Missing modifiers are represented by "_".
-export const VM_MODIFIER_ALIASES = {
+export const MOD_COMBO = {
   vmCO__: ["left_command", "left_option"],
   vmC_C_: ["left_command", "left_control"],
   vmC__S: ["left_command", "left_shift"],
@@ -19,75 +20,26 @@ export const VM_MODIFIER_ALIASES = {
   vmCOCS: ["left_command", "left_option", "left_control", "left_shift"],
 } as const satisfies Record<string, Modifier[]>;
 
-export type VirtualModifierAlias = keyof typeof VM_MODIFIER_ALIASES;
+export type ModComboAlias = keyof typeof MOD_COMBO;
 
-// Backward-compatible aliases retained during migration.
-export const HYPER: Modifier[] = [
-  "left_command",
-  "left_option",
-  "left_control",
-];
-export const SUPER: Modifier[] = [
-  "left_command",
-  "left_option",
-  "left_control",
-  "left_shift",
-];
-export const MEH: Modifier[] = ["left_command", "left_option", "left_shift"];
-
-// Expansion map for ActionSpec key modifiers — consumed by action-resolver.ts
-export const MODIFIER_ALIASES = {
-  ...VM_MODIFIER_ALIASES,
-  hyper: VM_MODIFIER_ALIASES.vmCOC_,
-  super: VM_MODIFIER_ALIASES.vmCOCS,
-  meh: VM_MODIFIER_ALIASES.vmCO_S,
-  // Short aliases mirroring the L/R objects, usable as quoted strings
-  lcmd: ["left_command"],
-  lshift: ["left_shift"],
-  lopt: ["left_option"],
-  lctrl: ["left_control"],
-  rcmd: ["right_command"],
-  rshift: ["right_shift"],
-  ropt: ["right_option"],
-  rctrl: ["right_control"],
-} as const satisfies Record<string, Modifier[]>;
-
-export type ModifierAlias = keyof typeof MODIFIER_ALIASES;
-
-const MODIFIER_ALIAS_CANONICAL_BY_LOWER = new Map<string, ModifierAlias>(
-  Object.keys(MODIFIER_ALIASES).map((key) => [
+const MOD_COMBO_ALIAS_LOWER = new Map<string, ModComboAlias>(
+  Object.keys(MOD_COMBO).map((key) => [
     key.toLowerCase(),
-    key as ModifierAlias,
+    key as ModComboAlias,
   ]),
 );
 
-export function getModifierAliasCanonicalKey(
+export function getModComboAliasCanonicalKey(
   alias: string,
-): ModifierAlias | undefined {
-  return MODIFIER_ALIAS_CANONICAL_BY_LOWER.get(alias.toLowerCase());
+): ModComboAlias | undefined {
+  return MOD_COMBO_ALIAS_LOWER.get(alias.toLowerCase());
 }
 
-export function resolveModifierAlias(alias: string): Modifier[] | undefined {
-  const canonical = getModifierAliasCanonicalKey(alias);
-  return canonical ? [...MODIFIER_ALIASES[canonical]] : undefined;
+export function resolveModComboAlias(alias: string): Modifier[] | undefined {
+  const canonical = getModComboAliasCanonicalKey(alias);
+  return canonical ? [...MOD_COMBO[canonical]] : undefined;
 }
 
-export function isModifierAlias(alias: string): boolean {
-  return Boolean(getModifierAliasCanonicalKey(alias));
+export function isModComboAlias(alias: string): boolean {
+  return Boolean(getModComboAliasCanonicalKey(alias));
 }
-
-// Shorthand for left-side modifier keys
-export const L = {
-  cmd: "left_command" as const,
-  opt: "left_option" as const,
-  ctrl: "left_control" as const,
-  shift: "left_shift" as const,
-};
-
-// Shorthand for right-side modifier keys
-export const R = {
-  cmd: "right_command" as const,
-  opt: "right_option" as const,
-  ctrl: "right_control" as const,
-  shift: "right_shift" as const,
-};

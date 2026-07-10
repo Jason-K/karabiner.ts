@@ -34,11 +34,11 @@ test("generated output includes all critical rule categories", () => {
     "Missing tap-hold rules",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[CAPS]")),
+    descriptions.some((d: string) => d.startsWith("[⇪]")),
     "Missing CAPS rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[ESC]")),
+    descriptions.some((d: string) => d.startsWith("[␛]")),
     "Missing ESCAPE rule",
   );
   assert.ok(

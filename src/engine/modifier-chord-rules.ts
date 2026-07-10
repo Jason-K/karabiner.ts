@@ -1,8 +1,8 @@
 import { map, rule, toSetVar } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
-import type { ModifierKey } from "../data/key-aliases";
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { ModKey } from "../data/key-aliases";
 import { resolveActionToEvents } from "./action-resolver";
 
 export type ModifierChordBase = {
@@ -14,7 +14,7 @@ export type ModifierChordBase = {
 };
 
 export type ModifierChordVariant = {
-  modifiers: ModifierKey[];
+  modifiers: ModKey[];
   description: string;
   to: ActionSpec[];
 };

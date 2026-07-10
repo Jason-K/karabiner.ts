@@ -6,8 +6,8 @@ import {
     MODIFIER_SYMBOLS,
 } from "../data";
 import {
-  getModifierAliasCanonicalKey,
-  isModifierAlias,
+  getModComboAliasCanonicalKey,
+  isModComboAlias,
 } from "../data/key-aliases";
 
 function normalizeToken(token: string): string {
@@ -26,7 +26,7 @@ function splitChordTokens(chord: string | string[]): string[] {
 
 function isModifierToken(token: string): boolean {
   const normalized = normalizeToken(token);
-  if (isModifierAlias(token) || isModifierAlias(normalized)) {
+  if (isModComboAlias(token) || isModComboAlias(normalized)) {
     return true;
   }
 
@@ -43,36 +43,24 @@ function isModifierToken(token: string): boolean {
 }
 
 function modifierTokenToSymbols(token: string): string {
-  const canonicalAlias = getModifierAliasCanonicalKey(token);
+  const canonicalAlias = getModComboAliasCanonicalKey(token);
   if (canonicalAlias) {
     if (canonicalAlias.startsWith("vm")) {
       return canonicalAlias;
-    }
-
-    if (canonicalAlias === "super") {
-      return "vmCOCS";
-    }
-
-    if (canonicalAlias === "meh") {
-      return "vmCO_S";
-    }
-
-    if (canonicalAlias === "hyper") {
-      return "vmCOC_";
     }
   }
 
   const normalized = normalizeToken(token);
 
-  let sidePrefix = '';
+  let sidePrefix = "";
   let base = normalized;
 
-  if (normalized.startsWith('left_')) {
-    sidePrefix = '←';
-    base = normalized.slice('left_'.length);
-  } else if (normalized.startsWith('right_')) {
-    sidePrefix = '→';
-    base = normalized.slice('right_'.length);
+  if (normalized.startsWith("left_")) {
+    sidePrefix = "←";
+    base = normalized.slice("left_".length);
+  } else if (normalized.startsWith("right_")) {
+    sidePrefix = "→";
+    base = normalized.slice("right_".length);
   }
 
   return `${sidePrefix}${MODIFIER_SYMBOLS[base] ?? base.toUpperCase()}`;
@@ -133,14 +121,14 @@ export function formatRuleDescription(
   const segments: string[] = [];
   const modifierSymbols: string[] = [];
 
-  let index = 0;
-  while (index < tokens.length && isModifierToken(tokens[index])) {
-    modifierSymbols.push(modifierTokenToSymbols(tokens[index]));
-    index += 1;
-  }
+    let index = 0;
+    while (index < tokens.length && isModifierToken(tokens[index])) {
+      modifierSymbols.push(modifierTokenToSymbols(tokens[index]));
+      index += 1;
+    }
 
   if (modifierSymbols.length > 0) {
-    segments.push(`[${modifierSymbols.join('')}]`);
+    segments.push(`[${modifierSymbols.join("")}]`);
   }
 
   for (; index < tokens.length; index += 1) {
@@ -151,5 +139,5 @@ export function formatRuleDescription(
     segments.push(`[${description.toUpperCase()}]`);
   }
 
-  return `${segments.join('+')}${DESCRIPTION_SEPARATOR}${description} ${triggerLabel(trigger)}`;
+  return `${segments.join("+")}${DESCRIPTION_SEPARATOR}${description} ${triggerLabel(trigger)}`;
 }

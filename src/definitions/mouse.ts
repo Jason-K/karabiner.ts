@@ -61,7 +61,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             when: [
               { app: appRegistry.zen },
               { variable: "right_button_pressed", match: "if", value: 1 },
-              { variable: "middle_button_pressed", match: "if", value: 0 },
+              { variable: "wheel_down", match: "if", value: 0 },
             ],
             to: [
               {
@@ -89,7 +89,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             when: [
               { app: appRegistry.zen },
               { variable: "right_button_pressed", match: "if", value: 1 },
-              { variable: "middle_button_pressed", match: "if", value: 0 },
+              { variable: "wheel_down", match: "if", value: 0 },
             ],
             to: [
               {
@@ -122,7 +122,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "middle",
         description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
-        variable: "middle_pressed",
+        variable: "wheel_down",
         alone: [{ pointing_button: "button3" }],
         overrides: [
           {

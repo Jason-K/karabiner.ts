@@ -12,14 +12,14 @@ test('formats modifier chords with symbol brackets', () => {
 
 test('formats plain keys with short labels', () => {
   assert.equal(
-    formatRuleDescription('return_or_enter', 'Evaluate selection', 'hold'),
-    '[RETURN]        →    Evaluate selection (on hold)',
+    formatRuleDescription("return_or_enter", "Evaluate selection", "hold"),
+    "[⏎]        →    Evaluate selection (on hold)",
   );
 });
 
 test('formats multi-step layer chords as bracketed sequences', () => {
   assert.equal(
     formatRuleDescription(["spacebar", "a", "w"], "Work layer", "tap"),
-    "[SPACE]+[A]+[W]        →    Work layer (on tap)",
+    "[_]+[A]+[W]        →    Work layer (on tap)",
   );
 });

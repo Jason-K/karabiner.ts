@@ -2,7 +2,7 @@ import { rule } from "karabiner.ts";
 import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { tapHold } from "../core/tap-hold";
-import { resolveModifierAlias } from "../data/key-aliases";
+import { resolveModComboAlias } from "../data/key-aliases";
 import { resolveActionToEvents } from "./action-resolver";
 
 export type TapHoldConfig = {
@@ -36,7 +36,7 @@ function parseKeyWithModifiers(keyString: string): {
   const modifiers = parts.slice(0, -1);
 
   const normalizedModifiers = modifiers.flatMap((mod) => {
-    const alias = resolveModifierAlias(mod);
+    const alias = resolveModComboAlias(mod);
     if (alias) return alias;
 
     const lower = mod.toLowerCase();

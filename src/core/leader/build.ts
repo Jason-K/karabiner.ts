@@ -1,8 +1,6 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
-
-import { setVarExpr } from '../../core/conditions';
-import { L } from '../../core/mods';
+import { setVarExpr } from "../../core/conditions";
 import { formatRuleDescription } from "../../core/rule-descriptions";
 import { cmd, layerIndicatorCommand } from '../../core/scripts';
 import { openApp } from '../../core/software';
@@ -46,10 +44,10 @@ function buildSublayerManipulators(
     } else if (config.stickyModifier) {
       // Toggle sticky modifier using a/s/d/f
       const modMap: Record<string, string> = {
-        shift: L.shift,
-        option: L.opt,
-        command: L.cmd,
-        control: L.ctrl,
+        shift: "left_shift",
+        option: "left_option",
+        command: "left_command",
+        control: "left_control",
       } as any;
       const stickyKey = modMap[config.stickyModifier];
       events.push(toStickyModifier(stickyKey as any, "toggle"));
@@ -122,10 +120,10 @@ export function generateLayerRules(
       toSetVar(leaderVar, 0),
       ...allSublayerVars.map((v) => toSetVar(v, 0)),
       // Ensure sticky modifiers are cleared when leaving leader mode
-      toStickyModifier(L.shift, "off"),
-      toStickyModifier(L.opt, "off"),
-      toStickyModifier(L.cmd, "off"),
-      toStickyModifier(L.ctrl, "off"),
+      toStickyModifier("left_shift", "off"),
+      toStickyModifier("left_option", "off"),
+      toStickyModifier("left_command", "off"),
+      toStickyModifier("left_control", "off"),
       layerIndicatorCommand("hide"),
     ])
     .toDelayedAction(
@@ -224,14 +222,14 @@ export function generateLayerRules(
   // Swallow any unmapped keystrokes while leader mode is active.
   // This prevents accidental input from leaking through to the frontmost app.
   const escapeResetEvents: ToEvent[] = [
-    toKey('escape'),
+    toKey("escape"),
     toSetVar(leaderVar, 0),
     ...allSublayerVars.map((v) => toSetVar(v, 0)),
     ...resetVars.map((resetVar) => toSetVar(resetVar, 0)),
-    toStickyModifier(L.shift, 'off'),
-    toStickyModifier(L.opt, 'off'),
-    toStickyModifier(L.cmd, 'off'),
-    toStickyModifier(L.ctrl, 'off'),
+    toStickyModifier("left_shift", "off"),
+    toStickyModifier("left_option", "off"),
+    toStickyModifier("left_command", "off"),
+    toStickyModifier("left_control", "off"),
   ];
 
   const buildSwallowUnmappedEvents = (stateName: string): ToEvent[] => {

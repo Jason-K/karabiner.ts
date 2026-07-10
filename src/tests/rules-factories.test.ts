@@ -80,7 +80,7 @@ test("caps lock factory keeps three behavior variants", () => {
   const rule = toRule(buildCapsLockRule());
   assert.equal(
     rule.description,
-    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+    "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
   );
   assert.equal(rule.manipulators.length, 3);
 });
@@ -183,7 +183,7 @@ test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
   const rule = toRule(buildEscapeTapTapHoldRule());
   assert.equal(
     rule.description,
-    "[ESC]        →    Escape / Kill app (on multi-tap)",
+    "[␛]        →    Escape / Kill app (on multi-tap)",
   );
   assert.equal(rule.manipulators.length, 2);
 });
@@ -192,7 +192,7 @@ test("ctrl-escape monitor factory keeps single manipulator", () => {
   const rule = toRule(buildCtrlEscapeMonitorRule());
   assert.equal(
     rule.description,
-    "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)",
+    "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
   );
   assert.equal(rule.manipulators.length, 1);
 });
@@ -217,7 +217,7 @@ test("vmCOC_ plus rules factory keeps grouped mappings", () => {
       "[vmCOC_]+[T]        →    New Typinator rule (on tap)",
       "[vmCOC_]+[;]        →    Open System Settings (on tap)",
       "[vmCOC_]+[F12]        →    Edit last Typinator rule (on tap)",
-      "[vmCOC_]+[ESC]        →    Open Activity Monitor (on tap)",
+      "[vmCOC_]+[␛]        →    Open Activity Monitor (on tap)",
     ],
   );
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
@@ -228,7 +228,7 @@ test("enter rules factory keeps two keys across two contexts", () => {
   assert.equal(rules.length, 4);
   assert.equal(
     rules[0]?.description,
-    "[RETURN]        →    Evaluate selection (on hold)",
+    "[⏎]        →    Evaluate selection (on hold)",
   );
 });
 
@@ -306,6 +306,11 @@ test("mouse rules factory builds declarative per-device mappings", () => {
       value: 1,
     },
     {
+      type: "variable_if",
+      name: "wheel_down",
+      value: 0,
+    },
+    {
       type: "device_if",
       description: undefined,
       identifiers: [
@@ -322,7 +327,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     ),
     {
       type: "variable_unless",
-      name: "middle_pressed",
+      name: "wheel_down",
       value: 1,
     },
   );

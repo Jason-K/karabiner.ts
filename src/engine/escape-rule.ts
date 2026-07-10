@@ -1,13 +1,12 @@
-import { map, rule, toKey, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { L } from '../core/mods';
+import { map, rule, toKey, toSetVar, toStickyModifier } from "karabiner.ts";
 import { formatRuleDescription } from "../core/rule-descriptions";
 
 export function generateEscapeRule(suppressionVars: string[] = []): any[] {
   const otherVars = [
-    'caps_lock_pressed',
-    'command_q_pressed',
-    'ctrl_opt_esc_first',
-    'cmd_d_ready',
+    "caps_lock_pressed",
+    "command_q_pressed",
+    "ctrl_opt_esc_first",
+    "cmd_d_ready",
   ];
 
   return [
@@ -19,10 +18,10 @@ export function generateEscapeRule(suppressionVars: string[] = []): any[] {
           toKey("escape"),
           ...suppressionVars.map((v) => toSetVar(v, 0)),
           ...otherVars.map((v) => toSetVar(v, 0)),
-          toStickyModifier(L.shift, "off"),
-          toStickyModifier(L.opt, "off"),
-          toStickyModifier(L.cmd, "off"),
-          toStickyModifier(L.ctrl, "off"),
+          toStickyModifier("left_shift", "off"),
+          toStickyModifier("left_option", "off"),
+          toStickyModifier("left_command", "off"),
+          toStickyModifier("left_control", "off"),
         ])
         .build(),
     ]),

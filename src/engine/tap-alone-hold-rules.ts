@@ -1,13 +1,13 @@
 import { map, rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
-import type { ModifierKey } from "../data/key-aliases";
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { ModKey } from "../data/key-aliases";
 import { resolveActionToEvents } from "./action-resolver";
 
 export type TapAloneHoldConfig = {
   key: string;
-  modifiers?: ModifierKey[];
+  modifiers?: ModKey[];
   description: string;
   alone: ActionSpec[];
   hold: ActionSpec[];

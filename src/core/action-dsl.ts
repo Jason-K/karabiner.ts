@@ -1,10 +1,10 @@
 import type { AppRef } from "../data/apps";
 import type { CleanShotRef } from "../data/cleanshot";
 import type { FolderRef } from "../data/folders";
-import type { ModifierAlias, ModifierKey } from "../data/key-aliases";
+import type { ModComboAlias, ModKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
 
-export type ActionKeyModifier = ModifierKey | ModifierAlias;
+export type ActionKeyModifier = ModKey | ModComboAlias;
 
 export type ActionSpec =
   | {

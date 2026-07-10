@@ -30,7 +30,10 @@ test("generateMultiTapRule description uses multi-tap trigger", () => {
       mods: [],
     }),
   );
-  assert.equal(rule.description, "[ESC]        →    Escape / Kill app (on multi-tap)");
+  assert.equal(
+    rule.description,
+    "[␛]        →    Escape / Kill app (on multi-tap)",
+  );
 });
 
 test("generateMultiTapRule throws when tapTap and tapTapHold are both provided", () => {

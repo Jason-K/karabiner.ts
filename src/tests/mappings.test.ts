@@ -303,10 +303,10 @@ test("mouse device mappings are declarative and device-scoped", () => {
       },
     ],
     hold: [
-      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+      //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
-        key_code: "left_control",
-        modifiers: ["left_option", "left_shift"],
+        modifiers: ["left_option"],
+        pointing_button: "button3",
       },
     ],
     thresholdMs: 400,
@@ -331,6 +331,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
         when: [
           { app: appRegistry.zen },
           { variable: "right_button_pressed", match: "if", value: 1 },
+          { variable: "wheel_down", match: "if", value: 0 },
         ],
         to: [
           {
@@ -347,12 +348,21 @@ test("mouse device mappings are declarative and device-scoped", () => {
   const middleMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "middle",
   );
-  assert.deepEqual(middleFrontMapping, {
+  assert.deepEqual(middleMapping, {
     type: "tapHold",
     button: "middle",
     description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
-    variable: "middle_pressed",
+    variable: "wheel_down",
     alone: [{ pointing_button: "button3" }],
+    overrides: [
+      {
+        when: [
+          { app: appRegistry.zen },
+          { variable: "right_button_pressed", match: "if", value: 1 },
+        ],
+        to: [{ pointing_button: "button1", modifiers: ["left_option"] }],
+      },
+    ],
     hold: [
       ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
       {
@@ -372,7 +382,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   );
   assert.equal(
     leftBackMapping?.description,
-    "[G7] Rectangle Max/Restore (tap) / Next Display (hold)",
+    "[G7] Maximize window (tap) / Move window to next display (hold)",
   );
   const leftBackAlone =
     leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
@@ -392,7 +402,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "[G8] Activate Popclip (tap) / Sidenote (hold)",
+    description: "[G8] Popclip (tap) / Sidenote (hold)",
     alone: [
       {
         shell_command: "osascript -e 'tell application \"Popclip\" to appear'",

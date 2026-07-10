@@ -107,7 +107,7 @@ function buildTapHoldManipulators(
       m.conditions = m.conditions ?? [];
       m.conditions.push({
         type: "variable_unless",
-        name: "middle_pressed",
+        name: "wheel_down",
         value: 1,
       });
       m.conditions.push({

@@ -1,18 +1,18 @@
-import { HYPER } from "../core/mods";
+import { MOD_COMBO } from "../core/mods";
 import {
-    formatSelectionCommand,
-    typinatorNewRuleCommand,
+  formatSelectionCommand,
+  typinatorNewRuleCommand,
 } from "../core/scripts";
 import { PATHS } from "../data";
 import {
-    rectangleActionByFocusedWindowOrientationCommand,
-    rectangleActionUrl,
-    rectangleMaxOrRestoreCommand,
+  rectangleActionByFocusedWindowOrientationCommand,
+  rectangleActionUrl,
+  rectangleMaxOrRestoreCommand,
 } from "../data/rectangle";
 import type { TapHoldConfig } from "../engine";
 import {
-    generateModifierLauncherRules,
-    type ModifierLauncherMapping,
+  generateModifierLauncherRules,
+  type ModifierLauncherMapping,
 } from "../engine/launcher-rules";
 
 const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
@@ -59,7 +59,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
       {
         type: "key",
         key: "f18",
-        modifiers: ["vmCOCS"],
+        modifiers: MOD_COMBO.vmCOCS,
         options: { repeat: false },
       },
     ],
@@ -185,7 +185,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
 
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({
-    triggerKey: HYPER,
+    triggerKey: MOD_COMBO.vmCOC_,
     triggerLabel: "vmCOC_",
     launchers: hyperLauncherMappings,
   });

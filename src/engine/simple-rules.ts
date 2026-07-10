@@ -1,24 +1,24 @@
 import { ifApp, map, toKey } from "karabiner.ts";
 
 import { formatRuleDescription } from "../core/rule-descriptions";
-import type { ModifierKey } from "../data/key-aliases";
+import type { ModKey } from "../data/key-aliases";
 import { buildRulesFromMappings } from "./rule-factory-base";
 
 export type SimpleRemapMapping = {
   from: {
     key: string;
-    modifiers?: ModifierKey[];
+    modifiers?: ModKey[];
   };
   description: string;
   to: {
     key: string;
-    modifiers?: ModifierKey[];
+    modifiers?: ModKey[];
   };
 };
 
 export type DisabledShortcutMapping = {
   key: string;
-  modifiers: ModifierKey[];
+  modifiers: ModKey[];
   description: string;
 };
 
@@ -53,12 +53,12 @@ export function generateDisabledShortcutRules(
 export type AppScopedRemapMapping = {
   from: {
     key: string;
-    modifiers?: ModifierKey[];
+    modifiers?: ModKey[];
   };
   description: string;
   to: {
     key: string;
-    modifiers?: ModifierKey[];
+    modifiers?: ModKey[];
   };
   ifApp: string | string[];
 };

@@ -34,7 +34,7 @@ test("generateTapAloneHoldRule description uses hold trigger", () => {
   );
   assert.equal(
     rule.description,
-    "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)",
+    "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
   );
 });
 

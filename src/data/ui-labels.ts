@@ -50,7 +50,6 @@ export const MODIFIER_SYMBOLS: Record<string, string> = {
   cmd: "⌘",
   control: "⌃",
   ctrl: "⌃",
-  hyper: "✦",
   option: "⌥",
   opt: "⌥",
   shift: "⇧",
