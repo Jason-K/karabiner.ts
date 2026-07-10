@@ -1527,7 +1527,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[TAB]        →    Mission Control (on hold)",
+        "ruleDescription": "[⇥]        →    Mission Control (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2036,7 +2036,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[SPACE]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOC_]+[_]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2084,7 +2084,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[TAB]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2126,7 +2126,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[LEFT]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[←]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2168,7 +2168,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[RIGHT]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOC_]+[→]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2641,7 +2641,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[ESC]        →    Escape / Kill app (on multi-tap)",
+        "ruleDescription": "[␛]        →    Escape / Kill app (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2766,7 +2766,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)",
+        "ruleDescription": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2812,7 +2812,7 @@
                 }
               ]
             },
-            "description": "[←⌃]+[ESC]        →    Activity Monitor / Process Spy (on hold)"
+            "description": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3510,7 +3510,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+        "ruleDescription": "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3527,8 +3527,8 @@
               {
                 "key_code": "left_command",
                 "modifiers": [
-                  "left_control",
-                  "left_option"
+                  "left_option",
+                  "left_control"
                 ]
               }
             ],
@@ -3550,7 +3550,7 @@
                 ]
               }
             ],
-            "description": "[CAPS]        →    VM launcher / vmCOC_ (on hold)"
+            "description": "[⇪]        →    VM launcher / vmCOC_ (on hold)"
           },
           {
             "type": "basic",
@@ -3572,7 +3572,7 @@
                 ]
               }
             ],
-            "description": "[←⇧]+[CAPS]        →    vmCOCS (on hold)"
+            "description": "[←⇧]+[⇪]        →    vmCOCS (on hold)"
           },
           {
             "type": "basic",
@@ -3593,7 +3593,7 @@
                 ]
               }
             ],
-            "description": "[←⌃]+[CAPS]        →    vmCO_S (on hold)"
+            "description": "[←⌃]+[⇪]        →    vmCO_S (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3800,7 +3800,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOC_]+[ESC]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[vmCOC_]+[␛]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3829,7 +3829,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)",
+        "ruleDescription": "[⏎]        →    Evaluate selection (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3874,7 +3874,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[RETURN]        →    Edit cell (on hold)",
+        "ruleDescription": "[⏎]        →    Edit cell (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3920,7 +3920,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[RETURN]        →    Evaluate selection (on hold)",
+        "ruleDescription": "[⏎]        →    Evaluate selection (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3965,7 +3965,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[RETURN]        →    Edit cell (on hold)",
+        "ruleDescription": "[⏎]        →    Edit cell (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4668,7 +4668,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[RIGHT]        →    Zen command H remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[→]        →    Zen command H remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4704,7 +4704,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[LEFT]        →    Zen command U remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[←]        →    Zen command U remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",

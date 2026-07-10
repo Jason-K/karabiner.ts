@@ -1,8 +1,8 @@
-import { HYPER, L } from "../core/mods";
+import { VM_MODIFIER_ALIASES } from "../core/mods";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import {
-    generateModifierChordRules,
-    type ModifierChordConfig,
+  generateModifierChordRules,
+  type ModifierChordConfig,
 } from "../engine/modifier-chord-rules";
 
 export const capsLockChordConfig: ModifierChordConfig = {
@@ -17,39 +17,39 @@ export const capsLockChordConfig: ModifierChordConfig = {
     to: [
       {
         type: "key",
-        key: L.cmd,
-        modifiers: [L.ctrl, L.opt],
+        key: "left_command",
+        modifiers: VM_MODIFIER_ALIASES.vm_OC_,
       },
     ],
     toIfAlone: [
       {
         type: "key",
         key: "f15",
-        modifiers: HYPER,
+        modifiers: VM_MODIFIER_ALIASES.vmCOC_,
       },
     ],
     trackVar: "caps_lock_pressed",
   },
   variants: [
     {
-      modifiers: [L.shift],
+      modifiers: ["left_shift"],
       description: "vmCOCS",
       to: [
         {
           type: "key",
-          key: L.shift,
-          modifiers: ["vmCOC_"],
+          key: "left_shift",
+          modifiers: VM_MODIFIER_ALIASES.vmCOC_,
         },
       ],
     },
     {
-      modifiers: [L.ctrl],
+      modifiers: ["left_control"],
       description: "vmCO_S",
       to: [
         {
           type: "key",
-          key: L.cmd,
-          modifiers: [L.opt, L.shift],
+          key: "left_command",
+          modifiers: VM_MODIFIER_ALIASES.vm_O_S,
         },
       ],
     },
