@@ -2864,7 +2864,8 @@
                 "pointing_button": "button3",
                 "modifiers": [
                   "left_option"
-                ]
+                ],
+                "repeat": false
               }
             ],
             "to_delayed_action": {
@@ -2910,7 +2911,8 @@
                   "left_command",
                   "left_control",
                   "left_shift"
-                ]
+                ],
+                "repeat": false
               }
             ],
             "conditions": [
@@ -3006,7 +3008,8 @@
                   "left_command",
                   "left_control",
                   "left_shift"
-                ]
+                ],
+                "repeat": false
               }
             ],
             "conditions": [
@@ -3147,7 +3150,8 @@
                 "pointing_button": "button1",
                 "modifiers": [
                   "left_option"
-                ]
+                ],
+                "repeat": false
               }
             ],
             "conditions": [
@@ -3201,7 +3205,8 @@
             ],
             "to_if_alone": [
               {
-                "pointing_button": "button3"
+                "pointing_button": "button3",
+                "repeat": false
               }
             ],
             "to_if_held_down": [
@@ -3217,7 +3222,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "pointing_button": "button3"
+                  "pointing_button": "button3",
+                  "repeat": false
                 }
               ]
             },
@@ -3313,7 +3319,8 @@
                   "left_command",
                   "left_option",
                   "left_shift"
-                ]
+                ],
+                "repeat": false
               }
             ],
             "to_delayed_action": {
@@ -3374,7 +3381,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "pointing_button": "button4"
+                  "pointing_button": "button4",
+                  "repeat": false
                 }
               ]
             },
@@ -3428,7 +3436,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "pointing_button": "button5"
+                  "pointing_button": "button5",
+                  "repeat": false
                 }
               ]
             },

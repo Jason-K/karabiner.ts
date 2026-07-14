@@ -36,7 +36,11 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [
-          { pointing_button: "button3", modifiers: ["left_option"] },
+          {
+            pointing_button: "button3",
+            modifiers: ["left_option"],
+            repeat: false,
+          },
           //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           //   {
           //     key_code: "left_control",
@@ -67,6 +71,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
               {
                 key_code: "left_arrow",
                 modifiers: ["left_command", "left_control", "left_shift"],
+                repeat: false,
               },
             ],
           },
@@ -95,6 +100,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
               {
                 key_code: "right_arrow",
                 modifiers: ["left_command", "left_control", "left_shift"],
+                repeat: false,
               },
             ],
           },
@@ -123,14 +129,20 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         button: "middle",
         description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
         variable: "wheel_down",
-        alone: [{ pointing_button: "button3" }],
+        alone: [{ pointing_button: "button3", repeat: false }],
         overrides: [
           {
             when: [
               { app: appRegistry.zen },
               { variable: "right_button_pressed", match: "if", value: 1 },
             ],
-            to: [{ pointing_button: "button1", modifiers: ["left_option"] }],
+            to: [
+              {
+                pointing_button: "button1",
+                modifiers: ["left_option"],
+                repeat: false,
+              },
+            ],
           },
         ],
         hold: [
@@ -169,6 +181,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           {
             key_code: "f10",
             modifiers: ["left_command", "left_option", "left_shift"],
+            repeat: false,
           },
         ],
         thresholdMs: TIMINGS.delayMouseHoldMs,
@@ -178,7 +191,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "back",
         description: "[BACK] Back (tap) / Window switch (hold)",
-        alone: [{ pointing_button: "button4" }],
+        alone: [{ pointing_button: "button4", repeat: false }],
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
         eventOptions: { halt: true, repeat: false },
         thresholdMs: TIMINGS.delayMouseHoldMs,
@@ -188,11 +201,12 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "forward",
         description: "[FORWARD] Forward (tap) / App window switch (hold)",
-        alone: [{ pointing_button: "button5" }],
+        alone: [{ pointing_button: "button5", repeat: false }],
         hold: [
           {
             key_code: "grave_accent_and_tilde",
             modifiers: ["left_command"],
+            repeat: false,
           },
         ],
         eventOptions: { halt: true, repeat: false },
