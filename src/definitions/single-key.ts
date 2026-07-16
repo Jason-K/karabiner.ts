@@ -150,6 +150,16 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
       },
     ],
   },
+  q: {
+    description: "Launch Qspace",
+    hold: [
+      {
+        type: "app",
+        ref: "qspace",
+        mode: "focus",
+      },
+    ],
+  },
 
   r: {
     description: "Last d/l",

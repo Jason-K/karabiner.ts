@@ -87,26 +87,6 @@ let rules: any[] = [
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),
 
-  // ============================================================================
-  // SPECIAL RULES - SYSTEM & APPLICATION BEHAVIORS
-  // ============================================================================
-  /**
-   * This section contains miscellaneous rules that enhance macOS behavior:
-   *
-   * KEYBOARD IMPROVEMENTS:
-   * - HOME/END: Mac-style navigation (CMD+Left/Right instead of default)
-   * - ENTER/RETURN: Tap for enter, hold for quick format (Hammerspoon)
-   * - EQUALS: Tap for equals, hold for Quick Date (Python script)
-   * - CMD alone: Tapping either CMD key sends CMD+OPT+CTRL+L
-   *
-   * SAFETY FEATURES:
-   * - CMD+Q: Double-tap protection (300ms window prevents accidental app quit)
-   * - CTRL+OPT+ESC: Single tap for Activity Monitor, double tap for Force Quit
-   *
-   * APPLICATION-SPECIFIC:
-   * - CMD+SHIFT+K: Delete line (disabled in VSCode Insiders - native shortcut)
-   */
-
   // HOME/END - Make them work properly on macOS
   ...buildHomeEndRule(),
 
@@ -125,22 +105,6 @@ let rules: any[] = [
   // Right_Option + __ - App launch or focus
   ...buildRightOptionLauncherRules(),
 
-  // ============================================================================
-  // SECURITY & SYSTEM ACCESS RULES
-  // ============================================================================
-  /**
-   * These rules handle privileged operations and security dialogs:
-   *
-   * DISABLED SHORTCUTS:
-   * - CMD+H, CMD+OPT+H, CMD+OPT+M: Hide/Minimize shortcuts disabled (empty to events)
-   *
-   * PASSWORD AUTOMATION (SecurityAgent only):
-   * - CMD+/: Auto-fill admin password using Privileges.app + Hammerspoon
-   *
-   * APPLICATION-SPECIFIC OVERRIDES:
-   * - Skim: Remap CMD+H and CMD+U to use CTRL modifier for Skim-specific functions
-   */
-
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...buildDisableHideMinimizeRule(),
 
@@ -155,19 +119,6 @@ let rules: any[] = [
 
   // ZEN - CMD+SHIFT+H/U remapping
   ...buildZenCommandRemapRule(),
-
-  // ============================================================================
-  // APPLICATION-SPECIFIC RULES
-  // ============================================================================
-  /**
-   * Rules that modify behavior in specific applications:
-   *
-   * ANTINOTE:
-   * - CMD+D: Double-tap protection for deleting notes (300ms window)
-   * - Prevents accidental deletion of notes
-   *
-   * These rules use bundle ID matching to target specific apps.
-   */
 
   // ANTINOTE - CMD+D double-tap to delete note
   ...buildAntinoteRules(),

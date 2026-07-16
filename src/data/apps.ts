@@ -2,6 +2,7 @@ export const appRegistry = {
   activityMonitor: "com.apple.ActivityMonitor",
   antinote: "com.chabomakers.Antinote-setapp",
   antinoteLegacy: "com.chabomakers.Antinote",
+  brewUpdater: "org.gpgtools.pinentry-mac",
   browser: "app.zen-browser.zen",
   calendar: "com.busymac.busycal-setapp",
   claude: "com.anthropic.claudefordesktop",
@@ -29,7 +30,6 @@ export const appRegistry = {
   todoist: "com.todoist.mac.Todoist",
   word: "com.microsoft.Word",
   zen: "app.zen-browser.zen",
-  brewUpdater: "org.gpgtools.pinentry-mac"
 } as const;
 
 export type AppRef = keyof typeof appRegistry;

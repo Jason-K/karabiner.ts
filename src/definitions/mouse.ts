@@ -37,10 +37,12 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         ],
         hold: [
           {
+            // activate BetterStage radial menu
             pointing_button: "button3",
             modifiers: ["left_option"],
             repeat: false,
           },
+          // activate Rectangle Pro free movement
           //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           //   {
           //     key_code: "left_control",
@@ -61,6 +63,10 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         overrides: [
+          {
+            when: [{ variable: "wheel_down", match: "if", value: 1 }],
+            to: [],
+          },
           {
             when: [
               { app: appRegistry.zen },
@@ -90,6 +96,10 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         overrides: [
+          {
+            when: [{ variable: "wheel_down", match: "if", value: 1 }],
+            to: [],
+          },
           {
             when: [
               { app: appRegistry.zen },
@@ -126,7 +136,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       },
       {
         type: "tapHold",
-        button: "middle",
+        button: "wheel",
         description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
         variable: "wheel_down",
         alone: [{ pointing_button: "button3", repeat: false }],

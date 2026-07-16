@@ -475,6 +475,43 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[Q]        →    Launch Qspace (on hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "q"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -b 'com.jinghaoshe.qspace.pro'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "q"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[R]        →    Last d/l (on hold)",
         "manipulatorSources": [
           {
@@ -2949,6 +2986,29 @@
             "from": {
               "pointing_button": "button7"
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "wheel_down",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button7"
+            },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 200,
               "basic.to_if_held_down_threshold_milliseconds": 200
@@ -3028,6 +3088,29 @@
                 "type": "variable_if",
                 "name": "wheel_down",
                 "value": 0
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button8"
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "wheel_down",
+                "value": 1
               },
               {
                 "type": "device_if",
