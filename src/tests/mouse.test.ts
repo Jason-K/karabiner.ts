@@ -38,9 +38,9 @@ test("mouseTapHold emits a pointing button manipulator", () => {
 test("mouseVarTapTapHold can pass through original mouse button", () => {
   const manipulators = mouseVarTapTapHold({
     button: "forward",
-    firstVar: "mouse_forward_first_tap",
+    firstTapPendingVar: "mouse_forward_first_tap",
     holdEvents: [{ key_code: "down_arrow", modifiers: ["left_control"] }],
-    tapTapEvents: [{ key_code: "up_arrow", modifiers: ["left_control"] }],
+    doubleTapEvents: [{ key_code: "up_arrow", modifiers: ["left_control"] }],
     allowPassThrough: true,
   });
 
@@ -59,9 +59,9 @@ test("mouseVarTapTapHold can pass through original mouse button", () => {
 test("mouseVarTapTapHold can defer single-click events until timeout", () => {
   const manipulators = mouseVarTapTapHold({
     button: "left",
-    firstVar: "mouse_left_first_tap",
-    deferredAloneEvents: [{ key_code: "f10" }],
-    tapTapEvents: [{ key_code: "f11" }],
+    firstTapPendingVar: "mouse_left_first_tap",
+    delayedSingleTapEvents: [{ key_code: "f10" }],
+    doubleTapEvents: [{ key_code: "f11" }],
   });
 
   const firstTap = manipulators[1] as any;

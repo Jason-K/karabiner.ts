@@ -51,7 +51,7 @@ test("generateMultiTapRule throws when tapTap and tapTapHold are both provided",
   );
 });
 
-test("generateMultiTapRule auto-derives firstVar from key", () => {
+test("generateMultiTapRule auto-derives firstTapPendingVar from key", () => {
   const rule = toRule(
     generateMultiTapRule({
       key: "escape",
@@ -60,7 +60,7 @@ test("generateMultiTapRule auto-derives firstVar from key", () => {
       mods: [],
     }),
   );
-  // secondTap is at index 0; it has condition for firstVar === 1
+  // secondTap is at index 0; it has condition for firstTapPendingVar === 1
   const secondManipulator: any = rule.manipulators[0];
   assert.ok(
     secondManipulator?.conditions?.some(

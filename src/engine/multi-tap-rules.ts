@@ -36,15 +36,15 @@ export function generateMultiTapRule(config: MultiTapConfig) {
     );
   }
 
-  const firstVar = `multi_tap_${key}`;
+  const firstTapPendingVar = `multi_tap_${key}`;
 
   const manipulators = varTapTapHold({
     key,
-    firstVar,
-    aloneEvents: alone?.flatMap(resolveActionToEvents),
+    firstTapPendingVar,
+    immediateSingleTapEvents: alone?.flatMap(resolveActionToEvents),
     holdEvents: hold?.flatMap(resolveActionToEvents),
-    tapTapEvents: tapTap?.flatMap(resolveActionToEvents),
-    tapTapHoldEvents: tapTapHold?.flatMap(resolveActionToEvents),
+    doubleTapEvents: tapTap?.flatMap(resolveActionToEvents),
+    doubleTapHoldEvents: tapTapHold?.flatMap(resolveActionToEvents),
     thresholdMs,
     allowPassThrough,
     mods: mods as any,

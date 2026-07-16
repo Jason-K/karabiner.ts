@@ -1,8 +1,8 @@
 import {
   mapSimultaneous,
+  type FromEvent,
   type SimultaneousOptions as KarSimultaneousOptions,
   type ToEvent,
-  type FromEvent,
 } from "karabiner.ts";
 import { varTapTapHoldFrom } from "./tap-hold";
 
@@ -80,15 +80,15 @@ export function simultaneousMultiTap({
   simultaneousThresholdMs,
 }: SimultaneousMultiTapCoreOpts): any[] {
   const from = buildSimultaneousFromEvent(keys, karOptions);
-  const firstVar = `sim_tap_${label}`;
+  const firstTapPendingVar = `sim_tap_${label}`;
 
   const manipulators = varTapTapHoldFrom({
     from,
-    firstVar,
-    aloneEvents: alone,
+    firstTapPendingVar,
+    immediateSingleTapEvents: alone,
     holdEvents: hold,
-    tapTapEvents: tapTap,
-    tapTapHoldEvents: tapTapHold,
+    doubleTapEvents: tapTap,
+    doubleTapHoldEvents: tapTapHold,
     thresholdMs,
   });
 

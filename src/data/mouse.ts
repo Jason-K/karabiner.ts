@@ -58,20 +58,20 @@ export type MouseDoubleTapMapping = {
   type: "doubleTap";
   button: string;
   description: string;
-  firstVar: string;
+  firstTapPendingVar: string;
   /**
    * Optional conditions applied to both first/second-tap manipulators.
    */
   when?: MouseCondition[];
-  aloneEvents?: ToEvent[];
+  immediateSingleTapEvents?: ToEvent[];
   /**
    * Emit single-click behavior only after the double-tap window expires.
    * This prevents single-click actions from firing when a true double-click occurs.
    */
-  deferredAloneEvents?: ToEvent[];
+  delayedSingleTapEvents?: ToEvent[];
   holdEvents?: ToEvent[];
-  tapTapEvents?: ToEvent[];
-  tapTapHoldEvents?: ToEvent[];
+  doubleTapEvents?: ToEvent[];
+  doubleTapHoldEvents?: ToEvent[];
   allowPassThrough?: boolean;
   thresholdMs?: number;
   /**
@@ -80,11 +80,11 @@ export type MouseDoubleTapMapping = {
    */
   overrides?: Array<{
     when: MouseCondition[];
-    aloneEvents?: ToEvent[];
-    deferredAloneEvents?: ToEvent[];
+    immediateSingleTapEvents?: ToEvent[];
+    delayedSingleTapEvents?: ToEvent[];
     holdEvents?: ToEvent[];
-    tapTapEvents?: ToEvent[];
-    tapTapHoldEvents?: ToEvent[];
+    doubleTapEvents?: ToEvent[];
+    doubleTapHoldEvents?: ToEvent[];
     allowPassThrough?: boolean;
     thresholdMs?: number;
   }>;
@@ -104,7 +104,8 @@ export type mouseRemap = {
 export type MouseMapping =
   | MouseTapHoldMapping
   | MouseDoubleTapMapping
-  | MouseSimultaneousMapping;
+  | MouseSimultaneousMapping
+  | mouseRemap;
 
 export type MouseDeviceConfig = {
   buttonMap: Record<string, PointingButton>;

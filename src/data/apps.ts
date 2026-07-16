@@ -1,7 +1,6 @@
 export const appRegistry = {
   activityMonitor: "com.apple.ActivityMonitor",
-  antinote: "com.chabomakers.Antinote-setapp",
-  antinoteLegacy: "com.chabomakers.Antinote",
+  antinote: "com.chabomakers.Antinote",
   brewUpdater: "org.gpgtools.pinentry-mac",
   browser: "app.zen-browser.zen",
   calendar: "com.busymac.busycal-setapp",

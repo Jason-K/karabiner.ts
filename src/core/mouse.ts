@@ -81,12 +81,12 @@ type MouseVarTapTapHoldOpts = {
   description?: string;
   button: MouseButtonRef;
   buttonMap?: MouseButtonMap;
-  firstVar: string;
-  aloneEvents?: ToEvent[];
-  deferredAloneEvents?: ToEvent[];
+  firstTapPendingVar: string;
+  immediateSingleTapEvents?: ToEvent[];
+  delayedSingleTapEvents?: ToEvent[];
   holdEvents?: ToEvent[];
-  tapTapEvents?: ToEvent[];
-  tapTapHoldEvents?: ToEvent[];
+  doubleTapEvents?: ToEvent[];
+  doubleTapHoldEvents?: ToEvent[];
   thresholdMs?: number;
   allowPassThrough?: boolean;
 };

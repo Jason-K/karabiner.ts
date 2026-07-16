@@ -2884,6 +2884,34 @@
             "from": {
               "pointing_button": "button5"
             },
+            "to": [
+              {
+                "key_code": "down_arrow"
+              }
+            ],
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button5"
+            },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 400
@@ -3155,53 +3183,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "pointing_button": "button9"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "device_if",
-                "identifiers": [
-                  {
-                    "product_id": 49305,
-                    "vendor_id": 1133
-                  }
-                ]
-              }
-            ],
-            "description": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)",
         "manipulatorSources": [
           {
@@ -3407,6 +3388,53 @@
               }
             ],
             "description": "Logitech G502 X: [G8] Popclip (tap) / Sidenote (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button9"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3781,6 +3809,13 @@
                   "name": "left_with_right_first_tap",
                   "value": 0
                 }
+              },
+              {
+                "pointing_button": "button1",
+                "modifiers": [
+                  "left_option"
+                ],
+                "repeat": false
               }
             ],
             "to_delayed_action": {
@@ -3788,7 +3823,7 @@
                 {
                   "pointing_button": "button1",
                   "modifiers": [
-                    "left_option"
+                    "left_command"
                   ],
                   "repeat": false
                 },
@@ -5066,7 +5101,7 @@
             },
             "to": [
               {
-                "shell_command": "open -b 'com.chabomakers.Antinote-setapp' && osascript -e 'delay 0.2\ntell application \"System Events\"\nif exists process \"Antinote\" then\nset windowCount to count of windows of process \"Antinote\"\nif windowCount is 0 then\nkeystroke \"n\" using {command down}\nend if\nend if\nend tell'"
+                "shell_command": "open -b 'com.chabomakers.Antinote' && osascript -e 'delay 0.2\ntell application \"System Events\"\nif exists process \"Antinote\" then\nset windowCount to count of windows of process \"Antinote\"\nif windowCount is 0 then\nkeystroke \"n\" using {command down}\nend if\nend if\nend tell'"
               }
             ]
           }
@@ -5616,7 +5651,6 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "com.chabomakers.Antinote-setapp",
                   "com.chabomakers.Antinote"
                 ]
               }
@@ -5650,7 +5684,6 @@
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "com.chabomakers.Antinote-setapp",
                   "com.chabomakers.Antinote"
                 ]
               },

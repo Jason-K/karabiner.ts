@@ -16,7 +16,7 @@ export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+  ifApp: [appRegistry.antinote],
 };
 
 export const buildAntinoteRules = () => [

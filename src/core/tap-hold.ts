@@ -166,12 +166,14 @@ export function tapHold({
  */
 interface VarTapTapHoldOpts extends Omit<TapHoldOpts, "alone" | "hold"> {
   key: string;
-  firstVar: string;
-  aloneEvents?: ToEvent[];
-  deferredAloneEvents?: ToEvent[];
+  firstTapPendingVar: string;
+  // Fires immediately using the first tap's to_if_alone path; blocks double-tap detection
+  immediateSingleTapEvents?: ToEvent[];
+  // Fires based on to_delayed_action.to_if_invoked, allowing double tap
+  delayedSingleTapEvents?: ToEvent[];
   holdEvents?: ToEvent[];
-  tapTapEvents?: ToEvent[];
-  tapTapHoldEvents?: ToEvent[];
+  doubleTapEvents?: ToEvent[];
+  doubleTapHoldEvents?: ToEvent[];
   holdMods?: Modifier[];
   allowPassThrough?: boolean;
   mods?: Modifier[];
@@ -179,12 +181,12 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, "alone" | "hold"> {
 
 export function varTapTapHoldFrom({
   from,
-  firstVar,
-  aloneEvents,
-  deferredAloneEvents,
+  firstTapPendingVar,
+  immediateSingleTapEvents,
+  delayedSingleTapEvents,
   holdEvents,
-  tapTapEvents,
-  tapTapHoldEvents,
+  doubleTapEvents,
+  doubleTapHoldEvents,
   holdMods,
   thresholdMs = TIMINGS.delayHoldMs,
   description,
@@ -205,30 +207,34 @@ export function varTapTapHoldFrom({
       ...cloneFromEvent(from),
       modifiers,
     },
-    conditions: [{ type: "variable_if", name: firstVar, value: 1 }],
+    conditions: [{ type: "variable_if", name: firstTapPendingVar, value: 1 }],
     parameters: {
       "basic.to_if_alone_timeout_milliseconds": thresholdMs,
       "basic.to_if_held_down_threshold_milliseconds": thresholdMs,
     },
     description:
-      description || `${firstVar} second tap (tap-tap / tap-tap-hold)`,
+      description ||
+      `${firstTapPendingVar} second tap (tap-tap / tap-tap-hold)`,
     to: [...(passThrough ? [passThrough] : [])],
-    to_if_alone: [toSetVar(firstVar, 0), ...(tapTapEvents ?? [])],
-    to_if_held_down: [toSetVar(firstVar, 0), ...(tapTapHoldEvents ?? [])],
+    to_if_alone: [toSetVar(firstTapPendingVar, 0), ...(doubleTapEvents ?? [])],
+    to_if_held_down: [
+      toSetVar(firstTapPendingVar, 0),
+      ...(doubleTapHoldEvents ?? []),
+    ],
     to_delayed_action: {
-      to_if_invoked: [toSetVar(firstVar, 0)],
-      to_if_canceled: [toSetVar(firstVar, 0)],
+      to_if_invoked: [toSetVar(firstTapPendingVar, 0)],
+      to_if_canceled: [toSetVar(firstTapPendingVar, 0)],
     },
   } as any;
 
   let firstTap: BasicManipulator;
 
-  const firstTapAloneEvents = deferredAloneEvents
-    ? [toSetVar(firstVar, 1)]
-    : [toSetVar(firstVar, 1), ...(aloneEvents ?? [])];
-  const firstTapInvokedEvents = deferredAloneEvents
-    ? [...deferredAloneEvents, toSetVar(firstVar, 0)]
-    : [toSetVar(firstVar, 0)];
+  const firstTapAloneEvents = delayedSingleTapEvents
+    ? [toSetVar(firstTapPendingVar, 1)]
+    : [toSetVar(firstTapPendingVar, 1), ...(immediateSingleTapEvents ?? [])];
+  const firstTapInvokedEvents = delayedSingleTapEvents
+    ? [...delayedSingleTapEvents, toSetVar(firstTapPendingVar, 0)]
+    : [toSetVar(firstTapPendingVar, 0)];
 
   if (allowPassThrough) {
     firstTap = {
@@ -242,13 +248,17 @@ export function varTapTapHoldFrom({
         "basic.to_if_held_down_threshold_milliseconds": thresholdMs,
         "basic.to_if_alone_timeout_milliseconds": thresholdMs,
       },
-      description: description || `${firstVar} first tap (pass-through)`,
-      to: [toSetVar(firstVar, 1), ...(passThrough ? [passThrough] : [])],
+      description:
+        description || `${firstTapPendingVar} first tap (pass-through)`,
+      to: [
+        toSetVar(firstTapPendingVar, 1),
+        ...(passThrough ? [passThrough] : []),
+      ],
       to_if_alone: firstTapAloneEvents,
-      to_if_held_down: [toSetVar(firstVar, 0), ...(holdEvents ?? [])],
+      to_if_held_down: [toSetVar(firstTapPendingVar, 0), ...(holdEvents ?? [])],
       to_delayed_action: {
         to_if_invoked: firstTapInvokedEvents,
-        to_if_canceled: [toSetVar(firstVar, 0)],
+        to_if_canceled: [toSetVar(firstTapPendingVar, 0)],
       },
     } as any;
   } else {
@@ -263,13 +273,14 @@ export function varTapTapHoldFrom({
         "basic.to_if_held_down_threshold_milliseconds": thresholdMs,
         "basic.to_if_alone_timeout_milliseconds": thresholdMs,
       },
-      description: description || `${firstVar} first tap (tap / tap-hold)`,
-      to: [toSetVar(firstVar, 1)],
+      description:
+        description || `${firstTapPendingVar} first tap (tap / tap-hold)`,
+      to: [toSetVar(firstTapPendingVar, 1)],
       to_if_alone: firstTapAloneEvents,
-      to_if_held_down: [toSetVar(firstVar, 0), ...(holdEvents ?? [])],
+      to_if_held_down: [toSetVar(firstTapPendingVar, 0), ...(holdEvents ?? [])],
       to_delayed_action: {
         to_if_invoked: firstTapInvokedEvents,
-        to_if_canceled: [toSetVar(firstVar, 0)],
+        to_if_canceled: [toSetVar(firstTapPendingVar, 0)],
       },
     } as any;
   }
@@ -282,12 +293,12 @@ export function varTapTapHoldFrom({
  */
 export function varTapTapHold({
   key,
-  firstVar,
-  aloneEvents,
-  deferredAloneEvents,
+  firstTapPendingVar,
+  immediateSingleTapEvents,
+  delayedSingleTapEvents,
   holdEvents,
-  tapTapEvents,
-  tapTapHoldEvents,
+  doubleTapEvents,
+  doubleTapHoldEvents,
   holdMods,
   thresholdMs = TIMINGS.delayHoldMs,
   description,
@@ -299,12 +310,12 @@ export function varTapTapHold({
     passThrough: allowPassThrough
       ? toKey(key as any, [], { lazy: true })
       : undefined,
-    firstVar,
-    aloneEvents,
-    deferredAloneEvents,
+    firstTapPendingVar,
+    immediateSingleTapEvents,
+    delayedSingleTapEvents,
     holdEvents,
-    tapTapEvents,
-    tapTapHoldEvents,
+    doubleTapEvents,
+    doubleTapHoldEvents,
     holdMods,
     thresholdMs,
     description,

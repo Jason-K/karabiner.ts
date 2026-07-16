@@ -36,10 +36,7 @@ function buildMouseRemapManipulators(
   const manipulator = map({ pointing_button: pointingButton });
   mapping.to.forEach((e) => manipulator.to(e));
   if (mapping.eventOptions?.halt) {
-    manipulator.toDelayedAction({
-      ifInvoked: [],
-      ifCanceled: [],
-    });
+    manipulator.toDelayedAction([], []);
   }
   if (mapping.eventOptions?.repeat) {
     manipulator.parameters({
@@ -153,7 +150,7 @@ function buildTapHoldManipulators(
     manipulators.forEach((manipulator: any) => {
       manipulator.conditions = manipulator.conditions ?? [];
       mapping.when
-        .map(overrideCondition)
+        ?.map(overrideCondition)
         .forEach((condition) => manipulator.conditions.push(condition));
     });
   }
@@ -167,24 +164,26 @@ function buildDoubleTapManipulators(
 ) {
   const buildVariant = (variant?: {
     when?: MouseCondition[];
-    aloneEvents?: any[];
-    deferredAloneEvents?: any[];
+    immediateSingleTapEvents?: any[];
+    delayedSingleTapEvents?: any[];
     holdEvents?: any[];
-    tapTapEvents?: any[];
-    tapTapHoldEvents?: any[];
+    doubleTapEvents?: any[];
+    doubleTapHoldEvents?: any[];
     allowPassThrough?: boolean;
     thresholdMs?: number;
   }) => {
     const manipulators = mouseVarTapTapHold({
       button: mapping.button,
       buttonMap: device.buttonMap,
-      firstVar: mapping.firstVar,
-      aloneEvents: variant?.aloneEvents ?? mapping.aloneEvents,
-      deferredAloneEvents:
-        variant?.deferredAloneEvents ?? mapping.deferredAloneEvents,
+      firstTapPendingVar: mapping.firstTapPendingVar,
+      immediateSingleTapEvents:
+        variant?.immediateSingleTapEvents ?? mapping.immediateSingleTapEvents,
+      delayedSingleTapEvents:
+        variant?.delayedSingleTapEvents ?? mapping.delayedSingleTapEvents,
       holdEvents: variant?.holdEvents ?? mapping.holdEvents,
-      tapTapEvents: variant?.tapTapEvents ?? mapping.tapTapEvents,
-      tapTapHoldEvents: variant?.tapTapHoldEvents ?? mapping.tapTapHoldEvents,
+      doubleTapEvents: variant?.doubleTapEvents ?? mapping.doubleTapEvents,
+      doubleTapHoldEvents:
+        variant?.doubleTapHoldEvents ?? mapping.doubleTapHoldEvents,
       allowPassThrough: variant?.allowPassThrough ?? mapping.allowPassThrough,
       thresholdMs: variant?.thresholdMs ?? mapping.thresholdMs,
     });

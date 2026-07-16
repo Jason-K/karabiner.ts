@@ -38,6 +38,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
     identifiers: DEVICE_IDENTIFIERS.logitechG502X,
     buttonMap: g502xButtons,
     mappings: [
+      // -------------------------------------------------------------
+      // SHIFT BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "shift",
@@ -49,22 +52,31 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [
-          // activate BetterStage radial menu
-          //   {
-          //     pointing_button: "button3",
-          //     modifiers: ["left_option"],
-          //     repeat: false,
-          //   },
-          // activate Rectangle Pro free movement
+          // OPTION 1: activate BetterStage radial menu
+          // { pointing_button: "button3", modifiers: ["left_option"], repeat: false, },
+          // OPTION 2: activate Rectangle Pro free movement
           ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
           {
             key_code: "left_control",
             modifiers: ["left_option", "left_shift"],
           },
         ],
+        overrides: [
+          {
+            when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
+            to: [
+              {
+                key_code: "down_arrow",
+              },
+            ],
+          },
+        ],
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // WHEEL LEFT BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "wheel_left",
@@ -98,6 +110,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.timeoutWheelChordMs,
         timeoutMs: TIMINGS.timeoutWheelChordMs,
       },
+      // -------------------------------------------------------------
+      // WHEEL RIGHT BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "wheel_right",
@@ -127,22 +142,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.timeoutWheelChordMs,
         timeoutMs: TIMINGS.timeoutWheelChordMs,
       },
-      {
-        type: "tapHold",
-        button: "middle_back",
-        description: "[G9] Screenshot to text (tap) / markdown (hold)",
-        alone: [
-          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
-        ],
-        hold: [
-          {
-            shell_command:
-              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
-          },
-        ],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
+      // -------------------------------------------------------------
+      // WHEEL (AS BUTTON)
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "wheel",
@@ -186,6 +188,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // G8 BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "left_forward",
@@ -206,6 +211,29 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // G9 BUTTON
+      // -------------------------------------------------------------
+      {
+        type: "tapHold",
+        button: "middle_back",
+        description: "[G9] Screenshot to text (tap) / markdown (hold)",
+        alone: [
+          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
+        ],
+        hold: [
+          {
+            shell_command:
+              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
+          },
+        ],
+        thresholdMs: TIMINGS.delayMouseHoldMs,
+        timeoutMs: TIMINGS.delayMouseHoldMs,
+      },
+
+      // -------------------------------------------------------------
+      // BACK BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "back",
@@ -232,6 +260,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // FORWARD BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "forward",
@@ -264,6 +295,9 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // RIGHT BUTTON
+      // -------------------------------------------------------------
       {
         type: "tapHold",
         button: "right",
@@ -274,29 +308,50 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
+      // -------------------------------------------------------------
+      // LEFT BUTTON
+      // -------------------------------------------------------------
       {
         type: "doubleTap",
         button: "left",
         description:
           "[RBUTTON+LBUTTON] single action by app / double next display",
-        firstVar: "left_with_right_first_tap",
+        // Var to set on first tap
+        firstTapPendingVar: "left_with_right_first_tap",
+        // Optional condition, which limits when double tap events will fire.
         when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
-        tapTapEvents: MOVE_WINDOW_TO_NEXT_DISPLAY,
+        // NOTE: the event to fire on first tap is handled in overrides in this case
+        // Events to fire on double tap. This is the "double tap" action.
+        doubleTapEvents: MOVE_WINDOW_TO_NEXT_DISPLAY,
         thresholdMs: TIMINGS.timeoutDoubleClickMs,
         overrides: [
           {
+            // ZEN OVERRIDES
+            // -------------------------------------------------------------
             when: [{ app: appRegistry.zen }],
-            deferredAloneEvents: [
+            // ZEN - Rbutton + Lbutton (hold) = option+click (preview open link)
+            holdEvents: [
               {
                 pointing_button: "button1",
                 modifiers: ["left_option"],
                 repeat: false,
               },
             ],
+            // ZEN - Rbutton + Lbutton (tap) = cmd+click (open link in new tab)
+            delayedSingleTapEvents: [
+              {
+                pointing_button: "button1",
+                modifiers: ["left_command"],
+                repeat: false,
+              },
+            ],
           },
           {
+            // NON-ZEN OVERRIDES
+            // -------------------------------------------------------------
             when: [{ app: appRegistry.zen, unless: true }],
-            deferredAloneEvents: MAXIMIZE_WINDOW_UNDER_CURSOR,
+            // Rbutton + Lbutton (hold) = maximize window under cursor
+            delayedSingleTapEvents: MAXIMIZE_WINDOW_UNDER_CURSOR,
           },
         ],
       },
