@@ -276,7 +276,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
     DEVICE_IDENTIFIERS.logitechG502X,
   );
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 10);
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 11);
 
   const backMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "back",
@@ -285,8 +285,23 @@ test("mouse device mappings are declarative and device-scoped", () => {
     type: "tapHold",
     button: "back",
     description: "[BACK] Back (tap) / Window switch (hold)",
-    alone: [{ pointing_button: "button4" }],
+    alone: [{ pointing_button: "button4", repeat: false }],
     hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+    overrides: [
+      {
+        when: [
+          { app: appRegistry.zen },
+          { variable: "right_button_pressed", match: "if", value: 1 },
+        ],
+        to: [
+          {
+            key_code: "open_bracket",
+            modifiers: ["left_command", "left_shift"],
+            repeat: true,
+          },
+        ],
+      },
+    ],
     eventOptions: { halt: true, repeat: false },
     thresholdMs: 400,
     timeoutMs: 400,
@@ -307,6 +322,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       {
         modifiers: ["left_option"],
         pointing_button: "button3",
+        repeat: false,
       },
     ],
     thresholdMs: 400,
@@ -328,6 +344,10 @@ test("mouse device mappings are declarative and device-scoped", () => {
     ],
     overrides: [
       {
+        when: [{ variable: "wheel_down", match: "if", value: 1 }],
+        to: [],
+      },
+      {
         when: [
           { app: appRegistry.zen },
           { variable: "right_button_pressed", match: "if", value: 1 },
@@ -337,6 +357,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
           {
             key_code: "left_arrow",
             modifiers: ["left_command", "left_control", "left_shift"],
+            repeat: false,
           },
         ],
       },
@@ -346,21 +367,27 @@ test("mouse device mappings are declarative and device-scoped", () => {
   });
 
   const middleMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "middle",
+    (m) => m.type === "tapHold" && m.button === "wheel",
   );
   assert.deepEqual(middleMapping, {
     type: "tapHold",
-    button: "middle",
+    button: "wheel",
     description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
     variable: "wheel_down",
-    alone: [{ pointing_button: "button3" }],
+    alone: [{ pointing_button: "button3", repeat: false }],
     overrides: [
       {
         when: [
           { app: appRegistry.zen },
           { variable: "right_button_pressed", match: "if", value: 1 },
         ],
-        to: [{ pointing_button: "button1", modifiers: ["left_option"] }],
+        to: [
+          {
+            pointing_button: "button1",
+            modifiers: ["left_option"],
+            repeat: false,
+          },
+        ],
       },
     ],
     hold: [
@@ -412,6 +439,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       {
         key_code: "f10",
         modifiers: ["left_command", "left_option", "left_shift"],
+        repeat: false,
       },
     ],
     thresholdMs: 400,

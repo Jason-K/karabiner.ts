@@ -1,13 +1,14 @@
+import { toFromEvent } from "../core/beta";
 import { g502xButtons } from "../core/mouse";
 import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
 import {
-    ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-    type MouseDeviceConfig,
+  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+  type MouseDeviceConfig,
 } from "../data/mouse";
 import {
-    rectangleActionByFocusedWindowOrientationCommand,
-    rectangleActionUrl,
-    rectangleMaxOrRestoreEvents,
+  rectangleActionByFocusedWindowOrientationCommand,
+  rectangleActionUrl,
+  rectangleMaxOrRestoreEvents,
 } from "../data/rectangle";
 
 export { buildMouseDeviceRules, buildMouseRules } from "../engine/mouse-rules";
@@ -96,10 +97,6 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         overrides: [
-          {
-            when: [{ variable: "wheel_down", match: "if", value: 1 }],
-            to: [],
-          },
           {
             when: [
               { app: appRegistry.zen },
@@ -203,6 +200,22 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         description: "[BACK] Back (tap) / Window switch (hold)",
         alone: [{ pointing_button: "button4", repeat: false }],
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
+        overrides: [
+          {
+            // ZEN - Rbutton + Back = CMD+SHIFT+[ (switch to next tab)
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [
+              {
+                key_code: "open_bracket",
+                modifiers: ["left_command", "left_shift"],
+                repeat: true,
+              },
+            ],
+          },
+        ],
         eventOptions: { halt: true, repeat: false },
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
@@ -219,6 +232,22 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             repeat: false,
           },
         ],
+        overrides: [
+          {
+            // ZEN - Rbutton + Forward = CMD+SHIFT+] (switch to previous tab)
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [
+              {
+                key_code: "close_bracket",
+                modifiers: ["left_command", "left_shift"],
+                repeat: true,
+              },
+            ],
+          },
+        ],
         eventOptions: { halt: true, repeat: false },
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
@@ -228,9 +257,35 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         button: "right",
         description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
         variable: "right_button_pressed",
-        alone: [{ pointing_button: "button2" }],
-        hold: [],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
+        alone: [],
+        hold: [toFromEvent()],
+        thresholdMs: 0,
+        timeoutMs: TIMINGS.delayMouseHoldMs,
+      },
+      {
+        type: "tapHold",
+        button: "left",
+        description: "[LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        variable: "left_button_pressed",
+        alone: [],
+        hold: [toFromEvent()],
+        overrides: [
+          {
+            // ZEN - Lbutton + Rbutton = Open in pop-up (option+click)
+            when: [
+              { app: appRegistry.zen },
+              { variable: "right_button_pressed", match: "if", value: 1 },
+            ],
+            to: [
+              {
+                pointing_button: "button1",
+                modifiers: ["left_option"],
+                repeat: false,
+              },
+            ],
+          },
+        ],
+        thresholdMs: 0,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
     ],

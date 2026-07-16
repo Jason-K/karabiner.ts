@@ -5,12 +5,13 @@ import {
     resolveMouseButton,
 } from "../core/mouse";
 import type {
-    MouseCondition,
-    MouseDeviceConfig,
-    MouseDoubleTapMapping,
-    MouseMapping,
-    MouseSimultaneousMapping,
-    MouseTapHoldMapping,
+  MouseCondition,
+  MouseDeviceConfig,
+  MouseDoubleTapMapping,
+  mouseRemap,
+  MouseMapping,
+  MouseSimultaneousMapping,
+  MouseTapHoldMapping,
 } from "../data/mouse";
 
 function applyDeviceScope(
@@ -25,6 +26,28 @@ function applyDeviceScope(
     ];
     manipulator.description = `${device.name}: ${description}`;
   });
+}
+
+function buildMouseRemapManipulators(
+  device: MouseDeviceConfig,
+  mapping: mouseRemap,
+) {
+  const pointingButton = resolveMouseButton(mapping.from, device.buttonMap);
+  const manipulator = map({ pointing_button: pointingButton });
+  mapping.to.forEach((e) => manipulator.to(e));
+  if (mapping.eventOptions?.halt) {
+    manipulator.toDelayedAction({
+      ifInvoked: [],
+      ifCanceled: [],
+    });
+  }
+  if (mapping.eventOptions?.repeat) {
+    manipulator.parameters({
+      "basic.to_if_alone_timeout_milliseconds": 1000,
+      "basic.to_if_held_down_threshold_milliseconds": 1000,
+    });
+  }
+  return manipulator.build();
 }
 
 function buildSimultaneousManipulators(
@@ -150,6 +173,9 @@ function buildManipulatorsForMapping(
   device: MouseDeviceConfig,
   mapping: MouseMapping,
 ) {
+    if (mapping.type === "mouseRemap") {
+    return buildMouseRemapManipulators(device, mapping);
+  }
   if (mapping.type === "doubleTap") {
     return buildDoubleTapManipulators(device, mapping);
   }

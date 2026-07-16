@@ -2089,7 +2089,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[_]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOCS_]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2139,7 +2139,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS⇥]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2182,7 +2182,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[←]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS←ARROW]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2225,7 +2225,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[→]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOCS→ARROW]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2824,7 +2824,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
+        "ruleDescription": "[←⌃␛]        →    Activity Monitor / Process Spy (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2870,7 +2870,7 @@
                 }
               ]
             },
-            "description": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)"
+            "description": "[←⌃␛]        →    Activity Monitor / Process Spy (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3088,29 +3088,6 @@
                 "type": "variable_if",
                 "name": "wheel_down",
                 "value": 0
-              },
-              {
-                "type": "device_if",
-                "identifiers": [
-                  {
-                    "product_id": 49305,
-                    "vendor_id": 1133
-                  }
-                ]
-              }
-            ],
-            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "pointing_button": "button8"
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "wheel_down",
-                "value": 1
               },
               {
                 "type": "device_if",
@@ -3439,6 +3416,45 @@
             "from": {
               "pointing_button": "button4"
             },
+            "to": [
+              {
+                "key_code": "open_bracket",
+                "modifiers": [
+                  "left_command",
+                  "left_shift"
+                ],
+                "repeat": true
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button4"
+            },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 400
@@ -3489,6 +3505,45 @@
       {
         "ruleDescription": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)",
         "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button6"
+            },
+            "to": [
+              {
+                "key_code": "close_bracket",
+                "modifiers": [
+                  "left_command",
+                  "left_shift"
+                ],
+                "repeat": true
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)"
+          },
           {
             "type": "basic",
             "from": {
@@ -3551,7 +3606,7 @@
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "basic.to_if_held_down_threshold_milliseconds": 0
             },
             "to": [
               {
@@ -3569,9 +3624,9 @@
                 }
               }
             ],
-            "to_if_alone": [
+            "to_if_held_down": [
               {
-                "pointing_button": "button2"
+                "from_event": true
               }
             ],
             "to_delayed_action": {
@@ -3590,6 +3645,98 @@
               }
             ],
             "description": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1"
+            },
+            "to": [
+              {
+                "pointing_button": "button1",
+                "modifiers": [
+                  "left_option"
+                ],
+                "repeat": false
+              }
+            ],
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 0
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "left_button_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "left_button_pressed",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "from_event": true
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": []
+            },
+            "conditions": [
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3686,7 +3833,7 @@
                 ]
               }
             ],
-            "description": "[←⇧]+[⇪]        →    vmCOC_ (on hold)"
+            "description": "[←⇧⇪]        →    vmCOC_ (on hold)"
           },
           {
             "type": "basic",
@@ -3707,7 +3854,7 @@
                 ]
               }
             ],
-            "description": "[←⌃]+[⇪]        →    vmCO_S (on hold)"
+            "description": "[←⌃⇪]        →    vmCO_S (on hold)"
           },
           {
             "type": "basic",
@@ -3728,7 +3875,7 @@
                 ]
               }
             ],
-            "description": "[←⌥]+[⇪]        →    vmC_CS (on hold)"
+            "description": "[←⌥⇪]        →    vmC_CS (on hold)"
           },
           {
             "type": "basic",
@@ -3749,7 +3896,7 @@
                 ]
               }
             ],
-            "description": "[←⌘]+[⇪]        →    vm_OCS (on hold)"
+            "description": "[←⌘⇪]        →    vm_OCS (on hold)"
           },
           {
             "type": "basic",
@@ -3770,7 +3917,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⇧]+[⇪]        →    vmCO__ (on hold)"
+            "description": "[←⌃←⇧⇪]        →    vmCO__ (on hold)"
           },
           {
             "type": "basic",
@@ -3791,7 +3938,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⌥]+[⇪]        →    vmC__S (on hold)"
+            "description": "[←⌃←⌥⇪]        →    vmC__S (on hold)"
           },
           {
             "type": "basic",
@@ -3812,7 +3959,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⌘]+[⇪]        →    vm_O_S (on hold)"
+            "description": "[←⌃←⌘⇪]        →    vm_O_S (on hold)"
           },
           {
             "type": "basic",
@@ -3833,7 +3980,7 @@
                 ]
               }
             ],
-            "description": "[←⌘←⌥]+[⇪]        →    vm__CS (on hold)"
+            "description": "[←⌘←⌥⇪]        →    vm__CS (on hold)"
           },
           {
             "type": "basic",
@@ -3854,7 +4001,7 @@
                 ]
               }
             ],
-            "description": "[←⌘←⇧]+[⇪]        →    vm_OC_ (on hold)"
+            "description": "[←⌘←⇧⇪]        →    vm_OC_ (on hold)"
           },
           {
             "type": "basic",
@@ -3875,7 +4022,7 @@
                 ]
               }
             ],
-            "description": "[←⌥←⇧]+[⇪]        →    vmC_C_ (on hold)"
+            "description": "[←⌥←⇧⇪]        →    vmC_C_ (on hold)"
           },
           {
             "type": "basic",
@@ -3894,7 +4041,7 @@
                 "key_code": "left_option"
               }
             ],
-            "description": "[←⌘←⌃←⇧]+[⇪]        →    vm_O__ (on hold)"
+            "description": "[←⌘←⌃←⇧⇪]        →    vm_O__ (on hold)"
           },
           {
             "type": "basic",
@@ -3913,7 +4060,7 @@
                 "key_code": "left_control"
               }
             ],
-            "description": "[←⌘←⌥←⇧]+[⇪]        →    vm__C_ (on hold)"
+            "description": "[←⌘←⌥←⇧⇪]        →    vm__C_ (on hold)"
           },
           {
             "type": "basic",
@@ -3932,7 +4079,7 @@
                 "key_code": "left_command"
               }
             ],
-            "description": "[←⌥←⌃←⇧]+[⇪]        →    vmC___ (on hold)"
+            "description": "[←⌥←⌃←⇧⇪]        →    vmC___ (on hold)"
           },
           {
             "type": "basic",
@@ -3951,7 +4098,7 @@
                 "key_code": "left_shift"
               }
             ],
-            "description": "[←⌘←⌥←⌃]+[⇪]        →    vm___S (on hold)"
+            "description": "[←⌘←⌥←⌃⇪]        →    vm___S (on hold)"
           },
           {
             "type": "basic",
@@ -3971,7 +4118,7 @@
                 "key_code": "vk_none"
               }
             ],
-            "description": "[←⌘←⌥←⌃←⇧]+[⇪]        →    vm____ (on hold)"
+            "description": "[←⌘←⌥←⌃←⇧⇪]        →    vm____ (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3999,7 +4146,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[HOME]        →    Select to line start (on tap)",
+        "ruleDescription": "[←⇧HOME]        →    Select to line start (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4047,7 +4194,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[END]        →    Select to line end (on tap)",
+        "ruleDescription": "[←⇧END]        →    Select to line end (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4126,7 +4273,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[;]        →    Open System Settings (on tap)",
+        "ruleDescription": "[vmCOCS;]        →    Open System Settings (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4182,7 +4329,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[vmCOCS␛]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4866,7 +5013,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
+        "ruleDescription": "[←⌘/]        →    Copy document name and elevate privileges (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4900,7 +5047,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]        →    Quick fill password (on tap)",
+        "ruleDescription": "[←⌘/]        →    Quick fill password (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5051,7 +5198,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[→]        →    Zen command H remap (on tap)",
+        "ruleDescription": "[←⌘←⇧→ARROW]        →    Zen command H remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5087,7 +5234,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[←]        →    Zen command U remap (on tap)",
+        "ruleDescription": "[←⌘←⇧←ARROW]        →    Zen command U remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",

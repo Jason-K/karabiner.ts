@@ -24,8 +24,4 @@ export { PATHS } from "./paths";
 export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./profiles";
 export { raycastRegistry } from "./raycast";
 export { TIMINGS } from "./timings";
-export {
-    DESCRIPTION_SEPARATOR,
-    KEY_LABEL_OVERRIDES,
-    MODIFIER_SYMBOLS
-} from "./ui-labels";
+export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./ui-labels";

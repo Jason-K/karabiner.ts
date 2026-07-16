@@ -269,7 +269,7 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse rules factory builds declarative per-device mappings", () => {
   const rules = toRules(buildMouseRules(mouseDeviceMappings));
-  assert.equal(rules.length, 10);
+  assert.equal(rules.length, 11);
   assert.equal(
     rules[0]?.description,
     "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
@@ -283,7 +283,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     rules[1]?.description,
     "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)",
   );
-  assert.equal(rules[1]?.manipulators.length, 2);
+  assert.equal(rules[1]?.manipulators.length, 3);
   const wheelLeftOverride: any = rules[1]?.manipulators[0];
   assert.deepEqual(rules[1]?.manipulators[0]?.from, {
     pointing_button: "button7",
@@ -292,6 +292,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
       {
         key_code: "left_arrow",
         modifiers: ["left_command", "left_control", "left_shift"],
+        repeat: false,
       },
     ]);
   assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
@@ -322,9 +323,9 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     },
   ]);
   assert.deepEqual(
-    rules[1]?.manipulators[1]?.conditions?.find(
-      (condition: any) => condition?.type === "variable_unless",
-    ),
+    rules[1]?.manipulators
+      ?.flatMap((manipulator: any) => manipulator?.conditions ?? [])
+      ?.find((condition: any) => condition?.type === "variable_unless"),
     {
       type: "variable_unless",
       name: "wheel_down",
@@ -345,6 +346,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     {
       key_code: "right_arrow",
       modifiers: ["left_command", "left_control", "left_shift"],
+      repeat: false,
     },
   ]);
 });

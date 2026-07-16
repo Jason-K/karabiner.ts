@@ -1,6 +1,6 @@
 export const DESCRIPTION_SEPARATOR = "        →    ";
 
-export const KEY_LABEL_OVERRIDES: Record<string, string> = {
+export const KEY_SYMBOLS: Record<string, string> = {
   backslash: "\\",
   caps_lock: "⇪",
   close_bracket: "]",
@@ -42,9 +42,6 @@ export const KEY_LABEL_OVERRIDES: Record<string, string> = {
   spacebar: "_",
   tab: "⇥",
   up_arrow: "↑",
-};
-
-export const MODIFIER_SYMBOLS: Record<string, string> = {
   alt: "⌥",
   command: "⌘",
   cmd: "⌘",

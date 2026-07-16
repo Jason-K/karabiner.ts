@@ -1,10 +1,6 @@
 export type RuleTrigger = 'tap' | 'hold' | 'multi-tap' | 'simultaneous';
 
-import {
-    DESCRIPTION_SEPARATOR,
-    KEY_LABEL_OVERRIDES,
-    MODIFIER_SYMBOLS,
-} from "../data";
+import { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "../data";
 import {
   getModComboAliasCanonicalKey,
   isModComboAlias,
@@ -30,13 +26,13 @@ function isModifierToken(token: string): boolean {
     return true;
   }
 
-  if (MODIFIER_SYMBOLS[normalized]) {
+  if (KEY_SYMBOLS[normalized]) {
     return true;
   }
 
   if (normalized.startsWith('left_') || normalized.startsWith('right_')) {
     const base = normalized.replace(/^(left|right)_/, '');
-    return Boolean(MODIFIER_SYMBOLS[base]);
+    return Boolean(KEY_SYMBOLS[base]);
   }
 
   return false;
@@ -63,12 +59,12 @@ function modifierTokenToSymbols(token: string): string {
     base = normalized.slice("right_".length);
   }
 
-  return `${sidePrefix}${MODIFIER_SYMBOLS[base] ?? base.toUpperCase()}`;
+  return `${sidePrefix}${KEY_SYMBOLS[base] ?? base.toUpperCase()}`;
 }
 
 function keyTokenToLabel(token: string): string {
   const normalized = normalizeToken(token);
-  const override = KEY_LABEL_OVERRIDES[normalized];
+  const override = KEY_SYMBOLS[normalized];
   if (override) {
     return override;
   }

@@ -63,6 +63,17 @@ export type MouseDoubleTapMapping = {
   thresholdMs?: number;
 };
 
+export type mouseRemap = {
+  type: "mouseRemap";
+  description: string;
+  from: string;
+  to: ToEvent[];
+  eventOptions?: {
+    halt?: boolean;
+    repeat?: boolean;
+  };
+};
+
 export type MouseMapping =
   | MouseTapHoldMapping
   | MouseDoubleTapMapping

@@ -51,20 +51,20 @@ export function resolveMouseButton(
 }
 
 type MouseTapHoldOpts = {
+description?: string;
   button: MouseButtonRef;
   buttonMap?: MouseButtonMap;
+  variable?: string;
   alone?: ToEvent[];
-  hold?: ToEvent[];
   eventOptions?: {
     halt?: boolean;
     repeat?: boolean;
   };
-  variable?: string;
-  timeoutMs?: number;
-  thresholdMs?: number;
-  description?: string;
+  hold?: ToEvent[];
   cancel?: ToEvent[];
   invoked?: ToEvent[];
+  timeoutMs?: number;
+  thresholdMs?: number;
   appOverrides?: Array<{
     app: string;
     unless?: boolean;
@@ -78,6 +78,7 @@ type MouseTapHoldOpts = {
 };
 
 type MouseVarTapTapHoldOpts = {
+  description?: string;
   button: MouseButtonRef;
   buttonMap?: MouseButtonMap;
   firstVar: string;
@@ -86,7 +87,6 @@ type MouseVarTapTapHoldOpts = {
   tapTapEvents?: ToEvent[];
   tapTapHoldEvents?: ToEvent[];
   thresholdMs?: number;
-  description?: string;
   allowPassThrough?: boolean;
 };
 
