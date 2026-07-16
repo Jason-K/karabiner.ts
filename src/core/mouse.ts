@@ -83,6 +83,7 @@ type MouseVarTapTapHoldOpts = {
   buttonMap?: MouseButtonMap;
   firstVar: string;
   aloneEvents?: ToEvent[];
+  deferredAloneEvents?: ToEvent[];
   holdEvents?: ToEvent[];
   tapTapEvents?: ToEvent[];
   tapTapHoldEvents?: ToEvent[];

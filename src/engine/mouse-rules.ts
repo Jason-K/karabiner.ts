@@ -8,8 +8,8 @@ import type {
   MouseCondition,
   MouseDeviceConfig,
   MouseDoubleTapMapping,
-  mouseRemap,
   MouseMapping,
+  mouseRemap,
   MouseSimultaneousMapping,
   MouseTapHoldMapping,
 } from "../data/mouse";
@@ -73,8 +73,8 @@ function buildSimultaneousManipulators(
 function overrideCondition(condition: MouseCondition): any {
   if ("app" in condition) {
     return condition.unless
-      ? ifApp(condition.app).unless()
-      : ifApp(condition.app);
+      ? ifApp(condition.app).unless().build()
+      : ifApp(condition.app).build();
   }
   return {
     type: condition.match === "if" ? "variable_if" : "variable_unless",
@@ -149,6 +149,15 @@ function buildTapHoldManipulators(
     manipulators.unshift(manipulator),
   );
 
+  if (mapping.when?.length) {
+    manipulators.forEach((manipulator: any) => {
+      manipulator.conditions = manipulator.conditions ?? [];
+      mapping.when
+        .map(overrideCondition)
+        .forEach((condition) => manipulator.conditions.push(condition));
+    });
+  }
+
   return manipulators;
 }
 
@@ -156,17 +165,51 @@ function buildDoubleTapManipulators(
   device: MouseDeviceConfig,
   mapping: MouseDoubleTapMapping,
 ) {
-  return mouseVarTapTapHold({
-    button: mapping.button,
-    buttonMap: device.buttonMap,
-    firstVar: mapping.firstVar,
-    aloneEvents: mapping.aloneEvents,
-    holdEvents: mapping.holdEvents,
-    tapTapEvents: mapping.tapTapEvents,
-    tapTapHoldEvents: mapping.tapTapHoldEvents,
-    allowPassThrough: mapping.allowPassThrough,
-    thresholdMs: mapping.thresholdMs,
-  });
+  const buildVariant = (variant?: {
+    when?: MouseCondition[];
+    aloneEvents?: any[];
+    deferredAloneEvents?: any[];
+    holdEvents?: any[];
+    tapTapEvents?: any[];
+    tapTapHoldEvents?: any[];
+    allowPassThrough?: boolean;
+    thresholdMs?: number;
+  }) => {
+    const manipulators = mouseVarTapTapHold({
+      button: mapping.button,
+      buttonMap: device.buttonMap,
+      firstVar: mapping.firstVar,
+      aloneEvents: variant?.aloneEvents ?? mapping.aloneEvents,
+      deferredAloneEvents:
+        variant?.deferredAloneEvents ?? mapping.deferredAloneEvents,
+      holdEvents: variant?.holdEvents ?? mapping.holdEvents,
+      tapTapEvents: variant?.tapTapEvents ?? mapping.tapTapEvents,
+      tapTapHoldEvents: variant?.tapTapHoldEvents ?? mapping.tapTapHoldEvents,
+      allowPassThrough: variant?.allowPassThrough ?? mapping.allowPassThrough,
+      thresholdMs: variant?.thresholdMs ?? mapping.thresholdMs,
+    });
+
+    const combinedConditions = [
+      ...(mapping.when ?? []),
+      ...(variant?.when ?? []),
+    ];
+    if (combinedConditions.length) {
+      manipulators.forEach((manipulator: any) => {
+        manipulator.conditions = manipulator.conditions ?? [];
+        combinedConditions
+          .map(overrideCondition)
+          .forEach((condition) => manipulator.conditions.push(condition));
+      });
+    }
+
+    return manipulators;
+  };
+
+  if (mapping.overrides?.length) {
+    return mapping.overrides.flatMap((variant) => buildVariant(variant));
+  }
+
+  return buildVariant();
 }
 
 function buildManipulatorsForMapping(

@@ -55,3 +55,30 @@ test("mouseVarTapTapHold can pass through original mouse button", () => {
     pointing_button: "button6",
   });
 });
+
+test("mouseVarTapTapHold can defer single-click events until timeout", () => {
+  const manipulators = mouseVarTapTapHold({
+    button: "left",
+    firstVar: "mouse_left_first_tap",
+    deferredAloneEvents: [{ key_code: "f10" }],
+    tapTapEvents: [{ key_code: "f11" }],
+  });
+
+  const firstTap = manipulators[1] as any;
+  assert.equal(
+    firstTap.to_if_alone?.[0]?.set_variable?.name,
+    "mouse_left_first_tap",
+  );
+  assert.equal(firstTap.to_if_alone?.[0]?.set_variable?.value, 1);
+  assert.deepEqual(firstTap.to_delayed_action?.to_if_invoked?.[0], {
+    key_code: "f10",
+  });
+  assert.equal(
+    firstTap.to_delayed_action?.to_if_invoked?.[1]?.set_variable?.name,
+    "mouse_left_first_tap",
+  );
+  assert.equal(
+    firstTap.to_delayed_action?.to_if_invoked?.[1]?.set_variable?.value,
+    0,
+  );
+});

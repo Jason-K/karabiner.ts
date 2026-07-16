@@ -276,7 +276,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
     DEVICE_IDENTIFIERS.logitechG502X,
   );
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 11);
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 12);
 
   const backMapping = mouseDeviceMappings[0]?.mappings.find(
     (m) => m.type === "tapHold" && m.button === "back",

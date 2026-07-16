@@ -2898,11 +2898,15 @@
             ],
             "to_if_held_down": [
               {
-                "pointing_button": "button3",
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
+              {
+                "key_code": "left_control",
                 "modifiers": [
-                  "left_option"
-                ],
-                "repeat": false
+                  "left_option",
+                  "left_shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -3418,7 +3422,7 @@
             },
             "to": [
               {
-                "key_code": "open_bracket",
+                "key_code": "close_bracket",
                 "modifiers": [
                   "left_command",
                   "left_shift"
@@ -3512,7 +3516,7 @@
             },
             "to": [
               {
-                "key_code": "close_bracket",
+                "key_code": "open_bracket",
                 "modifiers": [
                   "left_command",
                   "left_shift"
@@ -3606,7 +3610,7 @@
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 0
+              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to": [
               {
@@ -3624,9 +3628,10 @@
                 }
               }
             ],
-            "to_if_held_down": [
+            "to_if_alone": [
               {
-                "from_event": true
+                "pointing_button": "button2",
+                "repeat": false
               }
             ],
             "to_delayed_action": {
@@ -3651,33 +3656,34 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        "ruleDescription": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button1"
-            },
-            "to": [
-              {
-                "pointing_button": "button1",
-                "modifiers": [
-                  "left_option"
-                ],
-                "repeat": false
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
               }
-            ],
+            },
             "conditions": [
               {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen"
-                ]
+                "type": "variable_if",
+                "name": "left_with_right_first_tap",
+                "value": 1
               },
               {
                 "type": "variable_if",
                 "name": "right_button_pressed",
                 "value": 1
+              },
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
               },
               {
                 "type": "device_if",
@@ -3689,8 +3695,322 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)"
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "to": [],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              },
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            }
           },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400,
+              "basic.to_if_alone_timeout_milliseconds": 400
+            },
+            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "pointing_button": "button1",
+                  "modifiers": [
+                    "left_option"
+                  ],
+                  "repeat": false
+                },
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "left_with_right_first_tap",
+                "value": 1
+              },
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "to": [],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              },
+              {
+                "pointing_button": "button1",
+                "hold_down_milliseconds": 80
+              },
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400,
+              "basic.to_if_alone_timeout_milliseconds": 400
+            },
+            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "left_with_right_first_tap",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "pointing_button": "button1",
+                  "hold_down_milliseconds": 80
+                },
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                },
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "left_with_right_first_tap",
+                    "value": 0
+                  }
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -3726,6 +4046,11 @@
               "to_if_canceled": []
             },
             "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "right_button_pressed",
+                "value": 1
+              },
               {
                 "type": "device_if",
                 "identifiers": [

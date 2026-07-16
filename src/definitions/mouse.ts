@@ -19,6 +19,18 @@ const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
 const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
   rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
+const MOVE_WINDOW_TO_NEXT_DISPLAY = [
+  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+  {
+    shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
+  },
+];
+
+const MAXIMIZE_WINDOW_UNDER_CURSOR = [
+  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+  ...rectangleMaxOrRestoreEvents(),
+];
+
 export const mouseDeviceMappings: MouseDeviceConfig[] = [
   {
     key: "logitech_g502_x",
@@ -37,18 +49,18 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           },
         ],
         hold: [
-          {
-            // activate BetterStage radial menu
-            pointing_button: "button3",
-            modifiers: ["left_option"],
-            repeat: false,
-          },
-          // activate Rectangle Pro free movement
-          //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          // activate BetterStage radial menu
           //   {
-          //     key_code: "left_control",
-          //     modifiers: ["left_option", "left_shift"],
+          //     pointing_button: "button3",
+          //     modifiers: ["left_option"],
+          //     repeat: false,
           //   },
+          // activate Rectangle Pro free movement
+          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          {
+            key_code: "left_control",
+            modifiers: ["left_option", "left_shift"],
+          },
         ],
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
@@ -202,14 +214,14 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         hold: [{ key_code: "tab", modifiers: ["left_command"] }],
         overrides: [
           {
-            // ZEN - Rbutton + Back = CMD+SHIFT+[ (switch to next tab)
+            // ZEN - Rbutton + Back = CMD+SHIFT+] (switch to next tab)
             when: [
               { app: appRegistry.zen },
               { variable: "right_button_pressed", match: "if", value: 1 },
             ],
             to: [
               {
-                key_code: "open_bracket",
+                key_code: "close_bracket",
                 modifiers: ["left_command", "left_shift"],
                 repeat: true,
               },
@@ -234,14 +246,14 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         ],
         overrides: [
           {
-            // ZEN - Rbutton + Forward = CMD+SHIFT+] (switch to previous tab)
+            // ZEN - Rbutton + Forward = CMD+SHIFT+[ (switch to previous tab)
             when: [
               { app: appRegistry.zen },
               { variable: "right_button_pressed", match: "if", value: 1 },
             ],
             to: [
               {
-                key_code: "close_bracket",
+                key_code: "open_bracket",
                 modifiers: ["left_command", "left_shift"],
                 repeat: true,
               },
@@ -257,26 +269,24 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         button: "right",
         description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
         variable: "right_button_pressed",
-        alone: [],
-        hold: [toFromEvent()],
-        thresholdMs: 0,
+        alone: [{ pointing_button: "button2", repeat: false }],
+        hold: [],
+        thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
       {
-        type: "tapHold",
+        type: "doubleTap",
         button: "left",
-        description: "[LBUTTON] Left click (tap) / Zen chord modifier (hold)",
-        variable: "left_button_pressed",
-        alone: [],
-        hold: [toFromEvent()],
+        description:
+          "[RBUTTON+LBUTTON] single action by app / double next display",
+        firstVar: "left_with_right_first_tap",
+        when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
+        tapTapEvents: MOVE_WINDOW_TO_NEXT_DISPLAY,
+        thresholdMs: TIMINGS.timeoutDoubleClickMs,
         overrides: [
           {
-            // ZEN - Lbutton + Rbutton = Open in pop-up (option+click)
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-            ],
-            to: [
+            when: [{ app: appRegistry.zen }],
+            deferredAloneEvents: [
               {
                 pointing_button: "button1",
                 modifiers: ["left_option"],
@@ -284,7 +294,20 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
               },
             ],
           },
+          {
+            when: [{ app: appRegistry.zen, unless: true }],
+            deferredAloneEvents: MAXIMIZE_WINDOW_UNDER_CURSOR,
+          },
         ],
+      },
+      {
+        type: "tapHold",
+        button: "left",
+        description: "[LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        when: [{ variable: "right_button_pressed", match: "unless", value: 1 }],
+        variable: "left_button_pressed",
+        alone: [],
+        hold: [toFromEvent()],
         thresholdMs: 0,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },

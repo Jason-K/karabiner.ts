@@ -24,6 +24,10 @@ export type MouseTapHoldMapping = {
   type: "tapHold";
   button: string;
   description: string;
+  /**
+   * Optional conditions applied to this tapHold mapping.
+   */
+  when?: MouseCondition[];
   variable?: string;
   alone?: ToEvent[];
   hold?: ToEvent[];
@@ -55,12 +59,35 @@ export type MouseDoubleTapMapping = {
   button: string;
   description: string;
   firstVar: string;
+  /**
+   * Optional conditions applied to both first/second-tap manipulators.
+   */
+  when?: MouseCondition[];
   aloneEvents?: ToEvent[];
+  /**
+   * Emit single-click behavior only after the double-tap window expires.
+   * This prevents single-click actions from firing when a true double-click occurs.
+   */
+  deferredAloneEvents?: ToEvent[];
   holdEvents?: ToEvent[];
   tapTapEvents?: ToEvent[];
   tapTapHoldEvents?: ToEvent[];
   allowPassThrough?: boolean;
   thresholdMs?: number;
+  /**
+   * Conditional branches for per-app/per-variable behavior while keeping one
+   * declarative doubleTap mapping entry.
+   */
+  overrides?: Array<{
+    when: MouseCondition[];
+    aloneEvents?: ToEvent[];
+    deferredAloneEvents?: ToEvent[];
+    holdEvents?: ToEvent[];
+    tapTapEvents?: ToEvent[];
+    tapTapHoldEvents?: ToEvent[];
+    allowPassThrough?: boolean;
+    thresholdMs?: number;
+  }>;
 };
 
 export type mouseRemap = {

@@ -269,7 +269,7 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse rules factory builds declarative per-device mappings", () => {
   const rules = toRules(buildMouseRules(mouseDeviceMappings));
-  assert.equal(rules.length, 11);
+  assert.equal(rules.length, 12);
   assert.equal(
     rules[0]?.description,
     "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",

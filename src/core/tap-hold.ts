@@ -168,6 +168,7 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, "alone" | "hold"> {
   key: string;
   firstVar: string;
   aloneEvents?: ToEvent[];
+  deferredAloneEvents?: ToEvent[];
   holdEvents?: ToEvent[];
   tapTapEvents?: ToEvent[];
   tapTapHoldEvents?: ToEvent[];
@@ -180,6 +181,7 @@ export function varTapTapHoldFrom({
   from,
   firstVar,
   aloneEvents,
+  deferredAloneEvents,
   holdEvents,
   tapTapEvents,
   tapTapHoldEvents,
@@ -221,6 +223,13 @@ export function varTapTapHoldFrom({
 
   let firstTap: BasicManipulator;
 
+  const firstTapAloneEvents = deferredAloneEvents
+    ? [toSetVar(firstVar, 1)]
+    : [toSetVar(firstVar, 1), ...(aloneEvents ?? [])];
+  const firstTapInvokedEvents = deferredAloneEvents
+    ? [...deferredAloneEvents, toSetVar(firstVar, 0)]
+    : [toSetVar(firstVar, 0)];
+
   if (allowPassThrough) {
     firstTap = {
       type: "basic",
@@ -235,10 +244,10 @@ export function varTapTapHoldFrom({
       },
       description: description || `${firstVar} first tap (pass-through)`,
       to: [toSetVar(firstVar, 1), ...(passThrough ? [passThrough] : [])],
-      to_if_alone: [toSetVar(firstVar, 1), ...(aloneEvents ?? [])],
+      to_if_alone: firstTapAloneEvents,
       to_if_held_down: [toSetVar(firstVar, 0), ...(holdEvents ?? [])],
       to_delayed_action: {
-        to_if_invoked: [toSetVar(firstVar, 0)],
+        to_if_invoked: firstTapInvokedEvents,
         to_if_canceled: [toSetVar(firstVar, 0)],
       },
     } as any;
@@ -256,10 +265,10 @@ export function varTapTapHoldFrom({
       },
       description: description || `${firstVar} first tap (tap / tap-hold)`,
       to: [toSetVar(firstVar, 1)],
-      to_if_alone: [toSetVar(firstVar, 1), ...(aloneEvents ?? [])],
+      to_if_alone: firstTapAloneEvents,
       to_if_held_down: [toSetVar(firstVar, 0), ...(holdEvents ?? [])],
       to_delayed_action: {
-        to_if_invoked: [toSetVar(firstVar, 0)],
+        to_if_invoked: firstTapInvokedEvents,
         to_if_canceled: [toSetVar(firstVar, 0)],
       },
     } as any;
@@ -275,6 +284,7 @@ export function varTapTapHold({
   key,
   firstVar,
   aloneEvents,
+  deferredAloneEvents,
   holdEvents,
   tapTapEvents,
   tapTapHoldEvents,
@@ -291,6 +301,7 @@ export function varTapTapHold({
       : undefined,
     firstVar,
     aloneEvents,
+    deferredAloneEvents,
     holdEvents,
     tapTapEvents,
     tapTapHoldEvents,
