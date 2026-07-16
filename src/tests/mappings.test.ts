@@ -5,12 +5,12 @@ import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../data";
 import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { folderRegistry } from "../data/folders";
-import { ACTIVATE_WINDOW_UNDER_CURSOR_EVENT } from "../data/mouse";
+import { WIN_ACTIVATE_UNDER_CURSOR } from "../data/mouse";
 import { raycastRegistry } from "../data/raycast";
 import {
-  rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
+  rectangleOrientationBasedCommand,
 } from "../data/rectangle";
 import { tapHoldMappings } from "../definitions";
 import {
@@ -26,10 +26,7 @@ import {
 } from "../definitions/system";
 
 test("rectangle focused-window orientation command uses focused display", () => {
-  const command = rectangleActionByFocusedWindowOrientationCommand(
-    "left-half",
-    "top-half",
-  );
+  const command = rectangleOrientationBasedCommand("left-half", "top-half");
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /win and win:screen\(\)/);
@@ -203,10 +200,7 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
   assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].alone, [
     {
       type: "shell",
-      command: rectangleActionByFocusedWindowOrientationCommand(
-        "left-half",
-        "top-half",
-      ),
+      command: rectangleOrientationBasedCommand("left-half", "top-half"),
     },
   ]);
   assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].hold, [
@@ -295,7 +289,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
         ],
         to: [
           {
-            key_code: "open_bracket",
+            key_code: "close_bracket",
             modifiers: ["left_command", "left_shift"],
             repeat: true,
           },
@@ -318,11 +312,10 @@ test("mouse device mappings are declarative and device-scoped", () => {
       },
     ],
     hold: [
-      //   ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+      //   WIN_ACTIVATE_UNDER_CURSOR,
       {
-        modifiers: ["left_option"],
-        pointing_button: "button3",
-        repeat: false,
+        key_code: "left_control",
+        modifiers: ["left_option", "left_shift"],
       },
     ],
     thresholdMs: 400,
@@ -334,9 +327,9 @@ test("mouse device mappings are declarative and device-scoped", () => {
     button: "wheel_left",
     description: "[WHEEL LEFT] Rectangle fill-left (hold)",
     hold: [
-      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+      WIN_ACTIVATE_UNDER_CURSOR,
       {
-        shell_command: rectangleActionByFocusedWindowOrientationCommand(
+        shell_command: rectangleOrientationBasedCommand(
           "fill-left",
           "top-half",
         ),
@@ -391,7 +384,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       },
     ],
     hold: [
-      ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+      WIN_ACTIVATE_UNDER_CURSOR,
       {
         shell_command: rectangleMaxOrRestoreCommand(),
       },
@@ -421,7 +414,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   const leftBackHold =
     leftBackMapping?.type === "tapHold" ? leftBackMapping.hold : undefined;
   assert.deepEqual(leftBackHold, [
-    ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+    WIN_ACTIVATE_UNDER_CURSOR,
     {
       shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
     },

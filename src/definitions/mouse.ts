@@ -2,34 +2,19 @@ import { toFromEvent } from "../core/beta";
 import { g502xButtons } from "../core/mouse";
 import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
 import {
-  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+  WIN_ACTIVATE_UNDER_CURSOR,
   type MouseDeviceConfig,
 } from "../data/mouse";
 import {
-  rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreEvents,
+  WIN_LEFT_OR_TOP,
+  WIN_MAX_OR_RESTORE,
+  WIN_NEXT_DISPLAY,
+  WIN_RIGHT_OR_BOTTOM,
 } from "../data/rectangle";
 
 export { buildMouseDeviceRules, buildMouseRules } from "../engine/mouse-rules";
-
-const RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("fill-left", "top-half");
-
-const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
-
-const MOVE_WINDOW_TO_NEXT_DISPLAY = [
-  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-  {
-    shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
-  },
-];
-
-const MAXIMIZE_WINDOW_UNDER_CURSOR = [
-  ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-  ...rectangleMaxOrRestoreEvents(),
-];
 
 export const mouseDeviceMappings: MouseDeviceConfig[] = [
   {
@@ -55,7 +40,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           // OPTION 1: activate BetterStage radial menu
           // { pointing_button: "button3", modifiers: ["left_option"], repeat: false, },
           // OPTION 2: activate Rectangle Pro free movement
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          WIN_ACTIVATE_UNDER_CURSOR,
           {
             key_code: "left_control",
             modifiers: ["left_option", "left_shift"],
@@ -67,6 +52,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             to: [
               {
                 key_code: "down_arrow",
+                modifiers: ["left_control"],
+                repeat: false,
               },
             ],
           },
@@ -81,12 +68,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "wheel_left",
         description: "[WHEEL LEFT] Rectangle fill-left (hold)",
-        hold: [
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-          {
-            shell_command: RECTANGLE_FILL_LEFT_OR_TOP_HALF_BY_ORIENTATION,
-          },
-        ],
+        hold: [...WIN_LEFT_OR_TOP],
         overrides: [
           {
             when: [{ variable: "wheel_down", match: "if", value: 1 }],
@@ -117,12 +99,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "wheel_right",
         description: "[WHEEL RIGHT] Rectangle fill-right (hold)",
-        hold: [
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-          {
-            shell_command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
-          },
-        ],
+        hold: [...WIN_RIGHT_OR_BOTTOM],
         overrides: [
           {
             when: [
@@ -166,10 +143,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             ],
           },
         ],
-        hold: [
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
-          ...rectangleMaxOrRestoreEvents(),
-        ],
+        hold: [WIN_ACTIVATE_UNDER_CURSOR, ...rectangleMaxOrRestoreEvents()],
         thresholdMs: TIMINGS.delayMouseHoldMs,
         timeoutMs: TIMINGS.delayMouseHoldMs,
       },
@@ -180,7 +154,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
           "[G7] Maximize window (tap) / Move window to next display (hold)",
         alone: rectangleMaxOrRestoreEvents(),
         hold: [
-          ACTIVATE_WINDOW_UNDER_CURSOR_EVENT,
+          WIN_ACTIVATE_UNDER_CURSOR,
           {
             shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
           },
@@ -322,7 +296,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
         // NOTE: the event to fire on first tap is handled in overrides in this case
         // Events to fire on double tap. This is the "double tap" action.
-        doubleTapEvents: MOVE_WINDOW_TO_NEXT_DISPLAY,
+        doubleTapEvents: WIN_NEXT_DISPLAY,
         thresholdMs: TIMINGS.timeoutDoubleClickMs,
         overrides: [
           {
@@ -351,7 +325,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
             // -------------------------------------------------------------
             when: [{ app: appRegistry.zen, unless: true }],
             // Rbutton + Lbutton (hold) = maximize window under cursor
-            delayedSingleTapEvents: MAXIMIZE_WINDOW_UNDER_CURSOR,
+            delayedSingleTapEvents: WIN_MAX_OR_RESTORE,
           },
         ],
       },

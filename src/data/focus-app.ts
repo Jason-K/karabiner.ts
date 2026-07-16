@@ -21,12 +21,4 @@ export const FOCUS_APP_BEHAVIORS: Partial<
       modifiers: ["command down"],
     },
   },
-  [appRegistry.antinoteLegacy]: {
-    appName: "Antinote",
-    activationDelaySeconds: 0.2,
-    createWindowShortcut: {
-      key: "n",
-      modifiers: ["command down"],
-    },
-  },
 };

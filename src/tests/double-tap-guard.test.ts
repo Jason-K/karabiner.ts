@@ -51,7 +51,7 @@ test("generateDoubleTapGuardRule adds ifApp condition when provided", () => {
       key: "d",
       modifiers: ["left_command"],
       description: "Delete note",
-      ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+      ifApp: [appRegistry.antinote],
     }),
   );
   assert.ok(

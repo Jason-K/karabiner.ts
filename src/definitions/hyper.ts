@@ -5,24 +5,15 @@ import {
 } from "../core/scripts";
 import { PATHS } from "../data";
 import {
-  rectangleActionByFocusedWindowOrientationCommand,
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
+  rectangleOrientationBasedCommand,
 } from "../data/rectangle";
 import type { TapHoldConfig } from "../engine";
 import {
   generateModifierLauncherRules,
   type ModifierLauncherMapping,
 } from "../engine/launcher-rules";
-
-const RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("left-half", "top-half");
-
-const RECTANGLE_RIGHT_OR_BOTTOM_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("right-half", "bottom-half");
-
-const RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION =
-  rectangleActionByFocusedWindowOrientationCommand("fill-right", "bottom-half");
 
 export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
@@ -156,7 +147,12 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   "vmCOCS+left_arrow": {
     description: "Rectangle fill-left / previous-display",
-    alone: [{ type: "shell", command: RECTANGLE_LEFT_OR_TOP_BY_ORIENTATION }],
+    alone: [
+      {
+        type: "shell",
+        command: rectangleOrientationBasedCommand("left-half", "top-half"),
+      },
+    ],
     hold: [
       {
         type: "url",
@@ -170,7 +166,7 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
     alone: [
       {
         type: "shell",
-        command: RECTANGLE_FILL_RIGHT_OR_BOTTOM_HALF_BY_ORIENTATION,
+        command: rectangleOrientationBasedCommand("right-half", "bottom-half"),
       },
     ],
     hold: [

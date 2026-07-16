@@ -1,6 +1,6 @@
 import { type PointingButton, type ToEvent } from "karabiner.ts";
 
-export const ACTIVATE_WINDOW_UNDER_CURSOR_EVENT: ToEvent = {
+export const WIN_ACTIVATE_UNDER_CURSOR: ToEvent = {
   pointing_button: "button1",
   hold_down_milliseconds: 80,
 };

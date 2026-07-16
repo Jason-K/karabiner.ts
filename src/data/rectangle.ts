@@ -1,4 +1,9 @@
 import type { ToEvent } from "karabiner.ts";
+import { WIN_ACTIVATE_UNDER_CURSOR } from "./mouse";
+
+function shellSingleQuote(value: string): string {
+  return `'${value.replace(/'/g, `"'"'`)}'`;
+}
 
 export const rectangleActions = [
   "almost-maximize",
@@ -118,11 +123,7 @@ export function rectangleActionUrl(action: RectangleAction): string {
   return `rectangle-pro://execute-action?name=${action}`;
 }
 
-function shellSingleQuote(value: string): string {
-  return `'${value.replace(/'/g, `"'"'`)}'`;
-}
-
-export function rectangleActionByFocusedWindowOrientationCommand(
+export function rectangleOrientationBasedCommand(
   landscapeAction: RectangleAction,
   portraitAction: RectangleAction,
 ): string {
@@ -139,16 +140,23 @@ export function rectangleActionByFocusedWindowOrientationCommand(
   return `/opt/homebrew/bin/hs -c ${shellSingleQuote(script)}`;
 }
 
-export function rectangleActionByFocusedWindowOrientationEvent(
+export function rectangleOrientationBasedEvent(
   landscapeAction: RectangleAction,
   portraitAction: RectangleAction,
 ): ToEvent {
   return {
-    shell_command: rectangleActionByFocusedWindowOrientationCommand(
+    shell_command: rectangleOrientationBasedCommand(
       landscapeAction,
       portraitAction,
     ),
   };
+}
+
+export function rectangleOrientationBasedEvents(
+  landscapeAction: RectangleAction,
+  portraitAction: RectangleAction,
+): ToEvent[] {
+  return [rectangleOrientationBasedEvent(landscapeAction, portraitAction)];
 }
 
 export function rectangleMaxOrRestoreCommand(): string {
@@ -179,3 +187,31 @@ export function rectangleMaxOrRestoreEvents(): ToEvent[] {
     },
   ];
 }
+
+export function rectangleNextDisplayEvents(): ToEvent[] {
+  return [
+    {
+      shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
+    },
+  ];
+}
+
+export const WIN_MAX_OR_RESTORE: ToEvent[] = [
+  WIN_ACTIVATE_UNDER_CURSOR,
+  ...rectangleMaxOrRestoreEvents(),
+];
+
+export const WIN_NEXT_DISPLAY: ToEvent[] = [
+  WIN_ACTIVATE_UNDER_CURSOR,
+  ...rectangleNextDisplayEvents(),
+];
+
+export const WIN_RIGHT_OR_BOTTOM: ToEvent[] = [
+  WIN_ACTIVATE_UNDER_CURSOR,
+  ...rectangleOrientationBasedEvents("fill-right", "bottom-half"),
+];
+
+export const WIN_LEFT_OR_TOP: ToEvent[] = [
+  WIN_ACTIVATE_UNDER_CURSOR,
+  ...rectangleOrientationBasedEvents("fill-left", "top-half"),
+];
