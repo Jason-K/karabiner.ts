@@ -1,9 +1,9 @@
-import { rule } from "karabiner.ts";
-import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
+import type { Rule } from "karabiner.ts";
+
+import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { tapHold } from "../core/tap-hold";
 import { resolveModComboAlias } from "../data/key-aliases";
-import { resolveActionToEvents } from "./action-resolver";
+import { defineBindings, type Binding, type Case } from "./binding";
 
 export type TapHoldConfig = {
   alone?: ActionSpec[];
@@ -55,54 +55,26 @@ function parseKeyWithModifiers(keyString: string): {
 export function generateTapHoldRules(
   tapHoldKeys: Record<string, TapHoldConfig>,
   suppressionVars: string[] = [],
-): any[] {
-
-  return Object.entries(tapHoldKeys).map(([keyString, config]) => {
+): Rule[] {
+  const bindings: Binding[] = Object.entries(tapHoldKeys).map(([keyString, config]) => {
     const { key, modifiers } = parseKeyWithModifiers(keyString);
-    const defaultAlone: ActionSpec[] = [
-      {
-        type: "key",
-        key,
-        modifiers: modifiers as ActionKeyModifier[],
-        options: { halt: true },
-      },
-    ];
-    const resolvedAlone = config.alone ?? defaultAlone;
-    const resolvedHold = config.hold ?? defaultAlone;
-
-    const manipulators = tapHold({
-      key,
-      alone: resolvedAlone.flatMap(resolveActionToEvents),
-      hold: resolvedHold.flatMap(resolveActionToEvents),
-      timeoutMs: config.timeoutMs,
-      thresholdMs: config.thresholdMs,
-      appOverrides: config.appOverrides?.map((override) => ({
-        ...override,
-        alone: override.alone?.flatMap(resolveActionToEvents),
-        hold: override.hold?.flatMap(resolveActionToEvents),
-        cancel: override.cancel?.flatMap(resolveActionToEvents),
-        invoked: override.invoked?.flatMap(resolveActionToEvents),
-      })),
-    }).build();
-
-    if (modifiers.length > 0) {
-      manipulators.forEach((m: any) => {
-        m.from.modifiers = m.from.modifiers || {};
-        m.from.modifiers.mandatory = modifiers;
-      });
+    const cases: Case[] = [];
+    if (config.alone) cases.push({ phase: "release", do: config.alone });
+    if (config.hold) cases.push({ phase: "hold", do: config.hold });
+    for (const ov of config.appOverrides ?? []) {
+      const conds = [{ app: ov.app, ...(ov.unless ? { unless: true } : {}) }];
+      if (ov.alone) cases.push({ phase: "release", conditions: conds, do: ov.alone });
+      if (ov.hold) cases.push({ phase: "hold", conditions: conds, do: ov.hold });
     }
-
-    if (suppressionVars.length > 0) {
-      manipulators.forEach((m: any) => {
-        m.conditions = m.conditions || [];
-        suppressionVars.forEach((name) => {
-          m.conditions.push({ type: "variable_unless", name, value: 1 });
-        });
-      });
-    }
-
-    return rule(
-      formatRuleDescription(keyString, config.description, "hold"),
-    ).manipulators(manipulators);
+    return {
+      description: formatRuleDescription(keyString, config.description, "hold"),
+      trigger: { keys: [key], modifiers },
+      timing: { aloneMs: config.timeoutMs, heldThresholdMs: config.thresholdMs },
+      cases,
+      ...(suppressionVars.length
+        ? { conditions: suppressionVars.map((v) => ({ var: v, equals: 1, unless: true })) }
+        : {}),
+    };
   });
+  return defineBindings(bindings);
 }

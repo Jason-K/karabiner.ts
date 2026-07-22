@@ -124,21 +124,43 @@ function resolveCases(cases: Case[], shared: Condition[] | undefined): ResolvedC
   }));
 }
 
+type CaseGroup = {
+  conditions: unknown[];
+  pressDo: ToEvent[];
+  releaseDo: ToEvent[];
+  holdDo: ToEvent[];
+  // Phase presence is tracked separately from event count so an explicit
+  // `{phase:"hold", do:[]}` (swallow hold) is distinguished from "no hold case"
+  // (fall back to the default-alone pass-through, matching tap-hold-rules).
+  hasRelease: boolean;
+  hasHold: boolean;
+};
+
 /** Group cases that share the same condition signature into one manipulator. */
-function groupByConditions(cases: ResolvedCase[]) {
-  const groups = new Map<
-    string,
-    { conditions: unknown[]; pressDo: ToEvent[]; releaseDo: ToEvent[]; holdDo: ToEvent[] }
-  >();
+function groupByConditions(cases: ResolvedCase[]): CaseGroup[] {
+  const groups = new Map<string, CaseGroup>();
   for (const c of cases) {
     const key = JSON.stringify(c.conditions);
     if (!groups.has(key)) {
-      groups.set(key, { conditions: c.conditions, pressDo: [], releaseDo: [], holdDo: [] });
+      groups.set(key, {
+        conditions: c.conditions,
+        pressDo: [],
+        releaseDo: [],
+        holdDo: [],
+        hasRelease: false,
+        hasHold: false,
+      });
     }
     const g = groups.get(key)!;
     if (c.phase === "press") g.pressDo.push(...c.do);
-    if (c.phase === "release") g.releaseDo.push(...c.do);
-    if (c.phase === "hold") g.holdDo.push(...c.do);
+    if (c.phase === "release") {
+      g.releaseDo.push(...c.do);
+      g.hasRelease = true;
+    }
+    if (c.phase === "hold") {
+      g.holdDo.push(...c.do);
+      g.hasHold = true;
+    }
   }
   return [...groups.values()];
 }
@@ -154,7 +176,7 @@ function buildManipulators(b: Binding): Manipulator[] {
   if (hasMultiTap) return buildMultiTap(b, resolved, isSim);
   if (isSim) return buildSimultaneousTapHold(b, resolved);
   return groupByConditions(resolved).flatMap((g) =>
-    g.releaseDo.length || g.holdDo.length ? buildTapHold(b, g) : buildRemap(b, g, false),
+    g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, false),
   );
 }
 
@@ -212,10 +234,7 @@ function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulato
   return manipulators;
 }
 
-function buildTapHold(
-  b: Binding,
-  g: { conditions: unknown[]; releaseDo: ToEvent[]; holdDo: ToEvent[] },
-): Manipulator | Manipulator[] {
+function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
   if ("pointer" in b.trigger) {
     throw new Error("tapHold pointer triggers are not supported (mouse is out of scope)");
   }
@@ -225,8 +244,13 @@ function buildTapHold(
   const defaultAlone: ActionSpec[] = [
     { type: "key", key, modifiers: mods as ActionKeyModifier[], options: { halt: true } },
   ];
-  const alone = g.releaseDo.length ? g.releaseDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
-  const hold = g.holdDo;
+  // Match tap-hold-rules: `resolvedAlone = config.alone ?? defaultAlone` and
+  // `resolvedHold = config.hold ?? defaultAlone`. An explicit phase with empty
+  // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing"
+  // and must not trigger the default-alone fallback. Phase presence is tracked
+  // in the CaseGroup (`hasRelease` / `hasHold`), not inferred from event count.
+  const alone = g.hasRelease ? g.releaseDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+  const hold = g.hasHold ? g.holdDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const manipulators = tapHold({
     key,
     alone,
