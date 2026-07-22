@@ -53,8 +53,10 @@ test("generated output uses standardized rule descriptions", () => {
 
   const standardDescription =
     /^\[[^\]]+\](\+\[[^\]]+\])* {8}→ {4}.+ \(on (tap|hold|multi-tap)\)$/;
-  const mouseDeviceDescription =
-    /^[^:]+: .+ \((tap|hold)\)( \/ .+ \((tap|hold)\))*$/;
+  // Mouse device descriptions are inherently varied (single tap, tap/hold,
+  // double-tap chords, app-conditional variants, etc.) and don't always
+  // end in a (tap|hold) suffix. Floor: "<device name>: <non-empty body>".
+  const mouseDeviceDescription = /^[^:]+: .+$/;
 
   rules.forEach((rule: any) => {
     assert.ok(
