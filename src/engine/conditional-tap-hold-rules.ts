@@ -1,15 +1,12 @@
-import { ifApp, withCondition } from "karabiner.ts";
+import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { tapHold } from "../core/tap-hold";
-import { resolveActionToEvents } from "./action-resolver";
-import { buildRulesWithVariantRules } from "./rule-factory-base";
-import type { AppCondition } from "./variant-types";
+import { defineBindings, type Binding } from "./binding";
 
 export type TapHoldVariantMapping = {
   description: string;
-  when?: AppCondition;
+  when?: { app: string; unless?: boolean };
   alone: ActionSpec[];
   hold: ActionSpec[];
   timeoutMs: number;
@@ -23,31 +20,20 @@ export type ConditionalTapHoldMapping = {
 
 export function generateConditionalTapHoldRules(
   mappings: ReadonlyArray<ConditionalTapHoldMapping>,
-) {
-  return buildRulesWithVariantRules({
-    mappings,
-    getVariants: ({ variants }) => variants,
-    toDescription: ({ key }, variant) =>
-      formatRuleDescription(key, variant.description, "hold"),
-    toManipulators: ({ key }, variant) => {
-      const manipulator = tapHold({
-        key,
-        alone: variant.alone.flatMap(resolveActionToEvents),
-        hold: variant.hold.flatMap(resolveActionToEvents),
-        timeoutMs: variant.timeoutMs,
-        thresholdMs: variant.thresholdMs,
-      }).build();
-
-      if (variant.when) {
-        const conditionedManipulator = withCondition(
-          variant.when.unless
-            ? ifApp(variant.when.app).unless()
-            : ifApp(variant.when.app),
-        )(manipulator).build();
-        return conditionedManipulator;
-      }
-
-      return manipulator;
-    },
-  });
+): Rule[] {
+  const bindings: Binding[] = mappings.flatMap(({ key, variants }) =>
+    variants.map<Binding>((v) => ({
+      description: formatRuleDescription(key, v.description, "hold"),
+      trigger: { keys: [key] },
+      timing: { aloneMs: v.timeoutMs, heldThresholdMs: v.thresholdMs },
+      ...(v.when
+        ? { conditions: [{ app: v.when.app, ...(v.when.unless ? { unless: true } : {}) }] }
+        : {}),
+      cases: [
+        { phase: "release", do: v.alone },
+        { phase: "hold", do: v.hold },
+      ],
+    })),
+  );
+  return defineBindings(bindings);
 }

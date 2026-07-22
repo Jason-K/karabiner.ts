@@ -193,11 +193,12 @@ function buildManipulators(b: Binding): Manipulator[] {
   // `multiTap: {allowPassThrough, mods}` even when no tap/hold cases are
   // provided — varTapTapHold still emits two manipulators in that case).
   const hasMultiTap = resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
-  const isSim = "keys" in b.trigger && b.trigger.keys.length > 1;
+  const isPointer = "pointer" in b.trigger;
+  const isSim = !isPointer && "keys" in b.trigger && b.trigger.keys.length > 1;
   if (hasMultiTap) return buildMultiTap(b, resolved, isSim);
   if (isSim) return buildSimultaneousTapHold(b, resolved);
   return groupByConditions(resolved).flatMap((g) =>
-    g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, false),
+    g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, isPointer),
   );
 }
 
@@ -309,9 +310,26 @@ function buildRemap(
   g: { conditions: unknown[]; pressDo: ToEvent[] },
   isPointer: boolean,
 ): Manipulator | Manipulator[] {
-  const builder = isPointer
-    ? map({ pointing_button: (b.trigger as { pointer: string }).pointer } as any)
-    : map(triggerToFrom(b.trigger));
+  if (isPointer) {
+    // Pointer manipulators are emitted as raw objects to match the legacy
+    // pointer-remap-rules shape exactly: {type, from, to, description, conditions?}.
+    // The `description` is duplicated at manipulator level (and at rule level)
+    // to preserve today's golden output byte-for-byte.
+    const pointer = b.trigger as { pointer: string; modifiers?: string[] };
+    const from: Record<string, unknown> = { pointing_button: pointer.pointer };
+    if (pointer.modifiers?.length) {
+      from.modifiers = { mandatory: pointer.modifiers };
+    }
+    const m: Record<string, unknown> = {
+      type: "basic",
+      from,
+      to: g.pressDo,
+      description: b.description,
+    };
+    if (g.conditions.length) m.conditions = g.conditions;
+    return m as unknown as Manipulator;
+  }
+  const builder = map(triggerToFrom(b.trigger));
   for (const cond of g.conditions) builder.condition(cond as any);
   // pressDo may be empty (noop) -> omit `to` (swallow). map().build() already omits empty `to`.
   for (const e of g.pressDo) builder.to(e);

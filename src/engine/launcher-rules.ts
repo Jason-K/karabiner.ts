@@ -1,9 +1,8 @@
-import { map } from "karabiner.ts";
+import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { resolveActionToEvents } from "./action-resolver";
-import { buildRulesFromMappings } from "./rule-factory-base";
+import { defineBindings, type Binding } from "./binding";
 
 export type ModifierLauncherMapping<TKey extends string = string> = {
   key: TKey;
@@ -19,24 +18,22 @@ type LauncherRuleConfig<TKey extends string> = {
 
 export function generateModifierLauncherRules<TKey extends string>(
   config: LauncherRuleConfig<TKey>,
-) {
+): Rule[] {
   const { triggerKey, triggerLabel, launchers } = config;
   const descriptionTrigger = triggerLabel ?? triggerKey;
+  const modifiers = Array.isArray(triggerKey) ? triggerKey : [triggerKey];
 
-  return buildRulesFromMappings({
-    mappings: launchers,
-    toDescription: ({ key, description }) =>
-      formatRuleDescription(
+  return defineBindings(
+    launchers.map<Binding>((l) => ({
+      description: formatRuleDescription(
         Array.isArray(descriptionTrigger)
-          ? [...descriptionTrigger, key]
-          : [descriptionTrigger, key],
-        description,
+          ? [...descriptionTrigger, l.key]
+          : [descriptionTrigger, l.key],
+        l.description,
         "tap",
       ),
-    toManipulators: ({ key, action }) => {
-      const builder = map(key as any, triggerKey as any);
-      resolveActionToEvents(action).forEach((e) => builder.to(e));
-      return builder.build();
-    },
-  });
+      trigger: { keys: [l.key], modifiers },
+      cases: [{ phase: "press", do: [l.action] }],
+    })),
+  );
 }
