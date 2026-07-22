@@ -11,6 +11,8 @@ import {
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
 import { tapHold } from "../core/tap-hold";
+import { varTapTapHold } from "../core/tap-hold";
+import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
@@ -148,12 +150,66 @@ export function defineBindings(bindings: Binding[]): Rule[] {
 function buildManipulators(b: Binding): Manipulator[] {
   const resolved = resolveCases(b.cases, b.conditions);
   const hasMultiTap = resolved.some((c) => c.tapCount >= 2);
-  if (hasMultiTap) {
-    throw new Error("multiTap arm not implemented until Task 6");
-  }
+  const isSim = "keys" in b.trigger && b.trigger.keys.length > 1;
+  if (hasMultiTap) return buildMultiTap(b, resolved, isSim);
+  if (isSim) return buildSimultaneousTapHold(b, resolved);
   return groupByConditions(resolved).flatMap((g) =>
-    g.releaseDo.length || g.holdDo.length ? buildTapHold(b, g) : buildRemap(b, g, "pointer" in b.trigger),
+    g.releaseDo.length || g.holdDo.length ? buildTapHold(b, g) : buildRemap(b, g, false),
   );
+}
+
+function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manipulator[] {
+  const key = isSim ? "" : (b.trigger as { keys: string[] }).keys[0]!;
+  const byPhase = (p: Phase, tapCount = 1) =>
+    cases.filter((c) => c.tapCount === tapCount && c.phase === p).flatMap((c) => c.do);
+  const threshold = b.timing?.aloneMs ?? b.timing?.heldThresholdMs;
+  if (isSim) {
+    const keys = (b.trigger as { keys: string[] }).keys;
+    const label = keys.join("");
+    return simultaneousMultiTap({
+      keys,
+      label,
+      alone: byPhase("release"),
+      hold: byPhase("hold"),
+      tapTap: cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
+      tapTapHold: cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
+      thresholdMs: threshold,
+      simultaneousThresholdMs: b.timing?.simultaneousMs,
+    });
+  }
+  const manipulators = varTapTapHold({
+    key,
+    firstTapPendingVar: `multi_tap_${key}`,
+    immediateSingleTapEvents: byPhase("release"),
+    holdEvents: byPhase("hold"),
+    doubleTapEvents: cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
+    doubleTapHoldEvents: cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
+    thresholdMs: threshold,
+    allowPassThrough: b.multiTap?.allowPassThrough,
+    mods: b.multiTap?.mods as any,
+  });
+  // attach hoisted/case conditions (multi-tap bindings are normally unconditional)
+  const conds = cases.flatMap((c) => c.conditions);
+  if (conds.length) {
+    manipulators.forEach((m: any) => {
+      m.conditions = m.conditions || [];
+      m.conditions.push(...conds);
+    });
+  }
+  return manipulators;
+}
+
+function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulator[] {
+  const keys = (b.trigger as { keys: string[] }).keys;
+  const byPhase = (p: Phase) => cases.filter((c) => c.phase === p).flatMap((c) => c.do);
+  const manipulators = simultaneousTapHold({
+    keys,
+    alone: byPhase("release"),
+    hold: byPhase("hold"),
+    thresholdMs: b.timing?.aloneMs,
+    simultaneousThresholdMs: b.timing?.simultaneousMs,
+  });
+  return manipulators;
 }
 
 function buildTapHold(

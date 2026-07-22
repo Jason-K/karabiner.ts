@@ -117,3 +117,23 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
     to_if_canceled: [{ halt: true, key_code: "a", modifiers: undefined }],
   });
 });
+
+test("defineBindings multiTap: escape tap/hold/doubleTapHold -> 2 var-dance manipulators", () => {
+  const rules = defineBindings([
+    {
+      description: "[␛]        →    Escape / Kill app (on multi-tap)",
+      trigger: { keys: ["escape"] },
+      timing: { aloneMs: 400, heldThresholdMs: 400 },
+      cases: [
+        { phase: "release", do: [{ type: "key", key: "escape" }] },
+        { phase: "hold", do: [{ type: "shell", command: "kill fg" }] },
+        { tapCount: 2, phase: "hold", do: [{ type: "shell", command: "kill all" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  // varTapTapHold emits [secondTap, firstTap]
+  assert.equal(built.manipulatorSources.length, 2);
+  const first = built.manipulatorSources.find((m: any) => m.to_if_alone?.some((e: any) => e.key_code === "escape"));
+  assert.ok(first, "first tap carries the escape alone action");
+});
