@@ -1,9 +1,7 @@
-import { rule } from "karabiner.ts";
-import type { SimultaneousOptions as KarSimultaneousOptions } from "karabiner.ts";
-import type { ActionSpec } from "../core/action-dsl";
+import type { Rule } from "karabiner.ts";
+
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
-import { resolveActionToEvents } from "./action-resolver";
+import { defineBindings, type Binding, type Case, type SimOrder } from "./binding";
 import type { TapHoldConfig } from "./tap-hold-rules";
 
 export type SimultaneousOptions = {
@@ -11,91 +9,74 @@ export type SimultaneousOptions = {
   key_down_order?: "insensitive" | "strict" | "strict_inverse";
   key_up_order?: "insensitive" | "strict" | "strict_inverse";
   key_up_when?: "any" | "all";
-  to_after_key_up?: ActionSpec[];
+  to_after_key_up?: import("../core/action-dsl").ActionSpec[];
 };
 
 export type SimultaneousConfig = {
   keys: string[];
   description: string;
-  alone?: ActionSpec[];
-  hold?: ActionSpec[];
-  tapTap?: ActionSpec[];
-  tapTapHold?: ActionSpec[];
+  alone?: import("../core/action-dsl").ActionSpec[];
+  hold?: import("../core/action-dsl").ActionSpec[];
+  tapTap?: import("../core/action-dsl").ActionSpec[];
+  tapTapHold?: import("../core/action-dsl").ActionSpec[];
   thresholdMs?: number;
   simultaneousOptions?: SimultaneousOptions;
   simultaneousThresholdMs?: number;
 };
 
-function resolveKarOptions(
-  simOpts: SimultaneousOptions | undefined,
-): KarSimultaneousOptions | undefined {
+/**
+ * Map the user-facing `SimultaneousOptions` (Karabiner JSON shape) to the
+ * `SimOrder` slice stored on a Binding's `trigger.order`. The `to_after_key_up`
+ * field is split off — it becomes `binding.afterKeyUp` (resolved ActionSpec[])
+ * in the adapter, then re-merged into `karOptions` by `binding.ts` when the
+ * simultaneous core primitive is called.
+ */
+function resolveOrder(simOpts: SimultaneousOptions | undefined): SimOrder | undefined {
   if (!simOpts) return undefined;
-  const resolvedAfterKeyUp = simOpts.to_after_key_up?.flatMap(resolveActionToEvents);
-  return {
-    detect_key_down_uninterruptedly: simOpts.detect_key_down_uninterruptedly,
-    key_down_order: simOpts.key_down_order,
-    key_up_order: simOpts.key_up_order,
-    key_up_when: simOpts.key_up_when,
-    ...(resolvedAfterKeyUp?.length ? { to_after_key_up: resolvedAfterKeyUp } : {}),
-  };
-}
-
-function injectSuppressionConditions(
-  manipulators: any[],
-  suppressionVars: string[],
-): void {
-  if (suppressionVars.length === 0) return;
-
-  manipulators.forEach((m: any) => {
-    m.conditions = m.conditions ?? [];
-    suppressionVars.forEach((name) => {
-      m.conditions.push({ type: "variable_unless", name, value: 1 });
-    });
-  });
+  const o: SimOrder = {};
+  if (simOpts.key_down_order) o.down = simOpts.key_down_order;
+  if (simOpts.key_up_order) o.up = simOpts.key_up_order;
+  if (simOpts.key_up_when) o.upWhen = simOpts.key_up_when;
+  if (simOpts.detect_key_down_uninterruptedly) o.detectUninterrupted = true;
+  return Object.keys(o).length ? o : undefined;
 }
 
 export function generateSimultaneousRules(
   mappings: Record<string, SimultaneousConfig>,
   suppressionVars: string[] = [],
   tapHoldKeys: Record<string, TapHoldConfig>,
-): any[] {
+): Rule[] {
   validateMappings(mappings, tapHoldKeys);
 
-  return Object.entries(mappings).map(([label, config]) => {
-    const karOptions = resolveKarOptions(config.simultaneousOptions);
-    const alone = config.alone?.flatMap(resolveActionToEvents);
-    const hold = config.hold?.flatMap(resolveActionToEvents);
-    const tapTap = config.tapTap?.flatMap(resolveActionToEvents);
-    const tapTapHold = config.tapTapHold?.flatMap(resolveActionToEvents);
-
-    const isMultiTap = tapTap !== undefined || tapTapHold !== undefined;
-    const manipulators: any[] = isMultiTap
-      ? simultaneousMultiTap({
-          keys: config.keys,
-          label,
-          alone,
-          hold,
-          tapTap,
-          tapTapHold,
-          thresholdMs: config.thresholdMs,
-          karOptions,
-          simultaneousThresholdMs: config.simultaneousThresholdMs,
-        })
-      : simultaneousTapHold({
-          keys: config.keys,
-          alone,
-          hold,
-          thresholdMs: config.thresholdMs,
-          karOptions,
-          simultaneousThresholdMs: config.simultaneousThresholdMs,
-        });
-
-    injectSuppressionConditions(manipulators, suppressionVars);
-
-    return rule(
-      formatRuleDescription(config.keys, config.description, "simultaneous"),
-    ).manipulators(manipulators);
+  const bindings: Binding[] = Object.entries(mappings).map(([, config]) => {
+    const cases: Case[] = [];
+    if (config.alone) cases.push({ phase: "release", do: config.alone });
+    if (config.hold) cases.push({ phase: "hold", do: config.hold });
+    if (config.tapTap) cases.push({ tapCount: 2, phase: "release", do: config.tapTap });
+    if (config.tapTapHold) cases.push({ tapCount: 2, phase: "hold", do: config.tapTapHold });
+    return {
+      description: formatRuleDescription(config.keys, config.description, "simultaneous"),
+      trigger: {
+        keys: config.keys,
+        ...(resolveOrder(config.simultaneousOptions)
+          ? { order: resolveOrder(config.simultaneousOptions) }
+          : {}),
+      },
+      timing: {
+        aloneMs: config.thresholdMs,
+        heldThresholdMs: config.thresholdMs,
+        simultaneousMs: config.simultaneousThresholdMs,
+      },
+      ...(suppressionVars.length
+        ? { conditions: suppressionVars.map((v) => ({ var: v, equals: 1, unless: true })) }
+        : {}),
+      ...(config.simultaneousOptions?.to_after_key_up
+        ? { afterKeyUp: config.simultaneousOptions.to_after_key_up }
+        : {}),
+      cases,
+    };
   });
+  return defineBindings(bindings);
 }
 
 function normalizedChordKey(keys: string[], keyDownOrder?: string): string {

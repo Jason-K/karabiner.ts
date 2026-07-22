@@ -90,6 +90,23 @@ function resolveSimOrder(order?: SimOrder): SimultaneousOptions | undefined {
   return Object.keys(o).length ? (o as SimultaneousOptions) : undefined;
 }
 
+/**
+ * Combine `trigger.order` (SimOrder) and `binding.afterKeyUp` (ActionSpec[])
+ * back into the single `SimultaneousOptions` blob the core simultaneous
+ * primitives expect. The adapter splits these when building a Binding; this
+ * merges them on the way out so `from.simultaneous_options` ends up with both
+ * `key_down_order`/etc. AND `to_after_key_up` exactly like the legacy generator.
+ */
+function resolveSimKarOptions(b: Binding): SimultaneousOptions | undefined {
+  const order = resolveSimOrder("order" in b.trigger ? b.trigger.order : undefined);
+  const afterKeyUp = b.afterKeyUp?.flatMap(resolveActionToEvents);
+  if (!order && !afterKeyUp?.length) return undefined;
+  return {
+    ...(order ?? {}),
+    ...(afterKeyUp?.length ? { to_after_key_up: afterKeyUp } : {}),
+  };
+}
+
 export function triggerToFrom(trigger: Trigger): FromEvent {
   if ("pointer" in trigger) {
     const from: Record<string, unknown> = { pointing_button: trigger.pointer };
@@ -192,7 +209,7 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
   if (isSim) {
     const keys = (b.trigger as { keys: string[] }).keys;
     const label = keys.join("");
-    return simultaneousMultiTap({
+    const manipulators = simultaneousMultiTap({
       keys,
       label,
       alone: byPhase("release"),
@@ -200,8 +217,11 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
       tapTap: cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
       tapTapHold: cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
       thresholdMs: threshold,
+      karOptions: resolveSimKarOptions(b),
       simultaneousThresholdMs: b.timing?.simultaneousMs,
     });
+    attachConditions(manipulators, cases);
+    return manipulators;
   }
   const manipulators = varTapTapHold({
     key,
@@ -214,14 +234,7 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
     allowPassThrough: b.multiTap?.allowPassThrough,
     mods: b.multiTap?.mods as any,
   });
-  // attach hoisted/case conditions (multi-tap bindings are normally unconditional)
-  const conds = cases.flatMap((c) => c.conditions);
-  if (conds.length) {
-    manipulators.forEach((m: any) => {
-      m.conditions = m.conditions || [];
-      m.conditions.push(...conds);
-    });
-  }
+  attachConditions(manipulators, cases);
   return manipulators;
 }
 
@@ -233,9 +246,21 @@ function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulato
     alone: byPhase("release"),
     hold: byPhase("hold"),
     thresholdMs: b.timing?.aloneMs,
+    karOptions: resolveSimKarOptions(b),
     simultaneousThresholdMs: b.timing?.simultaneousMs,
   });
+  attachConditions(manipulators, cases);
   return manipulators;
+}
+
+/** Push resolved case conditions onto every manipulator (hoisted + per-case). */
+function attachConditions(manipulators: Manipulator[], cases: ResolvedCase[]): void {
+  const conds = cases.flatMap((c) => c.conditions);
+  if (!conds.length) return;
+  manipulators.forEach((m: any) => {
+    m.conditions = m.conditions || [];
+    m.conditions.push(...conds);
+  });
 }
 
 function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
