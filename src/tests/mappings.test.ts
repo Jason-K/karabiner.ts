@@ -19,7 +19,6 @@ import {
 } from "../definitions/enter-equals";
 import { homeEndBindings } from "../definitions/home-end";
 import { mouseDeviceMappings } from "../definitions/mouse";
-import { rightOptionLaunchers } from "../definitions/right-option";
 import {
   disabledShortcuts,
   passwordsQuickFillMapping,
@@ -62,27 +61,6 @@ test("registries centralize app folder and integration refs", () => {
   assert.equal(folderRegistry.home, `${HOME_DIR}/`);
   assert.equal(raycastRegistry.recentFolders, "jason/recents/recentFolders");
   assert.equal(cleanShotRegistry.captureArea, "capture-area");
-});
-
-test("right-option launchers stay declarative", () => {
-  assert.equal(rightOptionLaunchers.length, 10);
-  assert.deepEqual(rightOptionLaunchers[0], {
-    key: "a",
-    description: "Antinote",
-    action: {
-      type: "app",
-      ref: "antinote",
-      mode: "focus",
-    },
-  });
-  assert.deepEqual(rightOptionLaunchers[4], {
-    key: "f",
-    description: "Home folder",
-    action: {
-      type: "folder",
-      ref: "home",
-    },
-  });
 });
 
 test("home-end navigation mappings stay declarative", () => {

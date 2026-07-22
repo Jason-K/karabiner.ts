@@ -17,7 +17,6 @@ import {
   buildLeftCommandRule,
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
-  buildRightOptionLauncherRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   mouseDeviceMappings,
@@ -89,13 +88,6 @@ test("cmd-q factory keeps double-tap protection structure", () => {
   const rule = toRule(buildCmdQRule());
   assert.equal(rule.description, "[←⌘]+[Q]        →    Quit app (on multi-tap)");
   assert.equal(rule.manipulators.length, 2);
-});
-
-test("right-option app factory keeps full launcher set", () => {
-  const rules = toRules(buildRightOptionLauncherRules());
-  assert.equal(rules.length, 10);
-  assert.equal(rules[0]?.description, "[→⌥]+[A]        →    Antinote (on tap)");
-  assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
 test("security disable shortcuts factory keeps all disabled combos", () => {

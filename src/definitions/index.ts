@@ -35,11 +35,7 @@ export {
   leftCommandTapHoldMappings,
 } from "./left-command";
 export { buildMouseRules, mouseDeviceMappings } from "./mouse";
-export {
-  buildRightOptionLauncherRules,
-  rightOptionLaunchers,
-  rightOptionTapHoldMappings,
-} from "./right-option";
+export { rightOptionTapHoldMappings } from "./right-option";
 export { buildShiftRules } from "./shift";
 export {
   buildDisableHideMinimizeRule,
