@@ -1,7 +1,6 @@
-import {
-  generateMultiTapRule,
-  type MultiTapConfig,
-} from "../engine/multi-tap-rules";
+import type { ActionSpec } from "../core/action-dsl";
+import { formatRuleDescription } from "../core/rule-descriptions";
+import { defineBindings, type Binding } from "../engine";
 
 const DOUBLE_TAP_DELAY_MS = 600;
 
@@ -9,39 +8,35 @@ const DOUBLE_TAP_DELAY_MS = 600;
 const RAYCAST_CLIPBOARD_HISTORY_URL =
   "raycast-x://extensions/raycast/clipboard-history/clipboard-history";
 
-export const leftShiftMultiTap: MultiTapConfig = {
-  key: "left_shift",
-  description: "Raycast clipboard history",
-  alone: [{ type: "key", key: "left_shift" }],
-  hold: [{ type: "key", key: "left_shift" }],
-  tapTap: [
-    {
-      type: "shell",
-      command: `open -u ${RAYCAST_CLIPBOARD_HISTORY_URL}`,
-    },
-  ],
-  thresholdMs: DOUBLE_TAP_DELAY_MS,
-  allowPassThrough: true,
-  mods: [],
+const clipboardHistoryAction: ActionSpec = {
+  type: "shell",
+  command: `open -u ${RAYCAST_CLIPBOARD_HISTORY_URL}`,
 };
 
-export const rightShiftMultiTap: MultiTapConfig = {
-  key: "right_shift",
-  description: "Raycast clipboard history",
-  alone: [{ type: "key", key: "right_shift" }],
-  hold: [{ type: "key", key: "right_shift" }],
-  tapTap: [
-    {
-      type: "shell",
-      command: `open -u ${RAYCAST_CLIPBOARD_HISTORY_URL}`,
-    },
-  ],
-  thresholdMs: DOUBLE_TAP_DELAY_MS,
-  allowPassThrough: true,
-  mods: [],
-};
+// A shift key that passes through on tap/hold and opens Raycast clipboard
+// history on double-tap. Left and right shift behave identically apart from
+// the key they pass through, so this factory keeps the two bindings in sync.
+function shiftClipboardBinding(key: "left_shift" | "right_shift"): Binding {
+  return {
+    description: formatRuleDescription(
+      key,
+      "Raycast clipboard history",
+      "multi-tap",
+    ),
+    trigger: { keys: [key] },
+    timing: { aloneMs: DOUBLE_TAP_DELAY_MS, heldThresholdMs: DOUBLE_TAP_DELAY_MS },
+    multiTap: { allowPassThrough: true, mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key }] },
+      { phase: "hold", do: [{ type: "key", key }] },
+      { tapCount: 2, phase: "release", do: [clipboardHistoryAction] },
+    ],
+  };
+}
 
-export const buildShiftRules = () => [
-  generateMultiTapRule(leftShiftMultiTap),
-  generateMultiTapRule(rightShiftMultiTap),
+export const shiftBindings: Binding[] = [
+  shiftClipboardBinding("left_shift"),
+  shiftClipboardBinding("right_shift"),
 ];
+
+export const buildShiftRules = () => defineBindings(shiftBindings);
