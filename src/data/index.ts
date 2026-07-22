@@ -10,6 +10,8 @@ export {
 } from "./accessibility";
 export { appRegistry, type AppRef } from "./apps";
 export { cleanShotRegistry } from "./cleanshot";
+export { commandRegistry, type CommandRef } from "./commands";
+// export { urlRegistry, type UrlRef } from "./urls";
 export {
     APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
     DEVICE_IDENTIFIERS

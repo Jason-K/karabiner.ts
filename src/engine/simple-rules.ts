@@ -60,7 +60,7 @@ export type AppScopedRemapMapping = {
     key: string;
     modifiers?: ModKey[];
   };
-  ifApp: string | string[];
+  ifApp?: string | string[];
 };
 
 export function generateAppScopedRemapRules(

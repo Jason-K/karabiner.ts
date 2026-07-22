@@ -1,16 +1,13 @@
+import { ACCESSIBILITY_VALUES, ACCESSIBILITY_VARIABLES } from "../data";
+import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS } from "../data/apps";
+import { commandRegistry } from "../data/commands";
 import {
-  ACCESSIBILITY_VALUES,
-  ACCESSIBILITY_VARIABLES,
-  appRegistry,
-  PATHS,
-} from "../data";
-import {
-    generateConditionalActionRules,
-    type ConditionalActionMapping,
+  generateConditionalActionRules,
+  type ConditionalActionMapping,
 } from "../engine/conditional-action-rules";
 import {
-    generateDisabledShortcutRules,
-    type DisabledShortcutMapping,
+  generateDisabledShortcutRules,
+  type DisabledShortcutMapping,
 } from "../engine/simple-rules";
 
 export const disabledShortcuts: DisabledShortcutMapping[] = [
@@ -29,16 +26,6 @@ export const disabledShortcuts: DisabledShortcutMapping[] = [
     modifiers: ["left_command", "left_option"],
     description: "Disabled minimize shortcut",
   },
-];
-
-const FILL_PW_SENDKEYS = `${PATHS.privCLI} -r && sleep 0.1 && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters \"<c:\/:command,option,control>\"`;
-const FILL_UN_PW_SENDKEYS = `${PATHS.privCLI} -r && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:\/:command,option,control>\"`;
-
-const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
-  appRegistry.securityAgent,
-  appRegistry.settings,
-  appRegistry.settingsPrivacySecurityExtension,
-  appRegistry.brewUpdater,
 ];
 
 export const passwordsQuickFillMapping: ConditionalActionMapping = {
@@ -68,7 +55,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       actions: [
         {
           type: "shell",
-          command: FILL_PW_SENDKEYS,
+          command: commandRegistry.fillPassword,
         },
       ],
     },
@@ -94,7 +81,7 @@ export const passwordsQuickFillMapping: ConditionalActionMapping = {
       actions: [
         {
           type: "shell",
-          command: FILL_UN_PW_SENDKEYS,
+          command: commandRegistry.fillUsernameAndPassword,
         },
       ],
     },

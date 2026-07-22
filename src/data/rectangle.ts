@@ -208,10 +208,10 @@ export const WIN_NEXT_DISPLAY: ToEvent[] = [
 
 export const WIN_RIGHT_OR_BOTTOM: ToEvent[] = [
   WIN_ACTIVATE_UNDER_CURSOR,
-  ...rectangleOrientationBasedEvents("fill-right", "bottom-half"),
+  ...rectangleOrientationBasedEvents("right-half", "bottom-half"),
 ];
 
 export const WIN_LEFT_OR_TOP: ToEvent[] = [
   WIN_ACTIVATE_UNDER_CURSOR,
-  ...rectangleOrientationBasedEvents("fill-left", "top-half"),
+  ...rectangleOrientationBasedEvents("left-half", "top-half"),
 ];

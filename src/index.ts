@@ -38,7 +38,6 @@ import {
   buildLeftCommandRule,
   buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
-  buildRightOptionLauncherRules,
   buildShiftRules,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
@@ -103,7 +102,8 @@ let rules: any[] = [
   buildCmdQRule(),
 
   // Right_Option + __ - App launch or focus
-  ...buildRightOptionLauncherRules(),
+  // Superceded by RCMD rules
+  //   ...buildRightOptionLauncherRules(),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...buildDisableHideMinimizeRule(),

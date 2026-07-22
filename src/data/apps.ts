@@ -32,3 +32,10 @@ export const appRegistry = {
 } as const;
 
 export type AppRef = keyof typeof appRegistry;
+
+export const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
+  "com.apple.SecurityAgent",
+  "com.apple.systempreferences",
+  "com.apple.settings.PrivacySecurity.extension",
+  "org.gpgtools.pinentry-mac",
+];

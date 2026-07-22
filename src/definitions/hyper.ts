@@ -27,7 +27,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
     action: { type: "shell", command: typinatorNewRuleCommand() },
   },
   {
-    key: "semicolon",
+    key: "comma",
     description: "Open System Settings",
     action: { type: "app", ref: "systemSettings" },
   },
@@ -44,38 +44,80 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "vmCOCS+a": {
-    description: "Raycast AI-chat",
-    hold: [
-      {
-        type: "key",
-        key: "f18",
-        modifiers: MOD_COMBO.vmCOCS,
-        options: { repeat: false },
-      },
-    ],
-  },
+  // "vmCOCS+a": {
+  //   description: "Raycast AI-chat",
+  //   hold: [
+  //     {
+  //       type: "key",
+  //       key: "f18",
+  //       modifiers: MOD_COMBO.vmCOCS,
+  //       options: { repeat: false },
+  //     },
+  //   ],
+  // },
   "vmCOCS+t": {
     description: "Edit last Typinator rule",
     alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
     hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
   },
   "vmCOCS+q": {
-    description: "Rectangle Pro left",
+    description: "Focus window to the left",
     alone: [
-      { type: "url", url: rectangleActionUrl("left-half"), background: true },
+      // { type: "url", url: rectangleActionUrl("left-half"), background: true },
+      {
+        type: "key",
+        key: "left_arrow",
+        modifiers: ["left_command", "left_control", "left_option"],
+        options: { repeat: false },
+      },
     ],
     hold: [
-      { type: "url", url: rectangleActionUrl("fill-left"), background: true },
+      // { type: "url", url: rectangleActionUrl("fill-left"), background: true },
     ],
   },
-  "vmCOCS+w": {
-    description: "Rectangle Pro right",
+  "vmCOCS+e": {
+    description: "Focus window to the right",
     alone: [
-      { type: "url", url: rectangleActionUrl("right-half"), background: true },
+      // { type: "url", url: rectangleActionUrl("right-half"), background: true },
+      {
+        type: "key",
+        key: "right_arrow",
+        modifiers: ["left_command", "left_control", "left_option"],
+        options: { repeat: false },
+      },
     ],
     hold: [
-      { type: "url", url: rectangleActionUrl("fill-right"), background: true },
+      // { type: "url", url: rectangleActionUrl("fill-right"), background: true },
+    ],
+  },
+  "vmCOCS+r": {
+    description: "Focus window to the top",
+    alone: [
+      // { type: "url", url: rectangleActionUrl("top-half"), background: true },
+      {
+        type: "key",
+        key: "up_arrow",
+        modifiers: ["left_command", "left_control", "left_option"],
+        options: { repeat: false },
+      },
+    ],
+    hold: [
+      // { type: "url", url: rectangleActionUrl("fill-top"), background: true },
+    ],
+  },
+  "vmCOCS+f": {
+    description: "Focus window to the bottom",
+    alone: [
+      // { type: "url", url: rectangleActionUrl("bottom-half"), background: true },
+      {
+        type: "key",
+        key: "down_arrow",
+        modifiers: ["left_command", "left_control", "left_option"],
+        options: { repeat: false },
+      },
+    ],
+    hold: [
+      // { type: "url", url: rectangleActionUrl("fill-bottom"), background: true },
     ],
   },
   "vmCOCS+keypad_1": {
