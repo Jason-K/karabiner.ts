@@ -8,12 +8,14 @@ The config is split by responsibility:
 
 - `src/core/` — low-level builders and shared primitives (`ActionSpec`, mods, conditions, scripts, tap-hold, mouse helpers, leader internals)
 - `src/data/` — registries and constants (apps, folders, raycast, cleanshot, devices, paths, timings, UI labels)
-- `src/definitions/` — data configs + one engine-function call per behaviour; this is the user edit surface
-- `src/engine/` — rule-generation functions; the only layer that constructs manipulators
+- `src/definitions/` — data configs that express behaviours as `Binding[]` (the standardized surface) and hand them to the engine; this is the user edit surface
+- `src/engine/` — rule generation; the only layer that constructs manipulators. `binding.ts` defines the `Binding`/`Case`/`Condition` schema and `defineBindings`, the single entry point every generator routes through
 - `src/tests/` — unit + integration regression coverage
 - `src/index.ts` — orchestrates the pipeline and writes the profile
 
-Every behaviour is a typed config object plus a single engine call. No definition file imports from `karabiner.ts` directly or iterates over its own mappings. All output events flow through one path: `ActionSpec` → `resolveActionToEvents` (in `src/engine/action-resolver.ts`) → karabiner.ts `ToEvent[]`.
+Every behaviour is a `Binding` (or a typed config that an engine adapter translates into one) plus a single `defineBindings`/generator call. No definition file imports from `karabiner.ts` directly or iterates over its own mappings. All output events flow through one path: `ActionSpec` → `resolveActionToEvents` (in `src/engine/action-resolver.ts`) → karabiner.ts `ToEvent[]`.
+
+> **Standardization in progress:** the `Binding` schema + `defineBindings` is the target definition surface. `home-end.ts` is migrated as the reference; the other definition files still use their legacy generator adapters (`generateTapHoldRules`, etc.), which are thin wrappers over `defineBindings`. See `docs/superpowers/specs/2026-07-21-engine-consolidation-design.md`.
 
 ## Upstream Integration
 
@@ -26,6 +28,7 @@ See `docs/UPSTREAM_SYNC.md` for the sync workflow.
 ## Key Files
 
 - `src/core/action-dsl.ts` — the `ActionSpec` union used for every output event
+- `src/engine/binding.ts` — the standardized `Binding` schema and `defineBindings`, the single entry point every generator routes through
 - `src/engine/action-resolver.ts` — single compiler from `ActionSpec` to Karabiner `ToEvent`s
 - `src/core/leader/build.ts` — generic leader-layer compiler (used by the space leader, ready for additional leaders)
 - `src/data/apps.ts`, `folders.ts`, `raycast.ts`, `cleanshot.ts` — registries referenced by definitions
