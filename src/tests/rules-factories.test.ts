@@ -497,3 +497,7 @@ test("resolveActionToEvents handles python action", () => {
   assert.match(shellCmd, /'--dest'/);
   assert.match(shellCmd, /'paste'/);
 });
+
+test("resolveActionToEvents returns no events for noop", () => {
+  assert.deepEqual(resolveActionToEvents({ type: "noop" } as any), []);
+});

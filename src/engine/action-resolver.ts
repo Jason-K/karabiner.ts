@@ -84,6 +84,8 @@ function resolveShellCommand(action: ActionSpec): string | null {
 
 export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
   switch (action.type) {
+    case "noop":
+      return [];
     case "app": {
       const bundleId = resolveAppBundleId(action.ref);
 
