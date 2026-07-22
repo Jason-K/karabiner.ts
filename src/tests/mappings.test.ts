@@ -221,39 +221,57 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
   ]);
 });
 
-test("vmCOCS+q and vmCOCS+w tap-hold mappings stay declarative", () => {
-  assert.equal(tapHoldMappings["vmCOCS+q"].description, "Rectangle Pro left");
-  assert.equal(tapHoldMappings["vmCOCS+w"].description, "Rectangle Pro right");
+test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
+  // Previously these were Rectangle Pro half/fill mappings keyed q/w; hyper.ts
+  // was reworked to use macOS focus-window arrow chords (q/e/r/f = left/right/
+  // top/bottom). The old Rectangle versions are commented out in hyper.ts and
+  // vmCOCS+w no longer exists. Assert the current focus-window set declaratively.
+  assert.equal(tapHoldMappings["vmCOCS+w"], undefined);
+  assert.equal(tapHoldMappings["vmCOCS+q"].description, "Focus window to the left");
+  assert.equal(tapHoldMappings["vmCOCS+e"].description, "Focus window to the right");
+  assert.equal(tapHoldMappings["vmCOCS+r"].description, "Focus window to the top");
+  assert.equal(tapHoldMappings["vmCOCS+f"].description, "Focus window to the bottom");
+
+  const focusModifiers = ["left_command", "left_control", "left_option"];
 
   assert.deepEqual(tapHoldMappings["vmCOCS+q"].alone, [
     {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=left-half",
-      background: true,
+      type: "key",
+      key: "left_arrow",
+      modifiers: focusModifiers,
+      options: { repeat: false },
     },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+q"].hold, [
+  assert.deepEqual(tapHoldMappings["vmCOCS+e"].alone, [
     {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=fill-left",
-      background: true,
+      type: "key",
+      key: "right_arrow",
+      modifiers: focusModifiers,
+      options: { repeat: false },
+    },
+  ]);
+  assert.deepEqual(tapHoldMappings["vmCOCS+r"].alone, [
+    {
+      type: "key",
+      key: "up_arrow",
+      modifiers: focusModifiers,
+      options: { repeat: false },
+    },
+  ]);
+  assert.deepEqual(tapHoldMappings["vmCOCS+f"].alone, [
+    {
+      type: "key",
+      key: "down_arrow",
+      modifiers: focusModifiers,
+      options: { repeat: false },
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOCS+w"].alone, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=right-half",
-      background: true,
-    },
-  ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+w"].hold, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=fill-right",
-      background: true,
-    },
-  ]);
+  // hold arrays exist but are empty (Rectangle fill-* fallbacks commented out).
+  assert.deepEqual(tapHoldMappings["vmCOCS+q"].hold, []);
+  assert.deepEqual(tapHoldMappings["vmCOCS+e"].hold, []);
+  assert.deepEqual(tapHoldMappings["vmCOCS+r"].hold, []);
+  assert.deepEqual(tapHoldMappings["vmCOCS+f"].hold, []);
 });
 
 test("mouse device mappings are declarative and device-scoped", () => {
@@ -306,10 +324,22 @@ test("mouse device mappings are declarative and device-scoped", () => {
       },
     ],
     hold: [
-      //   WIN_ACTIVATE_UNDER_CURSOR,
+      WIN_ACTIVATE_UNDER_CURSOR,
       {
         key_code: "left_control",
         modifiers: ["left_option", "left_shift"],
+      },
+    ],
+    overrides: [
+      {
+        when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
+        to: [
+          {
+            key_code: "down_arrow",
+            modifiers: ["left_control"],
+            repeat: false,
+          },
+        ],
       },
     ],
     thresholdMs: 400,
@@ -324,7 +354,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
       WIN_ACTIVATE_UNDER_CURSOR,
       {
         shell_command: rectangleOrientationBasedCommand(
-          "fill-left",
+          "left-half",
           "top-half",
         ),
       },

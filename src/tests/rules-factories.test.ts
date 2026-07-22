@@ -207,7 +207,7 @@ test("vmCOC_ plus rules factory keeps grouped mappings", () => {
     [
       "[vmCOCS]+[S]        →    Format selection (on tap)",
       "[vmCOCS]+[T]        →    New Typinator rule (on tap)",
-      "[vmCOCS]+[;]        →    Open System Settings (on tap)",
+      "[vmCOCS]+[,]        →    Open System Settings (on tap)",
       "[vmCOCS]+[F12]        →    Edit last Typinator rule (on tap)",
       "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
     ],
@@ -266,7 +266,10 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     rules[0]?.description,
     "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
   );
-  assert.equal(rules[0]?.manipulators.length, 1);
+  // Shift mapping now declares an override (right_button_pressed =>
+  // ctrl+down_arrow), which the engine emits as a standalone prepended
+  // manipulator, plus the base tap-hold manipulator.
+  assert.equal(rules[0]?.manipulators.length, 2);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
     pointing_button: "button5",
   });
