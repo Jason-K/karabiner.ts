@@ -112,7 +112,7 @@ test("word privileges factory keeps single guarded manipulator", () => {
   const rule = toRule(buildWordPrivilegesRule());
   assert.equal(
     rule.description,
-    "[←⌘/]        →    Copy document name and elevate privileges (on tap)",
+    "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
   );
   assert.equal(rule.manipulators.length, 1);
 });

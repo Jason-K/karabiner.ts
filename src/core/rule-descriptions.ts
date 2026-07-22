@@ -20,22 +20,30 @@ function splitChordTokens(chord: string | string[]): string[] {
   );
 }
 
+const MODIFIER_BASES = new Set([
+  'command',
+  'cmd',
+  'option',
+  'opt',
+  'alt',
+  'control',
+  'ctrl',
+  'shift',
+  'fn',
+  'caps_lock',
+]);
+
 function isModifierToken(token: string): boolean {
   const normalized = normalizeToken(token);
   if (isModComboAlias(token) || isModComboAlias(normalized)) {
     return true;
   }
 
-  if (KEY_SYMBOLS[normalized]) {
-    return true;
-  }
-
+  let base = normalized;
   if (normalized.startsWith('left_') || normalized.startsWith('right_')) {
-    const base = normalized.replace(/^(left|right)_/, '');
-    return Boolean(KEY_SYMBOLS[base]);
+    base = normalized.replace(/^(left|right)_/, '');
   }
-
-  return false;
+  return MODIFIER_BASES.has(base);
 }
 
 function modifierTokenToSymbols(token: string): string {

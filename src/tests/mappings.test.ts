@@ -98,7 +98,7 @@ test("home-end navigation mappings stay declarative", () => {
     ],
   });
   assert.deepEqual(homeEndBindings[1], {
-    description: "[←⇧HOME]        →    Select to line start (on tap)",
+    description: "[←⇧]+[HOME]        →    Select to line start (on tap)",
     trigger: { keys: ["home"], modifiers: ["left_shift"] },
     cases: [
       {

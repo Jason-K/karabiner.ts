@@ -2139,7 +2139,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS_]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOCS]+[_]        →    Rectangle maximize / restore (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2189,7 +2189,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS⇥]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2232,7 +2232,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS←ARROW]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[←]        →    Rectangle fill-left / previous-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2275,7 +2275,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS→ARROW]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[→]        →    Rectangle fill-right / next-display (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2874,7 +2874,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌃␛]        →    Activity Monitor / Process Spy (on hold)",
+        "ruleDescription": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4559,7 +4559,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧HOME]        →    Select to line start (on tap)",
+        "ruleDescription": "[←⇧]+[HOME]        →    Select to line start (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4607,7 +4607,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧END]        →    Select to line end (on tap)",
+        "ruleDescription": "[←⇧]+[END]        →    Select to line end (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4686,7 +4686,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS,]        →    Open System Settings (on tap)",
+        "ruleDescription": "[vmCOCS]+[,]        →    Open System Settings (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4742,7 +4742,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS␛]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5196,7 +5196,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘/]        →    Copy document name and elevate privileges (on tap)",
+        "ruleDescription": "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5230,7 +5230,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘/]        →    Quick fill password (on tap)",
+        "ruleDescription": "[←⌘]+[/]        →    Quick fill password (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5381,7 +5381,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧→ARROW]        →    Zen command H remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[→]        →    Zen command H remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5417,7 +5417,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧←ARROW]        →    Zen command U remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[←]        →    Zen command U remap (on tap)",
         "manipulatorSources": [
           {
             "type": "basic",

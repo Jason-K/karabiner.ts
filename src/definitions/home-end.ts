@@ -1,8 +1,9 @@
+import { formatRuleDescription } from "../core/rule-descriptions";
 import { defineBindings, type Binding } from "../engine";
 
 export const homeEndBindings: Binding[] = [
   {
-    description: "[HOME]        →    Move to line start (on tap)",
+    description: formatRuleDescription(["home"], "Move to line start", "tap"),
     trigger: { keys: ["home"] },
     cases: [
       {
@@ -12,7 +13,11 @@ export const homeEndBindings: Binding[] = [
     ],
   },
   {
-    description: "[←⇧HOME]        →    Select to line start (on tap)",
+    description: formatRuleDescription(
+      ["left_shift", "home"],
+      "Select to line start",
+      "tap",
+    ),
     trigger: { keys: ["home"], modifiers: ["left_shift"] },
     cases: [
       {
@@ -28,7 +33,7 @@ export const homeEndBindings: Binding[] = [
     ],
   },
   {
-    description: "[END]        →    Move to line end (on tap)",
+    description: formatRuleDescription(["end"], "Move to line end", "tap"),
     trigger: { keys: ["end"] },
     cases: [
       {
@@ -38,7 +43,11 @@ export const homeEndBindings: Binding[] = [
     ],
   },
   {
-    description: "[←⇧END]        →    Select to line end (on tap)",
+    description: formatRuleDescription(
+      ["left_shift", "end"],
+      "Select to line end",
+      "tap",
+    ),
     trigger: { keys: ["end"], modifiers: ["left_shift"] },
     cases: [
       {
