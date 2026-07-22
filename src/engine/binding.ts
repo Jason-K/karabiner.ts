@@ -1,5 +1,15 @@
 import type { ActionSpec } from "../core/action-dsl";
-import { ifApp, type FromEvent, type SimultaneousOptions } from "karabiner.ts";
+import {
+  ifApp,
+  map,
+  rule,
+  type FromEvent,
+  type Manipulator,
+  type Rule,
+  type SimultaneousOptions,
+  type ToEvent,
+} from "karabiner.ts";
+import { resolveActionToEvents } from "./action-resolver";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";
@@ -92,4 +102,67 @@ export function triggerToFrom(trigger: Trigger): FromEvent {
   const from: Record<string, unknown> = { key_code: trigger.keys[0] };
   if (trigger.modifiers?.length) from.modifiers = { mandatory: trigger.modifiers };
   return from as FromEvent;
+}
+
+type ResolvedCase = {
+  tapCount: number;
+  phase: Phase;
+  conditions: unknown[];
+  do: ToEvent[];
+};
+
+function resolveCases(cases: Case[], shared: Condition[] | undefined): ResolvedCase[] {
+  return cases.map((c) => ({
+    tapCount: c.tapCount ?? 1,
+    phase: c.phase ?? "press",
+    conditions: [...(shared ?? []), ...(c.conditions ?? [])].map(resolveCondition),
+    do: (c.do ?? []).flatMap(resolveActionToEvents),
+  }));
+}
+
+/** Group cases that share the same condition signature into one manipulator. */
+function groupByConditions(cases: ResolvedCase[]) {
+  const groups = new Map<
+    string,
+    { conditions: unknown[]; pressDo: ToEvent[]; releaseDo: ToEvent[]; holdDo: ToEvent[] }
+  >();
+  for (const c of cases) {
+    const key = JSON.stringify(c.conditions);
+    if (!groups.has(key)) {
+      groups.set(key, { conditions: c.conditions, pressDo: [], releaseDo: [], holdDo: [] });
+    }
+    const g = groups.get(key)!;
+    if (c.phase === "press") g.pressDo.push(...c.do);
+    if (c.phase === "release") g.releaseDo.push(...c.do);
+    if (c.phase === "hold") g.holdDo.push(...c.do);
+  }
+  return [...groups.values()];
+}
+
+export function defineBindings(bindings: Binding[]): Rule[] {
+  return bindings.map((b) => rule(b.description).manipulators(buildManipulators(b)) as unknown as Rule);
+}
+
+function buildManipulators(b: Binding): Manipulator[] {
+  const resolved = resolveCases(b.cases, b.conditions);
+  const hasMultiTap = resolved.some((c) => c.tapCount >= 2);
+  if (hasMultiTap) {
+    throw new Error("multiTap arm not implemented until Task 6");
+  }
+  const isPointer = "pointer" in b.trigger;
+  return groupByConditions(resolved).flatMap((g) => buildRemap(b, g, isPointer));
+}
+
+function buildRemap(
+  b: Binding,
+  g: { conditions: unknown[]; pressDo: ToEvent[] },
+  isPointer: boolean,
+): Manipulator | Manipulator[] {
+  const builder = isPointer
+    ? map({ pointing_button: (b.trigger as { pointer: string }).pointer } as any)
+    : map(triggerToFrom(b.trigger));
+  for (const cond of g.conditions) builder.condition(cond as any);
+  // pressDo may be empty (noop) -> omit `to` (swallow). map().build() already omits empty `to`.
+  for (const e of g.pressDo) builder.to(e);
+  return builder.build();
 }
