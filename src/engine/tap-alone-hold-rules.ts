@@ -1,9 +1,9 @@
-import { map, rule } from "karabiner.ts";
+import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import type { ModKey } from "../data/key-aliases";
-import { resolveActionToEvents } from "./action-resolver";
+import { defineBindings, type Binding } from "./binding";
 
 export type TapAloneHoldConfig = {
   key: string;
@@ -14,27 +14,19 @@ export type TapAloneHoldConfig = {
   timeoutMs: number;
 };
 
-export function generateTapAloneHoldRule(config: TapAloneHoldConfig) {
-  const { key, modifiers, description, alone, hold, timeoutMs } = config;
-
-  const aloneEvents = alone.flatMap(resolveActionToEvents);
-  const holdEvents = hold.flatMap(resolveActionToEvents);
-
-  const chord = modifiers ? [...modifiers, key] : key;
-  const ruleDescription = formatRuleDescription(chord, description, "hold");
-
-  const builder = map(key as any, modifiers?.length ? (modifiers as any) : undefined)
-    .parameters({
-      "basic.to_if_alone_timeout_milliseconds": timeoutMs,
-      "basic.to_if_held_down_threshold_milliseconds": timeoutMs,
-    });
-
-  aloneEvents.forEach((e) => builder.toIfAlone(e));
-  holdEvents.forEach((e) => builder.toIfHeldDown(e));
-
-  builder
-    .toDelayedAction([], aloneEvents)
-    .description(ruleDescription);
-
-  return rule(ruleDescription).manipulators(builder.build()) as any;
+export function generateTapAloneHoldRule(config: TapAloneHoldConfig): Rule {
+  const binding: Binding = {
+    description: formatRuleDescription(
+      config.modifiers ? [...config.modifiers, config.key] : config.key,
+      config.description,
+      "hold",
+    ),
+    trigger: { keys: [config.key], modifiers: config.modifiers as string[] | undefined },
+    timing: { aloneMs: config.timeoutMs, heldThresholdMs: config.timeoutMs },
+    cases: [
+      { phase: "release", do: config.alone },
+      { phase: "hold", do: config.hold },
+    ],
+  };
+  return defineBindings([binding])[0]!;
 }

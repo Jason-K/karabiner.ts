@@ -2919,8 +2919,7 @@
                   }
                 }
               ]
-            },
-            "description": "[←⌃␛]        →    Activity Monitor / Process Spy (on hold)"
+            }
           }
         ],
         "allowEmptyManipulators": false,
