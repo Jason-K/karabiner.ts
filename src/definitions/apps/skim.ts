@@ -1,24 +1,33 @@
 import { MOD_COMBO } from "../../core/mods";
+import { formatRuleDescription } from "../../core/rule-descriptions";
 import { appRegistry } from "../../data";
-import {
-  generateAppScopedRemapRules,
-  type AppScopedRemapMapping,
-} from "../../engine/simple-rules";
+import { defineBindings, type Binding } from "../../engine";
 
-export const skimRemapMappings: AppScopedRemapMapping[] = [
+export const skimRemapBindings: Binding[] = [
   {
-    from: { key: "h", modifiers: ["left_command"] },
-    description: "Skim command H remap",
-    to: { key: "h", modifiers: MOD_COMBO.vmC_C_ },
-    ifApp: appRegistry.skim,
+    description: formatRuleDescription(
+      ["left_command", "h"],
+      "Skim command H remap",
+      "tap",
+    ),
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    conditions: [{ app: appRegistry.skim }],
+    cases: [
+      { phase: "press", do: [{ type: "key", key: "h", modifiers: MOD_COMBO.vmC_C_ }] },
+    ],
   },
   {
-    from: { key: "u", modifiers: ["left_command"] },
-    description: "Skim command U remap",
-    to: { key: "u", modifiers: MOD_COMBO.vmC_C_ },
-    ifApp: appRegistry.skim,
+    description: formatRuleDescription(
+      ["left_command", "u"],
+      "Skim command U remap",
+      "tap",
+    ),
+    trigger: { keys: ["u"], modifiers: ["left_command"] },
+    conditions: [{ app: appRegistry.skim }],
+    cases: [
+      { phase: "press", do: [{ type: "key", key: "u", modifiers: MOD_COMBO.vmC_C_ }] },
+    ],
   },
 ];
 
-export const buildSkimCommandRemapRule = () =>
-  generateAppScopedRemapRules(skimRemapMappings);
+export const buildSkimCommandRemapRule = () => defineBindings(skimRemapBindings);

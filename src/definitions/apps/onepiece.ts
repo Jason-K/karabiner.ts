@@ -1,15 +1,17 @@
+import { formatRuleDescription } from "../../core/rule-descriptions";
 import { appRegistry } from "../../data";
-import {
-    generatePointerRemapRule,
-    type PointerRemapConfig,
-} from "../../engine/pointer-remap-rules";
+import { defineBindings, type Binding } from "../../engine";
 
-export const onePieceClickEnter: PointerRemapConfig = {
-  button: "button1",
-  description: "OnePiece left click -> enter",
-  to: [{ type: "key", key: "return_or_enter" }],
-  ifApp: appRegistry.onePiece,
+export const onePieceClickEnterBinding: Binding = {
+  description: formatRuleDescription(
+    "button1",
+    "OnePiece left click -> enter",
+    "tap",
+  ),
+  trigger: { pointer: "button1" },
+  conditions: [{ app: appRegistry.onePiece }],
+  cases: [{ phase: "press", do: [{ type: "key", key: "return_or_enter" }] }],
 };
 
 export const buildOnePieceClickEnterRule = () =>
-  generatePointerRemapRule(onePieceClickEnter);
+  defineBindings([onePieceClickEnterBinding])[0]!;

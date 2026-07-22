@@ -1,23 +1,50 @@
+import { formatRuleDescription } from "../../core/rule-descriptions";
 import { appRegistry } from "../../data";
-import {
-    generateAppScopedRemapRules,
-    type AppScopedRemapMapping,
-} from "../../engine/simple-rules";
+import { defineBindings, type Binding } from "../../engine";
 
-export const zenRemapMappings: AppScopedRemapMapping[] = [
+export const zenRemapBindings: Binding[] = [
   {
-    from: { key: "right_arrow", modifiers: ["left_command", "left_shift"] },
-    description: "Zen command H remap",
-    to: { key: "close_bracket", modifiers: ["left_command", "left_shift"] },
-    ifApp: appRegistry.zen,
+    description: formatRuleDescription(
+      ["left_command", "left_shift", "right_arrow"],
+      "Zen command H remap",
+      "tap",
+    ),
+    trigger: { keys: ["right_arrow"], modifiers: ["left_command", "left_shift"] },
+    conditions: [{ app: appRegistry.zen }],
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "close_bracket",
+            modifiers: ["left_command", "left_shift"],
+          },
+        ],
+      },
+    ],
   },
   {
-    from: { key: "left_arrow", modifiers: ["left_command", "left_shift"] },
-    description: "Zen command U remap",
-    to: { key: "open_bracket", modifiers: ["left_command", "left_shift"] },
-    ifApp: appRegistry.zen,
+    description: formatRuleDescription(
+      ["left_command", "left_shift", "left_arrow"],
+      "Zen command U remap",
+      "tap",
+    ),
+    trigger: { keys: ["left_arrow"], modifiers: ["left_command", "left_shift"] },
+    conditions: [{ app: appRegistry.zen }],
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "open_bracket",
+            modifiers: ["left_command", "left_shift"],
+          },
+        ],
+      },
+    ],
   },
 ];
 
-export const buildZenCommandRemapRule = () =>
-  generateAppScopedRemapRules(zenRemapMappings);
+export const buildZenCommandRemapRule = () => defineBindings(zenRemapBindings);
