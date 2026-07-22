@@ -1,35 +1,39 @@
+import { formatRuleDescription } from "../core/rule-descriptions";
 import { killAppCommand } from "../core/scripts";
 import { TIMINGS } from "../data";
-import {
-  generateMultiTapRule,
-  type MultiTapConfig,
-} from "../engine/multi-tap-rules";
-import {
-  generateTapAloneHoldRule,
-  type TapAloneHoldConfig,
-} from "../engine/tap-alone-hold-rules";
+import { defineBindings, type Binding } from "../engine";
 
-export const escapeTapTapHold: MultiTapConfig = {
-  key: "escape",
-  description: "Escape / Kill app",
-  alone: [{ type: "key", key: "escape" }],
-  hold: [{ type: "shell", command: killAppCommand("foreground") }],
-  tapTapHold: [{ type: "shell", command: killAppCommand() }],
-  thresholdMs: TIMINGS.delayHoldMs,
-  mods: [],
+export const escapeTapTapHoldBinding: Binding = {
+  description: formatRuleDescription("escape", "Escape / Kill app", "multi-tap"),
+  trigger: { keys: ["escape"] },
+  timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+  multiTap: { mods: [] },
+  cases: [
+    { phase: "release", do: [{ type: "key", key: "escape" }] },
+    { phase: "hold", do: [{ type: "shell", command: killAppCommand("foreground") }] },
+    { tapCount: 2, phase: "hold", do: [{ type: "shell", command: killAppCommand() }] },
+  ],
 };
 
-export const ctrlEscapeConfig: TapAloneHoldConfig = {
-  key: "escape",
-  modifiers: ["left_control"],
-  description: "Activity Monitor / Process Spy",
-  alone: [{ type: "app", ref: "activityMonitor" }],
-  hold: [{ type: "app", ref: "processSpy" }],
-  timeoutMs: TIMINGS.delayHoldMs,
+// ctrl+escape: tap → Activity Monitor, hold → Process Spy. Routed through the
+// tapHold builder, which does not emit a manipulator-level description — this
+// preserves the §8.1 normalization landed in round 1.
+export const ctrlEscapeMonitorBinding: Binding = {
+  description: formatRuleDescription(
+    ["left_control", "escape"],
+    "Activity Monitor / Process Spy",
+    "hold",
+  ),
+  trigger: { keys: ["escape"], modifiers: ["left_control"] },
+  timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+  cases: [
+    { phase: "release", do: [{ type: "app", ref: "activityMonitor" }] },
+    { phase: "hold", do: [{ type: "app", ref: "processSpy" }] },
+  ],
 };
 
 export const buildEscapeTapTapHoldRule = () =>
-  generateMultiTapRule(escapeTapTapHold);
+  defineBindings([escapeTapTapHoldBinding])[0]!;
 
 export const buildCtrlEscapeMonitorRule = () =>
-  generateTapAloneHoldRule(ctrlEscapeConfig);
+  defineBindings([ctrlEscapeMonitorBinding])[0]!;
