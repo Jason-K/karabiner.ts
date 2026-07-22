@@ -91,3 +91,29 @@ test("defineBindings remap: two press cases with different conditions -> two man
   const built = rules[0] as any;
   assert.equal(built.manipulatorSources.length, 2);
 });
+
+test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-through", () => {
+  const rules = defineBindings([
+    {
+      description: "[A]        →    X (on hold)",
+      trigger: { keys: ["a"] },
+      timing: { aloneMs: 400, heldThresholdMs: 400 },
+      cases: [{ phase: "hold", do: [{ type: "key", key: "f18", modifiers: ["vmCOC_"], options: { repeat: false } }] }],
+    },
+  ]);
+  const built = rules[0] as any;
+  const m = built.manipulatorSources[0];
+  // default-alone pass-through: the key itself with halt:true.
+  // Note: karabiner.ts' toKey() helper always sets `modifiers: undefined` as an own
+  // property (it gets dropped by JSON.stringify, so the live output is unaffected).
+  // The existing tap-hold-rules.ts produces the same shape — this is the byte-identical
+  // behavior the plan must preserve.
+  assert.deepEqual(m.to_if_alone, [{ halt: true, key_code: "a", modifiers: undefined }]);
+  assert.deepEqual(m.to_if_held_down, [
+    { repeat: false, key_code: "f18", modifiers: ["left_command", "left_option", "left_control"] },
+  ]);
+  assert.deepEqual(m.to_delayed_action, {
+    to_if_invoked: [],
+    to_if_canceled: [{ halt: true, key_code: "a", modifiers: undefined }],
+  });
+});

@@ -1,4 +1,4 @@
-import type { ActionSpec } from "../core/action-dsl";
+import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import {
   ifApp,
   map,
@@ -10,6 +10,8 @@ import {
   type ToEvent,
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
+import { tapHold } from "../core/tap-hold";
+import { resolveModComboAlias } from "../data/key-aliases";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";
@@ -149,8 +151,48 @@ function buildManipulators(b: Binding): Manipulator[] {
   if (hasMultiTap) {
     throw new Error("multiTap arm not implemented until Task 6");
   }
-  const isPointer = "pointer" in b.trigger;
-  return groupByConditions(resolved).flatMap((g) => buildRemap(b, g, isPointer));
+  return groupByConditions(resolved).flatMap((g) =>
+    g.releaseDo.length || g.holdDo.length ? buildTapHold(b, g) : buildRemap(b, g, "pointer" in b.trigger),
+  );
+}
+
+function buildTapHold(
+  b: Binding,
+  g: { conditions: unknown[]; releaseDo: ToEvent[]; holdDo: ToEvent[] },
+): Manipulator | Manipulator[] {
+  if ("pointer" in b.trigger) {
+    throw new Error("tapHold pointer triggers are not supported (mouse is out of scope)");
+  }
+  const keys = (b.trigger as { keys: string[] }).keys;
+  const key = keys[0]!;
+  const mods = (b.trigger as { modifiers?: string[] }).modifiers ?? [];
+  const defaultAlone: ActionSpec[] = [
+    { type: "key", key, modifiers: mods as ActionKeyModifier[], options: { halt: true } },
+  ];
+  const alone = g.releaseDo.length ? g.releaseDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+  const hold = g.holdDo;
+  const manipulators = tapHold({
+    key,
+    alone,
+    hold,
+    timeoutMs: b.timing?.aloneMs,
+    thresholdMs: b.timing?.heldThresholdMs,
+  }).build();
+  // Inject mandatory from-modifiers exactly like tap-hold-rules (vm alias -> resolved mods)
+  if (mods.length) {
+    const mandatory = mods.flatMap((m) => resolveModComboAlias(m) ?? [m]);
+    manipulators.forEach((m: any) => {
+      m.from.modifiers = m.from.modifiers || {};
+      m.from.modifiers.mandatory = mandatory;
+    });
+  }
+  g.conditions.forEach((cond) =>
+    manipulators.forEach((m: any) => {
+      m.conditions = m.conditions || [];
+      m.conditions.push(cond);
+    }),
+  );
+  return manipulators;
 }
 
 function buildRemap(
