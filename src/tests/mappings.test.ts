@@ -20,8 +20,8 @@ import {
 import { homeEndBindings } from "../definitions/home-end";
 import { mouseDeviceMappings } from "../definitions/mouse";
 import {
-  disabledShortcuts,
-  passwordsQuickFillMapping,
+  disabledShortcutBindings,
+  passwordsQuickFillBinding,
 } from "../definitions/system";
 
 test("rectangle focused-window orientation command uses focused display", () => {
@@ -94,16 +94,16 @@ test("home-end navigation mappings stay declarative", () => {
 });
 
 test("disabled shortcut mappings stay declarative", () => {
-  assert.equal(disabledShortcuts.length, 3);
-  assert.deepEqual(disabledShortcuts[0], {
-    key: "h",
-    modifiers: ["left_command"],
-    description: "Disabled hide shortcut",
+  assert.equal(disabledShortcutBindings.length, 3);
+  assert.deepEqual(disabledShortcutBindings[0], {
+    description: "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
-  assert.deepEqual(disabledShortcuts[2], {
-    key: "m",
-    modifiers: ["left_command", "left_option"],
-    description: "Disabled minimize shortcut",
+  assert.deepEqual(disabledShortcutBindings[2], {
+    description: "[←⌘←⌥]+[M]        →    Disabled minimize shortcut (on tap)",
+    trigger: { keys: ["m"], modifiers: ["left_command", "left_option"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
 });
 
@@ -168,10 +168,17 @@ test("equals key hold mappings stay declarative", () => {
 });
 
 test("passwords quick fill mapping stays declarative", () => {
-  assert.equal(passwordsQuickFillMapping.key, "slash");
-  assert.deepEqual(passwordsQuickFillMapping.modifiers, ["left_command"]);
-  assert.equal(passwordsQuickFillMapping.description, "Quick fill password");
-  assert.equal(passwordsQuickFillMapping.variants.length, 2);
+  const trigger = passwordsQuickFillBinding.trigger as {
+    keys: string[];
+    modifiers?: string[];
+  };
+  assert.equal(
+    passwordsQuickFillBinding.description,
+    "[←⌘]+[/]        →    Quick fill password (on tap)",
+  );
+  assert.deepEqual(trigger.keys, ["slash"]);
+  assert.deepEqual(trigger.modifiers, ["left_command"]);
+  assert.equal(passwordsQuickFillBinding.cases.length, 2);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {

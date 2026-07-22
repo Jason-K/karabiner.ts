@@ -1,95 +1,89 @@
+import { formatRuleDescription } from "../core/rule-descriptions";
 import { ACCESSIBILITY_VALUES, ACCESSIBILITY_VARIABLES } from "../data";
 import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS } from "../data/apps";
 import { commandRegistry } from "../data/commands";
-import {
-  generateConditionalActionRules,
-  type ConditionalActionMapping,
-} from "../engine/conditional-action-rules";
-import {
-  generateDisabledShortcutRules,
-  type DisabledShortcutMapping,
-} from "../engine/simple-rules";
+import { defineBindings, type Binding } from "../engine";
 
-export const disabledShortcuts: DisabledShortcutMapping[] = [
+// Disabled shortcuts swallow the chord entirely (noop = no `to` events).
+export const disabledShortcutBindings: Binding[] = [
   {
-    key: "h",
-    modifiers: ["left_command"],
-    description: "Disabled hide shortcut",
+    description: formatRuleDescription(
+      ["left_command", "h"],
+      "Disabled hide shortcut",
+      "tap",
+    ),
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
   {
-    key: "h",
-    modifiers: ["left_command", "left_option"],
-    description: "Disabled hide others shortcut",
+    description: formatRuleDescription(
+      ["left_command", "left_option", "h"],
+      "Disabled hide others shortcut",
+      "tap",
+    ),
+    trigger: { keys: ["h"], modifiers: ["left_command", "left_option"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
   {
-    key: "m",
-    modifiers: ["left_command", "left_option"],
-    description: "Disabled minimize shortcut",
+    description: formatRuleDescription(
+      ["left_command", "left_option", "m"],
+      "Disabled minimize shortcut",
+      "tap",
+    ),
+    trigger: { keys: ["m"], modifiers: ["left_command", "left_option"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
 ];
 
-export const passwordsQuickFillMapping: ConditionalActionMapping = {
-  key: "slash",
-  modifiers: ["left_command"],
-  description: "Quick fill password",
-  variants: [
+// CMD+/ quick-fill: dispatches by text-field role. Two press cases share the
+// frontmost-app + focused-UI-role guard; the secure vs non-secure subrole
+// distinguishes password-only from username+password fill.
+export const passwordsQuickFillBinding: Binding = {
+  description: formatRuleDescription(
+    ["left_command", "slash"],
+    "Quick fill password",
+    "tap",
+  ),
+  trigger: { keys: ["slash"], modifiers: ["left_command"] },
+  cases: [
     {
-      when: [
+      phase: "press",
+      conditions: [
+        { app: QUICK_FILL_APP_BUNDLE_IDENTIFIERS },
         {
-          type: "frontmostApp",
-          bundleIds: QUICK_FILL_APP_BUNDLE_IDENTIFIERS,
+          var: ACCESSIBILITY_VARIABLES.focusedUiRole,
+          equals: ACCESSIBILITY_VALUES.textFieldRole,
         },
         {
-          type: "variable",
-          name: ACCESSIBILITY_VARIABLES.focusedUiRole,
-          match: "if",
-          value: ACCESSIBILITY_VALUES.textFieldRole,
-        },
-        {
-          type: "variable",
-          name: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
-          match: "if",
-          value: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
+          var: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
+          equals: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
         },
       ],
-      actions: [
-        {
-          type: "shell",
-          command: commandRegistry.fillPassword,
-        },
-      ],
+      do: [{ type: "shell", command: commandRegistry.fillPassword }],
     },
     {
-      when: [
+      phase: "press",
+      conditions: [
+        { app: QUICK_FILL_APP_BUNDLE_IDENTIFIERS },
         {
-          type: "frontmostApp",
-          bundleIds: QUICK_FILL_APP_BUNDLE_IDENTIFIERS,
+          var: ACCESSIBILITY_VARIABLES.focusedUiRole,
+          equals: ACCESSIBILITY_VALUES.textFieldRole,
         },
         {
-          type: "variable",
-          name: ACCESSIBILITY_VARIABLES.focusedUiRole,
-          match: "if",
-          value: ACCESSIBILITY_VALUES.textFieldRole,
-        },
-        {
-          type: "variable",
-          name: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
-          match: "unless",
-          value: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
+          var: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
+          equals: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
+          unless: true,
         },
       ],
-      actions: [
-        {
-          type: "shell",
-          command: commandRegistry.fillUsernameAndPassword,
-        },
+      do: [
+        { type: "shell", command: commandRegistry.fillUsernameAndPassword },
       ],
     },
   ],
 };
 
 export const buildDisableHideMinimizeRule = () =>
-  generateDisabledShortcutRules(disabledShortcuts);
+  defineBindings(disabledShortcutBindings);
 
 export const buildPasswordsQuickFillRule = () =>
-  generateConditionalActionRules([passwordsQuickFillMapping])[0]!;
+  defineBindings([passwordsQuickFillBinding])[0]!;

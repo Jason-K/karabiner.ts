@@ -40,8 +40,8 @@ export { buildShiftRules } from "./shift";
 export {
   buildDisableHideMinimizeRule,
   buildPasswordsQuickFillRule,
-  disabledShortcuts,
-  passwordsQuickFillMapping,
+  disabledShortcutBindings,
+  passwordsQuickFillBinding,
 } from "./system";
 
 function mergeTapHoldRecords(
