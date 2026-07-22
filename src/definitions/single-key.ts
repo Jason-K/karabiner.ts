@@ -193,10 +193,8 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Clipboard manager",
     hold: [
       {
-        type: "key",
-        key: "v",
-        modifiers: ["left_option"],
-        options: { halt: true, repeat: false },
+        type: "raycast",
+        ref: "clipboardHistory",
       },
     ],
   },

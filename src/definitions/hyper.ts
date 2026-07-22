@@ -44,17 +44,6 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
 ];
 
 export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  // "vmCOCS+a": {
-  //   description: "Raycast AI-chat",
-  //   hold: [
-  //     {
-  //       type: "key",
-  //       key: "f18",
-  //       modifiers: MOD_COMBO.vmCOCS,
-  //       options: { repeat: false },
-  //     },
-  //   ],
-  // },
   "vmCOCS+t": {
     description: "Edit last Typinator rule",
     alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
@@ -63,7 +52,6 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
   "vmCOCS+q": {
     description: "Focus window to the left",
     alone: [
-      // { type: "url", url: rectangleActionUrl("left-half"), background: true },
       {
         type: "key",
         key: "left_arrow",
@@ -71,14 +59,10 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-    hold: [
-      // { type: "url", url: rectangleActionUrl("fill-left"), background: true },
-    ],
   },
   "vmCOCS+e": {
     description: "Focus window to the right",
     alone: [
-      // { type: "url", url: rectangleActionUrl("right-half"), background: true },
       {
         type: "key",
         key: "right_arrow",
@@ -86,14 +70,10 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-    hold: [
-      // { type: "url", url: rectangleActionUrl("fill-right"), background: true },
-    ],
   },
   "vmCOCS+r": {
     description: "Focus window to the top",
     alone: [
-      // { type: "url", url: rectangleActionUrl("top-half"), background: true },
       {
         type: "key",
         key: "up_arrow",
@@ -101,23 +81,16 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-    hold: [
-      // { type: "url", url: rectangleActionUrl("fill-top"), background: true },
-    ],
   },
   "vmCOCS+f": {
     description: "Focus window to the bottom",
     alone: [
-      // { type: "url", url: rectangleActionUrl("bottom-half"), background: true },
       {
         type: "key",
         key: "down_arrow",
         modifiers: ["left_command", "left_control", "left_option"],
         options: { repeat: false },
       },
-    ],
-    hold: [
-      // { type: "url", url: rectangleActionUrl("fill-bottom"), background: true },
     ],
   },
   "vmCOCS+keypad_1": {

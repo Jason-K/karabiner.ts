@@ -1,4 +1,5 @@
 export const raycastRegistry = {
+  clipboardHistory: "raycast/clipboard-history/clipboard-history",
   hereToThereActiveToTarget: "Jason/here-to-there/activeToTarget",
   recentApplications: "jason/recents/recentApplications",
   recentCustom: "jason/recents/recentCustom",

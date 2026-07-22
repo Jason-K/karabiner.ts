@@ -67,7 +67,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel_left",
-        description: "[WHEEL LEFT] Rectangle fill-left (hold)",
+        description:
+          "[WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
         hold: [...WIN_LEFT_OR_TOP],
         overrides: [
           {
@@ -98,7 +99,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel_right",
-        description: "[WHEEL RIGHT] Rectangle fill-right (hold)",
+        description:
+          "[WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)",
         hold: [...WIN_RIGHT_OR_BOTTOM],
         overrides: [
           {
@@ -125,7 +127,8 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "wheel",
-        description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
+        description:
+          "[WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
         variable: "wheel_down",
         alone: [{ pointing_button: "button3", repeat: false }],
         overrides: [
@@ -151,7 +154,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
         type: "tapHold",
         button: "left_back",
         description:
-          "[G7] Maximize window (tap) / Move window to next display (hold)",
+          "[G7] Fill screen with window (tap) / Move window to next display (hold)",
         alone: rectangleMaxOrRestoreEvents(),
         hold: [
           WIN_ACTIVATE_UNDER_CURSOR,
@@ -168,7 +171,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "left_forward",
-        description: "[G8] Popclip (tap) / Sidenote (hold)",
+        description: "[G8] Activate Popclip (tap) / Activate Sidenote (hold)",
         alone: [
           {
             shell_command:
@@ -240,12 +243,13 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
       {
         type: "tapHold",
         button: "forward",
-        description: "[FORWARD] Forward (tap) / App window switch (hold)",
+        description:
+          "[FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)",
         alone: [{ pointing_button: "button5", repeat: false }],
         hold: [
           {
-            key_code: "grave_accent_and_tilde",
-            modifiers: ["left_command"],
+            key_code: "down_arrow",
+            modifiers: ["left_control"],
             repeat: false,
           },
         ],

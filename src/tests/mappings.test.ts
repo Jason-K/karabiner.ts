@@ -267,11 +267,6 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
     },
   ]);
 
-  // hold arrays exist but are empty (Rectangle fill-* fallbacks commented out).
-  assert.deepEqual(tapHoldMappings["vmCOCS+q"].hold, []);
-  assert.deepEqual(tapHoldMappings["vmCOCS+e"].hold, []);
-  assert.deepEqual(tapHoldMappings["vmCOCS+r"].hold, []);
-  assert.deepEqual(tapHoldMappings["vmCOCS+f"].hold, []);
 });
 
 test("mouse device mappings are declarative and device-scoped", () => {
@@ -349,7 +344,8 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
     type: "tapHold",
     button: "wheel_left",
-    description: "[WHEEL LEFT] Rectangle fill-left (hold)",
+    description:
+      "[WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
     hold: [
       WIN_ACTIVATE_UNDER_CURSOR,
       {
@@ -389,7 +385,8 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(middleMapping, {
     type: "tapHold",
     button: "wheel",
-    description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
+    description:
+      "[WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
     variable: "wheel_down",
     alone: [{ pointing_button: "button3", repeat: false }],
     overrides: [
@@ -426,7 +423,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   );
   assert.equal(
     leftBackMapping?.description,
-    "[G7] Maximize window (tap) / Move window to next display (hold)",
+    "[G7] Fill screen with window (tap) / Move window to next display (hold)",
   );
   const leftBackAlone =
     leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
@@ -446,7 +443,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.deepEqual(leftForwardMapping, {
     type: "tapHold",
     button: "left_forward",
-    description: "[G8] Popclip (tap) / Sidenote (hold)",
+    description: "[G8] Activate Popclip (tap) / Activate Sidenote (hold)",
     alone: [
       {
         shell_command: "osascript -e 'tell application \"Popclip\" to appear'",

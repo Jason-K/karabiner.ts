@@ -696,12 +696,7 @@
             ],
             "to_if_held_down": [
               {
-                "halt": true,
-                "repeat": false,
-                "key_code": "v",
-                "modifiers": [
-                  "left_option"
-                ]
+                "shell_command": "open 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
               }
             ],
             "to_delayed_action": {
@@ -1719,6 +1714,18 @@
                 ]
               }
             ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "q",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -1766,6 +1773,18 @@
                   "left_command",
                   "left_control",
                   "left_option"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "e",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -1819,6 +1838,18 @@
                 ]
               }
             ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "r",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -1866,6 +1897,18 @@
                   "left_command",
                   "left_control",
                   "left_option"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "f",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -3019,7 +3062,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3064,7 +3107,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
+            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
           },
           {
             "type": "basic",
@@ -3087,7 +3130,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
+            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
           },
           {
             "type": "basic",
@@ -3132,14 +3175,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)"
+            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3184,7 +3227,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
+            "description": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)"
           },
           {
             "type": "basic",
@@ -3229,14 +3272,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)"
+            "description": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)",
+        "ruleDescription": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3274,7 +3317,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)"
+            "description": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)"
           },
           {
             "type": "basic",
@@ -3336,14 +3379,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL] Middle (tap) / Rectangle maximize (hold)"
+            "description": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G7] Maximize window (tap) / Move window to next display (hold)",
+        "ruleDescription": "Logitech G502 X: [G7] Fill screen with window (tap) / Move window to next display (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3387,14 +3430,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [G7] Maximize window (tap) / Move window to next display (hold)"
+            "description": "Logitech G502 X: [G7] Fill screen with window (tap) / Move window to next display (hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G8] Popclip (tap) / Sidenote (hold)",
+        "ruleDescription": "Logitech G502 X: [G8] Activate Popclip (tap) / Activate Sidenote (hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3440,7 +3483,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [G8] Popclip (tap) / Sidenote (hold)"
+            "description": "Logitech G502 X: [G8] Activate Popclip (tap) / Activate Sidenote (hold)"
           }
         ],
         "allowEmptyManipulators": false,
@@ -3588,7 +3631,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)",
+        "ruleDescription": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3627,7 +3670,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)"
+            "description": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)"
           },
           {
             "type": "basic",
@@ -3649,9 +3692,9 @@
               {
                 "halt": true,
                 "repeat": false,
-                "key_code": "grave_accent_and_tilde",
+                "key_code": "down_arrow",
                 "modifiers": [
-                  "left_command"
+                  "left_control"
                 ]
               }
             ],
@@ -3675,7 +3718,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [FORWARD] Forward (tap) / App window switch (hold)"
+            "description": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)"
           }
         ],
         "allowEmptyManipulators": false,
