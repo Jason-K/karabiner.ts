@@ -23,7 +23,7 @@ export {
   buildCtrlEscapeMonitorRule,
   buildEscapeTapTapHoldRule,
 } from "./escape";
-export { buildHomeEndRule, homeEndNavigationMappings } from "./home-end";
+export { buildHomeEndRule, homeEndBindings } from "./home-end";
 export {
   buildHyperLauncherRules,
   hyperLauncherMappings,

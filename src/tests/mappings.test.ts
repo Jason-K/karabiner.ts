@@ -17,7 +17,7 @@ import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "../definitions/enter-equals";
-import { homeEndNavigationMappings } from "../definitions/home-end";
+import { homeEndBindings } from "../definitions/home-end";
 import { mouseDeviceMappings } from "../definitions/mouse";
 import { rightOptionLaunchers } from "../definitions/right-option";
 import {
@@ -86,16 +86,32 @@ test("right-option launchers stay declarative", () => {
 });
 
 test("home-end navigation mappings stay declarative", () => {
-  assert.equal(homeEndNavigationMappings.length, 4);
-  assert.deepEqual(homeEndNavigationMappings[0], {
-    from: { key: "home" },
-    description: "Move to line start",
-    to: { key: "left_arrow", modifiers: ["left_command"] },
+  assert.equal(homeEndBindings.length, 4);
+  assert.deepEqual(homeEndBindings[0], {
+    description: "[HOME]        →    Move to line start (on tap)",
+    trigger: { keys: ["home"] },
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }],
+      },
+    ],
   });
-  assert.deepEqual(homeEndNavigationMappings[1], {
-    from: { key: "home", modifiers: ["left_shift"] },
-    description: "Select to line start",
-    to: { key: "left_arrow", modifiers: ["left_command", "left_shift"] },
+  assert.deepEqual(homeEndBindings[1], {
+    description: "[←⇧HOME]        →    Select to line start (on tap)",
+    trigger: { keys: ["home"], modifiers: ["left_shift"] },
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "left_arrow",
+            modifiers: ["left_command", "left_shift"],
+          },
+        ],
+      },
+    ],
   });
 });
 
