@@ -1,9 +1,8 @@
-import { rule } from "karabiner.ts";
+import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import { varTapTapHold } from "../core/tap-hold";
-import { resolveActionToEvents } from "./action-resolver";
+import { defineBindings, type Binding, type Case } from "./binding";
 
 export type MultiTapConfig = {
   key: string;
@@ -17,40 +16,21 @@ export type MultiTapConfig = {
   mods?: string[];
 };
 
-export function generateMultiTapRule(config: MultiTapConfig) {
-  const {
-    key,
-    description,
-    alone,
-    hold,
-    tapTap,
-    tapTapHold,
-    thresholdMs,
-    allowPassThrough = false,
-    mods = [],
-  } = config;
-
-  if (tapTap && tapTapHold) {
-    throw new Error(
-      "MultiTapConfig: tapTap and tapTapHold are mutually exclusive",
-    );
+export function generateMultiTapRule(config: MultiTapConfig): Rule {
+  if (config.tapTap && config.tapTapHold) {
+    throw new Error("MultiTapConfig: tapTap and tapTapHold are mutually exclusive");
   }
-
-  const firstTapPendingVar = `multi_tap_${key}`;
-
-  const manipulators = varTapTapHold({
-    key,
-    firstTapPendingVar,
-    immediateSingleTapEvents: alone?.flatMap(resolveActionToEvents),
-    holdEvents: hold?.flatMap(resolveActionToEvents),
-    doubleTapEvents: tapTap?.flatMap(resolveActionToEvents),
-    doubleTapHoldEvents: tapTapHold?.flatMap(resolveActionToEvents),
-    thresholdMs,
-    allowPassThrough,
-    mods: mods as any,
-  });
-
-  return rule(
-    formatRuleDescription(key, description, "multi-tap"),
-  ).manipulators(manipulators) as any;
+  const cases: Case[] = [];
+  if (config.alone) cases.push({ phase: "release", do: config.alone });
+  if (config.hold) cases.push({ phase: "hold", do: config.hold });
+  if (config.tapTap) cases.push({ tapCount: 2, phase: "release", do: config.tapTap });
+  if (config.tapTapHold) cases.push({ tapCount: 2, phase: "hold", do: config.tapTapHold });
+  const binding: Binding = {
+    description: formatRuleDescription(config.key, config.description, "multi-tap"),
+    trigger: { keys: [config.key] },
+    timing: { aloneMs: config.thresholdMs, heldThresholdMs: config.thresholdMs },
+    multiTap: { allowPassThrough: config.allowPassThrough, mods: config.mods },
+    cases,
+  };
+  return defineBindings([binding])[0]!;
 }

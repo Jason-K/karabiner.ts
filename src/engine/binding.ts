@@ -171,7 +171,11 @@ export function defineBindings(bindings: Binding[]): Rule[] {
 
 function buildManipulators(b: Binding): Manipulator[] {
   const resolved = resolveCases(b.cases, b.conditions);
-  const hasMultiTap = resolved.some((c) => c.tapCount >= 2);
+  // A binding routes to the multiTap arm if any case has tapCount >= 2 OR the
+  // binding declares `multiTap` config (e.g. generateMultiTapRule always sets
+  // `multiTap: {allowPassThrough, mods}` even when no tap/hold cases are
+  // provided — varTapTapHold still emits two manipulators in that case).
+  const hasMultiTap = resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
   const isSim = "keys" in b.trigger && b.trigger.keys.length > 1;
   if (hasMultiTap) return buildMultiTap(b, resolved, isSim);
   if (isSim) return buildSimultaneousTapHold(b, resolved);
