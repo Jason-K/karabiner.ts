@@ -1,5 +1,6 @@
 // Compiler internals: do not modify unless implementing a new rule type.
 
+export * from "./binding";
 export * from "./action-resolver";
 export * from "./double-tap-guard-rules";
 export * from "./multi-tap-rules";
