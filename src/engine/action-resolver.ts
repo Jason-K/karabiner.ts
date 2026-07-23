@@ -18,9 +18,7 @@ import {
 } from "../core/scripts";
 import { openApp } from "../core/software";
 import type { AppRef } from "../data";
-import { cleanShotRegistry } from "../data/cleanshot";
 import { resolveModComboAlias } from "../data/key-aliases";
-import { raycastRegistry } from "../data/raycast";
 
 function expandModifiers(modifiers: string[]): string[] {
   const expanded: string[] = [];
@@ -49,9 +47,9 @@ function resolveShellCommand(action: ActionSpec): string | null {
     case "folder":
       return getOpenFolderCommand(resolveName(action.ref));
     case "raycast":
-      return raycastExtensionCommand(raycastRegistry[action.ref]);
+      return raycastExtensionCommand(resolveName(action.ref));
     case "cleanShot":
-      return cleanShotCommand(cleanShotRegistry[action.ref]);
+      return cleanShotCommand(resolveName(action.ref));
     case "actHere":
       return actHereCmd(action.action);
     case "url":

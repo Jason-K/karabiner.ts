@@ -1,13 +1,25 @@
+const r = (name: string, refDesc: string) => ({
+  type: "raycast" as const,
+  name,
+  refDesc,
+});
+
 export const raycastRegistry = {
-  clipboardHistory: "raycast/clipboard-history/clipboard-history",
-  hereToThereActiveToTarget: "Jason/here-to-there/activeToTarget",
-  recentApplications: "jason/recents/recentApplications",
-  recentCustom: "jason/recents/recentCustom",
-  recentDownloads: "jason/recents/recentDownloads",
-  recentFiles: "jason/recents/recents",
-  recentFolders: "jason/recents/recentFolders",
-  spotifySearch: "mattisssa/spotify-player/search",
-  zoxideSearchDirectories: "mrpunkin/raycast-zoxide/search-directories",
+  clipboardHistory: r("raycast/clipboard-history/clipboard-history", "Clipboard history"),
+  hereToThereActiveToTarget: r(
+    "Jason/here-to-there/activeToTarget",
+    "Here2There (active to target)",
+  ),
+  recentApplications: r("jason/recents/recentApplications", "Recent applications"),
+  recentCustom: r("jason/recents/recentCustom", "Recent custom"),
+  recentDownloads: r("jason/recents/recentDownloads", "Recent downloads"),
+  recentFiles: r("jason/recents/recents", "Recent files"),
+  recentFolders: r("jason/recents/recentFolders", "Recent folders"),
+  spotifySearch: r("mattisssa/spotify-player/search", "Spotify search"),
+  zoxideSearchDirectories: r(
+    "mrpunkin/raycast-zoxide/search-directories",
+    "zoxide search directories",
+  ),
 } as const;
 
-export type RaycastRef = keyof typeof raycastRegistry;
+export type RaycastRef = import("./refs").RaycastRef;

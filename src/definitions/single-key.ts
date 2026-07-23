@@ -1,5 +1,6 @@
 import { recentDownloadsCommand } from "../core/scripts";
-import { appRegistry } from "../data";
+import { appRegistry, raycastRegistry } from "../data";
+import { cleanShotRegistry } from "../data/cleanshot";
 import { rectangleActionUrl } from "../data/rectangle";
 import type { TapHoldConfig } from "../engine";
 
@@ -119,11 +120,11 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   h: {
     description: "Here2There",
-    hold: [{ type: "raycast", ref: "hereToThereActiveToTarget" }],
+    hold: [{ type: "raycast", ref: raycastRegistry.hereToThereActiveToTarget }],
   },
   j: {
     description: "Last d/l",
-    hold: [{ type: "raycast", ref: "recentDownloads" }],
+    hold: [{ type: "raycast", ref: raycastRegistry.recentDownloads }],
   },
   k: { description: "Kitty", hold: [{ type: "app", ref: appRegistry.kitty }] },
   n: {
@@ -138,7 +139,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   o: {
     description: "OCR",
-    hold: [{ type: "cleanShot", ref: "captureTextNoLinebreaks" }],
+    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureTextNoLinebreaks }],
   },
   p: {
     description: "Popclip",
@@ -173,11 +174,11 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   s: {
     description: "Screenshot",
-    hold: [{ type: "cleanShot", ref: "captureArea" }],
+    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureArea }],
   },
   "shift+s": {
     description: "Screenshot Window",
-    hold: [{ type: "cleanShot", ref: "captureWindow" }],
+    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureWindow }],
   },
   t: {
     description: "Kitty quick terminal",
@@ -195,7 +196,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [
       {
         type: "raycast",
-        ref: "clipboardHistory",
+        ref: raycastRegistry.clipboardHistory,
       },
     ],
   },
@@ -209,7 +210,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   z: {
     description: "Zoxide",
-    hold: [{ type: "raycast", ref: "zoxideSearchDirectories" }],
+    hold: [{ type: "raycast", ref: raycastRegistry.zoxideSearchDirectories }],
   },
   8: {
     description: "RingCentral",

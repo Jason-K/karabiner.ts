@@ -1,4 +1,5 @@
 import { spotifyToggleCommand } from "../core/scripts";
+import { raycastRegistry } from "../data";
 import { PATHS } from "../data/paths";
 import { TIMINGS } from "../data/timings";
 import type { TapHoldConfig } from "../engine";
@@ -28,7 +29,7 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
   "right_option+s": {
     description: "Spotify toggle (tap), search (hold)",
     alone: [{ type: "shell", command: spotifyToggleCommand() }],
-    hold: [{ type: "raycast", ref: "spotifySearch" }],
+    hold: [{ type: "raycast", ref: raycastRegistry.spotifySearch }],
     timeoutMs: TIMINGS.delayHoldMs,
     thresholdMs: TIMINGS.delayHoldMs,
   },
