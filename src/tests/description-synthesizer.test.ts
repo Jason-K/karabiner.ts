@@ -7,7 +7,7 @@ import { commandRegistry } from "../data/commands";
 import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import { appRegistry } from "../data/apps";
-import { describeAction } from "../engine/description-synthesizer";
+import { describeAction, describeConditionGroup } from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(describeAction({ type: "app", ref: appRegistry.excel }), "open Microsoft Excel");
@@ -86,4 +86,43 @@ test("describeAction: cut / copy / paste / noop", () => {
 test("describeAction: sequence joins sub-actions with ' then '", () => {
   const seq: ActionSpec = { type: "sequence", actions: [{ type: "cut" }, { type: "paste" }] };
   assert.equal(describeAction(seq), "Cut selection then Paste selection");
+});
+
+const excelCond = {
+  type: "app" as const,
+  name: "com.microsoft.Excel",
+  refDesc: "Microsoft Excel",
+};
+const roleVar = {
+  name: "accessibility.focused_ui_element.role_string",
+  varDesc: "Focused UI role",
+};
+
+test("describeConditionGroup: empty -> Always", () => {
+  assert.equal(describeConditionGroup(undefined), "Always");
+  assert.equal(describeConditionGroup([]), "Always");
+});
+
+test("describeConditionGroup: app if/unless + multi-app", () => {
+  assert.equal(describeConditionGroup([{ app: excelCond }]), "In Microsoft Excel");
+  assert.equal(describeConditionGroup([{ app: excelCond, unless: true }]), "Outside Microsoft Excel");
+  assert.equal(
+    describeConditionGroup([{ app: [excelCond, { type: "app", name: "b", refDesc: "B" }] }]),
+    "In Microsoft Excel/B",
+  );
+});
+
+test("describeConditionGroup: var if/unless", () => {
+  assert.equal(describeConditionGroup([{ var: roleVar, equals: "AXTextField" }]), "Focused UI role");
+  assert.equal(
+    describeConditionGroup([{ var: roleVar, equals: "AXTextField", unless: true }]),
+    "not Focused UI role",
+  );
+});
+
+test("describeConditionGroup: multiple joined with ' and '", () => {
+  assert.equal(
+    describeConditionGroup([{ app: excelCond }, { var: roleVar, equals: "AXTextField" }]),
+    "In Microsoft Excel and Focused UI role",
+  );
 });

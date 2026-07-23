@@ -1,5 +1,6 @@
 import type { ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
+import type { Condition } from "./binding";
 import { expandModifiers } from "./action-resolver";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
@@ -64,4 +65,28 @@ export function describeAction(action: ActionSpec): string {
       return _exhaustive;
     }
   }
+}
+
+type AppCondition = Extract<Condition, { app: unknown }>;
+type VarCondition = Extract<Condition, { var: unknown }>;
+
+function describeAppCondition(app: AppCondition["app"], unless?: boolean): string {
+  const refs = Array.isArray(app) ? app : [app];
+  const names = refs.map((r) => r.refDesc).join("/");
+  return unless ? `Outside ${names}` : `In ${names}`;
+}
+
+/** Human label for one condition group (spec §6). Empty group -> "Always". */
+export function describeConditionGroup(conditions: Condition[] | undefined): string {
+  if (!conditions?.length) return "Always";
+  const parts = conditions.map((c) => {
+    if ("app" in c) return describeAppCondition(c.app, c.unless);
+    if ("var" in c) {
+      const v: VarCondition = c;
+      return v.unless ? `not ${v.var.varDesc}` : v.var.varDesc;
+    }
+    // device is reserved for the mouse round (Condition throws in resolveCondition).
+    return "device";
+  });
+  return parts.join(" and ");
 }
