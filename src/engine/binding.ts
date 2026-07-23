@@ -4,15 +4,17 @@ import {
   ifDevice,
   map,
   rule,
+  toPointingButton,
   type FromEvent,
   type Manipulator,
+  type PointingButton,
   type Rule,
   type SimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
 import { synthesizeManipulatorLabel, synthesizeRuleDescription } from "./description-synthesizer";
-import { tapHold, tapHoldFrom, varTapTapHold } from "../core/tap-hold";
+import { tapHold, tapHoldFrom, varTapTapHold, varTapTapHoldFrom } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { karabinerDeviceId } from "../data/devices";
@@ -52,6 +54,7 @@ export type Case = {
   do: Action[]; // { type: "noop" } = swallow (omits `to`); raw ToEvent = verbatim passthrough
   description?: string; // optional fragment; when set, used as this case's action line verbatim
   suppress?: boolean; // emit only `do`, no trigger fallback (this case's channel)
+  delayed?: boolean; // multi-tap: route this tap1 release as a delayed single tap (to_if_invoked after the timer) instead of immediate (to_if_alone)
 };
 
 /** One binding = one description = one Karabiner rule. */
@@ -67,7 +70,7 @@ export type Binding = {
   conditions?: Condition[]; // hoisted — applied to every case
   cases: Case[];
   eventOptions?: { halt?: boolean; repeat?: boolean };
-  multiTap?: { allowPassThrough?: boolean; mods?: string[] };
+  multiTap?: { allowPassThrough?: boolean; mods?: string[]; firstTapPendingVar?: VarSpec };
   afterKeyUp?: ActionSpec[];
   whileHoldVar?: VarSpec; // tap-hold: set 1 on key-down, 0 on key-up (chord-modifier signaling)
   suppress?: boolean; // emit only `do`, no trigger fallback (e.g. tap-hold default-alone)
@@ -142,6 +145,7 @@ export function triggerToFrom(trigger: Trigger): FromEvent {
 type ResolvedCase = {
   tapCount: number;
   phase: Phase;
+  delayed: boolean;
   conditions: unknown[];
   rawConditions: Condition[]; // original Condition[] — for slice-labels (Phase 2)
   do: ToEvent[];
@@ -153,6 +157,7 @@ function resolveCases(cases: Case[], shared: Condition[] | undefined): ResolvedC
     return {
       tapCount: c.tapCount ?? 1,
       phase: c.phase ?? "press",
+      delayed: c.delayed ?? false,
       conditions: rawConditions.map(resolveCondition),
       rawConditions,
       do: (c.do ?? []).flatMap(resolveActionToEvents),
@@ -265,20 +270,65 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
     stampLabel(manipulators, unionRawConditions(cases));
     return manipulators;
   }
-  const manipulators = varTapTapHold({
-    key,
-    firstTapPendingVar: `multi_tap_${key}`,
-    immediateSingleTapEvents: byPhase("release"),
-    holdEvents: byPhase("hold"),
-    doubleTapEvents: cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
-    doubleTapHoldEvents: cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
-    thresholdMs: threshold,
-    allowPassThrough: b.multiTap?.allowPassThrough,
-    mods: b.multiTap?.mods as any,
-  });
-  attachConditions(manipulators, cases);
-  stampLabel(manipulators, unionRawConditions(cases));
+  // key/pointer: one varTapTapHold(From) per condition-group, sharing a single
+  // firstTapPendingVar so a first tap in one group is detected by every group's
+  // second-tap manipulator — mirroring the bespoke double-tap's per-override
+  // build (e.g. the G502X left-button double-tap's Zen vs non-Zen variants).
+  const isPointer = "pointer" in b.trigger;
+  const triggerKey = "pointer" in b.trigger ? resolveButton(b.trigger.pointer).button : key;
+  const firstTapPendingVar = b.multiTap?.firstTapPendingVar?.name ?? `multi_tap_${triggerKey}`;
+  const manipulators: Manipulator[] = [];
+  for (const g of groupMultiTapCases(cases)) {
+    const delayedEvents = g.cases
+      .filter((c) => c.tapCount === 1 && c.phase === "release" && c.delayed)
+      .flatMap((c) => c.do);
+    const shared = {
+      firstTapPendingVar,
+      immediateSingleTapEvents: g.cases
+        .filter((c) => c.tapCount === 1 && c.phase === "release" && !c.delayed)
+        .flatMap((c) => c.do),
+      delayedSingleTapEvents: delayedEvents.length ? delayedEvents : undefined,
+      holdEvents: g.cases.filter((c) => c.tapCount === 1 && c.phase === "hold").flatMap((c) => c.do),
+      doubleTapEvents: g.cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
+      doubleTapHoldEvents: g.cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
+      thresholdMs: threshold,
+      allowPassThrough: b.multiTap?.allowPassThrough,
+    };
+    const groupManips = isPointer
+      ? varTapTapHoldFrom({
+          from: { pointing_button: triggerKey as PointingButton } as FromEvent,
+          passThrough: b.multiTap?.allowPassThrough
+            ? toPointingButton(triggerKey as PointingButton, undefined, { lazy: true })
+            : undefined,
+          ...shared,
+        })
+      : varTapTapHold({ key, mods: b.multiTap?.mods as any, ...shared });
+    // Attach the group's shared condition signature once (device_if last).
+    const conds = deviceLast(g.conditions);
+    if (conds.length) {
+      groupManips.forEach((m: any) => {
+        m.conditions = m.conditions || [];
+        m.conditions.push(...conds);
+      });
+    }
+    stampLabel(groupManips, unionRawConditions(g.cases));
+    manipulators.push(...groupManips);
+  }
   return manipulators;
+}
+
+/** Group multi-tap cases by condition signature (one varTapTapHold per group). */
+function groupMultiTapCases(cases: ResolvedCase[]): {
+  conditions: unknown[];
+  cases: ResolvedCase[];
+}[] {
+  const groups = new Map<string, { conditions: unknown[]; cases: ResolvedCase[] }>();
+  for (const c of cases) {
+    const sig = JSON.stringify(c.conditions);
+    if (!groups.has(sig)) groups.set(sig, { conditions: c.conditions, cases: [] });
+    groups.get(sig)!.cases.push(c);
+  }
+  return [...groups.values()];
 }
 
 function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulator[] {

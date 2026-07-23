@@ -223,6 +223,46 @@ export const mouseBindings: Binding[] = [
       { phase: "hold", do: [] },
     ],
   },
+  // -------------------------------------------------------------
+  // LEFT BUTTON (right-button held) — single action by app (tap) / double tap
+  // → next display. Zen vs non-Zen split into condition-groups; the single tap
+  // is DELAYED (fires via to_if_invoked after the timer) so a true double-tap
+  // can still win. firstTapPendingVar is shared across both groups.
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "left" },
+    conditions: [
+      { device: DEVICE_IDENTIFIERS.logitechG502X },
+      { var: mouseVars.rightButtonPressed, equals: 1 },
+    ],
+    multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
+    timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
+    cases: [
+      // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
+      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }] },
+      { tapCount: 1, phase: "hold", conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["left_option"], repeat: false }] },
+      { tapCount: 2, phase: "release", conditions: [{ app: appRegistry.zen }], do: [...WIN_NEXT_DISPLAY] },
+      // Non-Zen — tap = maximize (delayed), double = next display
+      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen, unless: true }], do: [...WIN_MAX_OR_RESTORE] },
+      { tapCount: 2, phase: "release", conditions: [{ app: appRegistry.zen, unless: true }], do: [...WIN_NEXT_DISPLAY] },
+    ],
+  },
+  // -------------------------------------------------------------
+  // LEFT BUTTON (right-button NOT held) — Left click (tap) / chord modifier (hold)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "left" },
+    conditions: [
+      { device: DEVICE_IDENTIFIERS.logitechG502X },
+      { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
+    ],
+    whileHoldVar: mouseVars.leftButtonPressed,
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: 0 },
+    cases: [
+      { phase: "release", do: [] },
+      { phase: "hold", do: [toFromEvent()] },
+    ],
+  },
 ];
 
 export const mouseDeviceMappings: MouseDeviceConfig[] = [

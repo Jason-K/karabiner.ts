@@ -79,10 +79,9 @@ let rules: any[] = [
   // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
   buildCtrlEscapeMonitorRule(),
 
-  // Mouse mappings — G502X tap-hold/remap bindings (Binding[] engine) plus the
-  // left-button double-tap/tap-hold mappings (still bespoke, pending multi-tap).
+  // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
+  // flow through the same Binding[] + defineBindings engine as keys.
   ...defineBindings(mouseBindings),
-  ...buildMouseRules(mouseDeviceMappings),
 
   // ONEPIECE - Left click submits with Enter inside the app
   buildOnePieceClickEnterRule(),

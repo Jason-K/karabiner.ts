@@ -2969,7 +2969,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
+        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit '↓'+←⌃\n\t\tAlways:\tEmit '↑'+←⌃\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit '⌃'+←⌥←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2985,6 +2985,7 @@
                 "repeat": false
               }
             ],
+            "description": "Right button held",
             "conditions": [
               {
                 "type": "variable_if",
@@ -3000,8 +3001,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)"
+            ]
           },
           {
             "type": "basic",
@@ -3054,15 +3054,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
+        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit '←'+←⌘←⌃←⇧\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3080,6 +3079,7 @@
                 "repeat": false
               }
             ],
+            "description": "In Zen and Right button held and Wheel held down",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -3106,14 +3106,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
+            ]
           },
           {
             "type": "basic",
             "from": {
               "pointing_button": "button7"
             },
+            "description": "Wheel held down",
             "conditions": [
               {
                 "type": "variable_if",
@@ -3129,8 +3129,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
+            ]
           },
           {
             "type": "basic",
@@ -3175,14 +3174,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)"
+            "description": "not Wheel held down and not Right button held"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)",
+        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit '→'+←⌘←⌃←⇧\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3200,6 +3199,7 @@
                 "repeat": false
               }
             ],
+            "description": "In Zen and Right button held and Wheel held down",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -3226,8 +3226,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)"
+            ]
           },
           {
             "type": "basic",
@@ -3272,14 +3271,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)"
+            "description": "not Wheel held down and not Right button held"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
+        "ruleDescription": "Wheel click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tClick Left click\n\t\ton Logitech G502 X:\tClick Middle click\n\tOn Hold:\n\t\ton Logitech G502 X:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3295,6 +3294,7 @@
                 "repeat": false
               }
             ],
+            "description": "on Logitech G502 X and In Zen and Right button held",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -3316,8 +3316,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)"
+            ]
           },
           {
             "type": "basic",
@@ -3379,14 +3378,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)"
+            "description": "on Logitech G502 X"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G7] Fill screen with window (tap) / Move window to next display (hold)",
+        "ruleDescription": "Left-back (G7):\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = …'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3429,15 +3428,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [G7] Fill screen with window (tap) / Move window to next display (hold)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G8] Activate Popclip (tap) / Activate Sidenote (hold)",
+        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit 'F10'+←⌘←⌥←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3482,15 +3480,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [G8] Activate Popclip (tap) / Activate Sidenote (hold)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)",
+        "ruleDescription": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'open 'cleanshot://capture-text?linebr…'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/Scripts/.venv/shared_ven…'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3529,15 +3526,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [G9] Screenshot to text (tap) / markdown (hold)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)",
+        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ']'+←⌘←⇧\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit '⇥'+←⌘",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3554,6 +3550,7 @@
                 "repeat": true
               }
             ],
+            "description": "on Logitech G502 X and In Zen and Right button held",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -3575,8 +3572,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)"
+            ]
           },
           {
             "type": "basic",
@@ -3624,14 +3620,14 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [BACK] Back (tap) / Window switch (hold)"
+            "description": "on Logitech G502 X"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)",
+        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit '['+←⌘←⇧\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit '↓'+←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3648,6 +3644,7 @@
                 "repeat": true
               }
             ],
+            "description": "In Zen and Right button held",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -3669,8 +3666,7 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)"
+            ]
           },
           {
             "type": "basic",
@@ -3717,15 +3713,14 @@
                   }
                 ]
               }
-            ],
-            "description": "Logitech G502 X: [FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)",
+        "ruleDescription": "Right click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X:\tClick Right click\n\tOn Hold:\n\t\ton Logitech G502 X:\t",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3773,7 +3768,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [RBUTTON] Right click (tap) / Zen chord modifier (hold)"
+            "description": "on Logitech G502 X"
           }
         ],
         "allowEmptyManipulators": false,
