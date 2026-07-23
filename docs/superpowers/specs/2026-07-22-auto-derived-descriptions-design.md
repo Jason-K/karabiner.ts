@@ -14,8 +14,8 @@ This is the **primary** redesign for round 2. It subsumes the Goal 2 "harmonize 
 
 ## 2. The two locked decisions
 
-1. **Rich breakdown lives at the rule level (option 1a).** The multi-line description is the *rule* description (one per binding/trigger); the physical manipulators underneath carry only a short condition-slice label. No duplication.
-2. **Byte-identical is dropped — for descriptions only.** Non-description output (events, triggers, conditions, timing) must stay behavior-identical, verified by a **description-agnostic structural diff**. The snapshot is regenerated once; the description *format* is locked by **synthesizer unit tests**, not the snapshot.
+1. **Rich breakdown lives at the rule level (option 1a).** The multi-line description is the _rule_ description (one per binding/trigger); the physical manipulators underneath carry only a short condition-slice label. No duplication.
+2. **Byte-identical is dropped — for descriptions only.** Non-description output (events, triggers, conditions, timing) must stay behavior-identical, verified by a **description-agnostic structural diff**. The snapshot is regenerated once; the description _format_ is locked by **synthesizer unit tests**, not the snapshot.
 
 ## 3. The hard Karabiner constraint (why slice-labels, not one manipulator)
 
@@ -30,23 +30,30 @@ Therefore: a binding produces N physical manipulators (one per condition-group),
 Replaces the label-less string registries (`appRegistry`, `folderRegistry`, `raycastRegistry`, `cleanShotRegistry`, `commandRegistry`). Each entry becomes an object:
 
 ```ts
-export type RefSpecType = "app" | "folder" | "raycast" | "cleanShot" | "command" | "url";
+export type RefSpecType =
+  | "app"
+  | "folder"
+  | "raycast"
+  | "cleanShot"
+  | "command"
+  | "url";
 
 export type RefSpec = {
   type: RefSpecType;
-  name: string | string[];   // the value(s): bundle id(s) / path / deeplink / command / url
-  refDesc: string;           // human label used to derive descriptions
+  name: string | string[]; // the value(s): bundle id(s) / path / deeplink / command / url
+  refDesc: string; // human label used to derive descriptions
 };
 ```
 
 Per-category aliases keep action refs type-safe (an app action's ref can't be a folder):
+
 ```ts
-export type AppRef      = RefSpec; // type: "app"
-export type FolderRef   = RefSpec; // type: "folder"
-export type RaycastRef  = RefSpec; // type: "raycast"
-export type CleanShotRef= RefSpec; // type: "cleanShot"
-export type CommandRef  = RefSpec; // type: "command"
-export type UrlRef      = RefSpec; // type: "url"
+export type AppRef = RefSpec; // type: "app"
+export type FolderRef = RefSpec; // type: "folder"
+export type RaycastRef = RefSpec; // type: "raycast"
+export type CleanShotRef = RefSpec; // type: "cleanShot"
+export type CommandRef = RefSpec; // type: "command"
+export type UrlRef = RefSpec; // type: "url"
 ```
 
 - `name: string | string[]` supports apps with legacy bundles (e.g. a unified antinote entry holding both bundle ids), replacing today's two-entry pattern.
@@ -58,8 +65,8 @@ export type UrlRef      = RefSpec; // type: "url"
 
 ```ts
 export type VarSpec = {
-  name: string;       // the variable name written to Karabiner
-  varDesc: string;    // human label for descriptions
+  name: string; // the variable name written to Karabiner
+  varDesc: string; // human label for descriptions
 };
 ```
 
@@ -69,8 +76,8 @@ Migrates `ACCESSIBILITY_VARIABLES` (e.g. `focusedUiRole` → `{ name: "accessibi
 
 ```ts
 export type DeviceSpec = {
-  name: string;        // registry key / identifier
-  deviceDesc: string;  // human label
+  name: string; // registry key / identifier
+  deviceDesc: string; // human label
   product_id: number;
   vendor_id: number;
   is_keyboard?: boolean;
@@ -88,32 +95,34 @@ Two structural changes plus description-template semantics.
 **(b) `actionDesc?` on the variants that need a nuance** (`app`, `folder`, `raycast`, `url`, `shell`, `python`, `osascript`, `key`). Appended to the derived description as ` | <actionDesc>`.
 
 **(c) New `command` variant** (commands become first-class refs):
+
 ```ts
 | { type: "command"; ref: CommandRef; actionDesc?: string }
 ```
+
 Today's `{ type: "shell"; command: commandRegistry.fillPassword }` pattern becomes `{ type: "command"; ref: commandRegistry.fillPassword }` — describable via `refDesc`. The `shell` variant remains for ad-hoc commands.
 
 **Description templates** (what each action contributes to the description):
 
-| Action | Template |
-|---|---|
-| `app` | `open/focus/open-shell <refDesc>` (by `mode`) `[ \| actionDesc]` |
-| `appHistory` | `Go back <index> apps` |
-| `folder` | `open '<refDesc>'` `[ \| actionDesc]` |
-| `raycast` | `Call '<refDesc>'` `[ \| actionDesc]` |
-| `cleanShot` | `<refDesc> using CSX` |
-| `command` | `Run command '<refDesc>'` `[ \| actionDesc]` |
-| `actHere` | `Context action: <action>` (derive from the `action` string) |
-| `caseChange` | `Change case to <operation>` |
-| `wrapString` | `Wrap selection in <operation>` |
-| `key` | `Emit '<key>'<+mods>` `[ \| actionDesc]` (mods rendered as symbols) |
-| `url` | `Open '<url>'` `[ \| actionDesc]` (or `<refDesc>` if from `urlRegistry`) |
-| `shell` | `Run '<command>'` `[ \| actionDesc]` |
-| `python` | `Run python '<scriptPath>'` `[ \| actionDesc]` |
-| `osascript` | `Run osascript '<scriptPath>'` `[ \| actionDesc]` |
-| `cut`/`copy`/`paste` | `Cut`/`Copy`/`Paste` selection |
-| `noop` | `No operation` |
-| `sequence` | join sub-action descriptions with ` then ` |
+| Action               | Template                                                                 |
+| -------------------- | ------------------------------------------------------------------------ |
+| `app`                | `open/focus/open-shell <refDesc>` (by `mode`) `[ \| actionDesc]`         |
+| `appHistory`         | `Go back <index> apps`                                                   |
+| `folder`             | `open '<refDesc>'` `[ \| actionDesc]`                                    |
+| `raycast`            | `Call '<refDesc>'` `[ \| actionDesc]`                                    |
+| `cleanShot`          | `<refDesc> using CSX`                                                    |
+| `command`            | `Run command '<refDesc>'` `[ \| actionDesc]`                             |
+| `actHere`            | `Context action: <action>` (derive from the `action` string)             |
+| `caseChange`         | `Change case to <operation>`                                             |
+| `wrapString`         | `Wrap selection in <operation>`                                          |
+| `key`                | `Emit '<key>'<+mods>` `[ \| actionDesc]` (mods rendered as symbols)      |
+| `url`                | `Open '<url>'` `[ \| actionDesc]` (or `<refDesc>` if from `urlRegistry`) |
+| `shell`              | `Run '<command>'` `[ \| actionDesc]`                                     |
+| `python`             | `Run python '<scriptPath>'` `[ \| actionDesc]`                           |
+| `osascript`          | `Run osascript '<scriptPath>'` `[ \| actionDesc]`                        |
+| `cut`/`copy`/`paste` | `Cut`/`Copy`/`Paste` selection                                           |
+| `noop`               | `No operation`                                                           |
+| `sequence`           | join sub-action descriptions with `then`                                 |
 
 ## 6. `Condition` changes
 
@@ -122,21 +131,28 @@ Today's `{ type: "shell"; command: commandRegistry.fillPassword }` pattern becom
 ```ts
 type Condition =
   | { app: AppRef | AppRef[]; unless?: boolean; description?: string }
-  | { var: VarSpec; equals: string | number; unless?: boolean; description?: string }
+  | {
+      var: VarSpec;
+      equals: string | number;
+      unless?: boolean;
+      description?: string;
+    }
   | { device: DeviceSpec; unless?: boolean; description?: string };
 ```
 
 `resolveCondition` reads `.name`/`.product_id`/etc.; the synthesizer renders the label:
+
 - **app:** `In <refDesc>` (if) / `Outside <refDesc>` (unless); multiple → `In <a>/<b>`.
 - **var:** `<varDesc>` (if) / `not <varDesc>` (unless).
 - **device:** `on <deviceDesc>` / `not on <deviceDesc>`.
-- Multiple conditions in a group joined with ` and `. No conditions → label `Always`.
+- Multiple conditions in a group joined with `and`. No conditions → label `Always`.
 
 ## 7. `Trigger` + `order` description rules
 
 The `[TRIGGER]` segment reuses `formatRuleDescription`'s key→symbol mapping (`[RETURN]`, `[←⌘]+[H]`, `[←⌘←⌥]+[M]`). `order` extends the rendering:
-- `down`/`up` `insensitive` → join keys with ` + ` (e.g. `Press a + b` / `Release a + b`).
-- `strict`/`strict_inverse` → join with ` → ` in key-down order (e.g. `Press a → b → c`).
+
+- `down`/`up` `insensitive` → join keys with `+` (e.g. `Press a + b` / `Release a + b`).
+- `strict`/`strict_inverse` → join with `→` in key-down order (e.g. `Press a → b → c`).
 - `upWhen: "any"` → append `(fire on first release)`; `"all"` → `(fire on last release)`.
 - `detectUninterrupted: true` → append `detect uninterruptedly`.
 
@@ -166,11 +182,13 @@ A new module (e.g. `engine/description-synthesizer.ts`) exports `synthesizeRuleD
 ```
 
 Produced from the string:
+
 ```
 [RETURN]:\n---\n\tOn Tap:\n\t\tIn Microsoft Excel:\tEmit 'return'\n\t\tOutside Microsoft Excel:\tEmit 'return'\n\tOn Hold:\n\t\tIn Microsoft Excel:\tRun command 'Evaluate selection'\n\t\tOutside Microsoft Excel:\tRun command 'Evaluate selection'
 ```
 
 Rules:
+
 - Line 1: `[TRIGGER]:` then `\n---\n`.
 - For each present phase, in fixed order — **On Tap** (`release`, tapCount 1), **On Hold** (`hold`, tapCount 1), **On Double Tap** (`release`, tapCount 2), **On Double Tap Hold** (`hold`, tapCount 2) — emit `\t<Phase>:` then one line per case.
 - Phases with no cases are omitted.
@@ -181,16 +199,16 @@ Rules:
 
 ## 10. Registry migration inventory
 
-| File | Current | Becomes |
-|---|---|---|
-| `data/apps.ts` | `appRegistry: Record<string, string>` | `Record<string, AppRef>` (each `{type:"app", name, refDesc}`); `folderOpener` name computed; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS` → `AppRef[]` |
-| `data/folders.ts` | `Record<string, string>` | `Record<string, FolderRef>` |
-| `data/raycast.ts` | `Record<string, string>` | `Record<string, RaycastRef>` |
-| `data/cleanshot.ts` | `Record<string, string>` | `Record<string, CleanShotRef>` |
-| `data/commands.ts` | `Record<string, string>` | `Record<string, CommandRef>` |
-| `data/urls.ts` | `{}` (empty) | `Record<string, UrlRef>` (structure ready) |
-| `data/accessibility.ts` | `ACCESSIBILITY_VARIABLES: Record<string,string>` | `Record<string, VarSpec>`; `ACCESSIBILITY_VALUES` unchanged |
-| `data/devices.ts` | `DEVICE_IDENTIFIERS: Record<string, {product_id,vendor_id,...}>` | `Record<string, DeviceSpec>` (add `deviceDesc`) |
+| File                    | Current                                                          | Becomes                                                                                                                                       |
+| ----------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data/apps.ts`          | `appRegistry: Record<string, string>`                            | `Record<string, AppRef>` (each `{type:"app", name, refDesc}`); `folderOpener` name computed; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS` → `AppRef[]` |
+| `data/folders.ts`       | `Record<string, string>`                                         | `Record<string, FolderRef>`                                                                                                                   |
+| `data/raycast.ts`       | `Record<string, string>`                                         | `Record<string, RaycastRef>`                                                                                                                  |
+| `data/cleanshot.ts`     | `Record<string, string>`                                         | `Record<string, CleanShotRef>`                                                                                                                |
+| `data/commands.ts`      | `Record<string, string>`                                         | `Record<string, CommandRef>`                                                                                                                  |
+| `data/urls.ts`          | `{}` (empty)                                                     | `Record<string, UrlRef>` (structure ready)                                                                                                    |
+| `data/accessibility.ts` | `ACCESSIBILITY_VARIABLES: Record<string,string>`                 | `Record<string, VarSpec>`; `ACCESSIBILITY_VALUES` unchanged                                                                                   |
+| `data/devices.ts`       | `DEVICE_IDENTIFIERS: Record<string, {product_id,vendor_id,...}>` | `Record<string, DeviceSpec>` (add `deviceDesc`)                                                                                               |
 
 Every consumer updates: `ref: "excel"` → `ref: appRegistry.excel`; `app: appRegistry.skim` (already object after migration) typed as `AppRef`; `var: ACCESSIBILITY_VARIABLES.x` → `var: accessibilityVars.x` (`VarSpec`); etc.
 
