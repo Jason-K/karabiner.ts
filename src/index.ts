@@ -23,6 +23,7 @@ import {
   DEVICE_IDENTIFIERS,
   PATHS,
   PREFERRED_PROFILE_NAME,
+  karabinerDeviceId,
 } from "./data";
 import {
   buildAntinoteRules,
@@ -133,7 +134,7 @@ let rules: any[] = [
 
 const deviceConfigs: DeviceConfig[] = [
   {
-    identifiers: DEVICE_IDENTIFIERS.appleNumericKeypad,
+    identifiers: karabinerDeviceId(DEVICE_IDENTIFIERS.appleNumericKeypad),
     simple_modifications: [...APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS],
   },
 ];

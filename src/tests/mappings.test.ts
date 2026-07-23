@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../data";
+import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS, karabinerDeviceId } from "../data";
 import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { folderRegistry } from "../data/folders";
@@ -267,7 +267,7 @@ test("mouse device mappings are declarative and device-scoped", () => {
   assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
   assert.deepEqual(
     mouseDeviceMappings[0]?.identifiers,
-    DEVICE_IDENTIFIERS.logitechG502X,
+    karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
   );
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
   assert.equal(mouseDeviceMappings[0]?.mappings.length, 12);

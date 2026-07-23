@@ -1,6 +1,6 @@
 import { toFromEvent } from "../core/beta";
 import { g502xButtons } from "../core/mouse";
-import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
+import { appRegistry, DEVICE_IDENTIFIERS, karabinerDeviceId, TIMINGS } from "../data";
 import {
   WIN_ACTIVATE_UNDER_CURSOR,
   type MouseDeviceConfig,
@@ -20,7 +20,7 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
   {
     key: "logitech_g502_x",
     name: "Logitech G502 X",
-    identifiers: DEVICE_IDENTIFIERS.logitechG502X,
+    identifiers: karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
     buttonMap: g502xButtons,
     mappings: [
       // -------------------------------------------------------------
