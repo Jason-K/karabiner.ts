@@ -154,3 +154,15 @@ export function synthesizeRuleDescription(binding: Binding): string {
   }
   return `${describeTrigger(binding.trigger)}\n---\n${sections.join("\n")}`;
 }
+
+/**
+ * Per-manipulator slice-label (spec §9): the condition-group's short label.
+ * Returns undefined for the single unconditional group so the manipulator's
+ * `description` field is omitted entirely.
+ */
+export function synthesizeManipulatorLabel(
+  conditions: Condition[] | undefined,
+): string | undefined {
+  if (!conditions?.length) return undefined;
+  return describeConditionGroup(conditions);
+}

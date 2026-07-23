@@ -12,6 +12,7 @@ import {
   describeAction,
   describeConditionGroup,
   describeTrigger,
+  synthesizeManipulatorLabel,
   synthesizeRuleDescription,
 } from "../engine/description-synthesizer";
 
@@ -220,5 +221,23 @@ test("synthesizeRuleDescription: Case.description overrides the action line", ()
   assert.equal(
     synthesizeRuleDescription(binding),
     "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tCustom fragment",
+  );
+});
+
+test("synthesizeManipulatorLabel: undefined when unconditional", () => {
+  assert.equal(synthesizeManipulatorLabel(undefined), undefined);
+  assert.equal(synthesizeManipulatorLabel([]), undefined);
+});
+
+test("synthesizeManipulatorLabel: condition-group label when conditional", () => {
+  assert.equal(
+    synthesizeManipulatorLabel([{ app: { type: "app", name: "x", refDesc: "Excel" } }]),
+    "In Excel",
+  );
+  assert.equal(
+    synthesizeManipulatorLabel([
+      { app: { type: "app", name: "x", refDesc: "Excel" }, unless: true },
+    ]),
+    "Outside Excel",
   );
 });
