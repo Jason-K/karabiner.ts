@@ -7,7 +7,11 @@ import { commandRegistry } from "../data/commands";
 import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import { appRegistry } from "../data/apps";
-import { describeAction, describeConditionGroup } from "../engine/description-synthesizer";
+import {
+  describeAction,
+  describeConditionGroup,
+  describeTrigger,
+} from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(describeAction({ type: "app", ref: appRegistry.excel }), "open Microsoft Excel");
@@ -124,5 +128,28 @@ test("describeConditionGroup: multiple joined with ' and '", () => {
   assert.equal(
     describeConditionGroup([{ app: excelCond }, { var: roleVar, equals: "AXTextField" }]),
     "In Microsoft Excel and Focused UI role",
+  );
+});
+
+test("describeTrigger: single key + modifier chords", () => {
+  assert.equal(describeTrigger({ keys: ["return_or_enter"] }), "[⏎]:");
+  assert.equal(describeTrigger({ keys: ["escape"] }), "[␛]:");
+  assert.equal(describeTrigger({ keys: ["home"] }), "[HOME]:");
+  assert.equal(describeTrigger({ keys: ["h"], modifiers: ["left_command"] }), "[←⌘]+[H]:");
+  assert.equal(
+    describeTrigger({ keys: ["m"], modifiers: ["left_command", "left_option"] }),
+    "[←⌘←⌥]+[M]:",
+  );
+});
+
+test("describeTrigger: simultaneous chord joins keys with ']+['", () => {
+  assert.equal(describeTrigger({ keys: ["j", "k"] }), "[J]+[K]:");
+});
+
+test("describeTrigger: pointer", () => {
+  assert.equal(describeTrigger({ pointer: "button1" }), "Click:");
+  assert.equal(
+    describeTrigger({ pointer: "button1", modifiers: ["left_command"] }),
+    "[←⌘]+Click:",
   );
 });

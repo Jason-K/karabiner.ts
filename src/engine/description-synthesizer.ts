@@ -1,6 +1,6 @@
 import type { ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
-import type { Condition } from "./binding";
+import type { Condition, Trigger } from "./binding";
 import { expandModifiers } from "./action-resolver";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
@@ -89,4 +89,27 @@ export function describeConditionGroup(conditions: Condition[] | undefined): str
     return "device";
   });
   return parts.join(" and ");
+}
+
+/**
+ * The `[TRIGGER]:` segment (spec §7). Reuses the key→symbol mapping from
+ * rule-descriptions. Pointer triggers render as `Click:` (button1) / `Pointer <x>:`.
+ * `SimOrder`-augmented rendering (strict key-down sequences, upWhen notes) is
+ * intentionally minimal here: no Phase 2 binding uses a simultaneous trigger, so
+ * the basic `]+[` join is complete for this phase; Phase 3 (simultaneous
+ * migration) extends it.
+ */
+export function describeTrigger(trigger: Trigger): string {
+  const modSymbols = (mods?: string[]) =>
+    mods?.length ? mods.map(modifierTokenToSymbols).join("") : "";
+  if ("pointer" in trigger) {
+    const symbols = modSymbols(trigger.modifiers);
+    const pointerLabel = trigger.pointer === "button1" ? "Click" : `Pointer ${trigger.pointer}`;
+    return symbols ? `[${symbols}]+${pointerLabel}:` : `${pointerLabel}:`;
+  }
+  const segments: string[] = [];
+  const symbols = modSymbols(trigger.modifiers);
+  if (symbols) segments.push(`[${symbols}]`);
+  for (const k of trigger.keys) segments.push(`[${keyTokenToLabel(k)}]`);
+  return `${segments.join("+")}:`;
 }
