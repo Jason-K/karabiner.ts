@@ -20,7 +20,7 @@ import { openApp } from "../core/software";
 import type { AppRef } from "../data";
 import { resolveModComboAlias } from "../data/key-aliases";
 
-function expandModifiers(modifiers: string[]): string[] {
+export function expandModifiers(modifiers: string[]): string[] {
   const expanded: string[] = [];
   const seen = new Set<string>();
   for (const mod of modifiers) {

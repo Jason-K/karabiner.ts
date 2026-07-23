@@ -46,7 +46,7 @@ function isModifierToken(token: string): boolean {
   return MODIFIER_BASES.has(base);
 }
 
-function modifierTokenToSymbols(token: string): string {
+export function modifierTokenToSymbols(token: string): string {
   const canonicalAlias = getModComboAliasCanonicalKey(token);
   if (canonicalAlias) {
     if (canonicalAlias.startsWith("vm")) {
@@ -70,7 +70,7 @@ function modifierTokenToSymbols(token: string): string {
   return `${sidePrefix}${KEY_SYMBOLS[base] ?? base.toUpperCase()}`;
 }
 
-function keyTokenToLabel(token: string): string {
+export function keyTokenToLabel(token: string): string {
   const normalized = normalizeToken(token);
   const override = KEY_SYMBOLS[normalized];
   if (override) {
