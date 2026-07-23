@@ -13,6 +13,16 @@ import {
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
 import { tapHoldBindings } from "../definitions";
+import {
+  enterKeyHoldMappings,
+  equalsKeyHoldMappings,
+} from "../definitions/enter-equals";
+import { homeEndBindings } from "../definitions/home-end";
+import { mouseDeviceMappings } from "../definitions/mouse";
+import {
+  disabledShortcutBindings,
+  passwordsQuickFillBinding,
+} from "../definitions/system";
 import type { Binding, Case } from "../engine";
 
 /** Find a tap-hold binding in the merged set by single key + modifiers. */
@@ -35,16 +45,6 @@ function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
   if (!c) throw new Error(`binding has no ${phase} case`);
   return c.do;
 }
-import {
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-} from "../definitions/enter-equals";
-import { homeEndBindings } from "../definitions/home-end";
-import { mouseDeviceMappings } from "../definitions/mouse";
-import {
-  disabledShortcutBindings,
-  passwordsQuickFillBinding,
-} from "../definitions/system";
 
 test("rectangle focused-window orientation command uses focused display", () => {
   const command = rectangleOrientationBasedCommand("left-half", "top-half");
@@ -222,7 +222,7 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
   assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=previous-display",
+      url: "rectangle-pro://execute-action?name=app-prev-display",
       background: true,
     },
   ]);

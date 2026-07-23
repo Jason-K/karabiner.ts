@@ -1,6 +1,6 @@
 const url = (name: string, refDesc: string) => ({
   type: "url" as const,
-  name,
+  name,     
   refDesc,
 });
 

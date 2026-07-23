@@ -9,16 +9,25 @@ import {
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
+import { urlRegistry } from "../data/urls";
 import { defineBindings, remap, tapHoldBinding, type Binding } from "../engine";
 
 // Launcher triggers use MOD_COMBO.vmCOCS (the expanded modifier array) because
 // buildRemap — unlike buildTapHold — does not expand alias modifiers.
 export const hyperLauncherBindings: Binding[] = [
-  remap("s", MOD_COMBO.vmCOCS, [{ type: "shell", command: formatSelectionCommand() }]),
-  remap("t", MOD_COMBO.vmCOCS, [{ type: "shell", command: typinatorNewRuleCommand() }]),
-  remap("comma", MOD_COMBO.vmCOCS, [{ type: "app", ref: appRegistry.systemSettings }]),
-  remap("f12", MOD_COMBO.vmCOCS, [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }]),
-  remap("escape", MOD_COMBO.vmCOCS, [{ type: "app", ref: appRegistry.activityMonitor }]),
+  remap("s", MOD_COMBO.vmCOCS, [
+    { type: "shell", command: formatSelectionCommand() },
+  ]),
+  // remap("t", MOD_COMBO.vmCOCS, [{ type: "shell", command: typinatorNewRuleCommand() }]),
+  remap("comma", MOD_COMBO.vmCOCS, [
+    { type: "app", ref: appRegistry.systemSettings },
+  ]),
+  remap("f12", MOD_COMBO.vmCOCS, [
+    { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
+  ]),
+  remap("escape", MOD_COMBO.vmCOCS, [
+    { type: "app", ref: appRegistry.activityMonitor },
+  ]),
 ];
 
 export const hyperTapHoldBindings: Binding[] = [
@@ -67,34 +76,94 @@ export const hyperTapHoldBindings: Binding[] = [
     ],
   }),
   tapHoldBinding("keypad_1", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true }],
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-left-eighth"),
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("keypad_3", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true }],
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("bottom-right-eighth"),
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("keypad_5", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("maximize"), background: true }],
+    alone: [
+      { type: "url", url: urlRegistry.rectWinMaximize.name, background: true },
+    ],
   }),
   tapHoldBinding("keypad_7", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("top-left-eighth"), background: true }],
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("top-left-eighth"),
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("keypad_9", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("top-right-eighth"), background: true }],
+    alone: [
+      {
+        type: "url",
+        url: rectangleActionUrl("top-right-eighth"),
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("spacebar", ["vmCOCS"], {
     alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
   }),
   tapHoldBinding("tab", ["vmCOCS"], {
-    alone: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
-    hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
+    alone: [
+      {
+        type: "url",
+        url: urlRegistry.rectAppNextDisplay.name,
+        background: true,
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: urlRegistry.rectAppPrevDisplay.name,
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("left_arrow", ["vmCOCS"], {
-    alone: [{ type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") }],
-    hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
+    alone: [
+      {
+        type: "shell",
+        command: rectangleOrientationBasedCommand("left-half", "top-half"),
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: urlRegistry.rectAppPrevDisplay.name,
+        background: true,
+      },
+    ],
   }),
   tapHoldBinding("right_arrow", ["vmCOCS"], {
-    alone: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
-    hold: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
+    alone: [
+      {
+        type: "shell",
+        command: rectangleOrientationBasedCommand("right-half", "bottom-half"),
+      },
+    ],
+    hold: [
+      {
+        type: "url",
+        url: urlRegistry.rectAppNextDisplay.name,
+        background: true,
+      },
+    ],
   }),
 ];
 

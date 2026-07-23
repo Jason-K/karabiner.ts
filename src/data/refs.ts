@@ -11,6 +11,7 @@ export type RefSpecType =
 
 export type RefSpec = {
   type: RefSpecType;
+  // TO DO: consider better name for 'name', which is a link in the case of a URL, a bundle Id in the case of an app, etc. (name is misleading; this is the value consumed by resolvers, not a human label)
   name: string | string[];
   refDesc: string;
 };
