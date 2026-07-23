@@ -66,7 +66,6 @@ test("registries centralize app folder and integration refs", () => {
 test("home-end navigation mappings stay declarative", () => {
   assert.equal(homeEndBindings.length, 4);
   assert.deepEqual(homeEndBindings[0], {
-    description: "[HOME]        →    Move to line start (on tap)",
     trigger: { keys: ["home"] },
     cases: [
       {
@@ -76,7 +75,6 @@ test("home-end navigation mappings stay declarative", () => {
     ],
   });
   assert.deepEqual(homeEndBindings[1], {
-    description: "[←⇧]+[HOME]        →    Select to line start (on tap)",
     trigger: { keys: ["home"], modifiers: ["left_shift"] },
     cases: [
       {
@@ -96,12 +94,10 @@ test("home-end navigation mappings stay declarative", () => {
 test("disabled shortcut mappings stay declarative", () => {
   assert.equal(disabledShortcutBindings.length, 3);
   assert.deepEqual(disabledShortcutBindings[0], {
-    description: "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
     trigger: { keys: ["h"], modifiers: ["left_command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
   assert.deepEqual(disabledShortcutBindings[2], {
-    description: "[←⌘←⌥]+[M]        →    Disabled minimize shortcut (on tap)",
     trigger: { keys: ["m"], modifiers: ["left_command", "left_option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
@@ -172,10 +168,8 @@ test("passwords quick fill mapping stays declarative", () => {
     keys: string[];
     modifiers?: string[];
   };
-  assert.equal(
-    passwordsQuickFillBinding.description,
-    "[←⌘]+[/]        →    Quick fill password (on tap)",
-  );
+  // Description is now auto-derived (Phase 2) — no hand-written override.
+  assert.equal(passwordsQuickFillBinding.description, undefined);
   assert.deepEqual(trigger.keys, ["slash"]);
   assert.deepEqual(trigger.modifiers, ["left_command"]);
   assert.equal(passwordsQuickFillBinding.cases.length, 2);

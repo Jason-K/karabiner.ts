@@ -1,5 +1,4 @@
 import type { ActionSpec } from "../core/action-dsl";
-import { formatRuleDescription } from "../core/rule-descriptions";
 import { defineBindings, type Binding } from "../engine";
 
 const DOUBLE_TAP_DELAY_MS = 600;
@@ -18,11 +17,6 @@ const clipboardHistoryAction: ActionSpec = {
 // the key they pass through, so this factory keeps the two bindings in sync.
 function shiftClipboardBinding(key: "left_shift" | "right_shift"): Binding {
   return {
-    description: formatRuleDescription(
-      key,
-      "Raycast clipboard history",
-      "multi-tap",
-    ),
     trigger: { keys: [key] },
     timing: { aloneMs: DOUBLE_TAP_DELAY_MS, heldThresholdMs: DOUBLE_TAP_DELAY_MS },
     multiTap: { allowPassThrough: true, mods: [] },

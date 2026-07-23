@@ -92,28 +92,19 @@ test("cmd-q factory keeps double-tap protection structure", () => {
 test("security disable shortcuts factory keeps all disabled combos", () => {
   const rules = toRules(buildDisableHideMinimizeRule());
   assert.equal(rules.length, 3);
-  assert.equal(
-    rules[0]?.description,
-    "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
-  );
+  assert.match(rules[0]?.description, /^\[←⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
 test("word privileges factory keeps single guarded manipulator", () => {
   const rule = toRule(buildWordPrivilegesRule());
-  assert.equal(
-    rule.description,
-    "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
-  );
+  assert.match(rule.description, /^\[←⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
 test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = toRule(buildPasswordsQuickFillRule());
-  assert.equal(
-    rule.description,
-    "[←⌘]+[/]        →    Quick fill password (on tap)",
-  );
+  assert.match(rule.description, /^\[←⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 
   const roleConditions = rule.manipulators.map(
@@ -154,10 +145,7 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
 test("skim command remap factory keeps both remaps", () => {
   const rules = toRules(buildSkimCommandRemapRule());
   assert.equal(rules.length, 2);
-  assert.equal(
-    rules[0]?.description,
-    "[←⌘]+[H]        →    Skim command H remap (on tap)",
-  );
+  assert.match(rules[0]?.description, /^\[←⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
@@ -172,29 +160,20 @@ test("antinote delete factory keeps double-tap workflow", () => {
 
 test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
   const rule = toRule(buildEscapeTapTapHoldRule());
-  assert.equal(
-    rule.description,
-    "[␛]        →    Escape / Kill app (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[␛\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
 test("ctrl-escape monitor factory keeps single manipulator", () => {
   const rule = toRule(buildCtrlEscapeMonitorRule());
-  assert.equal(
-    rule.description,
-    "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
-  );
+  assert.match(rule.description, /^\[←⌃\]\+\[␛\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
 test("home-end factory keeps four navigation mappings", () => {
   const rules = toRules(buildHomeEndRule());
   assert.equal(rules.length, 4);
-  assert.equal(
-    rules[0]?.description,
-    "[HOME]        →    Move to line start (on tap)",
-  );
+  assert.match(rules[0]?.description, /^\[HOME\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
@@ -226,10 +205,7 @@ test("enter rules factory keeps two keys across two contexts", () => {
 test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const rule = toRule(buildOnePieceClickEnterRule());
   const manipulator: any = rule.manipulators[0];
-  assert.equal(
-    rule.description,
-    "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
-  );
+  assert.match(rule.description, /^Click:\n---/);
   assert.equal(rule.manipulators.length, 1);
   assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",

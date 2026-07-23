@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { DESCRIPTION_SEPARATOR } from "../data";
 import { buildShiftRules } from "../definitions";
 
 const RAYCAST_CLIPBOARD_HISTORY_URL =
@@ -62,18 +61,14 @@ test("each shift rule has a second-tap and a first-tap manipulator", () => {
   }
 });
 
-test("left shift rule is labelled with the Raycast clipboard-history action", () => {
-  assert.equal(
-    builtRules()[0].description,
-    `[←⇧]${DESCRIPTION_SEPARATOR}Raycast clipboard history (on multi-tap)`,
-  );
+test("left shift rule description includes the Raycast clipboard-history action", () => {
+  assert.match(builtRules()[0].description, /On Double Tap:/);
+  assert.match(builtRules()[0].description, /clipboard-history/);
 });
 
-test("right shift rule is labelled with the Raycast clipboard-history action", () => {
-  assert.equal(
-    builtRules()[1].description,
-    `[→⇧]${DESCRIPTION_SEPARATOR}Raycast clipboard history (on multi-tap)`,
-  );
+test("right shift rule description includes the Raycast clipboard-history action", () => {
+  assert.match(builtRules()[1].description, /On Double Tap:/);
+  assert.match(builtRules()[1].description, /clipboard-history/);
 });
 
 test("double-tap of either shift key runs the Raycast clipboard-history command", () => {

@@ -1,10 +1,8 @@
-import { formatRuleDescription } from "../core/rule-descriptions";
 import { killAppCommand } from "../core/scripts";
 import { TIMINGS, appRegistry } from "../data";
 import { defineBindings, type Binding } from "../engine";
 
 export const escapeTapTapHoldBinding: Binding = {
-  description: formatRuleDescription("escape", "Escape / Kill app", "multi-tap"),
   trigger: { keys: ["escape"] },
   timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
   multiTap: { mods: [] },
@@ -19,11 +17,6 @@ export const escapeTapTapHoldBinding: Binding = {
 // tapHold builder, which does not emit a manipulator-level description — this
 // preserves the §8.1 normalization landed in round 1.
 export const ctrlEscapeMonitorBinding: Binding = {
-  description: formatRuleDescription(
-    ["left_control", "escape"],
-    "Activity Monitor / Process Spy",
-    "hold",
-  ),
   trigger: { keys: ["escape"], modifiers: ["left_control"] },
   timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
   cases: [
