@@ -25,5 +25,6 @@ export { folderRegistry, type FolderRef } from "./folders";
 export { PATHS } from "./paths";
 export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./profiles";
 export { raycastRegistry } from "./raycast";
+export type { DeviceSpec, RefSpec, RefSpecType, VarSpec } from "./refs";
 export { TIMINGS } from "./timings";
 export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./ui-labels";
