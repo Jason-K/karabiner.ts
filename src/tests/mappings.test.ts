@@ -5,10 +5,8 @@ import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS, karabinerDeviceId } from "../data"
 import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { folderRegistry } from "../data/folders";
-import { WIN_ACTIVATE_UNDER_CURSOR } from "../data/mouse";
 import { raycastRegistry } from "../data/raycast";
 import {
-  rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
@@ -262,7 +260,7 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
   ]);
 });
 
-test("mouse device mappings are declarative and device-scoped", () => {
+test("mouse device config shell holds the left-button mappings (bespoke, pending multi-tap)", () => {
   assert.equal(mouseDeviceMappings.length, 1);
   assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
   assert.deepEqual(
@@ -270,186 +268,12 @@ test("mouse device mappings are declarative and device-scoped", () => {
     karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
   );
   assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 12);
-
-  const backMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "back",
-  );
-  assert.deepEqual(backMapping, {
-    type: "tapHold",
-    button: "back",
-    description: "[BACK] Back (tap) / Window switch (hold)",
-    alone: [{ pointing_button: "button4", repeat: false }],
-    hold: [{ key_code: "tab", modifiers: ["left_command"] }],
-    overrides: [
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-        ],
-        to: [
-          {
-            key_code: "close_bracket",
-            modifiers: ["left_command", "left_shift"],
-            repeat: true,
-          },
-        ],
-      },
-    ],
-    eventOptions: { halt: true, repeat: false },
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
-    type: "tapHold",
-    button: "shift",
-    description: "[SHIFT] Mission Control (tap) / Rectangle key (hold)",
-    alone: [
-      {
-        key_code: "up_arrow",
-        modifiers: ["left_control"],
-      },
-    ],
-    hold: [
-      WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        key_code: "left_control",
-        modifiers: ["left_option", "left_shift"],
-      },
-    ],
-    overrides: [
-      {
-        when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
-        to: [
-          {
-            key_code: "down_arrow",
-            modifiers: ["left_control"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
-    type: "tapHold",
-    button: "wheel_left",
-    description:
-      "[WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
-    hold: [
-      WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        shell_command: rectangleOrientationBasedCommand(
-          "left-half",
-          "top-half",
-        ),
-      },
-    ],
-    overrides: [
-      {
-        when: [{ variable: "wheel_down", match: "if", value: 1 }],
-        to: [],
-      },
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-          { variable: "wheel_down", match: "if", value: 0 },
-        ],
-        to: [
-          {
-            key_code: "left_arrow",
-            modifiers: ["left_command", "left_control", "left_shift"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-    thresholdMs: 200,
-    timeoutMs: 200,
-  });
-
-  const middleMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "wheel",
-  );
-  assert.deepEqual(middleMapping, {
-    type: "tapHold",
-    button: "wheel",
-    description:
-      "[WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
-    variable: "wheel_down",
-    alone: [{ pointing_button: "button3", repeat: false }],
-    overrides: [
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-        ],
-        to: [
-          {
-            pointing_button: "button1",
-            modifiers: ["left_option"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-    hold: [
-      WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        shell_command: rectangleMaxOrRestoreCommand(),
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "left_forward",
-  );
-
-  const leftBackMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "left_back",
-  );
-  assert.equal(
-    leftBackMapping?.description,
-    "[G7] Fill screen with window (tap) / Move window to next display (hold)",
-  );
-  const leftBackAlone =
-    leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
-  assert.ok(leftBackAlone);
-  assert.equal(leftBackAlone?.length, 1);
-  assert.deepEqual(leftBackAlone?.[0], {
-    shell_command: rectangleMaxOrRestoreCommand(),
-  });
-  const leftBackHold =
-    leftBackMapping?.type === "tapHold" ? leftBackMapping.hold : undefined;
-  assert.deepEqual(leftBackHold, [
-    WIN_ACTIVATE_UNDER_CURSOR,
-    {
-      shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
-    },
-  ]);
-  assert.deepEqual(leftForwardMapping, {
-    type: "tapHold",
-    button: "left_forward",
-    description: "[G8] Activate Popclip (tap) / Activate Sidenote (hold)",
-    alone: [
-      {
-        shell_command: "osascript -e 'tell application \"Popclip\" to appear'",
-      },
-    ],
-    hold: [
-      {
-        key_code: "f10",
-        modifiers: ["left_command", "left_option", "left_shift"],
-        repeat: false,
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
+  // The ten tap-hold/remap mappings migrated to `mouseBindings` (Binding[]
+  // literals — covered by rules-factories.test.ts + the structural gate). Only
+  // the two left-button mappings remain bespoke here pending the multi-tap work.
+  assert.equal(mouseDeviceMappings[0]?.mappings.length, 2);
+  assert.equal(mouseDeviceMappings[0]?.mappings[0]?.type, "doubleTap");
+  assert.equal(mouseDeviceMappings[0]?.mappings[0]?.button, "left");
+  assert.equal(mouseDeviceMappings[0]?.mappings[1]?.type, "tapHold");
+  assert.equal(mouseDeviceMappings[0]?.mappings[1]?.button, "left");
 });

@@ -1,3 +1,4 @@
+import type { ToEvent } from "karabiner.ts";
 import type { AppRef } from "../data/apps";
 import type { CleanShotRef } from "../data/cleanshot";
 import type { CommandRef } from "../data/commands";
@@ -104,3 +105,12 @@ export type ActionSpec =
       type: "sequence";
       actions: ActionSpec[];
     };
+
+/**
+ * A case `do` entry: either a typed {@link ActionSpec} or a raw Karabiner
+ * `ToEvent` passed through verbatim (mouse mappings author heterogeneous
+ * events — pointing_button, shell_command, set_variable, from_event — that have
+ * no natural ActionSpec representation). Raw ToEvents are resolved as-is and
+ * described by shape.
+ */
+export type Action = ActionSpec | ToEvent;

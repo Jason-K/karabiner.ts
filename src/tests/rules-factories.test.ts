@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { pythonScriptCommand } from "../core/scripts";
-import { DEVICE_IDENTIFIERS, appRegistry } from "../data";
+import { appRegistry } from "../data";
 import {
   buildAntinoteRules,
   buildCapsLockRule,
@@ -19,10 +19,10 @@ import {
   buildPasswordsQuickFillRule,
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
-  mouseDeviceMappings,
+  mouseBindings,
 } from "../definitions";
 import {
-  buildMouseRules,
+  defineBindings,
   resolveActionToEvents,
 } from "../engine";
 
@@ -226,91 +226,51 @@ test("equals rules factory keeps keypad and regular mappings", () => {
   );
 });
 
-test("mouse rules factory builds declarative per-device mappings", () => {
-  const rules = toRules(buildMouseRules(mouseDeviceMappings));
-  assert.equal(rules.length, 12);
-  assert.equal(
-    rules[0]?.description,
-    "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
-  );
-  // Shift mapping now declares an override (right_button_pressed =>
-  // ctrl+down_arrow), which the engine emits as a standalone prepended
-  // manipulator, plus the base tap-hold manipulator.
+test("mouse bindings build device-scoped manipulators via defineBindings", () => {
+  const rules = toRules(defineBindings(mouseBindings));
+  assert.equal(rules.length, 10);
+
+  // Shift — override (right-button chord) prepended + base tap-hold. The alias
+  // auto-scopes to the G502X via nameScope, so device_if lands last.
   assert.equal(rules[0]?.manipulators.length, 2);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
     pointing_button: "button5",
   });
-
+  assert.deepEqual(rules[0]?.manipulators[0]?.to, [
+    {
+      key_code: "down_arrow",
+      modifiers: ["left_control"],
+      repeat: false,
+    },
+  ]);
+  const shiftConds = rules[0]?.manipulators[0]?.conditions ?? [];
   assert.equal(
-    rules[1]?.description,
-    "Logitech G502 X: [WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
+    shiftConds.find((c: any) => c.type === "variable_if")?.name,
+    "right_button_pressed",
   );
+  assert.ok(shiftConds.find((c: any) => c.type === "device_if"));
+  // device_if is the LAST condition (bespoke appended device scope last)
+  assert.equal(shiftConds[shiftConds.length - 1]?.type, "device_if");
+
+  // Wheel left — two overrides (reverse-declared) + base carrying wheel guards.
   assert.equal(rules[1]?.manipulators.length, 3);
-  const wheelLeftOverride: any = rules[1]?.manipulators[0];
   assert.deepEqual(rules[1]?.manipulators[0]?.from, {
     pointing_button: "button7",
   });
-    assert.deepEqual(wheelLeftOverride?.to, [
-      {
-        key_code: "left_arrow",
-        modifiers: ["left_command", "left_control", "left_shift"],
-        repeat: false,
-      },
-    ]);
-  assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
+  assert.deepEqual(rules[1]?.manipulators[0]?.to, [
     {
-      type: "frontmost_application_if",
-      description: undefined,
-      bundle_identifiers: [appRegistry.browser.name],
-    },
-    {
-      type: "variable_if",
-      name: "right_button_pressed",
-      value: 1,
-    },
-    {
-      type: "variable_if",
-      name: "wheel_down",
-      value: 0,
-    },
-    {
-      type: "device_if",
-      description: undefined,
-      identifiers: [
-        {
-          product_id: DEVICE_IDENTIFIERS.logitechG502X.product_id,
-          vendor_id: DEVICE_IDENTIFIERS.logitechG502X.vendor_id,
-        },
-      ],
-    },
-  ]);
-  assert.deepEqual(
-    rules[1]?.manipulators
-      ?.flatMap((manipulator: any) => manipulator?.conditions ?? [])
-      ?.find((condition: any) => condition?.type === "variable_unless"),
-    {
-      type: "variable_unless",
-      name: "wheel_down",
-      value: 1,
-    },
-  );
-
-  assert.equal(
-    rules[2]?.description,
-    "Logitech G502 X: [WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)",
-  );
-  assert.equal(rules[2]?.manipulators.length, 2);
-  const wheelRightOverride: any = rules[2]?.manipulators[0];
-  assert.deepEqual(rules[2]?.manipulators[0]?.from, {
-    pointing_button: "button8",
-  });
-  assert.deepEqual(wheelRightOverride?.to, [
-    {
-      key_code: "right_arrow",
+      key_code: "left_arrow",
       modifiers: ["left_command", "left_control", "left_shift"],
       repeat: false,
     },
   ]);
+  const wheelLeftBase = rules[1]?.manipulators[2];
+  assert.deepEqual(
+    (wheelLeftBase?.conditions ?? []).find(
+      (c: any) => c.type === "variable_unless" && c.name === "wheel_down",
+    ),
+    { type: "variable_unless", name: "wheel_down", value: 1 },
+  );
 });
 
 test("resolveActionToEvents flattens sequence into multiple events", () => {

@@ -43,6 +43,7 @@ import {
   buildSkimCommandRemapRule,
   buildWordPrivilegesRule,
   buildZenCommandRemapRule,
+  mouseBindings,
   mouseDeviceMappings,
   simultaneousMappings,
   tapHoldBindings,
@@ -78,7 +79,9 @@ let rules: any[] = [
   // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
   buildCtrlEscapeMonitorRule(),
 
-  // Mouse mappings (declarative per-device rules)
+  // Mouse mappings — G502X tap-hold/remap bindings (Binding[] engine) plus the
+  // left-button double-tap/tap-hold mappings (still bespoke, pending multi-tap).
+  ...defineBindings(mouseBindings),
   ...buildMouseRules(mouseDeviceMappings),
 
   // ONEPIECE - Left click submits with Enter inside the app

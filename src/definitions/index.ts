@@ -32,7 +32,7 @@ export {
   buildCmdQRule,
   buildLeftCommandRule,
 } from "./left-command";
-export { buildMouseRules, mouseDeviceMappings } from "./mouse";
+export { buildMouseRules, mouseBindings, mouseDeviceMappings } from "./mouse";
 export { buildShiftRules } from "./shift";
 export {
   buildDisableHideMinimizeRule,

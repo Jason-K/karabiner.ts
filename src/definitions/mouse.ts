@@ -3,6 +3,7 @@ import { g502xButtons } from "../core/mouse";
 import { appRegistry, DEVICE_IDENTIFIERS, karabinerDeviceId, TIMINGS } from "../data";
 import {
   WIN_ACTIVATE_UNDER_CURSOR,
+  mouseVars,
   type MouseDeviceConfig,
 } from "../data/mouse";
 import {
@@ -13,8 +14,216 @@ import {
   WIN_NEXT_DISPLAY,
   WIN_RIGHT_OR_BOTTOM,
 } from "../data/rectangle";
+import type { Binding } from "../engine";
 
 export { buildMouseDeviceRules, buildMouseRules } from "../engine/mouse-rules";
+
+/**
+ * G502X mouse mappings authored as plain `Binding[]` literals and consumed by
+ * `defineBindings` (the same engine as keys). Device-specific button aliases
+ * (shift, forward, the wheel-tilt and extra G-buttons) auto-scope to the G502X
+ * via the `buttons` registry `nameScope`; the standard buttons
+ * (back, forward, wheel, right, left) carry an explicit `device` condition.
+ *
+ * The two `button: "left"` mappings (double-tap + tap-hold) still flow through
+ * the bespoke `mouseDeviceMappings` builder pending the multi-tap pointer work.
+ */
+export const mouseBindings: Binding[] = [
+  // -------------------------------------------------------------
+  // SHIFT BUTTON — Mission Control (tap) / Rectangle key (hold);
+  // right-button chord → down_arrow
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "shift" },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      // override (right button held): immediate down_arrow
+      { phase: "press", conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
+      { phase: "release", do: [{ key_code: "up_arrow", modifiers: ["left_control"] }] },
+      {
+        phase: "hold",
+        do: [
+          WIN_ACTIVATE_UNDER_CURSOR,
+          { key_code: "left_control", modifiers: ["left_option", "left_shift"] },
+        ],
+      },
+    ],
+  },
+  // -------------------------------------------------------------
+  // WHEEL LEFT — Move window left/up (hold) / Change workspace (hold in Zen)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "wheelLeft" },
+    timing: { aloneMs: TIMINGS.timeoutWheelChordMs, heldThresholdMs: TIMINGS.timeoutWheelChordMs },
+    cases: [
+      // overrides declared in REVERSE of the bespoke prepend order so the
+      // emitted manipulator order matches (groupByConditions is first-seen).
+      // Zen + right-button + wheel-up → prev workspace
+      {
+        phase: "press",
+        conditions: [
+          { app: appRegistry.zen },
+          { var: mouseVars.rightButtonPressed, equals: 1 },
+          { var: mouseVars.wheelDown, equals: 0 },
+        ],
+        do: [{ key_code: "left_arrow", modifiers: ["left_command", "left_control", "left_shift"], repeat: false }],
+      },
+      // wheel held down → swallow (the wheel-as-button mapping handles it)
+      { phase: "press", conditions: [{ var: mouseVars.wheelDown, equals: 1 }], do: [] },
+      // base hold — wheel guards on the base only (matches bespoke injection)
+      {
+        phase: "hold",
+        conditions: [
+          { var: mouseVars.wheelDown, equals: 1, unless: true },
+          { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
+        ],
+        do: [...WIN_LEFT_OR_TOP],
+      },
+    ],
+  },
+  // -------------------------------------------------------------
+  // WHEEL RIGHT — Move window right/down (hold) / Change workspace (hold in Zen)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "wheelRight" },
+    timing: { aloneMs: TIMINGS.timeoutWheelChordMs, heldThresholdMs: TIMINGS.timeoutWheelChordMs },
+    cases: [
+      {
+        phase: "press",
+        conditions: [
+          { app: appRegistry.zen },
+          { var: mouseVars.rightButtonPressed, equals: 1 },
+          { var: mouseVars.wheelDown, equals: 0 },
+        ],
+        do: [{ key_code: "right_arrow", modifiers: ["left_command", "left_control", "left_shift"], repeat: false }],
+      },
+      {
+        phase: "hold",
+        conditions: [
+          { var: mouseVars.wheelDown, equals: 1, unless: true },
+          { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
+        ],
+        do: [...WIN_RIGHT_OR_BOTTOM],
+      },
+    ],
+  },
+  // -------------------------------------------------------------
+  // WHEEL (AS BUTTON) — Fill screen (hold) / Open link in glance (rbutton+wheel in Zen)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "wheel" },
+    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    whileHoldVar: mouseVars.wheelDown,
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      {
+        phase: "press",
+        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        do: [{ pointing_button: "button1", modifiers: ["left_option"], repeat: false }],
+      },
+      { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
+      { phase: "hold", do: [WIN_ACTIVATE_UNDER_CURSOR, ...rectangleMaxOrRestoreEvents()] },
+    ],
+  },
+  // -------------------------------------------------------------
+  // G7 (left_back) — Fill screen (tap) / Move window to next display (hold)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "leftBack" },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      { phase: "release", do: rectangleMaxOrRestoreEvents() },
+      {
+        phase: "hold",
+        do: [
+          WIN_ACTIVATE_UNDER_CURSOR,
+          { shell_command: `open -g '${rectangleActionUrl("next-display")}'` },
+        ],
+      },
+    ],
+  },
+  // -------------------------------------------------------------
+  // G8 (left_forward) — Activate Popclip (tap) / Activate Sidenote (hold)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "leftForward" },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      { phase: "release", do: [{ shell_command: "osascript -e 'tell application \"Popclip\" to appear'" }] },
+      { phase: "hold", do: [{ key_code: "f10", modifiers: ["left_command", "left_option", "left_shift"], repeat: false }] },
+    ],
+  },
+  // -------------------------------------------------------------
+  // G9 (middle_back) — Screenshot to text (tap) / markdown (hold)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "middleBack" },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      { phase: "release", do: [{ shell_command: "open 'cleanshot://capture-text?linebreaks=false'" }] },
+      {
+        phase: "hold",
+        do: [
+          {
+            shell_command:
+              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
+          },
+        ],
+      },
+    ],
+  },
+  // -------------------------------------------------------------
+  // BACK — Back (tap) / Window switch (hold); Zen+rbutton → next tab
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "back" },
+    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    eventOptions: { halt: true, repeat: false },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      {
+        phase: "press",
+        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        do: [{ key_code: "close_bracket", modifiers: ["left_command", "left_shift"], repeat: true }],
+      },
+      { phase: "release", do: [{ pointing_button: "button4", repeat: false }] },
+      { phase: "hold", do: [{ key_code: "tab", modifiers: ["left_command"] }] },
+    ],
+  },
+  // -------------------------------------------------------------
+  // FORWARD — Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "forward" },
+    eventOptions: { halt: true, repeat: false },
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      {
+        phase: "press",
+        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        do: [{ key_code: "open_bracket", modifiers: ["left_command", "left_shift"], repeat: true }],
+      },
+      { phase: "release", do: [{ pointing_button: "button5", repeat: false }] },
+      { phase: "hold", do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
+    ],
+  },
+  // -------------------------------------------------------------
+  // RIGHT — Right click (tap) / Zen chord modifier (hold).
+  // whileHoldVar signals right_button_pressed; suppressCancelFallback drops
+  // the stray click on a canceled hold.
+  // -------------------------------------------------------------
+  {
+    trigger: { pointer: "right" },
+    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    whileHoldVar: mouseVars.rightButtonPressed,
+    suppressCancelFallback: true,
+    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    cases: [
+      { phase: "release", do: [{ pointing_button: "button2", repeat: false }] },
+      { phase: "hold", do: [] },
+    ],
+  },
+];
 
 export const mouseDeviceMappings: MouseDeviceConfig[] = [
   {
@@ -23,269 +232,6 @@ export const mouseDeviceMappings: MouseDeviceConfig[] = [
     identifiers: karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
     buttonMap: g502xButtons,
     mappings: [
-      // -------------------------------------------------------------
-      // SHIFT BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "shift",
-        description: "[SHIFT] Mission Control (tap) / Rectangle key (hold)",
-        alone: [
-          {
-            key_code: "up_arrow",
-            modifiers: ["left_control"],
-          },
-        ],
-        hold: [
-          // OPTION 1: activate BetterStage radial menu
-          // { pointing_button: "button3", modifiers: ["left_option"], repeat: false, },
-          // OPTION 2: activate Rectangle Pro free movement
-          WIN_ACTIVATE_UNDER_CURSOR,
-          {
-            key_code: "left_control",
-            modifiers: ["left_option", "left_shift"],
-          },
-        ],
-        overrides: [
-          {
-            when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
-            to: [
-              {
-                key_code: "down_arrow",
-                modifiers: ["left_control"],
-                repeat: false,
-              },
-            ],
-          },
-        ],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      // -------------------------------------------------------------
-      // WHEEL LEFT BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "wheel_left",
-        description:
-          "[WHEEL LEFT] Move window left/up (hold) / Change workspace (hold in Zen)",
-        hold: [...WIN_LEFT_OR_TOP],
-        overrides: [
-          {
-            when: [{ variable: "wheel_down", match: "if", value: 1 }],
-            to: [],
-          },
-          {
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-              { variable: "wheel_down", match: "if", value: 0 },
-            ],
-            to: [
-              {
-                key_code: "left_arrow",
-                modifiers: ["left_command", "left_control", "left_shift"],
-                repeat: false,
-              },
-            ],
-          },
-        ],
-        thresholdMs: TIMINGS.timeoutWheelChordMs,
-        timeoutMs: TIMINGS.timeoutWheelChordMs,
-      },
-      // -------------------------------------------------------------
-      // WHEEL RIGHT BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "wheel_right",
-        description:
-          "[WHEEL RIGHT] Move window right/down (hold) / Change workspace (hold in Zen)",
-        hold: [...WIN_RIGHT_OR_BOTTOM],
-        overrides: [
-          {
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-              { variable: "wheel_down", match: "if", value: 0 },
-            ],
-            to: [
-              {
-                key_code: "right_arrow",
-                modifiers: ["left_command", "left_control", "left_shift"],
-                repeat: false,
-              },
-            ],
-          },
-        ],
-        thresholdMs: TIMINGS.timeoutWheelChordMs,
-        timeoutMs: TIMINGS.timeoutWheelChordMs,
-      },
-      // -------------------------------------------------------------
-      // WHEEL (AS BUTTON)
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "wheel",
-        description:
-          "[WHEEL] Fill screen with window (hold) / Open link in glance (rbutton+wheel in Zen)",
-        variable: "wheel_down",
-        alone: [{ pointing_button: "button3", repeat: false }],
-        overrides: [
-          {
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-            ],
-            to: [
-              {
-                pointing_button: "button1",
-                modifiers: ["left_option"],
-                repeat: false,
-              },
-            ],
-          },
-        ],
-        hold: [WIN_ACTIVATE_UNDER_CURSOR, ...rectangleMaxOrRestoreEvents()],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      {
-        type: "tapHold",
-        button: "left_back",
-        description:
-          "[G7] Fill screen with window (tap) / Move window to next display (hold)",
-        alone: rectangleMaxOrRestoreEvents(),
-        hold: [
-          WIN_ACTIVATE_UNDER_CURSOR,
-          {
-            shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
-          },
-        ],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      // -------------------------------------------------------------
-      // G8 BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "left_forward",
-        description: "[G8] Activate Popclip (tap) / Activate Sidenote (hold)",
-        alone: [
-          {
-            shell_command:
-              "osascript -e 'tell application \"Popclip\" to appear'",
-          },
-        ],
-        hold: [
-          {
-            key_code: "f10",
-            modifiers: ["left_command", "left_option", "left_shift"],
-            repeat: false,
-          },
-        ],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      // -------------------------------------------------------------
-      // G9 BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "middle_back",
-        description: "[G9] Screenshot to text (tap) / markdown (hold)",
-        alone: [
-          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
-        ],
-        hold: [
-          {
-            shell_command:
-              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
-          },
-        ],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-
-      // -------------------------------------------------------------
-      // BACK BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "back",
-        description: "[BACK] Back (tap) / Window switch (hold)",
-        alone: [{ pointing_button: "button4", repeat: false }],
-        hold: [{ key_code: "tab", modifiers: ["left_command"] }],
-        overrides: [
-          {
-            // ZEN - Rbutton + Back = CMD+SHIFT+] (switch to next tab)
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-            ],
-            to: [
-              {
-                key_code: "close_bracket",
-                modifiers: ["left_command", "left_shift"],
-                repeat: true,
-              },
-            ],
-          },
-        ],
-        eventOptions: { halt: true, repeat: false },
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      // -------------------------------------------------------------
-      // FORWARD BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "forward",
-        description:
-          "[FORWARD] Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)",
-        alone: [{ pointing_button: "button5", repeat: false }],
-        hold: [
-          {
-            key_code: "down_arrow",
-            modifiers: ["left_control"],
-            repeat: false,
-          },
-        ],
-        overrides: [
-          {
-            // ZEN - Rbutton + Forward = CMD+SHIFT+[ (switch to previous tab)
-            when: [
-              { app: appRegistry.zen },
-              { variable: "right_button_pressed", match: "if", value: 1 },
-            ],
-            to: [
-              {
-                key_code: "open_bracket",
-                modifiers: ["left_command", "left_shift"],
-                repeat: true,
-              },
-            ],
-          },
-        ],
-        eventOptions: { halt: true, repeat: false },
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
-      // -------------------------------------------------------------
-      // RIGHT BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "tapHold",
-        button: "right",
-        description: "[RBUTTON] Right click (tap) / Zen chord modifier (hold)",
-        variable: "right_button_pressed",
-        alone: [{ pointing_button: "button2", repeat: false }],
-        hold: [],
-        thresholdMs: TIMINGS.delayMouseHoldMs,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
       // -------------------------------------------------------------
       // LEFT BUTTON
       // -------------------------------------------------------------

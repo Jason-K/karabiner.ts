@@ -1,7 +1,7 @@
 import type { ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
-import type { ActionSpec } from "../core/action-dsl";
+import type { Action, ActionSpec } from "../core/action-dsl";
 import { getOpenFolderCommand } from "../core/folder-opener";
 import {
   actHereCmd,
@@ -80,7 +80,10 @@ function resolveShellCommand(action: ActionSpec): string | null {
   }
 }
 
-export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
+export function resolveActionToEvents(action: Action): ToEvent[] {
+  // Raw ToEvent passthrough: a `do` entry without a `type` discriminator is a
+  // verbatim Karabiner to-event (mouse mappings). ActionSpec always carries `type`.
+  if (!("type" in action)) return [action];
   switch (action.type) {
     case "noop":
       return [];

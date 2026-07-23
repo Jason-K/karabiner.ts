@@ -1,4 +1,5 @@
-import type { ActionSpec } from "../core/action-dsl";
+import type { ToEvent } from "karabiner.ts";
+import type { Action, ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
 import { resolveButton } from "../data/mouse";
 import type { Binding, Condition, Phase, Trigger } from "./binding";
@@ -68,6 +69,38 @@ export function describeAction(action: ActionSpec): string {
       return _exhaustive;
     }
   }
+}
+
+/** Describe a raw Karabiner `ToEvent` passed through verbatim in `do` (mouse
+ * mappings). Best-effort labels by event shape; never throws. */
+function describeToEvent(event: ToEvent): string {
+  const e = event as Record<string, unknown>;
+  if ("key_code" in e) {
+    const keyLabel = keyTokenToLabel(e.key_code as string);
+    const mods =
+      Array.isArray(e.modifiers) && e.modifiers.length
+        ? expandModifiers(e.modifiers as string[]).map(modifierTokenToSymbols).join("")
+        : "";
+    return mods ? `Emit '${keyLabel}'+${mods}` : `Emit '${keyLabel}'`;
+  }
+  if ("pointing_button" in e) {
+    return `Click ${resolveButton(e.pointing_button as string).desc}`;
+  }
+  if ("shell_command" in e) {
+    const c = String(e.shell_command);
+    return `Run '${c.length > 40 ? `${c.slice(0, 37)}…` : c}'`;
+  }
+  if ("set_variable" in e) {
+    const sv = e.set_variable as { name: string };
+    return `Set ${sv.name}`;
+  }
+  if ("from_event" in e) return "Pass through";
+  return "Raw event";
+}
+
+/** Describe a `do` entry that may be a typed ActionSpec or a raw ToEvent. */
+function describeDoAction(action: Action): string {
+  return "type" in action ? describeAction(action) : describeToEvent(action);
 }
 
 type AppCondition = Extract<Condition, { app: unknown }>;
@@ -150,7 +183,7 @@ export function synthesizeRuleDescription(binding: Binding): string {
         ...(binding.conditions ?? []),
         ...(c.conditions ?? []),
       ]);
-      const actionLine = c.description ?? c.do.map(describeAction).join(" then ");
+      const actionLine = c.description ?? c.do.map(describeDoAction).join(" then ");
       return `\t\t${condLabel}:\t${actionLine}`;
     });
     sections.push(`\t${label}:\n${lines.join("\n")}`);

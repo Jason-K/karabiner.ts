@@ -1,4 +1,4 @@
-import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
+import type { Action, ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import {
   ifApp,
   ifDevice,
@@ -12,8 +12,7 @@ import {
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
 import { synthesizeManipulatorLabel, synthesizeRuleDescription } from "./description-synthesizer";
-import { tapHold } from "../core/tap-hold";
-import { varTapTapHold } from "../core/tap-hold";
+import { tapHold, tapHoldFrom, varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { karabinerDeviceId } from "../data/devices";
@@ -50,7 +49,7 @@ export type Case = {
   tapCount?: number; // default 1; 2 = double-tap, etc. (framework-managed state)
   phase?: Phase; // default "press"
   conditions?: Condition[];
-  do: ActionSpec[]; // { type: "noop" } = swallow (omits `to`)
+  do: Action[]; // { type: "noop" } = swallow (omits `to`); raw ToEvent = verbatim passthrough
   description?: string; // optional fragment; when set, used as this case's action line verbatim
   suppress?: boolean; // emit only `do`, no trigger fallback (this case's channel)
 };
@@ -298,9 +297,10 @@ function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulato
   return manipulators;
 }
 
-/** Push resolved case conditions onto every manipulator (hoisted + per-case). */
+/** Push resolved case conditions onto every manipulator (hoisted + per-case),
+ * with `device_if` ordered last. */
 function attachConditions(manipulators: Manipulator[], cases: ResolvedCase[]): void {
-  const conds = cases.flatMap((c) => c.conditions);
+  const conds = deviceLast(cases.flatMap((c) => c.conditions));
   if (!conds.length) return;
   manipulators.forEach((m: any) => {
     m.conditions = m.conditions || [];
@@ -333,21 +333,60 @@ function stampLabel(manipulators: Manipulator[], conditions: Condition[] | undef
   });
 }
 
-function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
-  if ("pointer" in b.trigger) {
-    throw new Error("tapHold pointer triggers are not supported (mouse is out of scope)");
+/** Reorder resolved conditions so `device_if` entries come last, matching the
+ * bespoke mouse engine (device scope was appended after every per-manipulator
+ * condition via `applyDeviceScope`). No-op when no device_if is present. */
+function deviceLast(conds: unknown[]): unknown[] {
+  if (!conds.length) return conds;
+  const rest: unknown[] = [];
+  const device: unknown[] = [];
+  for (const c of conds) {
+    if (c && typeof c === "object" && (c as { type?: string }).type === "device_if") device.push(c);
+    else rest.push(c);
   }
+  return device.length ? [...rest, ...device] : rest;
+}
+
+function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
+  const manipulators = "pointer" in b.trigger
+    ? buildPointerTapHold(b, g)
+    : buildKeyTapHold(b, g);
+  // device_if conditions last (matches the bespoke mouse engine, which appends
+  // device scope after every per-manipulator condition).
+  for (const cond of deviceLast(g.conditions)) {
+    manipulators.forEach((m: any) => {
+      m.conditions = m.conditions || [];
+      m.conditions.push(cond);
+    });
+  }
+  // Chord-modifier levers: clear the cancel fallback (no stray click on canceled
+  // hold) and/or drop the default-alone pass-through (emit only `do`).
+  if (b.suppressCancelFallback) {
+    manipulators.forEach((m: any) => {
+      if (m.to_delayed_action?.to_if_canceled) m.to_delayed_action.to_if_canceled = [];
+    });
+  }
+  if (b.suppress) {
+    manipulators.forEach((m: any) => {
+      m.to_if_alone = [];
+    });
+  }
+  stampLabel(manipulators, g.rawConditions);
+  return manipulators;
+}
+
+/** Key tap-hold: `alone`/`hold` default to a halted re-emit of the key when the
+ * phase is absent (matches tap-hold-rules); mandatory from-modifiers injected. */
+function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const keys = (b.trigger as { keys: string[] }).keys;
   const key = keys[0]!;
   const mods = (b.trigger as { modifiers?: string[] }).modifiers ?? [];
   const defaultAlone: ActionSpec[] = [
     { type: "key", key, modifiers: mods as ActionKeyModifier[], options: { halt: true } },
   ];
-  // Match tap-hold-rules: `resolvedAlone = config.alone ?? defaultAlone` and
-  // `resolvedHold = config.hold ?? defaultAlone`. An explicit phase with empty
-  // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing"
-  // and must not trigger the default-alone fallback. Phase presence is tracked
-  // in the CaseGroup (`hasRelease` / `hasHold`), not inferred from event count.
+  // `resolvedAlone = config.alone ?? defaultAlone`. An explicit phase with empty
+  // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing" and
+  // must not trigger the default-alone fallback (tracked via hasRelease/hasHold).
   const alone = g.hasRelease ? g.releaseDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const hold = g.hasHold ? g.holdDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const manipulators = tapHold({
@@ -366,26 +405,32 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
       m.from.modifiers.mandatory = mandatory;
     });
   }
-  g.conditions.forEach((cond) =>
-    manipulators.forEach((m: any) => {
-      m.conditions = m.conditions || [];
-      m.conditions.push(cond);
-    }),
-  );
-  // Chord-modifier levers: clear the cancel fallback (no stray click on canceled
-  // hold) and/or drop the default-alone pass-through (emit only `do`).
-  if (b.suppressCancelFallback) {
-    manipulators.forEach((m: any) => {
-      if (m.to_delayed_action?.to_if_canceled) m.to_delayed_action.to_if_canceled = [];
-    });
-  }
-  if (b.suppress) {
-    manipulators.forEach((m: any) => {
-      m.to_if_alone = [];
-    });
-  }
-  stampLabel(manipulators, g.rawConditions);
   return manipulators;
+}
+
+/** Pointer (mouse-button) tap-hold: routes through `tapHoldFrom` with a
+ * pointing-button `from`. No default-alone fallback — `alone`/`hold` are the
+ * declared release/hold events or undefined (no channel). `eventOptions` are
+ * forwarded so `tapHoldFrom` applies them to alone/hold while keeping the raw
+ * alone events for the cancel fallback. `whileHoldVar` drives the chord-modifier
+ * signaling variable (set on key-down, cleared on key-up). */
+function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
+  const pointer = b.trigger as { pointer: string; modifiers?: string[] };
+  const { button } = resolveButton(pointer.pointer);
+  const from: Record<string, unknown> = { pointing_button: button };
+  const mods = pointer.modifiers ?? [];
+  if (mods.length) from.modifiers = { mandatory: mods };
+  const alone = g.hasRelease ? g.releaseDo : undefined;
+  const hold = g.hasHold ? g.holdDo : undefined;
+  return tapHoldFrom({
+    from: from as FromEvent,
+    alone,
+    hold,
+    timeoutMs: b.timing?.aloneMs,
+    thresholdMs: b.timing?.heldThresholdMs,
+    eventOptions: b.eventOptions,
+    ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
+  }).build();
 }
 
 function buildRemap(
@@ -396,20 +441,24 @@ function buildRemap(
   const label = synthesizeManipulatorLabel(g.rawConditions);
   if (isPointer) {
     // Pointer manipulators are emitted as raw objects to match the legacy
-    // pointer-remap-rules shape exactly: {type, from, to, description?, conditions?}.
+    // pointer-remap-rules shape exactly: {type, from, to?, description?, conditions?}.
     const pointer = b.trigger as { pointer: string; modifiers?: string[] };
-    const from: Record<string, unknown> = { pointing_button: pointer.pointer };
+    const { button } = resolveButton(pointer.pointer);
+    const from: Record<string, unknown> = { pointing_button: button };
     if (pointer.modifiers?.length) {
       from.modifiers = { mandatory: pointer.modifiers };
     }
-    const m: Record<string, unknown> = { type: "basic", from, to: g.pressDo };
+    const m: Record<string, unknown> = { type: "basic", from };
+    // Omit `to` when empty — matches map().build(), which drops an empty `to`.
+    if (g.pressDo.length) m.to = g.pressDo;
     if (label) m.description = label;
-    if (g.conditions.length) m.conditions = g.conditions;
+    const conds = deviceLast(g.conditions);
+    if (conds.length) m.conditions = conds;
     return m as unknown as Manipulator;
   }
   const builder = map(triggerToFrom(b.trigger));
   if (label) builder.description(label);
-  for (const cond of g.conditions) builder.condition(cond as any);
+  for (const cond of deviceLast(g.conditions)) builder.condition(cond as any);
   // pressDo may be empty (noop) -> omit `to` (swallow). map().build() already omits empty `to`.
   for (const e of g.pressDo) builder.to(e);
   return builder.build();
