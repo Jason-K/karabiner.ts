@@ -2,6 +2,7 @@ import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { AppRef } from "../data";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { defineBindings, type Binding, type Case } from "./binding";
 
@@ -12,7 +13,7 @@ export type TapHoldConfig = {
   timeoutMs?: number;
   thresholdMs?: number;
   appOverrides?: Array<{
-    app: string;
+    app: AppRef;
     unless?: boolean;
     alone?: ActionSpec[];
     hold?: ActionSpec[];

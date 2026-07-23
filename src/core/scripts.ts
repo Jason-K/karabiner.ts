@@ -283,7 +283,7 @@ export function spotifyToggleCommand(): string {
   return [
     "if pgrep -x 'Spotify' > /dev/null; then",
     "open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause';",
-    `else ${openAppBundleCommand(appRegistry.spotify)};`,
+    `else ${openAppBundleCommand(appRegistry.spotify.name as string)};`,
     "fi; echo 'Spotify toggled'",
   ].join(" ");
 }

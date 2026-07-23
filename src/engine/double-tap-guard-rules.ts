@@ -1,13 +1,14 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
 
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { AppRef } from "../data";
 import type { ModKey } from "../data/key-aliases";
 
 export type DoubleTapGuardConfig = {
   key: string;
   modifiers: ModKey[];
   description: string;
-  ifApp?: string | string[];
+  ifApp?: AppRef | AppRef[];
   timeoutMs?: number;
 };
 
@@ -31,7 +32,11 @@ export function generateDoubleTapGuardRule(config: DoubleTapGuardConfig) {
   const varName = deriveGuardVar(key, modifiers);
 
   const appCondition = appScope
-    ? ifApp(Array.isArray(appScope) ? appScope : [appScope])
+    ? ifApp(
+        (Array.isArray(appScope) ? appScope : [appScope]).flatMap((r) =>
+          Array.isArray(r.name) ? r.name : [r.name],
+        ),
+      )
     : null;
 
   // Second press: fire real key combo, reset var

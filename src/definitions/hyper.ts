@@ -3,7 +3,7 @@ import {
   formatSelectionCommand,
   typinatorNewRuleCommand,
 } from "../core/scripts";
-import { PATHS } from "../data";
+import { PATHS, appRegistry } from "../data";
 import {
   rectangleActionUrl,
   rectangleMaxOrRestoreCommand,
@@ -29,7 +29,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
     key: "comma",
     description: "Open System Settings",
-    action: { type: "app", ref: "systemSettings" },
+    action: { type: "app", ref: appRegistry.systemSettings },
   },
   {
     key: "f12",
@@ -39,7 +39,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
     key: "escape",
     description: "Open Activity Monitor",
-    action: { type: "app", ref: "activityMonitor" },
+    action: { type: "app", ref: appRegistry.activityMonitor },
   },
 ];
 

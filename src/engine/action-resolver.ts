@@ -2,7 +2,7 @@ import type { ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { getFolderOpenerBundleId, getOpenFolderCommand } from "../core/folder-opener";
+import { getOpenFolderCommand } from "../core/folder-opener";
 import {
   actHereCmd,
   applescript,
@@ -17,7 +17,7 @@ import {
   withSleep,
 } from "../core/scripts";
 import { openApp } from "../core/software";
-import { appRegistry, folderRegistry } from "../data";
+import { folderRegistry, type AppRef } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { raycastRegistry } from "../data/raycast";
@@ -36,12 +36,8 @@ function expandModifiers(modifiers: string[]): string[] {
   return expanded;
 }
 
-function resolveAppBundleId(ref: keyof typeof appRegistry): string {
-  if (ref === "folderOpener") {
-    return getFolderOpenerBundleId();
-  }
-
-  return appRegistry[ref];
+function resolveAppBundleId(ref: AppRef): string {
+  return Array.isArray(ref.name) ? ref.name[0]! : ref.name;
 }
 
 function resolveShellCommand(action: ActionSpec): string | null {

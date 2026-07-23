@@ -241,7 +241,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: [appRegistry.onePiece],
+      bundle_identifiers: [appRegistry.onePiece.name],
     },
   ]);
 });
@@ -293,7 +293,7 @@ test("mouse rules factory builds declarative per-device mappings", () => {
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: [appRegistry.browser],
+      bundle_identifiers: [appRegistry.browser.name],
     },
     {
       type: "variable_if",

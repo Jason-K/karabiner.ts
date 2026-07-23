@@ -1,4 +1,3 @@
-import type { AppRef } from "./apps";
 import { appRegistry } from "./apps";
 
 export type FocusAppBehavior = {
@@ -10,10 +9,8 @@ export type FocusAppBehavior = {
   };
 };
 
-export const FOCUS_APP_BEHAVIORS: Partial<
-  Record<(typeof appRegistry)[AppRef], FocusAppBehavior>
-> = {
-  [appRegistry.antinote]: {
+export const FOCUS_APP_BEHAVIORS: Partial<Record<string, FocusAppBehavior>> = {
+  [appRegistry.antinote.name as string]: {
     appName: "Antinote",
     activationDelaySeconds: 0.2,
     createWindowShortcut: {

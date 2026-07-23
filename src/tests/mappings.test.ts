@@ -57,7 +57,7 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(appRegistry.outlook, "com.microsoft.Outlook");
+  assert.equal(appRegistry.outlook.name, "com.microsoft.Outlook");
   assert.equal(folderRegistry.home, `${HOME_DIR}/`);
   assert.equal(raycastRegistry.recentFolders, "jason/recents/recentFolders");
   assert.equal(cleanShotRegistry.captureArea, "capture-area");
@@ -111,7 +111,7 @@ test("enter key hold mappings stay declarative", () => {
   assert.equal(enterKeyHoldMappings.length, 2);
   assert.deepEqual(enterKeyHoldMappings[0]?.variants[0], {
     description: "Evaluate selection",
-    when: { app: "com.microsoft.Excel", unless: true },
+    when: { app: appRegistry.excel, unless: true },
     alone: [
       {
         type: "key",

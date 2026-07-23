@@ -1,4 +1,5 @@
 import { recentDownloadsCommand } from "../core/scripts";
+import { appRegistry } from "../data";
 import { rectangleActionUrl } from "../data/rectangle";
 import type { TapHoldConfig } from "../engine";
 
@@ -114,7 +115,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   g: {
     description: "Claude",
-    hold: [{ type: "app", ref: "claude", mode: "shell" }],
+    hold: [{ type: "app", ref: appRegistry.claude, mode: "shell" }],
   },
   h: {
     description: "Here2There",
@@ -124,7 +125,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     description: "Last d/l",
     hold: [{ type: "raycast", ref: "recentDownloads" }],
   },
-  k: { description: "Kitty", hold: [{ type: "app", ref: "kitty" }] },
+  k: { description: "Kitty", hold: [{ type: "app", ref: appRegistry.kitty }] },
   n: {
     description: "New note",
     hold: [
@@ -155,7 +156,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [
       {
         type: "app",
-        ref: "qspace",
+        ref: appRegistry.qspace,
         mode: "focus",
       },
     ],
@@ -212,7 +213,7 @@ export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
   },
   8: {
     description: "RingCentral",
-    hold: [{ type: "app", ref: "ringCentral", mode: "shell" }],
+    hold: [{ type: "app", ref: appRegistry.ringCentral, mode: "shell" }],
   },
   keypad_0: {
     description: "Unstash all via rectangle",

@@ -4,13 +4,21 @@ import test from "node:test";
 import { resolveCondition, triggerToFrom } from "../engine/binding";
 
 test("resolveCondition app if -> frontmost_application_if", () => {
-  const c = resolveCondition({ app: "com.microsoft.Excel" }) as any;
+  const c = resolveCondition({
+    app: { type: "app", name: "com.microsoft.Excel", refDesc: "Excel" },
+  }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
 });
 
 test("resolveCondition app unless -> frontmost_application_unless", () => {
-  const c = resolveCondition({ app: ["a", "b"], unless: true }) as any;
+  const c = resolveCondition({
+    app: [
+      { type: "app", name: "a", refDesc: "A" },
+      { type: "app", name: "b", refDesc: "B" },
+    ],
+    unless: true,
+  }) as any;
   assert.equal(c.type, "frontmost_application_unless");
   assert.deepEqual(c.bundle_identifiers, ["a", "b"]);
 });
@@ -83,8 +91,8 @@ test("defineBindings remap: two press cases with different conditions -> two man
       description: "conditional",
       trigger: { keys: ["x"] },
       cases: [
-        { phase: "press", conditions: [{ app: "com.a" }], do: [{ type: "key", key: "1" }] },
-        { phase: "press", conditions: [{ app: "com.b" }], do: [{ type: "key", key: "2" }] },
+        { phase: "press", conditions: [{ app: { type: "app", name: "com.a", refDesc: "A" } }], do: [{ type: "key", key: "1" }] },
+        { phase: "press", conditions: [{ app: { type: "app", name: "com.b", refDesc: "B" } }], do: [{ type: "key", key: "2" }] },
       ],
     },
   ]);

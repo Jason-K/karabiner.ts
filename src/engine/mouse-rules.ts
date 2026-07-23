@@ -69,9 +69,12 @@ function buildSimultaneousManipulators(
 
 function overrideCondition(condition: MouseCondition): any {
   if ("app" in condition) {
+    const ids = Array.isArray(condition.app.name)
+      ? condition.app.name
+      : [condition.app.name];
     return condition.unless
-      ? ifApp(condition.app).unless().build()
-      : ifApp(condition.app).build();
+      ? ifApp(ids).unless().build()
+      : ifApp(ids).build();
   }
   return {
     type: condition.match === "if" ? "variable_if" : "variable_unless",

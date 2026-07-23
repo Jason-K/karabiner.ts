@@ -2,11 +2,12 @@ import type { Rule } from "karabiner.ts";
 
 import type { ActionSpec } from "../core/action-dsl";
 import { formatRuleDescription } from "../core/rule-descriptions";
+import type { AppRef } from "../data";
 import { defineBindings, type Binding } from "./binding";
 
 export type TapHoldVariantMapping = {
   description: string;
-  when?: { app: string; unless?: boolean };
+  when?: { app: AppRef; unless?: boolean };
   alone: ActionSpec[];
   hold: ActionSpec[];
   timeoutMs: number;

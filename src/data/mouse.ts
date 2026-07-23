@@ -1,4 +1,5 @@
 import { type PointingButton, type ToEvent } from "karabiner.ts";
+import type { AppRef } from "./refs";
 
 export const WIN_ACTIVATE_UNDER_CURSOR: ToEvent = {
   pointing_button: "button1",
@@ -10,7 +11,7 @@ export type MouseIdentifiers = {
 };
 
 export type MouseCondition =
-  | { app: string; unless?: boolean }
+  | { app: AppRef; unless?: boolean }
   | { variable: string; match: "if" | "unless"; value: string | number };
 
 export type MouseOverride = {

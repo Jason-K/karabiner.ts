@@ -1,6 +1,6 @@
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { killAppCommand } from "../core/scripts";
-import { TIMINGS } from "../data";
+import { TIMINGS, appRegistry } from "../data";
 import { defineBindings, type Binding } from "../engine";
 
 export const escapeTapTapHoldBinding: Binding = {
@@ -27,8 +27,8 @@ export const ctrlEscapeMonitorBinding: Binding = {
   trigger: { keys: ["escape"], modifiers: ["left_control"] },
   timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
   cases: [
-    { phase: "release", do: [{ type: "app", ref: "activityMonitor" }] },
-    { phase: "hold", do: [{ type: "app", ref: "processSpy" }] },
+    { phase: "release", do: [{ type: "app", ref: appRegistry.activityMonitor }] },
+    { phase: "hold", do: [{ type: "app", ref: appRegistry.processSpy }] },
   ],
 };
 
