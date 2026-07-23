@@ -172,11 +172,12 @@ test("describeTrigger: simultaneous chord joins keys with ']+['", () => {
   assert.equal(describeTrigger({ keys: ["j", "k"] }), "[J]+[K]:");
 });
 
-test("describeTrigger: pointer", () => {
-  assert.equal(describeTrigger({ pointer: "button1" }), "Click:");
+test("describeTrigger: pointer (button labels)", () => {
+  assert.equal(describeTrigger({ pointer: "left" }), "Left click:");
+  assert.equal(describeTrigger({ pointer: "shift" }), "Shift button:");
   assert.equal(
-    describeTrigger({ pointer: "button1", modifiers: ["left_command"] }),
-    "[←⌘]+Click:",
+    describeTrigger({ pointer: "left", modifiers: ["left_command"] }),
+    "[←⌘]+Left click:",
   );
 });
 

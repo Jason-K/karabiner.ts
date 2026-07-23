@@ -167,3 +167,20 @@ test("defineBindings auto-derived description omits slice-label when uncondition
   assert.equal(built.ruleDescription, "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'Y'");
   assert.equal("description" in built.manipulatorSources[0], false);
 });
+
+test("defineBindings: device-specific button alias auto-scopes via nameScope", () => {
+  const rules = defineBindings([
+    { trigger: { pointer: "shift" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
+  ]);
+  const m = (rules[0] as any).manipulatorSources[0];
+  const devCond = m.conditions?.find((c: any) => c.type === "device_if");
+  assert.deepEqual(devCond?.identifiers, [{ product_id: 49305, vendor_id: 1133 }]);
+});
+
+test("defineBindings: global button alias adds no device condition", () => {
+  const rules = defineBindings([
+    { trigger: { pointer: "left" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
+  ]);
+  const m = (rules[0] as any).manipulatorSources[0];
+  assert.equal(m.conditions?.some((c: any) => c.type === "device_if") ?? false, false);
+});

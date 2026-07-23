@@ -1,5 +1,6 @@
 import type { ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
+import { resolveButton } from "../data/mouse";
 import type { Binding, Condition, Phase, Trigger } from "./binding";
 import { expandModifiers } from "./action-resolver";
 
@@ -106,8 +107,8 @@ export function describeTrigger(trigger: Trigger): string {
     mods?.length ? mods.map(modifierTokenToSymbols).join("") : "";
   if ("pointer" in trigger) {
     const symbols = modSymbols(trigger.modifiers);
-    const pointerLabel = trigger.pointer === "button1" ? "Click" : `Pointer ${trigger.pointer}`;
-    return symbols ? `[${symbols}]+${pointerLabel}:` : `${pointerLabel}:`;
+    const { desc } = resolveButton(trigger.pointer);
+    return symbols ? `[${symbols}]+${desc}:` : `${desc}:`;
   }
   const segments: string[] = [];
   const symbols = modSymbols(trigger.modifiers);

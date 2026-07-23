@@ -197,7 +197,7 @@ test("enter rules factory keeps two keys across two contexts", () => {
 test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const rule = toRule(buildOnePieceClickEnterRule());
   const manipulator: any = rule.manipulators[0];
-  assert.match(rule.description, /^Click:\n---/);
+  assert.match(rule.description, /^Left click:\n---/);
   assert.equal(rule.manipulators.length, 1);
   assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",

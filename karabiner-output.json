@@ -4199,7 +4199,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Click:\n---\n\tOn Tap:\n\t\tIn 1Piece:\tEmit '⏎'",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\tIn 1Piece:\tEmit '⏎'",
         "manipulatorSources": [
           {
             "type": "basic",

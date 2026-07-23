@@ -17,6 +17,8 @@ import { varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { karabinerDeviceId } from "../data/devices";
+import { DEVICE_IDENTIFIERS } from "../data";
+import { resolveButton } from "../data/mouse";
 import type { AppRef, DeviceSpec, VarSpec } from "../data";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
@@ -117,7 +119,8 @@ function resolveSimKarOptions(b: Binding): SimultaneousOptions | undefined {
 
 export function triggerToFrom(trigger: Trigger): FromEvent {
   if ("pointer" in trigger) {
-    const from: Record<string, unknown> = { pointing_button: trigger.pointer };
+    const { button } = resolveButton(trigger.pointer);
+    const from: Record<string, unknown> = { pointing_button: button };
     if (trigger.modifiers?.length) from.modifiers = { mandatory: trigger.modifiers };
     return from as FromEvent;
   }
@@ -213,11 +216,27 @@ function buildManipulators(b: Binding): Manipulator[] {
   const hasMultiTap = resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
   const isPointer = "pointer" in b.trigger;
   const isSim = !isPointer && "keys" in b.trigger && b.trigger.keys.length > 1;
-  if (hasMultiTap) return buildMultiTap(b, resolved, isSim);
-  if (isSim) return buildSimultaneousTapHold(b, resolved);
-  return groupByConditions(resolved).flatMap((g) =>
-    g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, isPointer),
-  );
+  let manipulators: Manipulator[];
+  if (hasMultiTap) manipulators = buildMultiTap(b, resolved, isSim);
+  else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
+  else
+    manipulators = groupByConditions(resolved).flatMap((g) =>
+      g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, isPointer),
+    );
+  stampDeviceScope(manipulators, b.trigger);
+  return manipulators;
+}
+
+/** For a device-specific button alias, add a `device_if` condition to every manipulator. */
+function stampDeviceScope(manipulators: Manipulator[], trigger: Trigger): void {
+  if (!("pointer" in trigger)) return;
+  const { nameScope } = resolveButton(trigger.pointer);
+  if (!nameScope || nameScope === "global") return;
+  const ids = nameScope.map((n) => karabinerDeviceId(DEVICE_IDENTIFIERS[n]));
+  const cond = ifDevice(ids).build();
+  manipulators.forEach((m: any) => {
+    m.conditions = [...(m.conditions ?? []), cond];
+  });
 }
 
 function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manipulator[] {
