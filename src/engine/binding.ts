@@ -46,6 +46,7 @@ export type Case = {
   phase?: Phase; // default "press"
   conditions?: Condition[];
   do: ActionSpec[]; // { type: "noop" } = swallow (omits `to`)
+  description?: string; // optional fragment; when set, used as this case's action line verbatim
 };
 
 /** One binding = one description = one Karabiner rule. */

@@ -12,6 +12,7 @@ export type ActionSpec =
       type: "app";
       ref: AppRef;
       mode?: "open" | "focus" | "shell";
+      actionDesc?: string;
     }
   | {
       type: "appHistory";
@@ -20,10 +21,12 @@ export type ActionSpec =
   | {
       type: "folder";
       ref: FolderRef;
+      actionDesc?: string;
     }
   | {
       type: "raycast";
       ref: RaycastRef;
+      actionDesc?: string;
     }
   | {
       type: "cleanShot";
@@ -55,11 +58,13 @@ export type ActionSpec =
         halt?: boolean;
         lazy?: boolean;
       };
+      actionDesc?: string;
     }
   | {
       type: "url";
       url: string;
       background?: boolean;
+      actionDesc?: string;
     }
   | {
       type: "command";
@@ -69,17 +74,20 @@ export type ActionSpec =
   | {
       type: "shell";
       command: string;
+      actionDesc?: string;
     }
   | {
       type: "python";
       scriptPath: string;
       venv?: string;
       args?: string[];
+      actionDesc?: string;
     }
   | {
       type: "osascript";
       scriptPath: string;
       args?: string[];
+      actionDesc?: string;
     }
   | {
       type: "cut" | "copy" | "paste";
