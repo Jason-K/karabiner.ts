@@ -145,3 +145,25 @@ test("defineBindings multiTap: escape tap/hold/doubleTapHold -> 2 var-dance mani
   const first = built.manipulatorSources.find((m: any) => m.to_if_alone?.some((e: any) => e.key_code === "escape"));
   assert.ok(first, "first tap carries the escape alone action");
 });
+
+test("defineBindings auto-derives rule description + slice-label when description absent", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      conditions: [{ app: { type: "app", name: "com.a", refDesc: "A" } }],
+      cases: [{ phase: "press", do: [{ type: "key", key: "y" }] }],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.ruleDescription, "[X]:\n---\n\tOn Tap:\n\t\tIn A:\tEmit 'Y'");
+  assert.equal(built.manipulatorSources[0].description, "In A");
+});
+
+test("defineBindings auto-derived description omits slice-label when unconditional", () => {
+  const rules = defineBindings([
+    { trigger: { keys: ["x"] }, cases: [{ phase: "press", do: [{ type: "key", key: "y" }] }] },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.ruleDescription, "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'Y'");
+  assert.equal("description" in built.manipulatorSources[0], false);
+});

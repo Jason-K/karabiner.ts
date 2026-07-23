@@ -10,7 +10,7 @@ import {
   type ToEvent,
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
-import { synthesizeRuleDescription } from "./description-synthesizer";
+import { synthesizeManipulatorLabel, synthesizeRuleDescription } from "./description-synthesizer";
 import { tapHold } from "../core/tap-hold";
 import { varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
@@ -133,20 +133,26 @@ type ResolvedCase = {
   tapCount: number;
   phase: Phase;
   conditions: unknown[];
+  rawConditions: Condition[]; // original Condition[] — for slice-labels (Phase 2)
   do: ToEvent[];
 };
 
 function resolveCases(cases: Case[], shared: Condition[] | undefined): ResolvedCase[] {
-  return cases.map((c) => ({
-    tapCount: c.tapCount ?? 1,
-    phase: c.phase ?? "press",
-    conditions: [...(shared ?? []), ...(c.conditions ?? [])].map(resolveCondition),
-    do: (c.do ?? []).flatMap(resolveActionToEvents),
-  }));
+  return cases.map((c) => {
+    const rawConditions = [...(shared ?? []), ...(c.conditions ?? [])];
+    return {
+      tapCount: c.tapCount ?? 1,
+      phase: c.phase ?? "press",
+      conditions: rawConditions.map(resolveCondition),
+      rawConditions,
+      do: (c.do ?? []).flatMap(resolveActionToEvents),
+    };
+  });
 }
 
 type CaseGroup = {
   conditions: unknown[];
+  rawConditions: Condition[];
   pressDo: ToEvent[];
   releaseDo: ToEvent[];
   holdDo: ToEvent[];
@@ -165,6 +171,7 @@ function groupByConditions(cases: ResolvedCase[]): CaseGroup[] {
     if (!groups.has(key)) {
       groups.set(key, {
         conditions: c.conditions,
+        rawConditions: c.rawConditions,
         pressDo: [],
         releaseDo: [],
         holdDo: [],
@@ -229,6 +236,7 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
       simultaneousThresholdMs: b.timing?.simultaneousMs,
     });
     attachConditions(manipulators, cases);
+    stampLabel(manipulators, unionRawConditions(cases));
     return manipulators;
   }
   const manipulators = varTapTapHold({
@@ -243,6 +251,7 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
     mods: b.multiTap?.mods as any,
   });
   attachConditions(manipulators, cases);
+  stampLabel(manipulators, unionRawConditions(cases));
   return manipulators;
 }
 
@@ -258,6 +267,7 @@ function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulato
     simultaneousThresholdMs: b.timing?.simultaneousMs,
   });
   attachConditions(manipulators, cases);
+  stampLabel(manipulators, unionRawConditions(cases));
   return manipulators;
 }
 
@@ -268,6 +278,31 @@ function attachConditions(manipulators: Manipulator[], cases: ResolvedCase[]): v
   manipulators.forEach((m: any) => {
     m.conditions = m.conditions || [];
     m.conditions.push(...conds);
+  });
+}
+
+/** Unique union of raw conditions across cases (for multiTap/simultaneous slice-labels). */
+function unionRawConditions(cases: ResolvedCase[]): Condition[] {
+  const seen = new Set<string>();
+  const out: Condition[] = [];
+  for (const c of cases) {
+    for (const cond of c.rawConditions) {
+      const key = JSON.stringify(cond);
+      if (!seen.has(key)) {
+        seen.add(key);
+        out.push(cond);
+      }
+    }
+  }
+  return out;
+}
+
+/** Stamp the condition-group slice-label onto every manipulator (no-op when unconditional). */
+function stampLabel(manipulators: Manipulator[], conditions: Condition[] | undefined): void {
+  const label = synthesizeManipulatorLabel(conditions);
+  if (!label) return;
+  manipulators.forEach((m: any) => {
+    m.description = label;
   });
 }
 
@@ -309,34 +344,31 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
       m.conditions.push(cond);
     }),
   );
+  stampLabel(manipulators, g.rawConditions);
   return manipulators;
 }
 
 function buildRemap(
   b: Binding,
-  g: { conditions: unknown[]; pressDo: ToEvent[] },
+  g: { conditions: unknown[]; rawConditions: Condition[]; pressDo: ToEvent[] },
   isPointer: boolean,
 ): Manipulator | Manipulator[] {
+  const label = synthesizeManipulatorLabel(g.rawConditions);
   if (isPointer) {
     // Pointer manipulators are emitted as raw objects to match the legacy
-    // pointer-remap-rules shape exactly: {type, from, to, description, conditions?}.
-    // The `description` is duplicated at manipulator level (and at rule level)
-    // to preserve today's golden output byte-for-byte.
+    // pointer-remap-rules shape exactly: {type, from, to, description?, conditions?}.
     const pointer = b.trigger as { pointer: string; modifiers?: string[] };
     const from: Record<string, unknown> = { pointing_button: pointer.pointer };
     if (pointer.modifiers?.length) {
       from.modifiers = { mandatory: pointer.modifiers };
     }
-    const m: Record<string, unknown> = {
-      type: "basic",
-      from,
-      to: g.pressDo,
-      description: b.description,
-    };
+    const m: Record<string, unknown> = { type: "basic", from, to: g.pressDo };
+    if (label) m.description = label;
     if (g.conditions.length) m.conditions = g.conditions;
     return m as unknown as Manipulator;
   }
   const builder = map(triggerToFrom(b.trigger));
+  if (label) builder.description(label);
   for (const cond of g.conditions) builder.condition(cond as any);
   // pressDo may be empty (noop) -> omit `to` (swallow). map().build() already omits empty `to`.
   for (const e of g.pressDo) builder.to(e);
