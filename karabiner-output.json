@@ -2792,7 +2792,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[␛]        →    Escape / Kill app (on multi-tap)",
+        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app --foreground'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2917,7 +2917,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
+        "ruleDescription": "[←⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4199,7 +4199,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
+        "ruleDescription": "Click:\n---\n\tOn Tap:\n\t\tIn 1Piece:\tEmit '⏎'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4211,7 +4211,7 @@
                 "key_code": "return_or_enter"
               }
             ],
-            "description": "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
+            "description": "In 1Piece",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -4581,7 +4581,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[HOME]        →    Move to line start (on tap)",
+        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4602,7 +4602,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[HOME]        →    Select to line start (on tap)",
+        "ruleDescription": "[←⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4629,7 +4629,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[END]        →    Move to line end (on tap)",
+        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4650,7 +4650,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[END]        →    Select to line end (on tap)",
+        "ruleDescription": "[←⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4853,7 +4853,8 @@
                   "com.microsoft.Excel"
                 ]
               }
-            ]
+            ],
+            "description": "Outside Microsoft Excel"
           }
         ],
         "allowEmptyManipulators": false,
@@ -4899,7 +4900,8 @@
                   "com.microsoft.Excel"
                 ]
               }
-            ]
+            ],
+            "description": "In Microsoft Excel"
           }
         ],
         "allowEmptyManipulators": false,
@@ -4944,7 +4946,8 @@
                   "com.microsoft.Excel"
                 ]
               }
-            ]
+            ],
+            "description": "Outside Microsoft Excel"
           }
         ],
         "allowEmptyManipulators": false,
@@ -4990,7 +4993,8 @@
                   "com.microsoft.Excel"
                 ]
               }
-            ]
+            ],
+            "description": "In Microsoft Excel"
           }
         ],
         "allowEmptyManipulators": false,
@@ -5183,7 +5187,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
+        "ruleDescription": "[←⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5201,7 +5205,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥]+[H]        →    Disabled hide others shortcut (on tap)",
+        "ruleDescription": "[←⌘←⌥]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5220,7 +5224,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥]+[M]        →    Disabled minimize shortcut (on tap)",
+        "ruleDescription": "[←⌘←⌥]+[M]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5239,7 +5243,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]        →    Copy document name and elevate privileges (on tap)",
+        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Microsoft Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5251,6 +5255,7 @@
                 ]
               }
             },
+            "description": "In Microsoft Word",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5273,7 +5278,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]        →    Quick fill password (on tap)",
+        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5285,6 +5290,7 @@
                 ]
               }
             },
+            "description": "In Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5322,6 +5328,7 @@
                 ]
               }
             },
+            "description": "In Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and not Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5354,7 +5361,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[H]        →    Skim command H remap (on tap)",
+        "ruleDescription": "[←⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit 'H'+←⌘←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5366,6 +5373,7 @@
                 ]
               }
             },
+            "description": "In Skim",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5389,7 +5397,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[U]        →    Skim command U remap (on tap)",
+        "ruleDescription": "[←⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit 'U'+←⌘←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5401,6 +5409,7 @@
                 ]
               }
             },
+            "description": "In Skim",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5424,7 +5433,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[→]        →    Zen command H remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen browser:\tEmit ']'+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5437,6 +5446,7 @@
                 ]
               }
             },
+            "description": "In Zen browser",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5460,7 +5470,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[←]        →    Zen command U remap (on tap)",
+        "ruleDescription": "[←⌘←⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen browser:\tEmit '['+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5473,6 +5483,7 @@
                 ]
               }
             },
+            "description": "In Zen browser",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5591,7 +5602,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]        →    Raycast clipboard history (on multi-tap)",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tRun 'open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5727,7 +5738,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⇧]        →    Raycast clipboard history (on multi-tap)",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tRun 'open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history'",
         "manipulatorSources": [
           {
             "type": "basic",
