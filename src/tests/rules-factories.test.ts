@@ -176,7 +176,9 @@ test("home-end factory keeps four navigation mappings", () => {
 
 test("vmCOC_ plus rules factory keeps grouped mappings", () => {
   const rules = toRules(buildHyperLauncherRules());
-  assert.equal(rules.length, 5);
+  // "t" lives only in the tap-hold set now (launcher-t was removed to resolve
+  // the vmCOCS+t duplication), so the launcher has 4 entries.
+  assert.equal(rules.length, 4);
   // Launcher triggers carry the expanded vmCOCS modifiers, so the synthesized
   // trigger segment is the symbol chord (not the "vmCOCS" alias literal).
   assert.ok(rules.every((r) => /^\[←⌘←⌥←⌃←⇧\]\+\[[^\]]+\]:\n---/.test(r.description)));

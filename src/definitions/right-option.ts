@@ -2,25 +2,27 @@ import { spotifyToggleCommand } from "../core/scripts";
 import { raycastRegistry } from "../data";
 import { PATHS } from "../data/paths";
 import { TIMINGS } from "../data/timings";
-import { tapHoldBinding, type Binding } from "../engine";
+import type { Binding } from "../engine";
 
 export const rightOptionTapHoldBindings: Binding[] = [
-  tapHoldBinding("k", ["right_option"], {
-    hold: [{ type: "actHere", action: "kitty" }],
-    timeoutMs: TIMINGS.delayHoldMs,
-    thresholdMs: TIMINGS.delayHoldMs,
-  }),
-  tapHoldBinding("s", ["right_option"], {
-    alone: [{ type: "shell", command: spotifyToggleCommand() }],
-    hold: [{ type: "raycast", ref: raycastRegistry.spotifySearch }],
-    timeoutMs: TIMINGS.delayHoldMs,
-    thresholdMs: TIMINGS.delayHoldMs,
-  }),
-  tapHoldBinding("t", ["right_option"], {
-    hold: [{ type: "osascript", scriptPath: PATHS.typinatorEditLastRule }],
-    timeoutMs: TIMINGS.delayHoldMs,
-    thresholdMs: TIMINGS.delayHoldMs,
-  }),
+  {
+    trigger: { keys: ["k"], modifiers: ["right_option"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [{ phase: "hold", do: [{ type: "actHere", action: "kitty" }] }],
+  },
+  {
+    trigger: { keys: ["s"], modifiers: ["right_option"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [
+      { phase: "release", do: [{ type: "shell", command: spotifyToggleCommand() }] },
+      { phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.spotifySearch }] },
+    ],
+  },
+  {
+    trigger: { keys: ["t"], modifiers: ["right_option"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [{ phase: "hold", do: [{ type: "osascript", scriptPath: PATHS.typinatorEditLastRule }] }],
+  },
 ];
 
 // export const buildRightOptionLauncherRules = () =>

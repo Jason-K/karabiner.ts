@@ -1,14 +1,15 @@
 import { appRegistry } from "../../data";
-import { tapHoldBinding, type Binding } from "../../engine";
+import type { Binding } from "../../engine";
 import {
     generateDoubleTapGuardRule,
     type DoubleTapGuardConfig,
 } from "../../engine/double-tap-guard-rules";
 
 export const antinoteTapHoldBindings: Binding[] = [
-  tapHoldBinding("a", ["left_shift"], {
-    hold: [{ type: "url", url: "antinote://", background: true }],
-  }),
+  {
+    trigger: { keys: ["a"], modifiers: ["left_shift"] },
+    cases: [{ phase: "hold", do: [{ type: "url", url: "antinote://", background: true }] }],
+  },
 ];
 
 export const antinoteDeleteGuard: DoubleTapGuardConfig = {

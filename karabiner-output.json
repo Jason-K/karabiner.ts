@@ -2232,7 +2232,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=next-display'\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=previous-display'",
+        "ruleDescription": "[vmCOCS]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-next-display'\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-prev-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2253,19 +2253,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
                 }
               ]
             }
@@ -2275,7 +2275,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=previous-display'",
+        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-prev-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2301,7 +2301,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=previous-display'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
@@ -2318,7 +2318,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=next-display'",
+        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-next-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2344,7 +2344,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
               }
             ],
             "to_delayed_action": {
@@ -4703,32 +4703,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "t",
-              "modifiers": {
-                "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "[←⌘←⌥←⌃←⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
         "manipulatorSources": [
           {
@@ -5243,7 +5217,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Microsoft Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1'",
+        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5255,7 +5229,7 @@
                 ]
               }
             },
-            "description": "In Microsoft Word",
+            "description": "In Word",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5278,7 +5252,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
+        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5290,7 +5264,7 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and Focused UI subrole",
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5328,7 +5302,7 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/Privacy & Security extension/PIN entry and Focused UI role and not Focused UI subrole",
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5433,7 +5407,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen browser:\tEmit ']'+←⌘←⇧",
+        "ruleDescription": "[←⌘←⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ']'+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5446,7 +5420,7 @@
                 ]
               }
             },
-            "description": "In Zen browser",
+            "description": "In Zen",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5470,7 +5444,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen browser:\tEmit '['+←⌘←⇧",
+        "ruleDescription": "[←⌘←⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit '['+←⌘←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5483,7 +5457,7 @@
                 ]
               }
             },
-            "description": "In Zen browser",
+            "description": "In Zen",
             "conditions": [
               {
                 "type": "frontmost_application_if",

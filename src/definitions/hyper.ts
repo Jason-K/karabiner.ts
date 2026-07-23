@@ -10,161 +10,194 @@ import {
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
 import { urlRegistry } from "../data/urls";
-import { defineBindings, remap, tapHoldBinding, type Binding } from "../engine";
+import { defineBindings, type Binding } from "../engine";
 
 // Launcher triggers use MOD_COMBO.vmCOCS (the expanded modifier array) because
 // buildRemap — unlike buildTapHold — does not expand alias modifiers.
 export const hyperLauncherBindings: Binding[] = [
-  remap("s", MOD_COMBO.vmCOCS, [
-    { type: "shell", command: formatSelectionCommand() },
-  ]),
-  // remap("t", MOD_COMBO.vmCOCS, [{ type: "shell", command: typinatorNewRuleCommand() }]),
-  remap("comma", MOD_COMBO.vmCOCS, [
-    { type: "app", ref: appRegistry.systemSettings },
-  ]),
-  remap("f12", MOD_COMBO.vmCOCS, [
-    { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
-  ]),
-  remap("escape", MOD_COMBO.vmCOCS, [
-    { type: "app", ref: appRegistry.activityMonitor },
-  ]),
+  {
+    trigger: { keys: ["s"], modifiers: MOD_COMBO.vmCOCS },
+    cases: [{ phase: "press", do: [{ type: "shell", command: formatSelectionCommand() }] }],
+  },
+  // { trigger: { keys: ["t"], modifiers: MOD_COMBO.vmCOCS }, cases: [{ phase: "press", do: [{ type: "shell", command: typinatorNewRuleCommand() }] }] },
+  {
+    trigger: { keys: ["comma"], modifiers: MOD_COMBO.vmCOCS },
+    cases: [{ phase: "press", do: [{ type: "app", ref: appRegistry.systemSettings }] }],
+  },
+  {
+    trigger: { keys: ["f12"], modifiers: MOD_COMBO.vmCOCS },
+    cases: [
+      { phase: "press", do: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }] },
+    ],
+  },
+  {
+    trigger: { keys: ["escape"], modifiers: MOD_COMBO.vmCOCS },
+    cases: [{ phase: "press", do: [{ type: "app", ref: appRegistry.activityMonitor }] }],
+  },
 ];
 
 export const hyperTapHoldBindings: Binding[] = [
-  tapHoldBinding("t", ["vmCOCS"], {
-    alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
-    hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
-  }),
-  tapHoldBinding("q", ["vmCOCS"], {
-    alone: [
+  {
+    trigger: { keys: ["t"], modifiers: ["vmCOCS"] },
+    cases: [
+      { phase: "release", do: [{ type: "shell", command: typinatorNewRuleCommand() }] },
+      { phase: "hold", do: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }] },
+    ],
+  },
+  {
+    trigger: { keys: ["q"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "key",
-        key: "left_arrow",
-        modifiers: ["left_command", "left_control", "left_option"],
-        options: { repeat: false },
+        phase: "release",
+        do: [
+          {
+            type: "key",
+            key: "left_arrow",
+            modifiers: ["left_command", "left_control", "left_option"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
-  }),
-  tapHoldBinding("e", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["e"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "key",
-        key: "right_arrow",
-        modifiers: ["left_command", "left_control", "left_option"],
-        options: { repeat: false },
+        phase: "release",
+        do: [
+          {
+            type: "key",
+            key: "right_arrow",
+            modifiers: ["left_command", "left_control", "left_option"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
-  }),
-  tapHoldBinding("r", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["r"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "key",
-        key: "up_arrow",
-        modifiers: ["left_command", "left_control", "left_option"],
-        options: { repeat: false },
+        phase: "release",
+        do: [
+          {
+            type: "key",
+            key: "up_arrow",
+            modifiers: ["left_command", "left_control", "left_option"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
-  }),
-  tapHoldBinding("f", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["f"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "key",
-        key: "down_arrow",
-        modifiers: ["left_command", "left_control", "left_option"],
-        options: { repeat: false },
+        phase: "release",
+        do: [
+          {
+            type: "key",
+            key: "down_arrow",
+            modifiers: ["left_command", "left_control", "left_option"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
-  }),
-  tapHoldBinding("keypad_1", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["keypad_1"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: rectangleActionUrl("bottom-left-eighth"),
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true }],
       },
     ],
-  }),
-  tapHoldBinding("keypad_3", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["keypad_3"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: rectangleActionUrl("bottom-right-eighth"),
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true }],
       },
     ],
-  }),
-  tapHoldBinding("keypad_5", ["vmCOCS"], {
-    alone: [
-      { type: "url", url: urlRegistry.rectWinMaximize.name, background: true },
-    ],
-  }),
-  tapHoldBinding("keypad_7", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["keypad_5"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: rectangleActionUrl("top-left-eighth"),
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: urlRegistry.rectWinMaximize.name, background: true }],
       },
     ],
-  }),
-  tapHoldBinding("keypad_9", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["keypad_7"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: rectangleActionUrl("top-right-eighth"),
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: rectangleActionUrl("top-left-eighth"), background: true }],
       },
     ],
-  }),
-  tapHoldBinding("spacebar", ["vmCOCS"], {
-    alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
-  }),
-  tapHoldBinding("tab", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["keypad_9"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: urlRegistry.rectAppNextDisplay.name,
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: rectangleActionUrl("top-right-eighth"), background: true }],
       },
     ],
-    hold: [
+  },
+  {
+    trigger: { keys: ["spacebar"], modifiers: ["vmCOCS"] },
+    cases: [
+      { phase: "release", do: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }] },
+    ],
+  },
+  {
+    trigger: { keys: ["tab"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: urlRegistry.rectAppPrevDisplay.name,
-        background: true,
+        phase: "release",
+        do: [{ type: "url", url: urlRegistry.rectAppNextDisplay.name, background: true }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: urlRegistry.rectAppPrevDisplay.name, background: true }],
       },
     ],
-  }),
-  tapHoldBinding("left_arrow", ["vmCOCS"], {
-    alone: [
+  },
+  {
+    trigger: { keys: ["left_arrow"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "shell",
-        command: rectangleOrientationBasedCommand("left-half", "top-half"),
+        phase: "release",
+        do: [{ type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: urlRegistry.rectAppPrevDisplay.name, background: true }],
       },
     ],
-    hold: [
+  },
+  {
+    trigger: { keys: ["right_arrow"], modifiers: ["vmCOCS"] },
+    cases: [
       {
-        type: "url",
-        url: urlRegistry.rectAppPrevDisplay.name,
-        background: true,
+        phase: "release",
+        do: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: urlRegistry.rectAppNextDisplay.name, background: true }],
       },
     ],
-  }),
-  tapHoldBinding("right_arrow", ["vmCOCS"], {
-    alone: [
-      {
-        type: "shell",
-        command: rectangleOrientationBasedCommand("right-half", "bottom-half"),
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: urlRegistry.rectAppNextDisplay.name,
-        background: true,
-      },
-    ],
-  }),
+  },
 ];
 
 export const buildHyperLauncherRules = () => defineBindings(hyperLauncherBindings);

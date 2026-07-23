@@ -1,6 +1,6 @@
 import { MOD_COMBO } from "../core/mods";
 import { TIMINGS } from "../data";
-import { defineBindings, tapHoldBinding, type Binding } from "../engine";
+import { defineBindings, type Binding } from "../engine";
 import {
   generateDoubleTapGuardRule,
   type DoubleTapGuardConfig,
@@ -25,26 +25,24 @@ export const cmdQGuard: DoubleTapGuardConfig = {
 };
 
 export const leftCommandTapHoldBindings: Binding[] = [
-  tapHoldBinding("m", ["left_command"], {
-    hold: [
+  {
+    trigger: { keys: ["m"], modifiers: ["left_command"] },
+    cases: [
       {
-        type: "key",
-        key: "m",
-        modifiers: MOD_COMBO.vm_OC_,
-        options: { repeat: false },
+        phase: "hold",
+        do: [{ type: "key", key: "m", modifiers: MOD_COMBO.vm_OC_, options: { repeat: false } }],
       },
     ],
-  }),
-  tapHoldBinding("p", ["left_command"], {
-    hold: [
+  },
+  {
+    trigger: { keys: ["p"], modifiers: ["left_command"] },
+    cases: [
       {
-        type: "key",
-        key: "p",
-        modifiers: MOD_COMBO.vmCOC_,
-        options: { repeat: false },
+        phase: "hold",
+        do: [{ type: "key", key: "p", modifiers: MOD_COMBO.vmCOC_, options: { repeat: false } }],
       },
     ],
-  }),
+  },
 ];
 
 export const buildLeftCommandRule = () =>
