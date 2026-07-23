@@ -10,6 +10,7 @@ import {
   type ToEvent,
 } from "karabiner.ts";
 import { resolveActionToEvents } from "./action-resolver";
+import { synthesizeRuleDescription } from "./description-synthesizer";
 import { tapHold } from "../core/tap-hold";
 import { varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
@@ -51,7 +52,7 @@ export type Case = {
 
 /** One binding = one description = one Karabiner rule. */
 export type Binding = {
-  description: string;
+  description?: string; // absent -> auto-derived by the synthesizer (Phase 2)
   trigger: Trigger;
   timing?: {
     aloneMs?: number;
@@ -186,7 +187,10 @@ function groupByConditions(cases: ResolvedCase[]): CaseGroup[] {
 }
 
 export function defineBindings(bindings: Binding[]): Rule[] {
-  return bindings.map((b) => rule(b.description).manipulators(buildManipulators(b)) as unknown as Rule);
+  return bindings.map((b) =>
+    rule(b.description ?? synthesizeRuleDescription(b))
+      .manipulators(buildManipulators(b)) as unknown as Rule,
+  );
 }
 
 function buildManipulators(b: Binding): Manipulator[] {

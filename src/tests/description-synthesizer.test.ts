@@ -7,10 +7,12 @@ import { commandRegistry } from "../data/commands";
 import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import { appRegistry } from "../data/apps";
+import type { Binding } from "../engine/binding";
 import {
   describeAction,
   describeConditionGroup,
   describeTrigger,
+  synthesizeRuleDescription,
 } from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
@@ -151,5 +153,72 @@ test("describeTrigger: pointer", () => {
   assert.equal(
     describeTrigger({ pointer: "button1", modifiers: ["left_command"] }),
     "[←⌘]+Click:",
+  );
+});
+
+const evaluateCmd = { type: "command" as const, name: "x", refDesc: "Evaluate selection" };
+
+test("synthesizeRuleDescription: simple unconditional remap", () => {
+  const binding: Binding = {
+    trigger: { keys: ["home"] },
+    cases: [
+      { phase: "press", do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }] },
+    ],
+  };
+  assert.equal(
+    synthesizeRuleDescription(binding),
+    "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘",
+  );
+});
+
+test("synthesizeRuleDescription: conditional tap+hold (spec §9 canonical)", () => {
+  const binding: Binding = {
+    trigger: { keys: ["return_or_enter"] },
+    cases: [
+      { phase: "release", conditions: [{ app: excelCond }], do: [{ type: "key", key: "f2" }] },
+      {
+        phase: "release",
+        conditions: [{ app: excelCond, unless: true }],
+        do: [{ type: "key", key: "return_or_enter" }],
+      },
+      { phase: "hold", conditions: [{ app: excelCond }], do: [{ type: "key", key: "f2" }] },
+      {
+        phase: "hold",
+        conditions: [{ app: excelCond, unless: true }],
+        do: [{ type: "command", ref: evaluateCmd }],
+      },
+    ],
+  };
+  assert.equal(
+    synthesizeRuleDescription(binding),
+    "[⏎]:\n---\n\tOn Tap:\n\t\tIn Microsoft Excel:\tEmit 'F2'\n\t\tOutside Microsoft Excel:\tEmit '⏎'\n\tOn Hold:\n\t\tIn Microsoft Excel:\tEmit 'F2'\n\t\tOutside Microsoft Excel:\tRun command 'Evaluate selection'",
+  );
+});
+
+test("synthesizeRuleDescription: multi-action case joined with ' then '", () => {
+  const binding: Binding = {
+    trigger: { keys: ["slash"], modifiers: ["left_command"] },
+    cases: [
+      {
+        phase: "press",
+        conditions: [{ app: { type: "app", name: "w", refDesc: "Word" } }],
+        do: [{ type: "osascript", scriptPath: "/a.scpt" }, { type: "shell", command: "elevate" }],
+      },
+    ],
+  };
+  assert.equal(
+    synthesizeRuleDescription(binding),
+    "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/a.scpt' then Run 'elevate'",
+  );
+});
+
+test("synthesizeRuleDescription: Case.description overrides the action line", () => {
+  const binding: Binding = {
+    trigger: { keys: ["x"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }], description: "Custom fragment" }],
+  };
+  assert.equal(
+    synthesizeRuleDescription(binding),
+    "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tCustom fragment",
   );
 });

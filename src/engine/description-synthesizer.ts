@@ -1,6 +1,6 @@
 import type { ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
-import type { Condition, Trigger } from "./binding";
+import type { Binding, Condition, Phase, Trigger } from "./binding";
 import { expandModifiers } from "./action-resolver";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
@@ -112,4 +112,45 @@ export function describeTrigger(trigger: Trigger): string {
   if (symbols) segments.push(`[${symbols}]`);
   for (const k of trigger.keys) segments.push(`[${keyTokenToLabel(k)}]`);
   return `${segments.join("+")}:`;
+}
+
+function bucketFor(tapCount: number, phase: Phase): string {
+  if (tapCount === 1 && (phase === "press" || phase === "release")) return "On Tap";
+  if (tapCount === 1 && phase === "hold") return "On Hold";
+  if (tapCount >= 2 && (phase === "press" || phase === "release")) return "On Double Tap";
+  return "On Double Tap Hold";
+}
+
+/**
+ * Rich multi-line rule description (spec §9). Layout:
+ *   [TRIGGER]:\n---\n\t<Phase>:\n\t\t<conditionLabel>:\t<actionLine>
+ * Phases emitted in fixed order (On Tap, On Hold, On Double Tap, On Double Tap
+ * Hold); empty phases omitted. Per-case conditionLabel combines hoisted
+ * binding.conditions + the case's own conditions. Case.description, when set,
+ * overrides the derived action line verbatim.
+ */
+export function synthesizeRuleDescription(binding: Binding): string {
+  const buckets = new Map<string, number[]>();
+  for (const label of ["On Tap", "On Hold", "On Double Tap", "On Double Tap Hold"]) {
+    buckets.set(label, []);
+  }
+  binding.cases.forEach((c, i) => {
+    buckets.get(bucketFor(c.tapCount ?? 1, c.phase ?? "press"))!.push(i);
+  });
+
+  const sections: string[] = [];
+  for (const [label, idxs] of buckets) {
+    if (!idxs.length) continue;
+    const lines = idxs.map((i) => {
+      const c = binding.cases[i]!;
+      const condLabel = describeConditionGroup([
+        ...(binding.conditions ?? []),
+        ...(c.conditions ?? []),
+      ]);
+      const actionLine = c.description ?? c.do.map(describeAction).join(" then ");
+      return `\t\t${condLabel}:\t${actionLine}`;
+    });
+    sections.push(`\t${label}:\n${lines.join("\n")}`);
+  }
+  return `${describeTrigger(binding.trigger)}\n---\n${sections.join("\n")}`;
 }
