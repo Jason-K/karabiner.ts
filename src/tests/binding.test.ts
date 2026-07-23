@@ -25,11 +25,11 @@ test("resolveCondition app unless -> frontmost_application_unless", () => {
 
 test("resolveCondition var if/unless -> variable_if/unless", () => {
   assert.deepEqual(
-    resolveCondition({ var: "x", equals: 1 }) as any,
+    resolveCondition({ var: { name: "x", varDesc: "x" }, equals: 1 }) as any,
     { type: "variable_if", name: "x", value: 1 },
   );
   assert.deepEqual(
-    resolveCondition({ var: "x", equals: 1, unless: true }) as any,
+    resolveCondition({ var: { name: "x", varDesc: "x" }, equals: 1, unless: true }) as any,
     { type: "variable_unless", name: "x", value: 1 },
   );
 });

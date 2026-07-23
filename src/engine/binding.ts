@@ -14,7 +14,7 @@ import { tapHold } from "../core/tap-hold";
 import { varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
-import type { AppRef } from "../data";
+import type { AppRef, VarSpec } from "../data";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";
@@ -25,7 +25,7 @@ export type Phase = "press" | "release" | "hold";
 /** External state condition. Realized as a Karabiner `conditions[]` entry. */
 export type Condition =
   | { app: AppRef | AppRef[]; unless?: boolean; description?: string }
-  | { var: string; equals: string | number; unless?: boolean }
+  | { var: VarSpec; equals: string | number; unless?: boolean; description?: string }
   | { device: string; unless?: boolean }; // reserved for the later mouse round
 
 export type SimOrder = {
@@ -74,7 +74,7 @@ export function resolveCondition(c: Condition): unknown {
   if ("var" in c) {
     return {
       type: c.unless ? "variable_unless" : "variable_if",
-      name: c.var,
+      name: c.var.name,
       value: c.equals,
     };
   }

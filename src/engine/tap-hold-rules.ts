@@ -73,7 +73,7 @@ export function generateTapHoldRules(
       timing: { aloneMs: config.timeoutMs, heldThresholdMs: config.thresholdMs },
       cases,
       ...(suppressionVars.length
-        ? { conditions: suppressionVars.map((v) => ({ var: v, equals: 1, unless: true })) }
+        ? { conditions: suppressionVars.map((v) => ({ var: { name: v, varDesc: v }, equals: 1, unless: true })) }
         : {}),
     };
   });

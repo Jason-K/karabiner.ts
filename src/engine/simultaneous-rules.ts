@@ -68,7 +68,7 @@ export function generateSimultaneousRules(
         simultaneousMs: config.simultaneousThresholdMs,
       },
       ...(suppressionVars.length
-        ? { conditions: suppressionVars.map((v) => ({ var: v, equals: 1, unless: true })) }
+        ? { conditions: suppressionVars.map((v) => ({ var: { name: v, varDesc: v }, equals: 1, unless: true })) }
         : {}),
       ...(config.simultaneousOptions?.to_after_key_up
         ? { afterKeyUp: config.simultaneousOptions.to_after_key_up }
