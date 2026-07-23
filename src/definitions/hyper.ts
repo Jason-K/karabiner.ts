@@ -9,38 +9,16 @@ import {
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
-import {
-  generateModifierLauncherRules,
-  type ModifierLauncherMapping,
-} from "../engine/launcher-rules";
-import { tapHoldBinding, type Binding } from "../engine";
+import { defineBindings, remap, tapHoldBinding, type Binding } from "../engine";
 
-export const hyperLauncherMappings: ModifierLauncherMapping[] = [
-  {
-    key: "s",
-    description: "Format selection",
-    action: { type: "shell", command: formatSelectionCommand() },
-  },
-  {
-    key: "t",
-    description: "New Typinator rule",
-    action: { type: "shell", command: typinatorNewRuleCommand() },
-  },
-  {
-    key: "comma",
-    description: "Open System Settings",
-    action: { type: "app", ref: appRegistry.systemSettings },
-  },
-  {
-    key: "f12",
-    description: "Edit last Typinator rule",
-    action: { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
-  },
-  {
-    key: "escape",
-    description: "Open Activity Monitor",
-    action: { type: "app", ref: appRegistry.activityMonitor },
-  },
+// Launcher triggers use MOD_COMBO.vmCOCS (the expanded modifier array) because
+// buildRemap — unlike buildTapHold — does not expand alias modifiers.
+export const hyperLauncherBindings: Binding[] = [
+  remap("s", MOD_COMBO.vmCOCS, [{ type: "shell", command: formatSelectionCommand() }]),
+  remap("t", MOD_COMBO.vmCOCS, [{ type: "shell", command: typinatorNewRuleCommand() }]),
+  remap("comma", MOD_COMBO.vmCOCS, [{ type: "app", ref: appRegistry.systemSettings }]),
+  remap("f12", MOD_COMBO.vmCOCS, [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }]),
+  remap("escape", MOD_COMBO.vmCOCS, [{ type: "app", ref: appRegistry.activityMonitor }]),
 ];
 
 export const hyperTapHoldBindings: Binding[] = [
@@ -120,9 +98,4 @@ export const hyperTapHoldBindings: Binding[] = [
   }),
 ];
 
-export const buildHyperLauncherRules = () =>
-  generateModifierLauncherRules({
-    triggerKey: MOD_COMBO.vmCOCS,
-    triggerLabel: "vmCOCS",
-    launchers: hyperLauncherMappings,
-  });
+export const buildHyperLauncherRules = () => defineBindings(hyperLauncherBindings);

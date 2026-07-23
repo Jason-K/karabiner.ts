@@ -4677,7 +4677,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[S]        →    Format selection (on tap)",
+        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'FormatSelection()''",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4703,7 +4703,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[T]        →    New Typinator rule (on tap)",
+        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4729,7 +4729,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[,]        →    Open System Settings (on tap)",
+        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4759,7 +4759,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[F12]        →    Edit last Typinator rule (on tap)",
+        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4785,7 +4785,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
+        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
         "manipulatorSources": [
           {
             "type": "basic",

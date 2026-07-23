@@ -26,7 +26,7 @@ export {
 export { buildHomeEndRule, homeEndBindings } from "./home-end";
 export {
   buildHyperLauncherRules,
-  hyperLauncherMappings,
+  hyperLauncherBindings,
 } from "./hyper";
 export {
   buildCmdQRule,
