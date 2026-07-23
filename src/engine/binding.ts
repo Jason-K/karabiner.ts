@@ -52,6 +52,7 @@ export type Case = {
   conditions?: Condition[];
   do: ActionSpec[]; // { type: "noop" } = swallow (omits `to`)
   description?: string; // optional fragment; when set, used as this case's action line verbatim
+  suppress?: boolean; // emit only `do`, no trigger fallback (this case's channel)
 };
 
 /** One binding = one description = one Karabiner rule. */
@@ -69,6 +70,9 @@ export type Binding = {
   eventOptions?: { halt?: boolean; repeat?: boolean };
   multiTap?: { allowPassThrough?: boolean; mods?: string[] };
   afterKeyUp?: ActionSpec[];
+  whileHoldVar?: VarSpec; // tap-hold: set 1 on key-down, 0 on key-up (chord-modifier signaling)
+  suppress?: boolean; // emit only `do`, no trigger fallback (e.g. tap-hold default-alone)
+  suppressCancelFallback?: boolean; // clear to_if_canceled (chord-modifier buttons)
 };
 
 export function resolveCondition(c: Condition): unknown {
@@ -352,6 +356,7 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
     hold,
     timeoutMs: b.timing?.aloneMs,
     thresholdMs: b.timing?.heldThresholdMs,
+    ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();
   // Inject mandatory from-modifiers exactly like tap-hold-rules (vm alias -> resolved mods)
   if (mods.length) {
@@ -367,6 +372,18 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
       m.conditions.push(cond);
     }),
   );
+  // Chord-modifier levers: clear the cancel fallback (no stray click on canceled
+  // hold) and/or drop the default-alone pass-through (emit only `do`).
+  if (b.suppressCancelFallback) {
+    manipulators.forEach((m: any) => {
+      if (m.to_delayed_action?.to_if_canceled) m.to_delayed_action.to_if_canceled = [];
+    });
+  }
+  if (b.suppress) {
+    manipulators.forEach((m: any) => {
+      m.to_if_alone = [];
+    });
+  }
   stampLabel(manipulators, g.rawConditions);
   return manipulators;
 }

@@ -184,3 +184,17 @@ test("defineBindings: global button alias adds no device condition", () => {
   const m = (rules[0] as any).manipulatorSources[0];
   assert.equal(m.conditions?.some((c: any) => c.type === "device_if") ?? false, false);
 });
+
+test("buildTapHold: whileHoldVar sets var on down + suppressCancelFallback empties to_if_canceled", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      whileHoldVar: { name: "x_down", varDesc: "X down" },
+      suppressCancelFallback: true,
+      cases: [{ phase: "release", do: [{ type: "key", key: "x" }] }],
+    },
+  ]);
+  const m = (rules[0] as any).manipulatorSources[0];
+  assert.ok(m.to?.some((e: any) => e.set_variable?.name === "x_down"));
+  assert.deepEqual(m.to_delayed_action?.to_if_canceled, []);
+});
