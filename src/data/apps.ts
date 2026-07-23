@@ -7,17 +7,17 @@ const app = (name: string, refDesc: string) => ({
 export const appRegistry = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
-  brewUpdater: app("org.gpgtools.pinentry-mac", "PIN entry"),
-  browser: app("app.zen-browser.zen", "Zen browser"),
+  brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
+  browser: app("app.zen-browser.zen", "Zen"),
   calendar: app("com.busymac.busycal-setapp", "BusyCal"),
   claude: app("com.anthropic.claudefordesktop", "Claude"),
-  code: app("com.microsoft.VSCode", "VS Code"),
+  code: app("com.microsoft.VSCode", "Code"),
   excel: app("com.microsoft.Excel", "Microsoft Excel"),
   // getFolderOpenerBundleId() is a constant ("com.jinghaoshe.qspace.pro",
   // independent of the opener choice), so it is inlined here to keep data/
   // free of core/ imports. No action references folderOpener today, so the
   // old "__folder_opener__" sentinel + resolver special case were dead.
-  folderOpener: app("com.jinghaoshe.qspace.pro", "Folder opener"),
+  folderOpener: app("com.jinghaoshe.qspace.pro", "QSpace"),
   helium: app("net.imput.helium", "Helium"),
   kitty: app("net.kovidgoyal.kitty", "Kitty"),
   messages: app("com.apple.MobileSMS", "Messages"),
@@ -32,15 +32,15 @@ export const appRegistry = {
   settings: app("com.apple.systempreferences", "System Settings"),
   settingsPrivacySecurityExtension: app(
     "com.apple.settings.PrivacySecurity.extension",
-    "Privacy & Security extension",
+    "System Settings, security",
   ),
   skim: app("net.sourceforge.skim-app.skim", "Skim"),
   spotify: app("com.spotify.client", "Spotify"),
   systemSettings: app("com.apple.systempreferences", "System Settings"),
   teams: app("com.microsoft.teams2", "Microsoft Teams"),
   todoist: app("com.todoist.mac.Todoist", "Todoist"),
-  word: app("com.microsoft.Word", "Microsoft Word"),
-  zen: app("app.zen-browser.zen", "Zen browser"),
+  word: app("com.microsoft.Word", "Word"),
+  zen: app("app.zen-browser.zen", "Zen"),
 } as const;
 
 export type AppRef = import("./refs").AppRef;

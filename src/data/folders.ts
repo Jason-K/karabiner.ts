@@ -7,29 +7,38 @@ const folder = (name: string, refDesc: string) => ({
 });
 
 export const folderRegistry = {
-  applications: folder("/Applications/", "Applications"),
+  applications: folder("/Applications/", "Apps (global)"),
   cases: folder(
     `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/`,
-    "Cases",
+    "My Cases",
   ),
   chezmoi: folder(`${HOME_DIR}/.local/share/chezmoi/`, "chezmoi"),
-  dotConfig: folder(`${HOME_DIR}/.config/`, "~/.config"),
-  dotLocal: folder(`${HOME_DIR}/.local/`, "~/.local"),
-  dotBin: folder(`${HOME_DIR}/.local/bin/`, "~/.local/bin"),
-  dotState: folder(`${HOME_DIR}/.local/state/`, "~/.local/state"),
-  downloads: folder(`${HOME_DIR}/Downloads/`, "Downloads"),
-  downloads3dPrinting: folder(`${HOME_DIR}/Downloads/3dPrinting`, "3D Printing downloads"),
-  downloadsArchives: folder(`${HOME_DIR}/Downloads/Archives`, "Archives"),
-  downloadsInstalls: folder(`${HOME_DIR}/Downloads/Installs`, "Installs"),
-  downloadsOffice: folder(`${HOME_DIR}/Downloads/Office`, "Office downloads"),
-  downloadsPdfs: folder(`${HOME_DIR}/Downloads/PDFs/`, "PDFs"),
-  gits: folder(`${HOME_DIR}/gits/`, "~/gits"),
+  dotConfig: folder(`${HOME_DIR}/.config/`, ".config"),
+  dotLocal: folder(`${HOME_DIR}/.local/`, ".local"),
+  dotBin: folder(`${HOME_DIR}/.local/bin/`, ".bin"),
+  dotState: folder(`${HOME_DIR}/.local/state/`, ".state"),
+  downloads: folder(`${HOME_DIR}/Downloads/`, "D/Ls"),
+  downloads3dPrinting: folder(
+    `${HOME_DIR}/Downloads/3dPrinting`,
+    "D/Ls - 3d printing",
+  ),
+  downloadsArchives: folder(
+    `${HOME_DIR}/Downloads/Archives`,
+    "D/Ls - Archives",
+  ),
+  downloadsInstalls: folder(
+    `${HOME_DIR}/Downloads/Installs`,
+    "D/Ls - Installs",
+  ),
+  downloadsOffice: folder(`${HOME_DIR}/Downloads/Office`, "D/Ls - work"),
+  downloadsPdfs: folder(`${HOME_DIR}/Downloads/PDFs/`, "D/Ls - PDFs"),
+  gits: folder(`${HOME_DIR}/gits/`, "Gits"),
   home: folder(`${HOME_DIR}/`, "Home"),
   library: folder(
     `${HOME_DIR}/Library/CloudStorage/OneDrive-Personal/1 - Work/0 - Library/`,
-    "Library",
+    "My Library",
   ),
-  scripts: folder(`${HOME_DIR}/Scripts/`, "~/Scripts"),
+  scripts: folder(`${HOME_DIR}/Scripts/`, "Scripts"),
   workspaces: folder(`${HOME_DIR}/Scripts/workspaces/`, "Workspaces"),
 } as const;
 

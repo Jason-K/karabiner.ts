@@ -6,7 +6,8 @@ export type RefSpecType =
   | "raycast"
   | "cleanShot"
   | "command"
-  | "url";
+  | "url"
+  | "path";
 
 export type RefSpec = {
   type: RefSpecType;
@@ -34,3 +35,4 @@ export type RaycastRef = RefSpec;
 export type CleanShotRef = RefSpec;
 export type CommandRef = RefSpec;
 export type UrlRef = RefSpec;
+export type PathRef = RefSpec;

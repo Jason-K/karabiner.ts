@@ -5,6 +5,9 @@ function shellSingleQuote(value: string): string {
   return `'${value.replace(/'/g, `"'"'`)}'`;
 }
 
+
+
+
 export const rectangleActions = [
   "almost-maximize",
   "app-left-half",
