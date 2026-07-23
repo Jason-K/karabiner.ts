@@ -36,10 +36,7 @@ function toRules(input: any[]): any[] {
 
 test("left command factory keeps dual manipulator behavior", () => {
   const rule = toRule(buildLeftCommandRule());
-  assert.equal(
-    rule.description,
-    "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[⌘\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 

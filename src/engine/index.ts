@@ -4,7 +4,6 @@ export * from "./binding";
 export * from "./binding-helpers";
 export * from "./action-resolver";
 export * from "./double-tap-guard-rules";
-export * from "./multi-tap-rules";
 export * from "./conditional-tap-hold-rules";
 export * from "./device-config";
 export * from "./escape-rule";

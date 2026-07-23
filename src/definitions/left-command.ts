@@ -1,24 +1,20 @@
 import { MOD_COMBO } from "../core/mods";
 import { TIMINGS } from "../data";
-import { tapHoldBinding, type Binding } from "../engine";
+import { defineBindings, tapHoldBinding, type Binding } from "../engine";
 import {
   generateDoubleTapGuardRule,
   type DoubleTapGuardConfig,
 } from "../engine/double-tap-guard-rules";
-import {
-  generateMultiTapRule,
-  type MultiTapConfig,
-} from "../engine/multi-tap-rules";
 
-export const leftCommandMultiTap: MultiTapConfig = {
-  key: "left_command",
-  description: "Tap/double-tap/hold handler",
-  alone: [{ type: "key", key: "left_command" }],
-  hold: [{ type: "key", key: "left_command" }],
-  tapTap: [{ type: "appHistory", index: 1 }],
-  thresholdMs: TIMINGS.timeoutDoubleTapMs,
-  allowPassThrough: true,
-  mods: [],
+export const leftCommandMultiTapBinding: Binding = {
+  trigger: { keys: ["left_command"] },
+  timing: { aloneMs: TIMINGS.timeoutDoubleTapMs, heldThresholdMs: TIMINGS.timeoutDoubleTapMs },
+  multiTap: { allowPassThrough: true, mods: [] },
+  cases: [
+    { phase: "release", do: [{ type: "key", key: "left_command" }] },
+    { phase: "hold", do: [{ type: "key", key: "left_command" }] },
+    { tapCount: 2, phase: "release", do: [{ type: "appHistory", index: 1 }] },
+  ],
 };
 
 export const cmdQGuard: DoubleTapGuardConfig = {
@@ -52,5 +48,5 @@ export const leftCommandTapHoldBindings: Binding[] = [
 ];
 
 export const buildLeftCommandRule = () =>
-  generateMultiTapRule(leftCommandMultiTap);
+  defineBindings([leftCommandMultiTapBinding])[0]!;
 export const buildCmdQRule = () => generateDoubleTapGuardRule(cmdQGuard);

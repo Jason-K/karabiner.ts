@@ -2652,7 +2652,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
+        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'\n\tOn Hold:\n\t\tAlways:\tEmit '⌘'\n\tOn Double Tap:\n\t\tAlways:\tGo back 1 apps",
         "manipulatorSources": [
           {
             "type": "basic",
