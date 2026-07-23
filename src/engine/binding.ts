@@ -1,6 +1,7 @@
 import type { ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import {
   ifApp,
+  ifDevice,
   map,
   rule,
   type FromEvent,
@@ -15,7 +16,8 @@ import { tapHold } from "../core/tap-hold";
 import { varTapTapHold } from "../core/tap-hold";
 import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
 import { resolveModComboAlias } from "../data/key-aliases";
-import type { AppRef, VarSpec } from "../data";
+import { karabinerDeviceId } from "../data/devices";
+import type { AppRef, DeviceSpec, VarSpec } from "../data";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";
@@ -27,7 +29,7 @@ export type Phase = "press" | "release" | "hold";
 export type Condition =
   | { app: AppRef | AppRef[]; unless?: boolean; description?: string }
   | { var: VarSpec; equals: string | number; unless?: boolean; description?: string }
-  | { device: string; unless?: boolean }; // reserved for the later mouse round
+  | { device: DeviceSpec; unless?: boolean; description?: string };
 
 export type SimOrder = {
   down?: "insensitive" | "strict" | "strict_inverse";
@@ -80,8 +82,10 @@ export function resolveCondition(c: Condition): unknown {
       value: c.equals,
     };
   }
-  // device — reserved for the mouse round
-  throw new Error("device conditions are not supported yet (mouse is out of scope)");
+  // device
+  return c.unless
+    ? ifDevice(karabinerDeviceId(c.device)).unless().build()
+    : ifDevice(karabinerDeviceId(c.device)).build();
 }
 
 function resolveSimOrder(order?: SimOrder): SimultaneousOptions | undefined {

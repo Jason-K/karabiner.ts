@@ -87,8 +87,8 @@ export function describeConditionGroup(conditions: Condition[] | undefined): str
       const v: VarCondition = c;
       return v.unless ? `not ${v.var.varDesc}` : v.var.varDesc;
     }
-    // device is reserved for the mouse round (Condition throws in resolveCondition).
-    return "device";
+    const d = c as Extract<Condition, { device: unknown }>;
+    return d.unless ? `not on ${d.device.deviceDesc}` : `on ${d.device.deviceDesc}`;
   });
   return parts.join(" and ");
 }

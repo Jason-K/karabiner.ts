@@ -148,6 +148,15 @@ test("describeConditionGroup: multiple joined with ' and '", () => {
   );
 });
 
+test("describeConditionGroup: device if/unless", () => {
+  const dev = { name: "logitechG502X", deviceDesc: "Logitech G502 X", product_id: 49305, vendor_id: 1133 };
+  assert.equal(describeConditionGroup([{ device: dev as any }]), "on Logitech G502 X");
+  assert.equal(
+    describeConditionGroup([{ device: dev as any, unless: true }]),
+    "not on Logitech G502 X",
+  );
+});
+
 test("describeTrigger: single key + modifier chords", () => {
   assert.equal(describeTrigger({ keys: ["return_or_enter"] }), "[⏎]:");
   assert.equal(describeTrigger({ keys: ["escape"] }), "[␛]:");
