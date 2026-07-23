@@ -17,7 +17,7 @@ import {
   withSleep,
 } from "../core/scripts";
 import { openApp } from "../core/software";
-import { folderRegistry, type AppRef } from "../data";
+import type { AppRef } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { raycastRegistry } from "../data/raycast";
@@ -36,14 +36,18 @@ function expandModifiers(modifiers: string[]): string[] {
   return expanded;
 }
 
-function resolveAppBundleId(ref: AppRef): string {
+function resolveName(ref: { name: string | string[] }): string {
   return Array.isArray(ref.name) ? ref.name[0]! : ref.name;
+}
+
+function resolveAppBundleId(ref: AppRef): string {
+  return resolveName(ref);
 }
 
 function resolveShellCommand(action: ActionSpec): string | null {
   switch (action.type) {
     case "folder":
-      return getOpenFolderCommand(folderRegistry[action.ref]);
+      return getOpenFolderCommand(resolveName(action.ref));
     case "raycast":
       return raycastExtensionCommand(raycastRegistry[action.ref]);
     case "cleanShot":

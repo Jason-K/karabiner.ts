@@ -58,7 +58,7 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 
 test("registries centralize app folder and integration refs", () => {
   assert.equal(appRegistry.outlook.name, "com.microsoft.Outlook");
-  assert.equal(folderRegistry.home, `${HOME_DIR}/`);
+  assert.equal(folderRegistry.home.name, `${HOME_DIR}/`);
   assert.equal(raycastRegistry.recentFolders, "jason/recents/recentFolders");
   assert.equal(cleanShotRegistry.captureArea, "capture-area");
 });
