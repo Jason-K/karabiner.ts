@@ -126,6 +126,8 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
       return [toKey("x", ["left_command"]), cmd(resolveShellCommand(action)!)];
     case "sequence":
       return action.actions.flatMap(resolveActionToEvents);
+    case "command":
+      return [cmd(resolveName(action.ref))];
     default: {
       const shellCommand = resolveShellCommand(action);
       return shellCommand ? [cmd(shellCommand)] : [];

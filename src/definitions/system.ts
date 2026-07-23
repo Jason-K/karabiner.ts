@@ -59,7 +59,7 @@ export const passwordsQuickFillBinding: Binding = {
           equals: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
         },
       ],
-      do: [{ type: "shell", command: commandRegistry.fillPassword }],
+      do: [{ type: "command", ref: commandRegistry.fillPassword }],
     },
     {
       phase: "press",
@@ -76,7 +76,7 @@ export const passwordsQuickFillBinding: Binding = {
         },
       ],
       do: [
-        { type: "shell", command: commandRegistry.fillUsernameAndPassword },
+        { type: "command", ref: commandRegistry.fillUsernameAndPassword },
       ],
     },
   ],
