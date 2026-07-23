@@ -2,11 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
+import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { commandRegistry } from "../data/commands";
 import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
-import { appRegistry } from "../data/apps";
 import type { Binding } from "../engine/binding";
 import {
   describeAction,
@@ -34,10 +34,17 @@ test("describeAction: app variants by mode + actionDesc", () => {
 
 test("describeAction: appHistory / folder / raycast / cleanShot / command", () => {
   assert.equal(describeAction({ type: "appHistory", index: 2 }), "Go back 2 apps");
-  assert.equal(describeAction({ type: "folder", ref: folderRegistry.downloads }), "open 'Downloads'");
   assert.equal(
-    describeAction({ type: "folder", ref: folderRegistry.downloads, actionDesc: "new tab" }),
-    "open 'Downloads' | new tab",
+    describeAction({ type: "folder", ref: folderRegistry.downloads }),
+    "open 'D/Ls'",
+  );
+  assert.equal(
+    describeAction({
+      type: "folder",
+      ref: folderRegistry.downloads,
+      actionDesc: "new tab",
+    }),
+    "open 'D/Ls' | new tab",
   );
   assert.equal(
     describeAction({ type: "raycast", ref: raycastRegistry.clipboardHistory }),
