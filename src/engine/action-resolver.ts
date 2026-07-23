@@ -128,6 +128,13 @@ export function resolveActionToEvents(action: ActionSpec): ToEvent[] {
       return action.actions.flatMap(resolveActionToEvents);
     case "command":
       return [cmd(resolveName(action.ref))];
+    case "setVar": {
+      let value: string | number = 1;
+      if (action.toggle) value = "toggle";
+      else if (typeof action.value === "boolean") value = action.value ? 1 : 0;
+      else if (action.value !== undefined) value = action.value;
+      return [{ set_variable: { name: action.var.name, value } } as unknown as ToEvent];
+    }
     default: {
       const shellCommand = resolveShellCommand(action);
       return shellCommand ? [cmd(shellCommand)] : [];

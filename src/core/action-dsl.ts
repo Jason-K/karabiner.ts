@@ -4,6 +4,7 @@ import type { CommandRef } from "../data/commands";
 import type { FolderRef } from "../data/folders";
 import type { ModComboAlias, ModKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
+import type { VarSpec } from "../data/refs";
 
 export type ActionKeyModifier = ModKey | ModComboAlias;
 
@@ -93,6 +94,12 @@ export type ActionSpec =
       type: "cut" | "copy" | "paste";
     }
   | { type: "noop" }
+  | {
+      type: "setVar";
+      var: VarSpec;
+      value?: number | string | boolean;
+      toggle?: boolean;
+    }
   | {
       type: "sequence";
       actions: ActionSpec[];

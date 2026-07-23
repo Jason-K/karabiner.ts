@@ -60,6 +60,8 @@ export function describeAction(action: ActionSpec): string {
       return "No operation";
     case "sequence":
       return action.actions.map(describeAction).join(" then ");
+    case "setVar":
+      return `Set ${action.var.varDesc}`;
     default: {
       const _exhaustive: never = action;
       return _exhaustive;

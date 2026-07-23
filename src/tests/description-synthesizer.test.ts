@@ -102,6 +102,13 @@ test("describeAction: sequence joins sub-actions with ' then '", () => {
   assert.equal(describeAction(seq), "Cut selection then Paste selection");
 });
 
+test("describeAction: setVar uses the var label", () => {
+  assert.equal(
+    describeAction({ type: "setVar", var: { name: "right_button_pressed", varDesc: "Right button held" } }),
+    "Set Right button held",
+  );
+});
+
 const excelCond = {
   type: "app" as const,
   name: "com.microsoft.Excel",
