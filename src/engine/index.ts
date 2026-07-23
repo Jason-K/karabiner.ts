@@ -11,6 +11,5 @@ export * from "./escape-rule";
 export * from "./launcher-rules";
 export * from "./layer-emit";
 export * from "./mouse-rules";
-export * from "./tap-hold-rules";
 export * from "./modifier-chord-rules";
 export * from "./simultaneous-rules";

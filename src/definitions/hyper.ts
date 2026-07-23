@@ -9,11 +9,11 @@ import {
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
-import type { TapHoldConfig } from "../engine";
 import {
   generateModifierLauncherRules,
   type ModifierLauncherMapping,
 } from "../engine/launcher-rules";
+import { tapHoldBinding, type Binding } from "../engine";
 
 export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
@@ -43,14 +43,12 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   },
 ];
 
-export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
-  "vmCOCS+t": {
-    description: "Edit last Typinator rule",
+export const hyperTapHoldBindings: Binding[] = [
+  tapHoldBinding("t", ["vmCOCS"], {
     alone: [{ type: "shell", command: typinatorNewRuleCommand() }],
     hold: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }],
-  },
-  "vmCOCS+q": {
-    description: "Focus window to the left",
+  }),
+  tapHoldBinding("q", ["vmCOCS"], {
     alone: [
       {
         type: "key",
@@ -59,9 +57,8 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "vmCOCS+e": {
-    description: "Focus window to the right",
+  }),
+  tapHoldBinding("e", ["vmCOCS"], {
     alone: [
       {
         type: "key",
@@ -70,9 +67,8 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "vmCOCS+r": {
-    description: "Focus window to the top",
+  }),
+  tapHoldBinding("r", ["vmCOCS"], {
     alone: [
       {
         type: "key",
@@ -81,9 +77,8 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "vmCOCS+f": {
-    description: "Focus window to the bottom",
+  }),
+  tapHoldBinding("f", ["vmCOCS"], {
     alone: [
       {
         type: "key",
@@ -92,107 +87,38 @@ export const hyperTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "vmCOCS+keypad_1": {
-    description: "Rectangle bottom-left-eighth",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("bottom-left-eighth"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+keypad_3": {
-    description: "Rectangle bottom-right-eighth",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("bottom-right-eighth"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+keypad_5": {
-    description: "Rectangle maximize",
-    alone: [
-      { type: "url", url: rectangleActionUrl("maximize"), background: true },
-    ],
-  },
-  "vmCOCS+keypad_7": {
-    description: "Rectangle top-left-eighth",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("top-left-eighth"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+keypad_9": {
-    description: "Rectangle top-right-eighth",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("top-right-eighth"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+spacebar": {
-    description: "Rectangle maximize / restore",
+  }),
+  tapHoldBinding("keypad_1", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true }],
+  }),
+  tapHoldBinding("keypad_3", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true }],
+  }),
+  tapHoldBinding("keypad_5", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("maximize"), background: true }],
+  }),
+  tapHoldBinding("keypad_7", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("top-left-eighth"), background: true }],
+  }),
+  tapHoldBinding("keypad_9", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("top-right-eighth"), background: true }],
+  }),
+  tapHoldBinding("spacebar", ["vmCOCS"], {
     alone: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }],
-  },
-  "vmCOCS+tab": {
-    description: "Rectangle next-display / previous-display",
-    alone: [
-      {
-        type: "url",
-        url: rectangleActionUrl("next-display"),
-        background: true,
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("previous-display"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+left_arrow": {
-    description: "Rectangle fill-left / previous-display",
-    alone: [
-      {
-        type: "shell",
-        command: rectangleOrientationBasedCommand("left-half", "top-half"),
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("previous-display"),
-        background: true,
-      },
-    ],
-  },
-  "vmCOCS+right_arrow": {
-    description: "Rectangle fill-right / next-display",
-    alone: [
-      {
-        type: "shell",
-        command: rectangleOrientationBasedCommand("right-half", "bottom-half"),
-      },
-    ],
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("next-display"),
-        background: true,
-      },
-    ],
-  },
-};
+  }),
+  tapHoldBinding("tab", ["vmCOCS"], {
+    alone: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
+    hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
+  }),
+  tapHoldBinding("left_arrow", ["vmCOCS"], {
+    alone: [{ type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") }],
+    hold: [{ type: "url", url: rectangleActionUrl("previous-display"), background: true }],
+  }),
+  tapHoldBinding("right_arrow", ["vmCOCS"], {
+    alone: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
+    hold: [{ type: "url", url: rectangleActionUrl("next-display"), background: true }],
+  }),
+];
 
 export const buildHyperLauncherRules = () =>
   generateModifierLauncherRules({

@@ -2,7 +2,7 @@
   "complex_modifications": {
     "rules": [
       {
-        "ruleDescription": "[8]        →    RingCentral (on hold)",
+        "ruleDescription": "[8]:\n---\n\tOn Hold:\n\t\tAlways:\topen-shell RingCentral",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -39,7 +39,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[A]        →    Raycast AI-quick search (on hold)",
+        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F18'+←⌘←⌥←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -82,7 +82,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[C]        →    Calendar (on hold)",
+        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit '7'+←⌘←⌥←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -125,7 +125,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[D]        →    Add to Droppy (on hold)",
+        "ruleDescription": "[D]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F1'+←⌘←⌥←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -168,7 +168,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F]        →    QSSpace (on hold)",
+        "ruleDescription": "[F]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: qspace",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -205,7 +205,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[G]        →    Claude (on hold)",
+        "ruleDescription": "[G]:\n---\n\tOn Hold:\n\t\tAlways:\topen-shell Claude",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -242,7 +242,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[H]        →    Here2There (on hold)",
+        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Here2There (active to target)'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -279,7 +279,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[J]        →    Last d/l (on hold)",
+        "ruleDescription": "[J]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Recent downloads'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -316,7 +316,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[K]        →    Kitty (on hold)",
+        "ruleDescription": "[K]:\n---\n\tOn Hold:\n\t\tAlways:\topen Kitty",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -357,7 +357,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[N]        →    New note (on hold)",
+        "ruleDescription": "[N]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -394,7 +394,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[O]        →    OCR (on hold)",
+        "ruleDescription": "[O]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture text (no line breaks) using CSX",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -431,7 +431,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[P]        →    Popclip (on hold)",
+        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F9'+←⌘←⌥←⌃←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -475,7 +475,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Q]        →    Launch Qspace (on hold)",
+        "ruleDescription": "[Q]:\n---\n\tOn Hold:\n\t\tAlways:\tfocus QSpace",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -512,7 +512,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[R]        →    Last d/l (on hold)",
+        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -549,7 +549,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[S]        →    Screenshot (on hold)",
+        "ruleDescription": "[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture area using CSX",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -586,7 +586,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]+[S]        →    Screenshot Window (on hold)",
+        "ruleDescription": "[⇧]+[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture window using CSX",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -634,7 +634,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[T]        →    Kitty quick terminal (on hold)",
+        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F11'+←⌥←⌃←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -677,7 +677,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[V]        →    Clipboard manager (on hold)",
+        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Clipboard history'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -714,7 +714,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[X]        →    Copy file (on hold)",
+        "ruleDescription": "[X]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -751,7 +751,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Y]        →    Yank file (on hold)",
+        "ruleDescription": "[Y]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -788,7 +788,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Z]        →    Zoxide (on hold)",
+        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'zoxide search directories'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -825,7 +825,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 0]        →    Unstash all via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=unstash-all'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -862,7 +862,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 2]        →    Stash down via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-down'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -899,7 +899,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 4]        →    Stash left via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-left'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -936,7 +936,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 5]        →    Unstash via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=unstash'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -973,7 +973,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 6]        →    Stash right via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-right'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1010,7 +1010,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 8]        →    Stash up via rectangle (on hold)",
+        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-up'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1047,7 +1047,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F1]        →    Decrease brightness (on hold)",
+        "ruleDescription": "[F1]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS DECREMENT'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1085,7 +1085,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F2]        →    Increase brightness (on hold)",
+        "ruleDescription": "[F2]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS INCREMENT'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1123,7 +1123,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F3]        →    Mission Control (on hold)",
+        "ruleDescription": "[F3]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1161,7 +1161,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F4]        →    Launchpad (on hold)",
+        "ruleDescription": "[F4]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'LAUNCHPAD'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1199,7 +1199,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F5]        →    Dictation (on hold)",
+        "ruleDescription": "[F5]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F5'+←⌘←⌥←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1242,7 +1242,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F7]        →    Rewind (on hold)",
+        "ruleDescription": "[F7]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'REWIND'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1280,7 +1280,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F8]        →    Play/Pause (on hold)",
+        "ruleDescription": "[F8]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'PLAY OR PAUSE'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1318,7 +1318,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F9]        →    Fast Forward (on hold)",
+        "ruleDescription": "[F9]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'FASTFORWARD'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1356,7 +1356,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F10]        →    Mute (on hold)",
+        "ruleDescription": "[F10]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MUTE'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1394,7 +1394,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F11]        →    Volume Down (on hold)",
+        "ruleDescription": "[F11]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME DECREMENT'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1432,7 +1432,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F12]        →    Volume Up (on hold)",
+        "ruleDescription": "[F12]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME INCREMENT'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1470,7 +1470,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[/]        →    Houdah (on hold)",
+        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'H'+←⌘←⌥←⌃←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1514,7 +1514,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[~]        →    Popclip (on hold)",
+        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F9'+←⌘←⌥←⌃←⇧",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1559,7 +1559,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇥]        →    Mission Control (on hold)",
+        "ruleDescription": "[⇥]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1598,7 +1598,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[FN]        →    Dictation via Spokenly (on hold)",
+        "ruleDescription": "[FN]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F5'+←⌘←⌥←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1641,7 +1641,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[T]        →    Edit last Typinator rule (on hold)",
+        "ruleDescription": "[vmCOCS]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1684,7 +1684,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[Q]        →    Focus window to the left (on hold)",
+        "ruleDescription": "[vmCOCS]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘←⌃←⌥",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1746,7 +1746,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[E]        →    Focus window to the right (on hold)",
+        "ruleDescription": "[vmCOCS]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘←⌃←⌥",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1808,7 +1808,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[R]        →    Focus window to the top (on hold)",
+        "ruleDescription": "[vmCOCS]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '↑'+←⌘←⌃←⌥",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1870,7 +1870,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[F]        →    Focus window to the bottom (on hold)",
+        "ruleDescription": "[vmCOCS]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '↓'+←⌘←⌃←⌥",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1932,7 +1932,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 1]        →    Rectangle bottom-left-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=bottom-left-eighth'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1982,7 +1982,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 3]        →    Rectangle bottom-right-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 3]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=bottom-right-eighth'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2032,7 +2032,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 5]        →    Rectangle maximize (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 5]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=maximize'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2082,7 +2082,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 7]        →    Rectangle top-left-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 7]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=top-left-eighth'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2132,7 +2132,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 9]        →    Rectangle top-right-eighth (on hold)",
+        "ruleDescription": "[vmCOCS]+[KEYPAD 9]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=top-right-eighth'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2182,7 +2182,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[_]        →    Rectangle maximize / restore (on hold)",
+        "ruleDescription": "[vmCOCS]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)''",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2232,7 +2232,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[⇥]        →    Rectangle next-display / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=next-display'\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=previous-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2275,7 +2275,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[←]        →    Rectangle fill-left / previous-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=previous-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2318,7 +2318,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[→]        →    Rectangle fill-right / next-display (on hold)",
+        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=next-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2361,7 +2361,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[M]        →    Deminimize (on hold)",
+        "ruleDescription": "[←⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'M'+←⌥←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2414,7 +2414,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[P]        →    Paletro (on hold)",
+        "ruleDescription": "[←⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'P'+←⌘←⌥←⌃",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2468,7 +2468,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[A]        →    Antinote (on hold)",
+        "ruleDescription": "[←⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'antinote://'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2516,7 +2516,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[K]        →    Kitty here (on hold)",
+        "ruleDescription": "[→⌥]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2564,7 +2564,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[S]        →    Spotify toggle (tap), search (hold) (on hold)",
+        "ruleDescription": "[→⌥]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled''\n\tOn Hold:\n\t\tAlways:\tCall 'Spotify search'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2604,7 +2604,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[T]        →    Edit last Typinator expansion (on hold)",
+        "ruleDescription": "[→⌥]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
         "manipulatorSources": [
           {
             "type": "basic",

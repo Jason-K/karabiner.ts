@@ -1,21 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { generateSimultaneousRules } from "../engine";
-import type { SimultaneousConfig, TapHoldConfig } from "../engine";
+import type { Binding, SimultaneousConfig } from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
 }
 
-const noSuppression: string[] = [];
-const noTapHold: Record<string, TapHoldConfig> = {};
+const noTapHold: Binding[] = [];
 
 // ── Tap-hold path ─────────────────────────────────────────────────────────────
 
 test("tap-hold: from.simultaneous contains the chord keys", () => {
   const rules = generateSimultaneousRules(
     { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
@@ -36,7 +34,6 @@ test("tap-hold: produces to_if_alone and to_if_held_down", () => {
         hold: [{ type: "key", key: "f1" }],
       },
     },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
@@ -57,7 +54,6 @@ test("multi-tap: produces two manipulators", () => {
         thresholdMs: 300,
       },
     },
-    noSuppression,
     noTapHold,
   );
   const rule = toRule(rules[0]);
@@ -74,7 +70,6 @@ test("multi-tap: second manipulator has sim_tap_{label} variable condition", () 
         thresholdMs: 300,
       },
     },
-    noSuppression,
     noTapHold,
   );
   const secondManipulator = toRule(rules[0]).manipulators[0]; // [0] = secondTap (varTapTapHoldFrom returns [secondTap, firstTap])
@@ -94,7 +89,6 @@ test("multi-tap: chord from event appears on both manipulators", () => {
         thresholdMs: 300,
       },
     },
-    noSuppression,
     noTapHold,
   );
   const { manipulators } = toRule(rules[0]);
@@ -115,7 +109,6 @@ test("simultaneous_options: key_down_order is emitted when set", () => {
         simultaneousOptions: { key_down_order: "strict" },
       },
     },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
@@ -125,7 +118,6 @@ test("simultaneous_options: key_down_order is emitted when set", () => {
 test("simultaneous_options: absent when config has none", () => {
   const rules = generateSimultaneousRules(
     { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
@@ -144,7 +136,6 @@ test("simultaneous_options: to_after_key_up is resolved and emitted", () => {
         },
       },
     },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
@@ -167,43 +158,10 @@ test("simultaneousThresholdMs: emitted as basic.simultaneous_threshold_milliseco
         simultaneousThresholdMs: 100,
       },
     },
-    noSuppression,
     noTapHold,
   );
   const m = toRule(rules[0]).manipulators[0];
   assert.equal(m.parameters?.["basic.simultaneous_threshold_milliseconds"], 100);
-});
-
-// ── Leader-suppression conditions ─────────────────────────────────────────────
-
-test("suppression: variable_unless injected for each supplied var", () => {
-  const rules = generateSimultaneousRules(
-    { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-    ["leader_mod", "leader_d_sublayer"],
-    noTapHold,
-  );
-  const m = toRule(rules[0]).manipulators[0];
-  const names = (m.conditions ?? [])
-    .filter((c: any) => c.type === "variable_unless")
-    .map((c: any) => c.name);
-  assert.ok(names.includes("leader_mod"), "should suppress leader_mod");
-  assert.ok(
-    names.includes("leader_d_sublayer"),
-    "should suppress leader_d_sublayer",
-  );
-});
-
-test("suppression: empty list emits no variable_unless conditions", () => {
-  const rules = generateSimultaneousRules(
-    { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-    noSuppression,
-    noTapHold,
-  );
-  const m = toRule(rules[0]).manipulators[0];
-  const hasUnless = (m.conditions ?? []).some(
-    (c: any) => c.type === "variable_unless",
-  );
-  assert.equal(hasUnless, false, "no suppression conditions when list is empty");
 });
 
 // ── Conflict check 1: duplicate chords ────────────────────────────────────────
@@ -216,7 +174,6 @@ test("conflict 1: throws on duplicate insensitive chords regardless of key order
           jk_a: { keys: ["j", "k"], description: "First", alone: [{ type: "key", key: "escape" }] },
           jk_b: { keys: ["k", "j"], description: "Second", alone: [{ type: "key", key: "f1" }] },
         },
-        noSuppression,
         noTapHold,
       ),
     /duplicate/i,
@@ -240,7 +197,6 @@ test("conflict 1: strict-order [j,k] and [k,j] are NOT duplicates", () => {
           simultaneousOptions: { key_down_order: "strict" },
         },
       },
-      noSuppression,
       noTapHold,
     ),
   );
@@ -262,7 +218,6 @@ test("conflict 1: same keys with different key_down_order are NOT duplicates", (
           alone: [{ type: "key", key: "f1" }],
         },
       },
-      noSuppression,
       noTapHold,
     ),
   );
@@ -271,23 +226,30 @@ test("conflict 1: same keys with different key_down_order are NOT duplicates", (
 // ── Conflict check 2: tap-hold key overlap ────────────────────────────────────
 
 test("conflict 2: throws when a simultaneous key matches a bare tap-hold key", () => {
+  const jBare: Binding[] = [
+    { trigger: { keys: ["j"] }, cases: [{ phase: "hold", do: [{ type: "key", key: "j" }] }] },
+  ];
   assert.throws(
     () =>
       generateSimultaneousRules(
         { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-        noSuppression,
-        { j: { description: "J tap-hold", alone: [{ type: "key", key: "j" }] } } as any,
+        jBare,
       ),
     /conflict/i,
   );
 });
 
 test("conflict 2: modifier-prefixed tap-hold key does NOT conflict", () => {
+  const jModded: Binding[] = [
+    {
+      trigger: { keys: ["j"], modifiers: ["left_command"] },
+      cases: [{ phase: "hold", do: [{ type: "key", key: "f1" }] }],
+    },
+  ];
   assert.doesNotThrow(() =>
     generateSimultaneousRules(
       { jk: { keys: ["j", "k"], description: "J+K", alone: [{ type: "key", key: "escape" }] } },
-      noSuppression,
-      { "cmd+j": { description: "cmd+J", alone: [{ type: "key", key: "f1" }] } } as any,
+      jModded,
     ),
   );
 });
@@ -307,7 +269,6 @@ test("throws when tapTap and tapTapHold are both specified", () => {
             thresholdMs: 300,
           },
         },
-        noSuppression,
         noTapHold,
       ),
     /mutually exclusive/i,
@@ -319,7 +280,6 @@ test("throws when keys has fewer than 2 entries", () => {
     () =>
       generateSimultaneousRules(
         { j: { keys: ["j"], description: "Single", alone: [{ type: "key", key: "escape" }] } },
-        noSuppression,
         noTapHold,
       ),
     /at least 2 keys/i,
@@ -330,8 +290,7 @@ test("throws when no action fields are specified", () => {
   assert.throws(
     () =>
       generateSimultaneousRules(
-        { jk: { keys: ["j", "k"], description: "No-op" } },
-        noSuppression,
+        { jk: { keys: ["j", "k"], description: "No-op" } as SimultaneousConfig },
         noTapHold,
       ),
     /no action/i,

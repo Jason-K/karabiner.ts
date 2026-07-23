@@ -1,6 +1,6 @@
 import { MOD_COMBO } from "../core/mods";
 import { TIMINGS } from "../data";
-import type { TapHoldConfig } from "../engine";
+import { tapHoldBinding, type Binding } from "../engine";
 import {
   generateDoubleTapGuardRule,
   type DoubleTapGuardConfig,
@@ -28,9 +28,8 @@ export const cmdQGuard: DoubleTapGuardConfig = {
   timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };
 
-export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
-  "left_command+m": {
-    description: "Deminimize",
+export const leftCommandTapHoldBindings: Binding[] = [
+  tapHoldBinding("m", ["left_command"], {
     hold: [
       {
         type: "key",
@@ -39,9 +38,8 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-  "left_command+p": {
-    description: "Paletro",
+  }),
+  tapHoldBinding("p", ["left_command"], {
     hold: [
       {
         type: "key",
@@ -50,8 +48,8 @@ export const leftCommandTapHoldMappings: Record<string, TapHoldConfig> = {
         options: { repeat: false },
       },
     ],
-  },
-};
+  }),
+];
 
 export const buildLeftCommandRule = () =>
   generateMultiTapRule(leftCommandMultiTap);

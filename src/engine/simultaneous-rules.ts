@@ -1,8 +1,6 @@
 import type { Rule } from "karabiner.ts";
 
-import { formatRuleDescription } from "../core/rule-descriptions";
 import { defineBindings, type Binding, type Case, type SimOrder } from "./binding";
-import type { TapHoldConfig } from "./tap-hold-rules";
 
 export type SimultaneousOptions = {
   detect_key_down_uninterruptedly?: boolean;
@@ -43,10 +41,9 @@ function resolveOrder(simOpts: SimultaneousOptions | undefined): SimOrder | unde
 
 export function generateSimultaneousRules(
   mappings: Record<string, SimultaneousConfig>,
-  suppressionVars: string[] = [],
-  tapHoldKeys: Record<string, TapHoldConfig>,
+  tapHoldBindings: Binding[],
 ): Rule[] {
-  validateMappings(mappings, tapHoldKeys);
+  validateMappings(mappings, tapHoldBindings);
 
   const bindings: Binding[] = Object.entries(mappings).map(([, config]) => {
     const cases: Case[] = [];
@@ -55,7 +52,6 @@ export function generateSimultaneousRules(
     if (config.tapTap) cases.push({ tapCount: 2, phase: "release", do: config.tapTap });
     if (config.tapTapHold) cases.push({ tapCount: 2, phase: "hold", do: config.tapTapHold });
     return {
-      description: formatRuleDescription(config.keys, config.description, "simultaneous"),
       trigger: {
         keys: config.keys,
         ...(resolveOrder(config.simultaneousOptions)
@@ -67,9 +63,6 @@ export function generateSimultaneousRules(
         heldThresholdMs: config.thresholdMs,
         simultaneousMs: config.simultaneousThresholdMs,
       },
-      ...(suppressionVars.length
-        ? { conditions: suppressionVars.map((v) => ({ var: { name: v, varDesc: v }, equals: 1, unless: true })) }
-        : {}),
       ...(config.simultaneousOptions?.to_after_key_up
         ? { afterKeyUp: config.simultaneousOptions.to_after_key_up }
         : {}),
@@ -89,7 +82,7 @@ function normalizedChordKey(keys: string[], keyDownOrder?: string): string {
 
 function validateMappings(
   mappings: Record<string, SimultaneousConfig>,
-  tapHoldKeys: Record<string, TapHoldConfig>,
+  tapHoldBindings: Binding[],
 ): void {
   // Input validation
   for (const [label, config] of Object.entries(mappings)) {
@@ -127,7 +120,9 @@ function validateMappings(
 
   // Check 2: tap-hold key overlap (bare keys only — no modifier prefix)
   const bareHoldKeys = new Set(
-    Object.keys(tapHoldKeys).filter((k) => !k.includes("+")),
+    tapHoldBindings
+      .filter((b) => "keys" in b.trigger && !(b.trigger.modifiers?.length))
+      .flatMap((b) => (b.trigger as { keys: string[] }).keys),
   );
   for (const [label, config] of Object.entries(mappings)) {
     for (const key of config.keys) {

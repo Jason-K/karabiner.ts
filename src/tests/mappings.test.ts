@@ -12,7 +12,29 @@ import {
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
-import { tapHoldMappings } from "../definitions";
+import { tapHoldBindings } from "../definitions";
+import type { Binding, Case } from "../engine";
+
+/** Find a tap-hold binding in the merged set by single key + modifiers. */
+function findTapHold(key: string, modifiers: string[] = []): Binding {
+  const mods = [...modifiers].sort().join(",");
+  const found = tapHoldBindings.find(
+    (b) =>
+      "keys" in b.trigger &&
+      b.trigger.keys.length === 1 &&
+      b.trigger.keys[0] === key &&
+      [...(b.trigger.modifiers ?? [])].sort().join(",") === mods,
+  );
+  if (!found) throw new Error(`tap-hold binding not found: ${modifiers.join("+")}+${key}`);
+  return found;
+}
+
+/** Pull a phase's action list out of a binding. */
+function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
+  const c = b.cases.find((cc) => cc.phase === phase);
+  if (!c) throw new Error(`binding has no ${phase} case`);
+  return c.do;
+}
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
@@ -176,29 +198,28 @@ test("passwords quick fill mapping stays declarative", () => {
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {
-  assert.ok(tapHoldMappings.a);
-  assert.ok(tapHoldMappings["vmCOCS+q"]);
-  assert.ok(tapHoldMappings["vmCOCS+left_arrow"]);
-  assert.ok(tapHoldMappings["vmCOCS+right_arrow"]);
-  assert.ok(tapHoldMappings["vmCOCS+spacebar"]);
-  assert.ok(tapHoldMappings.tab);
-  assert.ok(tapHoldMappings["vmCOCS+tab"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_1"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_3"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_5"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_7"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_9"]);
-  assert.ok(tapHoldMappings["right_option+s"]);
+  // Each findTapHold throws if the binding is absent.
+  findTapHold("a");
+  findTapHold("q", ["vmCOCS"]);
+  findTapHold("left_arrow", ["vmCOCS"]);
+  findTapHold("right_arrow", ["vmCOCS"]);
+  findTapHold("spacebar", ["vmCOCS"]);
+  findTapHold("tab");
+  findTapHold("tab", ["vmCOCS"]);
+  findTapHold("keypad_1", ["vmCOCS"]);
+  findTapHold("keypad_3", ["vmCOCS"]);
+  findTapHold("keypad_5", ["vmCOCS"]);
+  findTapHold("keypad_7", ["vmCOCS"]);
+  findTapHold("keypad_9", ["vmCOCS"]);
+  findTapHold("s", ["right_option"]);
 });
 
 test("new vmCOCS rectangle mappings stay declarative", () => {
-  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].alone, [
-    {
-      type: "shell",
-      command: rectangleOrientationBasedCommand("left-half", "top-half"),
-    },
+  const left = findTapHold("left_arrow", ["vmCOCS"]);
+  assert.deepEqual(phaseDo(left, "release"), [
+    { type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].hold, [
+  assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=previous-display",
@@ -206,14 +227,13 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOCS+spacebar"].alone, [
-    {
-      type: "shell",
-      command: rectangleMaxOrRestoreCommand(),
-    },
+  const spacebar = findTapHold("spacebar", ["vmCOCS"]);
+  assert.deepEqual(phaseDo(spacebar, "release"), [
+    { type: "shell", command: rectangleMaxOrRestoreCommand() },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOCS+keypad_9"].alone, [
+  const keypad9 = findTapHold("keypad_9", ["vmCOCS"]);
+  assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",
       url: "rectangle-pro://execute-action?name=top-right-eighth",
@@ -223,51 +243,23 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
 });
 
 test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
-  // Previously these were Rectangle Pro half/fill mappings keyed q/w; hyper.ts
-  // was reworked to use macOS focus-window arrow chords (q/e/r/f = left/right/
-  // top/bottom). The old Rectangle versions are commented out in hyper.ts and
-  // vmCOCS+w no longer exists. Assert the current focus-window set declaratively.
-  assert.equal(tapHoldMappings["vmCOCS+w"], undefined);
-  assert.equal(tapHoldMappings["vmCOCS+q"].description, "Focus window to the left");
-  assert.equal(tapHoldMappings["vmCOCS+e"].description, "Focus window to the right");
-  assert.equal(tapHoldMappings["vmCOCS+r"].description, "Focus window to the top");
-  assert.equal(tapHoldMappings["vmCOCS+f"].description, "Focus window to the bottom");
+  // hyper.ts uses macOS focus-window arrow chords (q/e/r/f = left/right/top/bottom).
+  // vmCOCS+w no longer exists.
+  assert.throws(() => findTapHold("w", ["vmCOCS"]), /not found/);
 
   const focusModifiers = ["left_command", "left_control", "left_option"];
-
-  assert.deepEqual(tapHoldMappings["vmCOCS+q"].alone, [
-    {
-      type: "key",
-      key: "left_arrow",
-      modifiers: focusModifiers,
-      options: { repeat: false },
-    },
+  assert.deepEqual(phaseDo(findTapHold("q", ["vmCOCS"]), "release"), [
+    { type: "key", key: "left_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+e"].alone, [
-    {
-      type: "key",
-      key: "right_arrow",
-      modifiers: focusModifiers,
-      options: { repeat: false },
-    },
+  assert.deepEqual(phaseDo(findTapHold("e", ["vmCOCS"]), "release"), [
+    { type: "key", key: "right_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+r"].alone, [
-    {
-      type: "key",
-      key: "up_arrow",
-      modifiers: focusModifiers,
-      options: { repeat: false },
-    },
+  assert.deepEqual(phaseDo(findTapHold("r", ["vmCOCS"]), "release"), [
+    { type: "key", key: "up_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+f"].alone, [
-    {
-      type: "key",
-      key: "down_arrow",
-      modifiers: focusModifiers,
-      options: { repeat: false },
-    },
+  assert.deepEqual(phaseDo(findTapHold("f", ["vmCOCS"]), "release"), [
+    { type: "key", key: "down_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);
-
 });
 
 test("mouse device mappings are declarative and device-scoped", () => {

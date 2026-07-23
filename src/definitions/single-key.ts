@@ -2,7 +2,7 @@ import { recentDownloadsCommand } from "../core/scripts";
 import { appRegistry, raycastRegistry } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { rectangleActionUrl } from "../data/rectangle";
-import type { TapHoldConfig } from "../engine";
+import { holdKey, type Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES
 //
@@ -50,336 +50,96 @@ import type { TapHoldConfig } from "../engine";
 //////     f12: Volume Up
 ////
 ////   OTHER KEYS:
-////
 //////     slash: Houdah
 //////     tab: Mission Control
 //////     fn: Dictation via Spokenly
 //////     application: Reflow pinned app (tap), Pin app (hold)
-//
-//====================================================================
-// CONFIG OPTIONS:
-//
-// triggerKey: {
-//   description:     string;
-//   alone?:          ActionConfig[]; // Action(s) to fire on tap
-//   hold:            ActionConfig[]; // Action(s) to fire on hold (after timeout)
-//   timeoutMs?:      number; // Time to wait for a hold before firing alone action
-//   thresholdMs?:    number; // Minimum hold time to fire hold action instead of alone action
-// }
-//
-// ACTION OPTIONS:
-//        { type: "key"; key: string; modifiers?: string[]; options?: { repeat?: boolean; halt?: boolean } } |
-//        { type: "url"; url: string; background?: boolean } | { type: "shell"; command: string } |
-//        { type: "app"; ref: string; mode?: "frontmost" | "shell" } |
-//        { type: "raycast"; ref: string } |
-//        { type: "actHere"; action: string } |
-//        { type: "cleanShot"; ref: string } |
-//        { type: "osascript"; scriptPath: string }
 
-export const singleKeyTapHoldMappings: Record<string, TapHoldConfig> = {
-  a: {
-    description: "Raycast AI-quick search",
-    hold: [
-      {
-        type: "key",
-        key: "f18",
-        modifiers: ["vmCOC_"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  c: {
-    description: "Calendar",
-    hold: [
-      {
-        type: "key",
-        key: "7",
-        modifiers: ["vmCO_S"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  d: {
-    description: "Add to Droppy",
-    hold: [
-      {
-        type: "key",
-        key: "f1",
-        modifiers: ["vmCO_S"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  f: {
-    description: "QSSpace",
-    hold: [{ type: "actHere", action: "qspace" }],
-  },
-  g: {
-    description: "Claude",
-    hold: [{ type: "app", ref: appRegistry.claude, mode: "shell" }],
-  },
-  h: {
-    description: "Here2There",
-    hold: [{ type: "raycast", ref: raycastRegistry.hereToThereActiveToTarget }],
-  },
-  j: {
-    description: "Last d/l",
-    hold: [{ type: "raycast", ref: raycastRegistry.recentDownloads }],
-  },
-  k: { description: "Kitty", hold: [{ type: "app", ref: appRegistry.kitty }] },
-  n: {
-    description: "New note",
-    hold: [
-      {
-        type: "url",
-        url: "sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A",
-        background: true,
-      },
-    ],
-  },
-  o: {
-    description: "OCR",
-    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureTextNoLinebreaks }],
-  },
-  p: {
-    description: "Popclip",
-    hold: [
-      {
-        type: "key",
-        key: "f9",
-        modifiers: ["vmCOCS"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  q: {
-    description: "Launch Qspace",
-    hold: [
-      {
-        type: "app",
-        ref: appRegistry.qspace,
-        mode: "focus",
-      },
-    ],
-  },
-
-  r: {
-    description: "Last d/l",
-    hold: [
-      {
-        type: "shell",
-        command: recentDownloadsCommand(),
-      },
-    ],
-  },
-  s: {
-    description: "Screenshot",
-    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureArea }],
-  },
-  "shift+s": {
-    description: "Screenshot Window",
-    hold: [{ type: "cleanShot", ref: cleanShotRegistry.captureWindow }],
-  },
-  t: {
-    description: "Kitty quick terminal",
-    hold: [
-      {
-        type: "key",
-        key: "f11",
-        modifiers: ["vm_OCS"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  v: {
-    description: "Clipboard manager",
-    hold: [
-      {
-        type: "raycast",
-        ref: raycastRegistry.clipboardHistory,
-      },
-    ],
-  },
-  x: {
-    description: "Copy file",
-    hold: [{ type: "actHere", action: "copy" }],
-  },
-  y: {
-    description: "Yank file",
-    hold: [{ type: "actHere", action: "copy" }],
-  },
-  z: {
-    description: "Zoxide",
-    hold: [{ type: "raycast", ref: raycastRegistry.zoxideSearchDirectories }],
-  },
-  8: {
-    description: "RingCentral",
-    hold: [{ type: "app", ref: appRegistry.ringCentral, mode: "shell" }],
-  },
-  keypad_0: {
-    description: "Unstash all via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("unstash-all"),
-        background: true,
-      },
-    ],
-  },
-  keypad_2: {
-    description: "Stash down via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("stash-down"),
-        background: true,
-      },
-    ],
-  },
-  keypad_4: {
-    description: "Stash left via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("stash-left"),
-        background: true,
-      },
-    ],
-  },
-  keypad_5: {
-    description: "Unstash via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("unstash"),
-        background: true,
-      },
-    ],
-  },
-  keypad_6: {
-    description: "Stash right via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("stash-right"),
-        background: true,
-      },
-    ],
-  },
-  keypad_8: {
-    description: "Stash up via rectangle",
-    hold: [
-      {
-        type: "url",
-        url: rectangleActionUrl("stash-up"),
-        background: true,
-      },
-    ],
-  },
-  f1: {
-    description: "Decrease brightness",
-    hold: [
-      {
-        type: "key",
-        key: "display_brightness_decrement",
-        options: { repeat: true },
-      },
-    ],
-  },
-  f2: {
-    description: "Increase brightness",
-    hold: [
-      {
-        type: "key",
-        key: "display_brightness_increment",
-        options: { repeat: true },
-      },
-    ],
-  },
-  f3: {
-    description: "Mission Control",
-    hold: [{ type: "key", key: "mission_control", options: { repeat: false } }],
-  },
-  f4: {
-    description: "Launchpad",
-    hold: [{ type: "key", key: "launchpad", options: { repeat: false } }],
-  },
-  f5: {
-    description: "Dictation",
-    hold: [
-      {
-        type: "key",
-        key: "f5",
-        modifiers: ["vmCOC_"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  f7: {
-    description: "Rewind",
-    hold: [{ type: "key", key: "rewind", options: { repeat: true } }],
-  },
-  f8: {
-    description: "Play/Pause",
-    hold: [{ type: "key", key: "play_or_pause", options: { repeat: false } }],
-  },
-  f9: {
-    description: "Fast Forward",
-    hold: [{ type: "key", key: "fastforward", options: { repeat: true } }],
-  },
-  f10: {
-    description: "Mute",
-    hold: [{ type: "key", key: "mute", options: { repeat: false } }],
-  },
-  f11: {
-    description: "Volume Down",
-    hold: [{ type: "key", key: "volume_decrement", options: { repeat: true } }],
-  },
-  f12: {
-    description: "Volume Up",
-    hold: [{ type: "key", key: "volume_increment", options: { repeat: true } }],
-  },
-  slash: {
-    description: "Houdah",
-    hold: [
-      {
-        type: "key",
-        key: "h",
-        modifiers: ["vmCOCS"],
-        options: { repeat: false },
-      },
-    ],
-  },
-  grave_accent_and_tilde: {
-    description: "Popclip",
-    hold: [
-      {
-        type: "key",
-        key: "f9",
-        modifiers: ["vmCOCS"],
-        options: { halt: true, repeat: false },
-      },
-    ],
-  },
-  tab: {
-    description: "Mission Control",
-    hold: [
-      {
-        type: "key",
-        key: "mission_control",
-        options: { halt: true, repeat: true },
-      },
-    ],
-  },
-  fn: {
-    description: "Dictation via Spokenly",
-    hold: [
-      {
-        type: "key",
-        key: "f5",
-        modifiers: ["vmCOC_"],
-        options: { repeat: false },
-      },
-    ],
-  },
-};
+export const singleKeyTapHoldBindings: Binding[] = [
+  // NOTE: "8" is kept first to preserve the historical rule order (the old
+  // Record hoisted integer-like keys to the front). It has no special meaning.
+  holdKey("8", [{ type: "app", ref: appRegistry.ringCentral, mode: "shell" }]),
+  holdKey("a", [
+    { type: "key", key: "f18", modifiers: ["vmCOC_"], options: { repeat: false } },
+  ]),
+  holdKey("c", [
+    { type: "key", key: "7", modifiers: ["vmCO_S"], options: { repeat: false } },
+  ]),
+  holdKey("d", [
+    { type: "key", key: "f1", modifiers: ["vmCO_S"], options: { repeat: false } },
+  ]),
+  holdKey("f", [{ type: "actHere", action: "qspace" }]),
+  holdKey("g", [{ type: "app", ref: appRegistry.claude, mode: "shell" }]),
+  holdKey("h", [{ type: "raycast", ref: raycastRegistry.hereToThereActiveToTarget }]),
+  holdKey("j", [{ type: "raycast", ref: raycastRegistry.recentDownloads }]),
+  holdKey("k", [{ type: "app", ref: appRegistry.kitty }]),
+  holdKey("n", [
+    {
+      type: "url",
+      url: "sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A",
+      background: true,
+    },
+  ]),
+  holdKey("o", [{ type: "cleanShot", ref: cleanShotRegistry.captureTextNoLinebreaks }]),
+  holdKey("p", [
+    { type: "key", key: "f9", modifiers: ["vmCOCS"], options: { repeat: false } },
+  ]),
+  holdKey("q", [{ type: "app", ref: appRegistry.qspace, mode: "focus" }]),
+  holdKey("r", [{ type: "shell", command: recentDownloadsCommand() }]),
+  holdKey("s", [{ type: "cleanShot", ref: cleanShotRegistry.captureArea }]),
+  holdKey(
+    "s",
+    [{ type: "cleanShot", ref: cleanShotRegistry.captureWindow }],
+    { modifiers: ["shift"] },
+  ),
+  holdKey("t", [
+    { type: "key", key: "f11", modifiers: ["vm_OCS"], options: { repeat: false } },
+  ]),
+  holdKey("v", [{ type: "raycast", ref: raycastRegistry.clipboardHistory }]),
+  holdKey("x", [{ type: "actHere", action: "copy" }]),
+  holdKey("y", [{ type: "actHere", action: "copy" }]),
+  holdKey("z", [{ type: "raycast", ref: raycastRegistry.zoxideSearchDirectories }]),
+  holdKey("keypad_0", [
+    { type: "url", url: rectangleActionUrl("unstash-all"), background: true },
+  ]),
+  holdKey("keypad_2", [
+    { type: "url", url: rectangleActionUrl("stash-down"), background: true },
+  ]),
+  holdKey("keypad_4", [
+    { type: "url", url: rectangleActionUrl("stash-left"), background: true },
+  ]),
+  holdKey("keypad_5", [
+    { type: "url", url: rectangleActionUrl("unstash"), background: true },
+  ]),
+  holdKey("keypad_6", [
+    { type: "url", url: rectangleActionUrl("stash-right"), background: true },
+  ]),
+  holdKey("keypad_8", [
+    { type: "url", url: rectangleActionUrl("stash-up"), background: true },
+  ]),
+  holdKey("f1", [{ type: "key", key: "display_brightness_decrement", options: { repeat: true } }]),
+  holdKey("f2", [{ type: "key", key: "display_brightness_increment", options: { repeat: true } }]),
+  holdKey("f3", [{ type: "key", key: "mission_control", options: { repeat: false } }]),
+  holdKey("f4", [{ type: "key", key: "launchpad", options: { repeat: false } }]),
+  holdKey("f5", [
+    { type: "key", key: "f5", modifiers: ["vmCOC_"], options: { repeat: false } },
+  ]),
+  holdKey("f7", [{ type: "key", key: "rewind", options: { repeat: true } }]),
+  holdKey("f8", [{ type: "key", key: "play_or_pause", options: { repeat: false } }]),
+  holdKey("f9", [{ type: "key", key: "fastforward", options: { repeat: true } }]),
+  holdKey("f10", [{ type: "key", key: "mute", options: { repeat: false } }]),
+  holdKey("f11", [{ type: "key", key: "volume_decrement", options: { repeat: true } }]),
+  holdKey("f12", [{ type: "key", key: "volume_increment", options: { repeat: true } }]),
+  holdKey("slash", [
+    { type: "key", key: "h", modifiers: ["vmCOCS"], options: { repeat: false } },
+  ]),
+  holdKey("grave_accent_and_tilde", [
+    { type: "key", key: "f9", modifiers: ["vmCOCS"], options: { halt: true, repeat: false } },
+  ]),
+  holdKey("tab", [
+    { type: "key", key: "mission_control", options: { halt: true, repeat: true } },
+  ]),
+  holdKey("fn", [
+    { type: "key", key: "f5", modifiers: ["vmCOC_"], options: { repeat: false } },
+  ]),
+];

@@ -44,19 +44,19 @@ import {
   buildZenCommandRemapRule,
   mouseDeviceMappings,
   simultaneousMappings,
-  tapHoldMappings,
+  tapHoldBindings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
   buildMouseRules,
+  defineBindings,
   generateSimultaneousRules,
-  generateTapHoldRules,
   updateDeviceConfigurations,
 } from "./engine";
 
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = generateTapHoldRules(tapHoldMappings);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, [], tapHoldMappings);
+const tapHoldRules = defineBindings(tapHoldBindings);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, tapHoldBindings);
 
 // ============================================================================
 // SPECIAL RULES
