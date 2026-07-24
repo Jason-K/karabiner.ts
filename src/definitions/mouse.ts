@@ -1,10 +1,8 @@
 import { toFromEvent } from "../core/beta";
-import { g502xButtons } from "../core/mouse";
-import { appRegistry, DEVICE_IDENTIFIERS, karabinerDeviceId, TIMINGS } from "../data";
+import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
 import {
   WIN_ACTIVATE_UNDER_CURSOR,
   mouseVars,
-  type MouseDeviceConfig,
 } from "../data/mouse";
 import {
   rectangleActionUrl,
@@ -16,17 +14,13 @@ import {
 } from "../data/rectangle";
 import type { Binding } from "../engine";
 
-export { buildMouseDeviceRules, buildMouseRules } from "../engine/mouse-rules";
-
 /**
  * G502X mouse mappings authored as plain `Binding[]` literals and consumed by
  * `defineBindings` (the same engine as keys). Device-specific button aliases
- * (shift, forward, the wheel-tilt and extra G-buttons) auto-scope to the G502X
- * via the `buttons` registry `nameScope`; the standard buttons
- * (back, forward, wheel, right, left) carry an explicit `device` condition.
- *
- * The two `button: "left"` mappings (double-tap + tap-hold) still flow through
- * the bespoke `mouseDeviceMappings` builder pending the multi-tap pointer work.
+ * (shift, forward, wheelLeft, wheelRight, middleBack, leftForward, leftBack)
+ * auto-scope to the G502X via the `buttons` registry `nameScope`; the global
+ * buttons used here (back, wheel, right, left) carry an explicit `device`
+ * condition.
  */
 export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
@@ -261,75 +255,6 @@ export const mouseBindings: Binding[] = [
     cases: [
       { phase: "release", do: [] },
       { phase: "hold", do: [toFromEvent()] },
-    ],
-  },
-];
-
-export const mouseDeviceMappings: MouseDeviceConfig[] = [
-  {
-    key: "logitech_g502_x",
-    name: "Logitech G502 X",
-    identifiers: karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
-    buttonMap: g502xButtons,
-    mappings: [
-      // -------------------------------------------------------------
-      // LEFT BUTTON
-      // -------------------------------------------------------------
-      {
-        type: "doubleTap",
-        button: "left",
-        description:
-          "[RBUTTON+LBUTTON] single action by app / double next display",
-        // Var to set on first tap
-        firstTapPendingVar: "left_with_right_first_tap",
-        // Optional condition, which limits when double tap events will fire.
-        when: [{ variable: "right_button_pressed", match: "if", value: 1 }],
-        // NOTE: the event to fire on first tap is handled in overrides in this case
-        // Events to fire on double tap. This is the "double tap" action.
-        doubleTapEvents: WIN_NEXT_DISPLAY,
-        thresholdMs: TIMINGS.timeoutDoubleClickMs,
-        overrides: [
-          {
-            // ZEN OVERRIDES
-            // -------------------------------------------------------------
-            when: [{ app: appRegistry.zen }],
-            // ZEN - Rbutton + Lbutton (hold) = option+click (preview open link)
-            holdEvents: [
-              {
-                pointing_button: "button1",
-                modifiers: ["left_option"],
-                repeat: false,
-              },
-            ],
-            // ZEN - Rbutton + Lbutton (tap) = cmd+click (open link in new tab)
-            delayedSingleTapEvents: [
-              {
-                pointing_button: "button1",
-                modifiers: ["left_command"],
-                repeat: false,
-              },
-            ],
-          },
-          {
-            // NON-ZEN OVERRIDES
-            // -------------------------------------------------------------
-            when: [{ app: appRegistry.zen, unless: true }],
-            // Rbutton + Lbutton (hold) = maximize window under cursor
-            delayedSingleTapEvents: WIN_MAX_OR_RESTORE,
-          },
-        ],
-      },
-      {
-        type: "tapHold",
-        button: "left",
-        description: "[LBUTTON] Left click (tap) / Zen chord modifier (hold)",
-        when: [{ variable: "right_button_pressed", match: "unless", value: 1 }],
-        variable: "left_button_pressed",
-        alone: [],
-        hold: [toFromEvent()],
-        thresholdMs: 0,
-        timeoutMs: TIMINGS.delayMouseHoldMs,
-      },
     ],
   },
 ];

@@ -8,6 +8,5 @@ export * from "./conditional-tap-hold-rules";
 export * from "./device-config";
 export * from "./escape-rule";
 export * from "./layer-emit";
-export * from "./mouse-rules";
 export * from "./modifier-chord-rules";
 export * from "./simultaneous-rules";

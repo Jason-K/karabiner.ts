@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS, karabinerDeviceId } from "../data";
+import { HOME_DIR, PATHS } from "../data";
 import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { folderRegistry } from "../data/folders";
@@ -16,7 +16,6 @@ import {
   equalsKeyHoldMappings,
 } from "../definitions/enter-equals";
 import { homeEndBindings } from "../definitions/home-end";
-import { mouseDeviceMappings } from "../definitions/mouse";
 import {
   disabledShortcutBindings,
   passwordsQuickFillBinding,
@@ -258,22 +257,4 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
   assert.deepEqual(phaseDo(findTapHold("f", ["vmCOCS"]), "release"), [
     { type: "key", key: "down_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);
-});
-
-test("mouse device config shell holds the left-button mappings (bespoke, pending multi-tap)", () => {
-  assert.equal(mouseDeviceMappings.length, 1);
-  assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
-  assert.deepEqual(
-    mouseDeviceMappings[0]?.identifiers,
-    karabinerDeviceId(DEVICE_IDENTIFIERS.logitechG502X),
-  );
-  assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  // The ten tap-hold/remap mappings migrated to `mouseBindings` (Binding[]
-  // literals — covered by rules-factories.test.ts + the structural gate). Only
-  // the two left-button mappings remain bespoke here pending the multi-tap work.
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 2);
-  assert.equal(mouseDeviceMappings[0]?.mappings[0]?.type, "doubleTap");
-  assert.equal(mouseDeviceMappings[0]?.mappings[0]?.button, "left");
-  assert.equal(mouseDeviceMappings[0]?.mappings[1]?.type, "tapHold");
-  assert.equal(mouseDeviceMappings[0]?.mappings[1]?.button, "left");
 });
