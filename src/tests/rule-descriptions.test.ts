@@ -5,8 +5,8 @@ import { formatRuleDescription } from "../core/rule-descriptions";
 
 test('formats modifier chords with symbol brackets', () => {
   assert.equal(
-    formatRuleDescription('right_option+a', 'Antinote', 'tap'),
-    '[→⌥]+[A]        →    Antinote (on tap)',
+    formatRuleDescription("right_option+a", "Antinote", "tap"),
+    "[⌥>]+[A]        →    Antinote (on tap)",
   );
 });
 

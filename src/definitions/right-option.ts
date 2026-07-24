@@ -24,9 +24,3 @@ export const rightOptionTapHoldBindings: Binding[] = [
     cases: [{ phase: "hold", do: [{ type: "osascript", scriptPath: PATHS.typinatorEditLastRule }] }],
   },
 ];
-
-// export const buildRightOptionLauncherRules = () =>
-//   generateModifierLauncherRules({
-//     triggerKey: "right_option",
-//     launchers: rightOptionLaunchers,
-//   });

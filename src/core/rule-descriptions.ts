@@ -60,14 +60,16 @@ export function modifierTokenToSymbols(token: string): string {
   let base = normalized;
 
   if (normalized.startsWith("left_")) {
-    sidePrefix = "←";
+    sidePrefix = "<";
     base = normalized.slice("left_".length);
+    return `${sidePrefix}${KEY_SYMBOLS[base] ?? base.toUpperCase()}`;
   } else if (normalized.startsWith("right_")) {
-    sidePrefix = "→";
+    sidePrefix = ">";
     base = normalized.slice("right_".length);
+    return `${KEY_SYMBOLS[base] ?? base.toUpperCase()}${sidePrefix}`;
+  } else {
+    return `${KEY_SYMBOLS[base] ?? base.toUpperCase()}`;
   }
-
-  return `${sidePrefix}${KEY_SYMBOLS[base] ?? base.toUpperCase()}`;
 }
 
 export function keyTokenToLabel(token: string): string {

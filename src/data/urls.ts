@@ -1,6 +1,6 @@
 const url = (name: string, refDesc: string) => ({
   type: "url" as const,
-  name,     
+  name,
   refDesc,
 });
 
@@ -8,7 +8,7 @@ export const urlRegistry = {
   // Raycast URLs
   rayClipboard: url(
     "raycast-x://extensions/raycast/clipboard-history/clipboard-history",
-    "Clipboard history",
+    "open Raycast clipboard manager",
   ),
   rayHere2There: url(
     "raycast-x://extensions/Jason/here-to-there/activeToTarget",

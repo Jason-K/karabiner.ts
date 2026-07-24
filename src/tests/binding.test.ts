@@ -118,7 +118,11 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
   // behavior the plan must preserve.
   assert.deepEqual(m.to_if_alone, [{ halt: true, key_code: "a", modifiers: undefined }]);
   assert.deepEqual(m.to_if_held_down, [
-    { repeat: false, key_code: "f18", modifiers: ["left_command", "left_option", "left_control"] },
+    {
+      repeat: false,
+      key_code: "f18",
+      modifiers: ["command", "option", "control"],
+    },
   ]);
   assert.deepEqual(m.to_delayed_action, {
     to_if_invoked: [],

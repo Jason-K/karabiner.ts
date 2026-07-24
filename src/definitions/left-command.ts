@@ -8,7 +8,10 @@ import {
 
 export const leftCommandMultiTapBinding: Binding = {
   trigger: { keys: ["left_command"] },
-  timing: { aloneMs: TIMINGS.timeoutDoubleTapMs, heldThresholdMs: TIMINGS.timeoutDoubleTapMs },
+  timing: {
+    aloneMs: TIMINGS.timeoutDoubleTapMs,
+    heldThresholdMs: TIMINGS.timeoutDoubleTapMs,
+  },
   multiTap: { allowPassThrough: true, mods: [] },
   cases: [
     { phase: "release", do: [{ type: "key", key: "left_command" }] },
@@ -19,7 +22,7 @@ export const leftCommandMultiTapBinding: Binding = {
 
 export const cmdQGuard: DoubleTapGuardConfig = {
   key: "q",
-  modifiers: ["left_command"],
+  modifiers: ["command"],
   description: "Quit app",
   timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };

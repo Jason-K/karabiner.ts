@@ -21,10 +21,7 @@ import {
   buildWordPrivilegesRule,
   mouseBindings,
 } from "../definitions";
-import {
-  defineBindings,
-  resolveActionToEvents,
-} from "../engine";
+import { defineBindings, resolveActionToEvents } from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -82,26 +79,26 @@ test("caps lock factory keeps full complement behavior variants", () => {
 
 test("cmd-q factory keeps double-tap protection structure", () => {
   const rule = toRule(buildCmdQRule());
-  assert.equal(rule.description, "[←⌘]+[Q]        →    Quit app (on multi-tap)");
+  assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
   assert.equal(rule.manipulators.length, 2);
 });
 
 test("security disable shortcuts factory keeps all disabled combos", () => {
   const rules = toRules(buildDisableHideMinimizeRule());
-  assert.equal(rules.length, 3);
-  assert.match(rules[0]?.description, /^\[←⌘\]\+\[H\]:\n---/);
+  assert.equal(rules.length, 4);
+  assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
 test("word privileges factory keeps single guarded manipulator", () => {
   const rule = toRule(buildWordPrivilegesRule());
-  assert.match(rule.description, /^\[←⌘\]\+\[\/\]:\n---/);
+  assert.match(rule.description, /^\[<⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
 test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = toRule(buildPasswordsQuickFillRule());
-  assert.match(rule.description, /^\[←⌘\]\+\[\/\]:\n---/);
+  assert.match(rule.description, /^\[<⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 
   const roleConditions = rule.manipulators.map(
@@ -142,7 +139,7 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
 test("skim command remap factory keeps both remaps", () => {
   const rules = toRules(buildSkimCommandRemapRule());
   assert.equal(rules.length, 2);
-  assert.match(rules[0]?.description, /^\[←⌘\]\+\[H\]:\n---/);
+  assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
@@ -150,7 +147,7 @@ test("antinote delete factory keeps double-tap workflow", () => {
   const rule = toRule(buildAntinoteRules()[0]);
   assert.equal(
     rule.description,
-    "[←⌘]+[D]        →    Delete note (on multi-tap)",
+    "[⌘]+[D]        →    Delete note (on multi-tap)",
   );
   assert.equal(rule.manipulators.length, 2);
 });
@@ -163,7 +160,7 @@ test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
 
 test("ctrl-escape monitor factory keeps single manipulator", () => {
   const rule = toRule(buildCtrlEscapeMonitorRule());
-  assert.match(rule.description, /^\[←⌃\]\+\[␛\]:\n---/);
+  assert.match(rule.description, /^\[⌃\]\+\[␛\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
@@ -181,7 +178,9 @@ test("vmCOC_ plus rules factory keeps grouped mappings", () => {
   assert.equal(rules.length, 4);
   // Launcher triggers carry the expanded vmCOCS modifiers, so the synthesized
   // trigger segment is the symbol chord (not the "vmCOCS" alias literal).
-  assert.ok(rules.every((r) => /^\[←⌘←⌥←⌃←⇧\]\+\[[^\]]+\]:\n---/.test(r.description)));
+  assert.ok(
+    rules.every((r) => /^\[⌘⌥⌃⇧\]\+\[[^\]]+\]:\n---/.test(r.description)),
+  );
   assert.ok(rules.every((r) => r.manipulators.length === 1));
 });
 
@@ -239,7 +238,7 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
   assert.deepEqual(rules[0]?.manipulators[0]?.to, [
     {
       key_code: "down_arrow",
-      modifiers: ["left_control"],
+      modifiers: ["control"],
       repeat: false,
     },
   ]);
@@ -260,7 +259,7 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
   assert.deepEqual(rules[1]?.manipulators[0]?.to, [
     {
       key_code: "left_arrow",
-      modifiers: ["left_command", "left_control", "left_shift"],
+      modifiers: ["command", "control", "shift"],
       repeat: false,
     },
   ]);
@@ -298,12 +297,12 @@ test("resolveActionToEvents flattens sequence into multiple events", () => {
   const events = resolveActionToEvents({
     type: "sequence",
     actions: [
-      { type: "key", key: "c", modifiers: ["left_command"] },
+      { type: "key", key: "c", modifiers: ["command"] },
       { type: "shell", command: "echo hello" },
     ],
   });
   assert.equal(events.length, 2);
-  assert.deepEqual(events[0], { key_code: "c", modifiers: ["left_command"] });
+  assert.deepEqual(events[0], { key_code: "c", modifiers: ["command"] });
   assert.deepEqual(events[1], { shell_command: "echo hello" });
 });
 
@@ -315,9 +314,9 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
   });
   assert.deepEqual((vmCOCEvents[0] as any)?.key_code, "a");
   assert.deepEqual((vmCOCEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
+    "command",
+    "option",
+    "control",
   ]);
 
   const vmCOCSEvents = resolveActionToEvents({
@@ -326,10 +325,10 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
     modifiers: ["vmCOCS"],
   });
   assert.deepEqual((vmCOCSEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
-    "left_shift",
+    "command",
+    "option",
+    "control",
+    "shift",
   ]);
 
   const vmCOSEvents = resolveActionToEvents({
@@ -338,9 +337,9 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
     modifiers: ["vmCO_S"],
   });
   assert.deepEqual((vmCOSEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_shift",
+    "command",
+    "option",
+    "shift",
   ]);
 
   const mixedEvents = resolveActionToEvents({
@@ -349,26 +348,26 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
     modifiers: ["vmCOC_", "shift"],
   });
   assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
+    "command",
+    "option",
+    "control",
     "shift",
   ]);
 });
 
 test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   const vmCases: Array<[string, string[]]> = [
-    ["vmCO__", ["left_command", "left_option"]],
-    ["vmC_C_", ["left_command", "left_control"]],
-    ["vmC__S", ["left_command", "left_shift"]],
-    ["vm_OC_", ["left_option", "left_control"]],
-    ["vm_O_S", ["left_option", "left_shift"]],
-    ["vm__CS", ["left_control", "left_shift"]],
-    ["vmCOC_", ["left_command", "left_option", "left_control"]],
-    ["vmCO_S", ["left_command", "left_option", "left_shift"]],
-    ["vmC_CS", ["left_command", "left_control", "left_shift"]],
-    ["vm_OCS", ["left_option", "left_control", "left_shift"]],
-    ["vmCOCS", ["left_command", "left_option", "left_control", "left_shift"]],
+    ["vmCO__", ["command", "option"]],
+    ["vmC_C_", ["command", "control"]],
+    ["vmC__S", ["command", "shift"]],
+    ["vm_OC_", ["option", "control"]],
+    ["vm_O_S", ["option", "shift"]],
+    ["vm__CS", ["control", "shift"]],
+    ["vmCOC_", ["command", "option", "control"]],
+    ["vmCO_S", ["command", "option", "shift"]],
+    ["vmC_CS", ["command", "control", "shift"]],
+    ["vm_OCS", ["option", "control", "shift"]],
+    ["vmCOCS", ["command", "option", "control", "shift"]],
   ];
 
   for (const [alias, expected] of vmCases) {

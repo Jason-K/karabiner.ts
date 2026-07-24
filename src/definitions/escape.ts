@@ -17,10 +17,16 @@ export const escapeTapTapHoldBinding: Binding = {
 // tapHold builder, which does not emit a manipulator-level description — this
 // preserves the §8.1 normalization landed in round 1.
 export const ctrlEscapeMonitorBinding: Binding = {
-  trigger: { keys: ["escape"], modifiers: ["left_control"] },
-  timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+  trigger: { keys: ["escape"], modifiers: ["control"] },
+  timing: {
+    aloneMs: TIMINGS.delayHoldMs,
+    heldThresholdMs: TIMINGS.delayHoldMs,
+  },
   cases: [
-    { phase: "release", do: [{ type: "app", ref: appRegistry.activityMonitor }] },
+    {
+      phase: "release",
+      do: [{ type: "app", ref: appRegistry.activityMonitor }],
+    },
     { phase: "hold", do: [{ type: "app", ref: appRegistry.processSpy }] },
   ],
 };

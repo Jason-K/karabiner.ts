@@ -6,6 +6,7 @@ import type { FolderRef } from "../data/folders";
 import type { ModComboAlias, ModKey } from "../data/key-aliases";
 import type { RaycastRef } from "../data/raycast";
 import type { VarSpec } from "../data/refs";
+import type { UrlRef } from "../data/urls";
 
 export type ActionKeyModifier = ModKey | ModComboAlias;
 
@@ -64,7 +65,7 @@ export type ActionSpec =
     }
   | {
       type: "url";
-      url: string;
+      url: UrlRef | string;
       background?: boolean;
       actionDesc?: string;
     }
@@ -73,11 +74,13 @@ export type ActionSpec =
       ref: CommandRef;
       actionDesc?: string;
     }
+  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
   | {
       type: "shell";
       command: string;
       actionDesc?: string;
     }
+  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
   | {
       type: "python";
       scriptPath: string;
@@ -85,6 +88,7 @@ export type ActionSpec =
       args?: string[];
       actionDesc?: string;
     }
+  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
   | {
       type: "osascript";
       scriptPath: string;

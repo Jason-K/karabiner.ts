@@ -7,14 +7,19 @@ import {
 
 export const antinoteTapHoldBindings: Binding[] = [
   {
-    trigger: { keys: ["a"], modifiers: ["left_shift"] },
-    cases: [{ phase: "hold", do: [{ type: "url", url: "antinote://", background: true }] }],
+    trigger: { keys: ["a"], modifiers: ["shift"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: "antinote://", background: true }],
+      },
+    ],
   },
 ];
 
 export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
-  modifiers: ["left_command"],
+  modifiers: ["command"],
   description: "Delete note",
   ifApp: [appRegistry.antinote],
 };

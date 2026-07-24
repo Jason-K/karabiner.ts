@@ -1,4 +1,4 @@
-import { PATHS, TIMINGS, appRegistry } from "../../data";
+import { appRegistry, commandRegistry, pathRegistry } from "../../data";
 import { defineBindings, type Binding } from "../../engine";
 
 const GET_PRIVILEGES =
@@ -11,10 +11,13 @@ export const wordPrivilegesBinding: Binding = {
       phase: "press",
       conditions: [{ app: appRegistry.word }],
       do: [
-        { type: "osascript", scriptPath: PATHS.wordDocumentPathAppleScript },
+        {
+          type: "osascript",
+          scriptPath: pathRegistry.wordDocumentPathAppleScript.name,
+        },
         {
           type: "shell",
-          command: `${GET_PRIVILEGES} && sleep ${TIMINGS.privilegesPostElevationDelayMs / 1000}`,
+          command: `${commandRegistry.getPrivileges.name}`,
         },
       ],
     },

@@ -22,32 +22,30 @@ export const pathRegistry = {
   ),
   typinatorEditLastRule: path(
     `${HOME_DIR}/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt`,
-    "Typinator Edit Last Rule script",
+    "edit last Typinator rule",
   ),
   typinatorNewRuleScript: path(
     `${HOME_DIR}/Scripts/apps/Typinator/new_rule/new_rule.py`,
-    "Typinator New Rule script",
+    "create new Typinator rule",
   ),
   wordDocumentPathAppleScript: path(
     `${HOME_DIR}/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript`,
-    "Get Word Document Path AppleScript",
+    "get path to active word document",
   ),
   // binaries
   cliclick: path(`/opt/homebrew/bin/cliclick`, "Cliclick binary"),
-  hsBridge: path(
-    `${HOME_DIR}/Hammer-Console/cli/hammer`,
-    "Hammer Console CLI binary",
-  ),
+  hsBridge: path(`${HOME_DIR}/Hammer-Console/cli/hammer`, "Hammer CLI bin"),
   killAppBin: path(`${HOME_DIR}/.local/bin/kill-app`, "Kill App binary"),
   openAppBin: path(`${HOME_DIR}/.local/bin/open-app`, "Open App binary"),
   privCLI: path(
     `/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI`,
-    "Privileges CLI binary",
+    "Privileges binary",
   ),
+  hs: path(`/opt/homebrew/bin/hs`, "Hammerspoon binary"),
   sendkeys: path(`/opt/homebrew/bin/sendkeys`, "Sendkeys"),
   typinatorPythonBin: path(
     `${HOME_DIR}/.venv/typinator/bin/python`,
-    "Typinator Python binary",
+    "python bin for Typinator",
   ),
   uvBin: path(`${HOME_DIR}/.local/bin/uv`, "UV binary"),
   // files

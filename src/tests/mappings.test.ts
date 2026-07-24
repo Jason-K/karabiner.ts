@@ -89,12 +89,12 @@ test("home-end navigation mappings stay declarative", () => {
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }],
+        do: [{ type: "key", key: "left_arrow", modifiers: ["command"] }],
       },
     ],
   });
   assert.deepEqual(homeEndBindings[1], {
-    trigger: { keys: ["home"], modifiers: ["left_shift"] },
+    trigger: { keys: ["home"], modifiers: ["shift"] },
     cases: [
       {
         phase: "press",
@@ -102,7 +102,7 @@ test("home-end navigation mappings stay declarative", () => {
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_command", "left_shift"],
+            modifiers: ["command", "shift"],
           },
         ],
       },
@@ -111,13 +111,13 @@ test("home-end navigation mappings stay declarative", () => {
 });
 
 test("disabled shortcut mappings stay declarative", () => {
-  assert.equal(disabledShortcutBindings.length, 3);
+  assert.equal(disabledShortcutBindings.length, 4);
   assert.deepEqual(disabledShortcutBindings[0], {
-    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    trigger: { keys: ["h"], modifiers: ["command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
   assert.deepEqual(disabledShortcutBindings[2], {
-    trigger: { keys: ["m"], modifiers: ["left_command", "left_option"] },
+    trigger: { keys: ["m"], modifiers: ["command", "option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
 });
@@ -163,12 +163,12 @@ test("equals key hold mappings stay declarative", () => {
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_shift", "left_option"],
+            modifiers: ["shift", "option"],
           },
           {
             type: "key",
             key: "c",
-            modifiers: ["left_command"],
+            modifiers: ["command"],
           },
           {
             type: "shell",
@@ -244,7 +244,7 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
   // vmCOCS+w no longer exists.
   assert.throws(() => findTapHold("w", ["vmCOCS"]), /not found/);
 
-  const focusModifiers = ["left_command", "left_control", "left_option"];
+  const focusModifiers = ["command", "control", "option"];
   assert.deepEqual(phaseDo(findTapHold("q", ["vmCOCS"]), "release"), [
     { type: "key", key: "left_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);

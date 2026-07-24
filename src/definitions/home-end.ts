@@ -6,12 +6,12 @@ export const homeEndBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }],
+        do: [{ type: "key", key: "left_arrow", modifiers: ["command"] }],
       },
     ],
   },
   {
-    trigger: { keys: ["home"], modifiers: ["left_shift"] },
+    trigger: { keys: ["home"], modifiers: ["shift"] },
     cases: [
       {
         phase: "press",
@@ -19,7 +19,7 @@ export const homeEndBindings: Binding[] = [
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_command", "left_shift"],
+            modifiers: ["command", "shift"],
           },
         ],
       },
@@ -30,12 +30,12 @@ export const homeEndBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "right_arrow", modifiers: ["left_command"] }],
+        do: [{ type: "key", key: "right_arrow", modifiers: ["command"] }],
       },
     ],
   },
   {
-    trigger: { keys: ["end"], modifiers: ["left_shift"] },
+    trigger: { keys: ["end"], modifiers: ["shift"] },
     cases: [
       {
         phase: "press",
@@ -43,7 +43,7 @@ export const homeEndBindings: Binding[] = [
           {
             type: "key",
             key: "right_arrow",
-            modifiers: ["left_command", "left_shift"],
+            modifiers: ["command", "shift"],
           },
         ],
       },

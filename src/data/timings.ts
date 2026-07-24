@@ -6,4 +6,5 @@ export const TIMINGS = {
   delayMouseHoldMs: 400,
   timeoutWheelChordMs: 200,
   privilegesPostElevationDelayMs: 1000,
+  privDelaySec: 0.2,
 } as const;

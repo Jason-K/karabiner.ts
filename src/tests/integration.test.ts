@@ -42,7 +42,7 @@ test("generated output includes all critical rule categories", () => {
     "Missing ESCAPE rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[←⌘]+[Q]")),
+    descriptions.some((d: string) => d.startsWith("[⌘]+[Q]")),
     "Missing CMD-Q rule",
   );
 });

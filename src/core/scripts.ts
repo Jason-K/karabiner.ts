@@ -297,7 +297,7 @@ export function withSleep(delaySeconds: number, shell: string): string {
 }
 
 export function openUrlCommand(url: string): string {
-  return `open ${shellSingleQuote(url)}`;
+  return `open -u ${shellSingleQuote(url)}`;
 }
 
 export function raycastExtensionCommand(route: string): string {

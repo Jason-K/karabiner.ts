@@ -3,12 +3,8 @@ import {
   formatSelectionCommand,
   typinatorNewRuleCommand,
 } from "../core/scripts";
-import { PATHS, appRegistry } from "../data";
-import {
-  rectangleActionUrl,
-  rectangleMaxOrRestoreCommand,
-  rectangleOrientationBasedCommand,
-} from "../data/rectangle";
+import { PATHS, appRegistry, commandRegistry } from "../data";
+import { rectangleActionUrl } from "../data/rectangle";
 import { urlRegistry } from "../data/urls";
 import { defineBindings, type Binding } from "../engine";
 
@@ -17,22 +13,41 @@ import { defineBindings, type Binding } from "../engine";
 export const hyperLauncherBindings: Binding[] = [
   {
     trigger: { keys: ["s"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [{ phase: "press", do: [{ type: "shell", command: formatSelectionCommand() }] }],
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "shell", command: formatSelectionCommand() }],
+      },
+    ],
   },
-  // { trigger: { keys: ["t"], modifiers: MOD_COMBO.vmCOCS }, cases: [{ phase: "press", do: [{ type: "shell", command: typinatorNewRuleCommand() }] }] },
   {
     trigger: { keys: ["comma"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [{ phase: "press", do: [{ type: "app", ref: appRegistry.systemSettings }] }],
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "app", ref: appRegistry.systemSettings }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f12"], modifiers: MOD_COMBO.vmCOCS },
     cases: [
-      { phase: "press", do: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }] },
+      {
+        phase: "press",
+        do: [
+          { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
+        ],
+      },
     ],
   },
   {
     trigger: { keys: ["escape"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [{ phase: "press", do: [{ type: "app", ref: appRegistry.activityMonitor }] }],
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "app", ref: appRegistry.activityMonitor }],
+      },
+    ],
   },
 ];
 
@@ -40,8 +55,16 @@ export const hyperTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["t"], modifiers: ["vmCOCS"] },
     cases: [
-      { phase: "release", do: [{ type: "shell", command: typinatorNewRuleCommand() }] },
-      { phase: "hold", do: [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }] },
+      {
+        phase: "release",
+        do: [{ type: "shell", command: typinatorNewRuleCommand() }],
+      },
+      {
+        phase: "hold",
+        do: [
+          { type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` },
+        ],
+      },
     ],
   },
   {
@@ -53,7 +76,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_command", "left_control", "left_option"],
+            modifiers: ["command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -69,7 +92,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "right_arrow",
-            modifiers: ["left_command", "left_control", "left_option"],
+            modifiers: ["command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -85,7 +108,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "up_arrow",
-            modifiers: ["left_command", "left_control", "left_option"],
+            modifiers: ["command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -101,7 +124,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "down_arrow",
-            modifiers: ["left_command", "left_control", "left_option"],
+            modifiers: ["command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -113,7 +136,13 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: rectangleActionUrl("bottom-left-eighth"), background: true }],
+        do: [
+          {
+            type: "url",
+            url: rectangleActionUrl("bottom-left-eighth"),
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -122,7 +151,13 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: rectangleActionUrl("bottom-right-eighth"), background: true }],
+        do: [
+          {
+            type: "url",
+            url: rectangleActionUrl("bottom-right-eighth"),
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -131,7 +166,13 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: urlRegistry.rectWinMaximize.name, background: true }],
+        do: [
+          {
+            type: "url",
+            url: urlRegistry.rectWinMaximize.name,
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -140,7 +181,13 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: rectangleActionUrl("top-left-eighth"), background: true }],
+        do: [
+          {
+            type: "url",
+            url: rectangleActionUrl("top-left-eighth"),
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -149,26 +196,50 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: rectangleActionUrl("top-right-eighth"), background: true }],
+        do: [
+          {
+            type: "url",
+            url: rectangleActionUrl("top-right-eighth"),
+            background: true,
+          },
+        ],
       },
     ],
   },
+  // Currently, I have to add a description key:value pair to force the manipulator to use the refDesc from the command registry, because shell commands don't allow me to do this with just `do: [{ type: "shell", command: commandRegistry.winMaxOrRestore }]`. If i didn't manually add the description, the manipulator's description includes the raw test of the command from commandRegistry.winMaxOrRestore.name.
   {
     trigger: { keys: ["spacebar"], modifiers: ["vmCOCS"] },
     cases: [
-      { phase: "release", do: [{ type: "shell", command: rectangleMaxOrRestoreCommand() }] },
+      {
+        phase: "release",
+        do: [{ type: "shell", command: commandRegistry.winMaxOrRestore.name }],
+        description: commandRegistry.winMaxOrRestore.refDesc,
+      },
     ],
   },
+  // Similar issue - url should automatically render the description when calling from urlRegistry.rectAppNextDisplay. It currently needs to call the value in that object, and doesn't read from its refDesc value.
   {
     trigger: { keys: ["tab"], modifiers: ["vmCOCS"] },
     cases: [
       {
         phase: "release",
-        do: [{ type: "url", url: urlRegistry.rectAppNextDisplay.name, background: true }],
+        do: [
+          {
+            type: "url",
+            url: urlRegistry.rectAppNextDisplay.name,
+            background: true,
+          },
+        ],
       },
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectAppPrevDisplay.name, background: true }],
+        do: [
+          {
+            type: "url",
+            url: urlRegistry.rectAppPrevDisplay.name,
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -177,11 +248,22 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") }],
+        do: [
+          {
+            type: "shell",
+            command: commandRegistry.winLeftOrTop.name,
+          },
+        ],
       },
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectAppPrevDisplay.name, background: true }],
+        do: [
+          {
+            type: "url",
+            url: urlRegistry.rectAppPrevDisplay.name,
+            background: true,
+          },
+        ],
       },
     ],
   },
@@ -190,11 +272,23 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
+        do: [
+          {
+            type: "shell",
+            command: commandRegistry.winRightOrBottom.name,
+          },
+        ],
+        // do: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
       },
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectAppNextDisplay.name, background: true }],
+        do: [
+          {
+            type: "url",
+            url: urlRegistry.rectAppNextDisplay.name,
+            background: true,
+          },
+        ],
       },
     ],
   },

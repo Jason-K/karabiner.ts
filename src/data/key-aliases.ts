@@ -7,17 +7,17 @@ export type ModKey = Modifier;
 // Virtual modifiers use fixed slots in vmCOCS order:
 // Cmd, Opt, Ctrl, Shift. Missing modifiers are represented by "_".
 export const MOD_COMBO = {
-  vmCO__: ["left_command", "left_option"],
-  vmC_C_: ["left_command", "left_control"],
-  vmC__S: ["left_command", "left_shift"],
-  vm_OC_: ["left_option", "left_control"],
-  vm_O_S: ["left_option", "left_shift"],
-  vm__CS: ["left_control", "left_shift"],
-  vmCOC_: ["left_command", "left_option", "left_control"],
-  vmCO_S: ["left_command", "left_option", "left_shift"],
-  vmC_CS: ["left_command", "left_control", "left_shift"],
-  vm_OCS: ["left_option", "left_control", "left_shift"],
-  vmCOCS: ["left_command", "left_option", "left_control", "left_shift"],
+  vmCO__: ["command", "option"],
+  vmC_C_: ["command", "control"],
+  vmC__S: ["command", "shift"],
+  vm_OC_: ["option", "control"],
+  vm_O_S: ["option", "shift"],
+  vm__CS: ["control", "shift"],
+  vmCOC_: ["command", "option", "control"],
+  vmCO_S: ["command", "option", "shift"],
+  vmC_CS: ["command", "control", "shift"],
+  vm_OCS: ["option", "control", "shift"],
+  vmCOCS: ["command", "option", "control", "shift"],
 } as const satisfies Record<string, Modifier[]>;
 
 export type ModComboAlias = keyof typeof MOD_COMBO;

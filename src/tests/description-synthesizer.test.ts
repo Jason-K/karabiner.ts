@@ -71,11 +71,21 @@ test("describeAction: actHere / caseChange / wrapString", () => {
 
 test("describeAction: key (with/without mods) + actionDesc", () => {
   assert.equal(describeAction({ type: "key", key: "f2" }), "Emit 'F2'");
-  assert.equal(describeAction({ type: "key", key: "return_or_enter" }), "Emit '⏎'");
-  assert.equal(describeAction({ type: "key", key: "h", modifiers: ["left_command"] }), "Emit 'H'+←⌘");
   assert.equal(
-    describeAction({ type: "key", key: "h", modifiers: ["left_command", "left_option"] }),
-    "Emit 'H'+←⌘←⌥",
+    describeAction({ type: "key", key: "return_or_enter" }),
+    "Emit '⏎'",
+  );
+  assert.equal(
+    describeAction({ type: "key", key: "h", modifiers: ["left_command"] }),
+    "Emit <⌘ + 'H'",
+  );
+  assert.equal(
+    describeAction({
+      type: "key",
+      key: "h",
+      modifiers: ["left_command", "left_option"],
+    }),
+    "Emit <⌘<⌥ + 'H'",
   );
   assert.equal(
     describeAction({ type: "key", key: "f2", actionDesc: "edit cell" }),
@@ -161,10 +171,16 @@ test("describeTrigger: single key + modifier chords", () => {
   assert.equal(describeTrigger({ keys: ["return_or_enter"] }), "[⏎]:");
   assert.equal(describeTrigger({ keys: ["escape"] }), "[␛]:");
   assert.equal(describeTrigger({ keys: ["home"] }), "[HOME]:");
-  assert.equal(describeTrigger({ keys: ["h"], modifiers: ["left_command"] }), "[←⌘]+[H]:");
   assert.equal(
-    describeTrigger({ keys: ["m"], modifiers: ["left_command", "left_option"] }),
-    "[←⌘←⌥]+[M]:",
+    describeTrigger({ keys: ["h"], modifiers: ["left_command"] }),
+    "[<⌘]+[H]:",
+  );
+  assert.equal(
+    describeTrigger({
+      keys: ["m"],
+      modifiers: ["left_command", "left_option"],
+    }),
+    "[<⌘<⌥]+[M]:",
   );
 });
 
@@ -177,7 +193,7 @@ test("describeTrigger: pointer (button labels)", () => {
   assert.equal(describeTrigger({ pointer: "shift" }), "Shift button:");
   assert.equal(
     describeTrigger({ pointer: "left", modifiers: ["left_command"] }),
-    "[←⌘]+Left click:",
+    "[<⌘]+Left click:",
   );
 });
 
@@ -192,7 +208,7 @@ test("synthesizeRuleDescription: simple unconditional remap", () => {
   };
   assert.equal(
     synthesizeRuleDescription(binding),
-    "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘",
+    "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit <⌘ + '←'",
   );
 });
 
@@ -233,7 +249,7 @@ test("synthesizeRuleDescription: multi-action case joined with ' then '", () => 
   };
   assert.equal(
     synthesizeRuleDescription(binding),
-    "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/a.scpt' then Run 'elevate'",
+    "[<⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/a.scpt' then Run 'elevate'",
   );
 });
 

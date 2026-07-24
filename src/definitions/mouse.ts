@@ -32,13 +32,13 @@ export const mouseBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
     cases: [
       // override (right button held): immediate down_arrow
-      { phase: "press", conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
-      { phase: "release", do: [{ key_code: "up_arrow", modifiers: ["left_control"] }] },
+      { phase: "press", conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }] },
+      { phase: "release", do: [{ key_code: "up_arrow", modifiers: ["control"] }] },
       {
         phase: "hold",
         do: [
           WIN_ACTIVATE_UNDER_CURSOR,
-          { key_code: "left_control", modifiers: ["left_option", "left_shift"] },
+          { key_code: "left_control", modifiers: ["option", "shift"] },
         ],
       },
     ],
@@ -60,7 +60,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
-        do: [{ key_code: "left_arrow", modifiers: ["left_command", "left_control", "left_shift"], repeat: false }],
+        do: [{ key_code: "left_arrow", modifiers: ["command", "control", "shift"], repeat: false }],
       },
       // wheel held down → swallow (the wheel-as-button mapping handles it)
       { phase: "press", conditions: [{ var: mouseVars.wheelDown, equals: 1 }], do: [] },
@@ -89,7 +89,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
-        do: [{ key_code: "right_arrow", modifiers: ["left_command", "left_control", "left_shift"], repeat: false }],
+        do: [{ key_code: "right_arrow", modifiers: ["command", "control", "shift"], repeat: false }],
       },
       {
         phase: "hold",
@@ -113,7 +113,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ pointing_button: "button1", modifiers: ["left_option"], repeat: false }],
+        do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }],
       },
       { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
       { phase: "hold", do: [WIN_ACTIVATE_UNDER_CURSOR, ...rectangleMaxOrRestoreEvents()] },
@@ -144,7 +144,7 @@ export const mouseBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
     cases: [
       { phase: "release", do: [{ shell_command: "osascript -e 'tell application \"Popclip\" to appear'" }] },
-      { phase: "hold", do: [{ key_code: "f10", modifiers: ["left_command", "left_option", "left_shift"], repeat: false }] },
+      { phase: "hold", do: [{ key_code: "f10", modifiers: ["command", "option", "shift"], repeat: false }] },
     ],
   },
   // -------------------------------------------------------------
@@ -178,10 +178,10 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ key_code: "close_bracket", modifiers: ["left_command", "left_shift"], repeat: true }],
+        do: [{ key_code: "close_bracket", modifiers: ["command", "shift"], repeat: true }],
       },
       { phase: "release", do: [{ pointing_button: "button4", repeat: false }] },
-      { phase: "hold", do: [{ key_code: "tab", modifiers: ["left_command"] }] },
+      { phase: "hold", do: [{ key_code: "tab", modifiers: ["command"] }] },
     ],
   },
   // -------------------------------------------------------------
@@ -195,10 +195,10 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ key_code: "open_bracket", modifiers: ["left_command", "left_shift"], repeat: true }],
+        do: [{ key_code: "open_bracket", modifiers: ["command", "shift"], repeat: true }],
       },
       { phase: "release", do: [{ pointing_button: "button5", repeat: false }] },
-      { phase: "hold", do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
+      { phase: "hold", do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }] },
     ],
   },
   // -------------------------------------------------------------
@@ -233,8 +233,8 @@ export const mouseBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
     cases: [
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
-      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }] },
-      { tapCount: 1, phase: "hold", conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["left_option"], repeat: false }] },
+      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["command"], repeat: false }] },
+      { tapCount: 1, phase: "hold", conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }] },
       { tapCount: 2, phase: "release", conditions: [{ app: appRegistry.zen }], do: [...WIN_NEXT_DISPLAY] },
       // Non-Zen — tap = maximize (delayed), double = next display
       { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen, unless: true }], do: [...WIN_MAX_OR_RESTORE] },

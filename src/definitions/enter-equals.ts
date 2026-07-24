@@ -73,9 +73,9 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_shift", "left_option"],
+            modifiers: ["shift", "option"],
           },
-          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "key", key: "c", modifiers: ["command"] },
           { type: "shell", command: QUICK_DATE_COMMAND },
         ],
         timeoutMs: TIMINGS.delayHoldMs,
@@ -95,9 +95,9 @@ export const equalsKeyHoldMappings: ConditionalTapHoldMapping[] = [
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["left_shift", "left_option"],
+            modifiers: ["shift", "option"],
           },
-          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "key", key: "c", modifiers: ["command"] },
           { type: "shell", command: QUICK_DATE_COMMAND },
         ],
         timeoutMs: TIMINGS.delayHoldMs,

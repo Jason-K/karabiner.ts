@@ -1,20 +1,25 @@
 import { ACCESSIBILITY_VALUES, ACCESSIBILITY_VARIABLES } from "../data";
-import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS } from "../data/apps";
+import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS, appRegistry } from "../data/apps";
 import { commandRegistry } from "../data/commands";
 import { defineBindings, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
 export const disabledShortcutBindings: Binding[] = [
   {
-    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    trigger: { keys: ["h"], modifiers: ["command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
   {
-    trigger: { keys: ["h"], modifiers: ["left_command", "left_option"] },
+    trigger: { keys: ["h"], modifiers: ["command", "option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
   {
-    trigger: { keys: ["m"], modifiers: ["left_command", "left_option"] },
+    trigger: { keys: ["m"], modifiers: ["command", "option"] },
+    cases: [{ phase: "press", do: [{ type: "noop" }] }],
+  },
+  {
+    trigger: { keys: ["d"], modifiers: ["command"] },
+    conditions: [{ app: appRegistry.antinote }],
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
 ];

@@ -2,8 +2,8 @@ import type { ToEvent } from "karabiner.ts";
 import type { Action, ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
 import { resolveButton } from "../data/mouse";
-import type { Binding, Condition, Phase, Trigger } from "./binding";
 import { expandModifiers } from "./action-resolver";
+import type { Binding, Condition, Phase, Trigger } from "./binding";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
 function withActionDesc(base: string, actionDesc?: string): string {
@@ -15,7 +15,7 @@ function describeKeyAction(action: Extract<ActionSpec, { type: "key" }>): string
   const mods = action.modifiers?.length
     ? expandModifiers(action.modifiers as string[]).map(modifierTokenToSymbols).join("")
     : "";
-  return mods ? `Emit '${keyLabel}'+${mods}` : `Emit '${keyLabel}'`;
+  return mods ? `Emit ${mods} + '${keyLabel}'` : `Emit '${keyLabel}'`;
 }
 
 /** Single-line human description for one action (spec §5 templates). */
@@ -45,7 +45,10 @@ export function describeAction(action: ActionSpec): string {
     case "key":
       return withActionDesc(describeKeyAction(action), action.actionDesc);
     case "url":
-      return withActionDesc(`Open '${action.url}'`, action.actionDesc);
+      return withActionDesc(
+        `Open '${typeof action.url === "string" ? action.url : action.url.refDesc}'`,
+        action.actionDesc,
+      );
     case "shell":
       return withActionDesc(`Run '${action.command}'`, action.actionDesc);
     case "python":
@@ -81,7 +84,7 @@ function describeToEvent(event: ToEvent): string {
       Array.isArray(e.modifiers) && e.modifiers.length
         ? expandModifiers(e.modifiers as string[]).map(modifierTokenToSymbols).join("")
         : "";
-    return mods ? `Emit '${keyLabel}'+${mods}` : `Emit '${keyLabel}'`;
+    return mods ? `Emit ${mods}+'${keyLabel}'` : `Emit '${keyLabel}'`;
   }
   if ("pointing_button" in e) {
     return `Click ${resolveButton(e.pointing_button as string).desc}`;

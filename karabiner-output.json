@@ -39,7 +39,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F18'+←⌘←⌥←⌃",
+        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃+'F18'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -61,9 +61,9 @@
                 "repeat": false,
                 "key_code": "f18",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -82,7 +82,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit '7'+←⌘←⌥←⇧",
+        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧+'7'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -104,9 +104,9 @@
                 "repeat": false,
                 "key_code": "7",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "shift"
                 ]
               }
             ],
@@ -125,7 +125,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[D]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F1'+←⌘←⌥←⇧",
+        "ruleDescription": "[D]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧+'F1'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -147,9 +147,9 @@
                 "repeat": false,
                 "key_code": "f1",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "shift"
                 ]
               }
             ],
@@ -261,7 +261,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast-x://extensions/Jason/here-to-there/activeToTarget'"
+                "shell_command": "open -u 'raycast-x://extensions/Jason/here-to-there/activeToTarget'"
               }
             ],
             "to_delayed_action": {
@@ -298,7 +298,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast-x://extensions/jason/recents/recentDownloads'"
+                "shell_command": "open -u 'raycast-x://extensions/jason/recents/recentDownloads'"
               }
             ],
             "to_delayed_action": {
@@ -413,7 +413,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+                "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
               }
             ],
             "to_delayed_action": {
@@ -431,7 +431,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F9'+←⌘←⌥←⌃←⇧",
+        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧+'F9'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -453,10 +453,10 @@
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -568,7 +568,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'cleanshot://capture-area'"
+                "shell_command": "open -u 'cleanshot://capture-area'"
               }
             ],
             "to_delayed_action": {
@@ -613,7 +613,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'cleanshot://capture-window'"
+                "shell_command": "open -u 'cleanshot://capture-window'"
               }
             ],
             "to_delayed_action": {
@@ -634,7 +634,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F11'+←⌥←⌃←⇧",
+        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⌃⇧+'F11'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -656,9 +656,9 @@
                 "repeat": false,
                 "key_code": "f11",
                 "modifiers": [
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -677,7 +677,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Clipboard history'",
+        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -696,7 +696,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
+                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
               }
             ],
             "to_delayed_action": {
@@ -788,7 +788,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'zoxide search directories'",
+        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'zoxide search directories'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -807,7 +807,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast-x://extensions/mrpunkin/raycast-zoxide/search-directories'"
+                "shell_command": "open -u 'raycast-x://extensions/mrpunkin/raycast-zoxide/search-directories'"
               }
             ],
             "to_delayed_action": {
@@ -825,7 +825,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=unstash-all'",
+        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash all'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -862,7 +862,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-down'",
+        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↓'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -899,7 +899,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-left'",
+        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -936,7 +936,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=unstash'",
+        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -973,7 +973,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-right'",
+        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash →'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1010,7 +1010,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=stash-up'",
+        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↑'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1199,7 +1199,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[F5]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F5'+←⌘←⌥←⌃",
+        "ruleDescription": "[F5]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃+'F5'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1221,9 +1221,9 @@
                 "repeat": false,
                 "key_code": "f5",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -1470,7 +1470,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'H'+←⌘←⌥←⌃←⇧",
+        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧+'H'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1492,10 +1492,10 @@
                 "repeat": false,
                 "key_code": "h",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1514,7 +1514,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F9'+←⌘←⌥←⌃←⇧",
+        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧+'F9'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1537,10 +1537,10 @@
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1598,7 +1598,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[FN]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'F5'+←⌘←⌥←⌃",
+        "ruleDescription": "[FN]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃+'F5'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1620,9 +1620,9 @@
                 "repeat": false,
                 "key_code": "f5",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -1649,10 +1649,10 @@
               "key_code": "t",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1684,7 +1684,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘←⌃←⌥",
+        "ruleDescription": "[vmCOCS]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥+'←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1692,10 +1692,10 @@
               "key_code": "q",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1708,9 +1708,9 @@
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_option"
+                  "command",
+                  "control",
+                  "option"
                 ]
               }
             ],
@@ -1719,10 +1719,10 @@
                 "halt": true,
                 "key_code": "q",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1733,9 +1733,9 @@
                   "repeat": false,
                   "key_code": "left_arrow",
                   "modifiers": [
-                    "left_command",
-                    "left_control",
-                    "left_option"
+                    "command",
+                    "control",
+                    "option"
                   ]
                 }
               ]
@@ -1746,7 +1746,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘←⌃←⌥",
+        "ruleDescription": "[vmCOCS]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥+'→'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1754,10 +1754,10 @@
               "key_code": "e",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1770,9 +1770,9 @@
                 "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_option"
+                  "command",
+                  "control",
+                  "option"
                 ]
               }
             ],
@@ -1781,10 +1781,10 @@
                 "halt": true,
                 "key_code": "e",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1795,9 +1795,9 @@
                   "repeat": false,
                   "key_code": "right_arrow",
                   "modifiers": [
-                    "left_command",
-                    "left_control",
-                    "left_option"
+                    "command",
+                    "control",
+                    "option"
                   ]
                 }
               ]
@@ -1808,7 +1808,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '↑'+←⌘←⌃←⌥",
+        "ruleDescription": "[vmCOCS]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥+'↑'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1816,10 +1816,10 @@
               "key_code": "r",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1832,9 +1832,9 @@
                 "repeat": false,
                 "key_code": "up_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_option"
+                  "command",
+                  "control",
+                  "option"
                 ]
               }
             ],
@@ -1843,10 +1843,10 @@
                 "halt": true,
                 "key_code": "r",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1857,9 +1857,9 @@
                   "repeat": false,
                   "key_code": "up_arrow",
                   "modifiers": [
-                    "left_command",
-                    "left_control",
-                    "left_option"
+                    "command",
+                    "control",
+                    "option"
                   ]
                 }
               ]
@@ -1870,7 +1870,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '↓'+←⌘←⌃←⌥",
+        "ruleDescription": "[vmCOCS]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥+'↓'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1878,10 +1878,10 @@
               "key_code": "f",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1894,9 +1894,9 @@
                 "repeat": false,
                 "key_code": "down_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_option"
+                  "command",
+                  "control",
+                  "option"
                 ]
               }
             ],
@@ -1905,10 +1905,10 @@
                 "halt": true,
                 "key_code": "f",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1919,9 +1919,9 @@
                   "repeat": false,
                   "key_code": "down_arrow",
                   "modifiers": [
-                    "left_command",
-                    "left_control",
-                    "left_option"
+                    "command",
+                    "control",
+                    "option"
                   ]
                 }
               ]
@@ -1940,10 +1940,10 @@
               "key_code": "keypad_1",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -1961,10 +1961,10 @@
                 "halt": true,
                 "key_code": "keypad_1",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -1990,10 +1990,10 @@
               "key_code": "keypad_3",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2011,10 +2011,10 @@
                 "halt": true,
                 "key_code": "keypad_3",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -2040,10 +2040,10 @@
               "key_code": "keypad_5",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2061,10 +2061,10 @@
                 "halt": true,
                 "key_code": "keypad_5",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -2090,10 +2090,10 @@
               "key_code": "keypad_7",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2111,10 +2111,10 @@
                 "halt": true,
                 "key_code": "keypad_7",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -2140,10 +2140,10 @@
               "key_code": "keypad_9",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2161,10 +2161,10 @@
                 "halt": true,
                 "key_code": "keypad_9",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -2182,7 +2182,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)''",
+        "ruleDescription": "[vmCOCS]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tMaximize or restore window",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2190,10 +2190,10 @@
               "key_code": "spacebar",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2211,10 +2211,10 @@
                 "halt": true,
                 "key_code": "spacebar",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -2240,10 +2240,10 @@
               "key_code": "tab",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2275,7 +2275,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-prev-display'",
+        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-prev-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2283,10 +2283,10 @@
               "key_code": "left_arrow",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2296,7 +2296,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -2308,7 +2308,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -2318,7 +2318,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-next-display'",
+        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)''\n\tOn Hold:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=app-next-display'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2326,10 +2326,10 @@
               "key_code": "right_arrow",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -2339,7 +2339,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -2351,7 +2351,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -2361,7 +2361,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'M'+←⌥←⌃",
+        "ruleDescription": "[<⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⌃+'M'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2391,8 +2391,8 @@
                 "repeat": false,
                 "key_code": "m",
                 "modifiers": [
-                  "left_option",
-                  "left_control"
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -2414,7 +2414,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'P'+←⌘←⌥←⌃",
+        "ruleDescription": "[<⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃+'P'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2444,9 +2444,9 @@
                 "repeat": false,
                 "key_code": "p",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -2468,7 +2468,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'antinote://'",
+        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'antinote://'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2476,7 +2476,7 @@
               "key_code": "a",
               "modifiers": {
                 "mandatory": [
-                  "left_shift"
+                  "shift"
                 ]
               }
             },
@@ -2489,7 +2489,7 @@
                 "halt": true,
                 "key_code": "a",
                 "modifiers": [
-                  "left_shift"
+                  "shift"
                 ]
               }
             ],
@@ -2505,7 +2505,7 @@
                   "halt": true,
                   "key_code": "a",
                   "modifiers": [
-                    "left_shift"
+                    "shift"
                   ]
                 }
               ]
@@ -2516,7 +2516,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
+        "ruleDescription": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2564,7 +2564,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled''\n\tOn Hold:\n\t\tAlways:\tCall 'Spotify search'",
+        "ruleDescription": "[⌥>]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled''\n\tOn Hold:\n\t\tAlways:\tCall 'Spotify search'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2587,7 +2587,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open 'raycast-x://extensions/mattisssa/spotify-player/search'"
+                "shell_command": "open -u 'raycast-x://extensions/mattisssa/spotify-player/search'"
               }
             ],
             "to_delayed_action": {
@@ -2604,7 +2604,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[→⌥]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
+        "ruleDescription": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2917,7 +2917,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
+        "ruleDescription": "[⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2925,7 +2925,7 @@
               "key_code": "escape",
               "modifiers": {
                 "mandatory": [
-                  "left_control"
+                  "control"
                 ]
               }
             },
@@ -2969,7 +2969,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit '↓'+←⌃\n\t\tAlways:\tEmit '↑'+←⌃\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit '⌃'+←⌥←⇧",
+        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit ⌃+'↓'\n\t\tAlways:\tEmit ⌃+'↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧+'⌃'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2980,7 +2980,7 @@
               {
                 "key_code": "down_arrow",
                 "modifiers": [
-                  "left_control"
+                  "control"
                 ],
                 "repeat": false
               }
@@ -3016,7 +3016,7 @@
               {
                 "key_code": "up_arrow",
                 "modifiers": [
-                  "left_control"
+                  "control"
                 ]
               }
             ],
@@ -3028,8 +3028,8 @@
               {
                 "key_code": "left_control",
                 "modifiers": [
-                  "left_option",
-                  "left_shift"
+                  "option",
+                  "shift"
                 ]
               }
             ],
@@ -3039,7 +3039,7 @@
                 {
                   "key_code": "up_arrow",
                   "modifiers": [
-                    "left_control"
+                    "control"
                   ]
                 }
               ]
@@ -3061,7 +3061,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit '←'+←⌘←⌃←⇧\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
+        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3072,9 +3072,9 @@
               {
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "control",
+                  "shift"
                 ],
                 "repeat": false
               }
@@ -3146,7 +3146,7 @@
                 "hold_down_milliseconds": 80
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -3181,7 +3181,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit '→'+←⌘←⌃←⇧\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
+        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3192,9 +3192,9 @@
               {
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "control",
+                  "shift"
                 ],
                 "repeat": false
               }
@@ -3243,7 +3243,7 @@
                 "hold_down_milliseconds": 80
               },
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -3289,7 +3289,7 @@
               {
                 "pointing_button": "button1",
                 "modifiers": [
-                  "left_option"
+                  "option"
                 ],
                 "repeat": false
               }
@@ -3435,7 +3435,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit 'F10'+←⌘←⌥←⇧",
+        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧+'F10'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3455,9 +3455,9 @@
               {
                 "key_code": "f10",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "shift"
                 ],
                 "repeat": false
               }
@@ -3533,7 +3533,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ']'+←⌘←⇧\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit '⇥'+←⌘",
+        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧+']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘+'⇥'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3544,8 +3544,8 @@
               {
                 "key_code": "close_bracket",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ],
                 "repeat": true
               }
@@ -3596,7 +3596,7 @@
                 "repeat": false,
                 "key_code": "tab",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               }
             ],
@@ -3627,7 +3627,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit '['+←⌘←⇧\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit '↓'+←⌃",
+        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧+'['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃+'↓'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3638,8 +3638,8 @@
               {
                 "key_code": "open_bracket",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ],
                 "repeat": true
               }
@@ -3690,7 +3690,7 @@
                 "repeat": false,
                 "key_code": "down_arrow",
                 "modifiers": [
-                  "left_control"
+                  "control"
                 ]
               }
             ],
@@ -3904,7 +3904,7 @@
               {
                 "pointing_button": "button1",
                 "modifiers": [
-                  "left_option"
+                  "option"
                 ],
                 "repeat": false
               }
@@ -3914,7 +3914,7 @@
                 {
                   "pointing_button": "button1",
                   "modifiers": [
-                    "left_command"
+                    "command"
                   ],
                   "repeat": false
                 },
@@ -4238,9 +4238,9 @@
               {
                 "key_code": "left_command",
                 "modifiers": [
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -4256,10 +4256,10 @@
               {
                 "key_code": "f15",
                 "modifiers": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -4279,12 +4279,12 @@
               {
                 "key_code": "left_command",
                 "modifiers": [
-                  "left_option",
-                  "left_control"
+                  "option",
+                  "control"
                 ]
               }
             ],
-            "description": "[←⇧⇪]        →    vmCOC_ (on hold)"
+            "description": "[<⇧⇪]        →    vmCOC_ (on hold)"
           },
           {
             "type": "basic",
@@ -4300,12 +4300,12 @@
               {
                 "key_code": "left_command",
                 "modifiers": [
-                  "left_option",
-                  "left_shift"
+                  "option",
+                  "shift"
                 ]
               }
             ],
-            "description": "[←⌃⇪]        →    vmCO_S (on hold)"
+            "description": "[<⌃⇪]        →    vmCO_S (on hold)"
           },
           {
             "type": "basic",
@@ -4321,12 +4321,12 @@
               {
                 "key_code": "left_command",
                 "modifiers": [
-                  "left_control",
-                  "left_shift"
+                  "control",
+                  "shift"
                 ]
               }
             ],
-            "description": "[←⌥⇪]        →    vmC_CS (on hold)"
+            "description": "[<⌥⇪]        →    vmC_CS (on hold)"
           },
           {
             "type": "basic",
@@ -4342,12 +4342,12 @@
               {
                 "key_code": "left_option",
                 "modifiers": [
-                  "left_control",
-                  "left_shift"
+                  "control",
+                  "shift"
                 ]
               }
             ],
-            "description": "[←⌘⇪]        →    vm_OCS (on hold)"
+            "description": "[<⌘⇪]        →    vm_OCS (on hold)"
           },
           {
             "type": "basic",
@@ -4368,7 +4368,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⇧⇪]        →    vmCO__ (on hold)"
+            "description": "[<⌃<⇧⇪]        →    vmCO__ (on hold)"
           },
           {
             "type": "basic",
@@ -4389,7 +4389,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⌥⇪]        →    vmC__S (on hold)"
+            "description": "[<⌃<⌥⇪]        →    vmC__S (on hold)"
           },
           {
             "type": "basic",
@@ -4410,7 +4410,7 @@
                 ]
               }
             ],
-            "description": "[←⌃←⌘⇪]        →    vm_O_S (on hold)"
+            "description": "[<⌃<⌘⇪]        →    vm_O_S (on hold)"
           },
           {
             "type": "basic",
@@ -4431,7 +4431,7 @@
                 ]
               }
             ],
-            "description": "[←⌘←⌥⇪]        →    vm__CS (on hold)"
+            "description": "[<⌘<⌥⇪]        →    vm__CS (on hold)"
           },
           {
             "type": "basic",
@@ -4452,7 +4452,7 @@
                 ]
               }
             ],
-            "description": "[←⌘←⇧⇪]        →    vm_OC_ (on hold)"
+            "description": "[<⌘<⇧⇪]        →    vm_OC_ (on hold)"
           },
           {
             "type": "basic",
@@ -4473,7 +4473,7 @@
                 ]
               }
             ],
-            "description": "[←⌥←⇧⇪]        →    vmC_C_ (on hold)"
+            "description": "[<⌥<⇧⇪]        →    vmC_C_ (on hold)"
           },
           {
             "type": "basic",
@@ -4492,7 +4492,7 @@
                 "key_code": "left_option"
               }
             ],
-            "description": "[←⌘←⌃←⇧⇪]        →    vm_O__ (on hold)"
+            "description": "[<⌘<⌃<⇧⇪]        →    vm_O__ (on hold)"
           },
           {
             "type": "basic",
@@ -4511,7 +4511,7 @@
                 "key_code": "left_control"
               }
             ],
-            "description": "[←⌘←⌥←⇧⇪]        →    vm__C_ (on hold)"
+            "description": "[<⌘<⌥<⇧⇪]        →    vm__C_ (on hold)"
           },
           {
             "type": "basic",
@@ -4530,7 +4530,7 @@
                 "key_code": "left_command"
               }
             ],
-            "description": "[←⌥←⌃←⇧⇪]        →    vmC___ (on hold)"
+            "description": "[<⌥<⌃<⇧⇪]        →    vmC___ (on hold)"
           },
           {
             "type": "basic",
@@ -4549,7 +4549,7 @@
                 "key_code": "left_shift"
               }
             ],
-            "description": "[←⌘←⌥←⌃⇪]        →    vm___S (on hold)"
+            "description": "[<⌘<⌥<⌃⇪]        →    vm___S (on hold)"
           },
           {
             "type": "basic",
@@ -4569,14 +4569,14 @@
                 "key_code": "vk_none"
               }
             ],
-            "description": "[←⌘←⌥←⌃←⇧⇪]        →    vm____ (on hold)"
+            "description": "[<⌘<⌥<⌃<⇧⇪]        →    vm____ (on hold)"
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘",
+        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘+'←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4587,7 +4587,7 @@
               {
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               }
             ]
@@ -4597,7 +4597,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '←'+←⌘←⇧",
+        "ruleDescription": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧+'←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4605,7 +4605,7 @@
               "key_code": "home",
               "modifiers": {
                 "mandatory": [
-                  "left_shift"
+                  "shift"
                 ]
               }
             },
@@ -4613,8 +4613,8 @@
               {
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             ]
@@ -4624,7 +4624,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘",
+        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘+'→'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4635,7 +4635,7 @@
               {
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               }
             ]
@@ -4645,7 +4645,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '→'+←⌘←⇧",
+        "ruleDescription": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧+'→'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4653,7 +4653,7 @@
               "key_code": "end",
               "modifiers": {
                 "mandatory": [
-                  "left_shift"
+                  "shift"
                 ]
               }
             },
@@ -4661,8 +4661,8 @@
               {
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             ]
@@ -4672,7 +4672,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'FormatSelection()''",
+        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'FormatSelection()''",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4680,10 +4680,10 @@
               "key_code": "s",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -4698,7 +4698,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
+        "ruleDescription": "[⌘⌥⌃⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4706,10 +4706,10 @@
               "key_code": "comma",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -4728,7 +4728,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4736,10 +4736,10 @@
               "key_code": "f12",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -4754,7 +4754,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥←⌃←⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
+        "ruleDescription": "[⌘⌥⌃⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4762,10 +4762,10 @@
               "key_code": "escape",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option",
-                  "left_control",
-                  "left_shift"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -4991,14 +4991,14 @@
               {
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_shift",
-                  "left_option"
+                  "shift",
+                  "option"
                 ]
               },
               {
                 "key_code": "c",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               },
               {
@@ -5041,14 +5041,14 @@
               {
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_shift",
-                  "left_option"
+                  "shift",
+                  "option"
                 ]
               },
               {
                 "key_code": "c",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               },
               {
@@ -5070,7 +5070,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[Q]        →    Quit app (on multi-tap)",
+        "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5078,7 +5078,7 @@
               "key_code": "q",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5093,7 +5093,7 @@
               {
                 "key_code": "q",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               },
               {
@@ -5110,7 +5110,7 @@
               "key_code": "q",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5156,7 +5156,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5164,7 +5164,7 @@
               "key_code": "h",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             }
@@ -5174,7 +5174,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "ruleDescription": "[⌘⌥]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5182,8 +5182,8 @@
               "key_code": "h",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option"
+                  "command",
+                  "option"
                 ]
               }
             }
@@ -5193,7 +5193,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⌥]+[M]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "ruleDescription": "[⌘⌥]+[M]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5201,8 +5201,8 @@
               "key_code": "m",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_option"
+                  "command",
+                  "option"
                 ]
               }
             }
@@ -5212,7 +5212,34 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1'",
+        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tNo operation",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "d",
+              "modifiers": {
+                "mandatory": [
+                  "command"
+                ]
+              }
+            },
+            "description": "In Antinote",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.chabomakers.Antinote"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[<⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5238,7 +5265,7 @@
                 "shell_command": "osascript \"/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
               },
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 1"
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2"
               }
             ]
           }
@@ -5247,7 +5274,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
+        "ruleDescription": "[<⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5283,7 +5310,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.1 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
               }
             ]
           },
@@ -5330,7 +5357,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit 'H'+←⌘←⌃",
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃+'H'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5338,7 +5365,7 @@
               "key_code": "h",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5355,8 +5382,8 @@
               {
                 "key_code": "h",
                 "modifiers": [
-                  "left_command",
-                  "left_control"
+                  "command",
+                  "control"
                 ]
               }
             ]
@@ -5366,7 +5393,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit 'U'+←⌘←⌃",
+        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃+'U'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5374,7 +5401,7 @@
               "key_code": "u",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5391,8 +5418,8 @@
               {
                 "key_code": "u",
                 "modifiers": [
-                  "left_command",
-                  "left_control"
+                  "command",
+                  "control"
                 ]
               }
             ]
@@ -5402,7 +5429,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ']'+←⌘←⇧",
+        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧+']'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5410,8 +5437,8 @@
               "key_code": "right_arrow",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             },
@@ -5428,8 +5455,8 @@
               {
                 "key_code": "close_bracket",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             ]
@@ -5439,7 +5466,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘←⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit '['+←⌘←⇧",
+        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧+'['",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5447,8 +5474,8 @@
               "key_code": "left_arrow",
               "modifiers": {
                 "mandatory": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             },
@@ -5465,8 +5492,8 @@
               {
                 "key_code": "open_bracket",
                 "modifiers": [
-                  "left_command",
-                  "left_shift"
+                  "command",
+                  "shift"
                 ]
               }
             ]
@@ -5476,7 +5503,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[←⌘]+[D]        →    Delete note (on multi-tap)",
+        "ruleDescription": "[⌘]+[D]        →    Delete note (on multi-tap)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5484,7 +5511,7 @@
               "key_code": "d",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5505,7 +5532,7 @@
               {
                 "key_code": "d",
                 "modifiers": [
-                  "left_command"
+                  "command"
                 ]
               },
               {
@@ -5522,7 +5549,7 @@
               "key_code": "d",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
+                  "command"
                 ]
               }
             },
@@ -5571,7 +5598,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tRun 'open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history'",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5587,8 +5614,8 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 600,
-              "basic.to_if_held_down_threshold_milliseconds": 600
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "description": "multi_tap_left_shift second tap (tap-tap / tap-tap-hold)",
             "to": [
@@ -5606,7 +5633,7 @@
                 }
               },
               {
-                "shell_command": "open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history"
+                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
               }
             ],
             "to_if_held_down": [
@@ -5643,9 +5670,9 @@
               "modifiers": {}
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 600,
-              "basic.to_if_held_down_threshold_milliseconds": 600,
-              "basic.to_if_alone_timeout_milliseconds": 600
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
             },
             "description": "multi_tap_left_shift first tap (pass-through)",
             "to": [
@@ -5707,7 +5734,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tRun 'open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history'",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5723,8 +5750,8 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 600,
-              "basic.to_if_held_down_threshold_milliseconds": 600
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "description": "multi_tap_right_shift second tap (tap-tap / tap-tap-hold)",
             "to": [
@@ -5742,7 +5769,7 @@
                 }
               },
               {
-                "shell_command": "open -u raycast-x://extensions/raycast/clipboard-history/clipboard-history"
+                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
               }
             ],
             "to_if_held_down": [
@@ -5779,9 +5806,9 @@
               "modifiers": {}
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 600,
-              "basic.to_if_held_down_threshold_milliseconds": 600,
-              "basic.to_if_alone_timeout_milliseconds": 600
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
             },
             "description": "multi_tap_right_shift first tap (pass-through)",
             "to": [

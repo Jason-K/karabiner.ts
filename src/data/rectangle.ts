@@ -135,8 +135,8 @@ export function rectangleOrientationBasedCommand(
   const script = [
     "local win = hs.window.focusedWindow()",
     "local screen = (win and win:screen()) or hs.screen.mainScreen()",
-    "local frame = screen:frame()",
-    `local url = (frame.w >= frame.h) and [[${landscapeUrl}]] or [[${portraitUrl}]]`,
+    "local screenFrame = screen:frame()",
+    `local url = (screenFrame.w >= screenFrame.h) and [[${landscapeUrl}]] or [[${portraitUrl}]]`,
     "hs.urlevent.openURL(url)",
   ].join("; ");
 

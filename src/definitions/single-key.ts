@@ -1,5 +1,5 @@
 import { recentDownloadsCommand } from "../core/scripts";
-import { appRegistry, raycastRegistry } from "../data";
+import { appRegistry, raycastRegistry, urlRegistry } from "../data";
 import { cleanShotRegistry } from "../data/cleanshot";
 import { rectangleActionUrl } from "../data/rectangle";
 import type { Binding } from "../engine";
@@ -167,7 +167,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["v"] },
-    cases: [{ phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.clipboardHistory }] }],
+    cases: [{ phase: "hold", do: [{ type: "url", url: urlRegistry.rayClipboard }] }],
   },
   {
     trigger: { keys: ["x"] },
@@ -180,7 +180,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["z"] },
     cases: [
-      { phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.zoxideSearchDirectories }] },
+      { phase: "hold", do: [{ type: "url", url: urlRegistry.rayZoxideSearchDirs }] },
     ],
   },
   {
@@ -188,7 +188,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: rectangleActionUrl("unstash-all"), background: true }],
+        do: [{ type: "url", url: urlRegistry.rectWinsUnstashAll, background: true }],
       },
     ],
   },
@@ -197,7 +197,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: rectangleActionUrl("stash-down"), background: true }],
+        do: [{ type: "url", url: urlRegistry.rectWinStashDown, background: true }],
       },
     ],
   },
@@ -206,14 +206,14 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: rectangleActionUrl("stash-left"), background: true }],
+        do: [{ type: "url", url: urlRegistry.rectWinStashLeft, background: true }],
       },
     ],
   },
   {
     trigger: { keys: ["keypad_5"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: rectangleActionUrl("unstash"), background: true }] },
+      { phase: "hold", do: [{ type: "url", url: urlRegistry.rectWinsUnstash, background: true }] },
     ],
   },
   {
@@ -221,14 +221,14 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: rectangleActionUrl("stash-right"), background: true }],
+        do: [{ type: "url", url: urlRegistry.rectWinStashRight, background: true }],
       },
     ],
   },
   {
     trigger: { keys: ["keypad_8"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: rectangleActionUrl("stash-up"), background: true }] },
+      { phase: "hold", do: [{ type: "url", url: urlRegistry.rectWinStashUp, background: true }] },
     ],
   },
   {

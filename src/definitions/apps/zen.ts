@@ -1,9 +1,10 @@
 import { appRegistry } from "../../data";
+import { MOD_COMBO } from "../../data/key-aliases";
 import { defineBindings, type Binding } from "../../engine";
 
 export const zenRemapBindings: Binding[] = [
   {
-    trigger: { keys: ["right_arrow"], modifiers: ["left_command", "left_shift"] },
+    trigger: { keys: ["right_arrow"], modifiers: MOD_COMBO.vmC__S },
     conditions: [{ app: appRegistry.zen }],
     cases: [
       {
@@ -12,14 +13,14 @@ export const zenRemapBindings: Binding[] = [
           {
             type: "key",
             key: "close_bracket",
-            modifiers: ["left_command", "left_shift"],
+            modifiers: ["command", "shift"],
           },
         ],
       },
     ],
   },
   {
-    trigger: { keys: ["left_arrow"], modifiers: ["left_command", "left_shift"] },
+    trigger: { keys: ["left_arrow"], modifiers: MOD_COMBO.vmC__S },
     conditions: [{ app: appRegistry.zen }],
     cases: [
       {
@@ -28,7 +29,7 @@ export const zenRemapBindings: Binding[] = [
           {
             type: "key",
             key: "open_bracket",
-            modifiers: ["left_command", "left_shift"],
+            modifiers: ["command", "shift"],
           },
         ],
       },

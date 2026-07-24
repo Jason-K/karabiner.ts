@@ -10,7 +10,6 @@ import {
   cmd,
   focusApp,
   openAppBundleCommand,
-  openUrlCommand,
   pythonScriptCommand,
   raycastExtensionCommand,
   textProcessorCommand,
@@ -52,10 +51,13 @@ function resolveShellCommand(action: ActionSpec): string | null {
       return cleanShotCommand(resolveName(action.ref));
     case "actHere":
       return actHereCmd(action.action);
-    case "url":
+    case "url": {
+      const urlString =
+        typeof action.url === "string" ? action.url : resolveName(action.url);
       return action.background
-        ? `open -g '${action.url}'`
-        : openUrlCommand(action.url);
+        ? `open -g '${urlString}'`
+        : `open -u '${urlString}'`;
+    }
     case "caseChange":
       return textProcessorCommand(action.operation);
     case "wrapString":
@@ -63,6 +65,7 @@ function resolveShellCommand(action: ActionSpec): string | null {
         action.delaySeconds ?? 0.2,
         textProcessorCommand(action.operation),
       );
+    // need to allow the user to assign a command from commandRegistry to a shell action (while preserving ability to assign arbitrary shell commands to shell actions)
     case "shell":
       return action.command;
     case "python":
@@ -119,14 +122,14 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
     case "osascript":
       return [applescript(action.scriptPath, ...(action.args ?? []))];
     case "cut":
-      return [toKey("x", ["left_command"])];
+      return [toKey("x", ["command"])];
     case "copy":
-      return [toKey("c", ["left_command"])];
+      return [toKey("c", ["command"])];
     case "paste":
-      return [toKey("v", ["left_command"])];
+      return [toKey("v", ["command"])];
     case "caseChange":
     case "wrapString":
-      return [toKey("x", ["left_command"]), cmd(resolveShellCommand(action)!)];
+      return [toKey("x", ["command"]), cmd(resolveShellCommand(action)!)];
     case "sequence":
       return action.actions.flatMap(resolveActionToEvents);
     case "command":
