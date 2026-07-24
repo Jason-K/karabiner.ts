@@ -3775,7 +3775,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3818,7 +3818,7 @@
               "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 400
             },
-            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "description": "on Logitech G502 X and Right button held and In Zen",
             "to": [],
             "to_if_alone": [
               {
@@ -3877,7 +3877,7 @@
               "basic.to_if_held_down_threshold_milliseconds": 400,
               "basic.to_if_alone_timeout_milliseconds": 400
             },
-            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "description": "on Logitech G502 X and Right button held and In Zen",
             "to": [
               {
                 "set_variable": {
@@ -3998,7 +3998,7 @@
               "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 400
             },
-            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "description": "on Logitech G502 X and Right button held and Outside Zen",
             "to": [],
             "to_if_alone": [
               {
@@ -4057,7 +4057,7 @@
               "basic.to_if_held_down_threshold_milliseconds": 400,
               "basic.to_if_alone_timeout_milliseconds": 400
             },
-            "description": "Logitech G502 X: [RBUTTON+LBUTTON] single action by app / double next display",
+            "description": "on Logitech G502 X and Right button held and Outside Zen",
             "to": [
               {
                 "set_variable": {
@@ -4135,7 +4135,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held:\t\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4187,7 +4187,7 @@
                 ]
               }
             ],
-            "description": "Logitech G502 X: [LBUTTON] Left click (tap) / Zen chord modifier (hold)"
+            "description": "on Logitech G502 X and not Right button held"
           }
         ],
         "allowEmptyManipulators": false,
