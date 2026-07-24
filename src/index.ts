@@ -44,13 +44,11 @@ import {
   buildWordPrivilegesRule,
   buildZenCommandRemapRule,
   mouseBindings,
-  mouseDeviceMappings,
   simultaneousMappings,
   tapHoldBindings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
-  buildMouseRules,
   defineBindings,
   generateSimultaneousRules,
   updateDeviceConfigurations,

@@ -248,7 +248,7 @@ function stampDeviceScope(manipulators: Manipulator[], trigger: Trigger): void {
 }
 
 function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manipulator[] {
-  const key = isSim ? "" : (b.trigger as { keys: string[] }).keys[0]!;
+  const key = isSim ? "" : "keys" in b.trigger ? b.trigger.keys[0]! : "";
   const byPhase = (p: Phase, tapCount = 1) =>
     cases.filter((c) => c.tapCount === tapCount && c.phase === p).flatMap((c) => c.do);
   const threshold = b.timing?.aloneMs ?? b.timing?.heldThresholdMs;

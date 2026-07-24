@@ -228,7 +228,7 @@ test("equals rules factory keeps keypad and regular mappings", () => {
 
 test("mouse bindings build device-scoped manipulators via defineBindings", () => {
   const rules = toRules(defineBindings(mouseBindings));
-  assert.equal(rules.length, 10);
+  assert.equal(rules.length, 12);
 
   // Shift — override (right-button chord) prepended + base tap-hold. The alias
   // auto-scopes to the G502X via nameScope, so device_if lands last.
@@ -270,6 +270,27 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
       (c: any) => c.type === "variable_unless" && c.name === "wheel_down",
     ),
     { type: "variable_unless", name: "wheel_down", value: 1 },
+  );
+
+  // Left-button double-tap (right-button held) — two condition-groups (Zen vs
+  // non-Zen), each a [secondTap, firstTap] pair = 4 manipulators. The delayed
+  // single tap routes to to_if_invoked; the shared firstTapPendingVar gates the
+  // second-tap manipulators.
+  const doubleTap = rules[10];
+  assert.equal(doubleTap?.manipulators.length, 4);
+  const firstTap = doubleTap?.manipulators.find((m: any) =>
+    (m.to ?? []).some((e: any) => e.set_variable?.name === "left_with_right_first_tap"),
+  );
+  assert.ok(firstTap, "first-tap (var-setting) manipulator present");
+  assert.deepEqual(firstTap?.from, {
+    pointing_button: "button1",
+    modifiers: { optional: ["any"] },
+  });
+  assert.ok(
+    (firstTap?.to_delayed_action?.to_if_invoked ?? []).some(
+      (e: any) => e.pointing_button === "button1",
+    ),
+    "delayed single tap routed to to_if_invoked",
   );
 });
 
