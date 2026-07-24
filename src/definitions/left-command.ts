@@ -22,7 +22,7 @@ export const leftCommandMultiTapBinding: Binding = {
 
 export const cmdQGuard: DoubleTapGuardConfig = {
   key: "q",
-  modifiers: ["command"],
+  modifiers: ["left_command"],
   description: "Quit app",
   timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };

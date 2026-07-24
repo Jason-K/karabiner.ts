@@ -92,13 +92,13 @@ test("security disable shortcuts factory keeps all disabled combos", () => {
 
 test("word privileges factory keeps single guarded manipulator", () => {
   const rule = toRule(buildWordPrivilegesRule());
-  assert.match(rule.description, /^\[<⌘\]\+\[\/\]:\n---/);
+  assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
 test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = toRule(buildPasswordsQuickFillRule());
-  assert.match(rule.description, /^\[<⌘\]\+\[\/\]:\n---/);
+  assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 
   const roleConditions = rule.manipulators.map(
@@ -259,7 +259,7 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
   assert.deepEqual(rules[1]?.manipulators[0]?.to, [
     {
       key_code: "left_arrow",
-      modifiers: ["command", "control", "shift"],
+      modifiers: ["left_command", "control", "shift"],
       repeat: false,
     },
   ]);

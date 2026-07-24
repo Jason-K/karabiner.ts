@@ -13,7 +13,7 @@ export const zenRemapBindings: Binding[] = [
           {
             type: "key",
             key: "close_bracket",
-            modifiers: ["command", "shift"],
+            modifiers: ["left_command", "shift"],
           },
         ],
       },
@@ -29,7 +29,7 @@ export const zenRemapBindings: Binding[] = [
           {
             type: "key",
             key: "open_bracket",
-            modifiers: ["command", "shift"],
+            modifiers: ["left_command", "shift"],
           },
         ],
       },

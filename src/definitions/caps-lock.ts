@@ -5,62 +5,6 @@ import {
   type ModifierChordConfig,
 } from "../engine/modifier-chord-rules";
 
-// !! WIP !!
-// Can we use a single binding to replace all of the logic below?
-// Won't this do the same thing, so long as we allow any of the modifier keys as OPTIONAL modifiers?
-/*
-
-see: https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/from/modifiers/
-
-```MD
-
-```JSON
-{
-    "description": "Change escape to tab (from.modifiers.optional)",
-    "manipulators": [
-        {
-            "type": "basic",
-            "from": {
-                "key_code": "escape",
-                "modifiers": {
-                    "optional": ["left_shift", "left_control"]
-                }
-            },
-            "to": [
-                { "key_code": "tab" }
-            ]
-        }
-    ]
-}
-```
-*   The optional modifiers (`left_shift` and `left_control`) are kept in output events.
-*   The event is not changed if modifiers are not included in `optional` such as `left_option`.
-
-| Input | Output | Output Manipulated |
-| --- | --- | --- |
-| escape | tab | escape → tab |
-| left_shift + escape | left_shift + tab | left_shift + escape → left_shift + tab |
-| left_control + escape | left_control + tab | left_control + escape → left_control + tab |
-| left_option + escape | left_option + escape | Not manipulated |
-| left_shift + left_option + escape | left_shift + left_option + escape | Not manipulated |
-```
- */
-
-// export const capsBinding: Binding = {
-//   trigger: { keys: ["caps_lock"], modifiers: [] },
-//   whileHoldVar: { name: "caps_lock_pressed", varDesc: "caps lock pressed" },
-//   cases: [
-//     {
-//       phase: "release",
-//       do: [{ type: "key", key: "f15", modifiers: ["vmCOCS"] }],
-//       description: "call hsLauncher",
-//     },
-//     {
-//       phase: "press",
-//       do: [{ type: "key", key: "left_command", modifiers: ["vm_OCS"] }],
-//     },
-//   ],
-// };
 
 export const capsLockChordConfig: ModifierChordConfig = {
   ruleName: formatRuleDescription(

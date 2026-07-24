@@ -76,7 +76,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["command", "control", "option"],
+            modifiers: ["left_command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -92,7 +92,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "right_arrow",
-            modifiers: ["command", "control", "option"],
+            modifiers: ["left_command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -108,7 +108,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "up_arrow",
-            modifiers: ["command", "control", "option"],
+            modifiers: ["left_command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -124,7 +124,7 @@ export const hyperTapHoldBindings: Binding[] = [
           {
             type: "key",
             key: "down_arrow",
-            modifiers: ["command", "control", "option"],
+            modifiers: ["left_command", "control", "option"],
             options: { repeat: false },
           },
         ],
@@ -169,7 +169,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: urlRegistry.rectWinMaximize.name,
+            url: urlRegistry.rectWinMaximize,
             background: true,
           },
         ],
@@ -206,18 +206,15 @@ export const hyperTapHoldBindings: Binding[] = [
       },
     ],
   },
-  // Currently, I have to add a description key:value pair to force the manipulator to use the refDesc from the command registry, because shell commands don't allow me to do this with just `do: [{ type: "shell", command: commandRegistry.winMaxOrRestore }]`. If i didn't manually add the description, the manipulator's description includes the raw test of the command from commandRegistry.winMaxOrRestore.name.
   {
     trigger: { keys: ["spacebar"], modifiers: ["vmCOCS"] },
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: commandRegistry.winMaxOrRestore.name }],
-        description: commandRegistry.winMaxOrRestore.refDesc,
+        do: [{ type: "shell", command: commandRegistry.winMaxOrRestore }],
       },
     ],
   },
-  // Similar issue - url should automatically render the description when calling from urlRegistry.rectAppNextDisplay. It currently needs to call the value in that object, and doesn't read from its refDesc value.
   {
     trigger: { keys: ["tab"], modifiers: ["vmCOCS"] },
     cases: [
@@ -226,7 +223,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: urlRegistry.rectAppNextDisplay.name,
+            url: urlRegistry.rectAppNextDisplay,
             background: true,
           },
         ],
@@ -236,7 +233,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: urlRegistry.rectAppPrevDisplay.name,
+            url: urlRegistry.rectAppPrevDisplay,
             background: true,
           },
         ],
@@ -251,7 +248,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "shell",
-            command: commandRegistry.winLeftOrTop.name,
+            command: commandRegistry.winLeftOrTop,
           },
         ],
       },
@@ -260,7 +257,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: urlRegistry.rectAppPrevDisplay.name,
+            url: urlRegistry.rectAppPrevDisplay,
             background: true,
           },
         ],
@@ -275,7 +272,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "shell",
-            command: commandRegistry.winRightOrBottom.name,
+            command: commandRegistry.winRightOrBottom,
           },
         ],
         // do: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
@@ -285,7 +282,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: urlRegistry.rectAppNextDisplay.name,
+            url: urlRegistry.rectAppNextDisplay,
             background: true,
           },
         ],

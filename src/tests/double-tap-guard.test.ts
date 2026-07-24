@@ -27,7 +27,7 @@ test("generateDoubleTapGuardRule description uses multi-tap trigger", () => {
       description: "Quit app",
     }),
   );
-  assert.equal(rule.description, "[<⌘]+[Q]        →    Quit app (on multi-tap)");
+  assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
 });
 
 test("generateDoubleTapGuardRule auto-derives var name from key and modifier", () => {

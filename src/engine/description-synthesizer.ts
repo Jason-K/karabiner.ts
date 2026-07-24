@@ -50,7 +50,10 @@ export function describeAction(action: ActionSpec): string {
         action.actionDesc,
       );
     case "shell":
-      return withActionDesc(`Run '${action.command}'`, action.actionDesc);
+      return withActionDesc(
+        `Run '${typeof action.command === "string" ? action.command : action.command.refDesc}'`,
+        action.actionDesc,
+      );
     case "python":
       return withActionDesc(`Run python '${action.scriptPath}'`, action.actionDesc);
     case "osascript":

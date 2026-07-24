@@ -9,11 +9,11 @@ import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import type { Binding } from "../engine/binding";
 import {
-  describeAction,
-  describeConditionGroup,
-  describeTrigger,
-  synthesizeManipulatorLabel,
-  synthesizeRuleDescription,
+    describeAction,
+    describeConditionGroup,
+    describeTrigger,
+    synthesizeManipulatorLabel,
+    synthesizeRuleDescription,
 } from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
@@ -33,7 +33,10 @@ test("describeAction: app variants by mode + actionDesc", () => {
 });
 
 test("describeAction: appHistory / folder / raycast / cleanShot / command", () => {
-  assert.equal(describeAction({ type: "appHistory", index: 2 }), "Go back 2 apps");
+  assert.equal(
+    describeAction({ type: "appHistory", index: 2 }),
+    "Go back 2 apps",
+  );
   assert.equal(
     describeAction({ type: "folder", ref: folderRegistry.downloads }),
     "open 'D/Ls'",
@@ -58,6 +61,15 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     describeAction({ type: "command", ref: commandRegistry.fillPassword }),
     "Run command 'Fill password'",
   );
+  // shell accepts a CommandRef too — describes via refDesc (not the raw command).
+  assert.equal(
+    describeAction({ type: "shell", command: commandRegistry.fillPassword }),
+    "Run 'Fill password'",
+  );
+  assert.equal(
+    describeAction({ type: "shell", command: "echo ad-hoc" }),
+    "Run 'echo ad-hoc'",
+  );
 });
 
 test("describeAction: actHere / caseChange / wrapString", () => {
@@ -77,7 +89,7 @@ test("describeAction: key (with/without mods) + actionDesc", () => {
   );
   assert.equal(
     describeAction({ type: "key", key: "h", modifiers: ["left_command"] }),
-    "Emit <⌘ + 'H'",
+    "Emit ⌘ + 'H'",
   );
   assert.equal(
     describeAction({
@@ -85,7 +97,7 @@ test("describeAction: key (with/without mods) + actionDesc", () => {
       key: "h",
       modifiers: ["left_command", "left_option"],
     }),
-    "Emit <⌘<⌥ + 'H'",
+    "Emit ⌘⌥ + 'H'",
   );
   assert.equal(
     describeAction({ type: "key", key: "f2", actionDesc: "edit cell" }),
@@ -173,14 +185,14 @@ test("describeTrigger: single key + modifier chords", () => {
   assert.equal(describeTrigger({ keys: ["home"] }), "[HOME]:");
   assert.equal(
     describeTrigger({ keys: ["h"], modifiers: ["left_command"] }),
-    "[<⌘]+[H]:",
+    "[⌘]+[H]:",
   );
   assert.equal(
     describeTrigger({
       keys: ["m"],
       modifiers: ["left_command", "left_option"],
     }),
-    "[<⌘<⌥]+[M]:",
+    "[⌘⌥]+[M]:",
   );
 });
 
@@ -193,7 +205,7 @@ test("describeTrigger: pointer (button labels)", () => {
   assert.equal(describeTrigger({ pointer: "shift" }), "Shift button:");
   assert.equal(
     describeTrigger({ pointer: "left", modifiers: ["left_command"] }),
-    "[<⌘]+Left click:",
+    "[⌘]+Left click:",
   );
 });
 
@@ -208,7 +220,7 @@ test("synthesizeRuleDescription: simple unconditional remap", () => {
   };
   assert.equal(
     synthesizeRuleDescription(binding),
-    "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit <⌘ + '←'",
+    "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '←'",
   );
 });
 
@@ -249,7 +261,7 @@ test("synthesizeRuleDescription: multi-action case joined with ' then '", () => 
   };
   assert.equal(
     synthesizeRuleDescription(binding),
-    "[<⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/a.scpt' then Run 'elevate'",
+    "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/a.scpt' then Run 'elevate'",
   );
 });
 

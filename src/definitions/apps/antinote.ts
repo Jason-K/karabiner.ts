@@ -19,7 +19,7 @@ export const antinoteTapHoldBindings: Binding[] = [
 
 export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
-  modifiers: ["command"],
+  modifiers: ["left_command"],
   description: "Delete note",
   ifApp: [appRegistry.antinote],
 };

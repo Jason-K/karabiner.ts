@@ -17,7 +17,7 @@ export const wordPrivilegesBinding: Binding = {
         },
         {
           type: "shell",
-          command: `${commandRegistry.getPrivileges.name}`,
+          command: commandRegistry.getPrivileges,
         },
       ],
     },

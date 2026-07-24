@@ -342,7 +342,7 @@ const folder = (name: string, refDesc: string) => ({
 export const folderRegistry = {
   applications: folder("/Applications/", "Applications"),
   cases: folder(
-    `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/Cases/`,
+    `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/0-myCases/`,
     "Cases",
   ),
   chezmoi: folder(`${HOME_DIR}/.local/share/chezmoi/`, "chezmoi"),

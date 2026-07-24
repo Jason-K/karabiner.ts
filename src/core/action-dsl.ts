@@ -74,13 +74,14 @@ export type ActionSpec =
       ref: CommandRef;
       actionDesc?: string;
     }
-  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
+  // Accepts an arbitrary shell string OR a CommandRef. A CommandRef auto-resolves
+  // .name for the event and describes via .refDesc, so registry commands need no
+  // manual `description` (paralleling how `url` accepts `UrlRef | string`).
   | {
       type: "shell";
-      command: string;
+      command: string | CommandRef;
       actionDesc?: string;
     }
-  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
   | {
       type: "python";
       scriptPath: string;
@@ -88,7 +89,6 @@ export type ActionSpec =
       args?: string[];
       actionDesc?: string;
     }
-  // Need to allow assignment via CommandRef versus arbitrary shell command string (while preserving ability to assign arbitrary shell commands to shell actions)
   | {
       type: "osascript";
       scriptPath: string;

@@ -4,12 +4,14 @@ import test from "node:test";
 import { HOME_DIR, PATHS } from "../data";
 import { appRegistry } from "../data/apps";
 import { cleanShotRegistry } from "../data/cleanshot";
+import { commandRegistry } from "../data/commands";
 import { folderRegistry } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import {
   rectangleMaxOrRestoreCommand,
   rectangleOrientationBasedCommand,
 } from "../data/rectangle";
+import { urlRegistry } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import {
   enterKeyHoldMappings,
@@ -89,7 +91,7 @@ test("home-end navigation mappings stay declarative", () => {
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "left_arrow", modifiers: ["command"] }],
+        do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }],
       },
     ],
   });
@@ -102,7 +104,7 @@ test("home-end navigation mappings stay declarative", () => {
           {
             type: "key",
             key: "left_arrow",
-            modifiers: ["command", "shift"],
+            modifiers: ["left_command", "shift"],
           },
         ],
       },
@@ -113,11 +115,11 @@ test("home-end navigation mappings stay declarative", () => {
 test("disabled shortcut mappings stay declarative", () => {
   assert.equal(disabledShortcutBindings.length, 4);
   assert.deepEqual(disabledShortcutBindings[0], {
-    trigger: { keys: ["h"], modifiers: ["command"] },
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
   assert.deepEqual(disabledShortcutBindings[2], {
-    trigger: { keys: ["m"], modifiers: ["command", "option"] },
+    trigger: { keys: ["m"], modifiers: ["left_command", "option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
 });
@@ -168,7 +170,7 @@ test("equals key hold mappings stay declarative", () => {
           {
             type: "key",
             key: "c",
-            modifiers: ["command"],
+            modifiers: ["left_command"],
           },
           {
             type: "shell",
@@ -214,19 +216,19 @@ test("tap-hold mappings keep expected anchor keys", () => {
 test("new vmCOCS rectangle mappings stay declarative", () => {
   const left = findTapHold("left_arrow", ["vmCOCS"]);
   assert.deepEqual(phaseDo(left, "release"), [
-    { type: "shell", command: rectangleOrientationBasedCommand("left-half", "top-half") },
+    { type: "shell", command: commandRegistry.winLeftOrTop },
   ]);
   assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=app-prev-display",
+      url: urlRegistry.rectAppPrevDisplay,
       background: true,
     },
   ]);
 
   const spacebar = findTapHold("spacebar", ["vmCOCS"]);
   assert.deepEqual(phaseDo(spacebar, "release"), [
-    { type: "shell", command: rectangleMaxOrRestoreCommand() },
+    { type: "shell", command: commandRegistry.winMaxOrRestore },
   ]);
 
   const keypad9 = findTapHold("keypad_9", ["vmCOCS"]);
@@ -244,7 +246,7 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
   // vmCOCS+w no longer exists.
   assert.throws(() => findTapHold("w", ["vmCOCS"]), /not found/);
 
-  const focusModifiers = ["command", "control", "option"];
+  const focusModifiers = ["left_command", "control", "option"];
   assert.deepEqual(phaseDo(findTapHold("q", ["vmCOCS"]), "release"), [
     { type: "key", key: "left_arrow", modifiers: focusModifiers, options: { repeat: false } },
   ]);

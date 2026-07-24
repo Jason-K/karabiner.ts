@@ -4,7 +4,7 @@ import { defineBindings, type Binding } from "../../engine";
 
 export const skimRemapBindings: Binding[] = [
   {
-    trigger: { keys: ["h"], modifiers: ["command"] },
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
     conditions: [{ app: appRegistry.skim }],
     cases: [
       {
@@ -14,7 +14,7 @@ export const skimRemapBindings: Binding[] = [
     ],
   },
   {
-    trigger: { keys: ["u"], modifiers: ["command"] },
+    trigger: { keys: ["u"], modifiers: ["left_command"] },
     conditions: [{ app: appRegistry.skim }],
     cases: [
       {

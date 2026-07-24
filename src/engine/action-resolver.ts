@@ -65,9 +65,11 @@ function resolveShellCommand(action: ActionSpec): string | null {
         action.delaySeconds ?? 0.2,
         textProcessorCommand(action.operation),
       );
-    // need to allow the user to assign a command from commandRegistry to a shell action (while preserving ability to assign arbitrary shell commands to shell actions)
+    // Accepts an arbitrary shell string or a CommandRef (resolve its .name).
     case "shell":
-      return action.command;
+      return typeof action.command === "string"
+        ? action.command
+        : resolveName(action.command);
     case "python":
       return pythonScriptCommand(action.scriptPath, {
         venv: action.venv,
