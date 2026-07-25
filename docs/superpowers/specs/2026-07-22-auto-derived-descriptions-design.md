@@ -27,7 +27,7 @@ Therefore: a binding produces N physical manipulators (one per condition-group),
 
 ### 4.1 `RefSpec` — labeled registry entries
 
-Replaces the label-less string registries (`appRegistry`, `folderRegistry`, `raycastRegistry`, `cleanShotRegistry`, `commandRegistry`). Each entry becomes an object:
+Replaces the label-less string registries (`Apps`, `Folders`, `raycastRegistry`, `cleanShotRegistry`, `Commands`). Each entry becomes an object:
 
 ```ts
 export type RefSpecType =
@@ -57,9 +57,9 @@ export type UrlRef = RefSpec; // type: "url"
 ```
 
 - `name: string | string[]` supports apps with legacy bundles (e.g. a unified antinote entry holding both bundle ids), replacing today's two-entry pattern.
-- `commandRegistry` entries become `RefSpec` (`type: "command"`), enabling a new first-class `command` action variant (§5) so shell commands get `refDesc` like "Evaluate selection".
-- `urlRegistry` (currently empty) becomes `RefSpec` (`type: "url"`) when populated.
-- **`folderOpener` pseudo-app:** `appRegistry.folderOpener` currently holds the sentinel `"__folder_opener__"` resolved dynamically via `getFolderOpenerBundleId()`. Under `RefSpec`: `name: getFolderOpenerBundleId()` (computed at module load), `refDesc: "Folder opener"`.
+- `Commands` entries become `RefSpec` (`type: "command"`), enabling a new first-class `command` action variant (§5) so shell commands get `refDesc` like "Evaluate selection".
+- `Urls` (currently empty) becomes `RefSpec` (`type: "url"`) when populated.
+- **`folderOpener` pseudo-app:** `Apps.folderOpener` currently holds the sentinel `"__folder_opener__"` resolved dynamically via `getFolderOpenerBundleId()`. Under `RefSpec`: `name: getFolderOpenerBundleId()` (computed at module load), `refDesc: "Folder opener"`.
 
 ### 4.2 `VarSpec` — labeled variables
 
@@ -90,7 +90,7 @@ Migrates `DEVICE_IDENTIFIERS` (appleNumericKeypad, logitechG502X) — each gains
 
 Two structural changes plus description-template semantics.
 
-**(a) `ref` becomes a direct object reference.** Today `ref: "excel"` (a string key, resolved via `appRegistry[ref]`); tomorrow `ref: appRegistry.excel` (the `RefSpec` itself). `resolveActionToEvents` reads `action.ref.name`. Type-safe; no string-key indirection; the synthesizer reads `action.ref.refDesc` directly.
+**(a) `ref` becomes a direct object reference.** Today `ref: "excel"` (a string key, resolved via `Apps[ref]`); tomorrow `ref: Apps.excel` (the `RefSpec` itself). `resolveActionToEvents` reads `action.ref.name`. Type-safe; no string-key indirection; the synthesizer reads `action.ref.refDesc` directly.
 
 **(b) `actionDesc?` on the variants that need a nuance** (`app`, `folder`, `raycast`, `url`, `shell`, `python`, `osascript`, `key`). Appended to the derived description as ` | <actionDesc>`.
 
@@ -100,7 +100,7 @@ Two structural changes plus description-template semantics.
 | { type: "command"; ref: CommandRef; actionDesc?: string }
 ```
 
-Today's `{ type: "shell"; command: commandRegistry.fillPassword }` pattern becomes `{ type: "command"; ref: commandRegistry.fillPassword }` — describable via `refDesc`. The `shell` variant remains for ad-hoc commands.
+Today's `{ type: "shell"; command: Commands.fillPassword }` pattern becomes `{ type: "command"; ref: Commands.fillPassword }` — describable via `refDesc`. The `shell` variant remains for ad-hoc commands.
 
 **Description templates** (what each action contributes to the description):
 
@@ -116,7 +116,7 @@ Today's `{ type: "shell"; command: commandRegistry.fillPassword }` pattern becom
 | `caseChange`         | `Change case to <operation>`                                             |
 | `wrapString`         | `Wrap selection in <operation>`                                          |
 | `key`                | `Emit '<key>'<+mods>` `[ \| actionDesc]` (mods rendered as symbols)      |
-| `url`                | `Open '<url>'` `[ \| actionDesc]` (or `<refDesc>` if from `urlRegistry`) |
+| `url`                | `Open '<url>'` `[ \| actionDesc]` (or `<refDesc>` if from `Urls`) |
 | `shell`              | `Run '<command>'` `[ \| actionDesc]`                                     |
 | `python`             | `Run python '<scriptPath>'` `[ \| actionDesc]`                           |
 | `osascript`          | `Run osascript '<scriptPath>'` `[ \| actionDesc]`                        |
@@ -201,7 +201,7 @@ Rules:
 
 | File                    | Current                                                          | Becomes                                                                                                                                       |
 | ----------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data/apps.ts`          | `appRegistry: Record<string, string>`                            | `Record<string, AppRef>` (each `{type:"app", name, refDesc}`); `folderOpener` name computed; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS` → `AppRef[]` |
+| `data/apps.ts`          | `Apps: Record<string, string>`                            | `Record<string, AppRef>` (each `{type:"app", name, refDesc}`); `folderOpener` name computed; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS` → `AppRef[]` |
 | `data/folders.ts`       | `Record<string, string>`                                         | `Record<string, FolderRef>`                                                                                                                   |
 | `data/raycast.ts`       | `Record<string, string>`                                         | `Record<string, RaycastRef>`                                                                                                                  |
 | `data/cleanshot.ts`     | `Record<string, string>`                                         | `Record<string, CleanShotRef>`                                                                                                                |
@@ -210,7 +210,7 @@ Rules:
 | `data/accessibility.ts` | `ACCESSIBILITY_VARIABLES: Record<string,string>`                 | `Record<string, VarSpec>`; `ACCESSIBILITY_VALUES` unchanged                                                                                   |
 | `data/devices.ts`       | `DEVICE_IDENTIFIERS: Record<string, {product_id,vendor_id,...}>` | `Record<string, DeviceSpec>` (add `deviceDesc`)                                                                                               |
 
-Every consumer updates: `ref: "excel"` → `ref: appRegistry.excel`; `app: appRegistry.skim` (already object after migration) typed as `AppRef`; `var: ACCESSIBILITY_VARIABLES.x` → `var: accessibilityVars.x` (`VarSpec`); etc.
+Every consumer updates: `ref: "excel"` → `ref: Apps.excel`; `app: Apps.skim` (already object after migration) typed as `AppRef`; `var: ACCESSIBILITY_VARIABLES.x` → `var: accessibilityVars.x` (`VarSpec`); etc.
 
 ## 11. Phasing
 

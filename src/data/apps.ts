@@ -4,7 +4,7 @@ const app = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const appRegistry = {
+export const Apps = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
@@ -37,6 +37,7 @@ export const appRegistry = {
   skim: app("net.sourceforge.skim-app.skim", "Skim"),
   spotify: app("com.spotify.client", "Spotify"),
   systemSettings: app("com.apple.systempreferences", "System Settings"),
+  taphouse: app("com.multimodalsolutions.taphouse", "Taphouse"),
   teams: app("com.microsoft.teams2", "Microsoft Teams"),
   todoist: app("com.todoist.mac.Todoist", "Todoist"),
   word: app("com.microsoft.Word", "Word"),
@@ -46,8 +47,9 @@ export const appRegistry = {
 export type AppRef = import("./refs").AppRef;
 
 export const QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[] = [
-  appRegistry.securityAgent,
-  appRegistry.settings,
-  appRegistry.settingsPrivacySecurityExtension,
-  appRegistry.brewUpdater,
+  Apps.securityAgent,
+  Apps.settings,
+  Apps.settingsPrivacySecurityExtension,
+  Apps.brewUpdater,
+  Apps.taphouse
 ];

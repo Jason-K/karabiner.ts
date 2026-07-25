@@ -6,7 +6,7 @@ const folder = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const folderRegistry = {
+export const Folders = {
   applications: folder("/Applications/", "Apps (global)"),
   cases: folder(
     `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/0-myCases/`,

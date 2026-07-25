@@ -1,10 +1,8 @@
 import type { ToEvent } from "karabiner.ts";
 import type { AppRef } from "../data/apps";
-import type { CleanShotRef } from "../data/cleanshot";
 import type { CommandRef } from "../data/commands";
 import type { FolderRef } from "../data/folders";
 import type { ModComboAlias, ModKey } from "../data/key-aliases";
-import type { RaycastRef } from "../data/raycast";
 import type { VarSpec } from "../data/refs";
 import type { UrlRef } from "../data/urls";
 
@@ -25,15 +23,6 @@ export type ActionSpec =
       type: "folder";
       ref: FolderRef;
       actionDesc?: string;
-    }
-  | {
-      type: "raycast";
-      ref: RaycastRef;
-      actionDesc?: string;
-    }
-  | {
-      type: "cleanShot";
-      ref: CleanShotRef;
     }
   | {
       type: "actHere";

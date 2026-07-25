@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Migrate every `data/` registry to labeled `RefSpec`/`VarSpec`/`DeviceSpec` objects and switch `ActionSpec`/`Condition` to direct object refs (`ref: appRegistry.excel`, not `ref: "excel"`), keeping all Karabiner output byte-identical.
+**Goal:** Migrate every `data/` registry to labeled `RefSpec`/`VarSpec`/`DeviceSpec` objects and switch `ActionSpec`/`Condition` to direct object refs (`ref: Apps.excel`, not `ref: "excel"`), keeping all Karabiner output byte-identical.
 
 **Architecture:** Registries gain `{type, name, refDesc}` entries; resolvers read `.name` instead of doing a string-key lookup. This is pure infrastructure — the `refDesc` labels are unused in Phase 1 (they feed the Phase 2 description synthesizer). Because output is unchanged, the gate is byte-identity, not new tests. Phases 2 (synthesizer) and 3 (tap-hold) are planned separately after this lands.
 
@@ -24,7 +24,7 @@
 ## File Structure
 
 - **Create `src/data/refs.ts`** — the `RefSpec`/`VarSpec`/`DeviceSpec` types + category aliases (`AppRef`, `FolderRef`, `RaycastRef`, `CleanShotRef`, `CommandRef`, `UrlRef`). Type-only.
-- **Modify `src/data/apps.ts`** — `appRegistry: Record<string, AppRef>`; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[]`.
+- **Modify `src/data/apps.ts`** — `Apps: Record<string, AppRef>`; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[]`.
 - **Modify `src/data/folders.ts`** — `Record<string, FolderRef>`.
 - **Modify `src/data/raycast.ts`** — `Record<string, RaycastRef>`.
 - **Modify `src/data/cleanshot.ts`** — `Record<string, CleanShotRef>`.
@@ -36,7 +36,7 @@
 - **Modify `src/engine/action-resolver.ts`** — resolve via `.name`.
 - **Modify `src/engine/binding.ts`** — `Condition` app/var/device accept specs; `resolveCondition` reads `.name`.
 - **Modify `src/core/mouse.ts` + `src/engine/mouse-rules.ts`** — mouse `when.app` accepts `AppRef`; resolve via `.name`.
-- **Modify every definition** — sweep `ref: "x"` → `ref: xRegistry.x`; `var: ACCESSIBILITY_VARIABLES.x` stays (now a `VarSpec`); `{type:"shell", command: commandRegistry.x}` → `{type:"command", ref: commandRegistry.x}`.
+- **Modify every definition** — sweep `ref: "x"` → `ref: xRegistry.x`; `var: ACCESSIBILITY_VARIABLES.x` stays (now a `VarSpec`); `{type:"shell", command: Commands.x}` → `{type:"command", ref: Commands.x}`.
 
 ---
 
@@ -141,7 +141,7 @@ This task proves the full pattern — registry → `ActionSpec`/`Condition` type
 
 **Interfaces:**
 
-- Produces: `appRegistry: Record<string, AppRef>`; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[]`; `ActionSpec.app.ref: AppRef`; `Condition` app arm `app: AppRef | AppRef[]`; mouse `when.app: AppRef`.
+- Produces: `Apps: Record<string, AppRef>`; `QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[]`; `ActionSpec.app.ref: AppRef`; `Condition` app arm `app: AppRef | AppRef[]`; mouse `when.app: AppRef`.
 - Consumes: `RefSpec`/`AppRef` from Task 1.
 
 - [ ] **Step 1: Rewrite `src/data/apps.ts`**
@@ -155,7 +155,7 @@ const app = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const appRegistry = {
+export const Apps = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "PIN entry"),
@@ -193,10 +193,10 @@ export const appRegistry = {
 export type AppRef = import("./refs").AppRef;
 
 export const QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[] = [
-  appRegistry.securityAgent,
-  appRegistry.settings,
-  appRegistry.settingsPrivacySecurityExtension,
-  appRegistry.brewUpdater,
+  Apps.securityAgent,
+  Apps.settings,
+  Apps.settingsPrivacySecurityExtension,
+  Apps.brewUpdater,
 ];
 ```
 
@@ -226,7 +226,7 @@ function resolveAppBundleId(ref: AppRef): string {
 }
 ```
 
-Add `AppRef` to the imports from `../data` (or `../data/apps`). Remove the now-unused `appRegistry` import if nothing else in the file uses it (it doesn't after this change) — but keep `folderRegistry` (still used by `resolveShellCommand` until Task 3).
+Add `AppRef` to the imports from `../data` (or `../data/apps`). Remove the now-unused `Apps` import if nothing else in the file uses it (it doesn't after this change) — but keep `Folders` (still used by `resolveShellCommand` until Task 3).
 
 - [ ] **Step 4: Update `Condition` + `resolveCondition` in `src/engine/binding.ts`**
 
@@ -281,19 +281,19 @@ function resolveAppName(ref: AppRef): string[] {
 
 - [ ] **Step 6: Sweep app call sites**
 
-In every definition, replace string-key refs with object refs. The current `ref: "<key>"` → `ref: appRegistry.<key>`; the `app: appRegistry.<key>` condition sites already reference the (now-object) value, so they need no text change — only the type now fits. Specifically change these `ref:` literals:
+In every definition, replace string-key refs with object refs. The current `ref: "<key>"` → `ref: Apps.<key>`; the `app: Apps.<key>` condition sites already reference the (now-object) value, so they need no text change — only the type now fits. Specifically change these `ref:` literals:
 
-- `src/definitions/escape.ts:30` — `ref: "activityMonitor"` → `ref: appRegistry.activityMonitor`
-- `src/definitions/escape.ts:31` — `ref: "processSpy"` → `ref: appRegistry.processSpy`
-- `src/definitions/hyper.ts:32` — `ref: "systemSettings"` → `ref: appRegistry.systemSettings`
-- `src/definitions/hyper.ts:42` — `ref: "activityMonitor"` → `ref: appRegistry.activityMonitor`
-- `src/definitions/single-key.ts:117` — `ref: "claude"` → `ref: appRegistry.claude`
-- `src/definitions/single-key.ts:127` — `ref: "kitty"` → `ref: appRegistry.kitty`
-- `src/definitions/single-key.ts:158` — `ref: "qspace"` → `ref: appRegistry.qspace`
-- `src/definitions/single-key.ts:215` — `ref: "ringCentral"` → `ref: appRegistry.ringCentral`
+- `src/definitions/escape.ts:30` — `ref: "activityMonitor"` → `ref: Apps.activityMonitor`
+- `src/definitions/escape.ts:31` — `ref: "processSpy"` → `ref: Apps.processSpy`
+- `src/definitions/hyper.ts:32` — `ref: "systemSettings"` → `ref: Apps.systemSettings`
+- `src/definitions/hyper.ts:42` — `ref: "activityMonitor"` → `ref: Apps.activityMonitor`
+- `src/definitions/single-key.ts:117` — `ref: "claude"` → `ref: Apps.claude`
+- `src/definitions/single-key.ts:127` — `ref: "kitty"` → `ref: Apps.kitty`
+- `src/definitions/single-key.ts:158` — `ref: "qspace"` → `ref: Apps.qspace`
+- `src/definitions/single-key.ts:215` — `ref: "ringCentral"` → `ref: Apps.ringCentral`
 - `src/definitions/right-option.ts:31` — `ref: "spotifySearch"` is a **raycast** ref — leave it for Task 4 (it will error now; that's expected until Task 4). _(If you prefer zero intermediate errors, do Task 4's raycast change in the same step.)_
 
-Ensure each edited file imports `appRegistry` from `../data` (most already do via existing imports; verify).
+Ensure each edited file imports `Apps` from `../data` (most already do via existing imports; verify).
 
 - [ ] **Step 7: Typecheck**
 
@@ -326,7 +326,7 @@ git -c commit.gpgsign=false commit -m "refactor(data): migrate apps registry to 
 
 **Interfaces:**
 
-- Produces: `folderRegistry: Record<string, FolderRef>`; `ActionSpec.folder.ref: FolderRef`.
+- Produces: `Folders: Record<string, FolderRef>`; `ActionSpec.folder.ref: FolderRef`.
 
 - [ ] **Step 1: Rewrite `src/data/folders.ts`**
 
@@ -339,7 +339,7 @@ const folder = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const folderRegistry = {
+export const Folders = {
   applications: folder("/Applications/", "Applications"),
   cases: folder(
     `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP/Documents/0-myCases/`,
@@ -378,7 +378,7 @@ The `folder` variant `ref: FolderRef` — now an object (the import resolves via
 
 - [ ] **Step 3: Update `resolveShellCommand`'s folder branch in `src/engine/action-resolver.ts`**
 
-Change `return getOpenFolderCommand(folderRegistry[action.ref]);` to:
+Change `return getOpenFolderCommand(Folders[action.ref]);` to:
 
 ```ts
 return getOpenFolderCommand(
@@ -386,7 +386,7 @@ return getOpenFolderCommand(
 );
 ```
 
-(`folderRegistry` import may now be unused — remove if so.)
+(`Folders` import may now be unused — remove if so.)
 
 - [ ] **Step 4: Sweep folder call sites**
 
@@ -538,12 +538,12 @@ git -c commit.gpgsign=false commit -m "refactor(data): migrate raycast + cleansh
 
 **Interfaces:**
 
-- Produces: `commandRegistry: Record<string, CommandRef>`; `ActionSpec` gains `{ type: "command"; ref: CommandRef; actionDesc?: string }`.
+- Produces: `Commands: Record<string, CommandRef>`; `ActionSpec` gains `{ type: "command"; ref: CommandRef; actionDesc?: string }`.
 
 - [ ] **Step 1: Rewrite `src/data/commands.ts`**
 
 ```ts
-import { PATHS } from "./paths";
+import { Paths } from "./paths";
 
 const cmdEntry = (name: string, refDesc: string) => ({
   type: "command" as const,
@@ -551,21 +551,21 @@ const cmdEntry = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const commandRegistry = {
+export const Commands = {
   fillPassword: cmdEntry(
-    `${PATHS.privCLI} -r && sleep 0.1 && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control>"`,
+    `${Paths.privCLI} -r && sleep 0.1 && ${Paths.privCLI} -a && sleep 0.1 && ${Paths.sendkeys} --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control>"`,
     "Fill password",
   ),
   fillUsernameAndPassword: cmdEntry(
-    `${PATHS.privCLI} -r && ${PATHS.privCLI} -a && sleep 0.1 && ${PATHS.sendkeys} --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
+    `${Paths.privCLI} -r && ${Paths.privCLI} -a && sleep 0.1 && ${Paths.sendkeys} --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
     "Fill username and password",
   ),
 } as const;
 
 export type CommandRef = import("./refs").CommandRef;
 
-export const FILL_PW_SENDKEYS = commandRegistry.fillPassword.name;
-export const FILL_UN_PW_SENDKEYS = commandRegistry.fillUsernameAndPassword.name;
+export const FILL_PW_SENDKEYS = Commands.fillPassword.name;
+export const FILL_UN_PW_SENDKEYS = Commands.fillUsernameAndPassword.name;
 ```
 
 > `FILL_PW_SENDKEYS`/`FILL_UN_PW_SENDKEYS` keep their existing string values (now sourced from the registry entry's `.name`).
@@ -597,12 +597,12 @@ In `resolveActionToEvents`, add a case (the `default` branch's `resolveShellComm
 
 - [ ] **Step 4: Sweep command call sites in `src/definitions/system.ts`**
 
-Replace the two shell+commandRegistry actions:
+Replace the two shell+Commands actions:
 
-- `{ type: "shell", command: commandRegistry.fillPassword }` → `{ type: "command", ref: commandRegistry.fillPassword }`
-- `{ type: "shell", command: commandRegistry.fillUsernameAndPassword }` → `{ type: "command", ref: commandRegistry.fillUsernameAndPassword }`
+- `{ type: "shell", command: Commands.fillPassword }` → `{ type: "command", ref: Commands.fillPassword }`
+- `{ type: "shell", command: Commands.fillUsernameAndPassword }` → `{ type: "command", ref: Commands.fillUsernameAndPassword }`
 
-Verify no other `commandRegistry` string usage remains: `rg -n "commandRegistry" src/definitions`.
+Verify no other `Commands` string usage remains: `rg -n "Commands" src/definitions`.
 
 - [ ] **Step 5: Verify byte-identical + tests + commit**
 

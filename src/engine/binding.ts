@@ -41,10 +41,14 @@ export type SimOrder = {
   detectUninterrupted?: boolean;
 };
 
+export type TriggerModifiers =
+  | string[]
+  | { mandatory?: string[]; optional?: string[] };
+
 /** What was pressed. 1 key = single; 2+ keys = simultaneous chord. */
 export type Trigger =
-  | { keys: string[]; modifiers?: string[]; order?: SimOrder }
-  | { pointer: string; modifiers?: string[] };
+  | { keys: string[]; modifiers?: TriggerModifiers; order?: SimOrder }
+  | { pointer: string; modifiers?: TriggerModifiers };
 
 /** One (state + timing) -> action pairing. */
 export type Case = {
@@ -123,11 +127,47 @@ function resolveSimKarOptions(b: Binding): SimultaneousOptions | undefined {
   };
 }
 
+export function resolveModifiers(m?: TriggerModifiers): { mandatory: string[]; optional: string[] } {
+  if (!m) {
+    return { mandatory: [], optional: [] };
+  }
+  const resolveList = (list: string[]) => {
+    const expanded: string[] = [];
+    const seen = new Set<string>();
+    for (const mod of list) {
+      for (const resolved of resolveModComboAlias(mod) ?? [mod]) {
+        if (!seen.has(resolved)) {
+          seen.add(resolved);
+          expanded.push(resolved);
+        }
+      }
+    }
+    return expanded;
+  };
+
+  if (Array.isArray(m)) {
+    return {
+      mandatory: resolveList(m),
+      optional: [],
+    };
+  }
+  return {
+    mandatory: resolveList(m.mandatory ?? []),
+    optional: resolveList(m.optional ?? []),
+  };
+}
+
 export function triggerToFrom(trigger: Trigger): FromEvent {
+  const { mandatory, optional } = resolveModifiers(trigger.modifiers);
   if ("pointer" in trigger) {
     const { button } = resolveButton(trigger.pointer);
     const from: Record<string, unknown> = { pointing_button: button };
-    if (trigger.modifiers?.length) from.modifiers = { mandatory: trigger.modifiers };
+    if (mandatory.length || optional.length) {
+      from.modifiers = {
+        ...(mandatory.length ? { mandatory } : {}),
+        ...(optional.length ? { optional } : {}),
+      };
+    }
     return from as FromEvent;
   }
   if (trigger.keys.length > 1) {
@@ -138,7 +178,12 @@ export function triggerToFrom(trigger: Trigger): FromEvent {
     } as unknown as FromEvent;
   }
   const from: Record<string, unknown> = { key_code: trigger.keys[0] };
-  if (trigger.modifiers?.length) from.modifiers = { mandatory: trigger.modifiers };
+  if (mandatory.length || optional.length) {
+    from.modifiers = {
+      ...(mandatory.length ? { mandatory } : {}),
+      ...(optional.length ? { optional } : {}),
+    };
+  }
   return from as FromEvent;
 }
 
@@ -430,9 +475,9 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
 function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const keys = (b.trigger as { keys: string[] }).keys;
   const key = keys[0]!;
-  const mods = (b.trigger as { modifiers?: string[] }).modifiers ?? [];
+  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   const defaultAlone: ActionSpec[] = [
-    { type: "key", key, modifiers: mods as ActionKeyModifier[], options: { halt: true } },
+    { type: "key", key, modifiers: mandatory as ActionKeyModifier[], options: { halt: true } },
   ];
   // `resolvedAlone = config.alone ?? defaultAlone`. An explicit phase with empty
   // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing" and
@@ -448,11 +493,11 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();
   // Inject mandatory from-modifiers exactly like tap-hold-rules (vm alias -> resolved mods)
-  if (mods.length) {
-    const mandatory = mods.flatMap((m) => resolveModComboAlias(m) ?? [m]);
+  if (mandatory.length || optional.length) {
     manipulators.forEach((m: any) => {
       m.from.modifiers = m.from.modifiers || {};
-      m.from.modifiers.mandatory = mandatory;
+      if (mandatory.length) m.from.modifiers.mandatory = mandatory;
+      if (optional.length) m.from.modifiers.optional = optional;
     });
   }
   return manipulators;
@@ -465,11 +510,16 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
  * alone events for the cancel fallback. `whileHoldVar` drives the chord-modifier
  * signaling variable (set on key-down, cleared on key-up). */
 function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
-  const pointer = b.trigger as { pointer: string; modifiers?: string[] };
+  const pointer = b.trigger as { pointer: string; modifiers?: TriggerModifiers };
   const { button } = resolveButton(pointer.pointer);
   const from: Record<string, unknown> = { pointing_button: button };
-  const mods = pointer.modifiers ?? [];
-  if (mods.length) from.modifiers = { mandatory: mods };
+  const { mandatory, optional } = resolveModifiers(pointer.modifiers);
+  if (mandatory.length || optional.length) {
+    from.modifiers = {
+      ...(mandatory.length ? { mandatory } : {}),
+      ...(optional.length ? { optional } : {}),
+    };
+  }
   const alone = g.hasRelease ? g.releaseDo : undefined;
   const hold = g.hasHold ? g.holdDo : undefined;
   return tapHoldFrom({
@@ -492,11 +542,15 @@ function buildRemap(
   if (isPointer) {
     // Pointer manipulators are emitted as raw objects to match the legacy
     // pointer-remap-rules shape exactly: {type, from, to?, description?, conditions?}.
-    const pointer = b.trigger as { pointer: string; modifiers?: string[] };
+    const pointer = b.trigger as { pointer: string; modifiers?: TriggerModifiers };
     const { button } = resolveButton(pointer.pointer);
     const from: Record<string, unknown> = { pointing_button: button };
-    if (pointer.modifiers?.length) {
-      from.modifiers = { mandatory: pointer.modifiers };
+    const { mandatory, optional } = resolveModifiers(pointer.modifiers);
+    if (mandatory.length || optional.length) {
+      from.modifiers = {
+        ...(mandatory.length ? { mandatory } : {}),
+        ...(optional.length ? { optional } : {}),
+      };
     }
     const m: Record<string, unknown> = { type: "basic", from };
     // Omit `to` when empty — matches map().build(), which drops an empty `to`.

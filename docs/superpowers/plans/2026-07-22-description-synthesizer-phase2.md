@@ -167,29 +167,29 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { appRegistry } from "../data/apps";
-import { folderRegistry } from "../data/folders";
+import { Apps } from "../data/apps";
+import { Folders } from "../data/folders";
 import { raycastRegistry } from "../data/raycast";
 import { cleanShotRegistry } from "../data/cleanshot";
-import { commandRegistry } from "../data/commands";
+import { Commands } from "../data/commands";
 import { describeAction } from "../engine/description-synthesizer";
 
 const app = (refDesc: string) => ({ type: "app" as const, name: "x", refDesc });
 
 test("describeAction: app variants by mode + actionDesc", () => {
-  assert.equal(describeAction({ type: "app", ref: appRegistry.excel }), "open Microsoft Excel");
-  assert.equal(describeAction({ type: "app", ref: appRegistry.excel, mode: "focus" }), "focus Microsoft Excel");
-  assert.equal(describeAction({ type: "app", ref: appRegistry.excel, mode: "shell" }), "open-shell Microsoft Excel");
-  assert.equal(describeAction({ type: "app", ref: appRegistry.excel, actionDesc: "force" }), "open Microsoft Excel | force");
+  assert.equal(describeAction({ type: "app", ref: Apps.excel }), "open Microsoft Excel");
+  assert.equal(describeAction({ type: "app", ref: Apps.excel, mode: "focus" }), "focus Microsoft Excel");
+  assert.equal(describeAction({ type: "app", ref: Apps.excel, mode: "shell" }), "open-shell Microsoft Excel");
+  assert.equal(describeAction({ type: "app", ref: Apps.excel, actionDesc: "force" }), "open Microsoft Excel | force");
 });
 
 test("describeAction: appHistory / folder / raycast / cleanShot / command", () => {
   assert.equal(describeAction({ type: "appHistory", index: 2 }), "Go back 2 apps");
-  assert.equal(describeAction({ type: "folder", ref: folderRegistry.downloads }), "open 'Downloads'");
-  assert.equal(describeAction({ type: "folder", ref: folderRegistry.downloads, actionDesc: "new tab" }), "open 'Downloads' | new tab");
+  assert.equal(describeAction({ type: "folder", ref: Folders.downloads }), "open 'Downloads'");
+  assert.equal(describeAction({ type: "folder", ref: Folders.downloads, actionDesc: "new tab" }), "open 'Downloads' | new tab");
   assert.equal(describeAction({ type: "raycast", ref: raycastRegistry.clipboardHistory }), "Call 'Clipboard history'");
   assert.equal(describeAction({ type: "cleanShot", ref: cleanShotRegistry.captureArea }), "Capture area using CSX");
-  assert.equal(describeAction({ type: "command", ref: commandRegistry.fillPassword }), "Run command 'Fill password'");
+  assert.equal(describeAction({ type: "command", ref: Commands.fillPassword }), "Run command 'Fill password'");
 });
 
 test("describeAction: actHere / caseChange / wrapString", () => {

@@ -307,7 +307,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
 +  DEFAULT_PROFILE_NAME,
 +  DEVICE_IDENTIFIERS,
-+  PATHS,
++  Paths,
 +  PREFERRED_PROFILE_NAME,
 +} from "./data";
 +import {
@@ -501,7 +501,7 @@ Upstream: karabiner.ts-upstream; Local: karabiner.ts
 +  }
 +
 +  try {
-+    const raw = readFileSync(PATHS.karabinerConfig, "utf8");
++    const raw = readFileSync(Paths.karabinerConfig, "utf8");
 +    const parsed = JSON.parse(raw) as {
 +      profiles?: Array<{ name?: string; selected?: boolean }>;
 +    };

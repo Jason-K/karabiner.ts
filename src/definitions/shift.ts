@@ -1,4 +1,4 @@
-import { urlRegistry } from "../data";
+import { Urls } from "../data";
 import { TIMINGS } from "../data/timings";
 import { defineBindings, type Binding } from "../engine";
 
@@ -20,7 +20,7 @@ export const shiftBindings: Binding[] = [
       {
         tapCount: 2,
         phase: "release",
-        do: [{ type: "url", url: urlRegistry.rayClipboard }],
+        do: [{ type: "url", url: Urls.rayClipboard }],
       },
     ],
   },
@@ -37,7 +37,7 @@ export const shiftBindings: Binding[] = [
       {
         tapCount: 2,
         phase: "release",
-        do: [{ type: "url", url: urlRegistry.rayClipboard }],
+        do: [{ type: "url", url: Urls.rayClipboard }],
       },
     ],
   },

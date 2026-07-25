@@ -1,5 +1,5 @@
 import { killAppCommand } from "../core/scripts";
-import { TIMINGS, appRegistry } from "../data";
+import { TIMINGS, Apps } from "../data";
 import { defineBindings, type Binding } from "../engine";
 
 export const escapeTapTapHoldBinding: Binding = {
@@ -25,9 +25,9 @@ export const ctrlEscapeMonitorBinding: Binding = {
   cases: [
     {
       phase: "release",
-      do: [{ type: "app", ref: appRegistry.activityMonitor }],
+      do: [{ type: "app", ref: Apps.activityMonitor }],
     },
-    { phase: "hold", do: [{ type: "app", ref: appRegistry.processSpy }] },
+    { phase: "hold", do: [{ type: "app", ref: Apps.processSpy }] },
   ],
 };
 

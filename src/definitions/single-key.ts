@@ -1,7 +1,4 @@
-import { recentDownloadsCommand } from "../core/scripts";
-import { appRegistry, raycastRegistry, urlRegistry } from "../data";
-import { cleanShotRegistry } from "../data/cleanshot";
-import { rectangleActionUrl } from "../data/rectangle";
+import { Apps, Paths, Urls } from "../data";
 import type { Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
@@ -58,7 +55,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["8"] },
     cases: [
-      { phase: "hold", do: [{ type: "app", ref: appRegistry.ringCentral, mode: "shell" }] },
+      { phase: "hold", do: [{ type: "app", ref: Apps.ringCentral, mode: "shell" }] },
     ],
   },
   {
@@ -94,21 +91,21 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["g"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: appRegistry.claude, mode: "shell" }] }],
+    cases: [{ phase: "hold", do: [{ type: "app", ref: Apps.claude, mode: "shell" }] }],
   },
   {
     trigger: { keys: ["h"] },
     cases: [
-      { phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.hereToThereActiveToTarget }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.rayHere2There }] },
     ],
   },
   {
     trigger: { keys: ["j"] },
-    cases: [{ phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.recentDownloads }] }],
+    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.rayRecentDownloads }] }],
   },
   {
     trigger: { keys: ["k"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: appRegistry.kitty }] }],
+    cases: [{ phase: "hold", do: [{ type: "app", ref: Apps.kitty }] }],
   },
   {
     trigger: { keys: ["n"] },
@@ -128,7 +125,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["o"] },
     cases: [
-      { phase: "hold", do: [{ type: "cleanShot", ref: cleanShotRegistry.captureTextNoLinebreaks }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.csxCaptureTextNoLinebreaks }] },
     ],
   },
   {
@@ -142,19 +139,19 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["q"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: appRegistry.qspace, mode: "focus" }] }],
+    cases: [{ phase: "hold", do: [{ type: "app", ref: Apps.qspace, mode: "focus" }] }],
   },
   {
     trigger: { keys: ["r"] },
-    cases: [{ phase: "hold", do: [{ type: "shell", command: recentDownloadsCommand() }] }],
+    cases: [{ phase: "hold", do: [{ type: "shell", command: Paths.recentDownloadsScript }] }],
   },
   {
     trigger: { keys: ["s"] },
-    cases: [{ phase: "hold", do: [{ type: "cleanShot", ref: cleanShotRegistry.captureArea }] }],
+    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.csxCaptureArea }] }],
   },
   {
     trigger: { keys: ["s"], modifiers: ["shift"] },
-    cases: [{ phase: "hold", do: [{ type: "cleanShot", ref: cleanShotRegistry.captureWindow }] }],
+    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.csxCaptureWindow }] }],
   },
   {
     trigger: { keys: ["t"] },
@@ -167,7 +164,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["v"] },
-    cases: [{ phase: "hold", do: [{ type: "url", url: urlRegistry.rayClipboard }] }],
+    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.rayClipboard }] }],
   },
   {
     trigger: { keys: ["x"] },
@@ -180,7 +177,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["z"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: urlRegistry.rayZoxideSearchDirs }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.rayZoxideSearchDirs }] },
     ],
   },
   {
@@ -188,7 +185,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectWinsUnstashAll, background: true }],
+        do: [{ type: "url", url: Urls.rectWinsUnstashAll, background: true }],
       },
     ],
   },
@@ -197,7 +194,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectWinStashDown, background: true }],
+        do: [{ type: "url", url: Urls.rectWinStashDown, background: true }],
       },
     ],
   },
@@ -206,14 +203,14 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectWinStashLeft, background: true }],
+        do: [{ type: "url", url: Urls.rectWinStashLeft, background: true }],
       },
     ],
   },
   {
     trigger: { keys: ["keypad_5"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: urlRegistry.rectWinsUnstash, background: true }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.rectWinsUnstash, background: true }] },
     ],
   },
   {
@@ -221,14 +218,14 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: urlRegistry.rectWinStashRight, background: true }],
+        do: [{ type: "url", url: Urls.rectWinStashRight, background: true }],
       },
     ],
   },
   {
     trigger: { keys: ["keypad_8"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: urlRegistry.rectWinStashUp, background: true }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.rectWinStashUp, background: true }] },
     ],
   },
   {

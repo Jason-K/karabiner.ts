@@ -1,8 +1,8 @@
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import type { Binding } from "../../engine";
 import {
-    generateDoubleTapGuardRule,
-    type DoubleTapGuardConfig,
+  generateDoubleTapGuardRule,
+  type DoubleTapGuardConfig,
 } from "../../engine/double-tap-guard-rules";
 
 export const antinoteTapHoldBindings: Binding[] = [
@@ -21,7 +21,7 @@ export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [appRegistry.antinote],
+  ifApp: [Apps.antinote],
 };
 
 export const buildAntinoteRules = () => [

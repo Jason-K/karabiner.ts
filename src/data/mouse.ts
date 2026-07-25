@@ -2,11 +2,6 @@ import { type PointingButton, type ToEvent } from "karabiner.ts";
 import { DEVICE_IDENTIFIERS } from "./devices";
 import type { VarSpec } from "./refs";
 
-export const WIN_ACTIVATE_UNDER_CURSOR: ToEvent = {
-  pointing_button: "button1",
-  hold_down_milliseconds: 80,
-};
-
 // ── Button registry (replaces g502xButtons) ────────────────────────────────
 
 export type DeviceName = keyof typeof DEVICE_IDENTIFIERS;

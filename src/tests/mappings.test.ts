@@ -1,17 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { HOME_DIR, PATHS } from "../data";
-import { appRegistry } from "../data/apps";
-import { cleanShotRegistry } from "../data/cleanshot";
-import { commandRegistry } from "../data/commands";
-import { folderRegistry } from "../data/folders";
-import { raycastRegistry } from "../data/raycast";
-import {
-  rectangleMaxOrRestoreCommand,
-  rectangleOrientationBasedCommand,
-} from "../data/rectangle";
-import { urlRegistry } from "../data/urls";
+import { HOME_DIR, Paths } from "../data";
+import { Apps } from "../data/apps";
+import { Commands } from "../data/commands";
+import { Folders } from "../data/folders";
+import { Urls } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import {
   enterKeyHoldMappings,
@@ -22,18 +16,19 @@ import {
   disabledShortcutBindings,
   passwordsQuickFillBinding,
 } from "../definitions/system";
-import type { Binding, Case } from "../engine";
+import { resolveModifiers, type Binding, type Case } from "../engine";
 
 /** Find a tap-hold binding in the merged set by single key + modifiers. */
 function findTapHold(key: string, modifiers: string[] = []): Binding {
-  const mods = [...modifiers].sort().join(",");
-  const found = tapHoldBindings.find(
-    (b) =>
-      "keys" in b.trigger &&
-      b.trigger.keys.length === 1 &&
-      b.trigger.keys[0] === key &&
-      [...(b.trigger.modifiers ?? [])].sort().join(",") === mods,
-  );
+  const { mandatory: expectedMandatory } = resolveModifiers(modifiers);
+  const expectedMandStr = expectedMandatory.sort().join(",");
+  const found = tapHoldBindings.find((b) => {
+    if (!("keys" in b.trigger) || b.trigger.keys.length !== 1 || b.trigger.keys[0] !== key) {
+      return false;
+    }
+    const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
+    return mandatory.sort().join(",") === expectedMandStr && optional.length === 0;
+  });
   if (!found) throw new Error(`tap-hold binding not found: ${modifiers.join("+")}+${key}`);
   return found;
 }
@@ -46,7 +41,7 @@ function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
 }
 
 test("rectangle focused-window orientation command uses focused display", () => {
-  const command = rectangleOrientationBasedCommand("left-half", "top-half");
+  const command = Commands.winLeftOrTop.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /win and win:screen\(\)/);
@@ -65,7 +60,7 @@ test("rectangle focused-window orientation command uses focused display", () => 
 });
 
 test("rectangle max-or-restore command uses focused window coverage", () => {
-  const command = rectangleMaxOrRestoreCommand();
+  const command = Commands.winMaxOrRestore.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /screen:frame\(\)/);
@@ -78,10 +73,10 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(appRegistry.outlook.name, "com.microsoft.Outlook");
-  assert.equal(folderRegistry.home.name, `${HOME_DIR}/`);
-  assert.equal(raycastRegistry.recentFolders.name, "jason/recents/recentFolders");
-  assert.equal(cleanShotRegistry.captureArea.name, "capture-area");
+  assert.equal(Apps.outlook.name, "com.microsoft.Outlook");
+  assert.equal(Folders.home.name, `${HOME_DIR}/`);
+  assert.equal(Urls.rayRecentFolders.name, "raycast-x://extensions/jason/recents/recentFolders");
+  assert.equal(Urls.csxCaptureArea.name, "cleanshot://capture-area");
 });
 
 test("home-end navigation mappings stay declarative", () => {
@@ -128,7 +123,7 @@ test("enter key hold mappings stay declarative", () => {
   assert.equal(enterKeyHoldMappings.length, 2);
   assert.deepEqual(enterKeyHoldMappings[0]?.variants[0], {
     description: "Evaluate selection",
-    when: { app: appRegistry.excel, unless: true },
+    when: { app: Apps.excel, unless: true },
     alone: [
       {
         type: "key",
@@ -174,7 +169,7 @@ test("equals key hold mappings stay declarative", () => {
           },
           {
             type: "shell",
-            command: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
+            command: `${Paths.uvBin.name} --directory ${Paths.textProcessorDir.name} run python ${Paths.textProcessorEntrypoint.name} quick_date --source clipboard --dest paste`,
           },
         ],
         timeoutMs: 400,
@@ -216,26 +211,26 @@ test("tap-hold mappings keep expected anchor keys", () => {
 test("new vmCOCS rectangle mappings stay declarative", () => {
   const left = findTapHold("left_arrow", ["vmCOCS"]);
   assert.deepEqual(phaseDo(left, "release"), [
-    { type: "shell", command: commandRegistry.winLeftOrTop },
+    { type: "shell", command: Commands.winLeftOrTop },
   ]);
   assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
-      url: urlRegistry.rectAppPrevDisplay,
+      url: Urls.rectAppPrevDisplay,
       background: true,
     },
   ]);
 
   const spacebar = findTapHold("spacebar", ["vmCOCS"]);
   assert.deepEqual(phaseDo(spacebar, "release"), [
-    { type: "shell", command: commandRegistry.winMaxOrRestore },
+    { type: "shell", command: Commands.winMaxOrRestore },
   ]);
 
   const keypad9 = findTapHold("keypad_9", ["vmCOCS"]);
   assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=top-right-eighth",
+      url: Urls.rectWinTopRightEighth,
       background: true,
     },
   ]);

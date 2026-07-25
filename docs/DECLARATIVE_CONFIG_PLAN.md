@@ -162,14 +162,14 @@ A not-yet-migrated definition uses its legacy adapter config + generator (which 
 
 ```ts
 // definitions/antinote.ts
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import { generateDoubleTapGuardRule, type DoubleTapGuardConfig } from "../engine/double-tap-guard-rules";
 
 export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+  ifApp: [Apps.antinote, Apps.antinoteLegacy],
 };
 
 export const buildAntinoteDeleteRule = () => generateDoubleTapGuardRule(antinoteDeleteGuard);

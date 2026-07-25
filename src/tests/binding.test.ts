@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveCondition, triggerToFrom } from "../engine/binding";
+import { resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
 
 test("resolveCondition app if -> frontmost_application_if", () => {
   const c = resolveCondition({
@@ -201,4 +201,47 @@ test("buildTapHold: whileHoldVar sets var on down + suppressCancelFallback empti
   const m = (rules[0] as any).manipulatorSources[0];
   assert.ok(m.to?.some((e: any) => e.set_variable?.name === "x_down"));
   assert.deepEqual(m.to_delayed_action?.to_if_canceled, []);
+});
+
+test("resolveModifiers handles shorthand and explicit objects", () => {
+  assert.deepEqual(resolveModifiers(undefined), { mandatory: [], optional: [] });
+  assert.deepEqual(resolveModifiers(["left_shift", "vmCO_S"]), {
+    mandatory: ["left_shift", "command", "option", "shift"],
+    optional: [],
+  });
+  assert.deepEqual(
+    resolveModifiers({ mandatory: ["left_shift"], optional: ["vmCO_S"] }),
+    {
+      mandatory: ["left_shift"],
+      optional: ["command", "option", "shift"],
+    },
+  );
+});
+
+test("triggerToFrom with optional modifiers", () => {
+  assert.deepEqual(
+    triggerToFrom({ keys: ["a"], modifiers: { optional: ["left_shift"] } }) as any,
+    { key_code: "a", modifiers: { optional: ["left_shift"] } },
+  );
+  assert.deepEqual(
+    triggerToFrom({
+      keys: ["a"],
+      modifiers: { mandatory: ["left_command"], optional: ["left_shift"] },
+    }) as any,
+    {
+      key_code: "a",
+      modifiers: { mandatory: ["left_command"], optional: ["left_shift"] },
+    },
+  );
+});
+
+test("defineBindings: trigger with optional modifier resolves correctly", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["escape"], modifiers: { optional: ["left_shift"] } },
+      cases: [{ phase: "press", do: [{ type: "key", key: "tab" }] }],
+    },
+  ]);
+  const m = (rules[0] as any).manipulatorSources[0];
+  assert.deepEqual(m.from.modifiers, { optional: ["left_shift"] });
 });

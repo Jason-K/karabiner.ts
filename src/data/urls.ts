@@ -4,7 +4,7 @@ const url = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const urlRegistry = {
+export const Urls = {
   // Raycast URLs
   rayClipboard: url(
     "raycast-x://extensions/raycast/clipboard-history/clipboard-history",
@@ -382,6 +382,32 @@ export const urlRegistry = {
     "rectangle-pro://execute-action?name=upper-center",
     "Window to upper center",
   ),
+  rectWinBottomRightEighth: url(
+    "rectangle-pro://execute-action?name=bottom-right-eighth",
+    "Window to bottom right 1/8",
+  ),
+  rectWinBottomLeftEighth: url(
+    "rectangle-pro://execute-action?name=bottom-left-eighth",
+    "Window to bottom left 1/8",
+  ),
+  rectWinTopRightEighth: url(
+    "rectangle-pro://execute-action?name=top-right-eighth",
+    "Window to top right 1/8",
+  ),
+  rectWinTopLeftEighth: url(
+    "rectangle-pro://execute-action?name=top-left-eighth",
+    "Window to top left 1/8",
+  ),
+  // CleanShot URLs
+  csxCaptureArea: url("cleanshot://capture-area", "Capture area"),
+  csxCaptureFullscreen: url("cleanshot://capture-fullscreen", "Capture fullscreen"),
+  csxCaptureTextNoLinebreaks: url(
+    "cleanshot://capture-text?linebreaks=false",
+    "Capture text (no line breaks)",
+  ),
+  csxCaptureWindow: url("cleanshot://capture-window", "Capture window"),
+  csxRecordScreen: url("cleanshot://record-screen", "Record screen"),
 };
 
 export type UrlRef = import("./refs").UrlRef;
+

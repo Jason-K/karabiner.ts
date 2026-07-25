@@ -21,7 +21,7 @@ import {
   APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
   DEFAULT_PROFILE_NAME,
   DEVICE_IDENTIFIERS,
-  PATHS,
+  Paths,
   PREFERRED_PROFILE_NAME,
   karabinerDeviceId,
 } from "./data";
@@ -153,7 +153,7 @@ function resolveTargetProfileName(): string {
   }
 
   try {
-    const raw = readFileSync(PATHS.karabinerConfig, "utf8");
+    const raw = readFileSync(Paths.karabinerConfig.name, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };

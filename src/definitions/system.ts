@@ -1,6 +1,6 @@
-import { ACCESSIBILITY_VALUES, ACCESSIBILITY_VARIABLES } from "../data";
-import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS, appRegistry } from "../data/apps";
-import { commandRegistry } from "../data/commands";
+import { AccessibilityValues, AccessibilityVariables } from "../data";
+import { QUICK_FILL_APP_BUNDLE_IDENTIFIERS, Apps } from "../data/apps";
+import { Commands } from "../data/commands";
 import { defineBindings, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
@@ -19,7 +19,7 @@ export const disabledShortcutBindings: Binding[] = [
   },
   {
     trigger: { keys: ["d"], modifiers: ["left_command"] },
-    conditions: [{ app: appRegistry.antinote }],
+    conditions: [{ app: Apps.antinote }],
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
 ];
@@ -35,32 +35,32 @@ export const passwordsQuickFillBinding: Binding = {
       conditions: [
         { app: QUICK_FILL_APP_BUNDLE_IDENTIFIERS },
         {
-          var: ACCESSIBILITY_VARIABLES.focusedUiRole,
-          equals: ACCESSIBILITY_VALUES.textFieldRole,
+          var: AccessibilityVariables.focusedUiRole,
+          equals: AccessibilityValues.textFieldRole,
         },
         {
-          var: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
-          equals: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
+          var: AccessibilityVariables.focusedUiSubrole,
+          equals: AccessibilityValues.secureTextFieldSubrole,
         },
       ],
-      do: [{ type: "command", ref: commandRegistry.fillPassword }],
+      do: [{ type: "command", ref: Commands.fillPassword }],
     },
     {
       phase: "press",
       conditions: [
         { app: QUICK_FILL_APP_BUNDLE_IDENTIFIERS },
         {
-          var: ACCESSIBILITY_VARIABLES.focusedUiRole,
-          equals: ACCESSIBILITY_VALUES.textFieldRole,
+          var: AccessibilityVariables.focusedUiRole,
+          equals: AccessibilityValues.textFieldRole,
         },
         {
-          var: ACCESSIBILITY_VARIABLES.focusedUiSubrole,
-          equals: ACCESSIBILITY_VALUES.secureTextFieldSubrole,
+          var: AccessibilityVariables.focusedUiSubrole,
+          equals: AccessibilityValues.secureTextFieldSubrole,
           unless: true,
         },
       ],
       do: [
-        { type: "command", ref: commandRegistry.fillUsernameAndPassword },
+        { type: "command", ref: Commands.fillUsernameAndPassword },
       ],
     },
   ],

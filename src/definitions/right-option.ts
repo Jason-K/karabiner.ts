@@ -1,6 +1,6 @@
 import { spotifyToggleCommand } from "../core/scripts";
-import { raycastRegistry } from "../data";
-import { PATHS } from "../data/paths";
+import { Urls } from "../data";
+import { Paths } from "../data/paths";
 import { TIMINGS } from "../data/timings";
 import type { Binding } from "../engine";
 
@@ -15,12 +15,12 @@ export const rightOptionTapHoldBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
     cases: [
       { phase: "release", do: [{ type: "shell", command: spotifyToggleCommand() }] },
-      { phase: "hold", do: [{ type: "raycast", ref: raycastRegistry.spotifySearch }] },
+      { phase: "hold", do: [{ type: "url", url: Urls.raySpotifySearch }] },
     ],
   },
   {
     trigger: { keys: ["t"], modifiers: ["right_option"] },
     timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
-    cases: [{ phase: "hold", do: [{ type: "osascript", scriptPath: PATHS.typinatorEditLastRule }] }],
+    cases: [{ phase: "hold", do: [{ type: "osascript", scriptPath: Paths.typinatorEditLastRule.name }] }],
   },
 ];

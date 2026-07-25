@@ -1,4 +1,4 @@
-import { appRegistry, commandRegistry, pathRegistry } from "../../data";
+import { Apps, Commands, Paths } from "../../data";
 import { defineBindings, type Binding } from "../../engine";
 
 const GET_PRIVILEGES =
@@ -9,15 +9,15 @@ export const wordPrivilegesBinding: Binding = {
   cases: [
     {
       phase: "press",
-      conditions: [{ app: appRegistry.word }],
+      conditions: [{ app: Apps.word }],
       do: [
         {
           type: "osascript",
-          scriptPath: pathRegistry.wordDocumentPathAppleScript.name,
+          scriptPath: Paths.wordDocumentPathAppleScript.name,
         },
         {
           type: "shell",
-          command: commandRegistry.getPrivileges,
+          command: Commands.getPrivileges,
         },
       ],
     },

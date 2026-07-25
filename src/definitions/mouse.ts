@@ -1,17 +1,8 @@
 import { toFromEvent } from "../core/beta";
-import { appRegistry, DEVICE_IDENTIFIERS, TIMINGS } from "../data";
+import { Apps, Commands, DEVICE_IDENTIFIERS, TIMINGS, Urls } from "../data";
 import {
-  WIN_ACTIVATE_UNDER_CURSOR,
   mouseVars,
 } from "../data/mouse";
-import {
-  rectangleActionUrl,
-  rectangleMaxOrRestoreEvents,
-  WIN_LEFT_OR_TOP,
-  WIN_MAX_OR_RESTORE,
-  WIN_NEXT_DISPLAY,
-  WIN_RIGHT_OR_BOTTOM,
-} from "../data/rectangle";
 import type { Binding } from "../engine";
 
 /**
@@ -37,7 +28,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "hold",
         do: [
-          WIN_ACTIVATE_UNDER_CURSOR,
+          { pointing_button: "button1" },
           { key_code: "left_control", modifiers: ["option", "shift"] },
         ],
       },
@@ -56,7 +47,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: appRegistry.zen },
+          { app: Apps.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -71,7 +62,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.wheelDown, equals: 1, unless: true },
           { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
         ],
-        do: [...WIN_LEFT_OR_TOP],
+        do: [{ type: "shell", command: Commands.winLeftOrTop }]
       },
     ],
   },
@@ -85,7 +76,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: appRegistry.zen },
+          { app: Apps.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -97,7 +88,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.wheelDown, equals: 1, unless: true },
           { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
         ],
-        do: [...WIN_RIGHT_OR_BOTTOM],
+        do: [{ type: "shell", command: Commands.winRightOrBottom }],
       },
     ],
   },
@@ -112,11 +103,11 @@ export const mouseBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
         do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }],
       },
       { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
-      { phase: "hold", do: [WIN_ACTIVATE_UNDER_CURSOR, ...rectangleMaxOrRestoreEvents()] },
+      { phase: "hold", do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
     ],
   },
   // -------------------------------------------------------------
@@ -126,13 +117,10 @@ export const mouseBindings: Binding[] = [
     trigger: { pointer: "leftBack" },
     timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
     cases: [
-      { phase: "release", do: rectangleMaxOrRestoreEvents() },
+      { phase: "release", do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
       {
         phase: "hold",
-        do: [
-          WIN_ACTIVATE_UNDER_CURSOR,
-          { shell_command: `open -g '${rectangleActionUrl("next-display")}'` },
-        ],
+        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
       },
     ],
   },
@@ -177,7 +165,7 @@ export const mouseBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
         do: [{ key_code: "close_bracket", modifiers: ["left_command", "shift"], repeat: true }],
       },
       { phase: "release", do: [{ pointing_button: "button4", repeat: false }] },
@@ -194,7 +182,7 @@ export const mouseBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        conditions: [{ app: appRegistry.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
+        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
         do: [{ key_code: "open_bracket", modifiers: ["left_command", "shift"], repeat: true }],
       },
       { phase: "release", do: [{ pointing_button: "button5", repeat: false }] },
@@ -233,12 +221,12 @@ export const mouseBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
     cases: [
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
-      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }] },
-      { tapCount: 1, phase: "hold", conditions: [{ app: appRegistry.zen }], do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }] },
-      { tapCount: 2, phase: "release", conditions: [{ app: appRegistry.zen }], do: [...WIN_NEXT_DISPLAY] },
+      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: Apps.zen }], do: [{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }] },
+      { tapCount: 1, phase: "hold", conditions: [{ app: Apps.zen }], do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }] },
+      { tapCount: 2, phase: "release", conditions: [{ app: Apps.zen }], do: [{ type: "url", url: Urls.rectDisplayNext, background: true }] },
       // Non-Zen — tap = maximize (delayed), double = next display
-      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: appRegistry.zen, unless: true }], do: [...WIN_MAX_OR_RESTORE] },
-      { tapCount: 2, phase: "release", conditions: [{ app: appRegistry.zen, unless: true }], do: [...WIN_NEXT_DISPLAY] },
+      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: Apps.zen, unless: true }], do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
+      { tapCount: 2, phase: "release", conditions: [{ app: Apps.zen, unless: true }], do: [{ type: "url", url: Urls.rectDisplayNext, background: true }] },
     ],
   },
   // -------------------------------------------------------------

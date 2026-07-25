@@ -4,9 +4,9 @@ import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
 
-import { appRegistry } from "../data/apps";
+import { Apps } from "../data/apps";
 import { FOCUS_APP_BEHAVIORS } from "../data/focus-app";
-import { PATHS } from "../data/paths";
+import { Paths } from "../data/paths";
 import { toSendUserCommand } from "./beta";
 
 export function cmd(shell: string): ToEvent {
@@ -234,7 +234,7 @@ export function pythonScriptCommand(
   scriptPath: string,
   opts?: { venv?: string; args?: string[] },
 ): string {
-  const parts = [PATHS.uvBin, "run"];
+  const parts = [Paths.uvBin.name, "run"];
   if (opts?.venv) {
     parts.push("--python", normalizePathForShell(`${opts.venv}/bin/python`));
   }
@@ -248,7 +248,7 @@ export function pythonScriptCommand(
 export function textProcessorCommand(action: string): string {
   return pythonCommand(
     [
-      PATHS.textProcessorEntrypoint,
+      Paths.textProcessorEntrypoint.name,
       action,
       "--source",
       "clipboard",
@@ -256,7 +256,7 @@ export function textProcessorCommand(action: string): string {
       "paste",
     ],
     {
-      pythonBin: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python`,
+      pythonBin: `${Paths.uvBin.name} --directory ${Paths.textProcessorDir.name} run python`,
     },
   );
 }
@@ -271,25 +271,25 @@ export function formatSelectionCommand(): string {
 
 export function killAppCommand(scope: "foreground" | "all" = "all"): string {
   return scope === "foreground"
-    ? `${PATHS.killAppBin} --foreground`
-    : PATHS.killAppBin;
+    ? `${Paths.killAppBin.name} --foreground`
+    : Paths.killAppBin.name;
 }
 
 export function recentDownloadsCommand(): string {
-  return PATHS.recentDownloadsScript;
+  return Paths.recentDownloadsScript.name;
 }
 
 export function spotifyToggleCommand(): string {
   return [
     "if pgrep -x 'Spotify' > /dev/null; then",
     "open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause';",
-    `else ${openAppBundleCommand(appRegistry.spotify.name as string)};`,
+    `else ${openAppBundleCommand(Apps.spotify.name as string)};`,
     "fi; echo 'Spotify toggled'",
   ].join(" ");
 }
 
 export function typinatorNewRuleCommand(): string {
-  return `${PATHS.typinatorPythonBin} ${PATHS.typinatorNewRuleScript}`;
+  return `${Paths.typinatorPythonBin.name} ${Paths.typinatorNewRuleScript.name}`;
 }
 
 export function withSleep(delaySeconds: number, shell: string): string {
@@ -300,20 +300,12 @@ export function openUrlCommand(url: string): string {
   return `open -u ${shellSingleQuote(url)}`;
 }
 
-export function raycastExtensionCommand(route: string): string {
-  return openUrlCommand(`raycast-x://extensions/${route}`);
-}
-
-export function cleanShotCommand(route: string): string {
-  return openUrlCommand(`cleanshot://${route}`);
-}
-
 export function actHereCmd(action: string): string {
-  return `${PATHS.actHereScript} --action ${action}`;
+  return `${Paths.actHereScript.name} --action ${action}`;
 }
 
 export function openAppBundleCommand(bundleIdentifier: string): string {
-  return `${PATHS.openAppBin} -b ${shellSingleQuote(bundleIdentifier)}`;
+  return `${Paths.openAppBin.name} -b ${shellSingleQuote(bundleIdentifier)}`;
 }
 
 export function lua(code: string): ToEvent {

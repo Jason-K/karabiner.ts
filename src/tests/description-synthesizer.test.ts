@@ -2,32 +2,31 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { appRegistry } from "../data/apps";
-import { cleanShotRegistry } from "../data/cleanshot";
-import { commandRegistry } from "../data/commands";
-import { folderRegistry } from "../data/folders";
-import { raycastRegistry } from "../data/raycast";
+import { Apps } from "../data/apps";
+import { Commands } from "../data/commands";
+import { Folders } from "../data/folders";
+import { Urls } from "../data/urls";
 import type { Binding } from "../engine/binding";
 import {
-    describeAction,
-    describeConditionGroup,
-    describeTrigger,
-    synthesizeManipulatorLabel,
-    synthesizeRuleDescription,
+  describeAction,
+  describeConditionGroup,
+  describeTrigger,
+  synthesizeManipulatorLabel,
+  synthesizeRuleDescription,
 } from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
-  assert.equal(describeAction({ type: "app", ref: appRegistry.excel }), "open Microsoft Excel");
+  assert.equal(describeAction({ type: "app", ref: Apps.excel }), "open Microsoft Excel");
   assert.equal(
-    describeAction({ type: "app", ref: appRegistry.excel, mode: "focus" }),
+    describeAction({ type: "app", ref: Apps.excel, mode: "focus" }),
     "focus Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: appRegistry.excel, mode: "shell" }),
+    describeAction({ type: "app", ref: Apps.excel, mode: "shell" }),
     "open-shell Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: appRegistry.excel, actionDesc: "force" }),
+    describeAction({ type: "app", ref: Apps.excel, actionDesc: "force" }),
     "open Microsoft Excel | force",
   );
 });
@@ -38,32 +37,32 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Go back 2 apps",
   );
   assert.equal(
-    describeAction({ type: "folder", ref: folderRegistry.downloads }),
+    describeAction({ type: "folder", ref: Folders.downloads }),
     "open 'D/Ls'",
   );
   assert.equal(
     describeAction({
       type: "folder",
-      ref: folderRegistry.downloads,
+      ref: Folders.downloads,
       actionDesc: "new tab",
     }),
     "open 'D/Ls' | new tab",
   );
   assert.equal(
-    describeAction({ type: "raycast", ref: raycastRegistry.clipboardHistory }),
-    "Call 'Clipboard history'",
+    describeAction({ type: "url", url: Urls.rayClipboard }),
+    "Call 'open Raycast clipboard manager'",
   );
   assert.equal(
-    describeAction({ type: "cleanShot", ref: cleanShotRegistry.captureArea }),
+    describeAction({ type: "url", url: Urls.csxCaptureArea }),
     "Capture area using CSX",
   );
   assert.equal(
-    describeAction({ type: "command", ref: commandRegistry.fillPassword }),
+    describeAction({ type: "command", ref: Commands.fillPassword }),
     "Run command 'Fill password'",
   );
   // shell accepts a CommandRef too — describes via refDesc (not the raw command).
   assert.equal(
-    describeAction({ type: "shell", command: commandRegistry.fillPassword }),
+    describeAction({ type: "shell", command: Commands.fillPassword }),
     "Run 'Fill password'",
   );
   assert.equal(
@@ -291,5 +290,26 @@ test("synthesizeManipulatorLabel: condition-group label when conditional", () =>
       { app: { type: "app", name: "x", refDesc: "Excel" }, unless: true },
     ]),
     "Outside Excel",
+  );
+});
+
+test("describeTrigger formats optional modifiers correctly", () => {
+  assert.equal(
+    describeTrigger({ keys: ["a"], modifiers: { optional: ["left_shift"] } }),
+    "(⇧)?+[A]:",
+  );
+  assert.equal(
+    describeTrigger({
+      keys: ["escape"],
+      modifiers: { mandatory: ["left_command"], optional: ["left_shift", "left_control"] },
+    }),
+    "[⌘]+(⇧⌃)?+[␛]:",
+  );
+  assert.equal(
+    describeTrigger({
+      pointer: "left",
+      modifiers: { mandatory: ["left_command"], optional: ["left_shift"] },
+    }),
+    "[⌘]+(⇧)?+Left click:",
   );
 });

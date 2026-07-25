@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { pythonScriptCommand } from "../core/scripts";
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
   buildAntinoteRules,
   buildCapsLockRule,
@@ -208,7 +208,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: [appRegistry.onePiece.name],
+      bundle_identifiers: [Apps.onePiece.name],
     },
   ]);
 });

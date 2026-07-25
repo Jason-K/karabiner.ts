@@ -3,8 +3,6 @@
 export type RefSpecType =
   | "app"
   | "folder"
-  | "raycast"
-  | "cleanShot"
   | "command"
   | "url"
   | "path";
@@ -32,8 +30,7 @@ export type DeviceSpec = {
 // Category aliases keep action refs type-safe (an app ref can't be a folder).
 export type AppRef = RefSpec;
 export type FolderRef = RefSpec;
-export type RaycastRef = RefSpec;
-export type CleanShotRef = RefSpec;
 export type CommandRef = RefSpec;
 export type UrlRef = RefSpec;
 export type PathRef = RefSpec;
+

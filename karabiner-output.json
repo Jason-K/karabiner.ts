@@ -242,7 +242,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Here2There (active to target)'",
+        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Here2There'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -512,7 +512,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh'",
+        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Recent Downloads script'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -677,7 +677,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
+        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -788,7 +788,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'zoxide search directories'",
+        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'zoxide search directories'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1641,7 +1641,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1667,7 +1667,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'"
               }
             ],
             "to_delayed_action": {
@@ -1684,7 +1684,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '←'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1746,7 +1746,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '→'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '→'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1808,7 +1808,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↑'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↑'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1870,7 +1870,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↓'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↓'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1932,7 +1932,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=bottom-left-eighth'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom left 1/8'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1982,7 +1982,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 3]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=bottom-right-eighth'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 3]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom right 1/8'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2032,7 +2032,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 5]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window ✥'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 5]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window ✥'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2082,7 +2082,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 7]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=top-left-eighth'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 7]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top left 1/8'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2132,7 +2132,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[KEYPAD 9]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'rectangle-pro://execute-action?name=top-right-eighth'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 9]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top right 1/8'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2182,7 +2182,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2232,7 +2232,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2275,7 +2275,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2318,7 +2318,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[vmCOCS]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3022,8 +3022,7 @@
             ],
             "to_if_held_down": [
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
+                "pointing_button": "button1"
               },
               {
                 "key_code": "left_control",
@@ -3061,7 +3060,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
+        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to left or top half'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3142,10 +3141,6 @@
             },
             "to_if_held_down": [
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
-              {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -3181,7 +3176,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
+        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to right or bottom half'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3239,10 +3234,6 @@
             },
             "to_if_held_down": [
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
-              {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -3278,7 +3269,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tClick Left click\n\t\ton Logitech G502 X:\tClick Middle click\n\tOn Hold:\n\t\ton Logitech G502 X:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'",
+        "ruleDescription": "Wheel click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tClick Left click\n\t\ton Logitech G502 X:\tClick Middle click\n\tOn Hold:\n\t\ton Logitech G502 X:\tRun 'Maximize or restore window'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3351,10 +3342,6 @@
             ],
             "to_if_held_down": [
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
-              {
                 "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -3385,7 +3372,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left-back (G7):\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'local win = …'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'",
+        "ruleDescription": "Left-back (G7):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\tAlways:\tOpen 'Display →'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3402,10 +3389,6 @@
               }
             ],
             "to_if_held_down": [
-              {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
               }
@@ -3775,7 +3758,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tClick Left click then Run '/opt/homebrew/bin/hs -c 'local win = …'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tClick Left click then Run 'open -g 'rectangle-pro://execute-acti…'",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tOpen 'Display →'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tOpen 'Display →'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3826,10 +3809,6 @@
                   "name": "left_with_right_first_tap",
                   "value": 0
                 }
-              },
-              {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
               },
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
@@ -4008,10 +3987,6 @@
                 }
               },
               {
-                "pointing_button": "button1",
-                "hold_down_milliseconds": 80
-              },
-              {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
@@ -4084,10 +4059,6 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [
-                {
-                  "pointing_button": "button1",
-                  "hold_down_milliseconds": 80
-                },
                 {
                   "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 },
@@ -4672,7 +4643,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun '/opt/homebrew/bin/hs -c 'FormatSelection()''",
+        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Format selection using hsStringEval'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4728,7 +4699,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4745,7 +4716,7 @@
             },
             "to": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'"
               }
             ]
           }
@@ -5274,7 +5245,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
+        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5286,7 +5257,7 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and Focused UI subrole",
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5294,7 +5265,8 @@
                   "com.apple.SecurityAgent",
                   "com.apple.systempreferences",
                   "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac"
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
                 ]
               },
               {
@@ -5324,7 +5296,7 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater and Focused UI role and not Focused UI subrole",
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -5332,7 +5304,8 @@
                   "com.apple.SecurityAgent",
                   "com.apple.systempreferences",
                   "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac"
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
                 ]
               },
               {
@@ -5598,7 +5571,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5734,7 +5707,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tOpen 'open Raycast clipboard manager'",
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
         "manipulatorSources": [
           {
             "type": "basic",

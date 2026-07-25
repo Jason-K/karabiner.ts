@@ -1,11 +1,11 @@
 import { MOD_COMBO } from "../../core/mods";
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import { defineBindings, type Binding } from "../../engine";
 
 export const skimRemapBindings: Binding[] = [
   {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
-    conditions: [{ app: appRegistry.skim }],
+    conditions: [{ app: Apps.skim }],
     cases: [
       {
         phase: "press",
@@ -15,7 +15,7 @@ export const skimRemapBindings: Binding[] = [
   },
   {
     trigger: { keys: ["u"], modifiers: ["left_command"] },
-    conditions: [{ app: appRegistry.skim }],
+    conditions: [{ app: Apps.skim }],
     cases: [
       {
         phase: "press",

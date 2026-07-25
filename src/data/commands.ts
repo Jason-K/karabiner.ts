@@ -1,4 +1,4 @@
-import { pathRegistry } from "./paths";
+import { Paths } from "./paths";
 import { TIMINGS } from "./timings";
 
 const cmdEntry = (name: string, refDesc: string) => ({
@@ -8,14 +8,15 @@ const cmdEntry = (name: string, refDesc: string) => ({
 });
 
 const subCommands = {
-  revokePriv: `${pathRegistry.privCLI.name} -r`,
-  addPriv: `${pathRegistry.privCLI.name} -a`,
-  callSendKeys: `${pathRegistry.sendkeys.name} --initial-delay 0 --delay 0.005`,
+  revokePriv: `${Paths.privCLI.name} -r`,
+  addPriv: `${Paths.privCLI.name} -a`,
+  callSendKeys: `${Paths.sendkeys.name} --initial-delay 0 --delay 0.005`,
+  callHammerspoon: `${Paths.hs.name} -c`,
   hsQueryScreenOrientation: `local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h)`,
-  hsGetWinScreenData: `${pathRegistry.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  hsGetWinScreenData: `${Paths.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 };
 
-export const commandRegistry = {
+export const Commands = {
   getPrivileges: cmdEntry(
     `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec}`,
     "Get privileges",
@@ -27,6 +28,10 @@ export const commandRegistry = {
   fillUsernameAndPassword: cmdEntry(
     `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep 0.1 && ${subCommands.callSendKeys} --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
     "Fill username and password",
+  ),
+  hsFormatSelection: cmdEntry(
+    `${subCommands.callHammerspoon} 'FormatSelection()'`,
+    "Format selection using hsStringEval"
   ),
   winRightOrBottom: cmdEntry(
     `${subCommands.hsGetWinScreenData}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'`,
@@ -41,11 +46,11 @@ export const commandRegistry = {
     "Maximize or restore window",
   ),
   typinatorNewRule: cmdEntry(
-    `${pathRegistry.typinatorPythonBin.name} ${pathRegistry.typinatorNewRuleScript.name}`,
+    `${Paths.typinatorPythonBin.name} ${Paths.typinatorNewRuleScript.name}`,
     "Create new Typinator rule",
   ),
   typinatorEditLastRule: cmdEntry(
-    `osascript '${pathRegistry.typinatorEditLastRule.name}'`,
+    `osascript '${Paths.typinatorEditLastRule.name}'`,
     "Edit last Typinator expansion",
   ),
 } as const;

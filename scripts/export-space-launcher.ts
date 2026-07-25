@@ -6,7 +6,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import type { NestedLayerConfig, SubLayerConfig } from "../src/core/leader/types";
-import { appRegistry, folderRegistry } from "../src/data";
+import { Apps, Folders } from "../src/data";
 import { spaceLayerDefinitions } from "../src/definitions";
 
 type SpaceLauncherAction =
@@ -171,7 +171,7 @@ function resolvePortableAction(
   if (action.type === "folder") {
     return {
       openFolder: {
-        folderPath: folderRegistry[action.ref],
+        folderPath: Folders[action.ref],
       },
     };
   }
@@ -181,7 +181,7 @@ function resolvePortableAction(
   }
 
   const bundleIdentifier =
-    action.ref === "folderOpener" ? appRegistry.qspace : appRegistry[action.ref];
+    action.ref === "folderOpener" ? Apps.qspace : Apps[action.ref];
   const appPath = resolveAppPath(bundleIdentifier);
 
   if (!appPath) {

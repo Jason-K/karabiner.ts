@@ -432,9 +432,9 @@ import { remap, type Binding } from "../engine";
 export const hyperLauncherBindings: Binding[] = [
   remap("s", ["vmCOCS"], [{ type: "shell", command: formatSelectionCommand() }]),
   remap("t", ["vmCOCS"], [{ type: "shell", command: typinatorNewRuleCommand() }]),
-  remap("comma", ["vmCOCS"], [{ type: "app", ref: appRegistry.systemSettings }]),
-  remap("f12", ["vmCOCS"], [{ type: "osascript", scriptPath: `${PATHS.typinatorEditLastRule}` }]),
-  remap("escape", ["vmCOCS"], [{ type: "app", ref: appRegistry.activityMonitor }]),
+  remap("comma", ["vmCOCS"], [{ type: "app", ref: Apps.systemSettings }]),
+  remap("f12", ["vmCOCS"], [{ type: "osascript", scriptPath: `${Paths.typinatorEditLastRule}` }]),
+  remap("escape", ["vmCOCS"], [{ type: "app", ref: Apps.activityMonitor }]),
 ];
 export const buildHyperLauncherRules = () => defineBindings(hyperLauncherBindings);
 ```

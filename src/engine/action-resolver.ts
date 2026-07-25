@@ -6,12 +6,10 @@ import { getOpenFolderCommand } from "../core/folder-opener";
 import {
   actHereCmd,
   applescript,
-  cleanShotCommand,
   cmd,
   focusApp,
   openAppBundleCommand,
   pythonScriptCommand,
-  raycastExtensionCommand,
   textProcessorCommand,
   withSleep,
 } from "../core/scripts";
@@ -45,10 +43,6 @@ function resolveShellCommand(action: ActionSpec): string | null {
   switch (action.type) {
     case "folder":
       return getOpenFolderCommand(resolveName(action.ref));
-    case "raycast":
-      return raycastExtensionCommand(resolveName(action.ref));
-    case "cleanShot":
-      return cleanShotCommand(resolveName(action.ref));
     case "actHere":
       return actHereCmd(action.action);
     case "url": {

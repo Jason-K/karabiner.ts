@@ -3,7 +3,7 @@ import type { Action, ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
 import { resolveButton } from "../data/mouse";
 import { expandModifiers } from "./action-resolver";
-import type { Binding, Condition, Phase, Trigger } from "./binding";
+import { resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "./binding";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
 function withActionDesc(base: string, actionDesc?: string): string {
@@ -30,10 +30,6 @@ export function describeAction(action: ActionSpec): string {
       return `Go back ${action.index} apps`;
     case "folder":
       return withActionDesc(`open '${action.ref.refDesc}'`, action.actionDesc);
-    case "raycast":
-      return withActionDesc(`Call '${action.ref.refDesc}'`, action.actionDesc);
-    case "cleanShot":
-      return `${action.ref.refDesc} using CSX`;
     case "command":
       return withActionDesc(`Run command '${action.ref.refDesc}'`, action.actionDesc);
     case "actHere":
@@ -44,11 +40,25 @@ export function describeAction(action: ActionSpec): string {
       return `Wrap selection in ${action.operation}`;
     case "key":
       return withActionDesc(describeKeyAction(action), action.actionDesc);
-    case "url":
-      return withActionDesc(
-        `Open '${typeof action.url === "string" ? action.url : action.url.refDesc}'`,
-        action.actionDesc,
-      );
+    case "url": {
+      const url = action.url;
+      if (typeof url === "string") {
+        return withActionDesc(`Open '${url}'`, action.actionDesc);
+      }
+      const isCleanShot = Array.isArray(url.name)
+        ? url.name[0].startsWith("cleanshot://")
+        : url.name.startsWith("cleanshot://");
+      const isRaycast = Array.isArray(url.name)
+        ? url.name[0].startsWith("raycast-x://extensions/")
+        : url.name.startsWith("raycast-x://extensions/");
+
+      const base = isCleanShot
+        ? `${url.refDesc} using CSX`
+        : isRaycast
+          ? `Call '${url.refDesc}'`
+          : `Open '${url.refDesc}'`;
+      return withActionDesc(base, action.actionDesc);
+    }
     case "shell":
       return withActionDesc(
         `Run '${typeof action.command === "string" ? action.command : action.command.refDesc}'`,
@@ -142,16 +152,21 @@ export function describeConditionGroup(conditions: Condition[] | undefined): str
  * migration) extends it.
  */
 export function describeTrigger(trigger: Trigger): string {
-  const modSymbols = (mods?: string[]) =>
-    mods?.length ? mods.map(modifierTokenToSymbols).join("") : "";
+  const { mandatory, optional } = resolveModifiers(trigger.modifiers);
+  const mandSymbols = mandatory.length ? mandatory.map(modifierTokenToSymbols).join("") : "";
+  const optSymbols = optional.length ? optional.map(modifierTokenToSymbols).join("") : "";
+
   if ("pointer" in trigger) {
-    const symbols = modSymbols(trigger.modifiers);
+    const parts: string[] = [];
+    if (mandSymbols) parts.push(`[${mandSymbols}]`);
+    if (optSymbols) parts.push(`(${optSymbols})?`);
     const { desc } = resolveButton(trigger.pointer);
-    return symbols ? `[${symbols}]+${desc}:` : `${desc}:`;
+    parts.push(desc);
+    return `${parts.join("+")}:`;
   }
   const segments: string[] = [];
-  const symbols = modSymbols(trigger.modifiers);
-  if (symbols) segments.push(`[${symbols}]`);
+  if (mandSymbols) segments.push(`[${mandSymbols}]`);
+  if (optSymbols) segments.push(`(${optSymbols})?`);
   for (const k of trigger.keys) segments.push(`[${keyTokenToLabel(k)}]`);
   return `${segments.join("+")}:`;
 }

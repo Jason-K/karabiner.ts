@@ -411,7 +411,7 @@ export function generateModifierLauncherRules<TKey extends string>(
 - [ ] **Step 2: Update `src/definitions/right-option-launchers.ts`**
 
 ```ts
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
     generateModifierLauncherRules,
     type ModifierLauncherMapping,
@@ -451,7 +451,7 @@ import {
     formatSelectionCommand,
     typinatorNewRuleCommand,
 } from "../core/scripts";
-import { PATHS } from "../data";
+import { Paths } from "../data";
 
 export const hyperPlusMappings: ModifierLauncherMapping[] = [
   {
@@ -472,7 +472,7 @@ export const hyperPlusMappings: ModifierLauncherMapping[] = [
   {
     key: "f12",
     description: "Edit last Typinator rule",
-    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastRule}` },
+    action: { type: "shell", command: `/usr/bin/osascript ${Paths.typinatorEditLastRule}` },
   },
   {
     key: "escape",
@@ -607,7 +607,7 @@ Expected: PASS.
 
 ```ts
 import { L } from "../core/mods";
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
     generateAppScopedRemapRules,
     type AppScopedRemapMapping,
@@ -618,13 +618,13 @@ export const skimRemapMappings: AppScopedRemapMapping[] = [
     from: { key: "h", modifiers: ["left_command"] },
     description: "Skim command H remap",
     to: { key: "h", modifiers: [L.cmd, L.ctrl] },
-    ifApp: appRegistry.skim,
+    ifApp: Apps.skim,
   },
   {
     from: { key: "u", modifiers: ["left_command"] },
     description: "Skim command U remap",
     to: { key: "u", modifiers: [L.cmd, L.ctrl] },
-    ifApp: appRegistry.skim,
+    ifApp: Apps.skim,
   },
 ];
 
@@ -663,7 +663,7 @@ git commit -m "feat: add generateAppScopedRemapRules; migrate skim.ts"
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import { generateDoubleTapGuardRule } from "../engine";
 
 function toRule(input: any): any {
@@ -713,7 +713,7 @@ test("generateDoubleTapGuardRule adds ifApp condition when provided", () => {
       key: "d",
       modifiers: ["left_command"],
       description: "Delete note",
-      ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+      ifApp: [Apps.antinote, Apps.antinoteLegacy],
     }),
   );
   assert.ok(
@@ -841,7 +841,7 @@ Expected: all 5 new tests pass.
 - [ ] **Step 6: Migrate `src/definitions/antinote.ts`**
 
 ```ts
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
     generateDoubleTapGuardRule,
     type DoubleTapGuardConfig,
@@ -851,7 +851,7 @@ export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+  ifApp: [Apps.antinote, Apps.antinoteLegacy],
 };
 
 export const buildAntinoteDeleteRule = () =>
@@ -1072,7 +1072,7 @@ npm test 2>&1 | grep -E "(multi-tap|✓|✗)" | head -20
 import { map, rule, toKey } from "karabiner.ts";
 import { formatRuleDescription } from "../core/rule-descriptions";
 import { focusApp } from "../core/scripts";
-import { TIMINGS, appRegistry } from "../data";
+import { TIMINGS, Apps } from "../data";
 import { generateMultiTapRule, type MultiTapConfig } from "../engine/multi-tap-rules";
 import { generateTapAloneHoldRule, type TapAloneHoldConfig } from "../engine/tap-alone-hold-rules";
 // Note: generateTapAloneHoldRule is added in Task 8 — leave buildCtrlEscapeMonitorRule
@@ -1107,9 +1107,9 @@ export const buildCtrlEscapeMonitorRule = () => {
         "basic.to_if_alone_timeout_milliseconds": TIMINGS.mouseDefaultMs,
         "basic.to_if_held_down_threshold_milliseconds": TIMINGS.mouseDefaultMs,
       })
-      .toIfAlone(focusApp(appRegistry.activityMonitor))
-      .toIfHeldDown(focusApp(appRegistry.processSpy))
-      .toDelayedAction([], [focusApp(appRegistry.activityMonitor)])
+      .toIfAlone(focusApp(Apps.activityMonitor))
+      .toIfHeldDown(focusApp(Apps.processSpy))
+      .toDelayedAction([], [focusApp(Apps.activityMonitor)])
       .description(
         formatRuleDescription(
           ["left_control", "escape"],
@@ -1178,7 +1178,7 @@ git commit -m "feat: add generateMultiTapRule; migrate escape and left-command"
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import { generateTapAloneHoldRule } from "../engine";
 
 function toRule(input: any): any {
@@ -1308,7 +1308,7 @@ npm test 2>&1 | grep -E "tap-alone" | head -10
 Replace the remaining bespoke `buildCtrlEscapeMonitorRule` with the engine function. The full file becomes:
 
 ```ts
-import { TIMINGS, appRegistry } from "../data";
+import { TIMINGS, Apps } from "../data";
 import { killAppCommand } from "../core/scripts";
 import { generateMultiTapRule, type MultiTapConfig } from "../engine/multi-tap-rules";
 import { generateTapAloneHoldRule, type TapAloneHoldConfig } from "../engine/tap-alone-hold-rules";
@@ -1369,7 +1369,7 @@ git commit -m "feat: add generateTapAloneHoldRule; complete escape-monitor migra
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import { generatePointerRemapRule } from "../engine";
 
 function toRule(input: any): any {
@@ -1404,7 +1404,7 @@ test("generatePointerRemapRule attaches ifApp condition when provided", () => {
       button: "button1",
       description: "Left click -> enter",
       to: [{ type: "key", key: "return_or_enter" }],
-      ifApp: appRegistry.onePiece,
+      ifApp: Apps.onePiece,
     }),
   );
   assert.ok(
@@ -1512,7 +1512,7 @@ export const onePieceClickEnter: PointerRemapConfig = {
   button: "button1",
   description: "OnePiece left click -> enter",
   to: [{ type: "key", key: "return_or_enter" }],
-  ifApp: appRegistry.onePiece,
+  ifApp: Apps.onePiece,
 };
 
 export const buildOnePieceClickEnterRule = () =>

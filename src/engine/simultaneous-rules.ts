@@ -1,6 +1,6 @@
 import type { Rule } from "karabiner.ts";
 
-import { defineBindings, type Binding, type Case, type SimOrder } from "./binding";
+import { defineBindings, resolveModifiers, type Binding, type Case, type SimOrder } from "./binding";
 
 export type SimultaneousOptions = {
   detect_key_down_uninterruptedly?: boolean;
@@ -121,7 +121,11 @@ function validateMappings(
   // Check 2: tap-hold key overlap (bare keys only — no modifier prefix)
   const bareHoldKeys = new Set(
     tapHoldBindings
-      .filter((b) => "keys" in b.trigger && !(b.trigger.modifiers?.length))
+      .filter((b) => {
+        if (!("keys" in b.trigger)) return false;
+        const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
+        return mandatory.length === 0 && optional.length === 0;
+      })
       .flatMap((b) => (b.trigger as { keys: string[] }).keys),
   );
   for (const [label, config] of Object.entries(mappings)) {
