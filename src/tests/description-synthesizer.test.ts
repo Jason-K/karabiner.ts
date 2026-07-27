@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { Apps } from "../data/apps";
-import { Commands } from "../data/commands";
-import { Folders } from "../data/folders";
-import { Urls } from "../data/urls";
+import { APPS } from "../data/apps";
+import { CMDS } from "../data/commands";
+import { DIRS } from "../data/folders";
+import { URLS } from "../data/urls";
 import type { Binding } from "../engine/binding";
 import {
   describeAction,
@@ -16,17 +16,20 @@ import {
 } from "../engine/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
-  assert.equal(describeAction({ type: "app", ref: Apps.excel }), "open Microsoft Excel");
   assert.equal(
-    describeAction({ type: "app", ref: Apps.excel, mode: "focus" }),
+    describeAction({ type: "app", ref: APPS.excel }),
+    "open Microsoft Excel",
+  );
+  assert.equal(
+    describeAction({ type: "app", ref: APPS.excel, mode: "focus" }),
     "focus Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: Apps.excel, mode: "shell" }),
+    describeAction({ type: "app", ref: APPS.excel, mode: "shell" }),
     "open-shell Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: Apps.excel, actionDesc: "force" }),
+    describeAction({ type: "app", ref: APPS.excel, actionDesc: "force" }),
     "open Microsoft Excel | force",
   );
 });
@@ -37,32 +40,32 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Go back 2 apps",
   );
   assert.equal(
-    describeAction({ type: "folder", ref: Folders.downloads }),
+    describeAction({ type: "folder", ref: DIRS.downloads }),
     "open 'D/Ls'",
   );
   assert.equal(
     describeAction({
       type: "folder",
-      ref: Folders.downloads,
+      ref: DIRS.downloads,
       actionDesc: "new tab",
     }),
     "open 'D/Ls' | new tab",
   );
   assert.equal(
-    describeAction({ type: "url", url: Urls.rayClipboard }),
+    describeAction({ type: "url", url: URLS.rayClipboard }),
     "Call 'open Raycast clipboard manager'",
   );
   assert.equal(
-    describeAction({ type: "url", url: Urls.csxCaptureArea }),
+    describeAction({ type: "url", url: URLS.csxCaptureArea }),
     "Capture area using CSX",
   );
   assert.equal(
-    describeAction({ type: "command", ref: Commands.fillPassword }),
+    describeAction({ type: "command", ref: CMDS.fillPassword }),
     "Run command 'Fill password'",
   );
   // shell accepts a CommandRef too — describes via refDesc (not the raw command).
   assert.equal(
-    describeAction({ type: "shell", command: Commands.fillPassword }),
+    describeAction({ type: "shell", command: CMDS.fillPassword }),
     "Run 'Fill password'",
   );
   assert.equal(

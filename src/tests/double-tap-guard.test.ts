@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { Apps } from "../data";
+import { APPS } from "../data";
 import { generateDoubleTapGuardRule } from "../engine";
 
 function toRule(input: any): any {
@@ -51,7 +51,7 @@ test("generateDoubleTapGuardRule adds ifApp condition when provided", () => {
       key: "d",
       modifiers: ["left_command"],
       description: "Delete note",
-      ifApp: [Apps.antinote],
+      ifApp: [APPS.antinote],
     }),
   );
   assert.ok(

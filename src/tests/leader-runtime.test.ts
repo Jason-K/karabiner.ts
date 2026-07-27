@@ -1,14 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { leaderSuppressionVars } from "../core/leader";
 import type { SubLayerConfig } from "../core/leader";
+import { leaderSuppressionVars } from "../core/leader";
 
 const layers: SubLayerConfig[] = [
   { layerKey: "d", layerName: "Downloads", mappings: {} },
   {
     layerKey: "f",
-    layerName: "Folders",
+    layerName: "DIRS",
     mappings: {},
     subLayers: [{ layerKey: "r", layerName: "Recent", mappings: {} }],
   },

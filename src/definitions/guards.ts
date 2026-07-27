@@ -1,4 +1,4 @@
-import { Apps, TIMINGS } from "../data";
+import { APPS, TIMINGS } from "../data";
 import {
   generateDoubleTapGuardRule,
   type DoubleTapGuardConfig,
@@ -15,9 +15,13 @@ const antinoteGuards: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [Apps.antinote],
+  ifApp: [APPS.antinote],
 };
 
-export const guardRules: DoubleTapGuardConfig[] = [globalGuards, antinoteGuards];
+export const guardRules: DoubleTapGuardConfig[] = [
+  globalGuards,
+  antinoteGuards,
+];
 
-export const buildGuardRules = () => guardRules.map((guard) => generateDoubleTapGuardRule(guard));
+export const buildGuardRules = () =>
+  guardRules.map((guard) => generateDoubleTapGuardRule(guard));

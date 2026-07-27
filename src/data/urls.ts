@@ -431,7 +431,7 @@ const AntiNoteUrls = {
 
 // EXPORTS
 
-export const Urls = {
+export const URLS = {
   ...RaycastUrls,
   ...rectangleUrls,
   ...CsxUrls,

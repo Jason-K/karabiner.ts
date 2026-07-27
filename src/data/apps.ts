@@ -4,7 +4,10 @@ const app = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const Apps = {
+// TO DO: Karabiner allows foremost_application_if|unless conditions to be set based on bundle_identifiers|file_paths (https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/conditions/frontmost-application/)
+// APPS currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
+
+export const APPS = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
@@ -23,6 +26,7 @@ export const Apps = {
   messages: app("com.apple.MobileSMS", "Messages"),
   numi: app("com.nikolaeu.numi-setapp", "Numi"),
   onePiece: app("jp.fuji.1Piece", "1Piece"),
+  onePiecePreferences: app("jp.fuji.1PiecePreferences", "1Piece Preferences"),
   outlook: app("com.microsoft.Outlook", "Microsoft Outlook"),
   processSpy: app("com.itone.ProcessSpy", "Process Spy"),
   protonMail: app("ch.protonmail.desktop", "Proton Mail"),
@@ -44,12 +48,14 @@ export const Apps = {
   zen: app("app.zen-browser.zen", "Zen"),
 } as const;
 
+
+
 export type AppRef = import("./refs").AppRef;
 
-export const QUICK_FILL_APP_BUNDLE_IDENTIFIERS: AppRef[] = [
-  Apps.securityAgent,
-  Apps.settings,
-  Apps.settingsPrivacySecurityExtension,
-  Apps.brewUpdater,
-  Apps.taphouse
+export const PW_BUNDLES: AppRef[] = [
+  APPS.securityAgent,
+  APPS.settings,
+  APPS.settingsPrivacySecurityExtension,
+  APPS.brewUpdater,
+  APPS.taphouse,
 ];

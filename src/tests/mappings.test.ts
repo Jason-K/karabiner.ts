@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { HOME_DIR, Paths } from "../data";
-import { Apps } from "../data/apps";
-import { Commands } from "../data/commands";
-import { Folders } from "../data/folders";
-import { Urls } from "../data/urls";
+import { HOME_DIR, PATHS } from "../data";
+import { APPS } from "../data/apps";
+import { CMDS } from "../data/commands";
+import { DIRS } from "../data/folders";
+import { URLS } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
 import {
@@ -39,7 +39,7 @@ function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
 }
 
 test("rectangle focused-window orientation command uses focused display", () => {
-  const command = Commands.winLeftOrTop.name;
+  const command = CMDS.winLeftOrTop.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /win and win:screen\(\)/);
@@ -58,7 +58,7 @@ test("rectangle focused-window orientation command uses focused display", () => 
 });
 
 test("rectangle max-or-restore command uses focused window coverage", () => {
-  const command = Commands.winMaxOrRestore.name;
+  const command = CMDS.winMaxOrRestore.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /screen:frame\(\)/);
@@ -71,10 +71,13 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(Apps.outlook.name, "com.microsoft.Outlook");
-  assert.equal(Folders.home.name, `${HOME_DIR}/`);
-  assert.equal(Urls.rayRecentFolders.name, "raycast-x://extensions/jason/recents/recentFolders");
-  assert.equal(Urls.csxCaptureArea.name, "cleanshot://capture-area");
+  assert.equal(APPS.outlook.name, "com.microsoft.Outlook");
+  assert.equal(DIRS.home.name, `${HOME_DIR}/`);
+  assert.equal(
+    URLS.rayRecentFolders.name,
+    "raycast-x://extensions/jason/recents/recentFolders",
+  );
+  assert.equal(URLS.csxCaptureArea.name, "cleanshot://capture-area");
 });
 
 test("home-end navigation mappings stay declarative", () => {
@@ -121,7 +124,7 @@ test("enter key hold mappings stay declarative", () => {
   assert.equal(enterKeyHoldMappings.length, 2);
   assert.deepEqual(enterKeyHoldMappings[0]?.variants[0], {
     description: "Evaluate selection",
-    when: { app: Apps.excel, unless: true },
+    when: { app: APPS.excel, unless: true },
     alone: [
       {
         type: "key",
@@ -167,7 +170,7 @@ test("equals key hold mappings stay declarative", () => {
           },
           {
             type: "shell",
-            command: `${Paths.uvBin.name} --directory ${Paths.textProcessorDir.name} run python ${Paths.textProcessorEntrypoint.name} quick_date --source clipboard --dest paste`,
+            command: `${PATHS.uvBin.name} --directory ${PATHS.textProcessorDir.name} run python ${PATHS.textProcessorEntrypoint.name} quick_date --source clipboard --dest paste`,
           },
         ],
         timeoutMs: 400,
@@ -209,26 +212,26 @@ test("tap-hold mappings keep expected anchor keys", () => {
 test("new vmCOCS rectangle mappings stay declarative", () => {
   const left = findTapHold("left_arrow", ["vmCOCS"]);
   assert.deepEqual(phaseDo(left, "release"), [
-    { type: "shell", command: Commands.winLeftOrTop },
+    { type: "shell", command: CMDS.winLeftOrTop },
   ]);
   assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
-      url: Urls.rectAppPrevDisplay,
+      url: URLS.rectAppPrevDisplay,
       background: true,
     },
   ]);
 
   const spacebar = findTapHold("spacebar", ["vmCOCS"]);
   assert.deepEqual(phaseDo(spacebar, "release"), [
-    { type: "shell", command: Commands.winMaxOrRestore },
+    { type: "shell", command: CMDS.winMaxOrRestore },
   ]);
 
   const keypad9 = findTapHold("keypad_9", ["vmCOCS"]);
   assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",
-      url: Urls.rectWinTopRightEighth,
+      url: URLS.rectWinTopRightEighth,
       background: true,
     },
   ]);

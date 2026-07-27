@@ -1,5 +1,5 @@
 import { toFromEvent } from "../core/beta";
-import { Apps, Commands, DEVICE_IDENTIFIERS, TIMINGS, Urls } from "../data";
+import { APPS, CMDS, DEVICE_IDS, TIMINGS, URLS } from "../data";
 import { mouseVars } from "../data/mouse";
 import type { Binding } from "../engine";
 
@@ -58,7 +58,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: Apps.zen },
+          { app: APPS.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -83,7 +83,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.wheelDown, equals: 1, unless: true },
           { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
         ],
-        do: [{ type: "shell", command: Commands.winLeftOrTop }],
+        do: [{ type: "shell", command: CMDS.winLeftOrTop }],
       },
     ],
   },
@@ -100,7 +100,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: Apps.zen },
+          { app: APPS.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -118,7 +118,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.wheelDown, equals: 1, unless: true },
           { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
         ],
-        do: [{ type: "shell", command: Commands.winRightOrBottom }],
+        do: [{ type: "shell", command: CMDS.winRightOrBottom }],
       },
     ],
   },
@@ -127,7 +127,7 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "wheel" },
-    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    conditions: [{ device: DEVICE_IDS.logitechG502X }],
     whileHoldVar: mouseVars.wheelDown,
     timing: {
       aloneMs: TIMINGS.delayMouseHoldMs,
@@ -137,7 +137,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: Apps.zen },
+          { app: APPS.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -147,7 +147,7 @@ export const mouseBindings: Binding[] = [
       { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
       {
         phase: "hold",
-        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
       },
     ],
   },
@@ -163,11 +163,11 @@ export const mouseBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
       },
       {
         phase: "hold",
-        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
+        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
       },
     ],
   },
@@ -234,7 +234,7 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "back" },
-    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    conditions: [{ device: DEVICE_IDS.logitechG502X }],
     eventOptions: { halt: true, repeat: false },
     timing: {
       aloneMs: TIMINGS.delayMouseHoldMs,
@@ -244,7 +244,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: Apps.zen },
+          { app: APPS.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -273,7 +273,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: Apps.zen },
+          { app: APPS.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -298,7 +298,7 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "right" },
-    conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
+    conditions: [{ device: DEVICE_IDS.logitechG502X }],
     whileHoldVar: mouseVars.rightButtonPressed,
     suppressCancelFallback: true,
     timing: {
@@ -319,7 +319,7 @@ export const mouseBindings: Binding[] = [
   {
     trigger: { pointer: "left" },
     conditions: [
-      { device: DEVICE_IDENTIFIERS.logitechG502X },
+      { device: DEVICE_IDS.logitechG502X },
       { var: mouseVars.rightButtonPressed, equals: 1 },
     ],
     multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
@@ -330,7 +330,7 @@ export const mouseBindings: Binding[] = [
         tapCount: 1,
         phase: "release",
         delayed: true,
-        conditions: [{ app: Apps.zen }],
+        conditions: [{ app: APPS.zen }],
         do: [
           {
             pointing_button: "button1",
@@ -342,7 +342,7 @@ export const mouseBindings: Binding[] = [
       {
         tapCount: 1,
         phase: "hold",
-        conditions: [{ app: Apps.zen }],
+        conditions: [{ app: APPS.zen }],
         do: [
           { pointing_button: "button1", modifiers: ["option"], repeat: false },
         ],
@@ -350,22 +350,22 @@ export const mouseBindings: Binding[] = [
       {
         tapCount: 2,
         phase: "release",
-        conditions: [{ app: Apps.zen }],
-        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
+        conditions: [{ app: APPS.zen }],
+        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
       },
       // Non-Zen — tap = maximize (delayed), double = next display
       {
         tapCount: 1,
         phase: "release",
         delayed: true,
-        conditions: [{ app: Apps.zen, unless: true }],
-        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+        conditions: [{ app: APPS.zen, unless: true }],
+        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
       },
       {
         tapCount: 2,
         phase: "release",
-        conditions: [{ app: Apps.zen, unless: true }],
-        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
+        conditions: [{ app: APPS.zen, unless: true }],
+        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
       },
     ],
   },
@@ -375,7 +375,7 @@ export const mouseBindings: Binding[] = [
   {
     trigger: { pointer: "left" },
     conditions: [
-      { device: DEVICE_IDENTIFIERS.logitechG502X },
+      { device: DEVICE_IDS.logitechG502X },
       { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
     ],
     whileHoldVar: mouseVars.leftButtonPressed,
@@ -383,7 +383,10 @@ export const mouseBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        conditions: [{ app: Apps.onePiece }],
+        conditions: [
+          { app: APPS.onePiece },
+          { app: APPS.onePiecePreferences, unless: true },
+        ],
         do: [{ type: "key", key: "return_or_enter" }],
       },
       { phase: "hold", do: [toFromEvent()] },

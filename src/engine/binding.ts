@@ -1,4 +1,3 @@
-import type { Action, ActionKeyModifier, ActionSpec } from "../core/action-dsl";
 import {
   ifApp,
   ifDevice,
@@ -12,15 +11,27 @@ import {
   type SimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
-import { resolveActionToEvents } from "./action-resolver";
-import { synthesizeManipulatorLabel, synthesizeRuleDescription } from "./description-synthesizer";
-import { tapHold, tapHoldFrom, varTapTapHold, varTapTapHoldFrom } from "../core/tap-hold";
-import { simultaneousMultiTap, simultaneousTapHold } from "../core/simultaneous";
-import { resolveModComboAlias } from "../data/key-aliases";
-import { karabinerDeviceId } from "../data/devices";
-import { DEVICE_IDENTIFIERS } from "../data";
-import { resolveButton } from "../data/mouse";
+import type { Action, ActionKeyModifier, ActionSpec } from "../core/action-dsl";
+import {
+  simultaneousMultiTap,
+  simultaneousTapHold,
+} from "../core/simultaneous";
+import {
+  tapHold,
+  tapHoldFrom,
+  varTapTapHold,
+  varTapTapHoldFrom,
+} from "../core/tap-hold";
 import type { AppRef, DeviceSpec, VarSpec } from "../data";
+import { DEVICE_IDS } from "../data";
+import { karabinerDeviceId } from "../data/devices";
+import { resolveModComboAlias } from "../data/key-aliases";
+import { resolveButton } from "../data/mouse";
+import { resolveActionToEvents } from "./action-resolver";
+import {
+  synthesizeManipulatorLabel,
+  synthesizeRuleDescription,
+} from "./description-synthesizer";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";
@@ -31,7 +42,12 @@ export type Phase = "press" | "release" | "hold";
 /** External state condition. Realized as a Karabiner `conditions[]` entry. */
 export type Condition =
   | { app: AppRef | AppRef[]; unless?: boolean; description?: string }
-  | { var: VarSpec; equals: string | number; unless?: boolean; description?: string }
+  | {
+      var: VarSpec;
+      equals: string | number;
+      unless?: boolean;
+      description?: string;
+    }
   | { device: DeviceSpec; unless?: boolean; description?: string };
 
 export type SimOrder = {
@@ -74,7 +90,11 @@ export type Binding = {
   conditions?: Condition[]; // hoisted — applied to every case
   cases: Case[];
   eventOptions?: { halt?: boolean; repeat?: boolean };
-  multiTap?: { allowPassThrough?: boolean; mods?: string[]; firstTapPendingVar?: VarSpec };
+  multiTap?: {
+    allowPassThrough?: boolean;
+    mods?: string[];
+    firstTapPendingVar?: VarSpec;
+  };
   afterKeyUp?: ActionSpec[];
   whileHoldVar?: VarSpec; // tap-hold: set 1 on key-down, 0 on key-up (chord-modifier signaling)
   suppress?: boolean; // emit only `do`, no trigger fallback (e.g. tap-hold default-alone)
@@ -84,7 +104,9 @@ export type Binding = {
 export function resolveCondition(c: Condition): unknown {
   if ("app" in c) {
     const refs = Array.isArray(c.app) ? c.app : [c.app];
-    const ids = refs.flatMap((r) => (Array.isArray(r.name) ? r.name : [r.name]));
+    const ids = refs.flatMap((r) =>
+      Array.isArray(r.name) ? r.name : [r.name],
+    );
     return c.unless ? ifApp(ids).unless().build() : ifApp(ids).build();
   }
   if ("var" in c) {
@@ -106,7 +128,8 @@ function resolveSimOrder(order?: SimOrder): SimultaneousOptions | undefined {
   if (order.down) o.key_down_order = order.down;
   if (order.up) o.key_up_order = order.up;
   if (order.upWhen) o.key_up_when = order.upWhen;
-  if (order.detectUninterrupted) o.detect_key_down_uninterruptedly = order.detectUninterrupted;
+  if (order.detectUninterrupted)
+    o.detect_key_down_uninterruptedly = order.detectUninterrupted;
   return Object.keys(o).length ? (o as SimultaneousOptions) : undefined;
 }
 
@@ -118,7 +141,9 @@ function resolveSimOrder(order?: SimOrder): SimultaneousOptions | undefined {
  * `key_down_order`/etc. AND `to_after_key_up` exactly like the legacy generator.
  */
 function resolveSimKarOptions(b: Binding): SimultaneousOptions | undefined {
-  const order = resolveSimOrder("order" in b.trigger ? b.trigger.order : undefined);
+  const order = resolveSimOrder(
+    "order" in b.trigger ? b.trigger.order : undefined,
+  );
   const afterKeyUp = b.afterKeyUp?.flatMap(resolveActionToEvents);
   if (!order && !afterKeyUp?.length) return undefined;
   return {
@@ -127,7 +152,10 @@ function resolveSimKarOptions(b: Binding): SimultaneousOptions | undefined {
   };
 }
 
-export function resolveModifiers(m?: TriggerModifiers): { mandatory: string[]; optional: string[] } {
+export function resolveModifiers(m?: TriggerModifiers): {
+  mandatory: string[];
+  optional: string[];
+} {
   if (!m) {
     return { mandatory: [], optional: [] };
   }
@@ -196,7 +224,10 @@ type ResolvedCase = {
   do: ToEvent[];
 };
 
-function resolveCases(cases: Case[], shared: Condition[] | undefined): ResolvedCase[] {
+function resolveCases(
+  cases: Case[],
+  shared: Condition[] | undefined,
+): ResolvedCase[] {
   return cases.map((c) => {
     const rawConditions = [...(shared ?? []), ...(c.conditions ?? [])];
     return {
@@ -254,9 +285,11 @@ function groupByConditions(cases: ResolvedCase[]): CaseGroup[] {
 }
 
 export function defineBindings(bindings: Binding[]): Rule[] {
-  return bindings.map((b) =>
-    rule(b.description ?? synthesizeRuleDescription(b))
-      .manipulators(buildManipulators(b)) as unknown as Rule,
+  return bindings.map(
+    (b) =>
+      rule(b.description ?? synthesizeRuleDescription(b)).manipulators(
+        buildManipulators(b),
+      ) as unknown as Rule,
   );
 }
 
@@ -266,7 +299,8 @@ function buildManipulators(b: Binding): Manipulator[] {
   // binding declares `multiTap` config (e.g. a left-command multi-tap binding
   // sets `multiTap: {allowPassThrough, mods}` even when no tap/hold cases are
   // provided — varTapTapHold still emits two manipulators in that case).
-  const hasMultiTap = resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
+  const hasMultiTap =
+    resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
   const isPointer = "pointer" in b.trigger;
   const isSim = !isPointer && "keys" in b.trigger && b.trigger.keys.length > 1;
   let manipulators: Manipulator[];
@@ -274,7 +308,9 @@ function buildManipulators(b: Binding): Manipulator[] {
   else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
   else
     manipulators = groupByConditions(resolved).flatMap((g) =>
-      g.hasRelease || g.hasHold ? buildTapHold(b, g) : buildRemap(b, g, isPointer),
+      g.hasRelease || g.hasHold
+        ? buildTapHold(b, g)
+        : buildRemap(b, g, isPointer),
     );
   stampDeviceScope(manipulators, b.trigger);
   return manipulators;
@@ -285,17 +321,23 @@ function stampDeviceScope(manipulators: Manipulator[], trigger: Trigger): void {
   if (!("pointer" in trigger)) return;
   const { nameScope } = resolveButton(trigger.pointer);
   if (!nameScope || nameScope === "global") return;
-  const ids = nameScope.map((n) => karabinerDeviceId(DEVICE_IDENTIFIERS[n]));
+  const ids = nameScope.map((n) => karabinerDeviceId(DEVICE_IDS[n]));
   const cond = ifDevice(ids).build();
   manipulators.forEach((m: any) => {
     m.conditions = [...(m.conditions ?? []), cond];
   });
 }
 
-function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manipulator[] {
+function buildMultiTap(
+  b: Binding,
+  cases: ResolvedCase[],
+  isSim: boolean,
+): Manipulator[] {
   const key = isSim ? "" : "keys" in b.trigger ? b.trigger.keys[0]! : "";
   const byPhase = (p: Phase, tapCount = 1) =>
-    cases.filter((c) => c.tapCount === tapCount && c.phase === p).flatMap((c) => c.do);
+    cases
+      .filter((c) => c.tapCount === tapCount && c.phase === p)
+      .flatMap((c) => c.do);
   const threshold = b.timing?.aloneMs ?? b.timing?.heldThresholdMs;
   if (isSim) {
     const keys = (b.trigger as { keys: string[] }).keys;
@@ -305,8 +347,12 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
       label,
       alone: byPhase("release"),
       hold: byPhase("hold"),
-      tapTap: cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
-      tapTapHold: cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
+      tapTap: cases
+        .filter((c) => c.tapCount === 2 && c.phase === "release")
+        .flatMap((c) => c.do),
+      tapTapHold: cases
+        .filter((c) => c.tapCount === 2 && c.phase === "hold")
+        .flatMap((c) => c.do),
       thresholdMs: threshold,
       karOptions: resolveSimKarOptions(b),
       simultaneousThresholdMs: b.timing?.simultaneousMs,
@@ -320,8 +366,10 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
   // second-tap manipulator — mirroring the bespoke double-tap's per-override
   // build (e.g. the G502X left-button double-tap's Zen vs non-Zen variants).
   const isPointer = "pointer" in b.trigger;
-  const triggerKey = "pointer" in b.trigger ? resolveButton(b.trigger.pointer).button : key;
-  const firstTapPendingVar = b.multiTap?.firstTapPendingVar?.name ?? `multi_tap_${triggerKey}`;
+  const triggerKey =
+    "pointer" in b.trigger ? resolveButton(b.trigger.pointer).button : key;
+  const firstTapPendingVar =
+    b.multiTap?.firstTapPendingVar?.name ?? `multi_tap_${triggerKey}`;
   const manipulators: Manipulator[] = [];
   for (const g of groupMultiTapCases(cases)) {
     const delayedEvents = g.cases
@@ -333,9 +381,15 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
         .filter((c) => c.tapCount === 1 && c.phase === "release" && !c.delayed)
         .flatMap((c) => c.do),
       delayedSingleTapEvents: delayedEvents.length ? delayedEvents : undefined,
-      holdEvents: g.cases.filter((c) => c.tapCount === 1 && c.phase === "hold").flatMap((c) => c.do),
-      doubleTapEvents: g.cases.filter((c) => c.tapCount === 2 && c.phase === "release").flatMap((c) => c.do),
-      doubleTapHoldEvents: g.cases.filter((c) => c.tapCount === 2 && c.phase === "hold").flatMap((c) => c.do),
+      holdEvents: g.cases
+        .filter((c) => c.tapCount === 1 && c.phase === "hold")
+        .flatMap((c) => c.do),
+      doubleTapEvents: g.cases
+        .filter((c) => c.tapCount === 2 && c.phase === "release")
+        .flatMap((c) => c.do),
+      doubleTapHoldEvents: g.cases
+        .filter((c) => c.tapCount === 2 && c.phase === "hold")
+        .flatMap((c) => c.do),
       thresholdMs: threshold,
       allowPassThrough: b.multiTap?.allowPassThrough,
     };
@@ -343,7 +397,9 @@ function buildMultiTap(b: Binding, cases: ResolvedCase[], isSim: boolean): Manip
       ? varTapTapHoldFrom({
           from: { pointing_button: triggerKey as PointingButton } as FromEvent,
           passThrough: b.multiTap?.allowPassThrough
-            ? toPointingButton(triggerKey as PointingButton, undefined, { lazy: true })
+            ? toPointingButton(triggerKey as PointingButton, undefined, {
+                lazy: true,
+              })
             : undefined,
           ...shared,
         })
@@ -367,18 +423,26 @@ function groupMultiTapCases(cases: ResolvedCase[]): {
   conditions: unknown[];
   cases: ResolvedCase[];
 }[] {
-  const groups = new Map<string, { conditions: unknown[]; cases: ResolvedCase[] }>();
+  const groups = new Map<
+    string,
+    { conditions: unknown[]; cases: ResolvedCase[] }
+  >();
   for (const c of cases) {
     const sig = JSON.stringify(c.conditions);
-    if (!groups.has(sig)) groups.set(sig, { conditions: c.conditions, cases: [] });
+    if (!groups.has(sig))
+      groups.set(sig, { conditions: c.conditions, cases: [] });
     groups.get(sig)!.cases.push(c);
   }
   return [...groups.values()];
 }
 
-function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulator[] {
+function buildSimultaneousTapHold(
+  b: Binding,
+  cases: ResolvedCase[],
+): Manipulator[] {
   const keys = (b.trigger as { keys: string[] }).keys;
-  const byPhase = (p: Phase) => cases.filter((c) => c.phase === p).flatMap((c) => c.do);
+  const byPhase = (p: Phase) =>
+    cases.filter((c) => c.phase === p).flatMap((c) => c.do);
   const manipulators = simultaneousTapHold({
     keys,
     alone: byPhase("release"),
@@ -394,7 +458,10 @@ function buildSimultaneousTapHold(b: Binding, cases: ResolvedCase[]): Manipulato
 
 /** Push resolved case conditions onto every manipulator (hoisted + per-case),
  * with `device_if` ordered last. */
-function attachConditions(manipulators: Manipulator[], cases: ResolvedCase[]): void {
+function attachConditions(
+  manipulators: Manipulator[],
+  cases: ResolvedCase[],
+): void {
   const conds = deviceLast(cases.flatMap((c) => c.conditions));
   if (!conds.length) return;
   manipulators.forEach((m: any) => {
@@ -420,7 +487,10 @@ function unionRawConditions(cases: ResolvedCase[]): Condition[] {
 }
 
 /** Stamp the condition-group slice-label onto every manipulator (no-op when unconditional). */
-function stampLabel(manipulators: Manipulator[], conditions: Condition[] | undefined): void {
+function stampLabel(
+  manipulators: Manipulator[],
+  conditions: Condition[] | undefined,
+): void {
   const label = synthesizeManipulatorLabel(conditions);
   if (!label) return;
   manipulators.forEach((m: any) => {
@@ -436,16 +506,20 @@ function deviceLast(conds: unknown[]): unknown[] {
   const rest: unknown[] = [];
   const device: unknown[] = [];
   for (const c of conds) {
-    if (c && typeof c === "object" && (c as { type?: string }).type === "device_if") device.push(c);
+    if (
+      c &&
+      typeof c === "object" &&
+      (c as { type?: string }).type === "device_if"
+    )
+      device.push(c);
     else rest.push(c);
   }
   return device.length ? [...rest, ...device] : rest;
 }
 
 function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
-  const manipulators = "pointer" in b.trigger
-    ? buildPointerTapHold(b, g)
-    : buildKeyTapHold(b, g);
+  const manipulators =
+    "pointer" in b.trigger ? buildPointerTapHold(b, g) : buildKeyTapHold(b, g);
   // device_if conditions last (matches the bespoke mouse engine, which appends
   // device scope after every per-manipulator condition).
   for (const cond of deviceLast(g.conditions)) {
@@ -458,7 +532,8 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
   // hold) and/or drop the default-alone pass-through (emit only `do`).
   if (b.suppressCancelFallback) {
     manipulators.forEach((m: any) => {
-      if (m.to_delayed_action?.to_if_canceled) m.to_delayed_action.to_if_canceled = [];
+      if (m.to_delayed_action?.to_if_canceled)
+        m.to_delayed_action.to_if_canceled = [];
     });
   }
   if (b.suppress) {
@@ -477,13 +552,22 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const key = keys[0]!;
   const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   const defaultAlone: ActionSpec[] = [
-    { type: "key", key, modifiers: mandatory as ActionKeyModifier[], options: { halt: true } },
+    {
+      type: "key",
+      key,
+      modifiers: mandatory as ActionKeyModifier[],
+      options: { halt: true },
+    },
   ];
   // `resolvedAlone = config.alone ?? defaultAlone`. An explicit phase with empty
   // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing" and
   // must not trigger the default-alone fallback (tracked via hasRelease/hasHold).
-  const alone = g.hasRelease ? g.releaseDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
-  const hold = g.hasHold ? g.holdDo : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+  const alone = g.hasRelease
+    ? g.releaseDo
+    : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+  const hold = g.hasHold
+    ? g.holdDo
+    : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const manipulators = tapHold({
     key,
     alone,
@@ -510,7 +594,10 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
  * alone events for the cancel fallback. `whileHoldVar` drives the chord-modifier
  * signaling variable (set on key-down, cleared on key-up). */
 function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
-  const pointer = b.trigger as { pointer: string; modifiers?: TriggerModifiers };
+  const pointer = b.trigger as {
+    pointer: string;
+    modifiers?: TriggerModifiers;
+  };
   const { button } = resolveButton(pointer.pointer);
   const from: Record<string, unknown> = { pointing_button: button };
   const { mandatory, optional } = resolveModifiers(pointer.modifiers);
@@ -542,7 +629,10 @@ function buildRemap(
   if (isPointer) {
     // Pointer manipulators are emitted as raw objects to match the legacy
     // pointer-remap-rules shape exactly: {type, from, to?, description?, conditions?}.
-    const pointer = b.trigger as { pointer: string; modifiers?: TriggerModifiers };
+    const pointer = b.trigger as {
+      pointer: string;
+      modifiers?: TriggerModifiers;
+    };
     const { button } = resolveButton(pointer.pointer);
     const from: Record<string, unknown> = { pointing_button: button };
     const { mandatory, optional } = resolveModifiers(pointer.modifiers);

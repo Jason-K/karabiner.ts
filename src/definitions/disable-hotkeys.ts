@@ -1,4 +1,4 @@
-import { Apps } from "../data";
+import { APPS } from "../data";
 import { defineBindings, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
@@ -17,7 +17,7 @@ export const disabledHotkeys: Binding[] = [
   },
   {
     trigger: { keys: ["d"], modifiers: ["left_command"] },
-    conditions: [{ app: Apps.antinote }],
+    conditions: [{ app: APPS.antinote }],
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   },
 ];

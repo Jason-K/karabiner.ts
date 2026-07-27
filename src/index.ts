@@ -18,25 +18,25 @@
 import { map, writeToProfile } from "karabiner.ts";
 import { readFileSync } from "node:fs";
 import {
-  APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
   DEFAULT_PROFILE_NAME,
-  DEVICE_IDENTIFIERS,
+  DEVICE_IDS,
   karabinerDeviceId,
-  Paths,
+  NUMPAD_REMAPS,
+  PATHS,
   PREFERRED_PROFILE_NAME,
 } from "./data";
 import {
   buildCapsLockRule,
+  buildDisabledHotkeys,
   buildEnterRules,
   buildEqualsRules,
-  buildHomeEndRule,
   buildGuardRules,
+  buildHomeEndRule,
   buildHyperLauncherRules,
   buildPasswordsQuickFillRule,
   mouseBindings,
   simultaneousMappings,
   tapHoldBindings,
-  buildDisabledHotkeys,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
@@ -95,8 +95,8 @@ let rules: any[] = [
 
 const deviceConfigs: DeviceConfig[] = [
   {
-    identifiers: karabinerDeviceId(DEVICE_IDENTIFIERS.appleNumericKeypad),
-    simple_modifications: [...APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS],
+    identifiers: karabinerDeviceId(DEVICE_IDS.appleNumericKeypad),
+    simple_modifications: [...NUMPAD_REMAPS],
   },
 ];
 
@@ -114,7 +114,7 @@ function resolveTargetProfileName(): string {
   }
 
   try {
-    const raw = readFileSync(Paths.karabinerConfig.name, "utf8");
+    const raw = readFileSync(PATHS.karabinerConfig.name, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };

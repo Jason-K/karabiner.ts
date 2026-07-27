@@ -1,4 +1,4 @@
-// import { Urls } from "../data";
+// import { URLS } from "../data";
 // import { TIMINGS } from "../data/timings";
 // import { defineBindings, type Binding } from "../engine";
 
@@ -20,7 +20,7 @@
 //       {
 //         tapCount: 2,
 //         phase: "release",
-//         do: [{ type: "url", url: Urls.rayClipboard }],
+//         do: [{ type: "url", url: URLS.rayClipboard }],
 //       },
 //     ],
 //   },
@@ -37,7 +37,7 @@
 //       {
 //         tapCount: 2,
 //         phase: "release",
-//         do: [{ type: "url", url: Urls.rayClipboard }],
+//         do: [{ type: "url", url: URLS.rayClipboard }],
 //       },
 //     ],
 //   },

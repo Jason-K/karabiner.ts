@@ -8,13 +8,13 @@
 //     trigger: { keys: ["s"], modifiers: ["right_option"] },
 //     timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
 //     cases: [
-//       { phase: "release", do: [{ type: "shell", command: Commands.spotifyToggle }] },
-//       { phase: "hold", do: [{ type: "url", url: Urls.raySpotifySearch }] },
+//       { phase: "release", do: [{ type: "shell", command: CMDS.spotifyToggle }] },
+//       { phase: "hold", do: [{ type: "url", url: URLS.raySpotifySearch }] },
 //     ],
 //   },
 //   {
 //     trigger: { keys: ["t"], modifiers: ["right_option"] },
 //     timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
-//     cases: [{ phase: "hold", do: [{ type: "shell", command: Commands.typinatorEditLastRule }] }],
+//     cases: [{ phase: "hold", do: [{ type: "shell", command: CMDS.typinatorEditLastRule }] }],
 //   },
 // ];

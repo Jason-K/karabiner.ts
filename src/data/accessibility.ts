@@ -1,6 +1,6 @@
 const variable = (name: string, varDesc: string) => ({ name, varDesc });
 
-export const AccessibilityVariables = {
+export const WIN_VARS = {
   focusedUiRole: variable(
     "accessibility.focused_ui_element.role_string",
     "Focused UI role",
@@ -11,10 +11,9 @@ export const AccessibilityVariables = {
   ),
 } as const;
 
-export const AccessibilityValues = {
+export const WIN_VALS = {
   textFieldRole: "AXTextField",
   secureTextFieldSubrole: "AXSecureTextField",
 } as const;
 
 export type AccessibilityVariable = import("./refs").VarSpec;
-

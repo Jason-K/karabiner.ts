@@ -4705,7 +4705,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held and In 1Piece:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4758,6 +4758,12 @@
                 ]
               },
               {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "jp.fuji.1PiecePreferences"
+                ]
+              },
+              {
                 "type": "device_if",
                 "identifiers": [
                   {
@@ -4767,7 +4773,7 @@
                 ]
               }
             ],
-            "description": "on Logitech G502 X and not Right button held and In 1Piece"
+            "description": "on Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences"
           },
           {
             "type": "basic",

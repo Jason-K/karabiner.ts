@@ -1,10 +1,6 @@
 import { MOD_COMBO } from "../core/mods";
-import {
-  formatSelectionCommand,
-  typinatorNewRuleCommand,
-} from "../core/scripts";
-import { Paths, Apps, Commands } from "../data";
-import { Urls } from "../data/urls";
+import { APPS, CMDS } from "../data";
+import { URLS } from "../data/urls";
 import { defineBindings, type Binding } from "../engine";
 
 // Launcher triggers use MOD_COMBO.vmCOCS (the expanded modifier array) because
@@ -15,7 +11,7 @@ export const hyperLauncherBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "shell", command: Commands.hsFormatSelection }],
+        do: [{ type: "shell", command: CMDS.hsFormatSelection }],
       },
     ],
   },
@@ -24,7 +20,7 @@ export const hyperLauncherBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "app", ref: Apps.systemSettings }],
+        do: [{ type: "app", ref: APPS.systemSettings }],
       },
     ],
   },
@@ -33,7 +29,7 @@ export const hyperLauncherBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "shell", command: Commands.typinatorEditLastRule }],
+        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
       },
     ],
   },
@@ -42,7 +38,7 @@ export const hyperLauncherBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "app", ref: Apps.activityMonitor }],
+        do: [{ type: "app", ref: APPS.activityMonitor }],
       },
     ],
   },
@@ -54,13 +50,11 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: Commands.typinatorNewRule }],
+        do: [{ type: "shell", command: CMDS.typinatorNewRule }],
       },
       {
         phase: "hold",
-        do: [
-          { type: "shell", command: Commands.typinatorEditLastRule },
-        ],
+        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
       },
     ],
   },
@@ -136,7 +130,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectWinBottomLeftEighth,
+            url: URLS.rectWinBottomLeftEighth,
             background: true,
           },
         ],
@@ -151,7 +145,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectWinBottomRightEighth,
+            url: URLS.rectWinBottomRightEighth,
             background: true,
           },
         ],
@@ -166,7 +160,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectWinMaximize,
+            url: URLS.rectWinMaximize,
             background: true,
           },
         ],
@@ -181,7 +175,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectWinTopLeftEighth,
+            url: URLS.rectWinTopLeftEighth,
             background: true,
           },
         ],
@@ -196,7 +190,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectWinTopRightEighth,
+            url: URLS.rectWinTopRightEighth,
             background: true,
           },
         ],
@@ -208,7 +202,7 @@ export const hyperTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
       },
     ],
   },
@@ -220,7 +214,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectAppNextDisplay,
+            url: URLS.rectAppNextDisplay,
             background: true,
           },
         ],
@@ -230,7 +224,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectAppPrevDisplay,
+            url: URLS.rectAppPrevDisplay,
             background: true,
           },
         ],
@@ -245,7 +239,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "shell",
-            command: Commands.winLeftOrTop,
+            command: CMDS.winLeftOrTop,
           },
         ],
       },
@@ -254,7 +248,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectAppPrevDisplay,
+            url: URLS.rectAppPrevDisplay,
             background: true,
           },
         ],
@@ -269,7 +263,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "shell",
-            command: Commands.winRightOrBottom,
+            command: CMDS.winRightOrBottom,
           },
         ],
         // do: [{ type: "shell", command: rectangleOrientationBasedCommand("right-half", "bottom-half") }],
@@ -279,7 +273,7 @@ export const hyperTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: Urls.rectAppNextDisplay,
+            url: URLS.rectAppNextDisplay,
             background: true,
           },
         ],

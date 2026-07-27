@@ -2,7 +2,7 @@ import {
   evaluateSelectionCommand,
   textProcessorCommand,
 } from "../core/scripts";
-import { TIMINGS, Apps } from "../data";
+import { APPS, TIMINGS } from "../data";
 import {
   generateConditionalTapHoldRules,
   type ConditionalTapHoldMapping,
@@ -17,7 +17,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
     variants: [
       {
         description: "Evaluate selection",
-        when: { app: Apps.excel, unless: true },
+        when: { app: APPS.excel, unless: true },
         alone: [{ type: "key", key: "keypad_enter", options: { halt: true } }],
         hold: [{ type: "shell", command: EVALUATE_SELECTION_COMMAND }],
         timeoutMs: TIMINGS.delayHoldMs,
@@ -25,7 +25,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
       },
       {
         description: "Edit cell",
-        when: { app: Apps.excel },
+        when: { app: APPS.excel },
         alone: [{ type: "key", key: "keypad_enter", options: { halt: true } }],
         hold: [{ type: "key", key: "f2", options: { repeat: false } }],
         timeoutMs: TIMINGS.delayHoldMs,
@@ -38,7 +38,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
     variants: [
       {
         description: "Evaluate selection",
-        when: { app: Apps.excel, unless: true },
+        when: { app: APPS.excel, unless: true },
         alone: [
           { type: "key", key: "return_or_enter", options: { halt: true } },
         ],
@@ -48,7 +48,7 @@ export const enterKeyHoldMappings: ConditionalTapHoldMapping[] = [
       },
       {
         description: "Edit cell",
-        when: { app: Apps.excel },
+        when: { app: APPS.excel },
         alone: [
           { type: "key", key: "return_or_enter", options: { halt: true } },
         ],

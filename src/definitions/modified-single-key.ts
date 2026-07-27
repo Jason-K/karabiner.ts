@@ -1,5 +1,5 @@
 import { MOD_COMBO } from "../core/mods";
-import { Apps, Commands, TIMINGS, Urls } from "../data";
+import { APPS, CMDS, TIMINGS, URLS } from "../data";
 import type { Binding } from "../engine";
 
 const lCmdBindings: Binding[] = [
@@ -55,9 +55,9 @@ const rOptBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "shell", command: Commands.spotifyToggle }],
+        do: [{ type: "shell", command: CMDS.spotifyToggle }],
       },
-      { phase: "hold", do: [{ type: "url", url: Urls.raySpotifySearch }] },
+      { phase: "hold", do: [{ type: "url", url: URLS.raySpotifySearch }] },
     ],
   },
   {
@@ -69,7 +69,7 @@ const rOptBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "shell", command: Commands.typinatorEditLastRule }],
+        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
       },
     ],
   },
@@ -85,9 +85,9 @@ const ctrlBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "app", ref: Apps.activityMonitor }],
+        do: [{ type: "app", ref: APPS.activityMonitor }],
       },
-      { phase: "hold", do: [{ type: "app", ref: Apps.processSpy }] },
+      { phase: "hold", do: [{ type: "app", ref: APPS.processSpy }] },
     ],
   },
 ];
@@ -99,7 +99,7 @@ const antinoteRemaps: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: Urls.antinoteNewNoteInBackground }],
+        do: [{ type: "url", url: URLS.antinoteNewNoteInBackground }],
       },
     ],
   },
@@ -108,7 +108,7 @@ const antinoteRemaps: Binding[] = [
 const zenRemaps: Binding[] = [
   {
     trigger: { keys: ["right_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: Apps.zen }],
+    conditions: [{ app: APPS.zen }],
     cases: [
       {
         phase: "press",
@@ -124,7 +124,7 @@ const zenRemaps: Binding[] = [
   },
   {
     trigger: { keys: ["left_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: Apps.zen }],
+    conditions: [{ app: APPS.zen }],
     cases: [
       {
         phase: "press",
@@ -143,7 +143,7 @@ const zenRemaps: Binding[] = [
 const skimRemaps: Binding[] = [
   {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
-    conditions: [{ app: Apps.skim }],
+    conditions: [{ app: APPS.skim }],
     cases: [
       {
         phase: "press",
@@ -153,7 +153,7 @@ const skimRemaps: Binding[] = [
   },
   {
     trigger: { keys: ["u"], modifiers: ["left_command"] },
-    conditions: [{ app: Apps.skim }],
+    conditions: [{ app: APPS.skim }],
     cases: [
       {
         phase: "press",

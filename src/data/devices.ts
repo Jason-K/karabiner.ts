@@ -18,7 +18,7 @@ export function karabinerDeviceId(spec: DeviceSpec): {
   return id;
 }
 
-export const DEVICE_IDENTIFIERS = {
+export const DEVICE_IDS = {
   appleNumericKeypad: {
     name: "appleNumericKeypad",
     deviceDesc: "Apple numeric keypad",
@@ -34,7 +34,7 @@ export const DEVICE_IDENTIFIERS = {
   },
 } as const satisfies Record<string, DeviceSpec>;
 
-export const APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS = [
+export const NUMPAD_REMAPS = [
   {
     from: { key_code: "keypad_asterisk" },
     to: [{ key_code: "keypad_hyphen" }],

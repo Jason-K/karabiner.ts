@@ -1,4 +1,4 @@
-import { Paths } from "./paths";
+import { PATHS } from "./paths";
 import { TIMINGS } from "./timings";
 
 const cmdEntry = (name: string, refDesc: string) => ({
@@ -9,22 +9,22 @@ const cmdEntry = (name: string, refDesc: string) => ({
 
 const subCommands = {
   // PRIVILEGES
-  revokePriv: `${Paths.privCLI.name} -r`,
-  addPriv: `${Paths.privCLI.name} -a`,
+  revokePriv: `${PATHS.privCLI.name} -r`,
+  addPriv: `${PATHS.privCLI.name} -a`,
 
   // UTILITIES
-  callSendKeys: `${Paths.sendkeys.name} --initial-delay 0 --delay 0.005`,
+  callSendKeys: `${PATHS.sendkeys.name} --initial-delay 0 --delay 0.005`,
 
   // SCRIPTS
-  getWordDocPath: `osascript '${Paths.wordDocumentPathAppleScript.name}'`,
+  getWordDocPath: `osascript '${PATHS.wordDocumentPathAppleScript.name}'`,
 
   // HAMMERSPOON
-  callHammerspoon: `${Paths.hs.name} -c`,
+  callHammerspoon: `${PATHS.hs.name} -c`,
   hsQueryScreenOrientation: `local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h)`,
-  hsGetWinScreenData: `${Paths.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  hsGetWinScreenData: `${PATHS.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 };
 
-export const Commands = {
+export const CMDS = {
   // PASSWORDS AND PRIVILEGES
   getPrivileges: cmdEntry(
     `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec}`,
@@ -51,11 +51,11 @@ export const Commands = {
 
   // TYPINATOR
   typinatorNewRule: cmdEntry(
-    `${Paths.typinatorPythonBin.name} ${Paths.typinatorNewRuleScript.name}`,
+    `${PATHS.typinatorPythonBin.name} ${PATHS.typinatorNewRuleScript.name}`,
     "Create new Typinator rule",
   ),
   typinatorEditLastRule: cmdEntry(
-    `osascript '${Paths.typinatorEditLastRule.name}'`,
+    `osascript '${PATHS.typinatorEditLastRule.name}'`,
     "Edit last Typinator expansion",
   ),
 

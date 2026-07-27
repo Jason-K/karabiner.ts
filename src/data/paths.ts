@@ -6,7 +6,7 @@ const path = (name: string, refDesc: string) => ({
   refDesc,
 });
 
-export const Paths = {
+export const PATHS = {
   // scripts
   actHereScript: path(
     `${HOME_DIR}/Scripts/active_process/take_action_here/take_action_here.sh`,

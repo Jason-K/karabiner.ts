@@ -146,7 +146,7 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
     ],
   );
 
-  // TO DO: update to reflect manipulator that is built from Apps.word (returns "undefined" because of the nested structure.)
+  // TO DO: update to reflect manipulator that is built from APPS.word (returns "undefined" because of the nested structure.)
   //   assert.deepEqual(
   //     wordConditions.map((condition: any) => condition?.name),
   //     ["Word"],
@@ -231,7 +231,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
     {
       type: "frontmost_application_if",
       description: undefined,
-      bundle_identifiers: [Apps.onePiece.name],
+      bundle_identifiers: [APPS.onePiece.name],
     },
   ]);
 });
