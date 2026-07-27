@@ -1,10 +1,12 @@
+// URL object
 const url = (name: string, refDesc: string) => ({
   type: "url" as const,
   name,
   refDesc,
 });
 
-export const Urls = {
+// Application-specific URLs
+const RaycastUrls = {
   // Raycast URLs
   rayClipboard: url(
     "raycast-x://extensions/raycast/clipboard-history/clipboard-history",
@@ -12,40 +14,43 @@ export const Urls = {
   ),
   rayHere2There: url(
     "raycast-x://extensions/Jason/here-to-there/activeToTarget",
-    "Here2There",
+    "call Raycast Here2There",
   ),
   rayRecentApps: url(
     "raycast-x://extensions/jason/recents/recentApplications",
-    "Recent applications",
+    "show recent applications",
   ),
   rayRecentCustom: url(
     "raycast-x://extensions/jason/recents/recentCustom",
-    "Recent custom",
+    "show recent files",
   ),
   rayRecentDownloads: url(
     "raycast-x://extensions/jason/recents/recentDownloads",
-    "Recent downloads",
+    "show recent downloads",
   ),
   rayRecentFiles: url(
     "raycast-x://extensions/jason/recents/recents",
-    "Recent files",
+    "show recent files",
   ),
   rayRecentFolders: url(
     "raycast-x://extensions/jason/recents/recentFolders",
-    "Recent folders",
+    "show recent folders",
   ),
   raySpotifyPlayPause: url(
     "raycast-x://extensions/mattisssa/spotify-player/togglePlayPause",
-    "Spotify play/pause",
+    "toggle Spotify",
   ),
   raySpotifySearch: url(
     "raycast-x://extensions/mattisssa/spotify-player/search",
-    "Spotify search",
+    "search Spotify",
   ),
   rayZoxideSearchDirs: url(
     "raycast-x://extensions/mrpunkin/raycast-zoxide/search-directories",
-    "zoxide search directories",
+    "search directories using zoxide",
   ),
+};
+
+const rectangleUrls = {
   // Rectangle URLs
   rectAppLeftHalf: url(
     "rectangle-pro://execute-action?name=app-left-half",
@@ -398,9 +403,15 @@ export const Urls = {
     "rectangle-pro://execute-action?name=top-left-eighth",
     "Window to top left 1/8",
   ),
+};
+
+const CsxUrls = {
   // CleanShot URLs
   csxCaptureArea: url("cleanshot://capture-area", "Capture area"),
-  csxCaptureFullscreen: url("cleanshot://capture-fullscreen", "Capture fullscreen"),
+  csxCaptureFullscreen: url(
+    "cleanshot://capture-fullscreen",
+    "Capture fullscreen",
+  ),
   csxCaptureTextNoLinebreaks: url(
     "cleanshot://capture-text?linebreaks=false",
     "Capture text (no line breaks)",
@@ -409,5 +420,22 @@ export const Urls = {
   csxRecordScreen: url("cleanshot://record-screen", "Record screen"),
 };
 
-export type UrlRef = import("./refs").UrlRef;
+const AntiNoteUrls = {
+  antinote: url("antinote://", "Open AntiNote"),
+  antinoteNewNote: url("antinote://new-note", "Create new note"),
+  antinoteNewNoteInBackground: url(
+    "antinote://new-note?background=true",
+    "Create new note in background",
+  ),
+};
 
+// EXPORTS
+
+export const Urls = {
+  ...RaycastUrls,
+  ...rectangleUrls,
+  ...CsxUrls,
+  ...AntiNoteUrls,
+};
+
+export type UrlRef = import("./refs").UrlRef;

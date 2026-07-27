@@ -21,7 +21,7 @@ export const Paths = {
     "Text Processor entrypoint",
   ),
   typinatorEditLastRule: path(
-    `${HOME_DIR}/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt`,
+    `${HOME_DIR}/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript`,
     "edit last Typinator rule",
   ),
   typinatorNewRuleScript: path(
@@ -39,7 +39,7 @@ export const Paths = {
   openAppBin: path(`${HOME_DIR}/.local/bin/open-app`, "Open App binary"),
   privCLI: path(
     `/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI`,
-    "Privileges binary",
+    "PrivilegesCLI",
   ),
   hs: path(`/opt/homebrew/bin/hs`, "Hammerspoon binary"),
   sendkeys: path(`/opt/homebrew/bin/sendkeys`, "Sendkeys"),

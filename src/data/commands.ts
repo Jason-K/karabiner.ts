@@ -8,15 +8,24 @@ const cmdEntry = (name: string, refDesc: string) => ({
 });
 
 const subCommands = {
+  // PRIVILEGES
   revokePriv: `${Paths.privCLI.name} -r`,
   addPriv: `${Paths.privCLI.name} -a`,
+
+  // UTILITIES
   callSendKeys: `${Paths.sendkeys.name} --initial-delay 0 --delay 0.005`,
+
+  // SCRIPTS
+  getWordDocPath: `osascript '${Paths.wordDocumentPathAppleScript.name}'`,
+
+  // HAMMERSPOON
   callHammerspoon: `${Paths.hs.name} -c`,
   hsQueryScreenOrientation: `local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h)`,
   hsGetWinScreenData: `${Paths.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 };
 
 export const Commands = {
+  // PASSWORDS AND PRIVILEGES
   getPrivileges: cmdEntry(
     `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec}`,
     "Get privileges",
@@ -29,10 +38,34 @@ export const Commands = {
     `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep 0.1 && ${subCommands.callSendKeys} --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
     "Fill username and password",
   ),
+  getWordDocPathAndPrivileges: cmdEntry(
+    `${subCommands.getWordDocPath} && sleep ${TIMINGS.privDelaySec} && ${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
+    "Get privileges and path to active Word document",
+  ),
+
+  // HAMMERSPOON
   hsFormatSelection: cmdEntry(
     `${subCommands.callHammerspoon} 'FormatSelection()'`,
-    "Format selection using hsStringEval"
+    "Format selection using hsStringEval",
   ),
+
+  // TYPINATOR
+  typinatorNewRule: cmdEntry(
+    `${Paths.typinatorPythonBin.name} ${Paths.typinatorNewRuleScript.name}`,
+    "Create new Typinator rule",
+  ),
+  typinatorEditLastRule: cmdEntry(
+    `osascript '${Paths.typinatorEditLastRule.name}'`,
+    "Edit last Typinator expansion",
+  ),
+
+  // SPOTIFY
+  spotifyToggle: cmdEntry(
+    "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'",
+    "open Spotify or toggle play/pause",
+  ),
+
+  // WINDOW NAVIGATION AND MOVEMENT
   winRightOrBottom: cmdEntry(
     `${subCommands.hsGetWinScreenData}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'`,
     "Move window to right or bottom half",
@@ -44,14 +77,6 @@ export const Commands = {
   winMaxOrRestore: cmdEntry(
     `${subCommands.hsGetWinScreenData}; local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'`,
     "Maximize or restore window",
-  ),
-  typinatorNewRule: cmdEntry(
-    `${Paths.typinatorPythonBin.name} ${Paths.typinatorNewRuleScript.name}`,
-    "Create new Typinator rule",
-  ),
-  typinatorEditLastRule: cmdEntry(
-    `osascript '${Paths.typinatorEditLastRule.name}'`,
-    "Edit last Typinator expansion",
   ),
 } as const;
 

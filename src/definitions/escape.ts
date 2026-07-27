@@ -1,38 +1,38 @@
-import { killAppCommand } from "../core/scripts";
-import { TIMINGS, Apps } from "../data";
-import { defineBindings, type Binding } from "../engine";
+// import { killAppCommand } from "../core/scripts";
+// import { TIMINGS, Apps } from "../data";
+// import { defineBindings, type Binding } from "../engine";
 
-export const escapeTapTapHoldBinding: Binding = {
-  trigger: { keys: ["escape"] },
-  timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
-  multiTap: { mods: [] },
-  cases: [
-    { phase: "release", do: [{ type: "key", key: "escape" }] },
-    { phase: "hold", do: [{ type: "shell", command: killAppCommand("foreground") }] },
-    { tapCount: 2, phase: "hold", do: [{ type: "shell", command: killAppCommand() }] },
-  ],
-};
+// export const escapeTapTapHoldBinding: Binding = {
+//   trigger: { keys: ["escape"] },
+//   timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+//   multiTap: { mods: [] },
+//   cases: [
+//     { phase: "release", do: [{ type: "key", key: "escape" }] },
+//     { phase: "hold", do: [{ type: "shell", command: killAppCommand("foreground") }] },
+//     { tapCount: 2, phase: "hold", do: [{ type: "shell", command: killAppCommand() }] },
+//   ],
+// };
 
-// ctrl+escape: tap → Activity Monitor, hold → Process Spy. Routed through the
-// tapHold builder, which does not emit a manipulator-level description — this
-// preserves the §8.1 normalization landed in round 1.
-export const ctrlEscapeMonitorBinding: Binding = {
-  trigger: { keys: ["escape"], modifiers: ["control"] },
-  timing: {
-    aloneMs: TIMINGS.delayHoldMs,
-    heldThresholdMs: TIMINGS.delayHoldMs,
-  },
-  cases: [
-    {
-      phase: "release",
-      do: [{ type: "app", ref: Apps.activityMonitor }],
-    },
-    { phase: "hold", do: [{ type: "app", ref: Apps.processSpy }] },
-  ],
-};
+// // ctrl+escape: tap → Activity Monitor, hold → Process Spy. Routed through the
+// // tapHold builder, which does not emit a manipulator-level description — this
+// // preserves the §8.1 normalization landed in round 1.
+// export const ctrlEscapeMonitorBinding: Binding = {
+//   trigger: { keys: ["escape"], modifiers: ["control"] },
+//   timing: {
+//     aloneMs: TIMINGS.delayHoldMs,
+//     heldThresholdMs: TIMINGS.delayHoldMs,
+//   },
+//   cases: [
+//     {
+//       phase: "release",
+//       do: [{ type: "app", ref: Apps.activityMonitor }],
+//     },
+//     { phase: "hold", do: [{ type: "app", ref: Apps.processSpy }] },
+//   ],
+// };
 
-export const buildEscapeTapTapHoldRule = () =>
-  defineBindings([escapeTapTapHoldBinding])[0]!;
+// export const buildEscapeTapTapHoldRule = () =>
+//   defineBindings([escapeTapTapHoldBinding])[0]!;
 
-export const buildCtrlEscapeMonitorRule = () =>
-  defineBindings([ctrlEscapeMonitorBinding])[0]!;
+// export const buildCtrlEscapeMonitorRule = () =>
+//   defineBindings([ctrlEscapeMonitorBinding])[0]!;

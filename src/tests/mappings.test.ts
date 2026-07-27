@@ -7,13 +7,13 @@ import { Commands } from "../data/commands";
 import { Folders } from "../data/folders";
 import { Urls } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
+import buildDisabledHotkeys from "../definitions/disable-hotkeys";
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "../definitions/enter-equals";
 import { homeEndBindings } from "../definitions/home-end";
 import {
-  disabledShortcutBindings,
   passwordsQuickFillBinding,
 } from "../definitions/system";
 import { resolveModifiers, type Binding, type Case } from "../engine";
@@ -108,12 +108,12 @@ test("home-end navigation mappings stay declarative", () => {
 });
 
 test("disabled shortcut mappings stay declarative", () => {
-  assert.equal(disabledShortcutBindings.length, 4);
-  assert.deepEqual(disabledShortcutBindings[0], {
+  assert.equal(buildDisabledHotkeys().length, 4);
+  assert.deepEqual(buildDisabledHotkeys()[0], {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
-  assert.deepEqual(disabledShortcutBindings[2], {
+  assert.deepEqual(buildDisabledHotkeys()[2], {
     trigger: { keys: ["m"], modifiers: ["left_command", "option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
@@ -188,7 +188,7 @@ test("passwords quick fill mapping stays declarative", () => {
   assert.equal(passwordsQuickFillBinding.description, undefined);
   assert.deepEqual(trigger.keys, ["slash"]);
   assert.deepEqual(trigger.modifiers, ["left_command"]);
-  assert.equal(passwordsQuickFillBinding.cases.length, 2);
+  assert.equal(passwordsQuickFillBinding.cases.length, 3);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {

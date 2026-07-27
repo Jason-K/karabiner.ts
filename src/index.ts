@@ -21,31 +21,22 @@ import {
   APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
   DEFAULT_PROFILE_NAME,
   DEVICE_IDENTIFIERS,
+  karabinerDeviceId,
   Paths,
   PREFERRED_PROFILE_NAME,
-  karabinerDeviceId,
 } from "./data";
 import {
-  buildAntinoteRules,
   buildCapsLockRule,
-  buildCmdQRule,
-  buildCtrlEscapeMonitorRule,
-  buildDisableHideMinimizeRule,
   buildEnterRules,
   buildEqualsRules,
-  buildEscapeTapTapHoldRule,
   buildHomeEndRule,
+  buildGuardRules,
   buildHyperLauncherRules,
-  buildLeftCommandRule,
-  buildOnePieceClickEnterRule,
   buildPasswordsQuickFillRule,
-  buildShiftRules,
-  buildSkimCommandRemapRule,
-  buildWordPrivilegesRule,
-  buildZenCommandRemapRule,
   mouseBindings,
   simultaneousMappings,
   tapHoldBindings,
+  buildDisabledHotkeys,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
@@ -68,21 +59,12 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-  // LEFT COMMAND - Tap (pass-through), double-tap (last app), hold (f13)
-  buildLeftCommandRule(),
-
-  // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
-  buildEscapeTapTapHoldRule(),
-
-  // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
-  buildCtrlEscapeMonitorRule(),
+  // GUARD - Various guard rules
+  ...buildGuardRules(),
 
   // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
   // flow through the same Binding[] + defineBindings engine as keys.
   ...defineBindings(mouseBindings),
-
-  // ONEPIECE - Left click submits with Enter inside the app
-  buildOnePieceClickEnterRule(),
 
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),
@@ -99,33 +81,12 @@ let rules: any[] = [
   // EQUALS - Hold for Quick Date (both keypad and regular)
   ...buildEqualsRules(),
 
-  // CMD+Q double-tap protection (simplified - no optional any support in map())
-  buildCmdQRule(),
-
-  // Right_Option + __ - App launch or focus
-  // Superceded by RCMD rules
-  //   ...buildRightOptionLauncherRules(),
-
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
-  ...buildDisableHideMinimizeRule(),
-
-  // WORD - CMD+/ copy document name and elevate privileges
-  buildWordPrivilegesRule(),
+  ...buildDisabledHotkeys(),
 
   // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
   buildPasswordsQuickFillRule(),
 
-  // SKIM - CMD+H/U remapping
-  ...buildSkimCommandRemapRule(),
-
-  // ZEN - CMD+SHIFT+H/U remapping
-  ...buildZenCommandRemapRule(),
-
-  // ANTINOTE - CMD+D double-tap to delete note
-  ...buildAntinoteRules(),
-
-  // SHIFT - Shift key rules
-  ...buildShiftRules(),
 ];
 
 // ============================================================================

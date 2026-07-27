@@ -1,8 +1,6 @@
 import { toFromEvent } from "../core/beta";
 import { Apps, Commands, DEVICE_IDENTIFIERS, TIMINGS, Urls } from "../data";
-import {
-  mouseVars,
-} from "../data/mouse";
+import { mouseVars } from "../data/mouse";
 import type { Binding } from "../engine";
 
 /**
@@ -20,11 +18,21 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "shift" },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
       // override (right button held): immediate down_arrow
-      { phase: "press", conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }] },
-      { phase: "release", do: [{ key_code: "up_arrow", modifiers: ["control"] }] },
+      {
+        phase: "press",
+        conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }],
+        do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }],
+      },
+      {
+        phase: "release",
+        do: [{ key_code: "up_arrow", modifiers: ["control"] }],
+      },
       {
         phase: "hold",
         do: [
@@ -39,7 +47,10 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "wheelLeft" },
-    timing: { aloneMs: TIMINGS.timeoutWheelChordMs, heldThresholdMs: TIMINGS.timeoutWheelChordMs },
+    timing: {
+      aloneMs: TIMINGS.timeoutWheelChordMs,
+      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
+    },
     cases: [
       // overrides declared in REVERSE of the bespoke prepend order so the
       // emitted manipulator order matches (groupByConditions is first-seen).
@@ -51,10 +62,20 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
-        do: [{ key_code: "left_arrow", modifiers: ["left_command", "control", "shift"], repeat: false }],
+        do: [
+          {
+            key_code: "left_arrow",
+            modifiers: ["left_command", "control", "shift"],
+            repeat: false,
+          },
+        ],
       },
       // wheel held down → swallow (the wheel-as-button mapping handles it)
-      { phase: "press", conditions: [{ var: mouseVars.wheelDown, equals: 1 }], do: [] },
+      {
+        phase: "press",
+        conditions: [{ var: mouseVars.wheelDown, equals: 1 }],
+        do: [],
+      },
       // base hold — wheel guards on the base only (matches bespoke injection)
       {
         phase: "hold",
@@ -62,7 +83,7 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.wheelDown, equals: 1, unless: true },
           { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
         ],
-        do: [{ type: "shell", command: Commands.winLeftOrTop }]
+        do: [{ type: "shell", command: Commands.winLeftOrTop }],
       },
     ],
   },
@@ -71,7 +92,10 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "wheelRight" },
-    timing: { aloneMs: TIMINGS.timeoutWheelChordMs, heldThresholdMs: TIMINGS.timeoutWheelChordMs },
+    timing: {
+      aloneMs: TIMINGS.timeoutWheelChordMs,
+      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
+    },
     cases: [
       {
         phase: "press",
@@ -80,7 +104,13 @@ export const mouseBindings: Binding[] = [
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
-        do: [{ key_code: "right_arrow", modifiers: ["left_command", "control", "shift"], repeat: false }],
+        do: [
+          {
+            key_code: "right_arrow",
+            modifiers: ["left_command", "control", "shift"],
+            repeat: false,
+          },
+        ],
       },
       {
         phase: "hold",
@@ -99,15 +129,26 @@ export const mouseBindings: Binding[] = [
     trigger: { pointer: "wheel" },
     conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
     whileHoldVar: mouseVars.wheelDown,
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
       {
         phase: "press",
-        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }],
+        conditions: [
+          { app: Apps.zen },
+          { var: mouseVars.rightButtonPressed, equals: 1 },
+        ],
+        do: [
+          { pointing_button: "button1", modifiers: ["option"], repeat: false },
+        ],
       },
       { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
-      { phase: "hold", do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+      },
     ],
   },
   // -------------------------------------------------------------
@@ -115,9 +156,15 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "leftBack" },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
-      { phase: "release", do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
+      {
+        phase: "release",
+        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+      },
       {
         phase: "hold",
         do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
@@ -129,10 +176,30 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "leftForward" },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
-      { phase: "release", do: [{ shell_command: "osascript -e 'tell application \"Popclip\" to appear'" }] },
-      { phase: "hold", do: [{ key_code: "f10", modifiers: ["left_command", "option", "shift"], repeat: false }] },
+      {
+        phase: "release",
+        do: [
+          {
+            shell_command:
+              "osascript -e 'tell application \"Popclip\" to appear'",
+          },
+        ],
+      },
+      {
+        phase: "hold",
+        do: [
+          {
+            key_code: "f10",
+            modifiers: ["left_command", "option", "shift"],
+            repeat: false,
+          },
+        ],
+      },
     ],
   },
   // -------------------------------------------------------------
@@ -140,9 +207,17 @@ export const mouseBindings: Binding[] = [
   // -------------------------------------------------------------
   {
     trigger: { pointer: "middleBack" },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
-      { phase: "release", do: [{ shell_command: "open 'cleanshot://capture-text?linebreaks=false'" }] },
+      {
+        phase: "release",
+        do: [
+          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
+        ],
+      },
       {
         phase: "hold",
         do: [
@@ -161,12 +236,24 @@ export const mouseBindings: Binding[] = [
     trigger: { pointer: "back" },
     conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
     eventOptions: { halt: true, repeat: false },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
       {
         phase: "press",
-        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ key_code: "close_bracket", modifiers: ["left_command", "shift"], repeat: true }],
+        conditions: [
+          { app: Apps.zen },
+          { var: mouseVars.rightButtonPressed, equals: 1 },
+        ],
+        do: [
+          {
+            key_code: "close_bracket",
+            modifiers: ["left_command", "shift"],
+            repeat: true,
+          },
+        ],
       },
       { phase: "release", do: [{ pointing_button: "button4", repeat: false }] },
       { phase: "hold", do: [{ key_code: "tab", modifiers: ["left_command"] }] },
@@ -178,15 +265,30 @@ export const mouseBindings: Binding[] = [
   {
     trigger: { pointer: "forward" },
     eventOptions: { halt: true, repeat: false },
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
       {
         phase: "press",
-        conditions: [{ app: Apps.zen }, { var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ key_code: "open_bracket", modifiers: ["left_command", "shift"], repeat: true }],
+        conditions: [
+          { app: Apps.zen },
+          { var: mouseVars.rightButtonPressed, equals: 1 },
+        ],
+        do: [
+          {
+            key_code: "open_bracket",
+            modifiers: ["left_command", "shift"],
+            repeat: true,
+          },
+        ],
       },
       { phase: "release", do: [{ pointing_button: "button5", repeat: false }] },
-      { phase: "hold", do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }] },
+      {
+        phase: "hold",
+        do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }],
+      },
     ],
   },
   // -------------------------------------------------------------
@@ -199,7 +301,10 @@ export const mouseBindings: Binding[] = [
     conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }],
     whileHoldVar: mouseVars.rightButtonPressed,
     suppressCancelFallback: true,
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: TIMINGS.delayMouseHoldMs },
+    timing: {
+      aloneMs: TIMINGS.delayMouseHoldMs,
+      heldThresholdMs: TIMINGS.delayMouseHoldMs,
+    },
     cases: [
       { phase: "release", do: [{ pointing_button: "button2", repeat: false }] },
       { phase: "hold", do: [] },
@@ -221,12 +326,47 @@ export const mouseBindings: Binding[] = [
     timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
     cases: [
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
-      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: Apps.zen }], do: [{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }] },
-      { tapCount: 1, phase: "hold", conditions: [{ app: Apps.zen }], do: [{ pointing_button: "button1", modifiers: ["option"], repeat: false }] },
-      { tapCount: 2, phase: "release", conditions: [{ app: Apps.zen }], do: [{ type: "url", url: Urls.rectDisplayNext, background: true }] },
+      {
+        tapCount: 1,
+        phase: "release",
+        delayed: true,
+        conditions: [{ app: Apps.zen }],
+        do: [
+          {
+            pointing_button: "button1",
+            modifiers: ["left_command"],
+            repeat: false,
+          },
+        ],
+      },
+      {
+        tapCount: 1,
+        phase: "hold",
+        conditions: [{ app: Apps.zen }],
+        do: [
+          { pointing_button: "button1", modifiers: ["option"], repeat: false },
+        ],
+      },
+      {
+        tapCount: 2,
+        phase: "release",
+        conditions: [{ app: Apps.zen }],
+        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
+      },
       // Non-Zen — tap = maximize (delayed), double = next display
-      { tapCount: 1, phase: "release", delayed: true, conditions: [{ app: Apps.zen, unless: true }], do: [{ type: "shell", command: Commands.winMaxOrRestore }] },
-      { tapCount: 2, phase: "release", conditions: [{ app: Apps.zen, unless: true }], do: [{ type: "url", url: Urls.rectDisplayNext, background: true }] },
+      {
+        tapCount: 1,
+        phase: "release",
+        delayed: true,
+        conditions: [{ app: Apps.zen, unless: true }],
+        do: [{ type: "shell", command: Commands.winMaxOrRestore }],
+      },
+      {
+        tapCount: 2,
+        phase: "release",
+        conditions: [{ app: Apps.zen, unless: true }],
+        do: [{ type: "url", url: Urls.rectDisplayNext, background: true }],
+      },
     ],
   },
   // -------------------------------------------------------------
@@ -241,7 +381,11 @@ export const mouseBindings: Binding[] = [
     whileHoldVar: mouseVars.leftButtonPressed,
     timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: 0 },
     cases: [
-      { phase: "release", do: [] },
+      {
+        phase: "release",
+        conditions: [{ app: Apps.onePiece }],
+        do: [{ type: "key", key: "return_or_enter" }],
+      },
       { phase: "hold", do: [toFromEvent()] },
     ],
   },

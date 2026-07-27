@@ -242,7 +242,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Here2There'",
+        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'call Raycast Here2There'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -279,7 +279,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[J]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'Recent downloads'",
+        "ruleDescription": "[J]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'show recent downloads'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -788,7 +788,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'zoxide search directories'",
+        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'search directories using zoxide'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1598,6 +1598,131 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app --foreground'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_escape",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
+            "to": [],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/kill-app"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400,
+              "basic.to_if_alone_timeout_milliseconds": 400
+            },
+            "description": "multi_tap_escape first tap (tap / tap-hold)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "escape"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[FN]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'F5'",
         "manipulatorSources": [
           {
@@ -1641,6 +1766,418 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'\n\tOn Hold:\n\t\tAlways:\tEmit '⌘'\n\tOn Double Tap:\n\t\tAlways:\tGo back 1 apps",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_left_command",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "description": "multi_tap_left_command second tap (tap-tap / tap-tap-hold)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "left_command",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_command",
+                  "value": 0
+                }
+              },
+              {
+                "software_function": {
+                  "open_application": {
+                    "frontmost_application_history_index": 1
+                  }
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_command",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_command",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_command",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_command",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
+            },
+            "description": "multi_tap_left_command first tap (pass-through)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_command",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "left_command",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_command",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "left_command"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_command",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "left_command"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_command",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_command",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_left_shift",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "description": "multi_tap_left_shift second tap (tap-tap / tap-tap-hold)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "left_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
+            },
+            "description": "multi_tap_left_shift first tap (pass-through)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "left_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "left_shift"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_left_shift",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "left_shift"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_left_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_shift",
+              "modifiers": {}
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_right_shift",
+                "value": 1
+              }
+            ],
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "description": "multi_tap_right_shift second tap (tap-tap / tap-tap-hold)",
+            "to": [
+              {
+                "lazy": true,
+                "key_code": "right_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_shift",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
+            },
+            "description": "multi_tap_right_shift first tap (pass-through)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 1
+                }
+              },
+              {
+                "lazy": true,
+                "key_code": "right_shift",
+                "modifiers": []
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "right_shift"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_right_shift",
+                  "value": 0
+                }
+              },
+              {
+                "key_code": "right_shift"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_right_shift",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
         "manipulatorSources": [
           {
@@ -1667,7 +2204,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'"
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
               }
             ],
             "to_delayed_action": {
@@ -2468,54 +3005,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'antinote://'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "a",
-              "modifiers": {
-                "mandatory": [
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "a",
-                "modifiers": [
-                  "shift"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "open -g 'antinote://'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "a",
-                  "modifiers": [
-                    "shift"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
         "manipulatorSources": [
           {
@@ -2564,7 +3053,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌥>]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled''\n\tOn Hold:\n\t\tAlways:\tCall 'Spotify search'",
+        "ruleDescription": "[⌥>]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'open Spotify or toggle play/pause'\n\tOn Hold:\n\t\tAlways:\tCall 'search Spotify'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2582,7 +3071,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -2594,7 +3083,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else /Users/jason/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             }
@@ -2604,7 +3093,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'",
+        "ruleDescription": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2631,7 +3120,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
               }
             ],
             "to_delayed_action": {
@@ -2643,271 +3132,6 @@
                   "modifiers": [
                     "right_option"
                   ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'\n\tOn Hold:\n\t\tAlways:\tEmit '⌘'\n\tOn Double Tap:\n\t\tAlways:\tGo back 1 apps",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {}
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "multi_tap_left_command",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "description": "multi_tap_left_command second tap (tap-tap / tap-tap-hold)",
-            "to": [
-              {
-                "lazy": true,
-                "key_code": "left_command",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_command",
-                  "value": 0
-                }
-              },
-              {
-                "software_function": {
-                  "open_application": {
-                    "frontmost_application_history_index": 1
-                  }
-                }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_command",
-                  "value": 0
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_command",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_command",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_command",
-              "modifiers": {}
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300,
-              "basic.to_if_alone_timeout_milliseconds": 300
-            },
-            "description": "multi_tap_left_command first tap (pass-through)",
-            "to": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_command",
-                  "value": 1
-                }
-              },
-              {
-                "lazy": true,
-                "key_code": "left_command",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_command",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "left_command"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_command",
-                  "value": 0
-                }
-              },
-              {
-                "key_code": "left_command"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_command",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_command",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app --foreground'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {}
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "multi_tap_escape",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
-            "to": [],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/kill-app"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {}
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400,
-              "basic.to_if_alone_timeout_milliseconds": 400
-            },
-            "description": "multi_tap_escape first tap (tap / tap-hold)",
-            "to": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 1
-                }
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "escape"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
                 }
               ]
             }
@@ -2959,6 +3183,381 @@
                     "open_application": {
                       "bundle_identifier": "com.apple.ActivityMonitor"
                     }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -u 'antinote://new-note?background=true'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + ']'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "shift"
+                ]
+              }
+            },
+            "description": "In Zen",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "close_bracket",
+                "modifiers": [
+                  "left_command",
+                  "shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + '['",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "shift"
+                ]
+              }
+            },
+            "description": "In Zen",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "open_bracket",
+                "modifiers": [
+                  "left_command",
+                  "shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'H'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "h",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Skim",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "net.sourceforge.skim-app.skim"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "control"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'U'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "u",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Skim",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "net.sourceforge.skim-app.skim"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "u",
+                "modifiers": [
+                  "command",
+                  "control"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_q",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "key_code": "q",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
+              {
+                "set_variable": {
+                  "name": "guard_cmd_q",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_q",
+                "value": 0
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "guard_cmd_q",
+                  "value": 1
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "guard_cmd_q",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "guard_cmd_q",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[D]        →    Delete note (on multi-tap)",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "d",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_d",
+                "value": 1
+              },
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.chabomakers.Antinote"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "d",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
+              {
+                "set_variable": {
+                  "name": "guard_cmd_d",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "d",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.chabomakers.Antinote"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_d",
+                "value": 0
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "guard_cmd_d",
+                  "value": 1
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "guard_cmd_d",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "guard_cmd_d",
+                    "value": 0
                   }
                 }
               ]
@@ -4106,8 +4705,70 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held:\t\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
+        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held and In 1Piece:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
         "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button1"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 0
+            },
+            "to": [
+              {
+                "set_variable": {
+                  "name": "left_button_pressed",
+                  "value": 1
+                }
+              }
+            ],
+            "to_after_key_up": [
+              {
+                "set_variable": {
+                  "name": "left_button_pressed",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "key_code": "return_or_enter"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "key_code": "return_or_enter"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "right_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "jp.fuji.1Piece"
+                ]
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133
+                  }
+                ]
+              }
+            ],
+            "description": "on Logitech G502 X and not Right button held and In 1Piece"
+          },
           {
             "type": "basic",
             "from": {
@@ -4159,33 +4820,6 @@
               }
             ],
             "description": "on Logitech G502 X and not Right button held"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\tIn 1Piece:\tEmit '⏎'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "pointing_button": "button1"
-            },
-            "to": [
-              {
-                "key_code": "return_or_enter"
-              }
-            ],
-            "description": "In 1Piece",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "jp.fuji.1Piece"
-                ]
-              }
-            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -4716,7 +5350,7 @@
             },
             "to": [
               {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.scpt'"
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
               }
             ]
           }
@@ -5041,92 +5675,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "q",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_q",
-                "value": 1
-              }
-            ],
-            "to": [
-              {
-                "key_code": "q",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "set_variable": {
-                  "name": "guard_cmd_q",
-                  "value": 0
-                }
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "q",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_q",
-                "value": 0
-              }
-            ],
-            "to": [
-              {
-                "set_variable": {
-                  "name": "guard_cmd_q",
-                  "value": 1
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "guard_cmd_q",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "guard_cmd_q",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
         "manipulatorSources": [
           {
@@ -5210,42 +5758,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' then Run 'Get privileges'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Word",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.microsoft.Word"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "osascript \"/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript\""
-              },
-              {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2"
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'",
+        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5324,519 +5837,31 @@
                 "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
               }
             ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'H'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "h",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Skim",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "h",
-                "modifiers": [
-                  "command",
-                  "control"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'U'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "u",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Skim",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "u",
-                "modifiers": [
-                  "command",
-                  "control"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + ']'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "right_arrow",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "shift"
-                ]
-              }
-            },
-            "description": "In Zen",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "close_bracket",
-                "modifiers": [
-                  "left_command",
-                  "shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + '['",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_arrow",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "shift"
-                ]
-              }
-            },
-            "description": "In Zen",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "open_bracket",
-                "modifiers": [
-                  "left_command",
-                  "shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[D]        →    Delete note (on multi-tap)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "d",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_d",
-                "value": 1
-              },
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.chabomakers.Antinote"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "d",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "set_variable": {
-                  "name": "guard_cmd_d",
-                  "value": 0
-                }
-              }
-            ]
           },
           {
             "type": "basic",
             "from": {
-              "key_code": "d",
+              "key_code": "slash",
               "modifiers": {
                 "mandatory": [
                   "left_command"
                 ]
               }
             },
+            "description": "In Word",
             "conditions": [
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "com.chabomakers.Antinote"
+                  "com.microsoft.Word"
                 ]
-              },
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_d",
-                "value": 0
               }
             ],
             "to": [
               {
-                "set_variable": {
-                  "name": "guard_cmd_d",
-                  "value": 1
-                }
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
               }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "guard_cmd_d",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "guard_cmd_d",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_shift",
-              "modifiers": {}
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "multi_tap_left_shift",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "description": "multi_tap_left_shift second tap (tap-tap / tap-tap-hold)",
-            "to": [
-              {
-                "lazy": true,
-                "key_code": "left_shift",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_shift",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_shift",
-                  "value": 0
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_shift",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_shift",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "left_shift",
-              "modifiers": {}
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300,
-              "basic.to_if_alone_timeout_milliseconds": 300
-            },
-            "description": "multi_tap_left_shift first tap (pass-through)",
-            "to": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_shift",
-                  "value": 1
-                }
-              },
-              {
-                "lazy": true,
-                "key_code": "left_shift",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_shift",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "left_shift"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_left_shift",
-                  "value": 0
-                }
-              },
-              {
-                "key_code": "left_shift"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_shift",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_left_shift",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'\n\tOn Hold:\n\t\tAlways:\tEmit '⇧'\n\tOn Double Tap:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "right_shift",
-              "modifiers": {}
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "multi_tap_right_shift",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "description": "multi_tap_right_shift second tap (tap-tap / tap-tap-hold)",
-            "to": [
-              {
-                "lazy": true,
-                "key_code": "right_shift",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_right_shift",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_right_shift",
-                  "value": 0
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_right_shift",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_right_shift",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "right_shift",
-              "modifiers": {}
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300,
-              "basic.to_if_alone_timeout_milliseconds": 300
-            },
-            "description": "multi_tap_right_shift first tap (pass-through)",
-            "to": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_right_shift",
-                  "value": 1
-                }
-              },
-              {
-                "lazy": true,
-                "key_code": "right_shift",
-                "modifiers": []
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_right_shift",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "right_shift"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_right_shift",
-                  "value": 0
-                }
-              },
-              {
-                "key_code": "right_shift"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_right_shift",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_right_shift",
-                    "value": 0
-                  }
-                }
-              ]
-            }
+            ]
           }
         ],
         "allowEmptyManipulators": false,

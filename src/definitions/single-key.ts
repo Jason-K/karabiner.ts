@@ -1,4 +1,5 @@
-import { Apps, Paths, Urls } from "../data";
+import { killAppCommand } from "../core/scripts";
+import { Apps, Paths, TIMINGS, Urls } from "../data";
 import type { Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
@@ -55,7 +56,10 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["8"] },
     cases: [
-      { phase: "hold", do: [{ type: "app", ref: Apps.ringCentral, mode: "shell" }] },
+      {
+        phase: "hold",
+        do: [{ type: "app", ref: Apps.ringCentral, mode: "shell" }],
+      },
     ],
   },
   {
@@ -63,16 +67,31 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f18", modifiers: ["vmCOC_"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f18",
+            modifiers: ["vmCOC_"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
+
   {
     trigger: { keys: ["c"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "7", modifiers: ["vmCO_S"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "7",
+            modifiers: ["vmCO_S"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
@@ -81,7 +100,14 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f1", modifiers: ["vmCO_S"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f1",
+            modifiers: ["vmCO_S"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
@@ -91,17 +117,19 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["g"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: Apps.claude, mode: "shell" }] }],
-  },
-  {
-    trigger: { keys: ["h"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: Urls.rayHere2There }] },
+      { phase: "hold", do: [{ type: "app", ref: Apps.claude, mode: "shell" }] },
     ],
   },
   {
+    trigger: { keys: ["h"] },
+    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.rayHere2There }] }],
+  },
+  {
     trigger: { keys: ["j"] },
-    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.rayRecentDownloads }] }],
+    cases: [
+      { phase: "hold", do: [{ type: "url", url: Urls.rayRecentDownloads }] },
+    ],
   },
   {
     trigger: { keys: ["k"] },
@@ -125,7 +153,10 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["o"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: Urls.csxCaptureTextNoLinebreaks }] },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: Urls.csxCaptureTextNoLinebreaks }],
+      },
     ],
   },
   {
@@ -133,17 +164,31 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f9", modifiers: ["vmCOCS"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f9",
+            modifiers: ["vmCOCS"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
   {
     trigger: { keys: ["q"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: Apps.qspace, mode: "focus" }] }],
+    cases: [
+      { phase: "hold", do: [{ type: "app", ref: Apps.qspace, mode: "focus" }] },
+    ],
   },
   {
     trigger: { keys: ["r"] },
-    cases: [{ phase: "hold", do: [{ type: "shell", command: Paths.recentDownloadsScript }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: Paths.recentDownloadsScript }],
+      },
+    ],
   },
   {
     trigger: { keys: ["s"] },
@@ -151,14 +196,23 @@ export const singleKeyTapHoldBindings: Binding[] = [
   },
   {
     trigger: { keys: ["s"], modifiers: ["shift"] },
-    cases: [{ phase: "hold", do: [{ type: "url", url: Urls.csxCaptureWindow }] }],
+    cases: [
+      { phase: "hold", do: [{ type: "url", url: Urls.csxCaptureWindow }] },
+    ],
   },
   {
     trigger: { keys: ["t"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f11", modifiers: ["vm_OCS"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f11",
+            modifiers: ["vm_OCS"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
@@ -210,7 +264,10 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["keypad_5"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: Urls.rectWinsUnstash, background: true }] },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: Urls.rectWinsUnstash, background: true }],
+      },
     ],
   },
   {
@@ -225,68 +282,149 @@ export const singleKeyTapHoldBindings: Binding[] = [
   {
     trigger: { keys: ["keypad_8"] },
     cases: [
-      { phase: "hold", do: [{ type: "url", url: Urls.rectWinStashUp, background: true }] },
+      {
+        phase: "hold",
+        do: [{ type: "url", url: Urls.rectWinStashUp, background: true }],
+      },
     ],
   },
   {
     trigger: { keys: ["f1"] },
     cases: [
-      { phase: "hold", do: [{ type: "key", key: "display_brightness_decrement", options: { repeat: true } }] },
+      {
+        phase: "hold",
+        do: [
+          {
+            type: "key",
+            key: "display_brightness_decrement",
+            options: { repeat: true },
+          },
+        ],
+      },
     ],
   },
   {
     trigger: { keys: ["f2"] },
     cases: [
-      { phase: "hold", do: [{ type: "key", key: "display_brightness_increment", options: { repeat: true } }] },
+      {
+        phase: "hold",
+        do: [
+          {
+            type: "key",
+            key: "display_brightness_increment",
+            options: { repeat: true },
+          },
+        ],
+      },
     ],
   },
   {
     trigger: { keys: ["f3"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "mission_control", options: { repeat: false } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [
+          { type: "key", key: "mission_control", options: { repeat: false } },
+        ],
+      },
+    ],
   },
   {
     trigger: { keys: ["f4"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "launchpad", options: { repeat: false } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "launchpad", options: { repeat: false } }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f5"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f5", modifiers: ["vmCOC_"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f5",
+            modifiers: ["vmCOC_"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
   {
     trigger: { keys: ["f7"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "rewind", options: { repeat: true } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "rewind", options: { repeat: true } }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f8"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "play_or_pause", options: { repeat: false } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "play_or_pause", options: { repeat: false } }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f9"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "fastforward", options: { repeat: true } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "fastforward", options: { repeat: true } }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f10"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "mute", options: { repeat: false } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "mute", options: { repeat: false } }],
+      },
+    ],
   },
   {
     trigger: { keys: ["f11"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "volume_decrement", options: { repeat: true } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [
+          { type: "key", key: "volume_decrement", options: { repeat: true } },
+        ],
+      },
+    ],
   },
   {
     trigger: { keys: ["f12"] },
-    cases: [{ phase: "hold", do: [{ type: "key", key: "volume_increment", options: { repeat: true } }] }],
+    cases: [
+      {
+        phase: "hold",
+        do: [
+          { type: "key", key: "volume_increment", options: { repeat: true } },
+        ],
+      },
+    ],
   },
   {
     trigger: { keys: ["slash"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "h", modifiers: ["vmCOCS"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "h",
+            modifiers: ["vmCOCS"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
@@ -295,14 +433,50 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f9", modifiers: ["vmCOCS"], options: { halt: true, repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f9",
+            modifiers: ["vmCOCS"],
+            options: { halt: true, repeat: false },
+          },
+        ],
       },
     ],
   },
   {
     trigger: { keys: ["tab"] },
     cases: [
-      { phase: "hold", do: [{ type: "key", key: "mission_control", options: { halt: true, repeat: true } }] },
+      {
+        phase: "hold",
+        do: [
+          {
+            type: "key",
+            key: "mission_control",
+            options: { halt: true, repeat: true },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["escape"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
+    multiTap: { mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key: "escape" }] },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: killAppCommand("foreground") }],
+      },
+      {
+        tapCount: 2,
+        phase: "hold",
+        do: [{ type: "shell", command: killAppCommand() }],
+      },
     ],
   },
   {
@@ -310,7 +484,61 @@ export const singleKeyTapHoldBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "key", key: "f5", modifiers: ["vmCOC_"], options: { repeat: false } }],
+        do: [
+          {
+            type: "key",
+            key: "f5",
+            modifiers: ["vmCOC_"],
+            options: { repeat: false },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["left_command"] },
+    timing: {
+      aloneMs: TIMINGS.timeoutDoubleTapMs,
+      heldThresholdMs: TIMINGS.timeoutDoubleTapMs,
+    },
+    multiTap: { allowPassThrough: true, mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key: "left_command" }] },
+      { phase: "hold", do: [{ type: "key", key: "left_command" }] },
+      { tapCount: 2, phase: "release", do: [{ type: "appHistory", index: 1 }] },
+    ],
+  },
+  {
+    trigger: { keys: ["left_shift"] },
+    timing: {
+      aloneMs: TIMINGS.timeoutDoubleTapMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
+    multiTap: { allowPassThrough: true, mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key: "left_shift" }] },
+      { phase: "hold", do: [{ type: "key", key: "left_shift" }] },
+      {
+        tapCount: 2,
+        phase: "release",
+        do: [{ type: "url", url: Urls.rayClipboard }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["right_shift"] },
+    timing: {
+      aloneMs: TIMINGS.timeoutDoubleTapMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
+    multiTap: { allowPassThrough: true, mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key: "right_shift" }] },
+      { phase: "hold", do: [{ type: "key", key: "right_shift" }] },
+      {
+        tapCount: 2,
+        phase: "release",
+        do: [{ type: "url", url: Urls.rayClipboard }],
       },
     ],
   },

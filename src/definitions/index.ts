@@ -1,43 +1,26 @@
 // User edit surface: modify files in this directory to customize your Karabiner config.
 
 import { assertUniqueTriggers, type Binding } from "../engine";
-import { antinoteTapHoldBindings } from "./apps/antinote";
 import { hyperTapHoldBindings } from "./hyper";
-import { leftCommandTapHoldBindings } from "./left-command";
-import { rightOptionTapHoldBindings } from "./right-option";
+import { modifiedSingleKeyTapHoldBindings } from "./modified-single-key";
 import { singleKeyTapHoldBindings } from "./single-key";
-
-export { buildAntinoteRules } from "./apps/antinote";
-export { buildOnePieceClickEnterRule } from "./apps/onepiece";
-export { buildSkimCommandRemapRule } from "./apps/skim";
-export { buildWordPrivilegesRule } from "./apps/word";
-export { buildZenCommandRemapRule } from "./apps/zen";
 export { buildCapsLockRule } from "./caps-lock";
+export {
+  buildDisabledHotkeys,
+  disabledShortcutBindings,
+} from "./disable-hotkeys";
 export {
   buildEnterRules,
   buildEqualsRules,
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "./enter-equals";
-export {
-  buildCtrlEscapeMonitorRule,
-  buildEscapeTapTapHoldRule,
-} from "./escape";
+export { buildGuardRules } from "./guards";
 export { buildHomeEndRule, homeEndBindings } from "./home-end";
-export {
-  buildHyperLauncherRules,
-  hyperLauncherBindings,
-} from "./hyper";
-export {
-  buildCmdQRule,
-  buildLeftCommandRule,
-} from "./left-command";
+export { buildHyperLauncherRules, hyperLauncherBindings } from "./hyper";
 export { mouseBindings } from "./mouse";
-export { buildShiftRules } from "./shift";
 export {
-  buildDisableHideMinimizeRule,
   buildPasswordsQuickFillRule,
-  disabledShortcutBindings,
   passwordsQuickFillBinding,
 } from "./system";
 
@@ -45,9 +28,7 @@ export {
 export const tapHoldBindings: Binding[] = assertUniqueTriggers([
   ...singleKeyTapHoldBindings,
   ...hyperTapHoldBindings,
-  ...leftCommandTapHoldBindings,
-  ...antinoteTapHoldBindings,
-  ...rightOptionTapHoldBindings,
+  ...modifiedSingleKeyTapHoldBindings,
 ]);
 
 export { simultaneousMappings } from "./simultaneous";
