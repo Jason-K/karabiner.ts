@@ -5,10 +5,7 @@ import { hyperTapHoldBindings } from "./hyper";
 import { modifiedSingleKeyTapHoldBindings } from "./modified-single-key";
 import { singleKeyTapHoldBindings } from "./single-key";
 export { buildCapsLockRule } from "./caps-lock";
-export {
-  buildDisabledHotkeys,
-  disabledShortcutBindings,
-} from "./disable-hotkeys";
+export { buildDisabledHotkeys, disabledHotkeys } from "./disable-hotkeys";
 export {
   buildEnterRules,
   buildEqualsRules,

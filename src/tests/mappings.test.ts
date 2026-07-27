@@ -7,15 +7,13 @@ import { Commands } from "../data/commands";
 import { Folders } from "../data/folders";
 import { Urls } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
-import buildDisabledHotkeys from "../definitions/disable-hotkeys";
+import { disabledHotkeys } from "../definitions/disable-hotkeys";
 import {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "../definitions/enter-equals";
 import { homeEndBindings } from "../definitions/home-end";
-import {
-  passwordsQuickFillBinding,
-} from "../definitions/system";
+import { passwordsQuickFillBinding } from "../definitions/system";
 import { resolveModifiers, type Binding, type Case } from "../engine";
 
 /** Find a tap-hold binding in the merged set by single key + modifiers. */
@@ -108,12 +106,12 @@ test("home-end navigation mappings stay declarative", () => {
 });
 
 test("disabled shortcut mappings stay declarative", () => {
-  assert.equal(buildDisabledHotkeys().length, 4);
-  assert.deepEqual(buildDisabledHotkeys()[0], {
+  assert.equal(disabledHotkeys.length, 4);
+  assert.deepEqual(disabledHotkeys[0], {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });
-  assert.deepEqual(buildDisabledHotkeys()[2], {
+  assert.deepEqual(disabledHotkeys[2], {
     trigger: { keys: ["m"], modifiers: ["left_command", "option"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
   });

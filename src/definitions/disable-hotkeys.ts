@@ -2,7 +2,7 @@ import { Apps } from "../data";
 import { defineBindings, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
-export const disabledShortcutBindings: Binding[] = [
+export const disabledHotkeys: Binding[] = [
   {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
     cases: [{ phase: "press", do: [{ type: "noop" }] }],
@@ -22,5 +22,4 @@ export const disabledShortcutBindings: Binding[] = [
   },
 ];
 
-export const buildDisabledHotkeys = () =>
-  defineBindings(disabledShortcutBindings);
+export const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
