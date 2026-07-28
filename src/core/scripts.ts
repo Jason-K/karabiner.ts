@@ -159,7 +159,7 @@ export function pythonScriptCommand(
   scriptPath: string,
   opts?: { venv?: string; args?: string[] },
 ): string {
-  const parts = [PATHS.uvBin.name, "run"];
+  const parts = [PATHS.binUV.name, "run"];
   if (opts?.venv) {
     parts.push("--python", normalizePathForShell(`${opts.venv}/bin/python`));
   }
@@ -173,7 +173,7 @@ export function pythonScriptCommand(
 export function textProcessorCommand(action: string): string {
   return pythonCommand(
     [
-      PATHS.textProcessorEntrypoint.name,
+      PATHS.scriptTextProcessorCLI.name,
       action,
       "--source",
       "clipboard",
@@ -181,7 +181,7 @@ export function textProcessorCommand(action: string): string {
       "paste",
     ],
     {
-      pythonBin: `${PATHS.uvBin.name} --directory ${PATHS.textProcessorDir.name} run python`,
+      pythonBin: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python`,
     },
   );
 }
@@ -195,11 +195,9 @@ export function withSleep(delaySeconds: number, shell: string): string {
 
 
 export function actHereCmd(action: string): string {
-  return `${PATHS.actHereScript.name} --action ${action}`;
+  return `${PATHS.scriptHere2There.name} --action ${action}`;
 }
 
 export function openAppBundleCommand(bundleIdentifier: string): string {
-  return `${PATHS.openAppBin.name} -b ${shellSingleQuote(bundleIdentifier)}`;
+  return `${PATHS.binAppOpen.name} -b ${shellSingleQuote(bundleIdentifier)}`;
 }
-
-

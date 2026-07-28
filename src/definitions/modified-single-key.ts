@@ -244,7 +244,7 @@ const modLetterBindings: Binding[] = [
       },
       {
         phase: "hold",
-        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
+        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
       },
     ],
   },
@@ -257,7 +257,7 @@ const modLetterBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
+        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
       },
     ],
   },
@@ -505,7 +505,7 @@ const modFunctionKeyBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "shell", command: CMDS.typinatorEditLastRule }],
+        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
       },
     ],
   },

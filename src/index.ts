@@ -93,7 +93,7 @@ function resolveTargetProfileName(): string {
   }
 
   try {
-    const raw = readFileSync(PATHS.karabinerConfig.name, "utf8");
+    const raw = readFileSync(PATHS.configKarabiner.name, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };

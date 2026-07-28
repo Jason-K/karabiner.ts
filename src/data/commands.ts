@@ -9,50 +9,49 @@ const cmdEntry = (name: string, refDesc: string) => ({
 
 const subCommands = {
   // PRIVILEGES
-  revokePriv: `${PATHS.privCLI.name} -r`,
-  addPriv: `${PATHS.privCLI.name} -a`,
+  revokePriv: `${PATHS.binPrivCLI.name} -r`,
+  addPriv: `${PATHS.binPrivCLI.name} -a`,
+  getPriv: `${PATHS.binPrivCLI.name} -r && sleep ${TIMINGS.privDelaySec} && ${PATHS.binPrivCLI.name} -a && sleep ${TIMINGS.privDelaySec}`,
 
   // UTILITIES
-  callSendKeys: `${PATHS.sendkeys.name} --initial-delay 0 --delay 0.005`,
+  callSendKeys: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005`,
 
   // SCRIPTS
-  getWordDocPath: `osascript '${PATHS.wordDocumentPathAppleScript.name}'`,
+  getWordDocPath: `osascript '${PATHS.scriptWordGetDocPath.name}'`,
 
   // HAMMERSPOON
-  callHammerspoon: `${PATHS.hs.name} -c`,
-  hsQueryScreenOrientation: `local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h)`,
-  hsGetWinScreenData: `${PATHS.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  callHammerspoon: `${PATHS.binHS.name} -c`,
+
+  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 
   // TEXT PROCESSOR
-  callTextProcessor: `${PATHS.uvBin.name} --directory ${PATHS.textProcessorDir.name} run python ${PATHS.textProcessorEntrypoint.name}`,
+  callTextProcessor: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python ${PATHS.scriptTextProcessorCLI.name}`,
+  
 };
 
 export const CMDS = {
   // PASSWORDS AND PRIVILEGES
-  getPrivileges: cmdEntry(
-    `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec}`,
-    "Get privileges",
-  ),
+  getPrivileges: cmdEntry(`${subCommands.getPriv}`, "Get privileges"),
   fillPassword: cmdEntry(
-    `${subCommands.revokePriv} && sleep ${TIMINGS.privDelaySec} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
+    `${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
     "Fill password",
   ),
   fillUsernameAndPassword: cmdEntry(
-    `${subCommands.revokePriv} && ${subCommands.addPriv} && sleep 0.1 && ${subCommands.callSendKeys} --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
+    `${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
     "Fill username and password",
   ),
   getWordDocPathAndPrivileges: cmdEntry(
-    `${subCommands.getWordDocPath} && sleep ${TIMINGS.privDelaySec} && ${subCommands.revokePriv} && ${subCommands.addPriv} && sleep ${TIMINGS.privDelaySec} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
+    `${subCommands.getWordDocPath} && ${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
     "Get privileges and path to active Word document",
   ),
 
   // KILL APPS
   killForegroundApp: cmdEntry(
-    `${PATHS.killAppBin.name} --foreground`,
+    `${PATHS.binAppKill.name} --foreground`,
     "Kill foreground application",
   ),
   killAllApps: cmdEntry(
-    `${PATHS.killAppBin.name} --all`,
+    `${PATHS.binAppKill.name} --all`,
     "Kill all applications",
   ),
 
@@ -68,17 +67,17 @@ export const CMDS = {
 
   // TYPINATOR
   typinatorNewRule: cmdEntry(
-    `${PATHS.typinatorPythonBin.name} ${PATHS.typinatorNewRuleScript.name}`,
+    `${PATHS.binPythonTypinator.name} ${PATHS.scriptTypinatorNewRule.name}`,
     "Create new Typinator rule",
   ),
-  typinatorEditLastRule: cmdEntry(
-    `osascript '${PATHS.typinatorEditLastRule.name}'`,
+  scriptTypinatorLastRule: cmdEntry(
+    `osascript '${PATHS.scriptTypinatorLastRule.name}'`,
     "Edit last Typinator expansion",
   ),
 
   // SPOTIFY
   spotifyToggle: cmdEntry(
-    "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'",
+    `if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '${PATHS.binAppOpen.name}' -b 'com.spotify.client'; fi; echo 'Spotify toggled'`,
     "open Spotify or toggle play/pause",
   ),
 
@@ -90,15 +89,15 @@ export const CMDS = {
 
   // WINDOW NAVIGATION AND MOVEMENT
   winRightOrBottom: cmdEntry(
-    `${subCommands.hsGetWinScreenData}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'`,
+    `${subCommands.hsGetDisplayInfo}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'`,
     "Move window to right or bottom half",
   ),
   winLeftOrTop: cmdEntry(
-    `${subCommands.hsGetWinScreenData}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'`,
+    `${subCommands.hsGetDisplayInfo}; local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'`,
     "Move window to left or top half",
   ),
   winMaxOrRestore: cmdEntry(
-    `${subCommands.hsGetWinScreenData}; local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'`,
+    `${subCommands.hsGetDisplayInfo}; local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'`,
     "Maximize or restore window",
   ),
 } as const;

@@ -195,7 +195,7 @@ const letterBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "shell", command: PATHS.recentDownloadsScript }],
+        do: [{ type: "shell", command: PATHS.scriptNewDLs }],
       },
     ],
   },
@@ -243,7 +243,6 @@ const letterBindings: Binding[] = [
       { phase: "hold", do: [{ type: "url", url: URLS.rayZoxideSearchDirs }] },
     ],
   },
-
 ];
 
 const symbolBindings: Binding[] = [
