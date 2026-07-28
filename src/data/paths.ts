@@ -7,6 +7,12 @@ const path = (name: string, refDesc: string) => ({
 });
 
 export const PATHS = {
+  // directories
+  textProcessorDir: path(
+    `${HOME_DIR}/Scripts/strings/text_processor`,
+    "Text Processor directory",
+  ),
+
   // scripts
   actHereScript: path(
     `${HOME_DIR}/Scripts/active_process/take_action_here/take_action_here.sh`,
@@ -17,7 +23,7 @@ export const PATHS = {
     "Recent Downloads script",
   ),
   textProcessorEntrypoint: path(
-    "interfaces/cli.py",
+    `${HOME_DIR}/Scripts/strings/text_processor/interfaces/cli.py`,
     "Text Processor entrypoint",
   ),
   typinatorEditLastRule: path(
@@ -53,11 +59,7 @@ export const PATHS = {
     `${HOME_DIR}/.config/karabiner/karabiner.json`,
     "Karabiner configuration file",
   ),
-  // directories
-  textProcessorDir: path(
-    `${HOME_DIR}/Scripts/strings/text_processor`,
-    "Text Processor directory",
-  ),
+
 } as const;
 
 export type PathRef = import("./refs").PathRef;

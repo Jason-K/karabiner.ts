@@ -1,58 +1,10 @@
-import { killAppCommand } from "../core/scripts";
-import { APPS, PATHS, TIMINGS, URLS } from "../data";
+import { APPS, CMDS, PATHS, TIMINGS, URLS } from "../data";
 import type { Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
 //   tap passes the key through (the engine's default-alone behavior).
-//
-////   LETTERS:
-//////     a: Raycast AI-quick search
-//////     c: Calendar
-//////     f: QSSpace
-//////     g: Claude
-//////     h: Here2There
-//////     j: Last d/l
-//////     k: Kitty
-//////     o: OCR
-//////     p: Popclip
-//////     r: Last d/l
-//////     s: Screenshot
-//////     t: Todoist
-//////     v: Maccy
-//////     x: Copy file (actHere)
-//////     y: Yank file (actHere)
-//////     z: Zoxide
-////
-////   NUMBERS:
-//////     8: RingCentral
-//////     keypad_0: Unstash all via rectangle
-//////     keypad_2: Stash down via rectangle
-//////     keypad_4: Stash left via rectangle
-//////     keypad_5: Unstash via rectangle
-//////     keypad_6: Stash right via rectangle
-//////     keypad_8: Stash up via rectangle
-////
-////   FUNCTION KEYS:
-//////     f1: Brightness decrement
-//////     f2: Increase brightness
-//////     f3: Mission Control
-//////     f4: Launchpad
-//////     f5: Dictation
-//////     f7: Rewind
-//////     f8: Play/Pause
-//////     f9: Fast Forward
-//////     f10: Mute
-//////     f11: Volume Down
-//////     f12: Volume Up
-////
-////   OTHER KEYS:
-//////     slash: Houdah
-//////     tab: Mission Control
-//////     fn: Dictation via Spokenly
 
-export const singleKeyTapHoldBindings: Binding[] = [
-  // "8" is first to preserve historical rule order (the old Record hoisted
-  // integer-like keys to the front); no special meaning.
+const numBindings: Binding[] = [
   {
     trigger: { keys: ["8"] },
     cases: [
@@ -62,6 +14,63 @@ export const singleKeyTapHoldBindings: Binding[] = [
       },
     ],
   },
+  {
+    trigger: { keys: ["keypad_0"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinsUnstashAll, background: true }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["keypad_2"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinStashDown, background: true }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["keypad_4"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinStashLeft, background: true }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["keypad_5"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinsUnstash, background: true }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["keypad_6"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinStashRight, background: true }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["keypad_8"] },
+    cases: [
+      {
+        phase: "hold",
+        do: [{ type: "url", url: URLS.rectWinStashUp, background: true }],
+      },
+    ],
+  },
+];
+
+const letterBindings: Binding[] = [
   {
     trigger: { keys: ["a"] },
     cases: [
@@ -143,7 +152,7 @@ export const singleKeyTapHoldBindings: Binding[] = [
         do: [
           {
             type: "url",
-            url: "sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A",
+            url: URLS.newClientNote,
             background: true,
           },
         ],
@@ -234,60 +243,197 @@ export const singleKeyTapHoldBindings: Binding[] = [
       { phase: "hold", do: [{ type: "url", url: URLS.rayZoxideSearchDirs }] },
     ],
   },
+
+];
+
+const symbolBindings: Binding[] = [
   {
-    trigger: { keys: ["keypad_0"] },
+    trigger: { keys: ["keypad_equal_sign"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
     cases: [
       {
+        phase: "release",
+        do: [{ type: "key", key: "keypad_equal_sign", options: { halt: true } }],
+      },
+      {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinsUnstashAll, background: true }],
+        do: [
+          {
+            type: "key",
+            key: "left_arrow",
+            modifiers: ["shift", "option"],
+          },
+          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "shell", command: CMDS.tpQuickDate },
+        ],
       },
     ],
   },
   {
-    trigger: { keys: ["keypad_2"] },
+    trigger: { keys: ["equal_sign"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
     cases: [
       {
+        phase: "release",
+        do: [{ type: "key", key: "keypad_equal_sign", options: { halt: true } }],
+      },
+      {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinStashDown, background: true }],
+        do: [
+          {
+            type: "key",
+            key: "left_arrow",
+            modifiers: ["shift", "option"],
+          },
+          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "shell", command: CMDS.tpQuickDate },
+        ],
       },
     ],
   },
   {
-    trigger: { keys: ["keypad_4"] },
+    trigger: { keys: ["slash"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinStashLeft, background: true }],
+        do: [
+          {
+            type: "key",
+            key: "h",
+            modifiers: ["vmCOCS"],
+            options: { repeat: false },
+          },
+        ],
       },
     ],
   },
   {
-    trigger: { keys: ["keypad_5"] },
+    trigger: { keys: ["grave_accent_and_tilde"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinsUnstash, background: true }],
+        do: [
+          {
+            type: "key",
+            key: "f9",
+            modifiers: ["vmCOCS"],
+            options: { halt: true, repeat: false },
+          },
+        ],
+      },
+    ],
+  },
+]
+
+const nonCharBindings: Binding[] = [
+  {
+    trigger: { keys: ["keypad_enter"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
+    cases: [
+      {
+        phase: "release",
+        do: [{ type: "key", key: "keypad_enter", options: { halt: true } }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
+        conditions: [{ app: APPS.excel, unless: true }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "f2", options: { repeat: false } }],
+        conditions: [{ app: APPS.excel }],
       },
     ],
   },
   {
-    trigger: { keys: ["keypad_6"] },
+    trigger: { keys: ["return_or_enter"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
     cases: [
       {
+        phase: "release",
+        do: [{ type: "key", key: "return_or_enter", options: { halt: true } }],
+      },
+      {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinStashRight, background: true }],
+        do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
+        conditions: [{ app: APPS.excel, unless: true }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "f2", options: { repeat: false } }],
+        conditions: [{ app: APPS.excel }],
       },
     ],
   },
   {
-    trigger: { keys: ["keypad_8"] },
+    trigger: { keys: ["tab"] },
     cases: [
       {
         phase: "hold",
-        do: [{ type: "url", url: URLS.rectWinStashUp, background: true }],
+        do: [
+          {
+            type: "key",
+            key: "mission_control",
+            options: { halt: true, repeat: true },
+          },
+        ],
       },
     ],
   },
+  {
+    trigger: { keys: ["escape"] },
+    timing: {
+      aloneMs: TIMINGS.delayHoldMs,
+      heldThresholdMs: TIMINGS.delayHoldMs,
+    },
+    multiTap: { mods: [] },
+    cases: [
+      { phase: "release", do: [{ type: "key", key: "escape" }] },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: CMDS.killForegroundApp }],
+      },
+      {
+        tapCount: 2,
+        phase: "hold",
+        do: [{ type: "shell", command: CMDS.killAllApps }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["home"] },
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "key", key: "left_arrow", modifiers: ["left_command"] }],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["end"] },
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "key", key: "right_arrow", modifiers: ["left_command"] }],
+      },
+    ],
+  },
+];
+
+const functionKeyBindings: Binding[] = [
   {
     trigger: { keys: ["f1"] },
     cases: [
@@ -412,73 +558,9 @@ export const singleKeyTapHoldBindings: Binding[] = [
       },
     ],
   },
-  {
-    trigger: { keys: ["slash"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "key",
-            key: "h",
-            modifiers: ["vmCOCS"],
-            options: { repeat: false },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["grave_accent_and_tilde"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "key",
-            key: "f9",
-            modifiers: ["vmCOCS"],
-            options: { halt: true, repeat: false },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["tab"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "key",
-            key: "mission_control",
-            options: { halt: true, repeat: true },
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["escape"] },
-    timing: {
-      aloneMs: TIMINGS.delayHoldMs,
-      heldThresholdMs: TIMINGS.delayHoldMs,
-    },
-    multiTap: { mods: [] },
-    cases: [
-      { phase: "release", do: [{ type: "key", key: "escape" }] },
-      {
-        phase: "hold",
-        do: [{ type: "shell", command: killAppCommand("foreground") }],
-      },
-      {
-        tapCount: 2,
-        phase: "hold",
-        do: [{ type: "shell", command: killAppCommand() }],
-      },
-    ],
-  },
+];
+
+const modifierKeyBindings: Binding[] = [
   {
     trigger: { keys: ["fn"] },
     cases: [
@@ -542,4 +624,13 @@ export const singleKeyTapHoldBindings: Binding[] = [
       },
     ],
   },
+];
+
+export const singleKeyTapHoldBindings: Binding[] = [
+  ...numBindings,
+  ...letterBindings,
+  ...symbolBindings,
+  ...nonCharBindings,
+  ...functionKeyBindings,
+  ...modifierKeyBindings,
 ];

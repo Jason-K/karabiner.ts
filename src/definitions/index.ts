@@ -1,19 +1,15 @@
 // User edit surface: modify files in this directory to customize your Karabiner config.
 
+// IMPORTS
 import { assertUniqueTriggers, type Binding } from "../engine";
 import { hyperTapHoldBindings } from "./hyper";
 import { modifiedSingleKeyTapHoldBindings } from "./modified-single-key";
 import { singleKeyTapHoldBindings } from "./single-key";
+
+// RULES
 export { buildCapsLockRule } from "./caps-lock";
 export { buildDisabledHotkeys, disabledHotkeys } from "./disable-hotkeys";
-export {
-  buildEnterRules,
-  buildEqualsRules,
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-} from "./enter-equals";
 export { buildHotkeyGuards } from "./guards";
-export { buildHomeEndRule, homeEndBindings } from "./home-end";
 export { buildHyperLauncherRules, hyperLauncherBindings } from "./hyper";
 export { mouseBindings } from "./mouse";
 

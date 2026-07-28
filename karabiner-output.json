@@ -3387,6 +3387,116 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role_string",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.subrole_string",
+                "value": "AXSecureTextField"
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role_string",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_unless",
+                "name": "accessibility.focused_ui_element.subrole_string",
+                "value": "AXSecureTextField"
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Word",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Word"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)",
         "manipulatorSources": [
           {
@@ -5756,116 +5866,6 @@
                 "bundle_identifiers": [
                   "com.chabomakers.Antinote"
                 ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
-                ]
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.subrole_string",
-                "value": "AXSecureTextField"
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
-                ]
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_unless",
-                "name": "accessibility.focused_ui_element.subrole_string",
-                "value": "AXSecureTextField"
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Word",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.microsoft.Word"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
               }
             ]
           }

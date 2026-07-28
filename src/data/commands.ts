@@ -22,6 +22,9 @@ const subCommands = {
   callHammerspoon: `${PATHS.hs.name} -c`,
   hsQueryScreenOrientation: `local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local frame = screen:frame(); local url = (frame.w >= frame.h)`,
   hsGetWinScreenData: `${PATHS.hs.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+
+  // TEXT PROCESSOR
+  callTextProcessor: `${PATHS.uvBin.name} --directory ${PATHS.textProcessorDir.name} run python ${PATHS.textProcessorEntrypoint.name}`,
 };
 
 export const CMDS = {
@@ -43,10 +46,24 @@ export const CMDS = {
     "Get privileges and path to active Word document",
   ),
 
+  // KILL APPS
+  killForegroundApp: cmdEntry(
+    `${PATHS.killAppBin.name} --foreground`,
+    "Kill foreground application",
+  ),
+  killAllApps: cmdEntry(
+    `${PATHS.killAppBin.name} --all`,
+    "Kill all applications",
+  ),
+
   // HAMMERSPOON
   hsFormatSelection: cmdEntry(
     `${subCommands.callHammerspoon} 'FormatSelection()'`,
     "Format selection using hsStringEval",
+  ),
+  hsFormatCutSeed: cmdEntry(
+    `${subCommands.callHammerspoon} 'FormatCutSeed()'`,
+    "Format substrings within selection",
   ),
 
   // TYPINATOR
@@ -63,6 +80,12 @@ export const CMDS = {
   spotifyToggle: cmdEntry(
     "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'",
     "open Spotify or toggle play/pause",
+  ),
+
+  // STRING EVALUATION
+  tpQuickDate: cmdEntry(
+    `${subCommands.callTextProcessor} quick_date --source clipboard --dest paste`,
+    "Insert today's date in yyyy-mm-dd format at the cursor.",
   ),
 
   // WINDOW NAVIGATION AND MOVEMENT

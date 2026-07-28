@@ -28,9 +28,6 @@ import {
 import {
   buildCapsLockRule,
   buildDisabledHotkeys,
-  buildEnterRules,
-  buildEqualsRules,
-  buildHomeEndRule,
   buildHotkeyGuards,
   buildHyperLauncherRules,
   mouseBindings,
@@ -68,17 +65,8 @@ let rules: any[] = [
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),
 
-  // HOME/END - Make them work properly on macOS
-  ...buildHomeEndRule(),
-
   // vmCOC_ + _ - Grouped virtual-mod shortcuts
   ...buildHyperLauncherRules(),
-
-  // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel
-  ...buildEnterRules(),
-
-  // EQUALS - Hold for Quick Date (both keypad and regular)
-  ...buildEqualsRules(),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...buildDisabledHotkeys(),

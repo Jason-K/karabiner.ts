@@ -6,6 +6,11 @@ const url = (name: string, refDesc: string) => ({
 });
 
 // Application-specific URLs
+
+const SidenotesUrls = {
+  newClientNote: url("sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A", "new client note template")
+}
+
 const RaycastUrls = {
   // Raycast URLs
   rayClipboard: url(
@@ -432,6 +437,7 @@ const AntiNoteUrls = {
 // EXPORTS
 
 export const URLS = {
+  ...SidenotesUrls,
   ...RaycastUrls,
   ...rectangleUrls,
   ...CsxUrls,

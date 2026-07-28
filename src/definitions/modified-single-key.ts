@@ -10,7 +10,7 @@ import {
 } from "../data";
 import type { Binding } from "../engine";
 
-const lCmdBindings: Binding[] = [
+export const lCmdBindings: Binding[] = [
   {
     trigger: { keys: ["m"], modifiers: ["left_command"] },
     cases: [
@@ -45,7 +45,7 @@ const lCmdBindings: Binding[] = [
   },
 ];
 
-const rOptBindings: Binding[] = [
+export const rOptBindings: Binding[] = [
   {
     trigger: { keys: ["k"], modifiers: ["right_option"] },
     timing: {
@@ -83,7 +83,7 @@ const rOptBindings: Binding[] = [
   },
 ];
 
-const ctrlBindings: Binding[] = [
+export const ctrlBindings: Binding[] = [
   {
     trigger: { keys: ["escape"], modifiers: ["control"] },
     timing: {
@@ -100,7 +100,40 @@ const ctrlBindings: Binding[] = [
   },
 ];
 
-const antinoteRemaps: Binding[] = [
+export const shiftBindings: Binding[] = [
+  {
+    trigger: { keys: ["home"], modifiers: ["shift"] },
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "left_arrow",
+            modifiers: ["left_command", "shift"],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    trigger: { keys: ["end"], modifiers: ["shift"] },
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "right_arrow",
+            modifiers: ["left_command", "shift"],
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export const antinoteRemaps: Binding[] = [
   {
     trigger: { keys: ["a"], modifiers: ["shift"] },
     cases: [
@@ -112,7 +145,7 @@ const antinoteRemaps: Binding[] = [
   },
 ];
 
-const zenRemaps: Binding[] = [
+export const zenRemaps: Binding[] = [
   {
     trigger: { keys: ["right_arrow"], modifiers: MOD_COMBO.vmC__S },
     conditions: [{ app: APPS.zen }],
@@ -147,7 +180,7 @@ const zenRemaps: Binding[] = [
   },
 ];
 
-const skimRemaps: Binding[] = [
+export const skimRemaps: Binding[] = [
   {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
     conditions: [{ app: APPS.skim }],
@@ -170,7 +203,7 @@ const skimRemaps: Binding[] = [
   },
 ];
 
-const passwordsQuickFillBinding: Binding = {
+export const fillPassword: Binding = {
   trigger: { keys: ["slash"], modifiers: ["left_command"] },
   cases: [
     {
@@ -219,8 +252,9 @@ export const modifiedSingleKeyTapHoldBindings: Binding[] = [
   ...lCmdBindings,
   ...rOptBindings,
   ...ctrlBindings,
+  ...shiftBindings,
   ...antinoteRemaps,
   ...zenRemaps,
   ...skimRemaps,
-  passwordsQuickFillBinding,
+  fillPassword,
 ];

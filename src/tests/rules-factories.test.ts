@@ -1,24 +1,71 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { APPS } from "../data/apps";
 import { pythonScriptCommand } from "../core/scripts";
 import {
-  //   buildAntinoteRules,
   buildCapsLockRule,
-  //   buildCmdQRule,
-  //   buildCtrlEscapeMonitorRule,
   buildDisabledHotkeys,
-  //   buildDisableHideMinimizeRule,
-  buildEnterRules,
-  buildEqualsRules,
-  //   buildEscapeTapTapHoldRule,
-  buildHomeEndRule,
+  buildHotkeyGuards,
   buildHyperLauncherRules,
-  buildPasswordsQuickFillRule,
-  //   buildSkimCommandRemapRule,
   mouseBindings,
 } from "../definitions";
 import { defineBindings, resolveActionToEvents } from "../engine";
+import { singleKeyTapHoldBindings } from "../definitions/single-key";
+import {
+  modifiedSingleKeyTapHoldBindings,
+  fillPassword,
+  skimRemaps,
+} from "../definitions/modified-single-key";
+
+const buildLeftCommandRule = () =>
+  defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("left_command"))!])[0];
+
+const buildPasswordsQuickFillRule = () => defineBindings([fillPassword])[0];
+
+const buildSkimCommandRemapRule = () => defineBindings(skimRemaps);
+
+const buildAntinoteRules = () => [buildHotkeyGuards()[1]];
+
+const buildEscapeTapTapHoldRule = () =>
+  defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("escape"))!])[0];
+
+const buildCtrlEscapeMonitorRule = () =>
+  defineBindings([
+    modifiedSingleKeyTapHoldBindings.find(
+      (b) =>
+        "keys" in b.trigger &&
+        b.trigger.keys.includes("escape") &&
+        Array.isArray(b.trigger.modifiers) &&
+        b.trigger.modifiers.includes("control"),
+    )!,
+  ])[0];
+
+const buildHomeEndRule = () => {
+  const homeEndBindings = [
+    ...singleKeyTapHoldBindings.filter((b) => "keys" in b.trigger && (b.trigger.keys.includes("home") || b.trigger.keys.includes("end"))),
+    ...modifiedSingleKeyTapHoldBindings.filter((b) => "keys" in b.trigger && (b.trigger.keys.includes("home") || b.trigger.keys.includes("end"))),
+  ];
+  return defineBindings(homeEndBindings);
+};
+
+const buildEnterRules = () => {
+  const enterBindings = singleKeyTapHoldBindings.filter(
+    (b) => "keys" in b.trigger && (b.trigger.keys.includes("keypad_enter") || b.trigger.keys.includes("return_or_enter")),
+  );
+  return defineBindings(enterBindings);
+};
+
+const buildEqualsRules = () => {
+  const equalsBindings = singleKeyTapHoldBindings.filter(
+    (b) => "keys" in b.trigger && (b.trigger.keys.includes("keypad_equal_sign") || b.trigger.keys.includes("equal_sign")),
+  );
+  return defineBindings(equalsBindings);
+};
+
+const buildCmdQRule = () => buildHotkeyGuards()[0];
+
+const buildOnePieceClickEnterRule = () => defineBindings([mouseBindings[11]])[0];
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -28,8 +75,6 @@ function toRules(input: any[]): any[] {
   return input.map((item) => toRule(item));
 }
 
-// TO, DO: moved logic to single-key.ts; modify test to use manipulator build from new home.
-/*
 test("left command factory keeps dual manipulator behavior", () => {
   const rule = toRule(buildLeftCommandRule());
   assert.match(rule.description, /^\[⌘\]:\n---/);
@@ -66,7 +111,6 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
     },
   });
 });
-*/
 
 test("caps lock factory keeps full complement behavior variants", () => {
   const rule = toRule(buildCapsLockRule());
@@ -77,11 +121,11 @@ test("caps lock factory keeps full complement behavior variants", () => {
   assert.equal(rule.manipulators.length, 16);
 });
 
-// test("cmd-q factory keeps double-tap protection structure", () => {
-//   const rule = toRule(buildCmdQRule());
-//   assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
-//   assert.equal(rule.manipulators.length, 2);
-// });
+test("cmd-q factory keeps double-tap protection structure", () => {
+  const rule = toRule(buildCmdQRule());
+  assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
+  assert.equal(rule.manipulators.length, 2);
+});
 
 test("security disable shortcuts factory keeps all disabled combos", () => {
   const rules = toRules(buildDisabledHotkeys());
@@ -90,14 +134,19 @@ test("security disable shortcuts factory keeps all disabled combos", () => {
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
-// TO DO: moved logic into passwordsQuickFillBinding; modify test to use manipulator build from new home.
-/*
 test("word privileges factory keeps single guarded manipulator", () => {
-  const rule = toRule(buildWordPrivilegesRule());
+  const rule = toRule(defineBindings([fillPassword])[0]);
   assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
-  assert.equal(rule.manipulators.length, 1);
+  const wordManipulator = rule.manipulators[2];
+  assert.ok(wordManipulator);
+  assert.deepEqual(wordManipulator.conditions, [
+    {
+      type: "frontmost_application_if",
+      description: undefined,
+      bundle_identifiers: ["com.microsoft.Word"],
+    },
+  ]);
 });
-*/
 
 test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = toRule(buildPasswordsQuickFillRule());
@@ -136,6 +185,7 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
     [
       "accessibility.focused_ui_element.role_string",
       "accessibility.focused_ui_element.role_string",
+      undefined,
     ],
   );
   assert.deepEqual(
@@ -143,47 +193,45 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
     [
       "accessibility.focused_ui_element.subrole_string",
       "accessibility.focused_ui_element.subrole_string",
+      undefined,
     ],
   );
 
-  // TO DO: update to reflect manipulator that is built from APPS.word (returns "undefined" because of the nested structure.)
-  //   assert.deepEqual(
-  //     wordConditions.map((condition: any) => condition?.name),
-  //     ["Word"],
-  //   );
+  const wordCondition = rule.manipulators[2].conditions?.[0];
+  assert.deepEqual(wordCondition, {
+    type: "frontmost_application_if",
+    description: undefined,
+    bundle_identifiers: ["com.microsoft.Word"],
+  });
 });
 
-// TO DO: moved logic to modified-single-key.ts; modify test to use manipulator build from new home.
-// test("skim command remap factory keeps both remaps", () => {
-//   const rules = toRules(buildSkimCommandRemapRule());
-//   assert.equal(rules.length, 2);
-//   assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
-//   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
-// });
+test("skim command remap factory keeps both remaps", () => {
+  const rules = toRules(buildSkimCommandRemapRule());
+  assert.equal(rules.length, 2);
+  assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
+  assert.ok(rules.every((rule) => rule.manipulators.length === 1));
+});
 
-// TO DO: moved logivc to guards.ts; modify test to use manipulator build from new home.
-// test("antinote delete factory keeps double-tap workflow", () => {
-//   const rule = toRule(buildAntinoteRules()[0]);
-//   assert.equal(
-//     rule.description,
-//     "[⌘]+[D]        →    Delete note (on multi-tap)",
-//   );
-//   assert.equal(rule.manipulators.length, 2);
-// });
+test("antinote delete factory keeps double-tap workflow", () => {
+  const rule = toRule(buildAntinoteRules()[0]);
+  assert.equal(
+    rule.description,
+    "[⌘]+[D]        →    Delete note (on multi-tap)",
+  );
+  assert.equal(rule.manipulators.length, 2);
+});
 
-// TO DO: moved logic to single-key.ts; modify test to use manipulator build from new home.
-// test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
-//   const rule = toRule(buildEscapeTapTapHoldRule());
-//   assert.match(rule.description, /^\[␛\]:\n---/);
-//   assert.equal(rule.manipulators.length, 2);
-// });
+test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
+  const rule = toRule(buildEscapeTapTapHoldRule());
+  assert.match(rule.description, /^\[␛\]:\n---/);
+  assert.equal(rule.manipulators.length, 2);
+});
 
-// TO DO: moved logic to modified-single-key.ts; modify test to use manipulator build from new home.
-// test("ctrl-escape monitor factory keeps single manipulator", () => {
-//   const rule = toRule(buildCtrlEscapeMonitorRule());
-//   assert.match(rule.description, /^\[⌃\]\+\[␛\]:\n---/);
-//   assert.equal(rule.manipulators.length, 1);
-// });
+test("ctrl-escape monitor factory keeps single manipulator", () => {
+  const rule = toRule(buildCtrlEscapeMonitorRule());
+  assert.match(rule.description, /^\[⌃\]\+\[␛\]:\n---/);
+  assert.equal(rule.manipulators.length, 1);
+});
 
 test("home-end factory keeps four navigation mappings", () => {
   const rules = toRules(buildHomeEndRule());
@@ -207,46 +255,39 @@ test("vmCOC_ plus rules factory keeps grouped mappings", () => {
 
 test("enter rules factory keeps two keys across two contexts", () => {
   const rules = toRules(buildEnterRules());
-  assert.equal(rules.length, 4);
-  assert.equal(
+  assert.equal(rules.length, 2);
+  assert.match(
     rules[0]?.description,
-    "[⏎]        →    Evaluate selection (on hold)",
+    /^\[⏎\]:\n---/,
   );
 });
 
-// TO DO: moved logic into mouse.ts; modify test to use manipulator build from new home.
-/*
 test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const rule = toRule(buildOnePieceClickEnterRule());
-  const manipulator: any = rule.manipulators[0];
   assert.match(rule.description, /^Left click:\n---/);
-  assert.equal(rule.manipulators.length, 1);
+  assert.equal(rule.manipulators.length, 2);
+
+  const manipulator: any = rule.manipulators[0];
   assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",
   });
-  assert.deepEqual(manipulator?.to, [
+  assert.deepEqual(manipulator?.to_if_alone, [
     { key_code: "return_or_enter", modifiers: undefined },
   ]);
-  assert.deepEqual(manipulator?.conditions, [
-    {
-      type: "frontmost_application_if",
-      description: undefined,
-      bundle_identifiers: [APPS.onePiece.name],
-    },
-  ]);
+
+  const appIfCond = manipulator?.conditions.find((c: any) => c.type === "frontmost_application_if");
+  assert.deepEqual(appIfCond, {
+    type: "frontmost_application_if",
+    description: undefined,
+    bundle_identifiers: [APPS.onePiece.name],
+  });
 });
- */
 
 test("equals rules factory keeps keypad and regular mappings", () => {
   const rules = toRules(buildEqualsRules());
   assert.equal(rules.length, 2);
-  assert.deepEqual(
-    rules.map((rule) => rule.description),
-    [
-      "[PAD =]        →    Quick date (on hold)",
-      "[=]        →    Quick date (on hold)",
-    ],
-  );
+  assert.match(rules[0]?.description, /^\[PAD =\]:\n---/);
+  assert.match(rules[1]?.description, /^\[=\]:\n---/);
 });
 
 test("mouse bindings build device-scoped manipulators via defineBindings", () => {

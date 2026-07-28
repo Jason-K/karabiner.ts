@@ -1,19 +1,16 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { HOME_DIR, PATHS } from "../data";
+import { HOME_DIR, PATHS, TIMINGS } from "../data";
 import { APPS } from "../data/apps";
 import { CMDS } from "../data/commands";
 import { DIRS } from "../data/folders";
 import { URLS } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
-import {
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-} from "../definitions/enter-equals";
-import { homeEndBindings } from "../definitions/home-end";
-import { passwordsQuickFillBinding } from "../definitions/system";
+
+import { fillPassword } from "../definitions/modified-single-key";
+
 import { resolveModifiers, type Binding, type Case } from "../engine";
 
 /** Find a tap-hold binding in the merged set by single key + modifiers. */
@@ -81,8 +78,8 @@ test("registries centralize app folder and integration refs", () => {
 });
 
 test("home-end navigation mappings stay declarative", () => {
-  assert.equal(homeEndBindings.length, 4);
-  assert.deepEqual(homeEndBindings[0], {
+  const home = findTapHold("home");
+  assert.deepEqual(home, {
     trigger: { keys: ["home"] },
     cases: [
       {
@@ -91,7 +88,9 @@ test("home-end navigation mappings stay declarative", () => {
       },
     ],
   });
-  assert.deepEqual(homeEndBindings[1], {
+
+  const homeShift = findTapHold("home", ["shift"]);
+  assert.deepEqual(homeShift, {
     trigger: { keys: ["home"], modifiers: ["shift"] },
     cases: [
       {
@@ -100,6 +99,34 @@ test("home-end navigation mappings stay declarative", () => {
           {
             type: "key",
             key: "left_arrow",
+            modifiers: ["left_command", "shift"],
+          },
+        ],
+      },
+    ],
+  });
+
+  const end = findTapHold("end");
+  assert.deepEqual(end, {
+    trigger: { keys: ["end"] },
+    cases: [
+      {
+        phase: "press",
+        do: [{ type: "key", key: "right_arrow", modifiers: ["left_command"] }],
+      },
+    ],
+  });
+
+  const endShift = findTapHold("end", ["shift"]);
+  assert.deepEqual(endShift, {
+    trigger: { keys: ["end"], modifiers: ["shift"] },
+    cases: [
+      {
+        phase: "press",
+        do: [
+          {
+            type: "key",
+            key: "right_arrow",
             modifiers: ["left_command", "shift"],
           },
         ],
@@ -120,76 +147,113 @@ test("disabled shortcut mappings stay declarative", () => {
   });
 });
 
+
 test("enter key hold mappings stay declarative", () => {
-  assert.equal(enterKeyHoldMappings.length, 2);
-  assert.deepEqual(enterKeyHoldMappings[0]?.variants[0], {
-    description: "Evaluate selection",
-    when: { app: APPS.excel, unless: true },
-    alone: [
+  const keypadEnter = findTapHold("keypad_enter");
+  assert.deepEqual(keypadEnter, {
+    trigger: { keys: ["keypad_enter"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [
       {
-        type: "key",
-        key: "keypad_enter",
-        options: { halt: true },
+        phase: "release",
+        do: [{ type: "key", key: "keypad_enter", options: { halt: true } }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
+        conditions: [{ app: APPS.excel, unless: true }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "f2", options: { repeat: false } }],
+        conditions: [{ app: APPS.excel }],
       },
     ],
-    hold: [
+  });
+
+  const returnOrEnter = findTapHold("return_or_enter");
+  assert.deepEqual(returnOrEnter, {
+    trigger: { keys: ["return_or_enter"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [
       {
-        type: "shell",
-        command: "/opt/homebrew/bin/hs -c 'FormatCutSeed()'",
+        phase: "release",
+        do: [{ type: "key", key: "return_or_enter", options: { halt: true } }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
+        conditions: [{ app: APPS.excel, unless: true }],
+      },
+      {
+        phase: "hold",
+        do: [{ type: "key", key: "f2", options: { repeat: false } }],
+        conditions: [{ app: APPS.excel }],
       },
     ],
-    timeoutMs: 400,
-    thresholdMs: 400,
   });
 });
 
 test("equals key hold mappings stay declarative", () => {
-  assert.equal(equalsKeyHoldMappings.length, 2);
-  assert.deepEqual(equalsKeyHoldMappings[1], {
-    key: "equal_sign",
-    variants: [
+  const keypadEqualSign = findTapHold("keypad_equal_sign");
+  assert.deepEqual(keypadEqualSign, {
+    trigger: { keys: ["keypad_equal_sign"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [
       {
-        description: "Quick date",
-        alone: [
-          {
-            type: "key",
-            key: "keypad_equal_sign",
-            options: { halt: true },
-          },
-        ],
-        hold: [
+        phase: "release",
+        do: [{ type: "key", key: "keypad_equal_sign", options: { halt: true } }],
+      },
+      {
+        phase: "hold",
+        do: [
           {
             type: "key",
             key: "left_arrow",
             modifiers: ["shift", "option"],
           },
+          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "shell", command: CMDS.tpQuickDate },
+        ],
+      },
+    ],
+  });
+
+  const equalSign = findTapHold("equal_sign");
+  assert.deepEqual(equalSign, {
+    trigger: { keys: ["equal_sign"] },
+    timing: { aloneMs: TIMINGS.delayHoldMs, heldThresholdMs: TIMINGS.delayHoldMs },
+    cases: [
+      {
+        phase: "release",
+        do: [{ type: "key", key: "keypad_equal_sign", options: { halt: true } }],
+      },
+      {
+        phase: "hold",
+        do: [
           {
             type: "key",
-            key: "c",
-            modifiers: ["left_command"],
+            key: "left_arrow",
+            modifiers: ["shift", "option"],
           },
-          {
-            type: "shell",
-            command: `${PATHS.uvBin.name} --directory ${PATHS.textProcessorDir.name} run python ${PATHS.textProcessorEntrypoint.name} quick_date --source clipboard --dest paste`,
-          },
+          { type: "key", key: "c", modifiers: ["left_command"] },
+          { type: "shell", command: CMDS.tpQuickDate },
         ],
-        timeoutMs: 400,
-        thresholdMs: 400,
       },
     ],
   });
 });
 
 test("passwords quick fill mapping stays declarative", () => {
-  const trigger = passwordsQuickFillBinding.trigger as {
+  const trigger = fillPassword.trigger as {
     keys: string[];
     modifiers?: string[];
   };
   // Description is now auto-derived (Phase 2) — no hand-written override.
-  assert.equal(passwordsQuickFillBinding.description, undefined);
+  assert.equal(fillPassword.description, undefined);
   assert.deepEqual(trigger.keys, ["slash"]);
   assert.deepEqual(trigger.modifiers, ["left_command"]);
-  assert.equal(passwordsQuickFillBinding.cases.length, 3);
+  assert.equal(fillPassword.cases.length, 3);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {
