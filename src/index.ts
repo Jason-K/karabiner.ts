@@ -29,7 +29,6 @@ import {
   buildCapsLockRule,
   buildDisabledHotkeys,
   buildHotkeyGuards,
-  buildHyperLauncherRules,
   mouseBindings,
   simultaneousMappings,
   tapHoldBindings,
@@ -64,9 +63,6 @@ let rules: any[] = [
 
   // CAPS LOCK - Multiple behaviors
   buildCapsLockRule(),
-
-  // vmCOC_ + _ - Grouped virtual-mod shortcuts
-  ...buildHyperLauncherRules(),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...buildDisabledHotkeys(),

@@ -9,9 +9,15 @@ import { URLS } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
 
-import { fillPassword } from "../definitions/modified-single-key";
-
 import { resolveModifiers, type Binding, type Case } from "../engine";
+
+const fillPassword = tapHoldBindings.find(
+  (b) =>
+    "keys" in b.trigger &&
+    b.trigger.keys.includes("slash") &&
+    Array.isArray(b.trigger.modifiers) &&
+    b.trigger.modifiers.includes("left_command")
+)!;
 
 /** Find a tap-hold binding in the merged set by single key + modifiers. */
 function findTapHold(key: string, modifiers: string[] = []): Binding {
@@ -302,7 +308,7 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
 });
 
 test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
-  // hyper.ts uses macOS focus-window arrow chords (q/e/r/f = left/right/top/bottom).
+  // modified-single-key.ts uses macOS focus-window arrow chords (q/e/r/f = left/right/top/bottom).
   // vmCOCS+w no longer exists.
   assert.throws(() => findTapHold("w", ["vmCOCS"]), /not found/);
 

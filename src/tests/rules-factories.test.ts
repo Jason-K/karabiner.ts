@@ -7,16 +7,24 @@ import {
   buildCapsLockRule,
   buildDisabledHotkeys,
   buildHotkeyGuards,
-  buildHyperLauncherRules,
   mouseBindings,
 } from "../definitions";
 import { defineBindings, resolveActionToEvents } from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
-import {
-  modifiedSingleKeyTapHoldBindings,
-  fillPassword,
-  skimRemaps,
-} from "../definitions/modified-single-key";
+import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
+import { MOD_COMBO } from "../core/mods";
+
+const fillPassword = modifiedSingleKeyTapHoldBindings.find(
+  (b) =>
+    "keys" in b.trigger &&
+    b.trigger.keys.includes("slash") &&
+    Array.isArray(b.trigger.modifiers) &&
+    b.trigger.modifiers.includes("left_command")
+)!;
+
+const skimRemaps = modifiedSingleKeyTapHoldBindings.filter(
+  (b) => b.conditions?.some((c: any) => c.app === APPS.skim)
+);
 
 const buildLeftCommandRule = () =>
   defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("left_command"))!])[0];
@@ -241,7 +249,10 @@ test("home-end factory keeps four navigation mappings", () => {
 });
 
 test("vmCOC_ plus rules factory keeps grouped mappings", () => {
-  const rules = toRules(buildHyperLauncherRules());
+  const hyperLauncherBindings = modifiedSingleKeyTapHoldBindings.filter(
+    (b) => Array.isArray(b.trigger.modifiers) && b.trigger.modifiers.join(",") === MOD_COMBO.vmCOCS.join(",")
+  );
+  const rules = toRules(defineBindings(hyperLauncherBindings));
   // "t" lives only in the tap-hold set now (launcher-t was removed to resolve
   // the vmCOCS+t duplication), so the launcher has 4 entries.
   assert.equal(rules.length, 4);
