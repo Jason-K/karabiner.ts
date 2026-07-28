@@ -30,10 +30,9 @@ import {
   buildDisabledHotkeys,
   buildEnterRules,
   buildEqualsRules,
-  buildGuardRules,
   buildHomeEndRule,
+  buildHotkeyGuards,
   buildHyperLauncherRules,
-  buildPasswordsQuickFillRule,
   mouseBindings,
   simultaneousMappings,
   tapHoldBindings,
@@ -60,7 +59,7 @@ let rules: any[] = [
   ...tapHoldRules,
 
   // GUARD - Various guard rules
-  ...buildGuardRules(),
+  ...buildHotkeyGuards(),
 
   // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
   // flow through the same Binding[] + defineBindings engine as keys.
@@ -83,10 +82,6 @@ let rules: any[] = [
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...buildDisabledHotkeys(),
-
-  // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
-  buildPasswordsQuickFillRule(),
-
 ];
 
 // ============================================================================

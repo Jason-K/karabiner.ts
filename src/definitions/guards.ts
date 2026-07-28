@@ -18,10 +18,10 @@ const antinoteGuards: DoubleTapGuardConfig = {
   ifApp: [APPS.antinote],
 };
 
-export const guardRules: DoubleTapGuardConfig[] = [
+const guardRules: DoubleTapGuardConfig[] = [
   globalGuards,
   antinoteGuards,
 ];
 
-export const buildGuardRules = () =>
+export const buildHotkeyGuards = () =>
   guardRules.map((guard) => generateDoubleTapGuardRule(guard));

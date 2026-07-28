@@ -1,5 +1,13 @@
 import { MOD_COMBO } from "../core/mods";
-import { APPS, CMDS, TIMINGS, URLS } from "../data";
+import {
+  APPS,
+  CMDS,
+  PW_BUNDLES,
+  TIMINGS,
+  URLS,
+  WIN_VALS,
+  WIN_VARS,
+} from "../data";
 import type { Binding } from "../engine";
 
 const lCmdBindings: Binding[] = [
@@ -92,7 +100,6 @@ const ctrlBindings: Binding[] = [
   },
 ];
 
-
 const antinoteRemaps: Binding[] = [
   {
     trigger: { keys: ["a"], modifiers: ["shift"] },
@@ -163,6 +170,51 @@ const skimRemaps: Binding[] = [
   },
 ];
 
+const passwordsQuickFillBinding: Binding = {
+  trigger: { keys: ["slash"], modifiers: ["left_command"] },
+  cases: [
+    {
+      // AUTHENTICATION DIALOG fill password.
+      phase: "press",
+      conditions: [
+        { app: PW_BUNDLES },
+        {
+          var: WIN_VARS.focusedUiRole,
+          equals: WIN_VALS.textFieldRole,
+        },
+        {
+          var: WIN_VARS.focusedUiSubrole,
+          equals: WIN_VALS.secureTextFieldSubrole,
+        },
+      ],
+      do: [{ type: "command", ref: CMDS.fillPassword }],
+    },
+    {
+      // AUTHENTICATION DIALOG: fill username and password.
+      phase: "press",
+      conditions: [
+        { app: PW_BUNDLES },
+        {
+          var: WIN_VARS.focusedUiRole,
+          equals: WIN_VALS.textFieldRole,
+        },
+        {
+          var: WIN_VARS.focusedUiSubrole,
+          equals: WIN_VALS.secureTextFieldSubrole,
+          unless: true,
+        },
+      ],
+      do: [{ type: "command", ref: CMDS.fillUsernameAndPassword }],
+    },
+    {
+      // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
+      phase: "press",
+      conditions: [{ app: APPS.word }],
+      do: [{ type: "shell", command: CMDS.getWordDocPathAndPrivileges }],
+    },
+  ],
+};
+
 export const modifiedSingleKeyTapHoldBindings: Binding[] = [
   ...lCmdBindings,
   ...rOptBindings,
@@ -170,4 +222,5 @@ export const modifiedSingleKeyTapHoldBindings: Binding[] = [
   ...antinoteRemaps,
   ...zenRemaps,
   ...skimRemaps,
+  passwordsQuickFillBinding,
 ];

@@ -12,14 +12,10 @@ export {
   enterKeyHoldMappings,
   equalsKeyHoldMappings,
 } from "./enter-equals";
-export { buildGuardRules } from "./guards";
+export { buildHotkeyGuards } from "./guards";
 export { buildHomeEndRule, homeEndBindings } from "./home-end";
 export { buildHyperLauncherRules, hyperLauncherBindings } from "./hyper";
 export { mouseBindings } from "./mouse";
-export {
-  buildPasswordsQuickFillRule,
-  passwordsQuickFillBinding,
-} from "./system";
 
 /** All tap-hold bindings, merged with cross-file duplicate-trigger detection. */
 export const tapHoldBindings: Binding[] = assertUniqueTriggers([
