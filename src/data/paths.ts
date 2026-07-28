@@ -1,9 +1,19 @@
+// varSpec
+// ---------------------------------------------------------
+const path = (name: string, refDesc: string) => ({
+  type: "path" as const,
+  name,
+  refDesc,
+});
+
 // Get env vars (keep at top)
+// ---------------------------------------------------------
 const runtimeProcess = globalThis as {
   process?: {
     env?: Record<string, string | undefined>;
   };
 };
+
 
 export const HOME_DIR = runtimeProcess.process?.env?.HOME ?? "/Users/jason";
 const XDG_CONFIG_HOME =
@@ -20,57 +30,95 @@ const ZDOTDIR =
   runtimeProcess.process?.env?.ZDOTDIR ?? `${HOME_DIR}/.config/zsh`;
 const BREW_DIR = runtimeProcess.process?.env?.BREW_DIR ?? "/opt/homebrew";
 const SCRIPTS_DIR = `${HOME_DIR}/Scripts`;
+const DL_DIR = `${HOME_DIR}/Downloads`;
 const CHEZMOI_DIR = `${XDG_DATA_HOME}/.chezmoi`;
-
-// varSpec
-const path = (name: string, refDesc: string) => ({
-  type: "path" as const,
-  name,
-  refDesc,
-});
+const ONEDRIVE_WORK = `${HOME_DIR}/Library/CloudStorage/OneDrive-BoxerandGerson,LLP`;
+const ONEDRIVE_PERSONAL = `${HOME_DIR}/Library/CloudStorage/OneDrive-Personal`;
 
 // Paths for export as PATHS.*
+// ---------------------------------------------------------
 
-const ENV = {
+// DIRS 
+const ENV_DIRS = {
   dirHome: path(`${HOME_DIR}`, "Home directory"),
   dirXdgConfig: path(`${XDG_CONFIG_HOME}`, "XDG Config dir"),
   dirXdgData: path(`${XDG_DATA_HOME}`, "XDG Data dir"),
   dirXdgCache: path(`${XDG_CACHE_HOME}`, "XDG Cache dir"),
   dirXdgBin: path(`${XDG_BIN_HOME}`, "XDG Bin dir"),
   dirXdgState: path(`${XDG_STATE_HOME}`, "XDG State dir"),
+  dirZDot: path(`${ZDOTDIR}`, "ZSH home dir"),
+  dirChezmoi: path(`${CHEZMOI_DIR}`, "chezmoi"),
 };
 
-const DIRS = {
-  dirZDot: path(`${ZDOTDIR}`, "ZSH home dir"),
+const DL_DIRS = {
+  dirDls: path(`${DL_DIR}`, "DLs"),
+  dirDls3dPrinting: path(
+    `${DL_DIR}/3dPrinting`,
+    "downloaded 3D models",
+  ),
+  dirDlsArchives: path(
+    `${DL_DIR}/Archives`,
+    "downloaded archives",
+  ),
+  dirDlsInstalls: path(
+    `${DL_DIR}/Installs`,
+    "downloaded installers",
+  ),
+  dirDlsOffice: path(`${DL_DIR}/Office`, "work downloads"),
+  dirDlsPdfs: path(`${DL_DIR}/PDFs/`, "pdf downloads"),
+};
+
+const BIN_DIRS = {
   dirBrew: path(`${BREW_DIR}`, "Brew home dir"),
-  dirScripts: path(`${SCRIPTS_DIR}`, "Scripts home dir"),
-  dirChezmoi: path(`${CHEZMOI_DIR}`, "ChezMoi home dir"),
+  dirApplications: path("/Applications", "APPS (global)"),
+};
+
+const SCRIPTING_DIRS = {
+  dirScripts: path(`${SCRIPTS_DIR}`, "Scripts folder"),
   dirTextProcessor: path(
     `${SCRIPTS_DIR}/strings/text_processor`,
-    "Text Processor directory",
+    "Text Processor script folder",
+  ),
+  dirGits: path(`${HOME_DIR}/gits`, "Gits"),
+  dirWorkspaces: path(`${HOME_DIR}/Scripts/workspaces`, "VSC workspaces folder"),
+};
+
+const CLOUD_DIRS = {
+  dirOneDrivePersonal: path(`${ONEDRIVE_PERSONAL}`, "my OneDrive"),
+  dirOneDriveWork: path(`${ONEDRIVE_WORK}`, "work OneDrive"),
+};
+
+const WORK_DIRS = {
+  dirCases: path(
+    `${ONEDRIVE_WORK}/Documents/0-myCases`,
+    "my cases",
+  ),
+  dirLibrary: path(
+    `${ONEDRIVE_WORK}/Documents/1-firmLibrary`,
+    "work library",
   ),
 };
 
-const SCRIPTS = {
+const SCRIPT_FILES = {
   scriptHere2There: path(
     `${SCRIPTS_DIR}/active_process/take_action_here/take_action_here.sh`,
-    "Take Action Here script",
+    "Here2There script",
   ),
   scriptNewDLs: path(
     `${SCRIPTS_DIR}/filesystem/recent_changes/recent_dl.sh`,
-    "Recent Downloads script",
+    "Recent Dls script",
   ),
   scriptTextProcessorCLI: path(
     `${SCRIPTS_DIR}/strings/text_processor/interfaces/cli.py`,
-    "Text Processor entrypoint",
+    "Text Processor CLI entrypoint",
   ),
   scriptTypinatorLastRule: path(
     `${SCRIPTS_DIR}/apps/Typinator/Edit_Last_Typinator_Expansion.applescript`,
-    "edit last Typinator rule",
+    "edit the last Typinator rule",
   ),
   scriptTypinatorNewRule: path(
     `${SCRIPTS_DIR}/apps/Typinator/new_rule/new_rule.py`,
-    "create new Typinator rule",
+    "create a new Typinator rule",
   ),
   scriptWordGetDocPath: path(
     `${SCRIPTS_DIR}/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript`,
@@ -78,14 +126,14 @@ const SCRIPTS = {
   ),
 };
 
-const CONFIGS = {
+const CONFIG_FILES = {
   configKarabiner: path(
     `${HOME_DIR}/.config/karabiner/karabiner.json`,
     "Karabiner configuration file",
   ),
 };
 
-const BINS = {
+const BIN_FILES = {
   binCliClick: path(`${BREW_DIR}/bin/binCliClick`, "Cliclick binary"),
   binHSBridge: path(`${HOME_DIR}/Hammer-Console/cli/hammer`, "Hammer CLI bin"),
   binAppKill: path(`${HOME_DIR}/.local/bin/kill-app`, "Kill App binary"),
@@ -104,11 +152,15 @@ const BINS = {
 };
 
 export const PATHS = {
-  ...ENV,
-  ...DIRS,
-  ...SCRIPTS,
-  ...CONFIGS,
-  ...BINS,
+  ...ENV_DIRS,
+  ...DL_DIRS,
+  ...BIN_DIRS,
+  ...SCRIPTING_DIRS,
+  ...CLOUD_DIRS,
+  ...WORK_DIRS,
+  ...SCRIPT_FILES,
+  ...CONFIG_FILES,
+  ...BIN_FILES,
 } as const;
 
 export type PathRef = import("./refs").PathRef;

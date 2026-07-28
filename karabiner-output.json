@@ -39,6 +39,228 @@
         "conditions": []
       },
       {
+        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash all'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_0"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_0"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash-all'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_0"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↓'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_2"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-down'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_2"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ←'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_4"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-left'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_4"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_5"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_5"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash →'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_6"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_6"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↑'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_8"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-up'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_8"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
         "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'F18'",
         "manipulatorSources": [
           {
@@ -357,7 +579,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[N]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A'",
+        "ruleDescription": "[N]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'new client note template'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -475,7 +697,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[Q]:\n---\n\tOn Hold:\n\t\tAlways:\tfocus QSpace",
+        "ruleDescription": "[Q]:\n---\n\tOn Hold:\n\t\tAlways:\topen QSpace",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -494,7 +716,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -b 'com.jinghaoshe.qspace.pro'"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.jinghaoshe.qspace.pro"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -512,7 +738,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Recent Downloads script'",
+        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Recent Dls script'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -825,12 +1051,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash all'",
+        "ruleDescription": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⇧⌥ + '←' then Emit ⌘ + 'C' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_0"
+              "key_code": "keypad_equal_sign"
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
@@ -839,12 +1065,25 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_0"
+                "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash-all'"
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "shift",
+                  "option"
+                ]
+              },
+              {
+                "key_code": "c",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python /Users/jason/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -852,7 +1091,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_0"
+                  "key_code": "keypad_equal_sign"
                 }
               ]
             }
@@ -862,12 +1101,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↓'",
+        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⇧⌥ + '←' then Emit ⌘ + 'C' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_2"
+              "key_code": "equal_sign"
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
@@ -876,12 +1115,25 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_2"
+                "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-down'"
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "shift",
+                  "option"
+                ]
+              },
+              {
+                "key_code": "c",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python /Users/jason/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -889,7 +1141,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_2"
+                  "key_code": "keypad_equal_sign"
                 }
               ]
             }
@@ -899,12 +1151,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ←'",
+        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'H'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_4"
+              "key_code": "slash"
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
@@ -913,12 +1165,19 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_4"
+                "key_code": "slash"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-left'"
+                "repeat": false,
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -926,7 +1185,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_4"
+                  "key_code": "slash"
                 }
               ]
             }
@@ -936,12 +1195,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash'",
+        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F9'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_5"
+              "key_code": "grave_accent_and_tilde"
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
@@ -950,12 +1209,20 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_5"
+                "key_code": "grave_accent_and_tilde"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash'"
+                "halt": true,
+                "repeat": false,
+                "key_code": "f9",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -963,7 +1230,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_5"
+                  "key_code": "grave_accent_and_tilde"
                 }
               ]
             }
@@ -973,12 +1240,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash →'",
+        "ruleDescription": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_6"
+              "key_code": "keypad_enter"
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
@@ -987,12 +1254,13 @@
             "to_if_alone": [
               {
                 "halt": true,
-                "key_code": "keypad_6"
+                "key_code": "keypad_enter"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
+                "halt": true,
+                "key_code": "keypad_enter"
               }
             ],
             "to_delayed_action": {
@@ -1000,7 +1268,242 @@
               "to_if_canceled": [
                 {
                   "halt": true,
-                  "key_code": "keypad_6"
+                  "key_code": "keypad_enter"
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_enter"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_enter"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
+              }
+            ],
+            "description": "Outside Microsoft Excel"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "keypad_enter"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f2"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_enter"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
+              }
+            ],
+            "description": "In Microsoft Excel"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "return_or_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "return_or_enter"
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "return_or_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "return_or_enter"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_unless",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
+              }
+            ],
+            "description": "Outside Microsoft Excel"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "return_or_enter"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "return_or_enter"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "f2"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "return_or_enter"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Excel"
+                ]
+              }
+            ],
+            "description": "In Microsoft Excel"
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇥]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "tab"
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "tab"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "repeat": true,
+                "key_code": "mission_control"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "tab"
                 }
               ]
             }
@@ -1010,37 +1513,167 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↑'",
+        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun 'Kill foreground application'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun 'Kill all applications'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_8"
+              "key_code": "escape",
+              "modifiers": {}
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "multi_tap_escape",
+                "value": 1
+              }
+            ],
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 400
             },
+            "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
+            "to": [],
             "to_if_alone": [
               {
-                "halt": true,
-                "key_code": "keypad_8"
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-up'"
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/kill-app --all"
               }
             ],
             "to_delayed_action": {
-              "to_if_invoked": [],
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "keypad_8"
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
                 }
               ]
             }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "escape",
+              "modifiers": {}
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400,
+              "basic.to_if_alone_timeout_milliseconds": 400
+            },
+            "description": "multi_tap_escape first tap (tap / tap-hold)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 1
+                }
+              },
+              {
+                "key_code": "escape"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_escape",
+                  "value": 0
+                }
+              },
+              {
+                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_escape",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '←'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "home"
+            },
+            "to": [
+              {
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "left_command"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '→'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "end"
+            },
+            "to": [
+              {
+                "key_code": "right_arrow",
+                "modifiers": [
+                  "left_command"
+                ]
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -1461,259 +2094,6 @@
                 {
                   "halt": true,
                   "key_code": "f12"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'H'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "slash"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "h",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "slash"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F9'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "grave_accent_and_tilde"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "grave_accent_and_tilde"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "repeat": false,
-                "key_code": "f9",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "grave_accent_and_tilde"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⇥]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "tab"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "tab"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "repeat": true,
-                "key_code": "mission_control"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "tab"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app --foreground'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun '/Users/jason/.local/bin/kill-app'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {}
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "multi_tap_escape",
-                "value": 1
-              }
-            ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
-            "to": [],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/kill-app"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {}
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400,
-              "basic.to_if_alone_timeout_milliseconds": 400
-            },
-            "description": "multi_tap_escape first tap (tap / tap-hold)",
-            "to": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 1
-                }
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 1
-                }
-              },
-              {
-                "key_code": "escape"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_escape",
-                  "value": 0
-                }
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_escape",
-                    "value": 0
-                  }
                 }
               ]
             }
@@ -2178,297 +2558,6 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "t",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '←'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "q",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "repeat": false,
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "q",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "left_arrow",
-                  "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '→'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "e",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "repeat": false,
-                "key_code": "right_arrow",
-                "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "e",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "right_arrow",
-                  "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↑'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "r",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "repeat": false,
-                "key_code": "up_arrow",
-                "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "r",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "up_arrow",
-                  "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↓'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "repeat": false,
-                "key_code": "down_arrow",
-                "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "key_code": "f",
-                "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "down_arrow",
-                  "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
-                  ]
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
         "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom left 1/8'",
         "manipulatorSources": [
           {
@@ -2719,12 +2808,60 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
+        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "spacebar",
+              "key_code": "a",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "shift"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -u 'antinote://new-note?background=true'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '→'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "e",
               "modifiers": {
                 "mandatory": [
                   "command",
@@ -2740,13 +2877,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                "repeat": false,
+                "key_code": "right_arrow",
+                "modifiers": [
+                  "left_command",
+                  "control",
+                  "option"
+                ]
               }
             ],
             "to_if_held_down": [
               {
                 "halt": true,
-                "key_code": "spacebar",
+                "key_code": "e",
                 "modifiers": [
                   "command",
                   "option",
@@ -2759,7 +2902,13 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                  "repeat": false,
+                  "key_code": "right_arrow",
+                  "modifiers": [
+                    "left_command",
+                    "control",
+                    "option"
+                  ]
                 }
               ]
             }
@@ -2769,12 +2918,12 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↓'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "tab",
+              "key_code": "f",
               "modifiers": {
                 "mandatory": [
                   "command",
@@ -2790,19 +2939,38 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                "repeat": false,
+                "key_code": "down_arrow",
+                "modifiers": [
+                  "left_command",
+                  "control",
+                  "option"
+                ]
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
+                "halt": true,
+                "key_code": "f",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                  "repeat": false,
+                  "key_code": "down_arrow",
+                  "modifiers": [
+                    "left_command",
+                    "control",
+                    "option"
+                  ]
                 }
               ]
             }
@@ -2812,61 +2980,51 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'H'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "left_arrow",
+              "key_code": "h",
               "modifiers": {
                 "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
+                  "left_command"
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
+            "description": "In Skim",
+            "conditions": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "net.sourceforge.skim-app.skim"
+                ]
               }
             ],
-            "to_if_held_down": [
+            "to": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
+                "key_code": "h",
+                "modifiers": [
+                  "command",
+                  "control"
+                ]
               }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
-            }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
+        "ruleDescription": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "right_arrow",
+              "key_code": "k",
               "modifiers": {
                 "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
+                  "right_option"
                 ]
               }
             },
@@ -2876,19 +3034,27 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "halt": true,
+                "key_code": "k",
+                "modifiers": [
+                  "right_option"
+                ]
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                  "halt": true,
+                  "key_code": "k",
+                  "modifiers": [
+                    "right_option"
+                  ]
                 }
               ]
             }
@@ -3005,15 +3171,18 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
+        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '←'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "k",
+              "key_code": "q",
               "modifiers": {
                 "mandatory": [
-                  "right_option"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
@@ -3023,30 +3192,129 @@
             },
             "to_if_alone": [
               {
-                "halt": true,
-                "key_code": "k",
+                "repeat": false,
+                "key_code": "left_arrow",
                 "modifiers": [
-                  "right_option"
+                  "left_command",
+                  "control",
+                  "option"
                 ]
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
+                "halt": true,
+                "key_code": "q",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "k",
+                  "repeat": false,
+                  "key_code": "left_arrow",
                   "modifiers": [
-                    "right_option"
+                    "left_command",
+                    "control",
+                    "option"
                   ]
                 }
               ]
             }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↑'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "r",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "repeat": false,
+                "key_code": "up_arrow",
+                "modifiers": [
+                  "left_command",
+                  "control",
+                  "option"
+                ]
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "r",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "up_arrow",
+                  "modifiers": [
+                    "left_command",
+                    "control",
+                    "option"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Format selection using hsStringEval'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "s",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'FormatSelection()'"
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -3071,7 +3339,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -3083,7 +3351,50 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast://extensions/mattisssa/spotify-player/togglePlayPause'; else ~/.local/bin/open-app -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "t",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
                 }
               ]
             }
@@ -3120,7 +3431,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
@@ -3135,6 +3446,209 @@
                 }
               ]
             }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'U'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "u",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Skim",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "net.sourceforge.skim-app.skim"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "u",
+                "modifiers": [
+                  "command",
+                  "control"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "comma",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.systempreferences"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role_string",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.subrole_string",
+                "value": "AXSecureTextField"
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/binSendKeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.apple.SecurityAgent",
+                  "com.apple.systempreferences",
+                  "com.apple.settings.PrivacySecurity.extension",
+                  "org.gpgtools.pinentry-mac",
+                  "com.multimodalsolutions.taphouse"
+                ]
+              },
+              {
+                "type": "variable_if",
+                "name": "accessibility.focused_ui_element.role_string",
+                "value": "AXTextField"
+              },
+              {
+                "type": "variable_unless",
+                "name": "accessibility.focused_ui_element.subrole_string",
+                "value": "AXSecureTextField"
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/binSendKeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "description": "In Word",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Word"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/binSendKeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '→'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "end",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "right_arrow",
+                "modifiers": [
+                  "left_command",
+                  "shift"
+                ]
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -3193,14 +3707,74 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "a",
+              "key_code": "escape",
               "modifiers": {
                 "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.apple.ActivityMonitor"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '←'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "home",
+              "modifiers": {
+                "mandatory": [
+                  "shift"
+                ]
+              }
+            },
+            "to": [
+              {
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "left_command",
+                  "shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
                   "shift"
                 ]
               }
@@ -3211,27 +3785,99 @@
             },
             "to_if_alone": [
               {
-                "halt": true,
-                "key_code": "a",
-                "modifiers": [
-                  "shift"
-                ]
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -u 'antinote://new-note?background=true'"
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "halt": true,
-                  "key_code": "a",
-                  "modifiers": [
-                    "shift"
-                  ]
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + '['",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "shift"
+                ]
+              }
+            },
+            "description": "In Zen",
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "app.zen-browser.zen"
+                ]
+              }
+            ],
+            "to": [
+              {
+                "key_code": "open_bracket",
+                "modifiers": [
+                  "left_command",
+                  "shift"
+                ]
+              }
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_arrow",
+              "modifiers": {
+                "mandatory": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -3278,217 +3924,117 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + '['",
+        "ruleDescription": "[⌘⌥⌃⇧]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "left_arrow",
+              "key_code": "spacebar",
               "modifiers": {
                 "mandatory": [
                   "command",
+                  "option",
+                  "control",
                   "shift"
                 ]
               }
             },
-            "description": "In Zen",
-            "conditions": [
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
               {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "app.zen-browser.zen"
-                ]
+                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
-            "to": [
+            "to_if_held_down": [
               {
-                "key_code": "open_bracket",
+                "halt": true,
+                "key_code": "spacebar",
                 "modifiers": [
-                  "left_command",
+                  "command",
+                  "option",
+                  "control",
                   "shift"
                 ]
               }
-            ]
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                }
+              ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'H'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "h",
+              "key_code": "tab",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Skim",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "h",
-                "modifiers": [
                   "command",
-                  "control"
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
-            ]
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                }
+              ]
+            }
           }
         ],
         "allowEmptyManipulators": false,
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'U'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "u",
+              "key_code": "f12",
               "modifiers": {
                 "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Skim",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "net.sourceforge.skim-app.skim"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "key_code": "u",
-                "modifiers": [
                   "command",
-                  "control"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
-                ]
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.subrole_string",
-                "value": "AXSecureTextField"
-              }
-            ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
-                ]
-              },
-              {
-                "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_unless",
-                "name": "accessibility.focused_ui_element.subrole_string",
-                "value": "AXSecureTextField"
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.1 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control>\""
-              }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "slash",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Word",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.microsoft.Word"
-                ]
-              }
-            ],
-            "to": [
-              {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/sendkeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control>\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ]
           }
@@ -5291,500 +5837,6 @@
               }
             ],
             "description": "[⌘⌥⌃⇧⇪]        →    vm____ (on hold)"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '←'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "home"
-            },
-            "to": [
-              {
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "left_command"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '←'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "home",
-              "modifiers": {
-                "mandatory": [
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "left_command",
-                  "shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '→'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "end"
-            },
-            "to": [
-              {
-                "key_code": "right_arrow",
-                "modifiers": [
-                  "left_command"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '→'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "end",
-              "modifiers": {
-                "mandatory": [
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "key_code": "right_arrow",
-                "modifiers": [
-                  "left_command",
-                  "shift"
-                ]
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Format selection using hsStringEval'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "s",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatSelection()'"
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "comma",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.apple.systempreferences"
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "f12",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion-original.applescript'"
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⌘⌥⌃⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "escape",
-              "modifiers": {
-                "mandatory": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
-                ]
-              }
-            },
-            "to": [
-              {
-                "software_function": {
-                  "open_application": {
-                    "bundle_identifier": "com.apple.ActivityMonitor"
-                  }
-                }
-              }
-            ]
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⏎]        →    Evaluate selection (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "keypad_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_enter"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_unless",
-                "bundle_identifiers": [
-                  "com.microsoft.Excel"
-                ]
-              }
-            ],
-            "description": "Outside Microsoft Excel"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⏎]        →    Edit cell (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "keypad_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "f2"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_enter"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.microsoft.Excel"
-                ]
-              }
-            ],
-            "description": "In Microsoft Excel"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⏎]        →    Evaluate selection (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "return_or_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "return_or_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "return_or_enter"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_unless",
-                "bundle_identifiers": [
-                  "com.microsoft.Excel"
-                ]
-              }
-            ],
-            "description": "Outside Microsoft Excel"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[⏎]        →    Edit cell (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "return_or_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "return_or_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "f2"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "return_or_enter"
-                }
-              ]
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.microsoft.Excel"
-                ]
-              }
-            ],
-            "description": "In Microsoft Excel"
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[PAD =]        →    Quick date (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_equal_sign"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "keypad_equal_sign"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "shift",
-                  "option"
-                ]
-              },
-              {
-                "key_code": "c",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_equal_sign"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[=]        →    Quick date (on hold)",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "equal_sign"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "keypad_equal_sign"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "shift",
-                  "option"
-                ]
-              },
-              {
-                "key_code": "c",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python interfaces/cli.py quick_date --source clipboard --dest paste"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_equal_sign"
-                }
-              ]
-            }
           }
         ],
         "allowEmptyManipulators": false,

@@ -1,12 +1,12 @@
 import { MOD_COMBO } from "../core/mods";
 import {
-  APPS,
+  APP_BUNDLES,
   CMDS,
+  KE_VAR_VALUES,
+  KE_VARS,
   PW_BUNDLES,
   TIMINGS,
   URLS,
-  WIN_VALS,
-  WIN_VARS,
 } from "../data";
 import type { Binding } from "../engine";
 
@@ -132,7 +132,7 @@ const modLetterBindings: Binding[] = [
   },
   {
     trigger: { keys: ["h"], modifiers: ["left_command"] },
-    conditions: [{ app: APPS.skim }],
+    conditions: [{ app: APP_BUNDLES.skim }],
     cases: [
       {
         phase: "press",
@@ -263,7 +263,7 @@ const modLetterBindings: Binding[] = [
   },
   {
     trigger: { keys: ["u"], modifiers: ["left_command"] },
-    conditions: [{ app: APPS.skim }],
+    conditions: [{ app: APP_BUNDLES.skim }],
     cases: [
       {
         phase: "press",
@@ -279,7 +279,7 @@ const modSymbolBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "app", ref: APPS.systemSettings }],
+        do: [{ type: "app", ref: APP_BUNDLES.systemSettings }],
       },
     ],
   },
@@ -292,12 +292,12 @@ const modSymbolBindings: Binding[] = [
         conditions: [
           { app: PW_BUNDLES },
           {
-            var: WIN_VARS.focusedUiRole,
-            equals: WIN_VALS.textFieldRole,
+            var: KE_VARS.accessibilityType,
+            equals: KE_VAR_VALUES.axTextField,
           },
           {
-            var: WIN_VARS.focusedUiSubrole,
-            equals: WIN_VALS.secureTextFieldSubrole,
+            var: KE_VARS.accessibilitySubtype,
+            equals: KE_VAR_VALUES.axSecureTextField,
           },
         ],
         do: [{ type: "command", ref: CMDS.fillPassword }],
@@ -308,12 +308,12 @@ const modSymbolBindings: Binding[] = [
         conditions: [
           { app: PW_BUNDLES },
           {
-            var: WIN_VARS.focusedUiRole,
-            equals: WIN_VALS.textFieldRole,
+            var: KE_VARS.accessibilityType,
+            equals: KE_VAR_VALUES.axTextField,
           },
           {
-            var: WIN_VARS.focusedUiSubrole,
-            equals: WIN_VALS.secureTextFieldSubrole,
+            var: KE_VARS.accessibilitySubtype,
+            equals: KE_VAR_VALUES.axSecureTextField,
             unless: true,
           },
         ],
@@ -322,7 +322,7 @@ const modSymbolBindings: Binding[] = [
       {
         // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
         phase: "press",
-        conditions: [{ app: APPS.word }],
+        conditions: [{ app: APP_BUNDLES.word }],
         do: [{ type: "shell", command: CMDS.getWordDocPathAndPrivileges }],
       },
     ],
@@ -354,9 +354,9 @@ const modNonCharBindings: Binding[] = [
     cases: [
       {
         phase: "release",
-        do: [{ type: "app", ref: APPS.activityMonitor }],
+        do: [{ type: "app", ref: APP_BUNDLES.activityMonitor }],
       },
-      { phase: "hold", do: [{ type: "app", ref: APPS.processSpy }] },
+      { phase: "hold", do: [{ type: "app", ref: APP_BUNDLES.processSpy }] },
     ],
   },
   {
@@ -364,7 +364,7 @@ const modNonCharBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "app", ref: APPS.activityMonitor }],
+        do: [{ type: "app", ref: APP_BUNDLES.activityMonitor }],
       },
     ],
   },
@@ -409,7 +409,7 @@ const modNonCharBindings: Binding[] = [
   },
   {
     trigger: { keys: ["left_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: APPS.zen }],
+    conditions: [{ app: APP_BUNDLES.zen }],
     cases: [
       {
         phase: "press",
@@ -449,7 +449,7 @@ const modNonCharBindings: Binding[] = [
   },
   {
     trigger: { keys: ["right_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: APPS.zen }],
+    conditions: [{ app: APP_BUNDLES.zen }],
     cases: [
       {
         phase: "press",

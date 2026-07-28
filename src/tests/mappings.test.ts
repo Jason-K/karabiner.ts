@@ -2,9 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { HOME_DIR, PATHS, TIMINGS } from "../data";
-import { APPS } from "../data/apps";
+import { APP_BUNDLES } from "../data/app_bundles";
 import { CMDS } from "../data/commands";
-import { DIRS } from "../data/folders";
 import { URLS } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
@@ -74,8 +73,8 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(APPS.outlook.name, "com.microsoft.Outlook");
-  assert.equal(DIRS.home.name, `${HOME_DIR}/`);
+  assert.equal(APP_BUNDLES.outlook.name, "com.microsoft.Outlook");
+  assert.equal(PATHS.dirHome.name, HOME_DIR);
   assert.equal(
     URLS.rayRecentFolders.name,
     "raycast-x://extensions/jason/recents/recentFolders",
@@ -167,12 +166,12 @@ test("enter key hold mappings stay declarative", () => {
       {
         phase: "hold",
         do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
-        conditions: [{ app: APPS.excel, unless: true }],
+        conditions: [{ app: APP_BUNDLES.excel, unless: true }],
       },
       {
         phase: "hold",
         do: [{ type: "key", key: "f2", options: { repeat: false } }],
-        conditions: [{ app: APPS.excel }],
+        conditions: [{ app: APP_BUNDLES.excel }],
       },
     ],
   });
@@ -189,12 +188,12 @@ test("enter key hold mappings stay declarative", () => {
       {
         phase: "hold",
         do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
-        conditions: [{ app: APPS.excel, unless: true }],
+        conditions: [{ app: APP_BUNDLES.excel, unless: true }],
       },
       {
         phase: "hold",
         do: [{ type: "key", key: "f2", options: { repeat: false } }],
-        conditions: [{ app: APPS.excel }],
+        conditions: [{ app: APP_BUNDLES.excel }],
       },
     ],
   });

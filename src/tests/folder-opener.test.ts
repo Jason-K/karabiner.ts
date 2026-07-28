@@ -1,25 +1,29 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {
-  getFolderOpenerBundleIdFor,
-  getOpenFolderCommandFor,
-} from "../core/folder-opener";
+import { getOpenFolderCommand } from "../core/folder-opener";
 
 test("bloom opener escapes spaces", () => {
-  const command = getOpenFolderCommandFor("bloom", "/Users/jason/My Folder");
-  assert.equal(command, "open -a Bloom /Users/jason/My\\ Folder");
+  const command = getOpenFolderCommand("/Users/jason/My Folder", "bloom");
+  assert.equal(command, "open -a Bloom '/Users/jason/My\\ Folder'");
 });
 
 test("qspace opener uses bundle open syntax", () => {
-  const command = getOpenFolderCommandFor("qspace", "/Users/jason/My Folder");
+  const command = getOpenFolderCommand("/Users/jason/My Folder", "qspace");
   assert.equal(
     command,
     "open -b com.jinghaoshe.qspace.pro '/Users/jason/My Folder'",
   );
 });
 
-test("bundle id resolution stays stable across openers", () => {
-  assert.equal(getFolderOpenerBundleIdFor("bloom"), "com.jinghaoshe.qspace.pro");
-  assert.equal(getFolderOpenerBundleIdFor("qspace"), "com.jinghaoshe.qspace.pro");
+test("finder opener (default) uses plain open", () => {
+  assert.equal(
+    getOpenFolderCommand("/Users/jason/My Folder", "finder"),
+    "open '/Users/jason/My Folder'",
+  );
+  // default (no opener arg) also resolves to finder
+  assert.equal(
+    getOpenFolderCommand("/Users/jason/My Folder"),
+    "open '/Users/jason/My Folder'",
+  );
 });

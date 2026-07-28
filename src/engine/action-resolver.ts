@@ -1,20 +1,20 @@
 import type { ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
-import type { Action, ActionSpec } from "../core/action-dsl";
+import type { Action, ActionSpec, AppTarget } from "../core/action-dsl";
 import { getOpenFolderCommand } from "../core/folder-opener";
+import { FINDER_REPLACEMENT } from "../data/user-prefs";
 import {
   actHereCmd,
   applescript,
   cmd,
-  focusApp,
   openAppBundleCommand,
+  openAppPathCommand,
   pythonScriptCommand,
   textProcessorCommand,
   withSleep,
 } from "../core/scripts";
 import { openApp } from "../core/software";
-import type { AppRef } from "../data";
 import { resolveModComboAlias } from "../data/key-aliases";
 
 export function expandModifiers(modifiers: string[]): string[] {
@@ -35,14 +35,29 @@ function resolveName(ref: { name: string | string[] }): string {
   return Array.isArray(ref.name) ? ref.name[0]! : ref.name;
 }
 
-function resolveAppBundleId(ref: AppRef): string {
-  return resolveName(ref);
+/**
+ * Resolve an AppTarget ref to the correct openApp() argument shape.
+ * - AppRef  (type:"app")  → { bundleIdentifier }
+ * - PathRef (type:"path") → { filePath }
+ * - raw string starting with "/" or ending with ".app" → { filePath }
+ * - raw string otherwise → { bundleIdentifier } (treated as a bundle ID)
+ */
+function resolveAppTarget(ref: AppTarget): { bundleIdentifier: string } | { filePath: string } {
+  if (typeof ref === "string") {
+    return ref.startsWith("/") || ref.endsWith(".app")
+      ? { filePath: ref }
+      : { bundleIdentifier: ref };
+  }
+  if (ref.type === "path") {
+    return { filePath: resolveName(ref) };
+  }
+  return { bundleIdentifier: resolveName(ref) };
 }
 
 function resolveShellCommand(action: ActionSpec): string | null {
   switch (action.type) {
     case "folder":
-      return getOpenFolderCommand(resolveName(action.ref));
+      return getOpenFolderCommand(resolveName(action.ref), FINDER_REPLACEMENT);
     case "actHere":
       return actHereCmd(action.action);
     case "url": {
@@ -56,7 +71,7 @@ function resolveShellCommand(action: ActionSpec): string | null {
       return textProcessorCommand(action.operation);
     case "wrapString":
       return withSleep(
-        action.delaySeconds ?? 0.2,
+        action.delaySeconds ?? 0.1,
         textProcessorCommand(action.operation),
       );
     // Accepts an arbitrary shell string or a CommandRef (resolve its .name).
@@ -71,7 +86,10 @@ function resolveShellCommand(action: ActionSpec): string | null {
       });
     case "app":
       if (action.mode === "shell") {
-        return openAppBundleCommand(resolveAppBundleId(action.ref));
+        const target = resolveAppTarget(action.ref);
+        return "filePath" in target
+          ? openAppPathCommand(target.filePath)
+          : openAppBundleCommand(target.bundleIdentifier);
       }
       return null;
     default:
@@ -87,17 +105,17 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
     case "noop":
       return [];
     case "app": {
-      const bundleId = resolveAppBundleId(action.ref);
-
-      if (action.mode === "focus") {
-        return [focusApp(bundleId)];
-      }
+      const target = resolveAppTarget(action.ref);
 
       if (action.mode === "shell") {
-        return [cmd(openAppBundleCommand(bundleId))];
+        return [cmd(
+          "filePath" in target
+            ? openAppPathCommand(target.filePath)
+            : openAppBundleCommand(target.bundleIdentifier),
+        )];
       }
 
-      return [openApp({ bundleIdentifier: bundleId })];
+      return [openApp(target)];
     }
     case "appHistory":
       return [openApp({ historyIndex: action.index })];

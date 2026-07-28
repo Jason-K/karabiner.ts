@@ -1,18 +1,22 @@
 import type { ToEvent } from "karabiner.ts";
-import type { AppRef } from "../data/apps";
+import type { AppRef } from "../data/app_bundles";
 import type { CommandRef } from "../data/commands";
-import type { FolderRef } from "../data/folders";
 import type { ModComboAlias, ModKey } from "../data/key-aliases";
+import type { PathRef } from "../data/paths";
 import type { VarSpec } from "../data/refs";
 import type { UrlRef } from "../data/urls";
+
+/** Ref accepted by the "app" action: a typed AppRef (bundle ID), a typed
+ * PathRef (file path to .app), or a raw string (bundle ID or /path/to/Foo.app). */
+export type AppTarget = AppRef | PathRef | string;
 
 export type ActionKeyModifier = ModKey | ModComboAlias;
 
 export type ActionSpec =
   | {
       type: "app";
-      ref: AppRef;
-      mode?: "open" | "focus" | "shell";
+      ref: AppTarget;
+      mode?: "open" | "shell";
       actionDesc?: string;
     }
   | {
@@ -21,7 +25,7 @@ export type ActionSpec =
     }
   | {
       type: "folder";
-      ref: FolderRef;
+      ref: PathRef;
       actionDesc?: string;
     }
   | {

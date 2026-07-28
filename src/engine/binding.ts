@@ -22,7 +22,7 @@ import {
   varTapTapHold,
   varTapTapHoldFrom,
 } from "../core/tap-hold";
-import type { AppRef, DeviceSpec, VarSpec } from "../data";
+import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
 import { DEVICE_IDS } from "../data";
 import { karabinerDeviceId } from "../data/devices";
 import { resolveModComboAlias } from "../data/key-aliases";
@@ -41,7 +41,11 @@ export type Phase = "press" | "release" | "hold";
 
 /** External state condition. Realized as a Karabiner `conditions[]` entry. */
 export type Condition =
-  | { app: AppRef | AppRef[]; unless?: boolean; description?: string }
+  | {
+      app: AppRef | PathRef | (AppRef | PathRef)[];
+      unless?: boolean;
+      description?: string;
+    }
   | {
       var: VarSpec;
       equals: string | number;
@@ -104,10 +108,23 @@ export type Binding = {
 export function resolveCondition(c: Condition): unknown {
   if ("app" in c) {
     const refs = Array.isArray(c.app) ? c.app : [c.app];
-    const ids = refs.flatMap((r) =>
-      Array.isArray(r.name) ? r.name : [r.name],
-    );
-    return c.unless ? ifApp(ids).unless().build() : ifApp(ids).build();
+    const bundleIds: string[] = [];
+    const filePaths: string[] = [];
+    for (const r of refs) {
+      const names = Array.isArray(r.name) ? r.name : [r.name];
+      if (r.type === "path") {
+        filePaths.push(...names);
+      } else {
+        bundleIds.push(...names);
+      }
+    }
+    const builder =
+      filePaths.length > 0 && bundleIds.length > 0
+        ? ifApp({ bundle_identifiers: bundleIds, file_paths: filePaths })
+        : filePaths.length > 0
+          ? ifApp({ file_paths: filePaths })
+          : ifApp(bundleIds);
+    return c.unless ? builder.unless().build() : builder.build();
   }
   if ("var" in c) {
     return {

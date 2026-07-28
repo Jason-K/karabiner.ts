@@ -1,14 +1,14 @@
 import { ifApp, ifVar, map, rule, toKey, toSetVar } from "karabiner.ts";
 
 import { formatRuleDescription } from "../core/rule-descriptions";
-import type { AppRef } from "../data";
+import type { AppRef, PathRef } from "../data";
 import type { ModKey } from "../data/key-aliases";
 
 export type DoubleTapGuardConfig = {
   key: string;
   modifiers: ModKey[];
   description: string;
-  ifApp?: AppRef | AppRef[];
+  ifApp?: AppRef | PathRef | (AppRef | PathRef)[];
   timeoutMs?: number;
 };
 
@@ -31,13 +31,25 @@ export function generateDoubleTapGuardRule(config: DoubleTapGuardConfig) {
   const { key, modifiers, description, ifApp: appScope, timeoutMs } = config;
   const varName = deriveGuardVar(key, modifiers);
 
-  const appCondition = appScope
-    ? ifApp(
-        (Array.isArray(appScope) ? appScope : [appScope]).flatMap((r) =>
-          Array.isArray(r.name) ? r.name : [r.name],
-        ),
-      )
-    : null;
+  const refs = appScope ? (Array.isArray(appScope) ? appScope : [appScope]) : [];
+  const bundleIds: string[] = [];
+  const filePaths: string[] = [];
+  for (const r of refs) {
+    const names = Array.isArray(r.name) ? r.name : [r.name];
+    if (r.type === "path") {
+      filePaths.push(...names);
+    } else {
+      bundleIds.push(...names);
+    }
+  }
+  const appCondition =
+    refs.length === 0
+      ? null
+      : filePaths.length > 0 && bundleIds.length > 0
+        ? ifApp({ bundle_identifiers: bundleIds, file_paths: filePaths })
+        : filePaths.length > 0
+          ? ifApp({ file_paths: filePaths })
+          : ifApp(bundleIds);
 
   // Second press: fire real key combo, reset var
   const secondPressBuilder = map(key as any, modifiers as any).condition(

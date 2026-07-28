@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { APPS } from "../data/apps";
+import { APP_BUNDLES } from "../data/app_bundles";
 import { CMDS } from "../data/commands";
-import { DIRS } from "../data/folders";
+import { PATHS } from "../data/paths";
 import { URLS } from "../data/urls";
 import type { Binding } from "../engine/binding";
 import {
@@ -17,19 +17,15 @@ import {
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(
-    describeAction({ type: "app", ref: APPS.excel }),
+    describeAction({ type: "app", ref: APP_BUNDLES.excel }),
     "open Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APPS.excel, mode: "focus" }),
-    "focus Microsoft Excel",
-  );
-  assert.equal(
-    describeAction({ type: "app", ref: APPS.excel, mode: "shell" }),
+    describeAction({ type: "app", ref: APP_BUNDLES.excel, mode: "shell" }),
     "open-shell Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APPS.excel, actionDesc: "force" }),
+    describeAction({ type: "app", ref: APP_BUNDLES.excel, actionDesc: "force" }),
     "open Microsoft Excel | force",
   );
 });
@@ -40,16 +36,16 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Go back 2 apps",
   );
   assert.equal(
-    describeAction({ type: "folder", ref: DIRS.downloads }),
-    "open 'D/Ls'",
+    describeAction({ type: "folder", ref: PATHS.dirDls }),
+    "open 'DLs'",
   );
   assert.equal(
     describeAction({
       type: "folder",
-      ref: DIRS.downloads,
+      ref: PATHS.dirDls,
       actionDesc: "new tab",
     }),
-    "open 'D/Ls' | new tab",
+    "open 'DLs' | new tab",
   );
   assert.equal(
     describeAction({ type: "url", url: URLS.rayClipboard }),

@@ -1,4 +1,4 @@
-import { APPS, CMDS, PATHS, TIMINGS, URLS } from "../data";
+import { APP_BUNDLES, CMDS, PATHS, TIMINGS, URLS } from "../data";
 import type { Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
@@ -10,7 +10,7 @@ const numBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "app", ref: APPS.ringCentral, mode: "shell" }],
+        do: [{ type: "app", ref: APP_BUNDLES.ringCentral, mode: "shell" }],
       },
     ],
   },
@@ -127,7 +127,7 @@ const letterBindings: Binding[] = [
   {
     trigger: { keys: ["g"] },
     cases: [
-      { phase: "hold", do: [{ type: "app", ref: APPS.claude, mode: "shell" }] },
+      { phase: "hold", do: [{ type: "app", ref: APP_BUNDLES.claude, mode: "shell" }] },
     ],
   },
   {
@@ -142,7 +142,7 @@ const letterBindings: Binding[] = [
   },
   {
     trigger: { keys: ["k"] },
-    cases: [{ phase: "hold", do: [{ type: "app", ref: APPS.kitty }] }],
+    cases: [{ phase: "hold", do: [{ type: "app", ref: APP_BUNDLES.kitty }] }],
   },
   {
     trigger: { keys: ["n"] },
@@ -187,7 +187,7 @@ const letterBindings: Binding[] = [
   {
     trigger: { keys: ["q"] },
     cases: [
-      { phase: "hold", do: [{ type: "app", ref: APPS.qspace, mode: "focus" }] },
+      { phase: "hold", do: [{ type: "app", ref: APP_BUNDLES.qspace }] },
     ],
   },
   {
@@ -345,12 +345,12 @@ const nonCharBindings: Binding[] = [
       {
         phase: "hold",
         do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
-        conditions: [{ app: APPS.excel, unless: true }],
+        conditions: [{ app: APP_BUNDLES.excel, unless: true }],
       },
       {
         phase: "hold",
         do: [{ type: "key", key: "f2", options: { repeat: false } }],
-        conditions: [{ app: APPS.excel }],
+        conditions: [{ app: APP_BUNDLES.excel }],
       },
     ],
   },
@@ -368,12 +368,12 @@ const nonCharBindings: Binding[] = [
       {
         phase: "hold",
         do: [{ type: "shell", command: CMDS.hsFormatCutSeed }],
-        conditions: [{ app: APPS.excel, unless: true }],
+        conditions: [{ app: APP_BUNDLES.excel, unless: true }],
       },
       {
         phase: "hold",
         do: [{ type: "key", key: "f2", options: { repeat: false } }],
-        conditions: [{ app: APPS.excel }],
+        conditions: [{ app: APP_BUNDLES.excel }],
       },
     ],
   },

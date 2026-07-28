@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APPS } from "../data/apps";
+import { APP_BUNDLES } from "../data/app_bundles";
 import { pythonScriptCommand } from "../core/scripts";
 import {
   buildCapsLockRule,
@@ -23,7 +23,7 @@ const fillPassword = modifiedSingleKeyTapHoldBindings.find(
 )!;
 
 const skimRemaps = modifiedSingleKeyTapHoldBindings.filter(
-  (b) => b.conditions?.some((c: any) => c.app === APPS.skim)
+  (b) => b.conditions?.some((c: any) => c.app === APP_BUNDLES.skim)
 );
 
 const buildLeftCommandRule = () =>
@@ -290,7 +290,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   assert.deepEqual(appIfCond, {
     type: "frontmost_application_if",
     description: undefined,
-    bundle_identifiers: [APPS.onePiece.name],
+    bundle_identifiers: [APP_BUNDLES.onePiece.name],
   });
 });
 
@@ -496,4 +496,43 @@ test("resolveActionToEvents handles python action", () => {
 
 test("resolveActionToEvents returns no events for noop", () => {
   assert.deepEqual(resolveActionToEvents({ type: "noop" } as any), []);
+});
+
+// ── app action: AppTarget variants ──────────────────────────────────────────
+
+test("resolveActionToEvents: app with AppRef (type:\"app\") uses bundle_identifier", () => {
+  const ref = { type: "app" as const, name: "com.apple.Safari", refDesc: "Safari" };
+  const [event] = resolveActionToEvents({ type: "app", ref });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    bundle_identifier: "com.apple.Safari",
+  });
+});
+
+test("resolveActionToEvents: app with PathRef (type:\"path\") uses file_path", () => {
+  const ref = { type: "path" as const, name: "/Applications/Safari.app", refDesc: "Safari" };
+  const [event] = resolveActionToEvents({ type: "app", ref });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "/Applications/Safari.app",
+  });
+});
+
+test("resolveActionToEvents: app with raw bundle ID string uses bundle_identifier", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "com.apple.Safari" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    bundle_identifier: "com.apple.Safari",
+  });
+});
+
+test("resolveActionToEvents: app with raw absolute path string uses file_path", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "/Applications/Safari.app" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "/Applications/Safari.app",
+  });
+});
+
+test("resolveActionToEvents: app with raw .app-suffixed string uses file_path", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "Safari.app" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "Safari.app",
+  });
 });

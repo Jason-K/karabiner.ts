@@ -1,14 +1,34 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { APP_BUNDLES, PATHS } from "../data";
 import { resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
 
-test("resolveCondition app if -> frontmost_application_if", () => {
+test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
-    app: { type: "app", name: "com.microsoft.Excel", refDesc: "Excel" },
+    app: APP_BUNDLES.excel,
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
+  assert.equal(c.file_paths, undefined);
+});
+
+test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
+  const c = resolveCondition({
+    app: PATHS.dirApplications,
+  }) as any;
+  assert.equal(c.type, "frontmost_application_if");
+  assert.deepEqual(c.file_paths, ["/Applications"]);
+  assert.equal(c.bundle_identifiers, undefined);
+});
+
+test("resolveCondition app + path if -> frontmost_application_if (AppRef and PathRef)", () => {
+  const c = resolveCondition({
+    app: [APP_BUNDLES.excel, PATHS.dirApplications],
+  }) as any;
+  assert.equal(c.type, "frontmost_application_if");
+  assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
+  assert.deepEqual(c.file_paths, ["/Applications"]);
 });
 
 test("resolveCondition app unless -> frontmost_application_unless", () => {

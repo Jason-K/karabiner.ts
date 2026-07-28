@@ -5,9 +5,9 @@ const app = (name: string, refDesc: string) => ({
 });
 
 // TO DO: Karabiner allows foremost_application_if|unless conditions to be set based on bundle_identifiers|file_paths (https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/conditions/frontmost-application/)
-// APPS currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
+// APP_BUNDLES currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
 
-export const APPS = {
+export const APP_BUNDLES = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
@@ -16,11 +16,11 @@ export const APPS = {
   claude: app("com.anthropic.claudefordesktop", "Claude"),
   code: app("com.microsoft.VSCode", "Code"),
   excel: app("com.microsoft.Excel", "Microsoft Excel"),
-  // getFolderOpenerBundleId() is a constant ("com.jinghaoshe.qspace.pro",
+  // getFinderReplacementBundleId() is a constant ("com.jinghaoshe.qspace.pro",
   // independent of the opener choice), so it is inlined here to keep data/
-  // free of core/ imports. No action references folderOpener today, so the
+  // free of core/ imports. No action references FinderReplacement today, so the
   // old "__folder_opener__" sentinel + resolver special case were dead.
-  folderOpener: app("com.jinghaoshe.qspace.pro", "QSpace"),
+  FinderReplacement: app("com.jinghaoshe.qspace.pro", "QSpace"),
   helium: app("net.imput.helium", "Helium"),
   kitty: app("net.kovidgoyal.kitty", "Kitty"),
   messages: app("com.apple.MobileSMS", "Messages"),
@@ -53,9 +53,9 @@ export const APPS = {
 export type AppRef = import("./refs").AppRef;
 
 export const PW_BUNDLES: AppRef[] = [
-  APPS.securityAgent,
-  APPS.settings,
-  APPS.settingsPrivacySecurityExtension,
-  APPS.brewUpdater,
-  APPS.taphouse,
+  APP_BUNDLES.securityAgent,
+  APP_BUNDLES.settings,
+  APP_BUNDLES.settingsPrivacySecurityExtension,
+  APP_BUNDLES.brewUpdater,
+  APP_BUNDLES.taphouse,
 ];

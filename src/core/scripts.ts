@@ -4,7 +4,6 @@ import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
 
-import { FOCUS_APP_BEHAVIORS } from "../data/focus-app";
 import { PATHS } from "../data/paths";
 import { toSendUserCommand } from "./beta";
 
@@ -51,80 +50,9 @@ export function layerIndicatorCommand(action: 'show' | 'hide', layer?: string): 
 
 
 
-export type FocusAppOptions = {
-  appName?: string;
-  activationDelaySeconds?: number;
-  createWindowShortcut?: {
-    key: string;
-    modifiers?: string[];
-  };
-};
-
-function getFocusAppBehavior(bundleId: string): FocusAppOptions | undefined {
-  return FOCUS_APP_BEHAVIORS[bundleId as keyof typeof FOCUS_APP_BEHAVIORS];
-}
-
-/**
- * Focus an application by bundle ID using native macOS `open` command.
- * Optionally checks whether the app has a visible window and creates one if needed.
- *
- * Example:
- *   focusApp('com.apple.Safari')
- *   focusApp('com.chabomakers.Antinote-setapp') // auto-creates a note window if none exists
- *
- * Latency: ~10-30ms (native open -b, no overhead)
- */
-export function focusApp(bundleId: string, options?: FocusAppOptions): ToEvent {
-  const openCommand = `open -b ${shellSingleQuote(bundleId)}`;
-  const defaultBehavior = getFocusAppBehavior(bundleId);
-  const resolvedOptions = {
-    ...defaultBehavior,
-    ...options,
-    createWindowShortcut:
-      options?.createWindowShortcut ?? defaultBehavior?.createWindowShortcut,
-  };
-
-  if (!resolvedOptions.appName || !resolvedOptions.createWindowShortcut) {
-    return cmd(openCommand);
-  }
-
-  return cmd(
-    `${openCommand} && ${buildFocusAppWindowCheckCommand(resolvedOptions)}`,
-  );
-}
-
 
 function shellSingleQuote(str: string): string {
-  return `'${str.replace(/'/g, `"'"'`)}'`;
-}
-
-function appleScriptDoubleQuote(str: string): string {
-  return str.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-}
-
-function buildFocusAppWindowCheckCommand(options: FocusAppOptions): string {
-  const appName = appleScriptDoubleQuote(options.appName ?? "");
-  const key = appleScriptDoubleQuote(options.createWindowShortcut?.key ?? "n");
-  const modifiers = options.createWindowShortcut?.modifiers ?? [];
-  const delaySeconds = options.activationDelaySeconds ?? 0.2;
-
-  const keystrokeLine = modifiers.length
-    ? `keystroke "${key}" using {${modifiers.join(", ")}}`
-    : `keystroke "${key}"`;
-
-  const script = [
-    `delay ${delaySeconds}`,
-    'tell application "System Events"',
-    `if exists process "${appName}" then`,
-    `set windowCount to count of windows of process "${appName}"`,
-    "if windowCount is 0 then",
-    keystrokeLine,
-    "end if",
-    "end if",
-    "end tell",
-  ].join("\n");
-
-  return `osascript -e ${shellSingleQuote(script)}`;
+  return `'${str.replace(/'/g, "'\"'\"'")}'`;
 }
 
 function normalizePathForShell(path: string): string {
@@ -200,4 +128,8 @@ export function actHereCmd(action: string): string {
 
 export function openAppBundleCommand(bundleIdentifier: string): string {
   return `${PATHS.binAppOpen.name} -b ${shellSingleQuote(bundleIdentifier)}`;
+}
+
+export function openAppPathCommand(filePath: string): string {
+  return `${PATHS.binAppOpen.name} ${shellSingleQuote(filePath)}`;
 }

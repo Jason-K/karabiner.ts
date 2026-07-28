@@ -1,5 +1,5 @@
 import { toFromEvent } from "../core/beta";
-import { APPS, CMDS, DEVICE_IDS, TIMINGS, URLS } from "../data";
+import { APP_BUNDLES, CMDS, DEVICE_IDS, TIMINGS, URLS } from "../data";
 import { mouseVars } from "../data/mouse";
 import type { Binding } from "../engine";
 
@@ -58,7 +58,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: APPS.zen },
+          { app: APP_BUNDLES.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -100,7 +100,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: APPS.zen },
+          { app: APP_BUNDLES.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
           { var: mouseVars.wheelDown, equals: 0 },
         ],
@@ -137,7 +137,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: APPS.zen },
+          { app: APP_BUNDLES.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -244,7 +244,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: APPS.zen },
+          { app: APP_BUNDLES.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -273,7 +273,7 @@ export const mouseBindings: Binding[] = [
       {
         phase: "press",
         conditions: [
-          { app: APPS.zen },
+          { app: APP_BUNDLES.zen },
           { var: mouseVars.rightButtonPressed, equals: 1 },
         ],
         do: [
@@ -330,7 +330,7 @@ export const mouseBindings: Binding[] = [
         tapCount: 1,
         phase: "release",
         delayed: true,
-        conditions: [{ app: APPS.zen }],
+        conditions: [{ app: APP_BUNDLES.zen }],
         do: [
           {
             pointing_button: "button1",
@@ -342,7 +342,7 @@ export const mouseBindings: Binding[] = [
       {
         tapCount: 1,
         phase: "hold",
-        conditions: [{ app: APPS.zen }],
+        conditions: [{ app: APP_BUNDLES.zen }],
         do: [
           { pointing_button: "button1", modifiers: ["option"], repeat: false },
         ],
@@ -350,7 +350,7 @@ export const mouseBindings: Binding[] = [
       {
         tapCount: 2,
         phase: "release",
-        conditions: [{ app: APPS.zen }],
+        conditions: [{ app: APP_BUNDLES.zen }],
         do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
       },
       // Non-Zen — tap = maximize (delayed), double = next display
@@ -358,13 +358,13 @@ export const mouseBindings: Binding[] = [
         tapCount: 1,
         phase: "release",
         delayed: true,
-        conditions: [{ app: APPS.zen, unless: true }],
+        conditions: [{ app: APP_BUNDLES.zen, unless: true }],
         do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
       },
       {
         tapCount: 2,
         phase: "release",
-        conditions: [{ app: APPS.zen, unless: true }],
+        conditions: [{ app: APP_BUNDLES.zen, unless: true }],
         do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
       },
     ],
@@ -384,8 +384,8 @@ export const mouseBindings: Binding[] = [
       {
         phase: "release",
         conditions: [
-          { app: APPS.onePiece },
-          { app: APPS.onePiecePreferences, unless: true },
+          { app: APP_BUNDLES.onePiece },
+          { app: APP_BUNDLES.onePiecePreferences, unless: true },
         ],
         do: [{ type: "key", key: "return_or_enter" }],
       },

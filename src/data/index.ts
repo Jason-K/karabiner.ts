@@ -4,17 +4,11 @@
  * Re-exports shared registries/constants consumed by core/engine/definitions.
  */
 
-export {
-  WIN_VALS,
-  WIN_VARS,
-  type AccessibilityVariable,
-} from "./accessibility";
 export { DEVICE_IDS, karabinerDeviceId, NUMPAD_REMAPS } from "./devices";
-export { FOCUS_APP_BEHAVIORS, type FocusAppBehavior } from "./focus-app";
+export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./ke-vars";
 
-export { APPS, PW_BUNDLES, type AppRef } from "./apps";
+export { APP_BUNDLES, PW_BUNDLES, type AppRef } from "./app_bundles";
 export { CMDS, type CommandRef } from "./commands";
-export { DIRS, type FolderRef } from "./folders";
 export { HOME_DIR, PATHS, type PathRef } from "./paths";
 export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./profiles";
 export type { DeviceSpec, RefSpec, RefSpecType, VarSpec } from "./refs";

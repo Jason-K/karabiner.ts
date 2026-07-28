@@ -2,7 +2,6 @@
  *  `refDesc` is the human label used to derive descriptions (Phase 2). */
 export type RefSpecType =
   | "app"
-  | "folder"
   | "command"
   | "url"
   | "path";
@@ -29,8 +28,8 @@ export type DeviceSpec = {
 
 // Category aliases keep action refs type-safe (an app ref can't be a folder).
 export type AppRef = RefSpec;
-export type FolderRef = RefSpec;
 export type CommandRef = RefSpec;
 export type UrlRef = RefSpec;
 export type PathRef = RefSpec;
+export type VarRef = VarSpec;
 

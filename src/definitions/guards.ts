@@ -1,4 +1,4 @@
-import { APPS, TIMINGS } from "../data";
+import { APP_BUNDLES, TIMINGS } from "../data";
 import {
   generateDoubleTapGuardRule,
   type DoubleTapGuardConfig,
@@ -15,7 +15,7 @@ const antinoteGuards: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [APPS.antinote],
+  ifApp: [APP_BUNDLES.antinote],
 };
 
 const guardRules: DoubleTapGuardConfig[] = [

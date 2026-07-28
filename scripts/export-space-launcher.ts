@@ -181,7 +181,7 @@ function resolvePortableAction(
   }
 
   const bundleIdentifier =
-    action.ref === "folderOpener" ? Apps.qspace : Apps[action.ref];
+    action.ref === "FinderReplacement" ? Apps.qspace : Apps[action.ref];
   const appPath = resolveAppPath(bundleIdentifier);
 
   if (!appPath) {

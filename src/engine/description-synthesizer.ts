@@ -23,8 +23,9 @@ export function describeAction(action: ActionSpec): string {
   switch (action.type) {
     case "app": {
       const verb =
-        action.mode === "focus" ? "focus" : action.mode === "shell" ? "open-shell" : "open";
-      return withActionDesc(`${verb} ${action.ref.refDesc}`, action.actionDesc);
+        action.mode === "shell" ? "open-shell" : "open";
+      const label = typeof action.ref === "string" ? action.ref : action.ref.refDesc;
+      return withActionDesc(`${verb} ${label}`, action.actionDesc);
     }
     case "appHistory":
       return `Go back ${action.index} apps`;

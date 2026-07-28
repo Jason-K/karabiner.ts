@@ -31,7 +31,7 @@ See `docs/UPSTREAM_SYNC.md` for the sync workflow.
 - `src/engine/binding.ts` — the standardized `Binding` schema and `defineBindings`, the single entry point every generator routes through
 - `src/engine/action-resolver.ts` — single compiler from `ActionSpec` to Karabiner `ToEvent`s
 - `src/core/leader/build.ts` — generic leader-layer compiler (used by the space leader, ready for additional leaders)
-- `src/data/apps.ts`, `folders.ts`, `raycast.ts`, `cleanshot.ts` — registries referenced by definitions
+- `src/data/apps.ts`, `raycast.ts`, `cleanshot.ts`, `paths.ts` — registries referenced by definitions
 - `src/index.ts` — orchestration entry point
 
 ## Common Commands
