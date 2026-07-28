@@ -4,7 +4,6 @@ import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
 
-import { APPS } from "../data/apps";
 import { FOCUS_APP_BEHAVIORS } from "../data/focus-app";
 import { PATHS } from "../data/paths";
 import { toSendUserCommand } from "./beta";
@@ -50,52 +49,7 @@ export function layerIndicatorCommand(action: 'show' | 'hide', layer?: string): 
   return cmd(`open -g 'hammerspoon://layer_indicator?action=hide'`);
 }
 
-/**
- * Create a generic user command for any registered endpoint.
- * Payloads are routed to the command server by 'endpoint' field.
- *
- * Example:
- *   userCommand('hammerspoon', { function: 'focusApp', args: { bundleId: 'com.apple.Safari' } })
- */
-export function userCommand(endpoint: string, payload: Record<string, unknown>): ToEvent {
-  if (ENABLE_LAYER_INDICATOR_USER_COMMAND) {
-    return toSendUserCommand({ endpoint, ...payload }, LAYER_INDICATOR_USER_COMMAND_ENDPOINT);
-  }
-  // Fallback: no shell_command equivalent for generic endpoints
-  console.warn(`userCommand: endpoint '${endpoint}' requires command server; fallback unavailable`);
-  return cmd('open -g "hammerspoon://noop"');
-}
 
-/**
- * Send a notification via Hammerspoon using the command server.
- * Falls back to osascript if Hammerspoon unavailable.
- *
- * Example:
- *   showNotification('Alert', { subtitle: 'This is a message' })
- *
- * Latency: ~100ms (Hammerspoon) or ~50ms (osascript)
- */
-export function showNotification(
-  title: string,
-  options?: { subtitle?: string; informativeText?: string }
-): ToEvent {
-  // Prefer Hammerspoon if available (allows custom styling)
-  if (ENABLE_LAYER_INDICATOR_USER_COMMAND) {
-    return userCommand('hammerspoon', {
-      function: 'showNotification',
-      args: {
-        title,
-        ...options,
-      },
-    });
-  }
-
-  // Fallback: osascript native notification
-  const subtitle = options?.subtitle ? `with subtitle "${options.subtitle}"` : '';
-  const info = options?.informativeText ? ` message "${options.informativeText}"` : '';
-  const script = `display notification "${title}" ${subtitle}${info}`;
-  return cmd(`osascript -e ${shellSingleQuote(script)}`);
-}
 
 export type FocusAppOptions = {
   appName?: string;
@@ -139,22 +93,7 @@ export function focusApp(bundleId: string, options?: FocusAppOptions): ToEvent {
   );
 }
 
-/**
- * Copy text to clipboard using native `pbcopy` command.
- * Direct implementation, no Hammerspoon routing needed.
- *
- * Example:
- *   copyToClipboard('Hello, world!')
- *
- * Latency: ~2-5ms (native pbcopy, 50-100x faster than Hammerspoon routing)
- */
-export function copyToClipboard(text: string): ToEvent {
-  // Use native pbcopy for instant clipboard write
-  // Avoids socket overhead: no server latency, no Hammerspoon IPC
-  // Direct stdin to pbcopy is fastest possible clipboard implementation
-  const quoted = shellSingleQuote(text);
-  return cmd(`echo -n ${quoted} | pbcopy`);
-}
+
 function shellSingleQuote(str: string): string {
   return `'${str.replace(/'/g, `"'"'`)}'`;
 }
@@ -204,17 +143,7 @@ export function applescript(scriptPath: string, ...args: string[]): ToEvent {
   return cmd(parts.join(' '));
 }
 
-export function hs(code: string): ToEvent {
-  const codeQuoted = shellSingleQuote(code);
-  return cmd(`/opt/homebrew/bin/hs -c ${codeQuoted}`);
-}
-
-export function hammerspoonCommand(code: string): string {
-  const codeQuoted = shellSingleQuote(code);
-  return `/opt/homebrew/bin/hs -c ${codeQuoted}`;
-}
-
-export function pythonCommand(
+function pythonCommand(
   spec: string | string[],
   opts?: { useEnv?: boolean; pythonBin?: string }
 ): string {
@@ -224,10 +153,6 @@ export function pythonCommand(
     return `${pythonBin} ${joined}`;
   }
   return `${pythonBin} ${spec}`;
-}
-
-export function python(spec: string | string[], opts?: { useEnv?: boolean; pythonBin?: string }): ToEvent {
-  return cmd(pythonCommand(spec, opts));
 }
 
 export function pythonScriptCommand(
@@ -261,44 +186,13 @@ export function textProcessorCommand(action: string): string {
   );
 }
 
-export function evaluateSelectionCommand(): string {
-  return hammerspoonCommand("FormatCutSeed()");
-}
 
-export function formatSelectionCommand(): string {
-  return hammerspoonCommand("FormatSelection()");
-}
-
-export function killAppCommand(scope: "foreground" | "all" = "all"): string {
-  return scope === "foreground"
-    ? `${PATHS.killAppBin.name} --foreground`
-    : PATHS.killAppBin.name;
-}
-
-export function recentDownloadsCommand(): string {
-  return PATHS.recentDownloadsScript.name;
-}
-
-export function spotifyToggleCommand(): string {
-  return [
-    "if pgrep -x 'Spotify' > /dev/null; then",
-    "open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause';",
-    `else ${openAppBundleCommand(APPS.spotify.name as string)};`,
-    "fi; echo 'Spotify toggled'",
-  ].join(" ");
-}
-
-export function typinatorNewRuleCommand(): string {
-  return `${PATHS.typinatorPythonBin.name} ${PATHS.typinatorNewRuleScript.name}`;
-}
 
 export function withSleep(delaySeconds: number, shell: string): string {
   return `sleep ${delaySeconds} && ${shell}`;
 }
 
-export function openUrlCommand(url: string): string {
-  return `open -u ${shellSingleQuote(url)}`;
-}
+
 
 export function actHereCmd(action: string): string {
   return `${PATHS.actHereScript.name} --action ${action}`;
@@ -308,7 +202,4 @@ export function openAppBundleCommand(bundleIdentifier: string): string {
   return `${PATHS.openAppBin.name} -b ${shellSingleQuote(bundleIdentifier)}`;
 }
 
-export function lua(code: string): ToEvent {
-  const codeQuoted = shellSingleQuote(code);
-  return cmd(`lua -e ${codeQuoted}`);
-}
+
