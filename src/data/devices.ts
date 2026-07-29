@@ -58,3 +58,11 @@ export const NUMPAD_REMAPS = [
   { from: { key_code: "left_control" }, to: [{ key_code: "fn" }] },
   { from: { key_code: "fn" }, to: [{ key_code: "left_control" }] },
 ] as const;
+
+export const MOUSE_FLIP_WHEEL_VERTICAL: boolean = true;
+export const MOUSE_FLIP_WHEEL_HORIZONTAL: boolean = true;
+export const MOUSE_XY_MULTIPLIER: number = 10.0;
+export const MOUSE_WHEEL_MULTIPLIER: number = 5.0;
+export const MOUSE_MODIFY_EVENTS: boolean = true;
+export const KB_MODIFY_EVENTS: boolean = true;
+export const KB_USE_CAPS_LED: boolean = true;

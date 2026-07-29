@@ -12,6 +12,7 @@ export type DeviceConfig = {
   simple_modifications: ReadonlyArray<SimpleModification>;
 };
 
+// TO DO: update this to allow setting device-specific settings (e.g., mouse_flip_wheel_vertical, mouse_xy_multiplier, etc.); see src/data/user-prefs.ts and devices.ts for the list of settings that can be set in the profile.json file
 export function updateDeviceConfigurations(profileName: string, deviceConfigs: DeviceConfig[]): void {
   import('fs').then((fs) => {
     import('os').then((os) => {

@@ -79,6 +79,17 @@ const deviceConfigs: DeviceConfig[] = [
   },
 ];
 
+const logitechG502XConfig: DeviceConfig = {
+  identifiers: karabinerDeviceId(DEVICE_IDS.logitechG502X),
+  settings: {
+    mouse_flip_wheel_vertical: true,
+    mouse_flip_wheel_horizontal: true,
+    mouse_xy_multiplier: 10.0,
+    mouse_wheel_multiplier: 5.0,
+    mouse_modify_events: true,
+  },
+};
+
 // ============================================================================
 // WRITE TO PROFILE
 // ============================================================================

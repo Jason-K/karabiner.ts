@@ -38,7 +38,7 @@ const ONEDRIVE_PERSONAL = `${HOME_DIR}/Library/CloudStorage/OneDrive-Personal`;
 // Paths for export as PATHS.*
 // ---------------------------------------------------------
 
-// DIRS 
+// DIRS
 const ENV_DIRS = {
   dirHome: path(`${HOME_DIR}`, "Home directory"),
   dirXdgConfig: path(`${XDG_CONFIG_HOME}`, "XDG Config dir"),
@@ -143,7 +143,7 @@ const BIN_FILES = {
     "PrivilegesCLI",
   ),
   binHS: path(`${BREW_DIR}/bin/hs`, "Hammerspoon binary"),
-  binSendKeys: path(`${BREW_DIR}/bin/binSendKeys`, "Sendkeys"),
+  binSendKeys: path(`${BREW_DIR}/bin/SendKeys`, "Sendkeys"),
   binPythonTypinator: path(
     `${HOME_DIR}/.venv/typinator/bin/python`,
     "python bin for Typinator",

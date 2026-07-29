@@ -7,6 +7,6 @@ export * from "./double-tap-guard-rules";
 export * from "./conditional-tap-hold-rules";
 export * from "./device-config";
 export * from "./escape-rule";
-export * from "./layer-emit";
+// export * from "./layer-emit";
 export * from "./modifier-chord-rules";
 export * from "./simultaneous-rules";

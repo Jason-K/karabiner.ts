@@ -13,6 +13,10 @@ const subCommands = {
   addPriv: `${PATHS.binPrivCLI.name} -a`,
   getPriv: `${PATHS.binPrivCLI.name} -r && sleep ${TIMINGS.privDelaySec} && ${PATHS.binPrivCLI.name} -a && sleep ${TIMINGS.privDelaySec}`,
 
+  // 1PASSWORD
+  fillSecret: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control,shift>"`,
+  fillNameAndSecret: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control,shift>"`,
+
   // UTILITIES
   callSendKeys: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005`,
 
@@ -22,29 +26,27 @@ const subCommands = {
   // HAMMERSPOON
   callHammerspoon: `${PATHS.binHS.name} -c`,
 
-  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()'`,
 
   // TEXT PROCESSOR
   callTextProcessor: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python ${PATHS.scriptTextProcessorCLI.name}`,
-
 };
 
 const Passwords_Privileges = {
   // PASSWORDS AND PRIVILEGES
   getPrivileges: cmdEntry(`${subCommands.getPriv}`, "Get privileges"),
   fillPassword: cmdEntry(
-    `${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
+    `${subCommands.getPriv} && ${subCommands.fillSecret}`,
     "Fill password",
   ),
   fillUsernameAndPassword: cmdEntry(
-    `${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:a:command>Jason<c:tab><c:/:command,option,control>"`,
+    `${subCommands.getPriv} && ${subCommands.fillNameAndSecret}`,
     "Fill username and password",
   ),
   getWordDocPathAndPrivileges: cmdEntry(
-    `${subCommands.getWordDocPath} && ${subCommands.getPriv} && ${subCommands.callSendKeys} --characters "<c:/:command,option,control>"`,
+    `${subCommands.getWordDocPath} && ${subCommands.getPriv} && ${subCommands.fillSecret}`,
     "Get privileges and path to active Word document",
   ),
-
 };
 
 const Kill_Apps = {

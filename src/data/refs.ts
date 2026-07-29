@@ -18,12 +18,25 @@ export type VarSpec = {
   varDesc: string;
 };
 
+
+// TO DO: consider expanding to allow user to assign device-specific rules, including booleans for
 export type DeviceSpec = {
   name: string;
   deviceDesc: string;
   product_id: number;
   vendor_id: number;
-  is_keyboard?: boolean;
+  // device_type?: "keyboard" | "pointing_device"; used to set the d
+  //   is_keyboard?: boolean;
+  //   is_pointing_device?: boolean;
+  //   modify_events?: boolean;
+  //   manipulate_caps_led?: boolean;
+  //   mouse_flip_wheel_vertical?: boolean;
+  //   mouse_flip_wheel_horizontal?: boolean;
+  //   mouse_xy_multiplier?: number;
+  //   mouse_wheel_multiplier?: number;
+  //   mouse_modify_events?: boolean;
+  //   ignore_vendor_events?: boolean;
+  //   ignore_device?: boolean;
 };
 
 // Category aliases keep action refs type-safe (an app ref can't be a folder).
@@ -32,4 +45,3 @@ export type CommandRef = RefSpec;
 export type UrlRef = RefSpec;
 export type PathRef = RefSpec;
 export type VarRef = VarSpec;
-
