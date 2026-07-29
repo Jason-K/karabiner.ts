@@ -9,493 +9,171 @@ import {
   TIMINGS,
   URLS,
 } from "../data";
-import type { Binding } from "../engine";
+import {
+  actHere,
+  bind,
+  cmd,
+  condApp,
+  condNotVar,
+  condVar,
+  extHk,
+  from,
+  hold,
+  key,
+  openApp,
+  openUrl,
+  press,
+  release,
+  shell,
+  timing,
+  to,
+  when,
+  type Binding,
+} from "../engine";
 
 const modNumBindings: Binding[] = [
-  {
-    trigger: { keys: ["keypad_1"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectWinBottomLeftEighth,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["keypad_3"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectWinBottomRightEighth,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["keypad_5"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectWinMaximize,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["keypad_7"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectWinTopLeftEighth,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["keypad_9"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectWinTopRightEighth,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
+  bind(from("keypad_1", ["vmCOCS"]), to(release(openUrl(URLS.rectWinBottomLeftEighth, true)))),
+  bind(from("keypad_3", ["vmCOCS"]), to(release(openUrl(URLS.rectWinBottomRightEighth, true)))),
+  bind(from("keypad_5", ["vmCOCS"]), to(release(openUrl(URLS.rectWinMaximize, true)))),
+  bind(from("keypad_7", ["vmCOCS"]), to(release(openUrl(URLS.rectWinTopLeftEighth, true)))),
+  bind(from("keypad_9", ["vmCOCS"]), to(release(openUrl(URLS.rectWinTopRightEighth, true)))),
 ];
 
 const modLetterBindings: Binding[] = [
-  {
-    trigger: { keys: ["a"], modifiers: ["shift"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [{ type: "url", url: URLS.antinoteNewNoteInBackground }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["e"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.focusWinRight,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["f"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.focusWinBottom,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["h"], modifiers: ["left_command"] },
-    conditions: [{ app: APP_BUNDLES.skim }],
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "externalHk", ref: EXTERNAL_HKS.skimHighlight }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["k"], modifiers: ["right_option"] },
-    timing: {
+  bind(from("a", ["shift"]), to(hold(openUrl(URLS.antinoteNewNoteInBackground)))),
+  bind(from("e", ["vmCOCS"]), to(release(extHk(EXTERNAL_HKS.focusWinRight)))),
+  bind(from("f", ["vmCOCS"]), to(release(extHk(EXTERNAL_HKS.focusWinBottom)))),
+  bind(
+    from("h", ["left_command"]),
+    to(press(extHk(EXTERNAL_HKS.skimHighlight))),
+    when(condApp(APP_BUNDLES.skim)),
+  ),
+  bind(
+    from("k", ["right_option"]),
+    to(hold(actHere("kitty"))),
+    timing({
       aloneMs: TIMINGS.delayHoldMs,
       heldThresholdMs: TIMINGS.delayHoldMs,
-    },
-    cases: [{ phase: "hold", do: [{ type: "actHere", action: "kitty" }] }],
-  },
-  {
-    trigger: { keys: ["m"], modifiers: ["left_command"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.restoreMinimizedWindow,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["p"], modifiers: ["left_command"] },
-    cases: [
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.popclip,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["q"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.focusWinLeft,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["r"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.focusWinTop,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["s"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "shell", command: CMDS.hsFormatSelection }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["s"], modifiers: ["right_option"] },
-    timing: {
+    }),
+  ),
+  bind(from("m", ["left_command"]), to(hold(extHk(EXTERNAL_HKS.restoreMinimizedWindow)))),
+  bind(
+    from("p", ["left_command"]),
+    to(
+      release(cmd(CMDS.wordPrint)).when(condApp(APP_BUNDLES.word)),
+      hold(extHk(EXTERNAL_HKS.popclip)),
+    ),
+  ),
+  bind(from("q", ["vmCOCS"]), to(release(extHk(EXTERNAL_HKS.focusWinLeft)))),
+  bind(from("r", ["vmCOCS"]), to(release(extHk(EXTERNAL_HKS.focusWinTop)))),
+  bind(from("s", MOD_COMBO.vmCOCS), to(press(shell(CMDS.hsFormatSelection)))),
+  bind(
+    from("s", ["right_option"]),
+    to(
+      release(shell(CMDS.spotifyToggle)),
+      hold(openUrl(URLS.raySpotifySearch)),
+    ),
+    timing({
       aloneMs: TIMINGS.delayHoldMs,
       heldThresholdMs: TIMINGS.delayHoldMs,
-    },
-    cases: [
-      {
-        phase: "release",
-        do: [{ type: "shell", command: CMDS.spotifyToggle }],
-      },
-      { phase: "hold", do: [{ type: "url", url: URLS.raySpotifySearch }] },
-    ],
-  },
-  {
-    trigger: { keys: ["t"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [{ type: "shell", command: CMDS.typinatorNewRule }],
-      },
-      {
-        phase: "hold",
-        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["t"], modifiers: ["right_option"] },
-    timing: {
+    }),
+  ),
+  bind(
+    from("t", ["vmCOCS"]),
+    to(
+      release(shell(CMDS.typinatorNewRule)),
+      hold(shell(CMDS.scriptTypinatorLastRule)),
+    ),
+  ),
+  bind(
+    from("t", ["right_option"]),
+    to(hold(shell(CMDS.scriptTypinatorLastRule))),
+    timing({
       aloneMs: TIMINGS.delayHoldMs,
       heldThresholdMs: TIMINGS.delayHoldMs,
-    },
-    cases: [
-      {
-        phase: "hold",
-        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["u"], modifiers: ["left_command"] },
-    conditions: [{ app: APP_BUNDLES.skim }],
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "externalHk", ref: EXTERNAL_HKS.skimUnderline }],
-      },
-    ],
-  },
+    }),
+  ),
+  bind(
+    from("u", ["left_command"]),
+    to(press(extHk(EXTERNAL_HKS.skimUnderline))),
+    when(condApp(APP_BUNDLES.skim)),
+  ),
 ];
 
 const modSymbolBindings: Binding[] = [
-  {
-    trigger: { keys: ["comma"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "app", ref: APP_BUNDLES.systemSettings }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["slash"], modifiers: ["left_command"] },
-    cases: [
-      {
-        // AUTHENTICATION DIALOG fill password.
-        phase: "press",
-        conditions: [
-          { app: PW_BUNDLES },
-          {
-            var: KE_VARS.accessibilityType,
-            equals: KE_VAR_VALUES.axTextField,
-          },
-          {
-            var: KE_VARS.accessibilitySubtype,
-            equals: KE_VAR_VALUES.axSecureTextField,
-          },
-        ],
-        do: [{ type: "command", ref: CMDS.fillPassword }],
-      },
-      {
-        // AUTHENTICATION DIALOG: fill username and password.
-        phase: "press",
-        conditions: [
-          { app: PW_BUNDLES },
-          {
-            var: KE_VARS.accessibilityType,
-            equals: KE_VAR_VALUES.axTextField,
-          },
-          {
-            var: KE_VARS.accessibilitySubtype,
-            equals: KE_VAR_VALUES.axSecureTextField,
-            unless: true,
-          },
-        ],
-        do: [{ type: "command", ref: CMDS.fillUsernameAndPassword }],
-      },
-      {
-        // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
-        phase: "press",
-        conditions: [{ app: APP_BUNDLES.word }],
-        do: [{ type: "shell", command: CMDS.getWordDocPathAndPrivileges }],
-      },
-    ],
-  },
+  bind(from("comma", MOD_COMBO.vmCOCS), to(press(openApp(APP_BUNDLES.systemSettings)))),
+  bind(
+    from("slash", ["left_command"]),
+    to(
+      // AUTHENTICATION DIALOG fill password.
+      press(cmd(CMDS.fillPassword)).when(
+        condApp(PW_BUNDLES),
+        condVar(KE_VARS.accessibilityType, KE_VAR_VALUES.axTextField),
+        condVar(KE_VARS.accessibilitySubtype, KE_VAR_VALUES.axSecureTextField),
+      ),
+      // AUTHENTICATION DIALOG: fill username and password.
+      press(cmd(CMDS.fillUsernameAndPassword)).when(
+        condApp(PW_BUNDLES),
+        condVar(KE_VARS.accessibilityType, KE_VAR_VALUES.axTextField),
+        condNotVar(KE_VARS.accessibilitySubtype, KE_VAR_VALUES.axSecureTextField),
+      ),
+      // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
+      press(shell(CMDS.getWordDocPathAndPrivileges)).when(condApp(APP_BUNDLES.word)),
+    ),
+  ),
 ];
 
 const modNonCharBindings: Binding[] = [
-  {
-    trigger: { keys: ["end"], modifiers: ["shift"] },
-    cases: [
-      {
-        phase: "press",
-        do: [
-          {
-            type: "key",
-            key: "right_arrow",
-            modifiers: ["left_command", "shift"],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["escape"], modifiers: ["control"] },
-    timing: {
+  bind(from("end", ["shift"]), to(press(key("right_arrow", ["left_command", "shift"])))),
+  bind(
+    from("escape", ["control"]),
+    to(
+      release(openApp(APP_BUNDLES.activityMonitor)),
+      hold(openApp(APP_BUNDLES.processSpy)),
+    ),
+    timing({
       aloneMs: TIMINGS.delayHoldMs,
       heldThresholdMs: TIMINGS.delayHoldMs,
-    },
-    cases: [
-      {
-        phase: "release",
-        do: [{ type: "app", ref: APP_BUNDLES.activityMonitor }],
-      },
-      { phase: "hold", do: [{ type: "app", ref: APP_BUNDLES.processSpy }] },
-    ],
-  },
-  {
-    trigger: { keys: ["escape"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "app", ref: APP_BUNDLES.activityMonitor }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["home"], modifiers: ["shift"] },
-    cases: [
-      {
-        phase: "press",
-        do: [
-          {
-            type: "key",
-            key: "left_arrow",
-            modifiers: ["left_command", "shift"],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["left_arrow"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "shell",
-            command: CMDS.winLeftOrTop,
-          },
-        ],
-      },
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectAppPrevDisplay,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["left_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: APP_BUNDLES.zen }],
-    cases: [
-      {
-        phase: "press",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.zenNextTab,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["right_arrow"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "shell",
-            command: CMDS.winRightOrBottom,
-          },
-        ],
-      },
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectAppNextDisplay,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["right_arrow"], modifiers: MOD_COMBO.vmC__S },
-    conditions: [{ app: APP_BUNDLES.zen }],
-    cases: [
-      {
-        phase: "press",
-        do: [
-          {
-            type: "externalHk",
-            ref: EXTERNAL_HKS.zenPreviousTab,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["spacebar"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
-      },
-    ],
-  },
-  {
-    trigger: { keys: ["tab"], modifiers: ["vmCOCS"] },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectAppNextDisplay,
-            background: true,
-          },
-        ],
-      },
-      {
-        phase: "hold",
-        do: [
-          {
-            type: "url",
-            url: URLS.rectAppPrevDisplay,
-            background: true,
-          },
-        ],
-      },
-    ],
-  },
+    }),
+  ),
+  bind(from("escape", MOD_COMBO.vmCOCS), to(press(openApp(APP_BUNDLES.activityMonitor)))),
+  bind(from("home", ["shift"]), to(press(key("left_arrow", ["left_command", "shift"])))),
+  bind(
+    from("left_arrow", ["vmCOCS"]),
+    to(
+      release(shell(CMDS.winLeftOrTop)),
+      hold(openUrl(URLS.rectAppPrevDisplay, true)),
+    ),
+  ),
+  bind(
+    from("left_arrow", MOD_COMBO.vmC__S),
+    to(press(extHk(EXTERNAL_HKS.zenNextTab))),
+    when(condApp(APP_BUNDLES.zen)),
+  ),
+  bind(
+    from("right_arrow", ["vmCOCS"]),
+    to(
+      release(shell(CMDS.winRightOrBottom)),
+      hold(openUrl(URLS.rectAppNextDisplay, true)),
+    ),
+  ),
+  bind(
+    from("right_arrow", MOD_COMBO.vmC__S),
+    to(press(extHk(EXTERNAL_HKS.zenPreviousTab))),
+    when(condApp(APP_BUNDLES.zen)),
+  ),
+  bind(from("spacebar", ["vmCOCS"]), to(release(shell(CMDS.winMaxOrRestore)))),
+  bind(
+    from("tab", ["vmCOCS"]),
+    to(
+      release(openUrl(URLS.rectAppNextDisplay, true)),
+      hold(openUrl(URLS.rectAppPrevDisplay, true)),
+    ),
+  ),
 ];
 
 const modFunctionKeyBindings: Binding[] = [
-  {
-    trigger: { keys: ["f12"], modifiers: MOD_COMBO.vmCOCS },
-    cases: [
-      {
-        phase: "press",
-        do: [{ type: "shell", command: CMDS.scriptTypinatorLastRule }],
-      },
-    ],
-  },
+  bind(from("f12", MOD_COMBO.vmCOCS), to(press(shell(CMDS.scriptTypinatorLastRule)))),
 ];
 
 export const modifiedSingleKeyTapHoldBindings: Binding[] = [

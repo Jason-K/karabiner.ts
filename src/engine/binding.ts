@@ -26,7 +26,7 @@ import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
 import { DEVICE_IDS } from "../data";
 import { karabinerDeviceId } from "./device-config";
 import { resolveModComboAlias } from "../data/key-aliases";
-import { resolveButton } from "../data/mouse";
+import { isPointerButton, resolveButton } from "../data/mouse";
 import { resolveActionToEvents } from "./action-resolver";
 import {
   synthesizeManipulatorLabel,
@@ -202,27 +202,28 @@ export function resolveModifiers(m?: TriggerModifiers): {
   };
 }
 
+export function getTriggerKeys(trigger: Trigger): string[] {
+  return "keys" in trigger ? trigger.keys : [trigger.pointer];
+}
+
 export function triggerToFrom(trigger: Trigger): FromEvent {
   const { mandatory, optional } = resolveModifiers(trigger.modifiers);
-  if ("pointer" in trigger) {
-    const { button } = resolveButton(trigger.pointer);
-    const from: Record<string, unknown> = { pointing_button: button };
-    if (mandatory.length || optional.length) {
-      from.modifiers = {
-        ...(mandatory.length ? { mandatory } : {}),
-        ...(optional.length ? { optional } : {}),
-      };
-    }
-    return from as FromEvent;
-  }
-  if (trigger.keys.length > 1) {
+  const keys = getTriggerKeys(trigger);
+  if (keys.length > 1) {
     return {
-      simultaneous: trigger.keys.map((k) => ({ key_code: k })),
-      simultaneous_options: resolveSimOrder(trigger.order),
+      simultaneous: keys.map((k) =>
+        isPointerButton(k)
+          ? { pointing_button: resolveButton(k).button }
+          : { key_code: k },
+      ),
+      simultaneous_options: resolveSimOrder("order" in trigger ? trigger.order : undefined),
       modifiers: { optional: ["any"] },
     } as unknown as FromEvent;
   }
-  const from: Record<string, unknown> = { key_code: trigger.keys[0] };
+  const k = keys[0]!;
+  const from: Record<string, unknown> = isPointerButton(k)
+    ? { pointing_button: resolveButton(k).button }
+    : { key_code: k };
   if (mandatory.length || optional.length) {
     from.modifiers = {
       ...(mandatory.length ? { mandatory } : {}),
@@ -318,8 +319,9 @@ function buildManipulators(b: Binding): Manipulator[] {
   // provided — varTapTapHold still emits two manipulators in that case).
   const hasMultiTap =
     resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
-  const isPointer = "pointer" in b.trigger;
-  const isSim = !isPointer && "keys" in b.trigger && b.trigger.keys.length > 1;
+  const keys = getTriggerKeys(b.trigger);
+  const isSim = keys.length > 1;
+  const isPointer = keys.length === 1 && isPointerButton(keys[0]!);
   let manipulators: Manipulator[];
   if (hasMultiTap) manipulators = buildMultiTap(b, resolved, isSim);
   else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
@@ -335,10 +337,18 @@ function buildManipulators(b: Binding): Manipulator[] {
 
 /** For a device-specific button alias, add a `device_if` condition to every manipulator. */
 function stampDeviceScope(manipulators: Manipulator[], trigger: Trigger): void {
-  if (!("pointer" in trigger)) return;
-  const { nameScope } = resolveButton(trigger.pointer);
-  if (!nameScope || nameScope === "global") return;
-  const ids = nameScope.map((n) => karabinerDeviceId(DEVICE_IDS[n]));
+  const keys = getTriggerKeys(trigger);
+  const nameScopes: string[] = [];
+  for (const k of keys) {
+    if (isPointerButton(k)) {
+      const { nameScope } = resolveButton(k);
+      if (nameScope && nameScope !== "global") {
+        nameScopes.push(...nameScope);
+      }
+    }
+  }
+  if (!nameScopes.length) return;
+  const ids = nameScopes.map((n) => karabinerDeviceId(DEVICE_IDS[n as keyof typeof DEVICE_IDS]));
   const cond = ifDevice(ids).build();
   manipulators.forEach((m: any) => {
     m.conditions = [...(m.conditions ?? []), cond];
@@ -350,14 +360,14 @@ function buildMultiTap(
   cases: ResolvedCase[],
   isSim: boolean,
 ): Manipulator[] {
-  const key = isSim ? "" : "keys" in b.trigger ? b.trigger.keys[0]! : "";
+  const keys = getTriggerKeys(b.trigger);
+  const key = isSim ? "" : keys[0]!;
   const byPhase = (p: Phase, tapCount = 1) =>
     cases
       .filter((c) => c.tapCount === tapCount && c.phase === p)
       .flatMap((c) => c.do);
   const threshold = b.timing?.aloneMs ?? b.timing?.heldThresholdMs;
   if (isSim) {
-    const keys = (b.trigger as { keys: string[] }).keys;
     const label = keys.join("");
     const manipulators = simultaneousMultiTap({
       keys,
@@ -382,9 +392,8 @@ function buildMultiTap(
   // firstTapPendingVar so a first tap in one group is detected by every group's
   // second-tap manipulator — mirroring the bespoke double-tap's per-override
   // build (e.g. the G502X left-button double-tap's Zen vs non-Zen variants).
-  const isPointer = "pointer" in b.trigger;
-  const triggerKey =
-    "pointer" in b.trigger ? resolveButton(b.trigger.pointer).button : key;
+  const isPointer = isPointerButton(key);
+  const triggerKey = isPointer ? resolveButton(key).button : key;
   const firstTapPendingVar =
     b.multiTap?.firstTapPendingVar?.name ?? `multi_tap_${triggerKey}`;
   const manipulators: Manipulator[] = [];
@@ -457,7 +466,7 @@ function buildSimultaneousTapHold(
   b: Binding,
   cases: ResolvedCase[],
 ): Manipulator[] {
-  const keys = (b.trigger as { keys: string[] }).keys;
+  const keys = getTriggerKeys(b.trigger);
   const byPhase = (p: Phase) =>
     cases.filter((c) => c.phase === p).flatMap((c) => c.do);
   const manipulators = simultaneousTapHold({
@@ -535,8 +544,11 @@ function deviceLast(conds: unknown[]): unknown[] {
 }
 
 function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
-  const manipulators =
-    "pointer" in b.trigger ? buildPointerTapHold(b, g) : buildKeyTapHold(b, g);
+  const keys = getTriggerKeys(b.trigger);
+  const isPointer = keys.length === 1 && isPointerButton(keys[0]!);
+  const manipulators = isPointer
+    ? buildPointerTapHold(b, g)
+    : buildKeyTapHold(b, g);
   // device_if conditions last (matches the bespoke mouse engine, which appends
   // device scope after every per-manipulator condition).
   for (const cond of deviceLast(g.conditions)) {
@@ -565,7 +577,7 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
 /** Key tap-hold: `alone`/`hold` default to a halted re-emit of the key when the
  * phase is absent (matches tap-hold-rules); mandatory from-modifiers injected. */
 function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
-  const keys = (b.trigger as { keys: string[] }).keys;
+  const keys = getTriggerKeys(b.trigger);
   const key = keys[0]!;
   const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   const defaultAlone: ActionSpec[] = [
@@ -576,9 +588,6 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
       options: { halt: true },
     },
   ];
-  // `resolvedAlone = config.alone ?? defaultAlone`. An explicit phase with empty
-  // `do` (e.g. `hold: []`) is *not* a missing phase — it means "emit nothing" and
-  // must not trigger the default-alone fallback (tracked via hasRelease/hasHold).
   const alone = g.hasRelease
     ? g.releaseDo
     : defaultAlone.flatMap((a) => resolveActionToEvents(a));
@@ -593,7 +602,6 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     thresholdMs: b.timing?.heldThresholdMs,
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();
-  // Inject mandatory from-modifiers exactly like tap-hold-rules (vm alias -> resolved mods)
   if (mandatory.length || optional.length) {
     manipulators.forEach((m: any) => {
       m.from.modifiers = m.from.modifiers || {};
@@ -604,20 +612,11 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   return manipulators;
 }
 
-/** Pointer (mouse-button) tap-hold: routes through `tapHoldFrom` with a
- * pointing-button `from`. No default-alone fallback — `alone`/`hold` are the
- * declared release/hold events or undefined (no channel). `eventOptions` are
- * forwarded so `tapHoldFrom` applies them to alone/hold while keeping the raw
- * alone events for the cancel fallback. `whileHoldVar` drives the chord-modifier
- * signaling variable (set on key-down, cleared on key-up). */
 function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
-  const pointer = b.trigger as {
-    pointer: string;
-    modifiers?: TriggerModifiers;
-  };
-  const { button } = resolveButton(pointer.pointer);
+  const pointerKey = getTriggerKeys(b.trigger)[0]!;
+  const { button } = resolveButton(pointerKey);
   const from: Record<string, unknown> = { pointing_button: button };
-  const { mandatory, optional } = resolveModifiers(pointer.modifiers);
+  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   if (mandatory.length || optional.length) {
     from.modifiers = {
       ...(mandatory.length ? { mandatory } : {}),
@@ -644,15 +643,10 @@ function buildRemap(
 ): Manipulator | Manipulator[] {
   const label = synthesizeManipulatorLabel(g.rawConditions);
   if (isPointer) {
-    // Pointer manipulators are emitted as raw objects to match the legacy
-    // pointer-remap-rules shape exactly: {type, from, to?, description?, conditions?}.
-    const pointer = b.trigger as {
-      pointer: string;
-      modifiers?: TriggerModifiers;
-    };
-    const { button } = resolveButton(pointer.pointer);
+    const pointerKey = getTriggerKeys(b.trigger)[0]!;
+    const { button } = resolveButton(pointerKey);
     const from: Record<string, unknown> = { pointing_button: button };
-    const { mandatory, optional } = resolveModifiers(pointer.modifiers);
+    const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
     if (mandatory.length || optional.length) {
       from.modifiers = {
         ...(mandatory.length ? { mandatory } : {}),
@@ -660,7 +654,6 @@ function buildRemap(
       };
     }
     const m: Record<string, unknown> = { type: "basic", from };
-    // Omit `to` when empty — matches map().build(), which drops an empty `to`.
     if (g.pressDo.length) m.to = g.pressDo;
     if (label) m.description = label;
     const conds = deviceLast(g.conditions);
@@ -670,7 +663,6 @@ function buildRemap(
   const builder = map(triggerToFrom(b.trigger));
   if (label) builder.description(label);
   for (const cond of deviceLast(g.conditions)) builder.condition(cond as any);
-  // pressDo may be empty (noop) -> omit `to` (swallow). map().build() already omits empty `to`.
   for (const e of g.pressDo) builder.to(e);
   return builder.build();
 }

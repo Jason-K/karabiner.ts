@@ -488,7 +488,7 @@ test("resolveActionToEvents handles python action", () => {
   });
   assert.equal(events.length, 1);
   const shellCmd = (events[0] as any)?.shell_command as string;
-  assert.match(shellCmd, /uv run/);
+  assert.match(shellCmd, /uv"? run/);
   assert.match(shellCmd, /\$HOME\/Scripts\/foo\.py/);
   assert.match(shellCmd, /'--dest'/);
   assert.match(shellCmd, /'paste'/);

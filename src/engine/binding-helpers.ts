@@ -1,15 +1,13 @@
-import { resolveModifiers, type Binding, type Trigger } from "./binding";
+import { getTriggerKeys, resolveModifiers, type Binding, type Trigger } from "./binding";
 
 function triggerSignature(t: Trigger): string {
   const { mandatory, optional } = resolveModifiers(t.modifiers);
   const mandStr = [...mandatory].sort().join(",");
   const optStr = [...optional].sort().join(",");
   const mods = `mandatory:[${mandStr}]|optional:[${optStr}]`;
-  if ("pointer" in t) {
-    return `pointer:${t.pointer}|mods:${mods}`;
-  }
+  const keys = getTriggerKeys(t);
   const order = "order" in t && t.order ? JSON.stringify(t.order) : "";
-  return `keys:${[...t.keys].sort().join(",")}|mods:${mods}|order:${order}`;
+  return `keys:${[...keys].sort().join(",")}|mods:${mods}|order:${order}`;
 }
 
 /**

@@ -10,3 +10,5 @@ export * from "./escape-rule";
 // export * from "./layer-emit";
 export * from "./modifier-chord-rules";
 export * from "./simultaneous-rules";
+export * from "./case-helpers";
+

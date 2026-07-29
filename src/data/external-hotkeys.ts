@@ -60,6 +60,7 @@ const HK_REGISTRY = {
   zenPreviousTab: external_hk("close_bracket", MOD_COMBO.vmC__S, "activate previous tab in Zen", { app: APP_BUNDLES.zen, activeAppOnly: true, options: { repeat: false } }),
   raycastHere2This: external_hk("h", MOD_COMBO.vmCOCS, "raycast here2this", { app: APP_BUNDLES.raycast, options: { repeat: false } }),
   popclip: external_hk("p", MOD_COMBO.vmCOC_, "show Popclip toolbar", { app: "com.pilotmoon.popclip", options: { repeat: false } }),
+  wordPrint: external_hk("p", ["left_command"], "print in word", { app: APP_BUNDLES.word, activeAppOnly: true, options: { repeat: false } }),
 };
 
 export const EXTERNAL_HKS: { [key: string]: ExternalHkRef } = {

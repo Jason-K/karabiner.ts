@@ -1,7 +1,25 @@
 import { toFromEvent } from "../core/beta";
 import { APP_BUNDLES, CMDS, DEVICE_IDS, TIMINGS, URLS } from "../data";
 import { mouseVars } from "../data/mouse";
-import type { Binding } from "../engine";
+import {
+  bind,
+  condApp,
+  condDevice,
+  condNotVar,
+  condVar,
+  from,
+  hold,
+  key,
+  openUrl,
+  options,
+  press,
+  release,
+  shell,
+  timing,
+  to,
+  when,
+  type Binding,
+} from "../engine";
 
 /**
  * G502X mouse mappings authored as plain `Binding[]` literals and consumed by
@@ -16,380 +34,281 @@ export const mouseBindings: Binding[] = [
   // SHIFT BUTTON — Mission Control (tap) / Rectangle key (hold);
   // right-button chord → down_arrow
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "shift" },
-    timing: {
+  bind(
+    from("shift_button"),
+    to(
+      // override (right button held): immediate down_arrow
+      press(key("down_arrow", ["control"], { repeat: false }))
+        .when(condVar(mouseVars.rightButtonPressed, 1)),
+      release(key("up_arrow", ["control"])),
+      hold([
+        { pointing_button: "button1" },
+        key("left_control", ["option", "shift"]),
+      ]),
+    ),
+    timing({
       aloneMs: TIMINGS.delayMouseHoldMs,
       heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      // override (right button held): immediate down_arrow
-      {
-        phase: "press",
-        conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }],
-        do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }],
-      },
-      {
-        phase: "release",
-        do: [{ key_code: "up_arrow", modifiers: ["control"] }],
-      },
-      {
-        phase: "hold",
-        do: [
-          { pointing_button: "button1" },
-          { key_code: "left_control", modifiers: ["option", "shift"] },
-        ],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // WHEEL LEFT — Move window left/up (hold) / Change workspace (hold in Zen)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "wheelLeft" },
-    timing: {
-      aloneMs: TIMINGS.timeoutWheelChordMs,
-      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
-    },
-    cases: [
+  bind(
+    from("wheelLeft"),
+    to(
       // overrides declared in REVERSE of the bespoke prepend order so the
       // emitted manipulator order matches (groupByConditions is first-seen).
       // Zen + right-button + wheel-up → prev workspace
-      {
-        phase: "press",
-        conditions: [
-          { app: APP_BUNDLES.zen },
-          { var: mouseVars.rightButtonPressed, equals: 1 },
-          { var: mouseVars.wheelDown, equals: 0 },
-        ],
-        do: [
-          {
-            key_code: "left_arrow",
-            modifiers: ["left_command", "control", "shift"],
-            repeat: false,
-          },
-        ],
-      },
+      press(
+        key("left_arrow", ["left_command", "control", "shift"], {
+          repeat: false,
+        }),
+      ).when(
+        condApp(APP_BUNDLES.zen),
+        condVar(mouseVars.rightButtonPressed, 1),
+        condVar(mouseVars.wheelDown, 0),
+      ),
       // wheel held down → swallow (the wheel-as-button mapping handles it)
-      {
-        phase: "press",
-        conditions: [{ var: mouseVars.wheelDown, equals: 1 }],
-        do: [],
-      },
+      press([]).when(condVar(mouseVars.wheelDown, 1)),
       // base hold — wheel guards on the base only (matches bespoke injection)
-      {
-        phase: "hold",
-        conditions: [
-          { var: mouseVars.wheelDown, equals: 1, unless: true },
-          { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
-        ],
-        do: [{ type: "shell", command: CMDS.winLeftOrTop }],
-      },
-    ],
-  },
+      hold(shell(CMDS.winLeftOrTop)).when(
+        condNotVar(mouseVars.wheelDown, 1),
+        condNotVar(mouseVars.rightButtonPressed, 1),
+      ),
+    ),
+    timing({
+      aloneMs: TIMINGS.timeoutWheelChordMs,
+      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
+    }),
+  ),
   // -------------------------------------------------------------
   // WHEEL RIGHT — Move window right/down (hold) / Change workspace (hold in Zen)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "wheelRight" },
-    timing: {
+  bind(
+    from("wheelRight"),
+    to(
+      press(
+        key("right_arrow", ["left_command", "control", "shift"], {
+          repeat: false,
+        }),
+      ).when(
+        condApp(APP_BUNDLES.zen),
+        condVar(mouseVars.rightButtonPressed, 1),
+        condVar(mouseVars.wheelDown, 0),
+      ),
+      hold(shell(CMDS.winRightOrBottom)).when(
+        condNotVar(mouseVars.wheelDown, 1),
+        condNotVar(mouseVars.rightButtonPressed, 1),
+      ),
+    ),
+    timing({
       aloneMs: TIMINGS.timeoutWheelChordMs,
       heldThresholdMs: TIMINGS.timeoutWheelChordMs,
-    },
-    cases: [
-      {
-        phase: "press",
-        conditions: [
-          { app: APP_BUNDLES.zen },
-          { var: mouseVars.rightButtonPressed, equals: 1 },
-          { var: mouseVars.wheelDown, equals: 0 },
-        ],
-        do: [
-          {
-            key_code: "right_arrow",
-            modifiers: ["left_command", "control", "shift"],
-            repeat: false,
-          },
-        ],
-      },
-      {
-        phase: "hold",
-        conditions: [
-          { var: mouseVars.wheelDown, equals: 1, unless: true },
-          { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
-        ],
-        do: [{ type: "shell", command: CMDS.winRightOrBottom }],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // WHEEL (AS BUTTON) — Fill screen (hold) / Open link in glance (rbutton+wheel in Zen)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "wheel" },
-    conditions: [{ device: DEVICE_IDS.logitechG502X }],
-    whileHoldVar: mouseVars.wheelDown,
-    timing: {
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "press",
-        conditions: [
-          { app: APP_BUNDLES.zen },
-          { var: mouseVars.rightButtonPressed, equals: 1 },
-        ],
-        do: [
-          { pointing_button: "button1", modifiers: ["option"], repeat: false },
-        ],
+  bind(
+    from("wheel"),
+    to(
+      press([
+        { pointing_button: "button1", modifiers: ["option"], repeat: false },
+      ]).when(
+        condApp(APP_BUNDLES.zen),
+        condVar(mouseVars.rightButtonPressed, 1),
+      ),
+      release([{ pointing_button: "button3", repeat: false }]),
+      hold(shell(CMDS.winMaxOrRestore)),
+    ),
+    when(condDevice(DEVICE_IDS.logitechG502X)),
+    options({
+      whileHoldVar: mouseVars.wheelDown,
+      timing: {
+        aloneMs: TIMINGS.delayMouseHoldMs,
+        heldThresholdMs: TIMINGS.delayMouseHoldMs,
       },
-      { phase: "release", do: [{ pointing_button: "button3", repeat: false }] },
-      {
-        phase: "hold",
-        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // G7 (left_back) — Fill screen (tap) / Move window to next display (hold)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "leftBack" },
-    timing: {
+  bind(
+    from("leftBack"),
+    to(
+      release(shell(CMDS.winMaxOrRestore)),
+      hold(openUrl(URLS.rectDisplayNext)),
+    ),
+    timing({
       aloneMs: TIMINGS.delayMouseHoldMs,
       heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "release",
-        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
-      },
-      {
-        phase: "hold",
-        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // G8 (left_forward) — Activate Popclip (tap) / Activate Sidenote (hold)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "leftForward" },
-    timing: {
+  bind(
+    from("leftForward"),
+    to(
+      release([
+        {
+          shell_command:
+            "osascript -e 'tell application \"Popclip\" to appear'",
+        },
+      ]),
+      hold(
+        key("f10", ["left_command", "option", "shift"], { repeat: false }),
+      ),
+    ),
+    timing({
       aloneMs: TIMINGS.delayMouseHoldMs,
       heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          {
-            shell_command:
-              "osascript -e 'tell application \"Popclip\" to appear'",
-          },
-        ],
-      },
-      {
-        phase: "hold",
-        do: [
-          {
-            key_code: "f10",
-            modifiers: ["left_command", "option", "shift"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // G9 (middle_back) — Screenshot to text (tap) / markdown (hold)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "middleBack" },
-    timing: {
+  bind(
+    from("middleBack"),
+    to(
+      release([
+        { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
+      ]),
+      hold([
+        {
+          shell_command:
+            "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
+        },
+      ]),
+    ),
+    timing({
       aloneMs: TIMINGS.delayMouseHoldMs,
       heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "release",
-        do: [
-          { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
-        ],
-      },
-      {
-        phase: "hold",
-        do: [
-          {
-            shell_command:
-              "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
-          },
-        ],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // BACK — Back (tap) / Window switch (hold); Zen+rbutton → next tab
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "back" },
-    conditions: [{ device: DEVICE_IDS.logitechG502X }],
-    eventOptions: { halt: true, repeat: false },
-    timing: {
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "press",
-        conditions: [
-          { app: APP_BUNDLES.zen },
-          { var: mouseVars.rightButtonPressed, equals: 1 },
-        ],
-        do: [
-          {
-            key_code: "close_bracket",
-            modifiers: ["left_command", "shift"],
-            repeat: true,
-          },
-        ],
+  bind(
+    from("back"),
+    to(
+      press(
+        key("close_bracket", ["left_command", "shift"], { repeat: true }),
+      ).when(
+        condApp(APP_BUNDLES.zen),
+        condVar(mouseVars.rightButtonPressed, 1),
+      ),
+      release([{ pointing_button: "button4", repeat: false }]),
+      hold(key("tab", ["left_command"])),
+    ),
+    when(condDevice(DEVICE_IDS.logitechG502X)),
+    options({
+      eventOptions: { halt: true, repeat: false },
+      timing: {
+        aloneMs: TIMINGS.delayMouseHoldMs,
+        heldThresholdMs: TIMINGS.delayMouseHoldMs,
       },
-      { phase: "release", do: [{ pointing_button: "button4", repeat: false }] },
-      { phase: "hold", do: [{ key_code: "tab", modifiers: ["left_command"] }] },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // FORWARD — Show windows of active app (hold) / Cycle tabs (rbutton+forward in Zen)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "forward" },
-    eventOptions: { halt: true, repeat: false },
-    timing: {
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      {
-        phase: "press",
-        conditions: [
-          { app: APP_BUNDLES.zen },
-          { var: mouseVars.rightButtonPressed, equals: 1 },
-        ],
-        do: [
-          {
-            key_code: "open_bracket",
-            modifiers: ["left_command", "shift"],
-            repeat: true,
-          },
-        ],
+  bind(
+    from("forward"),
+    to(
+      press(
+        key("open_bracket", ["left_command", "shift"], { repeat: true }),
+      ).when(
+        condApp(APP_BUNDLES.zen),
+        condVar(mouseVars.rightButtonPressed, 1),
+      ),
+      release([{ pointing_button: "button5", repeat: false }]),
+      hold(key("down_arrow", ["control"], { repeat: false })),
+    ),
+    options({
+      eventOptions: { halt: true, repeat: false },
+      timing: {
+        aloneMs: TIMINGS.delayMouseHoldMs,
+        heldThresholdMs: TIMINGS.delayMouseHoldMs,
       },
-      { phase: "release", do: [{ pointing_button: "button5", repeat: false }] },
-      {
-        phase: "hold",
-        do: [{ key_code: "down_arrow", modifiers: ["control"], repeat: false }],
-      },
-    ],
-  },
+    }),
+  ),
   // -------------------------------------------------------------
   // RIGHT — Right click (tap) / Zen chord modifier (hold).
   // whileHoldVar signals right_button_pressed; suppressCancelFallback drops
   // the stray click on a canceled hold.
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "right" },
-    conditions: [{ device: DEVICE_IDS.logitechG502X }],
-    whileHoldVar: mouseVars.rightButtonPressed,
-    suppressCancelFallback: true,
-    timing: {
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    },
-    cases: [
-      { phase: "release", do: [{ pointing_button: "button2", repeat: false }] },
-      { phase: "hold", do: [] },
-    ],
-  },
+  bind(
+    from("right"),
+    to(
+      release([{ pointing_button: "button2", repeat: false }]),
+      hold([]),
+    ),
+    when(condDevice(DEVICE_IDS.logitechG502X)),
+    options({
+      whileHoldVar: mouseVars.rightButtonPressed,
+      suppressCancelFallback: true,
+      timing: {
+        aloneMs: TIMINGS.delayMouseHoldMs,
+        heldThresholdMs: TIMINGS.delayMouseHoldMs,
+      },
+    }),
+  ),
   // -------------------------------------------------------------
   // LEFT BUTTON (right-button held) — single action by app (tap) / double tap
   // → next display. Zen vs non-Zen split into condition-groups; the single tap
   // is DELAYED (fires via to_if_invoked after the timer) so a true double-tap
   // can still win. firstTapPendingVar is shared across both groups.
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "left" },
-    conditions: [
-      { device: DEVICE_IDS.logitechG502X },
-      { var: mouseVars.rightButtonPressed, equals: 1 },
-    ],
-    multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
-    timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
-    cases: [
+  bind(
+    from("left"),
+    to(
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
-      {
-        tapCount: 1,
-        phase: "release",
-        delayed: true,
-        conditions: [{ app: APP_BUNDLES.zen }],
-        do: [
-          {
-            pointing_button: "button1",
-            modifiers: ["left_command"],
-            repeat: false,
-          },
-        ],
-      },
-      {
-        tapCount: 1,
-        phase: "hold",
-        conditions: [{ app: APP_BUNDLES.zen }],
-        do: [
-          { pointing_button: "button1", modifiers: ["option"], repeat: false },
-        ],
-      },
-      {
-        tapCount: 2,
-        phase: "release",
-        conditions: [{ app: APP_BUNDLES.zen }],
-        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
-      },
+      release([{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }])
+        .when(condApp(APP_BUNDLES.zen))
+        .withDelayed(),
+      hold([{ pointing_button: "button1", modifiers: ["option"], repeat: false }])
+        .when(condApp(APP_BUNDLES.zen)),
+      release(openUrl(URLS.rectDisplayNext))
+        .when(condApp(APP_BUNDLES.zen))
+        .withTapCount(2),
       // Non-Zen — tap = maximize (delayed), double = next display
-      {
-        tapCount: 1,
-        phase: "release",
-        delayed: true,
-        conditions: [{ app: APP_BUNDLES.zen, unless: true }],
-        do: [{ type: "shell", command: CMDS.winMaxOrRestore }],
-      },
-      {
-        tapCount: 2,
-        phase: "release",
-        conditions: [{ app: APP_BUNDLES.zen, unless: true }],
-        do: [{ type: "url", url: URLS.rectDisplayNext, background: true }],
-      },
-    ],
-  },
+      release(shell(CMDS.winMaxOrRestore))
+        .when(condApp(APP_BUNDLES.zen, false))
+        .withDelayed(),
+      release(openUrl(URLS.rectDisplayNext))
+        .when(condApp(APP_BUNDLES.zen, false))
+        .withTapCount(2),
+    ),
+    when(
+      condDevice(DEVICE_IDS.logitechG502X),
+      condVar(mouseVars.rightButtonPressed, 1),
+    ),
+    options({
+      multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
+      timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
+    }),
+  ),
   // -------------------------------------------------------------
   // LEFT BUTTON (right-button NOT held) — Left click (tap) / chord modifier (hold)
   // -------------------------------------------------------------
-  {
-    trigger: { pointer: "left" },
-    conditions: [
-      { device: DEVICE_IDS.logitechG502X },
-      { var: mouseVars.rightButtonPressed, equals: 1, unless: true },
-    ],
-    whileHoldVar: mouseVars.leftButtonPressed,
-    timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: 0 },
-    cases: [
-      {
-        phase: "release",
-        conditions: [
-          { app: APP_BUNDLES.onePiece },
-          { app: APP_BUNDLES.onePiecePreferences, unless: true },
-        ],
-        do: [{ type: "key", key: "return_or_enter" }],
-      },
-      { phase: "hold", do: [toFromEvent()] },
-    ],
-  },
+  bind(
+    from("left"),
+    to(
+      release(key("return_or_enter")).when(
+        condApp(APP_BUNDLES.onePiece),
+        condApp(APP_BUNDLES.onePiecePreferences, false),
+      ),
+      hold([toFromEvent()]),
+    ),
+    when(
+      condDevice(DEVICE_IDS.logitechG502X),
+      condNotVar(mouseVars.rightButtonPressed, 1),
+    ),
+    options({
+      whileHoldVar: mouseVars.leftButtonPressed,
+      timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: 0 },
+    }),
+  ),
 ];

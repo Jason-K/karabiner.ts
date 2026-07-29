@@ -21,7 +21,7 @@ export const buttons = {
   wheel: { button: "button3", nameScope: "global", desc: "Wheel click" },
   back: { button: "button4", nameScope: "global", desc: "Back button" },
   // G502X-specific extra buttons → auto-scope to the G502X.
-  shift: {
+  shift_button: {
     button: "button5",
     nameScope: ["logitechG502X"],
     desc: "Shift button",
@@ -74,6 +74,10 @@ export function resolveButton(pointer: string): {
   if (spec)
     return { button: spec.button, nameScope: spec.nameScope, desc: spec.desc };
   return { button: pointer, desc: defaultButtonNames[pointer] ?? pointer };
+}
+
+export function isPointerButton(pointer: string): boolean {
+  return pointer in buttons || /^button\d+$/.test(pointer);
 }
 
 /** Mouse chord-modifier signaling variables. */

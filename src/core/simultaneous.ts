@@ -5,6 +5,11 @@ import {
   type ToEvent,
 } from "karabiner.ts";
 import { varTapTapHoldFrom } from "./tap-hold";
+import { isPointerButton, resolveButton } from "../data/mouse";
+
+function mapSimKey(k: string): any {
+  return isPointerButton(k) ? { pointing_button: resolveButton(k).button } : k;
+}
 
 // Internal: builds a raw FromEvent with from.simultaneous for the multi-tap path.
 // (The tap-hold path uses mapSimultaneous directly, which handles this internally.)
@@ -13,7 +18,11 @@ function buildSimultaneousFromEvent(
   karOptions?: KarSimultaneousOptions,
 ): FromEvent {
   return {
-    simultaneous: keys.map((k) => ({ key_code: k as any })),
+    simultaneous: keys.map((k) =>
+      isPointerButton(k)
+        ? ({ pointing_button: resolveButton(k).button } as any)
+        : ({ key_code: k } as any),
+    ),
     simultaneous_options: karOptions,
     modifiers: { optional: ["any"] },
   } as any;
@@ -37,8 +46,9 @@ export function simultaneousTapHold({
   karOptions,
   simultaneousThresholdMs,
 }: SimultaneousTapHoldCoreOpts): any[] {
+  const mappedKeys = keys.map(mapSimKey);
   const builder = mapSimultaneous(
-    keys as any[],
+    mappedKeys as any[],
     karOptions,
     simultaneousThresholdMs,
   )

@@ -194,7 +194,7 @@ test("defineBindings auto-derived description omits slice-label when uncondition
 
 test("defineBindings: device-specific button alias auto-scopes via nameScope", () => {
   const rules = defineBindings([
-    { trigger: { pointer: "shift" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
+    { trigger: { pointer: "shift_button" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
   ]);
   const m = (rules[0] as any).manipulatorSources[0];
   const devCond = m.conditions?.find((c: any) => c.type === "device_if");

@@ -24,22 +24,22 @@ const subCommands = {
   getPriv: `${PATHS.binPrivCLI.name} -r && sleep ${TIMINGS.privDelaySec} && ${PATHS.binPrivCLI.name} -a && sleep ${TIMINGS.privDelaySec}`,
 
   // 1PASSWORD
-  fillSecret: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control,shift>"`,
-  fillNameAndSecret: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control,shift>"`,
+  fillSecret: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control,shift>"`,
+  fillNameAndSecret: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control,shift>"`,
 
   // UTILITIES
-  callSendKeys: `${PATHS.binSendKeys.name} --initial-delay 0 --delay 0.005`,
+  callSendKeys: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005`,
 
   // SCRIPTS
   getWordDocPath: `osascript '${PATHS.scriptWordGetDocPath.name}'`,
 
   // HAMMERSPOON
-  callHammerspoon: `${PATHS.binHS.name} -c`,
+  callHammerspoon: `'${PATHS.binHS.name}' -c`,
 
-  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  hsGetDisplayInfo: `'${PATHS.binHS.name}' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 
   // TEXT PROCESSOR
-  callTextProcessor: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python ${PATHS.scriptTextProcessorCLI.name}`,
+  callTextProcessor: `'${PATHS.binUV.name}' --directory '${PATHS.dirTextProcessor.name}' run python '${PATHS.scriptTextProcessorCLI.name}'`,
 };
 
 const Passwords_Privileges = {
@@ -157,6 +157,13 @@ const Windows = {
   ),
 }
 
+const App_Specific = {
+  wordPrint: cmdEntry(
+    `${subCommands.getWordDocPath} && ${subCommands.callSendKeys} send "<c:p:command>"`,
+    "get file path and print in word",
+  ),
+}
+
 // ---------------------------------------------------------
 // Registry
 // ---------------------------------------------------------
@@ -169,6 +176,7 @@ export const CMDS = {
   ...Spotify,
   ...Text_Processor,
   ...Windows,
+  ...App_Specific,
 } as const;
 
 export type { CommandRef };

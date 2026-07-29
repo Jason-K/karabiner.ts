@@ -1,9 +1,9 @@
 import type { ToEvent } from "karabiner.ts";
 import type { Action, ActionSpec } from "../core/action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
-import { resolveButton } from "../data/mouse";
+import { isPointerButton, resolveButton } from "../data/mouse";
 import { expandModifiers } from "./action-resolver";
-import { resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "./binding";
+import { getTriggerKeys, resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "./binding";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
 function withActionDesc(base: string, actionDesc?: string): string {
@@ -117,9 +117,40 @@ function describeToEvent(event: ToEvent): string {
   return "Raw event";
 }
 
+const ACTION_SPEC_TYPES = new Set([
+  "app",
+  "appHistory",
+  "folder",
+  "command",
+  "actHere",
+  "caseChange",
+  "wrapString",
+  "key",
+  "externalHk",
+  "url",
+  "shell",
+  "python",
+  "osascript",
+  "cut",
+  "copy",
+  "paste",
+  "noop",
+  "setVar",
+  "sequence",
+]);
+
+function isActionSpec(action: Action): action is ActionSpec {
+  return (
+    typeof action === "object" &&
+    action !== null &&
+    "type" in action &&
+    ACTION_SPEC_TYPES.has((action as any).type)
+  );
+}
+
 /** Describe a `do` entry that may be a typed ActionSpec or a raw ToEvent. */
 function describeDoAction(action: Action): string {
-  return "type" in action ? describeAction(action) : describeToEvent(action);
+  return isActionSpec(action) ? describeAction(action) : describeToEvent(action);
 }
 
 type AppCondition = Extract<Condition, { app: unknown }>;
@@ -158,19 +189,18 @@ export function describeTrigger(trigger: Trigger): string {
   const { mandatory, optional } = resolveModifiers(trigger.modifiers);
   const mandSymbols = mandatory.length ? mandatory.map(modifierTokenToSymbols).join("") : "";
   const optSymbols = optional.length ? optional.map(modifierTokenToSymbols).join("") : "";
+  const keys = getTriggerKeys(trigger);
 
-  if ("pointer" in trigger) {
-    const parts: string[] = [];
-    if (mandSymbols) parts.push(`[${mandSymbols}]`);
-    if (optSymbols) parts.push(`(${optSymbols})?`);
-    const { desc } = resolveButton(trigger.pointer);
-    parts.push(desc);
-    return `${parts.join("+")}:`;
-  }
   const segments: string[] = [];
   if (mandSymbols) segments.push(`[${mandSymbols}]`);
   if (optSymbols) segments.push(`(${optSymbols})?`);
-  for (const k of trigger.keys) segments.push(`[${keyTokenToLabel(k)}]`);
+  for (const k of keys) {
+    if (isPointerButton(k)) {
+      segments.push(resolveButton(k).desc);
+    } else {
+      segments.push(`[${keyTokenToLabel(k)}]`);
+    }
+  }
   return `${segments.join("+")}:`;
 }
 

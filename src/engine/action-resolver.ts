@@ -1,4 +1,4 @@
-import type { ToEvent } from "karabiner.ts";
+import type { Manipulator, ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
 import type { Action, ActionSpec, AppTarget } from "../core/action-dsl";
@@ -54,6 +54,172 @@ function resolveAppTarget(ref: AppTarget): { bundleIdentifier: string } | { file
   return { bundleIdentifier: resolveName(ref) };
 }
 
+/** Check if a token represents a file-system path. */
+function isPathToken(token: string): boolean {
+  const clean = token.replace(/^['"]+|['"]+$/g, "");
+  if (!clean) return false;
+
+  if (
+    clean.startsWith("/") ||
+    clean.startsWith("~/") ||
+    clean === "~" ||
+    clean.startsWith("$HOME/") ||
+    clean.startsWith("${HOME}/") ||
+    clean.startsWith("./") ||
+    clean.startsWith("../")
+  ) {
+    return true;
+  }
+
+  if (
+    clean.includes("/") &&
+    !clean.includes("://") &&
+    !clean.startsWith("-") &&
+    !/\s\/\s/.test(clean)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+/**
+ * Splits a shell command string into discrete tokens (arguments, operators, whitespace),
+ * preserving single and double quoted argument boundaries.
+ */
+function tokenizeShellCommand(cmdStr: string): string[] {
+  const tokens: string[] = [];
+  let current = "";
+  let inSingle = false;
+  let inDouble = false;
+
+  for (let i = 0; i < cmdStr.length; i++) {
+    const char = cmdStr[i];
+    const prevChar = i > 0 ? cmdStr[i - 1] : "";
+
+    if (char === "'" && !inDouble && prevChar !== "\\") {
+      inSingle = !inSingle;
+      current += char;
+    } else if (char === '"' && !inSingle && prevChar !== "\\") {
+      inDouble = !inDouble;
+      current += char;
+    } else if (/\s/.test(char) && !inSingle && !inDouble) {
+      if (current.length > 0) {
+        tokens.push(current);
+        current = "";
+      }
+      tokens.push(char);
+    } else {
+      current += char;
+    }
+  }
+
+  if (current.length > 0) {
+    tokens.push(current);
+  }
+
+  return tokens;
+}
+
+/**
+ * Ensures that any file-system paths in a shell command string are enclosed in a single set of quotes,
+ * removing duplicate/nested quoting and adding missing quotes to unquoted paths.
+ */
+export function ensurePathQuotingInCommand(commandStr: string): string {
+  if (!commandStr) return commandStr;
+
+  const tokens = tokenizeShellCommand(commandStr);
+  const normalizedTokens = tokens.map((token) => {
+    if (/^\s+$/.test(token) || /^(&&|\|\||;|\|)$/.test(token)) {
+      return token;
+    }
+
+    const leadingMatch = token.match(/^['"]+/);
+    const trailingMatch = token.match(/['"]+$/);
+
+    const leadingQuotes = leadingMatch ? leadingMatch[0] : "";
+    const trailingQuotes = trailingMatch ? trailingMatch[0] : "";
+
+    const inner = token.slice(
+      leadingQuotes.length,
+      token.length - trailingQuotes.length
+    );
+
+    if (!isPathToken(inner)) {
+      return token;
+    }
+
+    // Single set of quotes check: exactly 1 leading quote, 1 trailing quote, matching quote char
+    if (
+      leadingQuotes.length === 1 &&
+      trailingQuotes.length === 1 &&
+      leadingQuotes === trailingQuotes
+    ) {
+      return token;
+    }
+
+    return `"${inner}"`;
+  });
+
+  return normalizedTokens.join("");
+}
+
+function normalizeToEvent(event: ToEvent): ToEvent {
+  if (
+    event &&
+    typeof event === "object" &&
+    "shell_command" in event &&
+    typeof (event as any).shell_command === "string"
+  ) {
+    return {
+      ...event,
+      shell_command: ensurePathQuotingInCommand((event as any).shell_command),
+    };
+  }
+  return event;
+}
+
+function normalizeToEvents(events?: ToEvent[]): ToEvent[] | undefined {
+  if (!events || !Array.isArray(events)) return events;
+  return events.map(normalizeToEvent);
+}
+
+/**
+ * Ensures that any file-system paths in manipulators are enclosed in a single set of quotes.
+ */
+export function ensurePathQuotingInManipulators<T extends Manipulator | Manipulator[]>(
+  input: T
+): T {
+  if (Array.isArray(input)) {
+    return input.map((m) => ensurePathQuotingInManipulators(m)) as T;
+  }
+  if (!input || typeof input !== "object") return input;
+
+  const m: any = { ...input };
+
+  if (m.to) m.to = normalizeToEvents(m.to);
+  if (m.to_if_alone) m.to_if_alone = normalizeToEvents(m.to_if_alone);
+  if (m.to_if_held_down) m.to_if_held_down = normalizeToEvents(m.to_if_held_down);
+  if (m.to_after_key_up) m.to_after_key_up = normalizeToEvents(m.to_after_key_up);
+  if (m.to_if_canceled) m.to_if_canceled = normalizeToEvents(m.to_if_canceled);
+
+  if (m.to_delayed_action) {
+    m.to_delayed_action = {
+      ...m.to_delayed_action,
+      ...(m.to_delayed_action.to_if_invoked
+        ? { to_if_invoked: normalizeToEvents(m.to_delayed_action.to_if_invoked) }
+        : {}),
+      ...(m.to_delayed_action.to_if_canceled
+        ? { to_if_canceled: normalizeToEvents(m.to_delayed_action.to_if_canceled) }
+        : {}),
+    };
+  }
+
+  return m as unknown as T;
+}
+
+export const ensurePathQuoting = ensurePathQuotingInManipulators;
+
 function resolveShellCommand(action: ActionSpec): string | null {
   switch (action.type) {
     case "folder":
@@ -97,7 +263,7 @@ function resolveShellCommand(action: ActionSpec): string | null {
   }
 }
 
-export function resolveActionToEvents(action: Action): ToEvent[] {
+function resolveActionToEventsRaw(action: Action): ToEvent[] {
   // Raw ToEvent passthrough: a `do` entry without a `type` discriminator is a
   // verbatim Karabiner to-event (mouse mappings). ActionSpec always carries `type`.
   if (!("type" in action)) return [action];
@@ -174,3 +340,9 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
     }
   }
 }
+
+export function resolveActionToEvents(action: Action): ToEvent[] {
+  const events = resolveActionToEventsRaw(action);
+  return events.map(normalizeToEvent);
+}
+

@@ -413,7 +413,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action qspace"
+                "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -450,7 +450,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.anthropic.claudefordesktop'"
+                "shell_command": "\"/Users/jason/.local/bin/open-app\" -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
@@ -761,7 +761,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh"
+                "shell_command": "\"/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh\""
               }
             ],
             "to_delayed_action": {
@@ -963,7 +963,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
               }
             ],
             "to_delayed_action": {
@@ -1000,7 +1000,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action copy"
+                "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
               }
             ],
             "to_delayed_action": {
@@ -1087,7 +1087,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python /Users/jason/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -1137,7 +1137,7 @@
                 ]
               },
               {
-                "shell_command": "/Users/jason/.local/bin/uv --directory /Users/jason/Scripts/strings/text_processor run python /Users/jason/Scripts/strings/text_processor/interfaces/cli.py quick_date --source clipboard --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source clipboard --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -1293,7 +1293,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
             "to_delayed_action": {
@@ -1410,7 +1410,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatCutSeed()'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
             "to_delayed_action": {
@@ -1553,7 +1553,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/.local/bin/kill-app --all"
+                "shell_command": "\"/Users/jason/.local/bin/kill-app\" --all"
               }
             ],
             "to_delayed_action": {
@@ -1614,7 +1614,7 @@
                 }
               },
               {
-                "shell_command": "/Users/jason/.local/bin/kill-app --foreground"
+                "shell_command": "\"/Users/jason/.local/bin/kill-app\" --foreground"
               }
             ],
             "to_delayed_action": {
@@ -3047,7 +3047,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh --action kitty"
+                "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action kitty"
               }
             ],
             "to_delayed_action": {
@@ -3121,8 +3121,54 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show Popclip toolbar'",
+        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun command 'get file path and print in word'\n\tOn Hold:\n\t\tAlways:\texternalHk 'show Popclip toolbar'",
         "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "p",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 400,
+              "basic.to_if_held_down_threshold_milliseconds": 400
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 send \"<c:p:command>\""
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "key_code": "p",
+                "modifiers": [
+                  "left_command"
+                ]
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 send \"<c:p:command>\""
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.microsoft.Word"
+                ]
+              }
+            ],
+            "description": "In Word"
+          },
           {
             "type": "basic",
             "from": {
@@ -3316,7 +3362,7 @@
             },
             "to": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'FormatSelection()'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatSelection()'"
               }
             ]
           }
@@ -3343,7 +3389,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > \"/dev/null;\" then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -3355,7 +3401,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > \"/dev/null;\" then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             }
@@ -3386,7 +3432,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
+                "shell_command": "\"/Users/jason/.venv/typinator/bin/python\" \"/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py\""
               }
             ],
             "to_if_held_down": [
@@ -3398,7 +3444,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/Users/jason/.venv/typinator/bin/python /Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py"
+                  "shell_command": "\"/Users/jason/.venv/typinator/bin/python\" \"/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py\""
                 }
               ]
             }
@@ -3560,7 +3606,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/SendKeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
+                "shell_command": "\"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
               }
             ]
           },
@@ -3599,7 +3645,7 @@
             ],
             "to": [
               {
-                "shell_command": "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/SendKeys --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control,shift>\""
+                "shell_command": "\"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control,shift>\""
               }
             ]
           },
@@ -3624,7 +3670,7 @@
             ],
             "to": [
               {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -r && sleep 0.2 && /Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a && sleep 0.2 && /opt/homebrew/bin/SendKeys --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
               }
             ]
           }
@@ -3790,7 +3836,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -3802,7 +3848,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -3871,7 +3917,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -3883,7 +3929,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -3952,7 +3998,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
@@ -3971,7 +4017,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 }
               ]
             }
@@ -4231,7 +4277,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit ⌃+'↓'\n\t\tAlways:\tEmit ⌃+'↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧+'⌃'",
+        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit ⌃ + '↓'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4240,11 +4286,11 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "down_arrow",
                 "modifiers": [
                   "control"
-                ],
-                "repeat": false
+                ]
               }
             ],
             "description": "Right button held",
@@ -4324,7 +4370,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to left or top half'",
+        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to left or top half'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4333,13 +4379,13 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
                   "left_command",
                   "control",
                   "shift"
-                ],
-                "repeat": false
+                ]
               }
             ],
             "description": "In Zen and Right button held and Wheel held down",
@@ -4407,7 +4453,7 @@
             },
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -4443,7 +4489,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧+'→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to right or bottom half'",
+        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to right or bottom half'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4452,13 +4498,13 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
                   "left_command",
                   "control",
                   "shift"
-                ],
-                "repeat": false
+                ]
               }
             ],
             "description": "In Zen and Right button held and Wheel held down",
@@ -4502,7 +4548,7 @@
             },
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -4612,7 +4658,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_delayed_action": {
@@ -4656,19 +4702,19 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "open -u 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 }
               ]
             },
@@ -4690,7 +4736,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧+'F10'",
+        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4708,13 +4754,13 @@
             ],
             "to_if_held_down": [
               {
+                "repeat": false,
                 "key_code": "f10",
                 "modifiers": [
                   "left_command",
                   "option",
                   "shift"
-                ],
-                "repeat": false
+                ]
               }
             ],
             "to_delayed_action": {
@@ -4761,7 +4807,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py"
+                "shell_command": "\"/Users/jason/Scripts/.venv/shared_venv/bin/python3\" \"/Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py\""
               }
             ],
             "to_delayed_action": {
@@ -4790,7 +4836,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧+']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘+'⇥'",
+        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧ + ']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘ + '⇥'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4799,12 +4845,12 @@
             },
             "to": [
               {
+                "repeat": true,
                 "key_code": "close_bracket",
                 "modifiers": [
                   "left_command",
                   "shift"
-                ],
-                "repeat": true
+                ]
               }
             ],
             "description": "on Logitech G502 X and In Zen and Right button held",
@@ -4886,7 +4932,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧+'['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃+'↓'",
+        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧ + '['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃ + '↓'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4895,12 +4941,12 @@
             },
             "to": [
               {
+                "repeat": true,
                 "key_code": "open_bracket",
                 "modifiers": [
                   "left_command",
                   "shift"
-                ],
-                "repeat": true
+                ]
               }
             ],
             "description": "In Zen and Right button held",
@@ -5091,7 +5137,7 @@
                 }
               },
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "open -u 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
             "to_if_held_down": [
@@ -5269,7 +5315,7 @@
                 }
               },
               {
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=next-display'"
+                "shell_command": "open -u 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
             "to_if_held_down": [
@@ -5342,7 +5388,7 @@
             "to_delayed_action": {
               "to_if_invoked": [
                 {
-                  "shell_command": "/opt/homebrew/bin/hs -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
                 },
                 {
                   "set_variable": {
