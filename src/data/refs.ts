@@ -19,24 +19,26 @@ export type VarSpec = {
 };
 
 
-// TO DO: consider expanding to allow user to assign device-specific rules, including booleans for
 export type DeviceSpec = {
+  // Registry metadata (stripped before writing to karabiner.json)
   name: string;
   deviceDesc: string;
+  // Hardware identifiers
   product_id: number;
   vendor_id: number;
-  // device_type?: "keyboard" | "pointing_device"; used to set the d
-  //   is_keyboard?: boolean;
-  //   is_pointing_device?: boolean;
-  //   modify_events?: boolean;
-  //   manipulate_caps_led?: boolean;
-  //   mouse_flip_wheel_vertical?: boolean;
-  //   mouse_flip_wheel_horizontal?: boolean;
-  //   mouse_xy_multiplier?: number;
-  //   mouse_wheel_multiplier?: number;
-  //   mouse_modify_events?: boolean;
-  //   ignore_vendor_events?: boolean;
-  //   ignore_device?: boolean;
+  is_keyboard?: boolean;
+  is_pointing_device?: boolean;
+  // Per-device Karabiner settings (mouse)
+  mouse_flip_wheel_vertical?: boolean;
+  mouse_flip_wheel_horizontal?: boolean;
+  mouse_xy_multiplier?: number;
+  mouse_wheel_multiplier?: number;
+  mouse_modify_events?: boolean;
+  // Per-device Karabiner settings (shared)
+  modify_events?: boolean;
+  manipulate_caps_lock_led?: boolean;
+  ignore_vendor_events?: boolean;
+  ignore_device?: boolean;
 };
 
 // Category aliases keep action refs type-safe (an app ref can't be a folder).

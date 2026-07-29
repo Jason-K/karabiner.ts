@@ -24,7 +24,7 @@ import {
 } from "../core/tap-hold";
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
 import { DEVICE_IDS } from "../data";
-import { karabinerDeviceId } from "../data/devices";
+import { karabinerDeviceId } from "./device-config";
 import { resolveModComboAlias } from "../data/key-aliases";
 import { resolveButton } from "../data/mouse";
 import { resolveActionToEvents } from "./action-resolver";

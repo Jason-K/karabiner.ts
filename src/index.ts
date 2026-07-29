@@ -20,7 +20,6 @@ import { readFileSync } from "node:fs";
 import {
   DEFAULT_PROFILE_NAME,
   DEVICE_IDS,
-  karabinerDeviceId,
   NUMPAD_REMAPS,
   PATHS,
   PREFERRED_PROFILE_NAME,
@@ -35,6 +34,7 @@ import {
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
+  buildDeviceConfig,
   defineBindings,
   generateSimultaneousRules,
   updateDeviceConfigurations,
@@ -73,22 +73,9 @@ let rules: any[] = [
 // ============================================================================
 
 const deviceConfigs: DeviceConfig[] = [
-  {
-    identifiers: karabinerDeviceId(DEVICE_IDS.appleNumericKeypad),
-    simple_modifications: [...NUMPAD_REMAPS],
-  },
+  buildDeviceConfig(DEVICE_IDS.appleNumericKeypad, [...NUMPAD_REMAPS]),
+  buildDeviceConfig(DEVICE_IDS.logitechG502X),
 ];
-
-const logitechG502XConfig: DeviceConfig = {
-  identifiers: karabinerDeviceId(DEVICE_IDS.logitechG502X),
-  settings: {
-    mouse_flip_wheel_vertical: true,
-    mouse_flip_wheel_horizontal: true,
-    mouse_xy_multiplier: 10.0,
-    mouse_wheel_multiplier: 5.0,
-    mouse_modify_events: true,
-  },
-};
 
 // ============================================================================
 // WRITE TO PROFILE

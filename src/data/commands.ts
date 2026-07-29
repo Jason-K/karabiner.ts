@@ -26,7 +26,7 @@ const subCommands = {
   // HAMMERSPOON
   callHammerspoon: `${PATHS.binHS.name} -c`,
 
-  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()'`,
+  hsGetDisplayInfo: `${PATHS.binHS.name} -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 
   // TEXT PROCESSOR
   callTextProcessor: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python ${PATHS.scriptTextProcessorCLI.name}`,

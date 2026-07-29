@@ -1,22 +1,13 @@
 import type { DeviceSpec } from "./refs";
 
-/**
- * Strip a `DeviceSpec` to the shape Karabiner accepts as a device identifier
- * (`product_id` / `vendor_id` / `is_keyboard?`). Prevents the `name`/`deviceDesc`
- * metadata from leaking into Karabiner's `identifiers[]`.
- */
-export function karabinerDeviceId(spec: DeviceSpec): {
-  product_id: number;
-  vendor_id: number;
-  is_keyboard?: boolean;
-} {
-  const id: { product_id: number; vendor_id: number; is_keyboard?: boolean } = {
-    product_id: spec.product_id,
-    vendor_id: spec.vendor_id,
-  };
-  if (spec.is_keyboard) id.is_keyboard = true;
-  return id;
-}
+// Default values for per-device settings
+export const MOUSE_FLIP_WHEEL_VERTICAL: boolean = true;
+export const MOUSE_FLIP_WHEEL_HORIZONTAL: boolean = true;
+export const MOUSE_XY_MULTIPLIER: number = 10.0;
+export const MOUSE_WHEEL_MULTIPLIER: number = 5.0;
+export const MOUSE_MODIFY_EVENTS: boolean = true;
+export const KB_MODIFY_EVENTS: boolean = true;
+export const KB_USE_CAPS_LED: boolean = true;
 
 export const DEVICE_IDS = {
   appleNumericKeypad: {
@@ -31,6 +22,12 @@ export const DEVICE_IDS = {
     deviceDesc: "Logitech G502 X",
     product_id: 49305,
     vendor_id: 1133,
+    is_pointing_device: true,
+    mouse_flip_wheel_vertical: MOUSE_FLIP_WHEEL_VERTICAL,
+    mouse_flip_wheel_horizontal: MOUSE_FLIP_WHEEL_HORIZONTAL,
+    mouse_xy_multiplier: MOUSE_XY_MULTIPLIER,
+    mouse_wheel_multiplier: MOUSE_WHEEL_MULTIPLIER,
+    mouse_modify_events: MOUSE_MODIFY_EVENTS,
   },
 } as const satisfies Record<string, DeviceSpec>;
 
@@ -58,11 +55,3 @@ export const NUMPAD_REMAPS = [
   { from: { key_code: "left_control" }, to: [{ key_code: "fn" }] },
   { from: { key_code: "fn" }, to: [{ key_code: "left_control" }] },
 ] as const;
-
-export const MOUSE_FLIP_WHEEL_VERTICAL: boolean = true;
-export const MOUSE_FLIP_WHEEL_HORIZONTAL: boolean = true;
-export const MOUSE_XY_MULTIPLIER: number = 10.0;
-export const MOUSE_WHEEL_MULTIPLIER: number = 5.0;
-export const MOUSE_MODIFY_EVENTS: boolean = true;
-export const KB_MODIFY_EVENTS: boolean = true;
-export const KB_USE_CAPS_LED: boolean = true;
