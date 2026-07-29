@@ -8,11 +8,11 @@ export {
   DEVICE_IDS,
   KB_MODIFY_EVENTS,
   KB_USE_CAPS_LED,
-  MOUSE_FLIP_WHEEL_HORIZONTAL,
-  MOUSE_FLIP_WHEEL_VERTICAL,
+  mouse_flip_horizontal_wheel,
+  mouse_flip_vertical_wheel,
   MOUSE_MODIFY_EVENTS,
-  MOUSE_WHEEL_MULTIPLIER,
-  MOUSE_XY_MULTIPLIER,
+  pointing_motion_wheels_multiplier,
+  pointing_motion_xy_multiplier,
   NUMPAD_REMAPS,
 } from "./devices";
 export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./ke-vars";

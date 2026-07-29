@@ -4,6 +4,7 @@ import test from "node:test";
 import { HOME_DIR, PATHS, TIMINGS } from "../data";
 import { APP_BUNDLES } from "../data/app_bundles";
 import { CMDS } from "../data/commands";
+import { EXTERNAL_HKS } from "../data/external-hotkeys";
 import { URLS } from "../data/urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
@@ -311,17 +312,16 @@ test("vmCOCS+q/e/r/f focus-window tap-hold mappings stay declarative", () => {
   // vmCOCS+w no longer exists.
   assert.throws(() => findTapHold("w", ["vmCOCS"]), /not found/);
 
-  const focusModifiers = ["left_command", "control", "option"];
   assert.deepEqual(phaseDo(findTapHold("q", ["vmCOCS"]), "release"), [
-    { type: "key", key: "left_arrow", modifiers: focusModifiers, options: { repeat: false } },
+    { type: "externalHk", ref: EXTERNAL_HKS.focusWinLeft },
   ]);
   assert.deepEqual(phaseDo(findTapHold("e", ["vmCOCS"]), "release"), [
-    { type: "key", key: "right_arrow", modifiers: focusModifiers, options: { repeat: false } },
+    { type: "externalHk", ref: EXTERNAL_HKS.focusWinRight },
   ]);
   assert.deepEqual(phaseDo(findTapHold("r", ["vmCOCS"]), "release"), [
-    { type: "key", key: "up_arrow", modifiers: focusModifiers, options: { repeat: false } },
+    { type: "externalHk", ref: EXTERNAL_HKS.focusWinTop },
   ]);
   assert.deepEqual(phaseDo(findTapHold("f", ["vmCOCS"]), "release"), [
-    { type: "key", key: "down_arrow", modifiers: focusModifiers, options: { repeat: false } },
+    { type: "externalHk", ref: EXTERNAL_HKS.focusWinBottom },
   ]);
 });

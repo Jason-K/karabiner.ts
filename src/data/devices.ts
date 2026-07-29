@@ -1,10 +1,10 @@
 import type { DeviceSpec } from "./refs";
 
 // Default values for per-device settings
-export const MOUSE_FLIP_WHEEL_VERTICAL: boolean = true;
-export const MOUSE_FLIP_WHEEL_HORIZONTAL: boolean = true;
-export const MOUSE_XY_MULTIPLIER: number = 10.0;
-export const MOUSE_WHEEL_MULTIPLIER: number = 5.0;
+export const mouse_flip_vertical_wheel: boolean = true;
+export const mouse_flip_horizontal_wheel: boolean = true;
+export const pointing_motion_xy_multiplier: number = 10.0;
+export const pointing_motion_wheels_multiplier: number = 5.0;
 export const MOUSE_MODIFY_EVENTS: boolean = true;
 export const KB_MODIFY_EVENTS: boolean = true;
 export const KB_USE_CAPS_LED: boolean = true;
@@ -23,11 +23,12 @@ export const DEVICE_IDS = {
     product_id: 49305,
     vendor_id: 1133,
     is_pointing_device: true,
-    mouse_flip_wheel_vertical: MOUSE_FLIP_WHEEL_VERTICAL,
-    mouse_flip_wheel_horizontal: MOUSE_FLIP_WHEEL_HORIZONTAL,
-    mouse_xy_multiplier: MOUSE_XY_MULTIPLIER,
-    mouse_wheel_multiplier: MOUSE_WHEEL_MULTIPLIER,
-    mouse_modify_events: MOUSE_MODIFY_EVENTS,
+    mouse_flip_vertical_wheel: true,
+    pointing_motion_xy_multiplier: 10,
+    pointing_motion_wheels_multiplier: 5,
+    mouse_modify_events: true,
+    ignore_vendor_events: true,
+    ignore: false,
   },
 } as const satisfies Record<string, DeviceSpec>;
 

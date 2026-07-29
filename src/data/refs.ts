@@ -58,16 +58,16 @@ export type DeviceSpec = {
   is_keyboard?: boolean;
   is_pointing_device?: boolean;
   // Per-device Karabiner settings (mouse)
-  mouse_flip_wheel_vertical?: boolean;
-  mouse_flip_wheel_horizontal?: boolean;
-  mouse_xy_multiplier?: number;
-  mouse_wheel_multiplier?: number;
+  mouse_flip_vertical_wheel?: boolean;
+  mouse_flip_horizontal_wheel?: boolean;
+  pointing_motion_xy_multiplier?: number;
+  pointing_motion_wheels_multiplier?: number;
   mouse_modify_events?: boolean;
   // Per-device Karabiner settings (shared)
   modify_events?: boolean;
   manipulate_caps_lock_led?: boolean;
   ignore_vendor_events?: boolean;
-  ignore_device?: boolean;
+  ignore?: boolean;
 };
 
 // Category aliases keep action refs type-safe (an app ref can't be a folder).

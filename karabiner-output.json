@@ -2,7 +2,7 @@
   "complex_modifications": {
     "rules": [
       {
-        "ruleDescription": "[8]:\n---\n\tOn Hold:\n\t\tAlways:\topen-shell RingCentral",
+        "ruleDescription": "[8]:\n---\n\tOn Hold:\n\t\tAlways:\topen RingCentral",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -21,7 +21,11 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "/Users/jason/.local/bin/open-app -b 'com.ringcentral.glip'"
+                "software_function": {
+                  "open_application": {
+                    "bundle_identifier": "com.ringcentral.glip"
+                  }
+                }
               }
             ],
             "to_delayed_action": {
@@ -304,7 +308,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + '7'",
+        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show busycal popup'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -653,7 +657,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F9'",
+        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show popclip'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -860,7 +864,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⌃⇧ + 'F11'",
+        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show kitty quake terminal'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1151,7 +1155,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'H'",
+        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'raycast here2this'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1195,7 +1199,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F9'",
+        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show popclip'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1214,7 +1218,6 @@
             ],
             "to_if_held_down": [
               {
-                "halt": true,
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
@@ -2856,7 +2859,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '→'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the right'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2880,9 +2883,9 @@
                 "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -2905,9 +2908,9 @@
                   "repeat": false,
                   "key_code": "right_arrow",
                   "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
+                    "command",
+                    "option",
+                    "control"
                   ]
                 }
               ]
@@ -2918,7 +2921,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↓'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the bottom'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2942,9 +2945,9 @@
                 "repeat": false,
                 "key_code": "down_arrow",
                 "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -2967,9 +2970,9 @@
                   "repeat": false,
                   "key_code": "down_arrow",
                   "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
+                    "command",
+                    "option",
+                    "control"
                   ]
                 }
               ]
@@ -2980,7 +2983,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'H'",
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\texternalHk 'highlight in skim'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3003,6 +3006,7 @@
             ],
             "to": [
               {
+                "repeat": false,
                 "key_code": "h",
                 "modifiers": [
                   "command",
@@ -3064,7 +3068,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⌃ + 'M'",
+        "ruleDescription": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'restore minimized windows'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3117,7 +3121,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'P'",
+        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show Popclip toolbar'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3171,7 +3175,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '←'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the left'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3195,9 +3199,9 @@
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -3220,9 +3224,9 @@
                   "repeat": false,
                   "key_code": "left_arrow",
                   "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
+                    "command",
+                    "option",
+                    "control"
                   ]
                 }
               ]
@@ -3233,7 +3237,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⌃⌥ + '↑'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the top'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3257,9 +3261,9 @@
                 "repeat": false,
                 "key_code": "up_arrow",
                 "modifiers": [
-                  "left_command",
-                  "control",
-                  "option"
+                  "command",
+                  "option",
+                  "control"
                 ]
               }
             ],
@@ -3282,9 +3286,9 @@
                   "repeat": false,
                   "key_code": "up_arrow",
                   "modifiers": [
-                    "left_command",
-                    "control",
-                    "option"
+                    "command",
+                    "option",
+                    "control"
                   ]
                 }
               ]
@@ -3339,7 +3343,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
               }
             ],
             "to_if_held_down": [
@@ -3351,7 +3355,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                  "shell_command": "if pgrep -x 'Spotify' > /dev/null; then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
                 }
               ]
             }
@@ -3452,7 +3456,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tEmit ⌘⌃ + 'U'",
+        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\texternalHk 'underline in skim'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3475,6 +3479,7 @@
             ],
             "to": [
               {
+                "repeat": false,
                 "key_code": "u",
                 "modifiers": [
                   "command",
@@ -3807,7 +3812,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + '['",
+        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\texternalHk 'activate next tab in Zen'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3831,9 +3836,10 @@
             ],
             "to": [
               {
+                "repeat": true,
                 "key_code": "open_bracket",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
@@ -3887,7 +3893,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tEmit ⌘⇧ + ']'",
+        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\texternalHk 'activate previous tab in Zen'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3911,9 +3917,10 @@
             ],
             "to": [
               {
+                "repeat": false,
                 "key_code": "close_bracket",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
