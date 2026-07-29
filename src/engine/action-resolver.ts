@@ -137,10 +137,12 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
       const modifiers = action.ref.modifiers.length
         ? expandModifiers(action.ref.modifiers)
         : undefined;
+      const opts = { ...action.ref.options, ...action.options };
       return [
         toKey(
           action.ref.name as any,
           modifiers?.length ? (modifiers as any) : undefined,
+          Object.keys(opts).length ? (opts as any) : undefined,
         ),
       ];
     }

@@ -39,6 +39,13 @@ export type ExternalHkRef = HkRef & {
   /** When true, the hotkey is only expected to work while `app` is frontmost.
    *  Purely informational metadata; defaults to false. */
   activeAppOnly?: boolean;
+  /** Default key-event options baked into the registry entry.
+   *  Individual `do` blocks may override any of these. */
+  options?: {
+    repeat?: boolean;
+    halt?: boolean;
+    lazy?: boolean;
+  };
 };
 
 export type DeviceSpec = {

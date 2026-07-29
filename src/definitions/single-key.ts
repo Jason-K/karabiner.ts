@@ -1,4 +1,4 @@
-import { APP_BUNDLES, CMDS, PATHS, TIMINGS, URLS } from "../data";
+import { APP_BUNDLES, CMDS, EXTERNAL_HKS, PATHS, TIMINGS, URLS } from "../data";
 import type { Binding } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
@@ -10,7 +10,7 @@ const numBindings: Binding[] = [
     cases: [
       {
         phase: "hold",
-        do: [{ type: "app", ref: APP_BUNDLES.ringCentral, mode: "shell" }],
+        do: [{ type: "app", ref: APP_BUNDLES.ringCentral, mode: "open" }],
       },
     ],
   },
@@ -95,10 +95,8 @@ const letterBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "7",
-            modifiers: ["vmCO_S"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.showBusyCal,
           },
         ],
       },
@@ -175,10 +173,8 @@ const letterBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "f9",
-            modifiers: ["vmCOCS"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.showPopclip,
           },
         ],
       },
@@ -216,10 +212,8 @@ const letterBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "f11",
-            modifiers: ["vm_OCS"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.showKittyQuakeTerm,
           },
         ],
       },
@@ -303,10 +297,8 @@ const symbolBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "h",
-            modifiers: ["vmCOCS"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.raycastHere2This,
           },
         ],
       },
@@ -319,10 +311,8 @@ const symbolBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "f9",
-            modifiers: ["vmCOCS"],
-            options: { halt: true, repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.showPopclip,
           },
         ],
       },

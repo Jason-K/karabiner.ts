@@ -2,6 +2,7 @@ import { MOD_COMBO } from "../core/mods";
 import {
   APP_BUNDLES,
   CMDS,
+  EXTERNAL_HKS,
   KE_VAR_VALUES,
   KE_VARS,
   PW_BUNDLES,
@@ -105,10 +106,8 @@ const modLetterBindings: Binding[] = [
         phase: "release",
         do: [
           {
-            type: "key",
-            key: "right_arrow",
-            modifiers: ["left_command", "control", "option"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.focusWinRight,
           },
         ],
       },
@@ -121,10 +120,8 @@ const modLetterBindings: Binding[] = [
         phase: "release",
         do: [
           {
-            type: "key",
-            key: "down_arrow",
-            modifiers: ["left_command", "control", "option"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.focusWinBottom,
           },
         ],
       },
@@ -136,7 +133,7 @@ const modLetterBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "h", modifiers: MOD_COMBO.vmC_C_ }],
+        do: [{ type: "externalHk", ref: EXTERNAL_HKS.skimHighlight }],
       },
     ],
   },
@@ -155,10 +152,8 @@ const modLetterBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "m",
-            modifiers: MOD_COMBO.vm_OC_,
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.restoreMinimizedWindow,
           },
         ],
       },
@@ -171,10 +166,8 @@ const modLetterBindings: Binding[] = [
         phase: "hold",
         do: [
           {
-            type: "key",
-            key: "p",
-            modifiers: MOD_COMBO.vmCOC_,
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.popclip,
           },
         ],
       },
@@ -187,10 +180,8 @@ const modLetterBindings: Binding[] = [
         phase: "release",
         do: [
           {
-            type: "key",
-            key: "left_arrow",
-            modifiers: ["left_command", "control", "option"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.focusWinLeft,
           },
         ],
       },
@@ -203,10 +194,8 @@ const modLetterBindings: Binding[] = [
         phase: "release",
         do: [
           {
-            type: "key",
-            key: "up_arrow",
-            modifiers: ["left_command", "control", "option"],
-            options: { repeat: false },
+            type: "externalHk",
+            ref: EXTERNAL_HKS.focusWinTop,
           },
         ],
       },
@@ -267,7 +256,7 @@ const modLetterBindings: Binding[] = [
     cases: [
       {
         phase: "press",
-        do: [{ type: "key", key: "u", modifiers: MOD_COMBO.vmC_C_ }],
+        do: [{ type: "externalHk", ref: EXTERNAL_HKS.skimUnderline }],
       },
     ],
   },
@@ -415,9 +404,8 @@ const modNonCharBindings: Binding[] = [
         phase: "press",
         do: [
           {
-            type: "key",
-            key: "open_bracket",
-            modifiers: ["left_command", "shift"],
+            type: "externalHk",
+            ref: EXTERNAL_HKS.zenNextTab,
           },
         ],
       },
@@ -455,9 +443,8 @@ const modNonCharBindings: Binding[] = [
         phase: "press",
         do: [
           {
-            type: "key",
-            key: "close_bracket",
-            modifiers: ["left_command", "shift"],
+            type: "externalHk",
+            ref: EXTERNAL_HKS.zenPreviousTab,
           },
         ],
       },

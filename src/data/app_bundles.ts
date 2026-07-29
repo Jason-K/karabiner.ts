@@ -45,6 +45,7 @@ export const APP_BUNDLES = {
   processSpy: app("com.itone.ProcessSpy", "Process Spy"),
   protonMail: app("ch.protonmail.desktop", "Proton Mail"),
   qspace: app("com.jinghaoshe.qspace.pro", "QSpace"),
+  raycast: app("com.raycast-x.macos", "Raycast"),
   ringCentral: app("com.ringcentral.glip", "RingCentral"),
   securityAgent: app("com.apple.SecurityAgent", "Security Agent"),
   settings: app("com.apple.systempreferences", "System Settings"),

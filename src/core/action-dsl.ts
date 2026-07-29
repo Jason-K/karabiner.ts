@@ -59,6 +59,11 @@ export type ActionSpec =
   | {
     type: "externalHk";
     ref: ExternalHkRef;
+    options?: {
+      repeat?: boolean;
+      halt?: boolean;
+      lazy?: boolean;
+    };
     actionDesc?: string;
   }
   | {
