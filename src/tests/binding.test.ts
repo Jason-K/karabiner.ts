@@ -198,7 +198,7 @@ test("defineBindings: device-specific button alias auto-scopes via nameScope", (
   ]);
   const m = (rules[0] as any).manipulatorSources[0];
   const devCond = m.conditions?.find((c: any) => c.type === "device_if");
-  assert.deepEqual(devCond?.identifiers, [{ product_id: 49305, vendor_id: 1133 }]);
+  assert.deepEqual(devCond?.identifiers, [{ product_id: 49305, vendor_id: 1133, is_pointing_device: true }]);
 });
 
 test("defineBindings: global button alias adds no device condition", () => {

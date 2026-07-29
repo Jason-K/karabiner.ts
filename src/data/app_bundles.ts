@@ -1,3 +1,13 @@
+import type { AppRef } from "./refs";
+
+// ---------------------------------------------------------
+// Factory
+// ---------------------------------------------------------
+
+/** Create a registry entry for an application bundle.
+ *  @param name    - bundle identifier (e.g. "com.apple.ActivityMonitor")
+ *  @param refDesc - human label used in descriptions
+ */
 const app = (name: string, refDesc: string) => ({
   type: "app" as const,
   name,
@@ -6,6 +16,10 @@ const app = (name: string, refDesc: string) => ({
 
 // TO DO: Karabiner allows foremost_application_if|unless conditions to be set based on bundle_identifiers|file_paths (https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/conditions/frontmost-application/)
 // APP_BUNDLES currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
+
+// ---------------------------------------------------------
+// Registry
+// ---------------------------------------------------------
 
 export const APP_BUNDLES = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
@@ -48,9 +62,7 @@ export const APP_BUNDLES = {
   zen: app("app.zen-browser.zen", "Zen"),
 } as const;
 
-
-
-export type AppRef = import("./refs").AppRef;
+export type { AppRef };
 
 export const PW_BUNDLES: AppRef[] = [
   APP_BUNDLES.securityAgent,

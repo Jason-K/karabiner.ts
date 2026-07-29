@@ -4,7 +4,8 @@ export type RefSpecType =
   | "app"
   | "command"
   | "url"
-  | "path";
+  | "path"
+  | "external_hk";
 
 export type RefSpec = {
   type: RefSpecType;
@@ -18,6 +19,27 @@ export type VarSpec = {
   varDesc: string;
 };
 
+/** Base type for hotkey entries that emit a key + modifier combo. */
+export type HkRef = {
+  type: "external_hk";
+  /** key_code to emit (e.g. "f", "space", "return"). */
+  name: string;
+  /** Modifier keys to hold while emitting `name` (e.g. ["command", "option"]). */
+  modifiers: string[];
+  /** Human label used to derive descriptions. */
+  refDesc: string;
+};
+
+/** An entry in the external-hotkeys registry. Extends HkRef with an optional
+ *  app constraint so the hotkey can be scoped to a specific application. */
+export type ExternalHkRef = HkRef & {
+  /** Optional app that "owns" this hotkey — accepts an AppRef, PathRef, or
+   *  a raw bundle-id / file-path string (same as `AppTarget` in action-dsl). */
+  app?: RefSpec | string;
+  /** When true, the hotkey is only expected to work while `app` is frontmost.
+   *  Purely informational metadata; defaults to false. */
+  activeAppOnly?: boolean;
+};
 
 export type DeviceSpec = {
   // Registry metadata (stripped before writing to karabiner.json)

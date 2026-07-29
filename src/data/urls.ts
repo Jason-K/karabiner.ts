@@ -1,11 +1,22 @@
-// URL object
+import type { UrlRef } from "./refs";
+
+// ---------------------------------------------------------
+// Factory
+// ---------------------------------------------------------
+
+/** Create a registry entry for a URL action.
+ *  @param name    - the URL string to open (e.g. "raycast-x://extensions/...")
+ *  @param refDesc - human label used in descriptions
+ */
 const url = (name: string, refDesc: string) => ({
   type: "url" as const,
   name,
   refDesc,
 });
 
-// Application-specific URLs
+// ---------------------------------------------------------
+// Registry
+// ---------------------------------------------------------
 
 const SidenotesUrls = {
   newClientNote: url("sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A", "new client note template")
@@ -444,4 +455,4 @@ export const URLS = {
   ...AntiNoteUrls,
 };
 
-export type UrlRef = import("./refs").UrlRef;
+export type { UrlRef };

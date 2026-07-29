@@ -79,6 +79,23 @@ test("describeAction: actHere / caseChange / wrapString", () => {
   );
 });
 
+test("describeAction: externalHk", () => {
+  const ref = {
+    type: "external_hk" as const,
+    name: "f",
+    modifiers: ["command", "option"],
+    refDesc: "Raycast Focus Mode",
+  };
+  assert.equal(
+    describeAction({ type: "externalHk", ref }),
+    "externalHk 'Raycast Focus Mode'",
+  );
+  assert.equal(
+    describeAction({ type: "externalHk", ref, actionDesc: "toggle" }),
+    "externalHk 'Raycast Focus Mode' | toggle",
+  );
+});
+
 test("describeAction: key (with/without mods) + actionDesc", () => {
   assert.equal(describeAction({ type: "key", key: "f2" }), "Emit 'F2'");
   assert.equal(

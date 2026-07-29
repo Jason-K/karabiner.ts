@@ -1,6 +1,16 @@
+import type { CommandRef } from "./refs";
 import { PATHS } from "./paths";
 import { TIMINGS } from "./timings";
+import { URLS } from "./urls";
 
+// ---------------------------------------------------------
+// Factory
+// ---------------------------------------------------------
+
+/** Create a registry entry for a shell command.
+ *  @param name    - the shell command string to execute
+ *  @param refDesc - human label used in descriptions
+ */
 const cmdEntry = (name: string, refDesc: string) => ({
   type: "command" as const,
   name,
@@ -84,7 +94,7 @@ const Typinator_Scripts = {
 
 const Spotify = {
   spotifyToggle: cmdEntry(
-    `if pgrep -x 'Spotify' > /dev/null; then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '${PATHS.binAppOpen.name}' -b 'com.spotify.client'; fi; echo 'Spotify toggled'`,
+    `if pgrep -x 'Spotify' > /dev/null; then open '${URLS.raySpotifyPlayPause}'; else '${PATHS.binAppOpen.name}' -b 'com.spotify.client'; fi; echo 'Spotify toggled'`,
     "open Spotify or toggle play/pause",
   ),
 };
@@ -147,6 +157,10 @@ const Windows = {
   ),
 }
 
+// ---------------------------------------------------------
+// Registry
+// ---------------------------------------------------------
+
 export const CMDS = {
   ...Passwords_Privileges,
   ...Kill_Apps,
@@ -157,4 +171,4 @@ export const CMDS = {
   ...Windows,
 } as const;
 
-export type CommandRef = import("./refs").CommandRef;
+export type { CommandRef };

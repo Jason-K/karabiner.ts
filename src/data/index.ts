@@ -19,6 +19,7 @@ export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./ke-vars";
 
 export { APP_BUNDLES, PW_BUNDLES, type AppRef } from "./app_bundles";
 export { CMDS, type CommandRef } from "./commands";
+export { EXTERNAL_HKS, type ExternalHkRef, type HkRef } from "./external-hotkeys";
 export { HOME_DIR, PATHS, type PathRef } from "./paths";
 export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./user-prefs";
 export type { DeviceSpec, RefSpec, RefSpecType, VarSpec } from "./refs";

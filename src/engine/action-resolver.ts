@@ -133,6 +133,17 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
         ),
       ];
     }
+    case "externalHk": {
+      const modifiers = action.ref.modifiers.length
+        ? expandModifiers(action.ref.modifiers)
+        : undefined;
+      return [
+        toKey(
+          action.ref.name as any,
+          modifiers?.length ? (modifiers as any) : undefined,
+        ),
+      ];
+    }
     case "osascript":
       return [applescript(action.scriptPath, ...(action.args ?? []))];
     case "cut":

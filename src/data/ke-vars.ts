@@ -1,3 +1,5 @@
+import type { VarRef } from "./refs";
+
 /** Built-in variables that Karabiner-Elements exposes via its variable system.
  *
  * Each entry is a {@link VarRef} (i.e. a `VarSpec`) that can be used directly
@@ -8,11 +10,21 @@
  * namespace (visible in the EventViewer's Variables tab).
  */
 
-// import type { VarRef } from "./refs";
+// ---------------------------------------------------------
+// Factory
+// ---------------------------------------------------------
 
+/** Create a registry entry for a Karabiner built-in variable.
+ *  @param name    - the variable name as reported by Karabiner EventViewer
+ *  @param varDesc - human label used in descriptions
+ */
 const keVar = (name: string, varDesc: string): VarRef => ({ name, varDesc });
 
 // ── Accessibility ────────────────────────────────────────────────────────────
+
+// ---------------------------------------------------------
+// Registry
+// ---------------------------------------------------------
 
 export const KE_VARS = {
   // accessibility.focused_ui_element.*
@@ -154,4 +166,4 @@ export const KE_VAR_VALUES = {
   axSecureTextFieldSubrole: "AXSecureTextField",
 } as const;
 
-export type VarRef = import("./refs").VarRef;
+export type { VarRef };

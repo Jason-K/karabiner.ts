@@ -41,6 +41,8 @@ export function describeAction(action: ActionSpec): string {
       return `Wrap selection in ${action.operation}`;
     case "key":
       return withActionDesc(describeKeyAction(action), action.actionDesc);
+    case "externalHk":
+      return withActionDesc(`externalHk '${action.ref.refDesc}'`, action.actionDesc);
     case "url": {
       const url = action.url;
       if (typeof url === "string") {

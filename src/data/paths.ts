@@ -1,12 +1,21 @@
-// varSpec
+import type { PathRef } from "./refs";
+
 // ---------------------------------------------------------
+// Factory
+// ---------------------------------------------------------
+
+/** Create a registry entry for a file-system path.
+ *  @param name    - absolute file or directory path (e.g. "/opt/homebrew")
+ *  @param refDesc - human label used in descriptions
+ */
 const path = (name: string, refDesc: string) => ({
   type: "path" as const,
   name,
   refDesc,
 });
 
-// Get env vars (keep at top)
+// ---------------------------------------------------------
+// Environment helpers (kept at top of registry section)
 // ---------------------------------------------------------
 const runtimeProcess = globalThis as {
   process?: {
@@ -29,6 +38,8 @@ const XDG_STATE_HOME =
 const ZDOTDIR =
   runtimeProcess.process?.env?.ZDOTDIR ?? `${HOME_DIR}/.config/zsh`;
 const BREW_DIR = runtimeProcess.process?.env?.BREW_DIR ?? "/opt/homebrew";
+const BREW_BIN_DIR =
+  runtimeProcess.process?.env?.BREW_BIN_DIR ?? `${BREW_DIR}/bin`;
 const SCRIPTS_DIR = `${HOME_DIR}/Scripts`;
 const DL_DIR = `${HOME_DIR}/Downloads`;
 const CHEZMOI_DIR = `${XDG_DATA_HOME}/.chezmoi`;
@@ -48,6 +59,7 @@ const ENV_DIRS = {
   dirXdgState: path(`${XDG_STATE_HOME}`, "XDG State dir"),
   dirZDot: path(`${ZDOTDIR}`, "ZSH home dir"),
   dirChezmoi: path(`${CHEZMOI_DIR}`, "chezmoi"),
+  dirBrew: path(`${BREW_DIR}`, "Brew home dir"),
 };
 
 const DL_DIRS = {
@@ -69,7 +81,7 @@ const DL_DIRS = {
 };
 
 const BIN_DIRS = {
-  dirBrew: path(`${BREW_DIR}`, "Brew home dir"),
+  dirBrewBins: path(`${BREW_BIN_DIR}`, "Brew bins"),
   dirApplications: path("/Applications", "APPS (global)"),
 };
 
@@ -128,28 +140,32 @@ const SCRIPT_FILES = {
 
 const CONFIG_FILES = {
   configKarabiner: path(
-    `${HOME_DIR}/.config/karabiner/karabiner.json`,
+    `${XDG_CONFIG_HOME}/karabiner/karabiner.json`,
     "Karabiner configuration file",
   ),
 };
 
 const BIN_FILES = {
-  binCliClick: path(`${BREW_DIR}/bin/binCliClick`, "Cliclick binary"),
+  binCliClick: path(`${BREW_BIN_DIR}/binCliClick`, "Cliclick binary"),
   binHSBridge: path(`${HOME_DIR}/Hammer-Console/cli/hammer`, "Hammer CLI bin"),
-  binAppKill: path(`${HOME_DIR}/.local/bin/kill-app`, "Kill App binary"),
-  binAppOpen: path(`${HOME_DIR}/.local/bin/open-app`, "Open App binary"),
+  binAppKill: path(`${XDG_BIN_HOME}/kill-app`, "Kill App binary"),
+  binAppOpen: path(`${XDG_BIN_HOME}/open-app`, "Open App binary"),
   binPrivCLI: path(
     `/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI`,
     "PrivilegesCLI",
   ),
-  binHS: path(`${BREW_DIR}/bin/hs`, "Hammerspoon binary"),
-  binSendKeys: path(`${BREW_DIR}/bin/SendKeys`, "Sendkeys"),
+  binHS: path(`${BREW_BIN_DIR}/hs`, "Hammerspoon binary"),
+  binSendKeys: path(`${BREW_BIN_DIR}/SendKeys`, "Sendkeys"),
   binPythonTypinator: path(
     `${HOME_DIR}/.venv/typinator/bin/python`,
     "python bin for Typinator",
   ),
-  binUV: path(`${HOME_DIR}/.local/bin/uv`, "UV binary"),
+  binUV: path(`${XDG_BIN_HOME}/uv`, "UV binary"),
 };
+
+// ---------------------------------------------------------
+// Registry
+// ---------------------------------------------------------
 
 export const PATHS = {
   ...ENV_DIRS,
@@ -163,4 +179,4 @@ export const PATHS = {
   ...BIN_FILES,
 } as const;
 
-export type PathRef = import("./refs").PathRef;
+export type { PathRef };
