@@ -272,6 +272,50 @@ type CaseGroup = {
   hasHold: boolean;
 };
 
+/**
+ * Fold an unconditional release-only (tap) group into the conditional hold
+ * groups.
+ *
+ * When a binding pairs an unconditional tap with conditional holds (e.g.
+ * `return_or_enter`: tap passes through; hold runs a shell outside Excel and
+ * emits F2 inside Excel), `groupByConditions` would otherwise emit the tap as
+ * its own no-conditions manipulator. That manipulator competes for the key in
+ * every app and blocks both the normal tap and the conditional holds.
+ *
+ * A conditional **hold** group lacking its own release already synthesizes a
+ * default-alone pass-through (a halted re-emit of the trigger key) for its
+ * `to_if_alone` (`buildKeyTapHold`), so a tap is already covered in every
+ * condition and the unconditional group is redundant — it is dropped, and its
+ * tap action is injected as the `alone` of each hold-only group so a custom
+ * (non-trigger) tap is preserved.
+ *
+ * Conditional **press** (remap) groups are left untouched: they carry no tap
+ * pass-through, so the unconditional tap must remain a separate manipulator.
+ */
+function distributeUnconditionalTap(groups: CaseGroup[]): CaseGroup[] {
+  if (groups.length < 2) return groups;
+  const defaultIdx = groups.findIndex(
+    (g) =>
+      g.conditions.length === 0 &&
+      g.hasRelease &&
+      !g.hasHold &&
+      g.pressDo.length === 0,
+  );
+  if (defaultIdx < 0) return groups;
+  const defaultTap = groups[defaultIdx]!.releaseDo;
+  const isHoldOnly = (g: CaseGroup) =>
+    g.conditions.length > 0 && g.hasHold && !g.hasRelease;
+  // Only fold when at least one conditional hold-only group can carry the tap;
+  // otherwise keep the standalone group (e.g. an unconditional tap paired with
+  // a conditional remap must remain its own manipulator).
+  if (!groups.some(isHoldOnly)) return groups;
+  return groups
+    .filter((_, i) => i !== defaultIdx)
+    .map((g) =>
+      isHoldOnly(g) ? { ...g, releaseDo: defaultTap, hasRelease: true } : g,
+    );
+}
+
 /** Group cases that share the same condition signature into one manipulator. */
 function groupByConditions(cases: ResolvedCase[]): CaseGroup[] {
   const groups = new Map<string, CaseGroup>();
@@ -325,12 +369,15 @@ function buildManipulators(b: Binding): Manipulator[] {
   let manipulators: Manipulator[];
   if (hasMultiTap) manipulators = buildMultiTap(b, resolved, isSim);
   else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
-  else
-    manipulators = groupByConditions(resolved).flatMap((g) =>
+  else {
+    manipulators = distributeUnconditionalTap(
+      groupByConditions(resolved),
+    ).flatMap((g) =>
       g.hasRelease || g.hasHold
         ? buildTapHold(b, g)
         : buildRemap(b, g, isPointer),
     );
+  }
   stampDeviceScope(manipulators, b.trigger);
   return manipulators;
 }

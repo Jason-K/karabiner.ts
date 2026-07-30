@@ -105,6 +105,64 @@ test("defineBindings remap: noop case -> manipulator with no `to` key", () => {
   assert.equal("to" in m, false, "noop must omit the `to` key");
 });
 
+test("defineBindings tap-hold: unconditional tap + conditional holds -> no competing unconditional manipulator", () => {
+  // Mirrors return_or_enter / keypad_enter: tap passes the key through; hold
+  // runs one action outside Excel and another inside. The unconditional tap
+  // must NOT become its own no-conditions manipulator, which would intercept
+  // the key and block both the normal tap and the conditional holds. Each
+  //conditional group carries its own default-alone pass-through instead.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["return_or_enter"] },
+      cases: [
+        { phase: "release", do: [{ type: "key", key: "return_or_enter", options: { halt: true } }] },
+        {
+          phase: "hold",
+          conditions: [{ app: APP_ID.excel, unless: true }],
+          do: [{ type: "shell", command: "format-cut-seed" }],
+        },
+        {
+          phase: "hold",
+          conditions: [{ app: APP_ID.excel }],
+          do: [{ type: "key", key: "f2", options: { repeat: false } }],
+        },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  // Exactly the two conditional groups — no third, unconditional manipulator.
+  assert.equal(built.manipulatorSources.length, 2);
+  assert.equal(
+    built.manipulatorSources.filter((m: any) => !m.conditions?.length).length,
+    0,
+    "no manipulator may lack a condition",
+  );
+  // Every manipulator still passes the key through on tap.
+  for (const m of built.manipulatorSources) {
+    assert.ok(
+      m.to_if_alone.some((e: any) => e.key_code === "return_or_enter"),
+      "tap must still emit return_or_enter",
+    );
+  }
+});
+
+test("defineBindings tap-hold: unconditional tap kept when paired with a conditional remap (press)", () => {
+  // An unconditional tap next to a conditional *press* (remap) must remain a
+  // separate manipulator: a remap has no default-alone pass-through, so folding
+  // the tap away would drop it.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      cases: [
+        { phase: "press", conditions: [{ app: APP_ID.excel }], do: [{ type: "key", key: "down_arrow" }] },
+        { phase: "release", do: [{ type: "key", key: "up_arrow" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulatorSources.length, 2);
+});
+
 test("defineBindings remap: two press cases with different conditions -> two manipulators", () => {
   const rules = defineBindings([
     {

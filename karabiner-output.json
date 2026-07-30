@@ -1223,37 +1223,6 @@
             ],
             "to_if_held_down": [
               {
-                "halt": true,
-                "key_code": "keypad_enter"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "keypad_enter"
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "keypad_enter",
-              "modifiers": {
-                "optional": []
-              }
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "keypad_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
@@ -1262,6 +1231,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "keypad_enter"
                 }
               ]
@@ -1287,6 +1257,7 @@
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "keypad_enter"
               }
             ],
@@ -1301,6 +1272,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "keypad_enter"
                 }
               ]
@@ -1339,37 +1311,6 @@
             ],
             "to_if_held_down": [
               {
-                "halt": true,
-                "key_code": "return_or_enter"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "return_or_enter"
-                }
-              ]
-            }
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "return_or_enter",
-              "modifiers": {
-                "optional": []
-              }
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "return_or_enter"
-              }
-            ],
-            "to_if_held_down": [
-              {
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
@@ -1378,6 +1319,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "return_or_enter"
                 }
               ]
@@ -1403,6 +1345,7 @@
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "return_or_enter"
               }
             ],
@@ -1417,6 +1360,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "return_or_enter"
                 }
               ]
