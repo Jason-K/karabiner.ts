@@ -5486,9 +5486,9 @@
                 "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
-                  "option",
-                  "control",
-                  "shift"
+                  "left_option",
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ],
@@ -5505,28 +5505,13 @@
                 "repeat": false,
                 "key_code": "f15",
                 "modifiers": [
-                  "command",
-                  "option",
-                  "control",
-                  "shift"
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
                 ]
               }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "f15",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control",
-                    "shift"
-                  ]
-                }
-              ]
-            }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -5550,8 +5535,8 @@
                 "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
-                  "option",
-                  "control"
+                  "left_option",
+                  "left_control"
                 ]
               }
             ]
@@ -5578,8 +5563,8 @@
                 "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
-                  "option",
-                  "shift"
+                  "left_option",
+                  "left_shift"
                 ]
               }
             ]
@@ -5606,8 +5591,8 @@
                 "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
-                  "control",
-                  "shift"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ]
@@ -5634,8 +5619,8 @@
                 "repeat": false,
                 "key_code": "left_option",
                 "modifiers": [
-                  "control",
-                  "shift"
+                  "left_control",
+                  "left_shift"
                 ]
               }
             ]
