@@ -1,10 +1,10 @@
 import { type PointingButton } from "karabiner.ts";
-import { DEVICE_IDS } from "./devices";
+import { DEVICES } from "./registry-devices";
 import type { VarSpec } from "./refs";
 
 // ── Button registry (replaces g502xButtons) ────────────────────────────────
 
-export type DeviceName = keyof typeof DEVICE_IDS;
+export type DeviceName = keyof typeof DEVICES;
 
 export type ButtonSpec = {
   button: PointingButton;
@@ -23,37 +23,37 @@ export const buttons = {
   // G502X-specific extra buttons → auto-scope to the G502X.
   shift_button: {
     button: "button5",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Shift button",
   },
   forward: {
     button: "button6",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Forward button",
   },
   wheelLeft: {
     button: "button7",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Wheel left",
   },
   wheelRight: {
     button: "button8",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Wheel right",
   },
   middleBack: {
     button: "button9",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Middle-back (G9)",
   },
   leftForward: {
     button: "button10",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Left-forward (G8)",
   },
   leftBack: {
     button: "button11",
-    nameScope: ["logitechG502X"],
+    nameScope: ["g502X"],
     desc: "Left-back (G7)",
   },
 } as const satisfies Record<string, ButtonSpec>;

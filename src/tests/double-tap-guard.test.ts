@@ -1,59 +1,31 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID } from "../data";
-import { generateDoubleTapGuardRule } from "../engine";
+import { antinoteGuardBinding, globalGuardBinding, guardBindings } from "../definitions/guards";
+import { defineBindings } from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
 }
 
-test("generateDoubleTapGuardRule produces two manipulators", () => {
-  const rule = toRule(
-    generateDoubleTapGuardRule({
-      key: "q",
-      modifiers: ["left_command"],
-      description: "Quit app",
-    }),
-  );
-  assert.equal(rule.manipulators.length, 2);
+test("guardBindings produces rules with two manipulators per double-tap guard", () => {
+  const rules = defineBindings(guardBindings).map(toRule);
+  assert.equal(rules.length, 2);
+  assert.equal(rules[0].manipulators.length, 2);
+  assert.equal(rules[1].manipulators.length, 2);
 });
 
-test("generateDoubleTapGuardRule description uses multi-tap trigger", () => {
-  const rule = toRule(
-    generateDoubleTapGuardRule({
-      key: "q",
-      modifiers: ["left_command"],
-      description: "Quit app",
-    }),
-  );
-  assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
-});
-
-test("generateDoubleTapGuardRule auto-derives var name from key and modifier", () => {
-  const rule = toRule(
-    generateDoubleTapGuardRule({
-      key: "q",
-      modifiers: ["left_command"],
-      description: "Quit app",
-    }),
-  );
+test("globalGuardBinding sets multi-tap pending variable on first tap", () => {
+  const [rule] = defineBindings([globalGuardBinding]).map(toRule);
   const firstPress: any = rule.manipulators[1];
   assert.ok(
-    firstPress?.to?.some((e: any) => e.set_variable?.name === "guard_cmd_q"),
-    "Expected guard_cmd_q variable",
+    firstPress?.to?.some((e: any) => e.set_variable?.name === "multi_tap_q"),
+    "Expected multi_tap_q variable",
   );
 });
 
-test("generateDoubleTapGuardRule adds ifApp condition when provided", () => {
-  const rule = toRule(
-    generateDoubleTapGuardRule({
-      key: "d",
-      modifiers: ["left_command"],
-      description: "Delete note",
-      ifApp: [APP_ID.antinote],
-    }),
-  );
+test("antinoteGuardBinding adds frontmost application condition to manipulators", () => {
+  const [rule] = defineBindings([antinoteGuardBinding]).map(toRule);
   assert.ok(
     rule.manipulators.every(
       (m: any) =>
@@ -63,14 +35,8 @@ test("generateDoubleTapGuardRule adds ifApp condition when provided", () => {
   );
 });
 
-test("generateDoubleTapGuardRule has no ifApp condition when omitted", () => {
-  const rule = toRule(
-    generateDoubleTapGuardRule({
-      key: "q",
-      modifiers: ["left_command"],
-      description: "Quit app",
-    }),
-  );
+test("globalGuardBinding has no app condition when omitted", () => {
+  const [rule] = defineBindings([globalGuardBinding]).map(toRule);
   assert.ok(
     rule.manipulators.every(
       (m: any) =>

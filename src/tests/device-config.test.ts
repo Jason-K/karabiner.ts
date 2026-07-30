@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { DEVICE_IDS } from "../data/devices";
+import { DEVICES } from "../data/registry-devices";
 import {
   buildDeviceConfig,
   expandDeviceConfigs,
@@ -9,14 +9,14 @@ import {
 } from "../engine/device-config";
 
 test("karabinerDeviceId extracts vendor, product, and device type flags", () => {
-  const keyboardId = karabinerDeviceId(DEVICE_IDS.appleNumericKeypad);
+  const keyboardId = karabinerDeviceId(DEVICES.appleNumericKeypad);
   assert.deepEqual(keyboardId, {
     vendor_id: 76,
     product_id: 802,
     is_keyboard: true,
   });
 
-  const pointingId = karabinerDeviceId(DEVICE_IDS.logitechG502X);
+  const pointingId = karabinerDeviceId(DEVICES.g502X);
   assert.deepEqual(pointingId, {
     vendor_id: 1133,
     product_id: 49305,
@@ -47,7 +47,7 @@ test("getDeviceKey produces unique keys distinguishing pointing devices from key
 });
 
 test("expandDeviceConfigs automatically generates keyboard ignore block for pointing devices", () => {
-  const g502xConfig = buildDeviceConfig(DEVICE_IDS.logitechG502X);
+  const g502xConfig = buildDeviceConfig(DEVICES.g502X);
   const expanded = expandDeviceConfigs([g502xConfig]);
 
   assert.equal(expanded.length, 2);
@@ -70,7 +70,7 @@ test("expandDeviceConfigs automatically generates keyboard ignore block for poin
 });
 
 test("expandDeviceConfigs does not duplicate keyboard config if explicitly provided", () => {
-  const g502xPointing = buildDeviceConfig(DEVICE_IDS.logitechG502X);
+  const g502xPointing = buildDeviceConfig(DEVICES.g502X);
   const g502xCustomKeyboard = {
     identifiers: {
       vendor_id: 1133,

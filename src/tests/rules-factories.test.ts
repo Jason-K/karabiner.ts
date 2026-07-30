@@ -4,24 +4,22 @@ import test from "node:test";
 import { APP_ID } from "../data/registry-app-ids";
 import { pythonScriptCommand } from "../core/scripts";
 import {
-  capsLockChordConfig,
+  capsLockBindings,
   disabledHotkeys,
-  guardRules,
+  guardBindings,
   mouseBindings,
 } from "../definitions";
 import {
   defineBindings,
-  generateDoubleTapGuardRule,
-  generateModifierChordRules,
   resolveActionToEvents,
 } from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
 import { VMOD } from "../core/mods";
 
-const buildCapsLockRule = () => generateModifierChordRules(capsLockChordConfig);
+const buildCapsLockRule = () => defineBindings(capsLockBindings);
 const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
-const buildHotkeyGuards = () => guardRules.map((g) => generateDoubleTapGuardRule(g));
+const buildHotkeyGuards = () => defineBindings(guardBindings);
 
 
 const fillPassword = modifiedSingleKeyTapHoldBindings.find(
@@ -137,17 +135,14 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
 });
 
 test("caps lock factory keeps full complement behavior variants", () => {
-  const rule = toRule(buildCapsLockRule());
-  assert.equal(
-    rule.description,
-    "[⇪]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
-  );
-  assert.equal(rule.manipulators.length, 16);
+  const rules = toRules(buildCapsLockRule());
+  assert.equal(rules.length, 16);
+  assert.match(rules[0].description, /^\[⇪\]:\n---/);
 });
 
 test("cmd-q factory keeps double-tap protection structure", () => {
   const rule = toRule(buildCmdQRule());
-  assert.equal(rule.description, "[⌘]+[Q]        →    Quit app (on multi-tap)");
+  assert.match(rule.description, /^\[⌘\]\+\[Q\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
@@ -238,10 +233,7 @@ test("skim command remap factory keeps both remaps", () => {
 
 test("antinote delete factory keeps double-tap workflow", () => {
   const rule = toRule(buildAntinoteRules()[0]);
-  assert.equal(
-    rule.description,
-    "[⌘]+[D]        →    Delete note (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[⌘\]\+\[D\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 

@@ -20,15 +20,15 @@ import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import {
   DEFAULT_GLOBAL_SETTINGS,
   DEFAULT_PROFILE,
-  DEVICE_IDS,
+  DEVICES,
   PATHS,
   PREFERRED_PROFILE,
   DEFAULT_PROFILE_TIMINGS,
 } from "./data";
 import {
-  capsLockChordConfig,
+  capsLockBindings,
   disabledHotkeys,
-  guardRules,
+  guardBindings,
   mouseBindings,
   NUMPAD_REMAPS,
   simultaneousMappings,
@@ -39,8 +39,6 @@ import {
   assertUniqueTriggers,
   buildDeviceConfig,
   defineBindings,
-  generateDoubleTapGuardRule,
-  generateModifierChordRules,
   generateSimultaneousRules,
   updateDeviceConfigurations,
 } from "./engine";
@@ -61,14 +59,14 @@ let rules: any[] = [
   ...tapHoldRules,
 
   // GUARD - Various guard rules
-  ...guardRules.map((guard) => generateDoubleTapGuardRule(guard)),
+  ...defineBindings(guardBindings),
 
   // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
   // flow through the same Binding[] + defineBindings engine as keys.
   ...defineBindings(mouseBindings),
 
   // CAPS LOCK - Multiple behaviors
-  generateModifierChordRules(capsLockChordConfig),
+  ...defineBindings(capsLockBindings),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
   ...defineBindings(disabledHotkeys),
@@ -80,8 +78,8 @@ let rules: any[] = [
 // ============================================================================
 
 const deviceConfigs: DeviceConfig[] = [
-  buildDeviceConfig(DEVICE_IDS.appleNumericKeypad, [...NUMPAD_REMAPS]),
-  buildDeviceConfig(DEVICE_IDS.logitechG502X),
+  buildDeviceConfig(DEVICES.appleNumericKeypad, [...NUMPAD_REMAPS]),
+  buildDeviceConfig(DEVICES.g502X),
 ];
 
 // ============================================================================

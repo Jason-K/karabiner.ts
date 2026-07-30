@@ -3965,62 +3965,44 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[Q]        →    Quit app (on multi-tap)",
+        "ruleDescription": "[⌘]+[Q]:\n---\n\tOn Double Tap:\n\t\tAlways:\tEmit ⌘ + 'Q'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
               "key_code": "q",
               "modifiers": {
-                "mandatory": [
-                  "left_command"
+                "optional": [
+                  "any"
                 ]
               }
             },
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "guard_cmd_q",
+                "name": "multi_tap_q",
                 "value": 1
               }
             ],
-            "to": [
-              {
-                "key_code": "q",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "description": "multi_tap_q second tap (tap-tap / tap-tap-hold)",
+            "to": [],
+            "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "guard_cmd_q",
+                  "name": "multi_tap_q",
                   "value": 0
                 }
               }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "q",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_q",
-                "value": 0
-              }
             ],
-            "to": [
+            "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "guard_cmd_q",
-                  "value": 1
+                  "name": "multi_tap_q",
+                  "value": 0
                 }
               }
             ],
@@ -4028,7 +4010,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "guard_cmd_q",
+                    "name": "multi_tap_q",
                     "value": 0
                   }
                 }
@@ -4036,7 +4018,66 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "guard_cmd_q",
+                    "name": "multi_tap_q",
+                    "value": 0
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "q",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
+            },
+            "description": "multi_tap_q first tap (tap / tap-hold)",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_q",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_q",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_q",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_q",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_q",
                     "value": 0
                   }
                 }
@@ -4048,22 +4089,22 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[D]        →    Delete note (on multi-tap)",
+        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Double Tap:\n\t\tIn Antinote:\tEmit ⌘ + 'D'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
               "key_code": "d",
               "modifiers": {
-                "mandatory": [
-                  "left_command"
+                "optional": [
+                  "any"
                 ]
               }
             },
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "guard_cmd_d",
+                "name": "multi_tap_d",
                 "value": 1
               },
               {
@@ -4073,49 +4114,25 @@
                 ]
               }
             ],
-            "to": [
-              {
-                "key_code": "d",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
+            },
+            "description": "In Antinote",
+            "to": [],
+            "to_if_alone": [
               {
                 "set_variable": {
-                  "name": "guard_cmd_d",
+                  "name": "multi_tap_d",
                   "value": 0
                 }
               }
-            ]
-          },
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "d",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.chabomakers.Antinote"
-                ]
-              },
-              {
-                "type": "variable_if",
-                "name": "guard_cmd_d",
-                "value": 0
-              }
             ],
-            "to": [
+            "to_if_held_down": [
               {
                 "set_variable": {
-                  "name": "guard_cmd_d",
-                  "value": 1
+                  "name": "multi_tap_d",
+                  "value": 0
                 }
               }
             ],
@@ -4123,7 +4140,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "guard_cmd_d",
+                    "name": "multi_tap_d",
                     "value": 0
                   }
                 }
@@ -4131,12 +4148,79 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "guard_cmd_d",
+                    "name": "multi_tap_d",
                     "value": 0
                   }
                 }
               ]
             }
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "d",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "parameters": {
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
+            },
+            "description": "In Antinote",
+            "to": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_d",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_alone": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_d",
+                  "value": 1
+                }
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "set_variable": {
+                  "name": "multi_tap_d",
+                  "value": 0
+                }
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_d",
+                    "value": 0
+                  }
+                }
+              ],
+              "to_if_canceled": [
+                {
+                  "set_variable": {
+                    "name": "multi_tap_d",
+                    "value": 0
+                  }
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.chabomakers.Antinote"
+                ]
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,
@@ -5437,12 +5521,15 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇪]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
+        "ruleDescription": "[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃⇧ + '⌘'\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F15'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "caps_lock"
+              "key_code": "caps_lock",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to": [
               {
@@ -5452,6 +5539,7 @@
                 }
               },
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "option",
@@ -5470,6 +5558,7 @@
             ],
             "to_if_alone": [
               {
+                "repeat": false,
                 "key_code": "f15",
                 "modifiers": [
                   "command",
@@ -5479,8 +5568,29 @@
                 ]
               }
             ],
-            "description": "[⇪]        →    VM launcher / COCS (on hold)"
-          },
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "f15",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control",
+                    "shift"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5493,15 +5603,22 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "option",
                   "control"
                 ]
               }
-            ],
-            "description": "[⇧⇪]        →    COC_ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌃]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⇧ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5514,15 +5631,22 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "option",
                   "shift"
                 ]
               }
-            ],
-            "description": "[⌃⇪]        →    CO_S (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5535,15 +5659,22 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "control",
                   "shift"
                 ]
               }
-            ],
-            "description": "[⌥⇪]        →    C_CS (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌥'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5556,15 +5687,22 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_option",
                 "modifiers": [
                   "control",
                   "shift"
                 ]
               }
-            ],
-            "description": "[⌘⇪]        →    _OCS (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5578,14 +5716,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "left_option"
                 ]
               }
-            ],
-            "description": "[⌃⇧⇪]        →    CO__ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌃⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5599,14 +5744,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "left_shift"
                 ]
               }
-            ],
-            "description": "[⌃⌥⇪]        →    C__S (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌃⌘]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌥'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5620,14 +5772,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_option",
                 "modifiers": [
                   "left_shift"
                 ]
               }
-            ],
-            "description": "[⌃⌘⇪]        →    _O_S (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌃'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5641,14 +5800,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_control",
                 "modifiers": [
                   "left_shift"
                 ]
               }
-            ],
-            "description": "[⌘⌥⇪]        →    __CS (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌥'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5662,14 +5828,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_option",
                 "modifiers": [
                   "left_control"
                 ]
               }
-            ],
-            "description": "[⌘⇧⇪]        →    _OC_ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌥⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5683,14 +5856,21 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command",
                 "modifiers": [
                   "left_control"
                 ]
               }
-            ],
-            "description": "[⌥⇧⇪]        →    C_C_ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌥'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5705,11 +5885,18 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_option"
               }
-            ],
-            "description": "[⌘⌃⇧⇪]        →    _O__ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌃'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5724,11 +5911,18 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_control"
               }
-            ],
-            "description": "[⌘⌥⇧⇪]        →    __C_ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌥⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5743,11 +5937,18 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_command"
               }
-            ],
-            "description": "[⌥⌃⇧⇪]        →    C___ (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5762,11 +5963,18 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_shift"
               }
-            ],
-            "description": "[⌘⌥⌃⇪]        →    ___S (on hold)"
-          },
+            ]
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[⌘⌥⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'VK NONE'",
+        "manipulatorSources": [
           {
             "type": "basic",
             "from": {
@@ -5782,10 +5990,10 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "vk_none"
               }
-            ],
-            "description": "[⌘⌥⌃⇧⇪]        →    ____ (on hold)"
+            ]
           }
         ],
         "allowEmptyManipulators": false,

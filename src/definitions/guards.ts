@@ -1,21 +1,27 @@
 import { APP_ID } from "../data";
-import type { DoubleTapGuardConfig } from "../engine/double-tap-guard-rules";
+import {
+  bind,
+  condApp,
+  doubleTap,
+  from,
+  key,
+  to,
+  when,
+  type Binding,
+} from "../engine";
 
-export const globalGuards: DoubleTapGuardConfig = {
-  key: "q",
-  modifiers: ["left_command"],
-  description: "Quit app",
-};
+export const globalGuardBinding: Binding = bind(
+  from("q", ["left_command"]),
+  to(doubleTap(key("q", ["left_command"]))),
+);
 
-export const antinoteGuards: DoubleTapGuardConfig = {
-  key: "d",
-  modifiers: ["left_command"],
-  description: "Delete note",
-  ifApp: [APP_ID.antinote],
-};
+export const antinoteGuardBinding: Binding = bind(
+  from("d", ["left_command"]),
+  to(doubleTap(key("d", ["left_command"]))),
+  when(condApp(APP_ID.antinote)),
+);
 
-export const guardRules: DoubleTapGuardConfig[] = [
-  globalGuards,
-  antinoteGuards,
+export const guardBindings: Binding[] = [
+  globalGuardBinding,
+  antinoteGuardBinding,
 ];
-

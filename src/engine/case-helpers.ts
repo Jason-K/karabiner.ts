@@ -333,7 +333,7 @@ export type WhenWrapper = {
  *
  * @example
  * when(condApp(APP_ID.skim))
- * when(condDevice(DEVICE_IDS.logitechG502X), condVar(mouseVars.rightButtonPressed, 1))
+ * when(condDevice(DEVICES.g502X), condVar(mouseVars.rightButtonPressed, 1))
  */
 export function when(...conditions: (Condition | Condition[])[]): WhenWrapper {
   return {
@@ -910,11 +910,11 @@ export function condNotApp(
 /**
  * Creates a device condition (rule applies only to specified hardware device).
  *
- * @param device Device specification object (`DEVICE_IDS.logitechG502X`, etc.).
+ * @param device Device specification object (`DEVICES.g502X`, etc.).
  * @param unlessOrOpts If true or `{ unless: true }`, condition is inverted.
  *
  * @example
- * condDevice(DEVICE_IDS.logitechG502X)
+ * condDevice(DEVICES.g502X)
  */
 export function condDevice(
   device: DeviceSpec,

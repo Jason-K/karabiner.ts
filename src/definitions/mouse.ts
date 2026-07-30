@@ -1,5 +1,5 @@
 import { toFromEvent } from "../core/beta";
-import { APP_ID, CMDS, DEVICE_IDS, PATHS, TIMINGS, URLS, VMOD } from "../data";
+import { APP_ID, CMDS, DEVICES, PATHS, TIMINGS, URLS, VMOD } from "../data";
 import { mouseVars } from "../data/mouse";
 import {
   bind,
@@ -110,7 +110,7 @@ export const mouseBindings: Binding[] = [
       release([{ pointing_button: "button3", repeat: false }]),
       hold(shell(CMDS.winMaxOrRestore)),
     ),
-    when(condDevice(DEVICE_IDS.logitechG502X)),
+    when(condDevice(DEVICES.g502X)),
     options({
       whileHoldVar: mouseVars.wheelDown,
     }),
@@ -160,7 +160,7 @@ export const mouseBindings: Binding[] = [
       release([{ pointing_button: "button4", repeat: false }]),
       hold(key("tab", ["left_command"])),
     ),
-    when(condDevice(DEVICE_IDS.logitechG502X)),
+    when(condDevice(DEVICES.g502X)),
     options({
       eventOptions: { halt: true, repeat: false },
     }),
@@ -195,7 +195,7 @@ export const mouseBindings: Binding[] = [
       release([{ pointing_button: "button2", repeat: false }]),
       hold([]),
     ),
-    when(condDevice(DEVICE_IDS.logitechG502X)),
+    when(condDevice(DEVICES.g502X)),
     options({
       whileHoldVar: mouseVars.rightButtonPressed,
       suppressCancelFallback: true,
@@ -228,7 +228,7 @@ export const mouseBindings: Binding[] = [
         .withTapCount(2),
     ),
     when(
-      condDevice(DEVICE_IDS.logitechG502X),
+      condDevice(DEVICES.g502X),
       condVar(mouseVars.rightButtonPressed, 1),
     ),
     options({
@@ -248,7 +248,7 @@ export const mouseBindings: Binding[] = [
       hold([toFromEvent()]),
     ),
     when(
-      condDevice(DEVICE_IDS.logitechG502X),
+      condDevice(DEVICES.g502X),
       condNotVar(mouseVars.rightButtonPressed, 1),
     ),
     options({

@@ -23,7 +23,7 @@ import {
   varTapTapHoldFrom,
 } from "../core/tap-hold";
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
-import { DEVICE_IDS, isModifierKey } from "../data";
+import { DEVICES, isModifierKey } from "../data";
 import { karabinerDeviceId } from "./device-config";
 import { resolveActionToEvents, resolveModComboAlias } from "./action-resolver";
 import { isPointerButton, resolveButton } from "./binding-helpers";
@@ -42,16 +42,16 @@ export type Phase = "press" | "release" | "hold";
 /** External state condition. Realized as a Karabiner `conditions[]` entry. */
 export type Condition =
   | {
-      app: AppRef | PathRef | (AppRef | PathRef)[];
-      unless?: boolean;
-      description?: string;
-    }
+    app: AppRef | PathRef | (AppRef | PathRef)[];
+    unless?: boolean;
+    description?: string;
+  }
   | {
-      var: VarSpec;
-      equals: string | number;
-      unless?: boolean;
-      description?: string;
-    }
+    var: VarSpec;
+    equals: string | number;
+    unless?: boolean;
+    description?: string;
+  }
   | { device: DeviceSpec; unless?: boolean; description?: string };
 
 export type SimOrder = {
@@ -348,7 +348,7 @@ function stampDeviceScope(manipulators: Manipulator[], trigger: Trigger): void {
     }
   }
   if (!nameScopes.length) return;
-  const ids = nameScopes.map((n) => karabinerDeviceId(DEVICE_IDS[n as keyof typeof DEVICE_IDS]));
+  const ids = nameScopes.map((n) => karabinerDeviceId(DEVICES[n as keyof typeof DEVICES]));
   const cond = ifDevice(ids).build();
   manipulators.forEach((m: any) => {
     m.conditions = [...(m.conditions ?? []), cond];
@@ -421,14 +421,14 @@ function buildMultiTap(
     };
     const groupManips = isPointer
       ? varTapTapHoldFrom({
-          from: { pointing_button: triggerKey as PointingButton } as FromEvent,
-          passThrough: b.multiTap?.allowPassThrough
-            ? toPointingButton(triggerKey as PointingButton, undefined, {
-                lazy: true,
-              })
-            : undefined,
-          ...shared,
-        })
+        from: { pointing_button: triggerKey as PointingButton } as FromEvent,
+        passThrough: b.multiTap?.allowPassThrough
+          ? toPointingButton(triggerKey as PointingButton, undefined, {
+            lazy: true,
+          })
+          : undefined,
+        ...shared,
+      })
       : varTapTapHold({ key, mods: b.multiTap?.mods as any, ...shared });
     // Attach the group's shared condition signature once (device_if last).
     const conds = deviceLast(g.conditions);
@@ -594,8 +594,8 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const hold = g.hasHold
     ? g.holdDo
     : isModifierKey(key)
-    ? []
-    : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+      ? []
+      : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const manipulators = tapHold({
     key,
     alone,
@@ -604,6 +604,12 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     thresholdMs: b.timing?.holdMs ?? b.timing?.heldThresholdMs,
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();
+  if (g.pressDo.length) {
+    manipulators.forEach((m: any) => {
+      m.to = m.to || [];
+      m.to.push(...g.pressDo);
+    });
+  }
   manipulators.forEach((m: any) => {
     const modifiersObj: Record<string, string[]> = {};
     if (mandatory.length) modifiersObj.mandatory = mandatory;

@@ -27,7 +27,7 @@ test("assertUniqueTriggers: throws on duplicate (order-independent mods)", () =>
 
 test("resolveButton: alias + nameScope + raw fallback", () => {
   assert.equal(resolveButton("shift_button").button, "button5");
-  assert.deepEqual(resolveButton("shift_button").nameScope, ["logitechG502X"]);
+  assert.deepEqual(resolveButton("shift_button").nameScope, ["g502X"]);
   assert.equal(resolveButton("left").nameScope, "global");
   assert.equal(resolveButton("button99").button, "button99");
   assert.equal(resolveButton("button1").desc, "Left click");

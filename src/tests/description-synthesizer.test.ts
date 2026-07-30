@@ -186,7 +186,7 @@ test("describeConditionGroup: multiple joined with ' and '", () => {
 });
 
 test("describeConditionGroup: device if/unless", () => {
-  const dev = { name: "logitechG502X", deviceDesc: "Logitech G502 X", product_id: 49305, vendor_id: 1133 };
+  const dev = { name: "g502X", deviceDesc: "Logitech G502 X", product_id: 49305, vendor_id: 1133 };
   assert.equal(describeConditionGroup([{ device: dev as any }]), "on Logitech G502 X");
   assert.equal(
     describeConditionGroup([{ device: dev as any, unless: true }]),
