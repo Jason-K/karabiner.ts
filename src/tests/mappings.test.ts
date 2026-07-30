@@ -6,7 +6,7 @@ import { APP_ID } from "../data/registry-app-ids";
 import { CMDS } from "../data/registry-cmds";
 import { COMBOS } from "../data/registry-combos";
 import { URLS } from "../data/registry-urls";
-import { tapHoldBindings } from "../definitions";
+import { capsLockBindings, tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
 
 import {
@@ -250,4 +250,41 @@ test("new COCS rectangle mappings stay declarative", () => {
       background: true,
     },
   ]);
+});
+
+test("caps lock base uses modWhileDown with left_ modifiers", () => {
+  const caps = capsLockBindings.find(
+    (b) =>
+      "keys" in b.trigger &&
+      b.trigger.keys[0] === "caps_lock" &&
+      !b.trigger.modifiers,
+  );
+  assert.ok(caps, "caps base binding exists");
+  assert.equal(caps!.modWhileDown, true, "caps base must set modWhileDown");
+  assert.equal(
+    caps!.whileHoldVar?.name,
+    "caps_lock_pressed",
+    "whileHoldVar preserved",
+  );
+  // base press case emits left_command + left_option/left_control/left_shift
+  const pressCase = caps!.cases.find((c) => c.phase === "press")!;
+  const pressKey = pressCase.do[0] as any;
+  assert.equal(pressKey.key, "left_command");
+  assert.deepEqual(pressKey.modifiers, ["left_option", "left_control", "left_shift"]);
+  // base release (tap combo) emits f15 + left_ COCS
+  const releaseCase = caps!.cases.find((c) => c.phase === "release")!;
+  const tapKey = releaseCase.do[0] as any;
+  assert.equal(tapKey.key, "f15");
+  assert.deepEqual(tapKey.modifiers, ["left_command", "left_option", "left_control", "left_shift"]);
+});
+
+test("caps lock variants use left_ modifiers (spot check: caps+left_shift)", () => {
+  const variant = capsLockBindings.find((b) => {
+    const mods = b.trigger.modifiers as unknown;
+    return Array.isArray(mods) && (mods as string[]).includes("left_shift") && (mods as string[]).length === 1;
+  });
+  assert.ok(variant, "caps+left_shift variant exists");
+  const out = variant!.cases[0]!.do[0] as any;
+  assert.equal(out.key, "left_command");
+  assert.deepEqual(out.modifiers, ["left_option", "left_control"]);
 });
