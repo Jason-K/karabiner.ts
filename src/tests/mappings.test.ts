@@ -278,13 +278,44 @@ test("caps lock base uses modWhileDown with left_ modifiers", () => {
   assert.deepEqual(tapKey.modifiers, ["left_command", "left_option", "left_control", "left_shift"]);
 });
 
-test("caps lock variants use left_ modifiers (spot check: caps+left_shift)", () => {
-  const variant = capsLockBindings.find((b) => {
-    const mods = b.trigger.modifiers as unknown;
-    return Array.isArray(mods) && (mods as string[]).includes("left_shift") && (mods as string[]).length === 1;
-  });
-  assert.ok(variant, "caps+left_shift variant exists");
-  const out = variant!.cases[0]!.do[0] as any;
-  assert.equal(out.key, "left_command");
-  assert.deepEqual(out.modifiers, ["left_option", "left_control"]);
+test("caps lock full compensation table: every variant emits COCS minus the physically-held modifier", () => {
+  // Caps emits the COCS set (left_command/option/control/shift) MINUS the
+  // modifier(s) physically held with it. The base (no modifiers held) is
+  // included so all 16 rows are covered by a permanent, committed test — a
+  // regression flipping any single row fails with that row's held-modifier set.
+  const table: Array<{ held: string[]; emitKey: string; emitMods: string[] }> = [
+    { held: [], emitKey: "left_command", emitMods: ["left_option", "left_control", "left_shift"] },
+    { held: ["left_shift"], emitKey: "left_command", emitMods: ["left_option", "left_control"] },
+    { held: ["left_control"], emitKey: "left_command", emitMods: ["left_option", "left_shift"] },
+    { held: ["left_option"], emitKey: "left_command", emitMods: ["left_control", "left_shift"] },
+    { held: ["left_command"], emitKey: "left_option", emitMods: ["left_control", "left_shift"] },
+    { held: ["left_control", "left_shift"], emitKey: "left_command", emitMods: ["left_option"] },
+    { held: ["left_control", "left_option"], emitKey: "left_command", emitMods: ["left_shift"] },
+    { held: ["left_control", "left_command"], emitKey: "left_option", emitMods: ["left_shift"] },
+    { held: ["left_command", "left_option"], emitKey: "left_control", emitMods: ["left_shift"] },
+    { held: ["left_command", "left_shift"], emitKey: "left_option", emitMods: ["left_control"] },
+    { held: ["left_option", "left_shift"], emitKey: "left_command", emitMods: ["left_control"] },
+    { held: ["left_command", "left_control", "left_shift"], emitKey: "left_option", emitMods: [] },
+    { held: ["left_command", "left_option", "left_shift"], emitKey: "left_control", emitMods: [] },
+    { held: ["left_option", "left_control", "left_shift"], emitKey: "left_command", emitMods: [] },
+    { held: ["left_command", "left_option", "left_control"], emitKey: "left_shift", emitMods: [] },
+    { held: ["left_command", "left_option", "left_control", "left_shift"], emitKey: "vk_none", emitMods: [] },
+  ];
+  assert.equal(table.length, 16, "sanity: 16 compensation rows");
+  for (const row of table) {
+    const label = row.held.length ? `caps+${row.held.join("+")}` : "caps (base)";
+    const binding = capsLockBindings.find((b) => {
+      if (!("keys" in b.trigger) || b.trigger.keys[0] !== "caps_lock") return false;
+      const mods = (b.trigger.modifiers as string[] | undefined) ?? [];
+      return mods.length === row.held.length && row.held.every((m) => mods.includes(m));
+    });
+    assert.ok(binding, `missing binding for ${label}`);
+    // Base is a press+release (modWhileDown); variants are a single press case.
+    const pressCase = binding!.cases.find((c) => c.phase === "press");
+    assert.ok(pressCase, `no press case for ${label}`);
+    const out = pressCase!.do[0] as any;
+    assert.equal(out.key, row.emitKey, `${label}: emit key ${out.key} !== ${row.emitKey}`);
+    assert.deepEqual(out.modifiers ?? [], row.emitMods, `${label}: emit mods mismatch`);
+  }
 });
+
