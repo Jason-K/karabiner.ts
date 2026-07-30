@@ -66,8 +66,8 @@ test("generated output uses standardized rule descriptions", () => {
   rules.forEach((rule: any) => {
     assert.ok(
       standardDescription.test(rule.ruleDescription) ||
-        synthesizedDescription.test(rule.ruleDescription) ||
-        mouseDeviceDescription.test(rule.ruleDescription),
+      synthesizedDescription.test(rule.ruleDescription) ||
+      mouseDeviceDescription.test(rule.ruleDescription),
       `Rule description is not standardized: ${rule.ruleDescription}`,
     );
   });
