@@ -339,3 +339,35 @@ test("Binding type accepts modWhileDown option", () => {
   assert.equal(withFlag.modWhileDown, true);
   assert.equal(withoutFlag.modWhileDown, undefined);
 });
+
+test("buildKeyTapHold: modWhileDown emits plain map().to().toIfAlone() (no delayed action)", () => {
+  const rules = defineBindings([
+    {
+      description: "caps base",
+      trigger: { keys: ["caps_lock"] },
+      modWhileDown: true,
+      whileHoldVar: { name: "caps_lock_pressed", varDesc: "Caps lock pressed" },
+      cases: [
+        { phase: "press", do: [{ type: "key", key: "left_command", modifiers: ["left_option", "left_control", "left_shift"] }] },
+        { phase: "release", do: [{ type: "key", key: "f15", modifiers: ["left_command", "left_option", "left_control", "left_shift"] }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulatorSources.length, 1, "modWhileDown emits a single manipulator");
+  const m = built.manipulatorSources[0];
+  // NO delayed action, NO held-down
+  assert.equal("to_delayed_action" in m, false, "modWhileDown must not emit to_delayed_action");
+  assert.equal("to_if_held_down" in m, false, "modWhileDown must not emit to_if_held_down");
+  // var set on key-down (to), var cleared on key-up (to_after_key_up).
+  // (toSetVar also emits undefined key_up_value/type keys; check name+value
+  // directly like the existing whileHoldVar test does.)
+  assert.equal(m.to[0].set_variable.name, "caps_lock_pressed");
+  assert.equal(m.to[0].set_variable.value, 1);
+  assert.equal(m.to_after_key_up[0].set_variable.name, "caps_lock_pressed");
+  assert.equal(m.to_after_key_up[0].set_variable.value, 0);
+  // held modifier in `to` (after the var)
+  assert.deepEqual(m.to[1].key_code, "left_command");
+  // tap combo in to_if_alone
+  assert.deepEqual(m.to_if_alone[0].key_code, "f15");
+});

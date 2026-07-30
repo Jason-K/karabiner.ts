@@ -4,6 +4,7 @@ import {
   map,
   rule,
   toPointingButton,
+  toSetVar,
   type FromEvent,
   type Manipulator,
   type PointingButton,
@@ -622,11 +623,46 @@ function buildTapHold(b: Binding, g: CaseGroup): Manipulator | Manipulator[] {
   return manipulators;
 }
 
+/**
+ * `modWhileDown` mode: the binding emits its modifier the entire time the key is
+ * physically down (asserted in `to`, no hold threshold). This bypasses
+ * `tapHold()` — which always injects a `to_delayed_action` state machine — and
+ * instead produces a plain `map().to().toIfAlone()` manipulator matching the
+ * bespoke modifier-chord behavior (e.g. caps_lock: held = COCS modifier, tap =
+ * f15+COCS combo). `whileHoldVar` is set on key-down and cleared on key-up.
+ */
+function buildModWhileDown(
+  b: Binding,
+  g: CaseGroup,
+  key: string,
+): Manipulator[] {
+  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
+  const builder = map(key as any);
+  if (b.whileHoldVar) {
+    builder.to(toSetVar(b.whileHoldVar.name, 1));
+    builder.toAfterKeyUp(toSetVar(b.whileHoldVar.name, 0));
+  }
+  for (const e of g.pressDo) builder.to(e);
+  for (const e of g.releaseDo) builder.toIfAlone(e);
+  // Mandatory from-modifiers must appear on the `from` event (mirrors the
+  // standard tap-hold path's from.modifiers normalization below).
+  const modifiersObj: Record<string, string[]> = {};
+  if (mandatory.length) modifiersObj.mandatory = mandatory;
+  if (optional.length) modifiersObj.optional = optional;
+  else if (!mandatory.length) modifiersObj.optional = [];
+  const m = builder.build()[0] as any;
+  m.from.modifiers = modifiersObj;
+  return [m as Manipulator];
+}
+
 /** Key tap-hold: `alone`/`hold` default to a halted re-emit of the key when the
  * phase is absent (matches tap-hold-rules); mandatory from-modifiers injected. */
 function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const keys = getTriggerKeys(b.trigger);
   const key = keys[0]!;
+  if (b.modWhileDown) {
+    return buildModWhileDown(b, g, key);
+  }
   const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   const defaultAlone: ActionSpec[] = [
     {
