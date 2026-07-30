@@ -104,6 +104,7 @@ export type Binding = {
   whileHoldVar?: VarSpec; // tap-hold: set 1 on key-down, 0 on key-up (chord-modifier signaling)
   suppress?: boolean; // emit only `do`, no trigger fallback (e.g. tap-hold default-alone)
   suppressCancelFallback?: boolean; // clear to_if_canceled (chord-modifier buttons)
+  modWhileDown?: boolean; // modifier asserted while key is down (in `to`), no hold threshold / delayed action
 };
 
 export function resolveCondition(c: Condition): unknown {

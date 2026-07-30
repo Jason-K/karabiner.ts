@@ -323,3 +323,19 @@ test("defineBindings: trigger with optional modifier resolves correctly", () => 
   const m = (rules[0] as any).manipulatorSources[0];
   assert.deepEqual(m.from.modifiers, { optional: ["left_shift"] });
 });
+
+test("Binding type accepts modWhileDown option", () => {
+  // Type-level check: modWhileDown is an accepted Binding field. Compiles only
+  // if the flag exists on the type. Default-omitted binding must still typecheck.
+  const withFlag: import("../engine/binding").Binding = {
+    trigger: { keys: ["caps_lock"] },
+    modWhileDown: true,
+    cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
+  };
+  const withoutFlag: import("../engine/binding").Binding = {
+    trigger: { keys: ["caps_lock"] },
+    cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
+  };
+  assert.equal(withFlag.modWhileDown, true);
+  assert.equal(withoutFlag.modWhileDown, undefined);
+});
