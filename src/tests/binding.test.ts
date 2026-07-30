@@ -371,3 +371,30 @@ test("buildKeyTapHold: modWhileDown emits plain map().to().toIfAlone() (no delay
   // tap combo in to_if_alone
   assert.deepEqual(m.to_if_alone[0].key_code, "f15");
 });
+
+test("buildKeyTapHold: modWhileDown without whileHoldVar omits all var signaling", () => {
+  // Reachable but previously untested path: modWhileDown with no whileHoldVar
+  // must not emit any set_variable / to_after_key_up events — the manipulator
+  // is a bare map().to().toIfAlone() with just the held modifier + tap combo.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["caps_lock"] },
+      modWhileDown: true,
+      cases: [
+        { phase: "press", do: [{ type: "key", key: "f16" }] },
+        { phase: "release", do: [{ type: "key", key: "f17" }] },
+      ],
+    },
+  ]);
+  const m = (rules[0] as any).manipulatorSources[0];
+  assert.equal("to_after_key_up" in m, false, "no whileHoldVar ⇒ no to_after_key_up");
+  assert.equal(
+    (m.to ?? []).some((e: any) => "set_variable" in e),
+    false,
+    "no whileHoldVar ⇒ no set_variable in to",
+  );
+  // held modifier (press) + tap combo (release) still present
+  assert.equal(m.to[0].key_code, "f16");
+  assert.equal(m.to_if_alone[0].key_code, "f17");
+});
+

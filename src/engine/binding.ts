@@ -205,6 +205,24 @@ export function resolveModifiers(m?: TriggerModifiers): {
   };
 }
 
+/**
+ * Build the `from.modifiers` object for a manipulator's `from` event from a
+ * trigger's resolved modifiers. Mirrors the three-branch convention used across
+ * the tap-hold / remap paths: `mandatory` and `optional` only when non-empty,
+ * falling back to `{ optional: [] }` when neither is set. Kept as a single
+ * shared helper so the three consumers cannot drift.
+ */
+export function fromModifiersObj(
+  trigger: Trigger,
+): Record<string, string[]> {
+  const { mandatory, optional } = resolveModifiers(trigger.modifiers);
+  const modifiersObj: Record<string, string[]> = {};
+  if (mandatory.length) modifiersObj.mandatory = mandatory;
+  if (optional.length) modifiersObj.optional = optional;
+  else if (!mandatory.length) modifiersObj.optional = [];
+  return modifiersObj;
+}
+
 export function getTriggerKeys(trigger: Trigger): string[] {
   return "keys" in trigger ? trigger.keys : [trigger.pointer];
 }
@@ -636,7 +654,6 @@ function buildModWhileDown(
   g: CaseGroup,
   key: string,
 ): Manipulator[] {
-  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
   const builder = map(key as any);
   if (b.whileHoldVar) {
     builder.to(toSetVar(b.whileHoldVar.name, 1));
@@ -644,14 +661,8 @@ function buildModWhileDown(
   }
   for (const e of g.pressDo) builder.to(e);
   for (const e of g.releaseDo) builder.toIfAlone(e);
-  // Mandatory from-modifiers must appear on the `from` event (mirrors the
-  // standard tap-hold path's from.modifiers normalization below).
-  const modifiersObj: Record<string, string[]> = {};
-  if (mandatory.length) modifiersObj.mandatory = mandatory;
-  if (optional.length) modifiersObj.optional = optional;
-  else if (!mandatory.length) modifiersObj.optional = [];
   const m = builder.build()[0] as any;
-  m.from.modifiers = modifiersObj;
+  m.from.modifiers = fromModifiersObj(b.trigger);
   return [m as Manipulator];
 }
 
@@ -694,11 +705,8 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
       m.to.push(...g.pressDo);
     });
   }
+  const modifiersObj = fromModifiersObj(b.trigger);
   manipulators.forEach((m: any) => {
-    const modifiersObj: Record<string, string[]> = {};
-    if (mandatory.length) modifiersObj.mandatory = mandatory;
-    if (optional.length) modifiersObj.optional = optional;
-    else if (!mandatory.length) modifiersObj.optional = [];
     m.from.modifiers = modifiersObj;
   });
   return manipulators;
@@ -707,14 +715,9 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
 function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const pointerKey = getTriggerKeys(b.trigger)[0]!;
   const { button } = resolveButton(pointerKey);
-  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
-  const modifiersObj: Record<string, string[]> = {};
-  if (mandatory.length) modifiersObj.mandatory = mandatory;
-  if (optional.length) modifiersObj.optional = optional;
-  else if (!mandatory.length) modifiersObj.optional = [];
   const from: Record<string, unknown> = {
     pointing_button: button,
-    modifiers: modifiersObj,
+    modifiers: fromModifiersObj(b.trigger),
   };
   const alone = g.hasRelease ? g.releaseDo : undefined;
   const hold = g.hasHold ? g.holdDo : undefined;
