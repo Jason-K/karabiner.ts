@@ -132,7 +132,7 @@ export class CaseBuilder implements Case {
  * @param conditions Optional conditions for this specific case.
  *
  * @example
- * press(openApp(APP_BUNDLES.claude))
+ * press(openApp(APP_ID.claude))
  * press(key("down_arrow", ["control"])).when(condVar(mouseVars.rightButtonPressed, 1))
  */
 export function press(
@@ -167,7 +167,7 @@ export function hold(
  *
  * @example
  * release(openUrl(URLS.rectWinMaximize, true))
- * release(extHk(EXTERNAL_HKS.focusWinRight))
+ * release(combo(COMBOS.focusWinRight))
  */
 export function release(
   actions: Action | Action[],
@@ -211,7 +211,7 @@ export function caseOf(
  * Defines a key trigger with optional modifiers and simultaneous order.
  *
  * @param keys Single key or array of chord keys.
- * @param modifiers Modifier keys (e.g. `["left_command"]`, `["shift"]`, `MOD_COMBO.vmCOCS`).
+ * @param modifiers Modifier keys (e.g. `["left_command"]`, `["shift"]`, `VMOD.COCS`).
  * @param order Chord order constraints (e.g. `{ down: "strict" }`).
  */
 export function triggerKeys(
@@ -260,7 +260,7 @@ export type FromInput =
  * Constructs a normalized Karabiner `Trigger` from single keys, key chords, pointer buttons, or spec objects.
  *
  * @param input Key code (e.g. `"a"`), chord array (e.g. `["j", "k"]`), button alias (e.g. `"shift_button"`), or object spec.
- * @param modifiers Optional modifier keys (e.g. `["left_command"]`, `["shift"]`, `MOD_COMBO.vmCOCS`).
+ * @param modifiers Optional modifier keys (e.g. `["left_command"]`, `["shift"]`, `VMOD.COCS`).
  * @param order Optional simultaneous chord order constraints (e.g. `{ down: "strict" }`).
  *
  * @example
@@ -307,7 +307,7 @@ export type ToWrapper = {
  * @param cases One or more case specifications or arrays of cases.
  *
  * @example
- * to(press(openApp(APP_BUNDLES.systemSettings)))
+ * to(press(openApp(APP_ID.systemSettings)))
  * to(
  *   release(shell(CMDS.winLeftOrTop)),
  *   hold(openUrl(URLS.rectAppPrevDisplay, true))
@@ -332,7 +332,7 @@ export type WhenWrapper = {
  * @param conditions One or more condition specifications.
  *
  * @example
- * when(condApp(APP_BUNDLES.skim))
+ * when(condApp(APP_ID.skim))
  * when(condDevice(DEVICE_IDS.logitechG502X), condVar(mouseVars.rightButtonPressed, 1))
  */
 export function when(...conditions: (Condition | Condition[])[]): WhenWrapper {
@@ -431,14 +431,14 @@ export type BindArg =
  * // Single action with app condition
  * bind(
  *   from("h", ["left_command"]),
- *   to(press(extHk(EXTERNAL_HKS.skimHighlight))),
- *   when(condApp(APP_BUNDLES.skim))
+ *   to(press(combo(COMBOS.skimHighlight))),
+ *   when(condApp(APP_ID.skim))
  * )
  *
  * @example
  * // Multi-case tap & hold with custom timing
  * bind(
- *   from("left_arrow", ["vmCOCS"]),
+ *   from("left_arrow", ["COCS"]),
  *   to(
  *     release(shell(CMDS.winLeftOrTop)),
  *     hold(openUrl(URLS.rectAppPrevDisplay, true))
@@ -563,13 +563,13 @@ export function bindPointer(
 /**
  * Creates an action that opens an application.
  *
- * @param ref App reference identifier (`APP_BUNDLES.kitty`, `APP_BUNDLES.claude`, etc.).
+ * @param ref App reference identifier (`APP_ID.kitty`, `APP_ID.claude`, etc.).
  * @param mode Optional execution mode (`"open"` or `"shell"`).
  * @param actionDesc Optional human-readable action description.
  *
  * @example
- * openApp(APP_BUNDLES.ringCentral)
- * openApp(APP_BUNDLES.claude, "shell")
+ * openApp(APP_ID.ringCentral)
+ * openApp(APP_ID.claude, "shell")
  */
 export function openApp(
   ref: AppTarget,
@@ -618,7 +618,7 @@ export type KeyOptions = { repeat?: boolean; halt?: boolean; lazy?: boolean };
  * @param actionDesc Optional human-readable description.
  *
  * @example
- * key("f18", ["vmCOC_"], { repeat: false })
+ * key("f18", ["COC_"], { repeat: false })
  * key("down_arrow", ["control"])
  */
 export function key(
@@ -638,34 +638,42 @@ export function key(
     modifiers = undefined;
   }
 
+  const finalOptions: KeyOptions = {
+    ...opts,
+    repeat: opts?.repeat ?? false,
+  };
+
   return {
     type: "key",
     key: keyName,
     ...(modifiers?.length ? { modifiers } : {}),
-    ...(opts ? { options: opts } : {}),
+    options: finalOptions,
     ...(actionDesc ? { actionDesc } : {}),
   };
 }
 
 /**
- * Creates an action that triggers an external hotkey.
+ * Creates an action that triggers an external hotkey (combo).
  *
- * @param ref External hotkey reference (`EXTERNAL_HKS.focusWinRight`, `EXTERNAL_HKS.showPopclip`, etc.).
+ * @param ref External hotkey reference (`COMBOS.focusWinRight`, `COMBOS.showPopclip`, etc.).
  * @param options Key execution options.
  * @param actionDesc Optional description.
  *
  * @example
- * extHk(EXTERNAL_HKS.focusWinRight)
+ * combo(COMBOS.focusWinRight)
  */
-export function extHk(
+export function combo(
   ref: ExternalHkRef,
-  options?: { repeat?: boolean; halt?: boolean; lazy?: boolean },
+  options?: KeyOptions,
   actionDesc?: string,
 ): ActionSpec {
   return {
     type: "externalHk",
     ref,
-    ...(options ? { options } : {}),
+    options: {
+      ...options,
+      repeat: options?.repeat ?? false,
+    },
     ...(actionDesc ? { actionDesc } : {}),
   };
 }
@@ -874,8 +882,8 @@ export function condNotVar(
  * @param isForemost If true (default), applies when foremost; if false, applies when NOT foremost.
  *
  * @example
- * condApp(APP_BUNDLES.skim)
- * condApp(APP_BUNDLES.word)
+ * condApp(APP_ID.skim)
+ * condApp(APP_ID.word)
  */
 export function condApp(
   app: AppRef | PathRef | (AppRef | PathRef)[],
@@ -891,7 +899,7 @@ export function condApp(
  * Creates an inverted app condition (rule applies unless specified app is active).
  *
  * @example
- * condNotApp(APP_BUNDLES.excel)
+ * condNotApp(APP_ID.excel)
  */
 export function condNotApp(
   app: AppRef | PathRef | (AppRef | PathRef)[],

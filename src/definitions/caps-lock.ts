@@ -1,15 +1,13 @@
-import { MOD_COMBO } from "../core/mods";
+import { VMOD } from "../core/mods";
 import { formatRuleDescription } from "../core/rule-descriptions";
-import {
-  generateModifierChordRules,
-  type ModifierChordConfig,
-} from "../engine/modifier-chord-rules";
+import { type ModifierChordConfig } from "../engine/modifier-chord-rules";
+
 
 
 export const capsLockChordConfig: ModifierChordConfig = {
   ruleName: formatRuleDescription(
     "caps_lock",
-    "VM launcher / vmCOC_ / vmCOCS / vmCO_S",
+    "VM launcher / COC_ / COCS / CO_S",
     "hold",
   ),
   base: {
@@ -17,19 +15,19 @@ export const capsLockChordConfig: ModifierChordConfig = {
     // CAPSLOCK = VMOD
     // CAPSLOCK + MOD = VMOD-MODS (e.g., CAPS+SHIFT=CMD+OPT+CTRL; CAPS+CTRL+SHIFT=CMD+OPT)
     key: "caps_lock",
-    description: "VM launcher / vmCOCS",
+    description: "VM launcher / COCS",
     to: [
       {
         type: "key",
         key: "left_command",
-        modifiers: MOD_COMBO.vm_OCS,
+        modifiers: VMOD._OCS,
       },
     ],
     toIfAlone: [
       {
         type: "key",
         key: "f15",
-        modifiers: MOD_COMBO.vmCOCS,
+        modifiers: VMOD.COCS,
       },
     ],
     trackVar: "caps_lock_pressed",
@@ -37,51 +35,51 @@ export const capsLockChordConfig: ModifierChordConfig = {
   variants: [
     {
       modifiers: ["left_shift"],
-      description: "vmCOC_",
+      description: "COC_",
       to: [
         {
           type: "key",
           key: "left_command",
-          modifiers: MOD_COMBO.vm_OC_,
+          modifiers: VMOD._OC_,
         },
       ],
     },
     {
       modifiers: ["left_control"],
-      description: "vmCO_S",
+      description: "CO_S",
       to: [
         {
           type: "key",
           key: "left_command",
-          modifiers: MOD_COMBO.vm_O_S,
+          modifiers: VMOD._O_S,
         },
       ],
     },
     {
       modifiers: ["left_option"],
-      description: "vmC_CS",
+      description: "C_CS",
       to: [
         {
           type: "key",
           key: "left_command",
-          modifiers: MOD_COMBO.vm__CS,
+          modifiers: VMOD.__CS,
         },
       ],
     },
     {
       modifiers: ["left_command"],
-      description: "vm_OCS",
+      description: "_OCS",
       to: [
         {
           type: "key",
           key: "left_option",
-          modifiers: MOD_COMBO.vm__CS,
+          modifiers: VMOD.__CS,
         },
       ],
     },
     {
       modifiers: ["left_control", "left_shift"],
-      description: "vmCO__",
+      description: "CO__",
       to: [
         {
           type: "key",
@@ -92,7 +90,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_control", "left_option"],
-      description: "vmC__S",
+      description: "C__S",
       to: [
         {
           type: "key",
@@ -103,7 +101,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_control", "left_command"],
-      description: "vm_O_S",
+      description: "_O_S",
       to: [
         {
           type: "key",
@@ -114,7 +112,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_option"],
-      description: "vm__CS",
+      description: "__CS",
       to: [
         {
           type: "key",
@@ -125,7 +123,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_shift"],
-      description: "vm_OC_",
+      description: "_OC_",
       to: [
         {
           type: "key",
@@ -136,7 +134,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_option", "left_shift"],
-      description: "vmC_C_",
+      description: "C_C_",
       to: [
         {
           type: "key",
@@ -147,7 +145,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_control", "left_shift"],
-      description: "vm_O__",
+      description: "_O__",
       to: [
         {
           type: "key",
@@ -157,7 +155,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_option", "left_shift"],
-      description: "vm__C_",
+      description: "__C_",
       to: [
         {
           type: "key",
@@ -167,7 +165,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_option", "left_control", "left_shift"],
-      description: "vmC___",
+      description: "C___",
       to: [
         {
           type: "key",
@@ -177,7 +175,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_option", "left_control"],
-      description: "vm___S",
+      description: "___S",
       to: [
         {
           type: "key",
@@ -187,7 +185,7 @@ export const capsLockChordConfig: ModifierChordConfig = {
     },
     {
       modifiers: ["left_command", "left_option", "left_control", "left_shift"],
-      description: "vm____",
+      description: "____",
       to: [
         {
           type: "key",
@@ -198,5 +196,5 @@ export const capsLockChordConfig: ModifierChordConfig = {
   ],
 };
 
-export const buildCapsLockRule = () =>
-  generateModifierChordRules(capsLockChordConfig);
+
+

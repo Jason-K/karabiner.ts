@@ -13,7 +13,7 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
       ruleName: "Test chord rule",
       base: {
         key: "caps_lock",
-        description: "vmCOC_",
+        description: "COC_",
         to: [
           {
             type: "key",
@@ -25,7 +25,7 @@ test("generateModifierChordRules produces one manipulator per variant plus base"
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "vmCOCS",
+          description: "COCS",
           to: [
             {
               type: "key",
@@ -44,10 +44,10 @@ test("generateModifierChordRules uses ruleName as rule description", () => {
   const rule = toRule(
     generateModifierChordRules({
       ruleName:
-        "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+        "[CAPS]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
       base: {
         key: "caps_lock",
-        description: "vmCOC_",
+        description: "COC_",
         to: [
           {
             type: "key",
@@ -61,7 +61,7 @@ test("generateModifierChordRules uses ruleName as rule description", () => {
   );
   assert.equal(
     rule.description,
-    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+    "[CAPS]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
   );
 });
 
@@ -71,7 +71,7 @@ test("generateModifierChordRules trackVar adds setVar and afterKeyUp events", ()
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "vmCOC_",
+        description: "COC_",
         to: [
           {
             type: "key",
@@ -103,7 +103,7 @@ test("generateModifierChordRules variant uses mandatory modifiers in from", () =
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "vmCOC_",
+        description: "COC_",
         to: [
           {
             type: "key",
@@ -115,7 +115,7 @@ test("generateModifierChordRules variant uses mandatory modifiers in from", () =
       variants: [
         {
           modifiers: ["left_shift"],
-          description: "vmCOCS",
+          description: "COCS",
           to: [{ type: "key", key: "left_shift", modifiers: ["left_command"] }],
         },
       ],
@@ -131,7 +131,7 @@ test("generateModifierChordRules can emit vk_none for the full modifier chord", 
       ruleName: "Test",
       base: {
         key: "caps_lock",
-        description: "vmCOC_",
+        description: "COC_",
         to: [
           {
             type: "key",
@@ -148,7 +148,7 @@ test("generateModifierChordRules can emit vk_none for the full modifier chord", 
             "left_control",
             "left_shift",
           ],
-          description: "vm____",
+          description: "____",
           to: [{ type: "key", key: "vk_none" }],
         },
       ],

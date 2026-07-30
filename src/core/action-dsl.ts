@@ -1,10 +1,10 @@
 import type { ToEvent } from "karabiner.ts";
-import type { AppRef } from "../data/app_bundles";
-import type { CommandRef } from "../data/commands";
+import type { AppRef } from "../data/registry-app-ids";
+import type { CommandRef } from "../data/registry-cmds";
 import type { ModComboAlias, ModKey } from "../data/key-aliases";
-import type { PathRef } from "../data/paths";
+import type { PathRef } from "../data/registry-paths";
 import type { ExternalHkRef, VarSpec } from "../data/refs";
-import type { UrlRef } from "../data/urls";
+import type { UrlRef } from "../data/registry-urls";
 
 /** Ref accepted by the "app" action: a typed AppRef (bundle ID), a typed
  * PathRef (file path to .app), or a raw string (bundle ID or /path/to/Foo.app). */

@@ -10,39 +10,45 @@
  * 3. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
  *
  * Virtual Modifiers:
- * - vmCOC_: Command + Option + Control
- * - vmCOCS: Command + Option + Control + Shift
- * - vmCO_S: Command + Option + Shift
+ * - COC_: Command + Option + Control
+ * - COCS: Command + Option + Control + Shift
+ * - CO_S: Command + Option + Shift
  */
 
 import { map, writeToProfile } from "karabiner.ts";
-import { readFileSync } from "node:fs";
+import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import {
-  DEFAULT_PROFILE_NAME,
+  DEFAULT_GLOBAL_SETTINGS,
+  DEFAULT_PROFILE,
   DEVICE_IDS,
-  NUMPAD_REMAPS,
   PATHS,
-  PREFERRED_PROFILE_NAME,
+  PREFERRED_PROFILE,
+  DEFAULT_PROFILE_TIMINGS,
 } from "./data";
 import {
-  buildCapsLockRule,
-  buildDisabledHotkeys,
-  buildHotkeyGuards,
+  capsLockChordConfig,
+  disabledHotkeys,
+  guardRules,
   mouseBindings,
+  NUMPAD_REMAPS,
   simultaneousMappings,
   tapHoldBindings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
+  assertUniqueTriggers,
   buildDeviceConfig,
   defineBindings,
+  generateDoubleTapGuardRule,
+  generateModifierChordRules,
   generateSimultaneousRules,
   updateDeviceConfigurations,
 } from "./engine";
 
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = defineBindings(tapHoldBindings);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, tapHoldBindings);
+const verifiedTapHoldBindings = assertUniqueTriggers(tapHoldBindings);
+const tapHoldRules = defineBindings(verifiedTapHoldBindings);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, verifiedTapHoldBindings);
 
 // ============================================================================
 // SPECIAL RULES
@@ -55,18 +61,19 @@ let rules: any[] = [
   ...tapHoldRules,
 
   // GUARD - Various guard rules
-  ...buildHotkeyGuards(),
+  ...guardRules.map((guard) => generateDoubleTapGuardRule(guard)),
 
   // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
   // flow through the same Binding[] + defineBindings engine as keys.
   ...defineBindings(mouseBindings),
 
   // CAPS LOCK - Multiple behaviors
-  buildCapsLockRule(),
+  generateModifierChordRules(capsLockChordConfig),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
-  ...buildDisabledHotkeys(),
+  ...defineBindings(disabledHotkeys),
 ];
+
 
 // ============================================================================
 // DEVICE-SPECIFIC SIMPLE MODIFICATIONS
@@ -87,7 +94,7 @@ const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
 function resolveTargetProfileName(): string {
   if (!isDarwin) {
-    return PREFERRED_PROFILE_NAME;
+    return PREFERRED_PROFILE;
   }
 
   try {
@@ -102,7 +109,7 @@ function resolveTargetProfileName(): string {
       return explicit;
     }
 
-    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE_NAME)?.name;
+    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE)?.name;
     if (preferred) {
       return preferred;
     }
@@ -113,19 +120,37 @@ function resolveTargetProfileName(): string {
     }
 
     const first = profiles[0]?.name;
-    return first ?? DEFAULT_PROFILE_NAME;
+    return first ?? DEFAULT_PROFILE;
   } catch {
-    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE_NAME;
+    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE;
   }
 }
 
 const targetProfileName = resolveTargetProfileName();
 
+function updateGlobalSettings(configPath: string): void {
+  try {
+    const raw = readFileSync(configPath, "utf8");
+    const parsed = JSON.parse(raw);
+    parsed.global = { ...parsed.global, ...DEFAULT_GLOBAL_SETTINGS };
+    const tmpPath = `${configPath}.tmp`;
+    writeFileSync(tmpPath, JSON.stringify(parsed, null, 2));
+    renameSync(tmpPath, configPath);
+    console.log("✓ Global settings updated.");
+  } catch (error) {
+    console.error("Error updating global settings:", error);
+  }
+}
+
+if (canWriteProfile) {
+  updateGlobalSettings(PATHS.configKarabiner.name);
+}
+
 // Write rules: use real profile locally, dry-run in CI/non-macOS
 writeToProfile(
   canWriteProfile ? targetProfileName : "--dry-run",
   rules,
-  {},
+  DEFAULT_PROFILE_TIMINGS,
   {
     simple_modifications: [
       map("left_control").to("fn"),

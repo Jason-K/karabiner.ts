@@ -1,5 +1,5 @@
 import { toFromEvent } from "../core/beta";
-import { APP_BUNDLES, CMDS, DEVICE_IDS, TIMINGS, URLS } from "../data";
+import { APP_ID, CMDS, DEVICE_IDS, PATHS, TIMINGS, URLS, VMOD } from "../data";
 import { mouseVars } from "../data/mouse";
 import {
   bind,
@@ -46,10 +46,6 @@ export const mouseBindings: Binding[] = [
         key("left_control", ["option", "shift"]),
       ]),
     ),
-    timing({
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    }),
   ),
   // -------------------------------------------------------------
   // WHEEL LEFT — Move window left/up (hold) / Change workspace (hold in Zen)
@@ -60,12 +56,8 @@ export const mouseBindings: Binding[] = [
       // overrides declared in REVERSE of the bespoke prepend order so the
       // emitted manipulator order matches (groupByConditions is first-seen).
       // Zen + right-button + wheel-up → prev workspace
-      press(
-        key("left_arrow", ["left_command", "control", "shift"], {
-          repeat: false,
-        }),
-      ).when(
-        condApp(APP_BUNDLES.zen),
+      press(key("left_arrow", VMOD.C_CS)).when(
+        condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
         condVar(mouseVars.wheelDown, 0),
       ),
@@ -79,7 +71,7 @@ export const mouseBindings: Binding[] = [
     ),
     timing({
       aloneMs: TIMINGS.timeoutWheelChordMs,
-      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
+      holdMs: TIMINGS.timeoutWheelChordMs,
     }),
   ),
   // -------------------------------------------------------------
@@ -88,12 +80,8 @@ export const mouseBindings: Binding[] = [
   bind(
     from("wheelRight"),
     to(
-      press(
-        key("right_arrow", ["left_command", "control", "shift"], {
-          repeat: false,
-        }),
-      ).when(
-        condApp(APP_BUNDLES.zen),
+      press(key("right_arrow", VMOD.C_CS)).when(
+        condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
         condVar(mouseVars.wheelDown, 0),
       ),
@@ -104,7 +92,7 @@ export const mouseBindings: Binding[] = [
     ),
     timing({
       aloneMs: TIMINGS.timeoutWheelChordMs,
-      heldThresholdMs: TIMINGS.timeoutWheelChordMs,
+      holdMs: TIMINGS.timeoutWheelChordMs,
     }),
   ),
   // -------------------------------------------------------------
@@ -116,7 +104,7 @@ export const mouseBindings: Binding[] = [
       press([
         { pointing_button: "button1", modifiers: ["option"], repeat: false },
       ]).when(
-        condApp(APP_BUNDLES.zen),
+        condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
       ),
       release([{ pointing_button: "button3", repeat: false }]),
@@ -125,10 +113,6 @@ export const mouseBindings: Binding[] = [
     when(condDevice(DEVICE_IDS.logitechG502X)),
     options({
       whileHoldVar: mouseVars.wheelDown,
-      timing: {
-        aloneMs: TIMINGS.delayMouseHoldMs,
-        heldThresholdMs: TIMINGS.delayMouseHoldMs,
-      },
     }),
   ),
   // -------------------------------------------------------------
@@ -140,10 +124,6 @@ export const mouseBindings: Binding[] = [
       release(shell(CMDS.winMaxOrRestore)),
       hold(openUrl(URLS.rectDisplayNext)),
     ),
-    timing({
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    }),
   ),
   // -------------------------------------------------------------
   // G8 (left_forward) — Activate Popclip (tap) / Activate Sidenote (hold)
@@ -151,20 +131,9 @@ export const mouseBindings: Binding[] = [
   bind(
     from("leftForward"),
     to(
-      release([
-        {
-          shell_command:
-            "osascript -e 'tell application \"Popclip\" to appear'",
-        },
-      ]),
-      hold(
-        key("f10", ["left_command", "option", "shift"], { repeat: false }),
-      ),
+      release(shell(CMDS.showPopclip)),
+      hold(key("f10", VMOD.CO_S, { repeat: false })),
     ),
-    timing({
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    }),
   ),
   // -------------------------------------------------------------
   // G9 (middle_back) — Screenshot to text (tap) / markdown (hold)
@@ -172,20 +141,9 @@ export const mouseBindings: Binding[] = [
   bind(
     from("middleBack"),
     to(
-      release([
-        { shell_command: "open 'cleanshot://capture-text?linebreaks=false'" },
-      ]),
-      hold([
-        {
-          shell_command:
-            "/Users/jason/Scripts/.venv/shared_venv/bin/python3 /Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py",
-        },
-      ]),
+      release([openUrl(URLS.csxOcrNoLinebreaks)]),
+      hold([shell(CMDS.screenshot_to_md)]),
     ),
-    timing({
-      aloneMs: TIMINGS.delayMouseHoldMs,
-      heldThresholdMs: TIMINGS.delayMouseHoldMs,
-    }),
   ),
   // -------------------------------------------------------------
   // BACK — Back (tap) / Window switch (hold); Zen+rbutton → next tab
@@ -196,7 +154,7 @@ export const mouseBindings: Binding[] = [
       press(
         key("close_bracket", ["left_command", "shift"], { repeat: true }),
       ).when(
-        condApp(APP_BUNDLES.zen),
+        condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
       ),
       release([{ pointing_button: "button4", repeat: false }]),
@@ -205,10 +163,6 @@ export const mouseBindings: Binding[] = [
     when(condDevice(DEVICE_IDS.logitechG502X)),
     options({
       eventOptions: { halt: true, repeat: false },
-      timing: {
-        aloneMs: TIMINGS.delayMouseHoldMs,
-        heldThresholdMs: TIMINGS.delayMouseHoldMs,
-      },
     }),
   ),
   // -------------------------------------------------------------
@@ -220,7 +174,7 @@ export const mouseBindings: Binding[] = [
       press(
         key("open_bracket", ["left_command", "shift"], { repeat: true }),
       ).when(
-        condApp(APP_BUNDLES.zen),
+        condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
       ),
       release([{ pointing_button: "button5", repeat: false }]),
@@ -228,10 +182,6 @@ export const mouseBindings: Binding[] = [
     ),
     options({
       eventOptions: { halt: true, repeat: false },
-      timing: {
-        aloneMs: TIMINGS.delayMouseHoldMs,
-        heldThresholdMs: TIMINGS.delayMouseHoldMs,
-      },
     }),
   ),
   // -------------------------------------------------------------
@@ -249,10 +199,6 @@ export const mouseBindings: Binding[] = [
     options({
       whileHoldVar: mouseVars.rightButtonPressed,
       suppressCancelFallback: true,
-      timing: {
-        aloneMs: TIMINGS.delayMouseHoldMs,
-        heldThresholdMs: TIMINGS.delayMouseHoldMs,
-      },
     }),
   ),
   // -------------------------------------------------------------
@@ -266,19 +212,19 @@ export const mouseBindings: Binding[] = [
     to(
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
       release([{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }])
-        .when(condApp(APP_BUNDLES.zen))
+        .when(condApp(APP_ID.zen))
         .withDelayed(),
       hold([{ pointing_button: "button1", modifiers: ["option"], repeat: false }])
-        .when(condApp(APP_BUNDLES.zen)),
+        .when(condApp(APP_ID.zen)),
       release(openUrl(URLS.rectDisplayNext))
-        .when(condApp(APP_BUNDLES.zen))
+        .when(condApp(APP_ID.zen))
         .withTapCount(2),
       // Non-Zen — tap = maximize (delayed), double = next display
       release(shell(CMDS.winMaxOrRestore))
-        .when(condApp(APP_BUNDLES.zen, false))
+        .when(condApp(APP_ID.zen, false))
         .withDelayed(),
       release(openUrl(URLS.rectDisplayNext))
-        .when(condApp(APP_BUNDLES.zen, false))
+        .when(condApp(APP_ID.zen, false))
         .withTapCount(2),
     ),
     when(
@@ -287,7 +233,6 @@ export const mouseBindings: Binding[] = [
     ),
     options({
       multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
-      timing: { aloneMs: TIMINGS.timeoutDoubleClickMs },
     }),
   ),
   // -------------------------------------------------------------
@@ -297,8 +242,8 @@ export const mouseBindings: Binding[] = [
     from("left"),
     to(
       release(key("return_or_enter")).when(
-        condApp(APP_BUNDLES.onePiece),
-        condApp(APP_BUNDLES.onePiecePreferences, false),
+        condApp(APP_ID.onePiece),
+        condApp(APP_ID.onePiecePreferences, false),
       ),
       hold([toFromEvent()]),
     ),
@@ -308,7 +253,7 @@ export const mouseBindings: Binding[] = [
     ),
     options({
       whileHoldVar: mouseVars.leftButtonPressed,
-      timing: { aloneMs: TIMINGS.delayMouseHoldMs, heldThresholdMs: 0 },
+      timing: { holdMs: 0 },
     }),
   ),
 ];

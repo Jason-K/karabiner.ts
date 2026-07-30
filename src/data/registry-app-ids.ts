@@ -15,13 +15,13 @@ const app = (name: string, refDesc: string) => ({
 });
 
 // TO DO: Karabiner allows foremost_application_if|unless conditions to be set based on bundle_identifiers|file_paths (https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/conditions/frontmost-application/)
-// APP_BUNDLES currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
+// APP_ID currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
 
 // ---------------------------------------------------------
 // Registry
 // ---------------------------------------------------------
 
-export const APP_BUNDLES = {
+export const APP_ID = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
@@ -53,6 +53,7 @@ export const APP_BUNDLES = {
     "com.apple.settings.PrivacySecurity.extension",
     "System Settings, security",
   ),
+  sidenotes: app("com.apptorium.SideNotes-setapp", "Sidenotes"),
   skim: app("net.sourceforge.skim-app.skim", "Skim"),
   spotify: app("com.spotify.client", "Spotify"),
   systemSettings: app("com.apple.systempreferences", "System Settings"),
@@ -65,10 +66,10 @@ export const APP_BUNDLES = {
 
 export type { AppRef };
 
-export const PW_BUNDLES: AppRef[] = [
-  APP_BUNDLES.securityAgent,
-  APP_BUNDLES.settings,
-  APP_BUNDLES.settingsPrivacySecurityExtension,
-  APP_BUNDLES.brewUpdater,
-  APP_BUNDLES.taphouse,
+export const PW_IDS: AppRef[] = [
+  APP_ID.securityAgent,
+  APP_ID.settings,
+  APP_ID.settingsPrivacySecurityExtension,
+  APP_ID.brewUpdater,
+  APP_ID.taphouse,
 ];

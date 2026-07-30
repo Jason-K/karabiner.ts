@@ -3,7 +3,7 @@ import { toKey } from "karabiner.ts";
 
 import type { Action, ActionSpec, AppTarget } from "../core/action-dsl";
 import { getOpenFolderCommand } from "../core/folder-opener";
-import { FINDER_REPLACEMENT } from "../data/user-prefs";
+import { FINDER_REPLACEMENT } from "../data/settings-global";
 import {
   actHereCmd,
   applescript,
@@ -15,7 +15,30 @@ import {
   withSleep,
 } from "../core/scripts";
 import { openApp } from "../core/software";
-import { resolveModComboAlias } from "../data/key-aliases";
+import type { Modifier } from "karabiner.ts";
+import { VMOD, type ModComboAlias } from "../data/key-aliases";
+
+const VMOD_ALIAS_LOWER = new Map<string, ModComboAlias>(
+  Object.keys(VMOD).map((key) => [
+    key.toLowerCase(),
+    key as ModComboAlias,
+  ]),
+);
+
+export function getModComboAliasCanonicalKey(
+  alias: string,
+): ModComboAlias | undefined {
+  return VMOD_ALIAS_LOWER.get(alias.toLowerCase());
+}
+
+export function resolveModComboAlias(alias: string): Modifier[] | undefined {
+  const canonical = getModComboAliasCanonicalKey(alias);
+  return canonical ? [...VMOD[canonical]] : undefined;
+}
+
+export function isModComboAlias(alias: string): boolean {
+  return Boolean(getModComboAliasCanonicalKey(alias));
+}
 
 export function expandModifiers(modifiers: string[]): string[] {
   const expanded: string[] = [];
@@ -34,6 +57,7 @@ export function expandModifiers(modifiers: string[]): string[] {
 function resolveName(ref: { name: string | string[] }): string {
   return Array.isArray(ref.name) ? ref.name[0]! : ref.name;
 }
+
 
 /**
  * Resolve an AppTarget ref to the correct openApp() argument shape.

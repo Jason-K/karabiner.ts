@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 import type { ToEvent } from 'karabiner.ts';
 
-import { PATHS } from "../data/paths";
+import { PATHS } from "../data/registry-paths";
 import { toSendUserCommand } from "./beta";
 
 export function cmd(shell: string): ToEvent {

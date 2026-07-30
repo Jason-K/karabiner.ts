@@ -1,19 +1,20 @@
-import { APP_BUNDLES, CMDS, EXTERNAL_HKS, PATHS, TIMINGS, URLS } from "../data";
+import { APP_ID, CMDS, COMBOS, URLS, VMOD } from "../data";
 import {
   actHere,
   appHistory,
   bind,
   condApp,
-  condNotApp,
-  extHk,
+  combo,
   from,
   hold,
   key,
   openApp,
   openUrl,
+  options,
   press,
   release,
   shell,
+  to,
   type Binding,
 } from "../engine";
 
@@ -21,170 +22,146 @@ import {
 //   tap passes the key through (the engine's default-alone behavior).
 
 const numBindings: Binding[] = [
-  bind(from("8"), hold(openApp(APP_BUNDLES.ringCentral))),
-  bind(from("keypad_0"), hold(openUrl(URLS.rectWinsUnstashAll, true))),
-  bind(from("keypad_2"), hold(openUrl(URLS.rectWinStashDown, true))),
-  bind(from("keypad_4"), hold(openUrl(URLS.rectWinStashLeft, true))),
-  bind(from("keypad_5"), hold(openUrl(URLS.rectWinsUnstash, true))),
-  bind(from("keypad_6"), hold(openUrl(URLS.rectWinStashRight, true))),
-  bind(from("keypad_8"), hold(openUrl(URLS.rectWinStashUp, true))),
+  bind(from("8"), to(hold(openApp(APP_ID.ringCentral)))),
+  bind(from("keypad_0"), to(hold(openUrl(URLS.rectWinsUnstashAll, true)))),
+  bind(from("keypad_2"), to(hold(openUrl(URLS.rectWinStashDown, true)))),
+  bind(from("keypad_4"), to(hold(openUrl(URLS.rectWinStashLeft, true)))),
+  bind(from("keypad_5"), to(hold(openUrl(URLS.rectWinsUnstash, true)))),
+  bind(from("keypad_6"), to(hold(openUrl(URLS.rectWinStashRight, true)))),
+  bind(from("keypad_8"), to(hold(openUrl(URLS.rectWinStashUp, true)))),
 ];
 
 const letterBindings: Binding[] = [
-  bind(from("a"), hold(key("f18", ["vmCOC_"], { repeat: false }))),
-  bind(from("c"), hold(extHk(EXTERNAL_HKS.showBusyCal))),
-  bind(from("d"), hold(key("f1", ["vmCO_S"], { repeat: false }))),
-  bind(from("f"), hold(actHere("qspace"))),
-  bind(from("g"), hold(openApp(APP_BUNDLES.claude, "shell"))),
-  bind(from("h"), hold(openUrl(URLS.rayHere2There))),
-  bind(from("j"), hold(openUrl(URLS.rayRecentDownloads))),
-  bind(from("k"), hold(openApp(APP_BUNDLES.kitty))),
-  bind(from("n"), hold(openUrl(URLS.newClientNote, true))),
-  bind(from("o"), hold(openUrl(URLS.csxCaptureTextNoLinebreaks))),
-  bind(from("p"), hold(extHk(EXTERNAL_HKS.showPopclip))),
-  bind(from("q"), hold(openApp(APP_BUNDLES.qspace))),
-  bind(from("r"), hold(shell(PATHS.scriptNewDLs))),
-  bind(from("s"), hold(openUrl(URLS.csxCaptureArea))),
-  bind(from("s", ["shift"]), hold(openUrl(URLS.csxCaptureWindow))),
-  bind(from("t"), hold(extHk(EXTERNAL_HKS.showKittyQuakeTerm))),
-  bind(from("v"), hold(openUrl(URLS.rayClipboard))),
-  bind(from("x"), hold(actHere("copy"))),
-  bind(from("y"), hold(actHere("copy"))),
-  bind(from("z"), hold(openUrl(URLS.rayZoxideSearchDirs))),
+  bind(from("a"), to(hold(key("f18", VMOD.COCS)))),
+  bind(from("c"), to(hold(combo(COMBOS.showBusyCal)))),
+  bind(from("d"), to(hold(key("f1", VMOD.CO_S)))),
+  bind(from("f"), to(hold(actHere("qspace")))),
+  bind(from("g"), to(hold(openApp(APP_ID.claude, "shell")))),
+  bind(from("h"), to(hold(openUrl(URLS.rayHere2There)))),
+  bind(from("j"), to(hold(openUrl(URLS.rayRecentDownloads)))),
+  bind(from("k"), to(hold(openApp(APP_ID.kitty)))),
+  bind(from("n"), to(hold(openUrl(URLS.newClientNote, true)))),
+  bind(from("o"), to(hold(openUrl(URLS.csxOcrNoLinebreaks)))),
+  bind(from("p"), to(hold(combo(COMBOS.showPopclip)))),
+  bind(from("q"), to(hold(openApp(APP_ID.qspace)))),
+  bind(from("r"), to(hold(shell(CMDS.rayGetRecents)))),
+  bind(from("s"), to(hold(openUrl(URLS.csxCaptureArea)))),
+  bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxCaptureWindow)))),
+  bind(from("t"), to(hold(combo(COMBOS.showKittyQuakeTerm)))),
+  bind(from("v"), to(hold(openUrl(URLS.rayClipboard)))),
+  bind(from("x"), to(hold(actHere("copy")))),
+  bind(from("y"), to(hold(actHere("copy")))),
+  bind(from("z"), to(hold(openUrl(URLS.rayZoxideSearchDirs)))),
 ];
 
 const symbolBindings: Binding[] = [
   bind(
     from("keypad_equal_sign"),
-    [
+    to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", ["shift", "option"]),
-        key("c", ["left_command"]),
+        key("left_arrow", VMOD._O_S),
+        // key("c", ["left_command"]),
         shell(CMDS.tpQuickDate),
       ]),
-    ],
-    {
-      timing: {
-        aloneMs: TIMINGS.delayHoldMs,
-        heldThresholdMs: TIMINGS.delayHoldMs,
-      },
-    },
+    ),
   ),
   bind(
     from("equal_sign"),
-    [
+    to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", ["shift", "option"]),
-        key("c", ["left_command"]),
+        key("left_arrow", VMOD._O_S),
+        // key("c", ["left_command"]),
         shell(CMDS.tpQuickDate),
       ]),
-    ],
-    {
-      timing: {
-        aloneMs: TIMINGS.delayHoldMs,
-        heldThresholdMs: TIMINGS.delayHoldMs,
-      },
-    },
+    ),
   ),
-  bind(from("slash"), hold(extHk(EXTERNAL_HKS.raycastHere2This))),
-  bind(from("grave_accent_and_tilde"), hold(extHk(EXTERNAL_HKS.showPopclip))),
+  bind(from("slash"), to(hold(combo(COMBOS.raycastHere2This)))),
+  bind(from("grave_accent_and_tilde"), to(hold(combo(COMBOS.showPopclip)))),
 ];
 
 const nonCharBindings: Binding[] = [
   bind(
     from("keypad_enter"),
-    [
+    to(
       release(key("keypad_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_BUNDLES.excel, false)),
-      hold(key("f2", { repeat: false })).when(condApp(APP_BUNDLES.excel)),
-    ]
+      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
+      hold(key("f2")).when(condApp(APP_ID.excel)),
+    ),
   ),
   bind(
     from("return_or_enter"),
-    [
+    to(
       release(key("return_or_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_BUNDLES.excel, false)),
-      hold(key("f2", { repeat: false })).when(condApp(APP_BUNDLES.excel)),
-    ],
+      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
+      hold(key("f2")).when(condApp(APP_ID.excel)),
+    ),
   ),
-  bind(from("tab"), hold(key("mission_control", { halt: true, repeat: true }))),
+  bind(from("tab"), to(hold(key("mission_control", { halt: true, repeat: true })))),
   bind(
     from("escape"),
-    [
+    to(
       release(key("escape")),
       hold(shell(CMDS.killForegroundApp)),
       hold(shell(CMDS.killAllApps)).withTapCount(2),
-    ],
-    {
+    ),
+    options({
       multiTap: { mods: [] },
-    },
+    }),
   ),
-  bind(from("home"), press(key("left_arrow", ["left_command"]))),
-  bind(from("end"), press(key("right_arrow", ["left_command"]))),
+  bind(from("home"), to(press(key("left_arrow", ["left_command"])))),
+  bind(from("end"), to(press(key("right_arrow", ["left_command"])))),
 ];
 
 const functionKeyBindings: Binding[] = [
-  bind(from("f1"), hold(key("display_brightness_decrement", { repeat: true }))),
-  bind(from("f2"), hold(key("display_brightness_increment", { repeat: true }))),
-  bind(from("f3"), hold(key("mission_control", { repeat: false }))),
-  bind(from("f4"), hold(key("launchpad", { repeat: false }))),
-  bind(from("f5"), hold(key("f5", ["vmCOC_"], { repeat: false }))),
-  bind(from("f7"), hold(key("rewind", { repeat: true }))),
-  bind(from("f8"), hold(key("play_or_pause", { repeat: false }))),
-  bind(from("f9"), hold(key("fastforward", { repeat: true }))),
-  bind(from("f10"), hold(key("mute", { repeat: false }))),
-  bind(from("f11"), hold(key("volume_decrement", { repeat: true }))),
-  bind(from("f12"), hold(key("volume_increment", { repeat: true }))),
+  bind(from("f1"), to(hold(key("display_brightness_decrement", { repeat: true })))),
+  bind(from("f2"), to(hold(key("display_brightness_increment", { repeat: true })))),
+  bind(from("f3"), to(hold(key("mission_control")))),
+  bind(from("f4"), to(hold(key("launchpad")))),
+  bind(from("f5"), to(hold(key("f5", ["COC_"])))),
+  bind(from("f7"), to(hold(key("rewind", { repeat: true })))),
+  bind(from("f8"), to(hold(key("play_or_pause")))),
+  bind(from("f9"), to(hold(key("fastforward", { repeat: true })))),
+  bind(from("f10"), to(hold(key("mute")))),
+  bind(from("f11"), to(hold(key("volume_decrement", { repeat: true })))),
+  bind(from("f12"), to(hold(key("volume_increment", { repeat: true })))),
 ];
 
 const modifierKeyBindings: Binding[] = [
-  bind(from("fn"), hold(key("f5", ["vmCOC_"], { repeat: false }))),
+  bind(from("fn"), to(hold(key("f5", ["COC_"])))),
   bind(
     from("left_command"),
-    [
+    to(
       release(key("left_command")),
       hold(key("left_command")),
       release(appHistory(1)).withTapCount(2),
-    ],
-    {
-      timing: {
-        aloneMs: TIMINGS.timeoutDoubleTapMs,
-        heldThresholdMs: TIMINGS.timeoutDoubleTapMs,
-      },
+    ),
+    options({
       multiTap: { allowPassThrough: true, mods: [] },
-    },
+    }),
   ),
   bind(
     from("left_shift"),
-    [
+    to(
       release(key("left_shift")),
       hold(key("left_shift")),
       release(openUrl(URLS.rayClipboard)).withTapCount(2),
-    ],
-    {
-      timing: {
-        aloneMs: TIMINGS.timeoutDoubleTapMs,
-        heldThresholdMs: TIMINGS.delayHoldMs,
-      },
+    ),
+    options({
       multiTap: { allowPassThrough: true, mods: [] },
-    },
+    }),
   ),
   bind(
     from("right_shift"),
-    [
+    to(
       release(key("right_shift")),
       hold(key("right_shift")),
       release(openUrl(URLS.rayClipboard)).withTapCount(2),
-    ],
-    {
-      timing: {
-        aloneMs: TIMINGS.timeoutDoubleTapMs,
-        heldThresholdMs: TIMINGS.delayHoldMs,
-      },
+    ),
+    options({
       multiTap: { allowPassThrough: true, mods: [] },
-    },
+    }),
   ),
 ];
 

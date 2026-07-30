@@ -1,27 +1,21 @@
-import { APP_BUNDLES, TIMINGS } from "../data";
-import {
-  generateDoubleTapGuardRule,
-  type DoubleTapGuardConfig,
-} from "../engine/double-tap-guard-rules";
+import { APP_ID } from "../data";
+import type { DoubleTapGuardConfig } from "../engine/double-tap-guard-rules";
 
-const globalGuards: DoubleTapGuardConfig = {
+export const globalGuards: DoubleTapGuardConfig = {
   key: "q",
   modifiers: ["left_command"],
   description: "Quit app",
-  timeoutMs: TIMINGS.timeoutDoubleTapMs,
 };
 
-const antinoteGuards: DoubleTapGuardConfig = {
+export const antinoteGuards: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [APP_BUNDLES.antinote],
+  ifApp: [APP_ID.antinote],
 };
 
-const guardRules: DoubleTapGuardConfig[] = [
+export const guardRules: DoubleTapGuardConfig[] = [
   globalGuards,
   antinoteGuards,
 ];
 
-export const buildHotkeyGuards = () =>
-  guardRules.map((guard) => generateDoubleTapGuardRule(guard));

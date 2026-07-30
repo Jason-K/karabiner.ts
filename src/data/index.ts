@@ -13,16 +13,20 @@ export {
   MOUSE_MODIFY_EVENTS,
   pointing_motion_wheels_multiplier,
   pointing_motion_xy_multiplier,
-  NUMPAD_REMAPS,
 } from "./devices";
-export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./ke-vars";
-
-export { APP_BUNDLES, PW_BUNDLES, type AppRef } from "./app_bundles";
-export { CMDS, type CommandRef } from "./commands";
-export { EXTERNAL_HKS, type ExternalHkRef, type HkRef } from "./external-hotkeys";
-export { HOME_DIR, PATHS, type PathRef } from "./paths";
-export { DEFAULT_PROFILE_NAME, PREFERRED_PROFILE_NAME } from "./user-prefs";
+export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./registry-vars";
+export { VMOD, MODIFIER_KEY_CODES, isModifierKey } from "./key-aliases";
+export { APP_ID, PW_IDS, type AppRef } from "./registry-app-ids";
+export { CMDS, type CommandRef } from "./registry-cmds";
+export { COMBOS, type ExternalHkRef, type HkRef } from "./registry-combos";
+export { HOME_DIR, PATHS, type PathRef } from "./registry-paths";
+export { DEFAULT_GLOBAL_SETTINGS } from "./settings-global";
+export { DEFAULT_PROFILE, PREFERRED_PROFILE, DEFAULT_PROFILE_TIMINGS } from "./settings-profiles";
 export type { DeviceSpec, RefSpec, RefSpecType, VarSpec } from "./refs";
-export { TIMINGS } from "./timings";
+export {
+  TIMINGS,
+  DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS,
+  DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
+} from "./settings-timings";
 export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./ui-labels";
-export { URLS, type UrlRef } from "./urls";
+export { URLS, type UrlRef } from "./registry-urls";

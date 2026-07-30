@@ -428,9 +428,10 @@ const CsxUrls = {
     "cleanshot://capture-fullscreen",
     "Capture fullscreen",
   ),
-  csxCaptureTextNoLinebreaks: url(
+  csxOcr: url("cleanshot://capture-text", "OCR text"),
+  csxOcrNoLinebreaks: url(
     "cleanshot://capture-text?linebreaks=false",
-    "Capture text (no line breaks)",
+    "OCR text (no line breaks)",
   ),
   csxCaptureWindow: url("cleanshot://capture-window", "Capture window"),
   csxRecordScreen: url("cleanshot://record-screen", "Record screen"),

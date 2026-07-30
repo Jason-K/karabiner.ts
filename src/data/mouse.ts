@@ -64,21 +64,7 @@ export const defaultButtonNames: Record<string, string> = {
   button3: "Middle click",
 };
 
-/** Resolve a pointer alias (or raw button id) → button + nameScope + label. */
-export function resolveButton(pointer: string): {
-  button: string;
-  nameScope?: ButtonSpec["nameScope"];
-  desc: string;
-} {
-  const spec = (buttons as Record<string, ButtonSpec>)[pointer];
-  if (spec)
-    return { button: spec.button, nameScope: spec.nameScope, desc: spec.desc };
-  return { button: pointer, desc: defaultButtonNames[pointer] ?? pointer };
-}
-
-export function isPointerButton(pointer: string): boolean {
-  return pointer in buttons || /^button\d+$/.test(pointer);
-}
+// ── Mouse signaling variables ────────────────────────────────────────────────
 
 /** Mouse chord-modifier signaling variables. */
 export const mouseVars = {

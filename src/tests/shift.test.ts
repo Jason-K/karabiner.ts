@@ -112,3 +112,13 @@ test("double-tap threshold is 300 ms", () => {
     );
   }
 });
+
+test("holding shift past threshold maintains key_code in to_if_held_down", () => {
+  const [left, right] = builtRules();
+  const leftHeld = firstTapManip(left).to_if_held_down.find((e: any) => typeof e.key_code === "string");
+  const rightHeld = firstTapManip(right).to_if_held_down.find((e: any) => typeof e.key_code === "string");
+  assert.equal(leftHeld?.key_code, "left_shift");
+  assert.equal(leftHeld?.repeat, undefined);
+  assert.equal(rightHeld?.key_code, "right_shift");
+  assert.equal(rightHeld?.repeat, undefined);
+});

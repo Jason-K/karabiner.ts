@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import type { ActionSpec } from "../core/action-dsl";
-import { APP_BUNDLES } from "../data/app_bundles";
-import { CMDS } from "../data/commands";
-import { PATHS } from "../data/paths";
-import { URLS } from "../data/urls";
+import { APP_ID } from "../data/registry-app-ids";
+import { CMDS } from "../data/registry-cmds";
+import { PATHS } from "../data/registry-paths";
+import { URLS } from "../data/registry-urls";
 import type { Binding } from "../engine/binding";
 import {
   describeAction,
@@ -17,15 +17,15 @@ import {
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(
-    describeAction({ type: "app", ref: APP_BUNDLES.excel }),
+    describeAction({ type: "app", ref: APP_ID.excel }),
     "open Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APP_BUNDLES.excel, mode: "shell" }),
+    describeAction({ type: "app", ref: APP_ID.excel, mode: "shell" }),
     "open-shell Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APP_BUNDLES.excel, actionDesc: "force" }),
+    describeAction({ type: "app", ref: APP_ID.excel, actionDesc: "force" }),
     "open Microsoft Excel | force",
   );
 });

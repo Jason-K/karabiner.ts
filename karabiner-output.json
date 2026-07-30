@@ -7,11 +7,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "8"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "8",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -48,11 +47,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_0"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_0",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -85,11 +83,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_2"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_2",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -122,11 +119,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_4"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_4",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -159,11 +155,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_5"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_5",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -196,11 +191,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_6"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_6",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -233,11 +227,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_8"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_8",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -265,16 +258,15 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'F18'",
+        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F18'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "a"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "a",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -289,7 +281,8 @@
                 "modifiers": [
                   "command",
                   "option",
-                  "control"
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -313,11 +306,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "c"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "c",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -356,11 +348,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "d"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "d",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -399,11 +390,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -436,11 +426,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "g"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "g",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -473,11 +462,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "h"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "h",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -510,11 +498,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "j"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "j",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -547,11 +534,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "k"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "k",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -588,11 +574,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "n"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "n",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -620,16 +605,15 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[O]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture text (no line breaks) using CSX",
+        "ruleDescription": "[O]:\n---\n\tOn Hold:\n\t\tAlways:\tOCR text (no line breaks) using CSX",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "o"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "o",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -662,11 +646,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "p"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "p",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -706,11 +689,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "q"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "q",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -742,16 +724,15 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Recent Dls script'",
+        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Get recent items from Raycast'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "r"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "r",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -761,7 +742,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "\"/Users/jason/Scripts/filesystem/recent_changes/recent_dl.sh\""
+                "shell_command": "open -u raycast-x://extensions/jason/recents/recentCustom"
               }
             ],
             "to_delayed_action": {
@@ -784,11 +765,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "s"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "s",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -828,10 +808,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -869,11 +845,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "t"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "t",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -912,11 +887,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "v"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "v",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -949,11 +923,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "x"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "x",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -986,11 +959,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "y"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "y",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1023,11 +995,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "z"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "z",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1055,39 +1026,34 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⇧⌥ + '←' then Emit ⌘ + 'C' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "ruleDescription": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_equal_sign"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
               {
+                "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "shift",
-                  "option"
+                  "option",
+                  "shift"
                 ]
               },
               {
-                "key_code": "c",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source clipboard --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -1095,6 +1061,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "keypad_equal_sign"
                 }
               ]
@@ -1105,39 +1072,34 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⇧⌥ + '←' then Emit ⌘ + 'C' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "key_code": "equal_sign"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "equal_sign",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "keypad_equal_sign"
               }
             ],
             "to_if_held_down": [
               {
+                "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "shift",
-                  "option"
+                  "option",
+                  "shift"
                 ]
               },
               {
-                "key_code": "c",
-                "modifiers": [
-                  "left_command"
-                ]
-              },
-              {
-                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source clipboard --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -1145,6 +1107,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "keypad_equal_sign"
                 }
               ]
@@ -1160,11 +1123,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "slash"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "slash",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1204,11 +1166,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "grave_accent_and_tilde"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1248,15 +1209,15 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "keypad_enter"
               }
             ],
@@ -1271,6 +1232,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "keypad_enter"
                 }
               ]
@@ -1279,11 +1241,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1318,11 +1279,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "keypad_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1365,15 +1325,15 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "return_or_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "return_or_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
                 "halt": true,
+                "repeat": false,
                 "key_code": "return_or_enter"
               }
             ],
@@ -1388,6 +1348,7 @@
               "to_if_canceled": [
                 {
                   "halt": true,
+                  "repeat": false,
                   "key_code": "return_or_enter"
                 }
               ]
@@ -1396,11 +1357,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "return_or_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "return_or_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1435,11 +1395,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "return_or_enter"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "return_or_enter",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1482,11 +1441,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "tab"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "tab",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1532,8 +1490,8 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "description": "multi_tap_escape second tap (tap-tap / tap-tap-hold)",
             "to": [],
@@ -1553,7 +1511,7 @@
                 }
               },
               {
-                "shell_command": "\"/Users/jason/.local/bin/kill-app\" --all"
+                "shell_command": "\"/Users/jason/.local/bin/kill-app\""
               }
             ],
             "to_delayed_action": {
@@ -1582,9 +1540,9 @@
               "modifiers": {}
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400,
-              "basic.to_if_alone_timeout_milliseconds": 400
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
             },
             "description": "multi_tap_escape first tap (tap / tap-hold)",
             "to": [
@@ -1603,6 +1561,7 @@
                 }
               },
               {
+                "repeat": false,
                 "key_code": "escape"
               }
             ],
@@ -1646,10 +1605,14 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "home"
+              "key_code": "home",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
                   "left_command"
@@ -1667,10 +1630,14 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "end"
+              "key_code": "end",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
                   "left_command"
@@ -1688,11 +1655,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f1"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f1",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1726,11 +1692,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f2"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f2",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1764,11 +1729,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f3"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f3",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1802,11 +1766,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f4"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f4",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1840,11 +1803,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f5"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f5",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1883,11 +1845,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f7"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f7",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1921,11 +1882,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f8"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f8",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1959,11 +1919,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f9"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f9",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -1997,11 +1956,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f10"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f10",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -2035,11 +1993,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f11"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f11",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -2073,11 +2030,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "f12"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "f12",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -2111,11 +2067,10 @@
           {
             "type": "basic",
             "from": {
-              "key_code": "fn"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "key_code": "fn",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -2576,10 +2531,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
@@ -2625,10 +2576,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -2676,10 +2623,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
@@ -2725,10 +2668,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -2776,10 +2715,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
@@ -2822,10 +2757,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -2873,10 +2804,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -2935,10 +2862,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3032,10 +2955,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -3079,10 +2998,6 @@
                   "left_command"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3133,13 +3048,9 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
-                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 send \"<c:p:command>\""
+                "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
               }
             ],
             "to_if_held_down": [
@@ -3155,7 +3066,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 send \"<c:p:command>\""
+                  "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
                 }
               ]
             },
@@ -3178,10 +3089,6 @@
                   "left_command"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3235,10 +3142,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3297,10 +3200,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3383,10 +3282,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "shell_command": "if pgrep -x 'Spotify' > \"/dev/null;\" then open '[object Object]'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
@@ -3426,13 +3321,9 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
-                "shell_command": "\"/Users/jason/.venv/typinator/bin/python\" \"/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py\""
+                "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
               }
             ],
             "to_if_held_down": [
@@ -3444,7 +3335,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "\"/Users/jason/.venv/typinator/bin/python\" \"/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py\""
+                  "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
                 }
               ]
             }
@@ -3465,10 +3356,6 @@
                   "right_option"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3693,6 +3580,7 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
                   "left_command",
@@ -3717,10 +3605,6 @@
                   "control"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3802,6 +3686,7 @@
             },
             "to": [
               {
+                "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
                   "left_command",
@@ -3829,10 +3714,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3882,7 +3763,7 @@
             ],
             "to": [
               {
-                "repeat": true,
+                "repeat": false,
                 "key_code": "open_bracket",
                 "modifiers": [
                   "command",
@@ -3910,10 +3791,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -3992,10 +3869,6 @@
                 ]
               }
             },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
-            },
             "to_if_alone": [
               {
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
@@ -4041,10 +3914,6 @@
                   "shift"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
             },
             "to_if_alone": [
               {
@@ -4139,9 +4008,6 @@
                   "left_command"
                 ]
               }
-            },
-            "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300
             },
             "conditions": [
               {
@@ -4315,14 +4181,14 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button5"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button5",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
+                "repeat": false,
                 "key_code": "up_arrow",
                 "modifiers": [
                   "control"
@@ -4334,6 +4200,7 @@
                 "pointing_button": "button1"
               },
               {
+                "repeat": false,
                 "key_code": "left_control",
                 "modifiers": [
                   "option",
@@ -4345,6 +4212,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
+                  "repeat": false,
                   "key_code": "up_arrow",
                   "modifiers": [
                     "control"
@@ -4382,7 +4250,7 @@
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "control",
                   "shift"
                 ]
@@ -4445,7 +4313,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button7"
+              "pointing_button": "button7",
+              "modifiers": {
+                "optional": []
+              }
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 200,
@@ -4501,7 +4372,7 @@
                 "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "control",
                   "shift"
                 ]
@@ -4540,7 +4411,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button8"
+              "pointing_button": "button8",
+              "modifiers": {
+                "optional": []
+              }
             },
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 200,
@@ -4628,11 +4502,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button3"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button3",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to": [
               {
@@ -4694,11 +4567,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button11"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button11",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -4736,16 +4608,15 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'osascript -e 'tell application \"Popcl…'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
+        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Show Popclip at cursor position'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button10"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button10",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -4757,7 +4628,7 @@
                 "repeat": false,
                 "key_code": "f10",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "option",
                   "shift"
                 ]
@@ -4789,32 +4660,31 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'open 'cleanshot://capture-text?linebr…'\n\tOn Hold:\n\t\tAlways:\tRun '/Users/jason/Scripts/.venv/shared_ven…'",
+        "ruleDescription": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tOCR text (no line breaks) using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button9"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button9",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
-                "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+                "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
               }
             ],
             "to_if_held_down": [
               {
-                "shell_command": "\"/Users/jason/Scripts/.venv/shared_venv/bin/python3\" \"/Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py\""
+                "shell_command": "'/Users/jason/Scripts/.venv/shared_venv/bin/python' '/Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "open 'cleanshot://capture-text?linebreaks=false'"
+                  "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
                 }
               ]
             },
@@ -4881,11 +4751,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button4"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button4",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -4977,11 +4846,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button6"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button6",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to_if_alone": [
               {
@@ -5032,11 +4900,10 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button2"
-            },
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "pointing_button": "button2",
+              "modifiers": {
+                "optional": []
+              }
             },
             "to": [
               {
@@ -5124,8 +4991,8 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "description": "on Logitech G502 X and Right button held and In Zen",
             "to": [],
@@ -5178,9 +5045,9 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400,
-              "basic.to_if_alone_timeout_milliseconds": 400
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
             },
             "description": "on Logitech G502 X and Right button held and In Zen",
             "to": [
@@ -5302,8 +5169,8 @@
               }
             ],
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400
+              "basic.to_if_alone_timeout_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300
             },
             "description": "on Logitech G502 X and Right button held and Outside Zen",
             "to": [],
@@ -5356,9 +5223,9 @@
               }
             },
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 400,
-              "basic.to_if_held_down_threshold_milliseconds": 400,
-              "basic.to_if_alone_timeout_milliseconds": 400
+              "basic.to_delayed_action_delay_milliseconds": 300,
+              "basic.to_if_held_down_threshold_milliseconds": 300,
+              "basic.to_if_alone_timeout_milliseconds": 300
             },
             "description": "on Logitech G502 X and Right button held and Outside Zen",
             "to": [
@@ -5440,10 +5307,12 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button1"
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": []
+              }
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 0
             },
             "to": [
@@ -5464,6 +5333,7 @@
             ],
             "to_if_alone": [
               {
+                "repeat": false,
                 "key_code": "return_or_enter"
               }
             ],
@@ -5471,6 +5341,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
+                  "repeat": false,
                   "key_code": "return_or_enter"
                 }
               ]
@@ -5509,10 +5380,12 @@
           {
             "type": "basic",
             "from": {
-              "pointing_button": "button1"
+              "pointing_button": "button1",
+              "modifiers": {
+                "optional": []
+              }
             },
             "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 400,
               "basic.to_if_held_down_threshold_milliseconds": 0
             },
             "to": [
@@ -5564,7 +5437,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+        "ruleDescription": "[⇪]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -5606,7 +5479,7 @@
                 ]
               }
             ],
-            "description": "[⇪]        →    VM launcher / vmCOCS (on hold)"
+            "description": "[⇪]        →    VM launcher / COCS (on hold)"
           },
           {
             "type": "basic",
@@ -5627,7 +5500,7 @@
                 ]
               }
             ],
-            "description": "[⇧⇪]        →    vmCOC_ (on hold)"
+            "description": "[⇧⇪]        →    COC_ (on hold)"
           },
           {
             "type": "basic",
@@ -5648,7 +5521,7 @@
                 ]
               }
             ],
-            "description": "[⌃⇪]        →    vmCO_S (on hold)"
+            "description": "[⌃⇪]        →    CO_S (on hold)"
           },
           {
             "type": "basic",
@@ -5669,7 +5542,7 @@
                 ]
               }
             ],
-            "description": "[⌥⇪]        →    vmC_CS (on hold)"
+            "description": "[⌥⇪]        →    C_CS (on hold)"
           },
           {
             "type": "basic",
@@ -5690,7 +5563,7 @@
                 ]
               }
             ],
-            "description": "[⌘⇪]        →    vm_OCS (on hold)"
+            "description": "[⌘⇪]        →    _OCS (on hold)"
           },
           {
             "type": "basic",
@@ -5711,7 +5584,7 @@
                 ]
               }
             ],
-            "description": "[⌃⇧⇪]        →    vmCO__ (on hold)"
+            "description": "[⌃⇧⇪]        →    CO__ (on hold)"
           },
           {
             "type": "basic",
@@ -5732,7 +5605,7 @@
                 ]
               }
             ],
-            "description": "[⌃⌥⇪]        →    vmC__S (on hold)"
+            "description": "[⌃⌥⇪]        →    C__S (on hold)"
           },
           {
             "type": "basic",
@@ -5753,7 +5626,7 @@
                 ]
               }
             ],
-            "description": "[⌃⌘⇪]        →    vm_O_S (on hold)"
+            "description": "[⌃⌘⇪]        →    _O_S (on hold)"
           },
           {
             "type": "basic",
@@ -5774,7 +5647,7 @@
                 ]
               }
             ],
-            "description": "[⌘⌥⇪]        →    vm__CS (on hold)"
+            "description": "[⌘⌥⇪]        →    __CS (on hold)"
           },
           {
             "type": "basic",
@@ -5795,7 +5668,7 @@
                 ]
               }
             ],
-            "description": "[⌘⇧⇪]        →    vm_OC_ (on hold)"
+            "description": "[⌘⇧⇪]        →    _OC_ (on hold)"
           },
           {
             "type": "basic",
@@ -5816,7 +5689,7 @@
                 ]
               }
             ],
-            "description": "[⌥⇧⇪]        →    vmC_C_ (on hold)"
+            "description": "[⌥⇧⇪]        →    C_C_ (on hold)"
           },
           {
             "type": "basic",
@@ -5835,7 +5708,7 @@
                 "key_code": "left_option"
               }
             ],
-            "description": "[⌘⌃⇧⇪]        →    vm_O__ (on hold)"
+            "description": "[⌘⌃⇧⇪]        →    _O__ (on hold)"
           },
           {
             "type": "basic",
@@ -5854,7 +5727,7 @@
                 "key_code": "left_control"
               }
             ],
-            "description": "[⌘⌥⇧⇪]        →    vm__C_ (on hold)"
+            "description": "[⌘⌥⇧⇪]        →    __C_ (on hold)"
           },
           {
             "type": "basic",
@@ -5873,7 +5746,7 @@
                 "key_code": "left_command"
               }
             ],
-            "description": "[⌥⌃⇧⇪]        →    vmC___ (on hold)"
+            "description": "[⌥⌃⇧⇪]        →    C___ (on hold)"
           },
           {
             "type": "basic",
@@ -5892,7 +5765,7 @@
                 "key_code": "left_shift"
               }
             ],
-            "description": "[⌘⌥⌃⇪]        →    vm___S (on hold)"
+            "description": "[⌘⌥⌃⇪]        →    ___S (on hold)"
           },
           {
             "type": "basic",
@@ -5912,7 +5785,7 @@
                 "key_code": "vk_none"
               }
             ],
-            "description": "[⌘⌥⌃⇧⇪]        →    vm____ (on hold)"
+            "description": "[⌘⌥⌃⇧⇪]        →    ____ (on hold)"
           }
         ],
         "allowEmptyManipulators": false,

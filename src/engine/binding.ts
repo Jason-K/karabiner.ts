@@ -23,11 +23,11 @@ import {
   varTapTapHoldFrom,
 } from "../core/tap-hold";
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
-import { DEVICE_IDS } from "../data";
+import { DEVICE_IDS, isModifierKey } from "../data";
 import { karabinerDeviceId } from "./device-config";
-import { resolveModComboAlias } from "../data/key-aliases";
-import { isPointerButton, resolveButton } from "../data/mouse";
-import { resolveActionToEvents } from "./action-resolver";
+import { resolveActionToEvents, resolveModComboAlias } from "./action-resolver";
+import { isPointerButton, resolveButton } from "./binding-helpers";
+
 import {
   synthesizeManipulatorLabel,
   synthesizeRuleDescription,
@@ -87,6 +87,7 @@ export type Binding = {
   trigger: Trigger;
   timing?: {
     aloneMs?: number;
+    holdMs?: number;
     heldThresholdMs?: number;
     delayedMs?: number;
     simultaneousMs?: number;
@@ -224,12 +225,11 @@ export function triggerToFrom(trigger: Trigger): FromEvent {
   const from: Record<string, unknown> = isPointerButton(k)
     ? { pointing_button: resolveButton(k).button }
     : { key_code: k };
-  if (mandatory.length || optional.length) {
-    from.modifiers = {
-      ...(mandatory.length ? { mandatory } : {}),
-      ...(optional.length ? { optional } : {}),
-    };
-  }
+  const modifiersObj: Record<string, string[]> = {};
+  if (mandatory.length) modifiersObj.mandatory = mandatory;
+  if (optional.length) modifiersObj.optional = optional;
+  else if (!mandatory.length) modifiersObj.optional = [];
+  from.modifiers = modifiersObj;
   return from as FromEvent;
 }
 
@@ -593,36 +593,39 @@ function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const hold = g.hasHold
     ? g.holdDo
+    : isModifierKey(key)
+    ? []
     : defaultAlone.flatMap((a) => resolveActionToEvents(a));
   const manipulators = tapHold({
     key,
     alone,
     hold,
     timeoutMs: b.timing?.aloneMs,
-    thresholdMs: b.timing?.heldThresholdMs,
+    thresholdMs: b.timing?.holdMs ?? b.timing?.heldThresholdMs,
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();
-  if (mandatory.length || optional.length) {
-    manipulators.forEach((m: any) => {
-      m.from.modifiers = m.from.modifiers || {};
-      if (mandatory.length) m.from.modifiers.mandatory = mandatory;
-      if (optional.length) m.from.modifiers.optional = optional;
-    });
-  }
+  manipulators.forEach((m: any) => {
+    const modifiersObj: Record<string, string[]> = {};
+    if (mandatory.length) modifiersObj.mandatory = mandatory;
+    if (optional.length) modifiersObj.optional = optional;
+    else if (!mandatory.length) modifiersObj.optional = [];
+    m.from.modifiers = modifiersObj;
+  });
   return manipulators;
 }
 
 function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   const pointerKey = getTriggerKeys(b.trigger)[0]!;
   const { button } = resolveButton(pointerKey);
-  const from: Record<string, unknown> = { pointing_button: button };
   const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
-  if (mandatory.length || optional.length) {
-    from.modifiers = {
-      ...(mandatory.length ? { mandatory } : {}),
-      ...(optional.length ? { optional } : {}),
-    };
-  }
+  const modifiersObj: Record<string, string[]> = {};
+  if (mandatory.length) modifiersObj.mandatory = mandatory;
+  if (optional.length) modifiersObj.optional = optional;
+  else if (!mandatory.length) modifiersObj.optional = [];
+  const from: Record<string, unknown> = {
+    pointing_button: button,
+    modifiers: modifiersObj,
+  };
   const alone = g.hasRelease ? g.releaseDo : undefined;
   const hold = g.hasHold ? g.holdDo : undefined;
   return tapHoldFrom({
@@ -630,7 +633,7 @@ function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     alone,
     hold,
     timeoutMs: b.timing?.aloneMs,
-    thresholdMs: b.timing?.heldThresholdMs,
+    thresholdMs: b.timing?.holdMs ?? b.timing?.heldThresholdMs,
     eventOptions: b.eventOptions,
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();

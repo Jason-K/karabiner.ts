@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { HOME_DIR, PATHS, TIMINGS } from "../data";
-import { APP_BUNDLES } from "../data/app_bundles";
-import { CMDS } from "../data/commands";
-import { EXTERNAL_HKS } from "../data/external-hotkeys";
-import { URLS } from "../data/urls";
+import { APP_ID } from "../data/registry-app-ids";
+import { CMDS } from "../data/registry-cmds";
+import { COMBOS } from "../data/registry-combos";
+import { URLS } from "../data/registry-urls";
 import { tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
 
@@ -96,7 +96,7 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(APP_BUNDLES.outlook.name, "com.microsoft.Outlook");
+  assert.equal(APP_ID.outlook.name, "com.microsoft.Outlook");
   assert.equal(PATHS.dirHome.name, HOME_DIR);
   assert.equal(
     URLS.rayRecentFolders.name,
@@ -149,9 +149,9 @@ test("enter key hold mappings stay declarative", () => {
     trigger: { keys: ["keypad_enter"] },
     cases: [
       release(key("keypad_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_BUNDLES.excel)),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_ID.excel)),
       hold(key("f2", { repeat: false })).when(
-        condApp(APP_BUNDLES.excel),
+        condApp(APP_ID.excel),
       ),
     ],
   });
@@ -161,9 +161,9 @@ test("enter key hold mappings stay declarative", () => {
     trigger: { keys: ["return_or_enter"] },
     cases: [
       release(key("return_or_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_BUNDLES.excel)),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_ID.excel)),
       hold(key("f2", { repeat: false })).when(
-        condApp(APP_BUNDLES.excel),
+        condApp(APP_ID.excel),
       ),
     ],
   });
@@ -173,15 +173,10 @@ test("equals key hold mappings stay declarative", () => {
   const keypadEqualSign = findTapHold("keypad_equal_sign");
   assert.deepEqual(keypadEqualSign, {
     trigger: { keys: ["keypad_equal_sign"] },
-    timing: {
-      aloneMs: TIMINGS.delayHoldMs,
-      heldThresholdMs: TIMINGS.delayHoldMs,
-    },
     cases: [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", ["shift", "option"]),
-        key("c", ["left_command"]),
+        key("left_arrow", ["option", "shift"]),
         shell(CMDS.tpQuickDate),
       ]),
     ],
@@ -190,15 +185,10 @@ test("equals key hold mappings stay declarative", () => {
   const equalSign = findTapHold("equal_sign");
   assert.deepEqual(equalSign, {
     trigger: { keys: ["equal_sign"] },
-    timing: {
-      aloneMs: TIMINGS.delayHoldMs,
-      heldThresholdMs: TIMINGS.delayHoldMs,
-    },
     cases: [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", ["shift", "option"]),
-        key("c", ["left_command"]),
+        key("left_arrow", ["option", "shift"]),
         shell(CMDS.tpQuickDate),
       ]),
     ],
@@ -220,22 +210,22 @@ test("passwords quick fill mapping stays declarative", () => {
 test("tap-hold mappings keep expected anchor keys", () => {
   // Each findTapHold throws if the binding is absent.
   findTapHold("a");
-  findTapHold("q", ["vmCOCS"]);
-  findTapHold("left_arrow", ["vmCOCS"]);
-  findTapHold("right_arrow", ["vmCOCS"]);
-  findTapHold("spacebar", ["vmCOCS"]);
+  findTapHold("q", ["COCS"]);
+  findTapHold("left_arrow", ["COCS"]);
+  findTapHold("right_arrow", ["COCS"]);
+  findTapHold("spacebar", ["COCS"]);
   findTapHold("tab");
-  findTapHold("tab", ["vmCOCS"]);
-  findTapHold("keypad_1", ["vmCOCS"]);
-  findTapHold("keypad_3", ["vmCOCS"]);
-  findTapHold("keypad_5", ["vmCOCS"]);
-  findTapHold("keypad_7", ["vmCOCS"]);
-  findTapHold("keypad_9", ["vmCOCS"]);
+  findTapHold("tab", ["COCS"]);
+  findTapHold("keypad_1", ["COCS"]);
+  findTapHold("keypad_3", ["COCS"]);
+  findTapHold("keypad_5", ["COCS"]);
+  findTapHold("keypad_7", ["COCS"]);
+  findTapHold("keypad_9", ["COCS"]);
   findTapHold("s", ["right_option"]);
 });
 
-test("new vmCOCS rectangle mappings stay declarative", () => {
-  const left = findTapHold("left_arrow", ["vmCOCS"]);
+test("new COCS rectangle mappings stay declarative", () => {
+  const left = findTapHold("left_arrow", ["COCS"]);
   assert.deepEqual(phaseDo(left, "release"), [
     { type: "shell", command: CMDS.winLeftOrTop },
   ]);
@@ -247,12 +237,12 @@ test("new vmCOCS rectangle mappings stay declarative", () => {
     },
   ]);
 
-  const spacebar = findTapHold("spacebar", ["vmCOCS"]);
+  const spacebar = findTapHold("spacebar", ["COCS"]);
   assert.deepEqual(phaseDo(spacebar, "release"), [
     { type: "shell", command: CMDS.winMaxOrRestore },
   ]);
 
-  const keypad9 = findTapHold("keypad_9", ["vmCOCS"]);
+  const keypad9 = findTapHold("keypad_9", ["COCS"]);
   assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",

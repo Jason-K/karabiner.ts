@@ -1,18 +1,28 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_BUNDLES } from "../data/app_bundles";
+import { APP_ID } from "../data/registry-app-ids";
 import { pythonScriptCommand } from "../core/scripts";
 import {
-  buildCapsLockRule,
-  buildDisabledHotkeys,
-  buildHotkeyGuards,
+  capsLockChordConfig,
+  disabledHotkeys,
+  guardRules,
   mouseBindings,
 } from "../definitions";
-import { defineBindings, resolveActionToEvents } from "../engine";
+import {
+  defineBindings,
+  generateDoubleTapGuardRule,
+  generateModifierChordRules,
+  resolveActionToEvents,
+} from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
-import { MOD_COMBO } from "../core/mods";
+import { VMOD } from "../core/mods";
+
+const buildCapsLockRule = () => generateModifierChordRules(capsLockChordConfig);
+const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
+const buildHotkeyGuards = () => guardRules.map((g) => generateDoubleTapGuardRule(g));
+
 
 const fillPassword = modifiedSingleKeyTapHoldBindings.find(
   (b) =>
@@ -23,7 +33,7 @@ const fillPassword = modifiedSingleKeyTapHoldBindings.find(
 )!;
 
 const skimRemaps = modifiedSingleKeyTapHoldBindings.filter(
-  (b) => b.conditions?.some((c: any) => c.app === APP_BUNDLES.skim)
+  (b) => b.conditions?.some((c: any) => c.app === APP_ID.skim)
 );
 
 const buildLeftCommandRule = () =>
@@ -118,13 +128,19 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
       },
     },
   });
+
+  // Verify to_if_held_down emits left_command so modifier holds are sustained
+  const keyCodesInHold = (rule.manipulators[1].to_if_held_down ?? [])
+    .filter((e: any) => typeof e.key_code === "string")
+    .map((e: any) => e.key_code);
+  assert.deepEqual(keyCodesInHold, ["left_command"], "expected left_command in to_if_held_down");
 });
 
 test("caps lock factory keeps full complement behavior variants", () => {
   const rule = toRule(buildCapsLockRule());
   assert.equal(
     rule.description,
-    "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
+    "[⇪]        →    VM launcher / COC_ / COCS / CO_S (on hold)",
   );
   assert.equal(rule.manipulators.length, 16);
 });
@@ -248,16 +264,16 @@ test("home-end factory keeps four navigation mappings", () => {
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
-test("vmCOC_ plus rules factory keeps grouped mappings", () => {
+test("COC_ plus rules factory keeps grouped mappings", () => {
   const hyperLauncherBindings = modifiedSingleKeyTapHoldBindings.filter(
-    (b) => Array.isArray(b.trigger.modifiers) && b.trigger.modifiers.join(",") === MOD_COMBO.vmCOCS.join(",")
+    (b) => Array.isArray(b.trigger.modifiers) && b.trigger.modifiers.join(",") === VMOD.COCS.join(",")
   );
   const rules = toRules(defineBindings(hyperLauncherBindings));
   // "t" lives only in the tap-hold set now (launcher-t was removed to resolve
-  // the vmCOCS+t duplication), so the launcher has 4 entries.
+  // the COCS+t duplication), so the launcher has 4 entries.
   assert.equal(rules.length, 4);
-  // Launcher triggers carry the expanded vmCOCS modifiers, so the synthesized
-  // trigger segment is the symbol chord (not the "vmCOCS" alias literal).
+  // Launcher triggers carry the expanded COCS modifiers, so the synthesized
+  // trigger segment is the symbol chord (not the "COCS" alias literal).
   assert.ok(
     rules.every((r) => /^\[⌘⌥⌃⇧\]\+\[[^\]]+\]:\n---/.test(r.description)),
   );
@@ -281,16 +297,17 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const manipulator: any = rule.manipulators[0];
   assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",
+    modifiers: { optional: [] },
   });
   assert.deepEqual(manipulator?.to_if_alone, [
-    { key_code: "return_or_enter", modifiers: undefined },
+    { key_code: "return_or_enter", modifiers: undefined, repeat: false },
   ]);
 
   const appIfCond = manipulator?.conditions.find((c: any) => c.type === "frontmost_application_if");
   assert.deepEqual(appIfCond, {
     type: "frontmost_application_if",
     description: undefined,
-    bundle_identifiers: [APP_BUNDLES.onePiece.name],
+    bundle_identifiers: [APP_ID.onePiece.name],
   });
 });
 
@@ -335,7 +352,7 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
   assert.deepEqual(rules[1]?.manipulators[0]?.to, [
     {
       key_code: "left_arrow",
-      modifiers: ["left_command", "control", "shift"],
+      modifiers: ["command", "control", "shift"],
       repeat: false,
     },
   ]);
@@ -386,7 +403,7 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
   const vmCOCEvents = resolveActionToEvents({
     type: "key",
     key: "a",
-    modifiers: ["vmCOC_"],
+    modifiers: ["COC_"],
   });
   assert.deepEqual((vmCOCEvents[0] as any)?.key_code, "a");
   assert.deepEqual((vmCOCEvents[0] as any)?.modifiers, [
@@ -395,12 +412,12 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
     "control",
   ]);
 
-  const vmCOCSEvents = resolveActionToEvents({
+  const COCSEvents = resolveActionToEvents({
     type: "key",
     key: "b",
-    modifiers: ["vmCOCS"],
+    modifiers: ["COCS"],
   });
-  assert.deepEqual((vmCOCSEvents[0] as any)?.modifiers, [
+  assert.deepEqual((COCSEvents[0] as any)?.modifiers, [
     "command",
     "option",
     "control",
@@ -410,7 +427,7 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
   const vmCOSEvents = resolveActionToEvents({
     type: "key",
     key: "c",
-    modifiers: ["vmCO_S"],
+    modifiers: ["CO_S"],
   });
   assert.deepEqual((vmCOSEvents[0] as any)?.modifiers, [
     "command",
@@ -421,7 +438,7 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
   const mixedEvents = resolveActionToEvents({
     type: "key",
     key: "d",
-    modifiers: ["vmCOC_", "shift"],
+    modifiers: ["COC_", "shift"],
   });
   assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
     "command",
@@ -433,17 +450,17 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
 
 test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   const vmCases: Array<[string, string[]]> = [
-    ["vmCO__", ["command", "option"]],
-    ["vmC_C_", ["command", "control"]],
-    ["vmC__S", ["command", "shift"]],
-    ["vm_OC_", ["option", "control"]],
-    ["vm_O_S", ["option", "shift"]],
-    ["vm__CS", ["control", "shift"]],
-    ["vmCOC_", ["command", "option", "control"]],
-    ["vmCO_S", ["command", "option", "shift"]],
-    ["vmC_CS", ["command", "control", "shift"]],
-    ["vm_OCS", ["option", "control", "shift"]],
-    ["vmCOCS", ["command", "option", "control", "shift"]],
+    ["CO__", ["command", "option"]],
+    ["C_C_", ["command", "control"]],
+    ["C__S", ["command", "shift"]],
+    ["_OC_", ["option", "control"]],
+    ["_O_S", ["option", "shift"]],
+    ["__CS", ["control", "shift"]],
+    ["COC_", ["command", "option", "control"]],
+    ["CO_S", ["command", "option", "shift"]],
+    ["C_CS", ["command", "control", "shift"]],
+    ["_OCS", ["option", "control", "shift"]],
+    ["COCS", ["command", "option", "control", "shift"]],
   ];
 
   for (const [alias, expected] of vmCases) {

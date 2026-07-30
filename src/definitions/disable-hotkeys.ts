@@ -1,14 +1,15 @@
-import { APP_BUNDLES } from "../data";
-import { bind, condApp, defineBindings, from, noop, press, type Binding } from "../engine";
+import { APP_ID } from "../data";
+import { bind, condApp, from, noop, press, to, when, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
 export const disabledHotkeys: Binding[] = [
-  bind(from("h", ["left_command"]), press(noop())),
-  bind(from("h", ["left_command", "option"]), press(noop())),
-  bind(from("m", ["left_command", "option"]), press(noop())),
-  bind(from("d", ["left_command"]), press(noop()), {
-    conditions: [condApp(APP_BUNDLES.antinote)],
-  }),
+  bind(from("h", ["left_command"]), to(press(noop()))),
+  bind(from("h", ["left_command", "option"]), to(press(noop()))),
+  bind(from("m", ["left_command", "option"]), to(press(noop()))),
+  bind(
+    from("d", ["left_command"]),
+    to(press(noop())),
+    when(condApp(APP_ID.antinote)),
+  ),
 ];
 
-export const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);

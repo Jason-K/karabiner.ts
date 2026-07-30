@@ -4,7 +4,8 @@ import { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "../data";
 import {
   getModComboAliasCanonicalKey,
   isModComboAlias,
-} from "../data/key-aliases";
+} from "../engine/action-resolver";
+
 
 function normalizeToken(token: string): string {
   return token.trim().toLowerCase().replace(/[\s-]+/g, '_');

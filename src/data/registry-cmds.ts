@@ -1,7 +1,7 @@
+import { PATHS } from "./registry-paths";
 import type { CommandRef } from "./refs";
-import { PATHS } from "./paths";
-import { TIMINGS } from "./timings";
-import { URLS } from "./urls";
+import { TIMINGS } from "./settings-timings";
+import { URLS } from "./registry-urls";
 
 // ---------------------------------------------------------
 // Factory
@@ -38,6 +38,9 @@ const subCommands = {
 
   hsGetDisplayInfo: `'${PATHS.binHS.name}' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 
+  // RAYCAST
+  callRaycastExtension: `open -u raycast-x://extensions`,
+
   // TEXT PROCESSOR
   callTextProcessor: `'${PATHS.binUV.name}' --directory '${PATHS.dirTextProcessor.name}' run python '${PATHS.scriptTextProcessorCLI.name}'`,
 };
@@ -64,10 +67,7 @@ const Kill_Apps = {
     `${PATHS.binAppKill.name} --foreground`,
     "Kill foreground application",
   ),
-  killAllApps: cmdEntry(
-    `${PATHS.binAppKill.name} --all`,
-    "Kill all applications",
-  ),
+  killAllApps: cmdEntry(`${PATHS.binAppKill.name}`, "Kill all applications"),
 };
 
 const Hs_Functions = {
@@ -79,11 +79,11 @@ const Hs_Functions = {
     `${subCommands.callHammerspoon} 'FormatCutSeed()'`,
     "Format substrings within selection",
   ),
-}
+};
 
 const Typinator_Scripts = {
   typinatorNewRule: cmdEntry(
-    `${PATHS.binPythonTypinator.name} ${PATHS.scriptTypinatorNewRule.name}`,
+    `'${PATHS.binTypinatorVenv.name}' '${PATHS.scriptTypinatorNewRule.name}'`,
     "Create new Typinator rule",
   ),
   scriptTypinatorLastRule: cmdEntry(
@@ -101,7 +101,7 @@ const Spotify = {
 
 const Text_Processor = {
   tpQuickDate: cmdEntry(
-    `${subCommands.callTextProcessor} quick_date --source clipboard --dest paste`,
+    `${subCommands.callTextProcessor} quick_date --source cut --dest paste`,
     "Insert today's date in yyyy-mm-dd format at the cursor.",
   ),
   tpCaseUpper: cmdEntry(
@@ -155,14 +155,44 @@ const Windows = {
     `${subCommands.hsGetDisplayInfo}; local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'`,
     "Maximize or restore window",
   ),
-}
+};
+
+const Get_Recents = {
+  rayGetRecents: cmdEntry(
+    `${subCommands.callRaycastExtension}/jason/recents/recentCustom`,
+    "Get recent items from Raycast",
+  ),
+  getRecentDls: cmdEntry(
+    `${PATHS.scriptNewDLs.name} -a`,
+    "Get recent items from script",
+  ),
+  getRecentMods: cmdEntry(
+    `${PATHS.scriptNewDLs.name} -m`,
+    "Get recent mods from script",
+  ),
+  getNewFiles: cmdEntry(
+    `${PATHS.scriptNewDLs.name} -c`,
+    "Get new files from script",
+  ),
+};
 
 const App_Specific = {
   wordPrint: cmdEntry(
-    `${subCommands.getWordDocPath} && ${subCommands.callSendKeys} send "<c:p:command>"`,
+    `${subCommands.getWordDocPath} && ${subCommands.callSendKeys} -c "<c:p:command>"`,
     "get file path and print in word",
   ),
-}
+};
+
+const Misc_Scripts = {
+  screenshot_to_md: cmdEntry(
+    `'${PATHS.binSharedVenv.name}' '${PATHS.dirScripts.name}/ui/screenshot_to_md/shot_to_md.py'`,
+    "Take screenshot and convert to markdown",
+  ),
+  showPopclip: cmdEntry(
+    `osascript -e 'tell application "Popclip" to appear'`,
+    "Show Popclip at cursor position",
+  ),
+};
 
 // ---------------------------------------------------------
 // Registry
@@ -176,7 +206,9 @@ export const CMDS = {
   ...Spotify,
   ...Text_Processor,
   ...Windows,
+  ...Get_Recents,
   ...App_Specific,
+  ...Misc_Scripts,
 } as const;
 
 export type { CommandRef };

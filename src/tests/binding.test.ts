@@ -1,12 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_BUNDLES, PATHS } from "../data";
+import { APP_ID, PATHS } from "../data";
 import { resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
-    app: APP_BUNDLES.excel,
+    app: APP_ID.excel,
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
@@ -15,7 +15,7 @@ test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
 
 test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
   const c = resolveCondition({
-    app: PATHS.dirApplications,
+    app: PATHS.dirGApps,
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.file_paths, ["/Applications"]);
@@ -24,7 +24,7 @@ test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
 
 test("resolveCondition app + path if -> frontmost_application_if (AppRef and PathRef)", () => {
   const c = resolveCondition({
-    app: [APP_BUNDLES.excel, PATHS.dirApplications],
+    app: [APP_ID.excel, PATHS.dirGApps],
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
@@ -88,7 +88,7 @@ test("defineBindings remap: one press case -> single manipulator with to", () =>
   const built = rules[0] as any;
   assert.equal(built.ruleDescription, "[HOME]        →    Move to line start (on tap)");
   const m = built.manipulatorSources[0];
-  assert.deepEqual(m.from, { key_code: "home" });
+  assert.deepEqual(m.from, { key_code: "home", modifiers: { optional: [] } });
   assert.deepEqual(m.to, [{ key_code: "left_arrow", modifiers: ["left_command"] }]);
 });
 
@@ -126,7 +126,7 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
       description: "[A]        →    X (on hold)",
       trigger: { keys: ["a"] },
       timing: { aloneMs: 400, heldThresholdMs: 400 },
-      cases: [{ phase: "hold", do: [{ type: "key", key: "f18", modifiers: ["vmCOC_"], options: { repeat: false } }] }],
+      cases: [{ phase: "hold", do: [{ type: "key", key: "f18", modifiers: ["COC_"], options: { repeat: false } }] }],
     },
   ]);
   const built = rules[0] as any;
@@ -225,12 +225,12 @@ test("buildTapHold: whileHoldVar sets var on down + suppressCancelFallback empti
 
 test("resolveModifiers handles shorthand and explicit objects", () => {
   assert.deepEqual(resolveModifiers(undefined), { mandatory: [], optional: [] });
-  assert.deepEqual(resolveModifiers(["left_shift", "vmCO_S"]), {
+  assert.deepEqual(resolveModifiers(["left_shift", "CO_S"]), {
     mandatory: ["left_shift", "command", "option", "shift"],
     optional: [],
   });
   assert.deepEqual(
-    resolveModifiers({ mandatory: ["left_shift"], optional: ["vmCO_S"] }),
+    resolveModifiers({ mandatory: ["left_shift"], optional: ["CO_S"] }),
     {
       mandatory: ["left_shift"],
       optional: ["command", "option", "shift"],

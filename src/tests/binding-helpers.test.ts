@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveButton } from "../data/mouse";
-import { assertUniqueTriggers } from "../engine/binding-helpers";
+import { assertUniqueTriggers, resolveButton } from "../engine/binding-helpers";
 import type { Binding } from "../engine/binding";
 
 function bareHold(key: string): Binding {
@@ -22,7 +21,7 @@ test("assertUniqueTriggers: passes for distinct triggers", () => {
 });
 
 test("assertUniqueTriggers: throws on duplicate (order-independent mods)", () => {
-  const dup = [moddedTapHold("q", "vmCOCS"), moddedTapHold("q", "vmCOCS")];
+  const dup = [moddedTapHold("q", "COCS"), moddedTapHold("q", "COCS")];
   assert.throws(() => assertUniqueTriggers(dup), /Duplicate trigger/);
 });
 

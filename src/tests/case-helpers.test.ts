@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { APP_BUNDLES, URLS } from "../data";
+import { APP_ID, URLS } from "../data";
 import {
   bind,
   bindKeys,
@@ -12,7 +12,7 @@ import {
   copy,
   cut,
   doubleTap,
-  extHk,
+  combo,
   from,
   hold,
   key,
@@ -37,13 +37,13 @@ import {
 import { defineBindings } from "../engine/binding";
 
 test("to(), when(), options(), and timing() DSL helpers construct flexible bindings", () => {
-  const condSkim = condApp(APP_BUNDLES.skim);
-  const condExcel = condApp(APP_BUNDLES.excel);
+  const condSkim = condApp(APP_ID.skim);
+  const condExcel = condApp(APP_ID.excel);
 
   // 1. Single to() with when()
   const b1 = bind(
     from("h", ["left_command"]),
-    to(press(extHk({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }))),
+    to(press(combo({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }))),
     when(condSkim),
   );
 
@@ -53,7 +53,7 @@ test("to(), when(), options(), and timing() DSL helpers construct flexible bindi
 
   // 2. Multi-case to() without array brackets + timing() helper
   const b2 = bind(
-    from("left_arrow", ["vmCOCS"]),
+    from("left_arrow", ["COCS"]),
     to(
       release(shell("cmd1")),
       hold(openUrl("https://example.com", true)),
@@ -90,9 +90,9 @@ test("phase helpers produce expected Case objects", () => {
   assert.equal(p.phase, "press");
   assert.deepEqual(p.do, [{ type: "noop" }]);
 
-  const h = hold(openApp(APP_BUNDLES.ringCentral));
+  const h = hold(openApp(APP_ID.ringCentral));
   assert.equal(h.phase, "hold");
-  assert.deepEqual(h.do, [{ type: "app", ref: APP_BUNDLES.ringCentral }]);
+  assert.deepEqual(h.do, [{ type: "app", ref: APP_ID.ringCentral }]);
 
   const r = release(openUrl(URLS.rectWinMaximize, true));
   assert.equal(r.phase, "release");
@@ -104,14 +104,14 @@ test("phase helpers produce expected Case objects", () => {
 });
 
 test("fluent chaining methods on CaseBuilder", () => {
-  const caseObj = hold(openApp(APP_BUNDLES.ringCentral))
+  const caseObj = hold(openApp(APP_ID.ringCentral))
     .when(condVar({ name: "flag", varDesc: "flag" }, 1))
     .withDelayed()
     .withSuppress()
     .describe("custom case desc");
 
   assert.equal(caseObj.phase, "hold");
-  assert.deepEqual(caseObj.do, [{ type: "app", ref: APP_BUNDLES.ringCentral }]);
+  assert.deepEqual(caseObj.do, [{ type: "app", ref: APP_ID.ringCentral }]);
   assert.deepEqual(caseObj.conditions, [{ var: { name: "flag", varDesc: "flag" }, equals: 1 }]);
   assert.equal(caseObj.delayed, true);
   assert.equal(caseObj.suppress, true);
@@ -119,9 +119,9 @@ test("fluent chaining methods on CaseBuilder", () => {
 });
 
 test("ActionSpec wrappers create expected typed actions", () => {
-  assert.deepEqual(openApp(APP_BUNDLES.ringCentral), {
+  assert.deepEqual(openApp(APP_ID.ringCentral), {
     type: "app",
-    ref: APP_BUNDLES.ringCentral,
+    ref: APP_ID.ringCentral,
   });
 
   assert.deepEqual(openUrl(URLS.rectWinMaximize, true), {
@@ -130,15 +130,17 @@ test("ActionSpec wrappers create expected typed actions", () => {
     background: true,
   });
 
-  assert.deepEqual(key("f18", ["vmCOC_"]), {
+  assert.deepEqual(key("f18", ["COC_"]), {
     type: "key",
     key: "f18",
-    modifiers: ["vmCOC_"],
+    modifiers: ["COC_"],
+    options: { repeat: false },
   });
 
-  assert.deepEqual(extHk({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }), {
+  assert.deepEqual(combo({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }), {
     type: "externalHk",
     ref: { type: "external_hk", name: "test", modifiers: [], refDesc: "test" },
+    options: { repeat: false },
   });
 
   assert.deepEqual(cmd({ type: "command", name: "test", refDesc: "test" }), {
@@ -180,17 +182,17 @@ test("Condition wrappers create expected condition objects", () => {
     equals: 1,
   });
 
-  assert.deepEqual(condApp(APP_BUNDLES.excel), {
-    app: APP_BUNDLES.excel,
+  assert.deepEqual(condApp(APP_ID.excel), {
+    app: APP_ID.excel,
   });
 
-  assert.deepEqual(condApp(APP_BUNDLES.excel, false), {
-    app: APP_BUNDLES.excel,
+  assert.deepEqual(condApp(APP_ID.excel, false), {
+    app: APP_ID.excel,
     unless: true,
   });
 
-  assert.deepEqual(condNotApp(APP_BUNDLES.excel), {
-    app: APP_BUNDLES.excel,
+  assert.deepEqual(condNotApp(APP_ID.excel), {
+    app: APP_ID.excel,
     unless: true,
   });
 
@@ -207,7 +209,7 @@ test("defineBindings integration with case & action helpers", () => {
       description: "test binding",
       trigger: { keys: ["8"] },
       cases: [
-        hold(openApp(APP_BUNDLES.ringCentral)),
+        hold(openApp(APP_ID.ringCentral)),
         release(openUrl(URLS.rectWinsUnstashAll)),
       ],
     },
@@ -246,10 +248,10 @@ test("Trigger and Bind wrappers create expected Binding and Trigger objects", ()
     cases: [press(noop())],
   });
 
-  const b2 = bindKeys("8", hold(openApp(APP_BUNDLES.ringCentral)));
+  const b2 = bindKeys("8", hold(openApp(APP_ID.ringCentral)));
   assert.deepEqual(b2, {
     trigger: { keys: ["8"] },
-    cases: [hold(openApp(APP_BUNDLES.ringCentral))],
+    cases: [hold(openApp(APP_ID.ringCentral))],
   });
 
   const b3 = bindKeys("s", hold(openUrl(URLS.csxCaptureWindow)), ["shift"]);
@@ -306,7 +308,7 @@ test("defineBindings supports mixed key and pointer button simultaneous triggers
   const rules = defineBindings([
     bind(
       from(["spacebar", "right"], ["left_command"]),
-      press(openApp(APP_BUNDLES.excel)),
+      press(openApp(APP_ID.excel)),
     ),
   ]);
 
