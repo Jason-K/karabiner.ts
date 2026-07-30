@@ -45,6 +45,7 @@ export class CaseBuilder implements Case {
   declare description?: string;
   declare suppress?: boolean;
   declare delayed?: boolean;
+  declare guard?: boolean;
 
   constructor(
     phase: Phase,
@@ -58,6 +59,7 @@ export class CaseBuilder implements Case {
     delete this.description;
     delete this.suppress;
     delete this.delayed;
+    delete this.guard;
 
     if (conditions) {
       this.when(conditions);
@@ -109,6 +111,15 @@ export class CaseBuilder implements Case {
    */
   withDelayed(delayed = true): this {
     this.delayed = delayed;
+    return this;
+  }
+
+  /**
+   * Mark this case as a double-tap guard (require two presses within a timeout
+   * before firing). Routed to the guard arm of `buildManipulators`.
+   */
+  withGuard(guard = true): this {
+    this.guard = guard;
     return this;
   }
 
@@ -190,6 +201,28 @@ export function doubleTap(
   conditions?: Condition | Condition[],
 ): CaseBuilder {
   return new CaseBuilder("press", actions, conditions).withTapCount(2);
+}
+
+/**
+ * Defines a double-tap guard case: the combo fires only after the user presses
+ * the trigger combo twice within a timeout (300ms by default). The first press
+ * arms a guard variable; the second press fires the real combo.
+ *
+ * Distinct from `doubleTap()` — which fires on a clean double tap-RELEASE via
+ * the multi-tap state machine. A guard fires the combo immediately in `to` on
+ * the second press, with a delayed-action arming window.
+ *
+ * @param actions The combo to fire on the second press.
+ * @param conditions Optional conditions for this guard.
+ *
+ * @example
+ * guard(key("q", ["left_command"]))
+ */
+export function guard(
+  actions: Action | Action[],
+  conditions?: Condition | Condition[],
+): CaseBuilder {
+  return new CaseBuilder("press", actions, conditions).withGuard();
 }
 
 /**

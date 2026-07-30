@@ -13,6 +13,7 @@ import {
   cut,
   doubleTap,
   combo,
+  guard,
   from,
   hold,
   key,
@@ -318,6 +319,25 @@ test("defineBindings supports mixed key and pointer button simultaneous triggers
   assert.deepEqual(manip.from.simultaneous, [
     { key_code: "spacebar" },
     { pointing_button: "button2" },
+  ]);
+});
+
+test("guard() produces a press case marked guard with the action", () => {
+  const g = guard(key("q", ["left_command"]));
+  assert.equal(g.phase, "press");
+  assert.equal((g as any).guard, true);
+  assert.equal(g.do.length, 1);
+  const action = g.do[0] as any;
+  assert.equal(action.type, "key");
+  assert.equal(action.key, "q");
+  assert.deepEqual(action.modifiers, ["left_command"]);
+});
+
+test("guard() accepts conditions", () => {
+  const g = guard(key("d"), condApp({ type: "app", name: "com.x", refDesc: "X" }));
+  assert.equal((g as any).guard, true);
+  assert.deepEqual(g.conditions ?? [], [
+    { app: { type: "app", name: "com.x", refDesc: "X" } },
   ]);
 });
 

@@ -80,6 +80,7 @@ export type Case = {
   description?: string; // optional fragment; when set, used as this case's action line verbatim
   suppress?: boolean; // emit only `do`, no trigger fallback (this case's channel)
   delayed?: boolean; // multi-tap: route this tap1 release as a delayed single tap (to_if_invoked after the timer) instead of immediate (to_if_alone)
+  guard?: boolean; // double-tap guard: require two presses within a timeout before firing the combo (routes to buildGuard)
 };
 
 /** One binding = one description = one Karabiner rule. */
