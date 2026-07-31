@@ -2,8 +2,8 @@ import { APP_ID } from "../data";
 import {
   bind,
   condApp,
-  doubleTap,
   from,
+  guard,
   key,
   to,
   when,
@@ -12,12 +12,12 @@ import {
 
 export const globalGuardBinding: Binding = bind(
   from("q", ["left_command"]),
-  to(doubleTap(key("q", ["left_command"]))),
+  to(guard(key("q", ["left_command"]))),
 );
 
 export const antinoteGuardBinding: Binding = bind(
   from("d", ["left_command"]),
-  to(doubleTap(key("d", ["left_command"]))),
+  to(guard(key("d", ["left_command"]))),
   when(condApp(APP_ID.antinote)),
 );
 
