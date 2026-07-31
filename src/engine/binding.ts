@@ -24,7 +24,7 @@ import {
   varTapTapHoldFrom,
 } from "../core/tap-hold";
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
-import { DEVICES, isModifierKey } from "../data";
+import { DEVICES, isModifierKey, TIMINGS } from "../data";
 import { karabinerDeviceId } from "./device-config";
 import { resolveActionToEvents, resolveModComboAlias } from "./action-resolver";
 import { isPointerButton, resolveButton } from "./binding-helpers";
@@ -107,6 +107,8 @@ export type Binding = {
   suppress?: boolean; // emit only `do`, no trigger fallback (e.g. tap-hold default-alone)
   suppressCancelFallback?: boolean; // clear to_if_canceled (chord-modifier buttons)
   modWhileDown?: boolean; // modifier asserted while key is down (in `to`), no hold threshold / delayed action
+  guardVar?: string; // override the derived guard_<mod>_<key> variable name
+  guardMs?: number; // double-tap guard timeout (default TIMINGS.timeoutDoubleTapMs)
 };
 
 export function resolveCondition(c: Condition): unknown {
@@ -258,6 +260,7 @@ type ResolvedCase = {
   tapCount: number;
   phase: Phase;
   delayed: boolean;
+  guard: boolean;
   conditions: unknown[];
   rawConditions: Condition[]; // original Condition[] — for slice-labels (Phase 2)
   do: ToEvent[];
@@ -273,6 +276,7 @@ function resolveCases(
       tapCount: c.tapCount ?? 1,
       phase: c.phase ?? "press",
       delayed: c.delayed ?? false,
+      guard: c.guard ?? false,
       conditions: rawConditions.map(resolveCondition),
       rawConditions,
       do: (c.do ?? []).flatMap(resolveActionToEvents),
@@ -376,8 +380,78 @@ export function defineBindings(bindings: Binding[]): Rule[] {
   );
 }
 
+/**
+ * Derive the double-tap guard variable name from the trigger, matching the
+ * bespoke `deriveGuardVar` convention: `guard_<normalizedMod>_<key>`, where the
+ * modifier is the first mandatory trigger modifier with its `left_`/`right_`
+ * prefix stripped and `command→cmd`/`control→ctrl`/`option→opt` aliased. A
+ * trigger with no modifiers uses `<mod> = "none"`.
+ */
+function deriveGuardVar(trigger: Trigger): string {
+  const key = getTriggerKeys(trigger)[0] ?? "none";
+  const mods = resolveModifiers(trigger.modifiers).mandatory;
+  const firstMod = mods[0];
+  const normalized = firstMod
+    ? firstMod
+        .replace(/^(left|right)_/, "")
+        .replace("command", "cmd")
+        .replace("control", "ctrl")
+        .replace("option", "opt")
+    : "none";
+  return `guard_${normalized}_${key}`;
+}
+
+/**
+ * Double-tap guard arm: require two presses of the trigger combo within a
+ * timeout before firing the real combo. Emits two manipulators —
+ *   (1) second press (guard var = 1): fires the combo in `to`, resets the var;
+ *   (2) first press  (guard var = 0): arms the var, disarmed by a
+ *       `to_delayed_action` whether the delay invokes (timeout) or is canceled
+ *       (another key pressed).
+ * This bypasses `varTapTapHold`, which routes the combo into `to_if_alone` and
+ * cannot reproduce the guard's immediate fire-on-second-press semantics.
+ * Hoisted binding conditions attach to BOTH manipulators.
+ */
+function buildGuard(b: Binding, resolved: ResolvedCase[]): Manipulator[] {
+  const key = getTriggerKeys(b.trigger)[0]!;
+  const varName = b.guardVar ?? deriveGuardVar(b.trigger);
+  const timeoutMs = b.guardMs ?? TIMINGS.timeoutDoubleTapMs;
+  // The guard case carries the combo to fire on the second press.
+  const guardCase = resolved.find((c) => c.guard);
+  const combo = guardCase?.do ?? [];
+  const modifiersObj = fromModifiersObj(b.trigger);
+  // Hoisted conditions attach to both manipulators, device_if last.
+  const conds = deviceLast(resolved.flatMap((c) => c.conditions));
+
+  // Second press: var = 1 → fire combo, reset var.
+  const secondPress = map(key as any);
+  secondPress.condition({ type: "variable_if", name: varName, value: 1 } as any);
+  for (const e of combo) secondPress.to(e);
+  secondPress.to(toSetVar(varName, 0));
+  for (const c of conds) secondPress.condition(c as any);
+  (secondPress as any).from.modifiers = modifiersObj;
+
+  // First press: var = 0 → arm var, delayed-action disarms.
+  const firstPress = map(key as any);
+  firstPress.condition({ type: "variable_if", name: varName, value: 0 } as any);
+  firstPress.parameters({ "basic.to_delayed_action_delay_milliseconds": timeoutMs });
+  firstPress.to(toSetVar(varName, 1));
+  firstPress.toDelayedAction([toSetVar(varName, 0)], [toSetVar(varName, 0)]);
+  for (const c of conds) firstPress.condition(c as any);
+  (firstPress as any).from.modifiers = modifiersObj;
+
+  const built = [...secondPress.build(), ...firstPress.build()];
+  stampLabel(built, guardCase?.rawConditions);
+  return built as Manipulator[];
+}
+
 function buildManipulators(b: Binding): Manipulator[] {
   const resolved = resolveCases(b.cases, b.conditions);
+  if (resolved.some((c) => c.guard)) {
+    const manipulators = buildGuard(b, resolved);
+    stampDeviceScope(manipulators, b.trigger);
+    return manipulators;
+  }
   // A binding routes to the multiTap arm if any case has tapCount >= 2 OR the
   // binding declares `multiTap` config (e.g. a left-command multi-tap binding
   // sets `multiTap: {allowPassThrough, mods}` even when no tap/hold cases are

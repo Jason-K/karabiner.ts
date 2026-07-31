@@ -372,6 +372,43 @@ test("buildKeyTapHold: modWhileDown emits plain map().to().toIfAlone() (no delay
   assert.deepEqual(m.to_if_alone[0].key_code, "f15");
 });
 
+test("buildGuard: double-tap guard emits two-manipulator arm/fire pattern", () => {
+  const rules = defineBindings([
+    {
+      description: "guard test",
+      trigger: { keys: ["q"], modifiers: ["left_command"] },
+      cases: [
+        {
+          phase: "press",
+          guard: true,
+          do: [{ type: "key", key: "q", modifiers: ["left_command"] }],
+        },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulatorSources.length, 2, "guard emits two manipulators");
+  const [secondPress, firstPress] = built.manipulatorSources;
+  // var name derived: guard_cmd_q
+  const varName = "guard_cmd_q";
+  // SECOND press: var=1, fires the real combo in `to`, resets var
+  assert.deepEqual(secondPress.conditions[0], { type: "variable_if", name: varName, value: 1 });
+  // toSetVar emits extra undefined keys; check name/value directly.
+  assert.equal(secondPress.to[0].key_code, "q");
+  assert.equal(secondPress.to[1].set_variable.name, varName);
+  assert.equal(secondPress.to[1].set_variable.value, 0);
+  // mandatory from-modifiers
+  assert.deepEqual(secondPress.from.modifiers, { mandatory: ["left_command"] });
+  // FIRST press: var=0, arms guard, delayed-action disarms
+  assert.deepEqual(firstPress.conditions[0], { type: "variable_if", name: varName, value: 0 });
+  assert.equal(firstPress.to[0].set_variable.name, varName);
+  assert.equal(firstPress.to[0].set_variable.value, 1);
+  assert.deepEqual(firstPress.parameters, { "basic.to_delayed_action_delay_milliseconds": 300 });
+  assert.equal(firstPress.to_delayed_action.to_if_invoked[0].set_variable.name, varName);
+  assert.equal(firstPress.to_delayed_action.to_if_canceled[0].set_variable.name, varName);
+  assert.deepEqual(firstPress.from.modifiers, { mandatory: ["left_command"] });
+});
+
 test("buildKeyTapHold: modWhileDown without whileHoldVar omits all var signaling", () => {
   // Reachable but previously untested path: modWhileDown with no whileHoldVar
   // must not emit any set_variable / to_after_key_up events — the manipulator
