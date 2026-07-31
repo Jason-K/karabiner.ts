@@ -154,6 +154,8 @@ test("enter key hold mappings stay declarative", () => {
         condApp(APP_ID.excel),
       ),
     ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 
   const returnOrEnter = findTapHold("return_or_enter");
@@ -166,6 +168,8 @@ test("enter key hold mappings stay declarative", () => {
         condApp(APP_ID.excel),
       ),
     ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 });
 

@@ -1036,51 +1036,9 @@
                 "optional": []
               }
             },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "repeat": false,
-                "key_code": "keypad_equal_sign"
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "repeat": false,
-                "key_code": "left_arrow",
-                "modifiers": [
-                  "option",
-                  "shift"
-                ]
-              },
-              {
-                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "keypad_equal_sign"
-                }
-              ]
-            }
-          }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
-      },
-      {
-        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
-        "manipulatorSources": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "equal_sign",
-              "modifiers": {
-                "optional": []
-              }
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
             },
             "to_if_alone": [
               {
@@ -1104,13 +1062,51 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "keypad_equal_sign"
-                }
-              ]
+              "to_if_canceled": []
+            }
+          }
+        ],
+        "allowEmptyManipulators": false,
+        "conditions": []
+      },
+      {
+        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "manipulatorSources": [
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "equal_sign",
+              "modifiers": {
+                "optional": []
+              }
+            },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
+            },
+            "to_if_alone": [
+              {
+                "halt": true,
+                "repeat": false,
+                "key_code": "keypad_equal_sign"
+              }
+            ],
+            "to_if_held_down": [
+              {
+                "repeat": false,
+                "key_code": "left_arrow",
+                "modifiers": [
+                  "option",
+                  "shift"
+                ]
+              },
+              {
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": []
             }
           }
         ],
@@ -1214,6 +1210,10 @@
                 "optional": []
               }
             },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
+            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -1228,13 +1228,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "keypad_enter"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -1254,6 +1248,10 @@
                 "optional": []
               }
             },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
+            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -1269,13 +1267,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "keypad_enter"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -1302,6 +1294,10 @@
                 "optional": []
               }
             },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
+            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -1316,13 +1312,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "return_or_enter"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -1342,6 +1332,10 @@
                 "optional": []
               }
             },
+            "parameters": {
+              "basic.to_if_alone_timeout_milliseconds": 200,
+              "basic.to_if_held_down_threshold_milliseconds": 200
+            },
             "to_if_alone": [
               {
                 "halt": true,
@@ -1357,13 +1351,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "repeat": false,
-                  "key_code": "return_or_enter"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {

@@ -64,10 +64,13 @@ const symbolBindings: Binding[] = [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
         key("left_arrow", VMOD._O_S),
-        // key("c", ["left_command"]),
         shell(CMDS.tpQuickDate),
       ]),
     ),
+    options({
+      timing: { aloneMs: 200, holdMs: 200 },
+      suppressCancelFallback: true,
+    }),
   ),
   bind(
     from("equal_sign"),
@@ -75,10 +78,13 @@ const symbolBindings: Binding[] = [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
         key("left_arrow", VMOD._O_S),
-        // key("c", ["left_command"]),
         shell(CMDS.tpQuickDate),
       ]),
     ),
+    options({
+      timing: { aloneMs: 200, holdMs: 200 },
+      suppressCancelFallback: true,
+    }),
   ),
   bind(from("slash"), to(hold(combo(COMBOS.raycastHere2This)))),
   bind(from("grave_accent_and_tilde"), to(hold(combo(COMBOS.showPopclip)))),
@@ -92,6 +98,10 @@ const nonCharBindings: Binding[] = [
       hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
       hold(key("f2")).when(condApp(APP_ID.excel)),
     ),
+    options({
+      timing: { aloneMs: 200, holdMs: 200 },
+      suppressCancelFallback: true,
+    }),
   ),
   bind(
     from("return_or_enter"),
@@ -100,6 +110,10 @@ const nonCharBindings: Binding[] = [
       hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
       hold(key("f2")).when(condApp(APP_ID.excel)),
     ),
+    options({
+      timing: { aloneMs: 200, holdMs: 200 },
+      suppressCancelFallback: true,
+    }),
   ),
   bind(from("tab"), to(hold(key("mission_control", { halt: true, repeat: true })))),
   bind(
