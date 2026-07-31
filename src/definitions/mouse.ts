@@ -1,4 +1,4 @@
-import { toTrigger } from "../engine/resolvers";
+import { toTrigger } from "../engine/resolve-to-action";
 import { APP_ID, CMDS, COMBOS, DEVICES, PATHS, TIMINGS, URLS, VMOD } from "../data";
 import { mouseVars } from "../data/settings-mouse";
 import {

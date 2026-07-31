@@ -7,7 +7,7 @@ import {
   toUserCommand,
   toVarExpr,
   unlessVarExpr,
-} from "../engine/resolvers";
+} from "../engine/resolve-to-action";
 
 test("toVarExpr emits documented expression fields", () => {
   assert.deepEqual(toVarExpr("mode", "mode != 0 ? 0 : 1", "0"), {

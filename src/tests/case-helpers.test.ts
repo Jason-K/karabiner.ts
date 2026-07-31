@@ -34,8 +34,8 @@ import {
   when,
   options,
   timing,
-} from "../engine/case-helpers";
-import { defineBindings } from "../engine/binding";
+} from "../engine/emit-modifiers/case-helpers";
+import { defineBindings } from "../engine/emit-modifiers/binding";
 
 test("to(), when(), options(), and timing() DSL helpers construct flexible bindings", () => {
   const condSkim = condApp(APP_ID.skim);

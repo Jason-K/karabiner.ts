@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import type { SubLayerConfig } from './leader/types';
-import { HOME_DIR } from "../data";
+import type { SubLayerConfig } from '../leader/types';
+import { HOME_DIR } from "../../data";
 
 function getDefaultOutputPaths(home: string, prefix: string): string[] {
   const filename = `${prefix}_layers.json`;

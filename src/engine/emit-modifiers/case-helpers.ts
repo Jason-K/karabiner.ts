@@ -1,6 +1,6 @@
 import type { Modifier } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "./action-dsl";
-import type { AppRef, CommandRef, DeviceSpec, MapRef, PathRef, UrlRef, VarSpec } from "../data";
+import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "../action-dsl";
+import type { AppRef, CommandRef, DeviceSpec, MapRef, PathRef, UrlRef, VarSpec } from "../../data";
 import type { Binding, Case, Condition, Phase, SimOrder, Trigger, TriggerModifiers } from "./binding";
 
 /** Known standard Karabiner key codes for auto-completion. */

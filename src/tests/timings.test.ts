@@ -7,7 +7,7 @@ import {
   DEFAULT_PROFILE_TIMINGS,
 } from "../data";
 import { bind, from, hold, key, timing, to } from "../engine";
-import { defineBindings } from "../engine/binding";
+import { defineBindings } from "../engine/emit-modifiers/binding";
 
 test("timing constants export expected defaults", () => {
   assert.equal(DEFAULT_GLOBAL_SETTINGS.check_for_updates_on_startup, true);

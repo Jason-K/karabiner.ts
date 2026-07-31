@@ -5,7 +5,7 @@ import {
   ensurePathQuotingInCommand,
   ensurePathQuotingInManipulators,
   resolveActionToEvents,
-} from "../engine/resolvers";
+} from "../engine/resolve-to-action";
 
 test("ensurePathQuotingInCommand encloses unquoted paths in quotes", () => {
   assert.equal(

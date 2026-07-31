@@ -25,7 +25,7 @@ export type DeviceConfig = {
   settings?: DeviceConfigSetting;
 };
 
-import type { DeviceSpec } from "../data/refs";
+import type { DeviceSpec } from "../../data/refs";
 
 /**
  * Strip a `DeviceSpec` to the shape Karabiner accepts as a device identifier.

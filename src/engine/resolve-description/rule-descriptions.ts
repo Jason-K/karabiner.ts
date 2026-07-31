@@ -1,10 +1,10 @@
 export type RuleTrigger = 'tap' | 'hold' | 'multi-tap' | 'simultaneous';
 
-import { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "../data";
+import { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "../../data";
 import {
   getModComboAliasCanonicalKey,
   isModComboAlias,
-} from "./resolvers";
+} from "../resolve-to-action";
 
 
 function normalizeToken(token: string): string {

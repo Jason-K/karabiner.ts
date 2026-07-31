@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { APP_ID } from "../data/registry-app-ids";
 import { map } from "../data/registry-combos";
-import { toPy } from "../engine/resolvers";
+import { toPy } from "../engine/resolve-to-action";
 import {
   capsLockBaseBindings,
   disabledHotkeys,

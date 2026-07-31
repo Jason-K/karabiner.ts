@@ -1,4 +1,4 @@
-import { buttons, defaultButtonNames, type ButtonSpec } from "../data/settings-mouse";
+import { buttons, defaultButtonNames, type ButtonSpec } from "../../data/settings-mouse";
 import { getTriggerKeys, resolveModifiers, type Binding, type Trigger } from "./binding";
 
 function triggerSignature(t: Trigger): string {

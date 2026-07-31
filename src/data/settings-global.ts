@@ -1,4 +1,4 @@
-import type { FolderOpener } from "../engine/resolvers";
+import type { FolderOpener } from "../engine/resolve-to-action";
 
 export const FINDER_REPLACEMENT: FolderOpener = "qspace";
 

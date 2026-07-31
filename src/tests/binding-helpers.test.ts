@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assertUniqueTriggers, resolveButton } from "../engine/binding-helpers";
-import type { Binding } from "../engine/binding";
+import { assertUniqueTriggers, resolveButton } from "../engine/emit-modifiers/binding-helpers";
+import type { Binding } from "../engine/emit-modifiers/binding";
 
 function bareHold(key: string): Binding {
   return { trigger: { keys: [key] }, cases: [{ phase: "hold", do: [{ type: "noop" }] }] };

@@ -42,7 +42,11 @@ export type ActionSpec =
     type: "caseChange";
     operation: "lowercase" | "sentence_case" | "title_case" | "uppercase";
   }
-  | { type: "command"; ref: CommandRef; actionDesc?: string; }
+  | {
+    type: "command";
+    ref: CommandRef;
+    actionDesc?: string;
+  }
   | { type: "copy"; }
   | { type: "cut"; }
   | {

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { toFolder } from "../engine/resolvers";
+import { toFolder } from "../engine/resolve-to-action";
 
 test("bloom opener escapes spaces", () => {
   const command = toFolder("/Users/jason/My Folder", "bloom");

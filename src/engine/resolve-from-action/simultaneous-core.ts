@@ -5,7 +5,7 @@ import {
   type ToEvent,
 } from "karabiner.ts";
 import { varTapTapHoldFrom } from "./tap-hold";
-import { isPointerButton, resolveButton } from "./binding-helpers";
+import { isPointerButton, resolveButton } from "../emit-modifiers/binding-helpers";
 
 function mapSimKey(k: string): any {
   return isPointerButton(k) ? { pointing_button: resolveButton(k).button } : k;

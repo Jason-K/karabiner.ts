@@ -1,6 +1,6 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { formatRuleDescription } from "../rule-descriptions";
+import { formatRuleDescription } from "../resolve-description/rule-descriptions";
 import { TIMINGS } from "../../data";
 import {
   resolveActionToEvents,
@@ -8,12 +8,12 @@ import {
   toCmd,
   toLayerIndicator,
   toVarExpr,
-} from "../resolvers";
+} from "../resolve-to-action";
 import {
-    buildLayerDebugLogCommand,
-    getAllSublayerVars,
-    getNestedSublayerVarName,
-    getSublayerVarName,
+  buildLayerDebugLogCommand,
+  getAllSublayerVars,
+  getNestedSublayerVarName,
+  getSublayerVarName,
 } from './runtime';
 import type { LayerMappingConfig, LayerRuleOptions, SubLayerConfig } from './types';
 

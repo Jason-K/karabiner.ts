@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID, PATHS } from "../data";
-import { normalizeModifier, resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
+import { normalizeModifier, resolveCondition, triggerToFrom, resolveModifiers } from "../engine/emit-modifiers/binding";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
@@ -67,7 +67,7 @@ test("triggerToFrom simultaneous chord", () => {
   assert.deepEqual(from.modifiers, { optional: ["any"] });
 });
 
-import { defineBindings } from "../engine/binding";
+import { defineBindings } from "../engine/emit-modifiers/binding";
 
 test("defineBindings remap: one press case -> single manipulator with to", () => {
   const rules = defineBindings([
@@ -327,12 +327,12 @@ test("defineBindings: trigger with optional modifier resolves correctly", () => 
 test("Binding type accepts modWhileDown option", () => {
   // Type-level check: modWhileDown is an accepted Binding field. Compiles only
   // if the flag exists on the type. Default-omitted binding must still typecheck.
-  const withFlag: import("../engine/binding").Binding = {
+  const withFlag: import("../engine/emit-modifiers/binding").Binding = {
     trigger: { keys: ["caps_lock"] },
     modWhileDown: true,
     cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
   };
-  const withoutFlag: import("../engine/binding").Binding = {
+  const withoutFlag: import("../engine/emit-modifiers/binding").Binding = {
     trigger: { keys: ["caps_lock"] },
     cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
   };

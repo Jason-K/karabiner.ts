@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
-import { defineBindings } from "../engine/binding";
+import { defineBindings } from "../engine/emit-modifiers/binding";
 
 const RAYCAST_CLIPBOARD_HISTORY_URL =
   "raycast-x://extensions/raycast/clipboard-history/clipboard-history";
@@ -106,7 +106,7 @@ test("double-tap threshold is 300 ms", () => {
   for (const rule of builtRules()) {
     assert.equal(
       secondTapManip(rule).parameters[
-        "basic.to_if_held_down_threshold_milliseconds"
+      "basic.to_if_held_down_threshold_milliseconds"
       ],
       DOUBLE_TAP_THRESHOLD_MS,
     );

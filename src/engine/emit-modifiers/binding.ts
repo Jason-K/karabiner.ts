@@ -12,27 +12,27 @@ import {
   type SimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec } from "./action-dsl";
+import type { Action, ActionKeyModifier, ActionSpec } from "../action-dsl";
 import {
   simultaneousMultiTap,
   simultaneousTapHold,
-} from "./simultaneous-core";
+} from "../resolve-from-action/simultaneous-core";
 import {
   tapHold,
   tapHoldFrom,
   varTapTapHold,
   varTapTapHoldFrom,
-} from "./tap-hold";
-import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
-import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, isModifierKey, TIMINGS } from "../data";
-import { karabinerDeviceId } from "./device-config";
-import { resolveActionToEvents, resolveModComboAlias } from "./resolvers";
+} from "../resolve-from-action/tap-hold";
+import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../../data";
+import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, isModifierKey, TIMINGS } from "../../data";
+import { karabinerDeviceId } from "../resolve-from-action/device-config";
+import { resolveActionToEvents, resolveModComboAlias } from "../resolve-to-action";
 import { isPointerButton, resolveButton } from "./binding-helpers";
 
 import {
   synthesizeManipulatorLabel,
   synthesizeRuleDescription,
-} from "./description-synthesizer";
+} from "../resolve-description/description-synthesizer";
 
 /** When in the key lifecycle the case's action fires. Maps to a Karabiner output channel. */
 export type Phase = "press" | "release" | "hold";

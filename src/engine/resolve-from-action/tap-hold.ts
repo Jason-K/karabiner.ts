@@ -10,7 +10,7 @@ import {
   DEFAULT_PROFILE_TIMINGS,
   isModifierKey,
   TIMINGS,
-} from "../data";
+} from "../../data";
 
 /**
  * Helper to compute manipulator-level parameters ONLY for values that differ

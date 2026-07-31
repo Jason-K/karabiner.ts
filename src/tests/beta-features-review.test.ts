@@ -9,7 +9,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { map, toSetVar } from "karabiner.ts";
-import { ifVarExpr, toTrigger } from "../engine/resolvers";
+import { ifVarExpr, toTrigger } from "../engine/resolve-to-action";
 
 const mapAny = map as unknown as (...args: any[]) => any;
 
@@ -44,8 +44,8 @@ test.skip("to_if_other_key_pressed: option-tab remap (cmd-tab alternative)", () 
 
   assert(
     manipulator.to?.[0] &&
-      typeof manipulator.to[0] === "object" &&
-      "key_code" in manipulator.to[0],
+    typeof manipulator.to[0] === "object" &&
+    "key_code" in manipulator.to[0],
     "base case: should have key_code",
   );
   assert(

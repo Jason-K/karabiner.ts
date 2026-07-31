@@ -6,14 +6,14 @@ import { APP_ID } from "../data/registry-app-ids";
 import { CMDS } from "../data/registry-cmds";
 import { PATHS } from "../data/registry-paths";
 import { URLS } from "../data/registry-urls";
-import type { Binding } from "../engine/binding";
+import type { Binding } from "../engine/emit-modifiers/binding";
 import {
   describeAction,
   describeConditionGroup,
   describeTrigger,
   synthesizeManipulatorLabel,
   synthesizeRuleDescription,
-} from "../engine/description-synthesizer";
+} from "../engine/resolve-description/description-synthesizer";
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(
