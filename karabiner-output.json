@@ -3909,103 +3909,66 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[Q]:\n---\n\tOn Double Tap:\n\t\tAlways:\tEmit ⌘ + 'Q'",
+        "ruleDescription": "[⌘]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + 'Q'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
               "key_code": "q",
               "modifiers": {
-                "optional": [
-                  "any"
+                "mandatory": [
+                  "left_command"
                 ]
               }
             },
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "multi_tap_q",
+                "name": "guard_cmd_q",
                 "value": 1
               }
             ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "description": "multi_tap_q second tap (tap-tap / tap-tap-hold)",
-            "to": [],
-            "to_if_alone": [
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "q",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
               {
                 "set_variable": {
-                  "name": "multi_tap_q",
+                  "name": "guard_cmd_q",
                   "value": 0
                 }
               }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_q",
-                  "value": 0
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_q",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_q",
-                    "value": 0
-                  }
-                }
-              ]
-            }
+            ]
           },
           {
             "type": "basic",
             "from": {
               "key_code": "q",
               "modifiers": {
-                "optional": [
-                  "any"
+                "mandatory": [
+                  "left_command"
                 ]
               }
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_q",
+                "value": 0
+              }
+            ],
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300,
-              "basic.to_if_alone_timeout_milliseconds": 300
+              "basic.to_delayed_action_delay_milliseconds": 300
             },
-            "description": "multi_tap_q first tap (tap / tap-hold)",
             "to": [
               {
                 "set_variable": {
-                  "name": "multi_tap_q",
+                  "name": "guard_cmd_q",
                   "value": 1
-                }
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_q",
-                  "value": 1
-                }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_q",
-                  "value": 0
                 }
               }
             ],
@@ -4013,7 +3976,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "multi_tap_q",
+                    "name": "guard_cmd_q",
                     "value": 0
                   }
                 }
@@ -4021,7 +3984,7 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "multi_tap_q",
+                    "name": "guard_cmd_q",
                     "value": 0
                   }
                 }
@@ -4033,22 +3996,22 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Double Tap:\n\t\tIn Antinote:\tEmit ⌘ + 'D'",
+        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tEmit ⌘ + 'D'",
         "manipulatorSources": [
           {
             "type": "basic",
             "from": {
               "key_code": "d",
               "modifiers": {
-                "optional": [
-                  "any"
+                "mandatory": [
+                  "left_command"
                 ]
               }
             },
             "conditions": [
               {
                 "type": "variable_if",
-                "name": "multi_tap_d",
+                "name": "guard_cmd_d",
                 "value": 1
               },
               {
@@ -4058,84 +4021,54 @@
                 ]
               }
             ],
-            "parameters": {
-              "basic.to_if_alone_timeout_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300
-            },
-            "description": "In Antinote",
-            "to": [],
-            "to_if_alone": [
+            "to": [
+              {
+                "repeat": false,
+                "key_code": "d",
+                "modifiers": [
+                  "left_command"
+                ]
+              },
               {
                 "set_variable": {
-                  "name": "multi_tap_d",
+                  "name": "guard_cmd_d",
                   "value": 0
                 }
               }
             ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_d",
-                  "value": 0
-                }
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_d",
-                    "value": 0
-                  }
-                }
-              ],
-              "to_if_canceled": [
-                {
-                  "set_variable": {
-                    "name": "multi_tap_d",
-                    "value": 0
-                  }
-                }
-              ]
-            }
+            "description": "In Antinote"
           },
           {
             "type": "basic",
             "from": {
               "key_code": "d",
               "modifiers": {
-                "optional": [
-                  "any"
+                "mandatory": [
+                  "left_command"
                 ]
               }
             },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "guard_cmd_d",
+                "value": 0
+              },
+              {
+                "type": "frontmost_application_if",
+                "bundle_identifiers": [
+                  "com.chabomakers.Antinote"
+                ]
+              }
+            ],
             "parameters": {
-              "basic.to_delayed_action_delay_milliseconds": 300,
-              "basic.to_if_held_down_threshold_milliseconds": 300,
-              "basic.to_if_alone_timeout_milliseconds": 300
+              "basic.to_delayed_action_delay_milliseconds": 300
             },
-            "description": "In Antinote",
             "to": [
               {
                 "set_variable": {
-                  "name": "multi_tap_d",
+                  "name": "guard_cmd_d",
                   "value": 1
-                }
-              }
-            ],
-            "to_if_alone": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_d",
-                  "value": 1
-                }
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "set_variable": {
-                  "name": "multi_tap_d",
-                  "value": 0
                 }
               }
             ],
@@ -4143,7 +4076,7 @@
               "to_if_invoked": [
                 {
                   "set_variable": {
-                    "name": "multi_tap_d",
+                    "name": "guard_cmd_d",
                     "value": 0
                   }
                 }
@@ -4151,20 +4084,13 @@
               "to_if_canceled": [
                 {
                   "set_variable": {
-                    "name": "multi_tap_d",
+                    "name": "guard_cmd_d",
                     "value": 0
                   }
                 }
               ]
             },
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.chabomakers.Antinote"
-                ]
-              }
-            ]
+            "description": "In Antinote"
           }
         ],
         "allowEmptyManipulators": false,
