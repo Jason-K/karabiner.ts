@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { capsLockBindings } from "../definitions/caps-lock";
+import { capsLockBaseBindings, capsLockBindings } from "../definitions/caps-lock";
 import { defineBindings } from "../engine";
 
 function toRule(input: any): any {
@@ -9,12 +9,12 @@ function toRule(input: any): any {
 }
 
 test("capsLockBindings produces rules for base and all 15 variants", () => {
-  const rules = defineBindings(capsLockBindings).map(toRule);
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
   assert.equal(rules.length, 16); // 1 base + 15 variants
 });
 
 test("capsLockBindings base binding adds setVar and afterKeyUp for whileHoldVar", () => {
-  const rules = defineBindings(capsLockBindings).map(toRule);
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
   const baseRule: any = rules[0];
   const baseManip: any = baseRule.manipulators[0];
   assert.ok(
@@ -30,13 +30,14 @@ test("capsLockBindings base binding adds setVar and afterKeyUp for whileHoldVar"
 });
 
 test("capsLockBindings variant uses mandatory modifiers in from", () => {
-  const rules = defineBindings(capsLockBindings).map(toRule);
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
   const shiftVariant: any = rules[1].manipulators[0];
   assert.deepEqual(shiftVariant?.from?.modifiers?.mandatory, ["left_shift"]);
 });
 
 test("capsLockBindings can emit vk_none for the full modifier chord", () => {
-  const rules = defineBindings(capsLockBindings).map(toRule);
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
   const fullChordRule: any = rules[15].manipulators[0];
-  assert.equal(fullChordRule?.to?.[0]?.key_code, "vk_none");
+  const vkNone = fullChordRule?.to?.find((e: any) => e.key_code)?.key_code;
+  assert.equal(vkNone, "vk_none");
 });

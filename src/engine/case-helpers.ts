@@ -1,3 +1,4 @@
+import type { Modifier } from "karabiner.ts";
 import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "../core/action-dsl";
 import type { AppRef, CommandRef, DeviceSpec, ExternalHkRef, PathRef, UrlRef, VarSpec } from "../data";
 import type { Binding, Case, Condition, Phase, SimOrder, Trigger, TriggerModifiers } from "./binding";
@@ -964,9 +965,49 @@ export function condDevice(
 }
 
 /**
- * Creates an inverted device condition (applies unless hardware device matches).
+ * Generates hyper/vmod bindings for a given trigger key and subtractive modifiers.
+ * Emits the COCS set minus any specified subtractive modifiers.
+ * Produces both sequential and simultaneous trigger variants.
+ *
+ * @example
+ * vmod("caps_lock", ["left_shift"], capsVars.pressed)
  */
-export function condNotDevice(device: DeviceSpec): Condition {
-  return condDevice(device, true);
+export function vmod(
+  triggerKey: string,
+  subtractiveModifiers: Modifier[] = [],
+  whileHoldVar?: VarSpec,
+): Binding[] {
+  const cocs: Modifier[] = ["left_command", "left_option", "left_control", "left_shift"];
+  const remaining = cocs.filter((m) => !subtractiveModifiers.includes(m));
+
+  let primaryKey = "vk_none";
+  let otherMods: Modifier[] = [];
+  if (remaining.length > 0) {
+    primaryKey = remaining[0]!;
+    otherMods = remaining.slice(1);
+  }
+
+  const keyAction = press(key(primaryKey as any, otherMods as any, { repeat: true }));
+  const opts = options({
+    modWhileDown: true,
+    ...(whileHoldVar ? { whileHoldVar } : {}),
+  });
+
+  if (subtractiveModifiers.length === 0) {
+    return [
+      bind(
+        from(triggerKey as any),
+        to(keyAction, release(key("f15", cocs, { repeat: true }))),
+        opts,
+      ),
+    ];
+  }
+
+  return [
+    // Sequential variant (modifier pressed before triggerKey)
+    bind(from(triggerKey as any, subtractiveModifiers), to(keyAction), opts),
+    // Simultaneous variant (triggerKey and modifiers pressed together)
+    bind(from([triggerKey as any, ...subtractiveModifiers]), to(keyAction), opts),
+  ];
 }
 

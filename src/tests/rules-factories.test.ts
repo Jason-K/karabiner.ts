@@ -4,7 +4,7 @@ import test from "node:test";
 import { APP_ID } from "../data/registry-app-ids";
 import { pythonScriptCommand } from "../core/scripts";
 import {
-  capsLockBindings,
+  capsLockBaseBindings,
   disabledHotkeys,
   guardBindings,
   mouseBindings,
@@ -17,7 +17,7 @@ import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
 import { VMOD } from "../core/mods";
 
-const buildCapsLockRule = () => defineBindings(capsLockBindings);
+const buildCapsLockRule = () => defineBindings(capsLockBaseBindings);
 const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
 const buildHotkeyGuards = () => defineBindings(guardBindings);
 

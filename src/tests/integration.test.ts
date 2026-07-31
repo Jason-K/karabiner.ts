@@ -30,7 +30,7 @@ test("generated output includes all critical rule categories", () => {
 
   // Sample critical rules: tap-hold, special rules
   assert.ok(
-    descriptions.some((d: string) => d.endsWith("(on hold)")),
+    descriptions.some((d: string) => d.endsWith("(on hold)") || d.includes("On Hold:")),
     "Missing tap-hold rules",
   );
   assert.ok(

@@ -132,7 +132,11 @@ const functionKeyBindings: Binding[] = [
 ];
 
 const modifierKeyBindings: Binding[] = [
-  bind(from("fn"), to(hold(key("f5", ["COC_"])))),
+  bind(
+    from("fn"),
+    to(hold(key("f5", ["COC_"]))),
+    when(condNotVar(capsVars.pressed, 1)),
+  ),
   bind(
     from("left_command"),
     to(
@@ -155,6 +159,7 @@ const modifierKeyBindings: Binding[] = [
       hold(key("left_shift")),
       release(openUrl(URLS.rayClipboard)).withTapCount(2),
     ),
+    when(condNotVar(capsVars.pressed, 1)),
     options({
       multiTap: { allowPassThrough: true, mods: [] },
     }),
@@ -166,6 +171,7 @@ const modifierKeyBindings: Binding[] = [
       hold(key("right_shift")),
       release(openUrl(URLS.rayClipboard)).withTapCount(2),
     ),
+    when(condNotVar(capsVars.pressed, 1)),
     options({
       multiTap: { allowPassThrough: true, mods: [] },
     }),

@@ -4,7 +4,7 @@ import type { Binding } from "../engine";
 import { modifiedSingleKeyTapHoldBindings } from "./modified-single-key";
 import { singleKeyTapHoldBindings } from "./single-key";
 
-export { capsLockBindings } from "./caps-lock";
+export { capsLockBaseBindings, capsLockBindings } from "./caps-lock";
 export { disabledHotkeys } from "./disable-hotkeys";
 export { antinoteGuardBinding, globalGuardBinding, guardBindings } from "./guards";
 export { mouseBindings } from "./mouse";
