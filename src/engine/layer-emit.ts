@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import type { SubLayerConfig } from '../core/leader/types';
+import type { SubLayerConfig } from './leader/types';
 import { HOME_DIR } from "../data";
 
 function getDefaultOutputPaths(home: string, prefix: string): string[] {

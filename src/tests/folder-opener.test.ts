@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { getOpenFolderCommand } from "../core/folder-opener";
+import { getOpenFolderCommand } from "../engine/folder-opener";
 
 test("bloom opener escapes spaces", () => {
   const command = getOpenFolderCommand("/Users/jason/My Folder", "bloom");

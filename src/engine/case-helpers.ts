@@ -1,5 +1,5 @@
 import type { Modifier } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "../core/action-dsl";
+import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "./action-dsl";
 import type { AppRef, CommandRef, DeviceSpec, ExternalHkRef, PathRef, UrlRef, VarSpec } from "../data";
 import type { Binding, Case, Condition, Phase, SimOrder, Trigger, TriggerModifiers } from "./binding";
 
@@ -277,8 +277,6 @@ export function triggerPointer(
   };
 }
 
-export const keysTrigger = triggerKeys;
-export const pointerTrigger = triggerPointer;
 
 /** Input type accepted by the `from()` trigger builder function. */
 export type FromInput =
@@ -326,8 +324,6 @@ export function from(
   throw new Error(`Invalid trigger input passed to from(): ${JSON.stringify(input)}`);
 }
 
-export const fromKeys = triggerKeys;
-export const fromPointer = triggerPointer;
 
 /** Container for `to()` output cases wrapper. */
 export type ToWrapper = {

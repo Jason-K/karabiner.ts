@@ -12,19 +12,19 @@ import {
   type SimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec } from "../core/action-dsl";
+import type { Action, ActionKeyModifier, ActionSpec } from "./action-dsl";
 import {
   simultaneousMultiTap,
   simultaneousTapHold,
-} from "../core/simultaneous";
+} from "./simultaneous-core";
 import {
   tapHold,
   tapHoldFrom,
   varTapTapHold,
   varTapTapHoldFrom,
-} from "../core/tap-hold";
+} from "./tap-hold";
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
-import { DEVICES, isModifierKey, TIMINGS } from "../data";
+import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, isModifierKey, TIMINGS } from "../data";
 import { karabinerDeviceId } from "./device-config";
 import { resolveActionToEvents, resolveModComboAlias } from "./action-resolver";
 import { isPointerButton, resolveButton } from "./binding-helpers";
@@ -814,12 +814,16 @@ function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   };
   const alone = g.hasRelease ? g.releaseDo : undefined;
   const hold = g.hasHold ? g.holdDo : undefined;
+  // Fall back to mouse-specific defaults so pointer manipulators can be tuned
+  // independently from keyboard ones via DEFAULT_MOUSE_MANIPULATOR_TIMINGS.
+  const timeoutMs = b.timing?.aloneMs ?? DEFAULT_MOUSE_MANIPULATOR_TIMINGS.aloneMs;
+  const thresholdMs = b.timing?.holdMs ?? b.timing?.heldThresholdMs ?? DEFAULT_MOUSE_MANIPULATOR_TIMINGS.holdMs;
   return tapHoldFrom({
     from: from as FromEvent,
     alone,
     hold,
-    timeoutMs: b.timing?.aloneMs,
-    thresholdMs: b.timing?.holdMs ?? b.timing?.heldThresholdMs,
+    timeoutMs,
+    thresholdMs,
     eventOptions: b.eventOptions,
     ...(b.whileHoldVar ? { variable: b.whileHoldVar.name } : {}),
   }).build();

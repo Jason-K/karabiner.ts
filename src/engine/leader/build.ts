@@ -1,11 +1,11 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { setVarExpr } from "../../core/conditions";
-import { formatRuleDescription } from "../../core/rule-descriptions";
-import { cmd, layerIndicatorCommand } from '../../core/scripts';
-import { openApp } from '../../core/software';
+import { setVarExpr } from "../conditions";
+import { formatRuleDescription } from "../rule-descriptions";
+import { cmd, layerIndicatorCommand } from '../scripts';
+import { openApp } from '../software';
 import { TIMINGS } from "../../data";
-import { resolveActionToEvents } from "../../engine/action-resolver";
+import { resolveActionToEvents } from "../action-resolver";
 import {
     buildLayerDebugLogCommand,
     getAllSublayerVars,

@@ -5,7 +5,7 @@
 // import path from "node:path";
 
 // import { emitLayerDefinitions } from "../engine";
-// import type { SubLayerConfig } from "../core/leader";
+// import type { SubLayerConfig } from "../engine/leader";
 
 // const layers: SubLayerConfig[] = [
 //   {

@@ -1,4 +1,4 @@
-import { VMOD } from "../core/mods";
+import { VMOD } from "../data/key-aliases";
 import {
   APP_ID,
   CMDS,

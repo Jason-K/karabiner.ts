@@ -1,8 +1,8 @@
 import type { Manipulator, ToEvent } from "karabiner.ts";
 import { toKey } from "karabiner.ts";
 
-import type { Action, ActionSpec, AppTarget } from "../core/action-dsl";
-import { getOpenFolderCommand } from "../core/folder-opener";
+import type { Action, ActionSpec, AppTarget } from "./action-dsl";
+import { getOpenFolderCommand } from "./folder-opener";
 import { FINDER_REPLACEMENT } from "../data/settings-global";
 import {
   actHereCmd,
@@ -13,8 +13,8 @@ import {
   pythonScriptCommand,
   textProcessorCommand,
   withSleep,
-} from "../core/scripts";
-import { openApp } from "../core/software";
+} from "./scripts";
+import { openApp } from "./software";
 import type { Modifier } from "karabiner.ts";
 import { VMOD, type ModComboAlias } from "../data/key-aliases";
 

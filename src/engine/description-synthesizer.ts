@@ -1,6 +1,6 @@
 import type { ToEvent } from "karabiner.ts";
-import type { Action, ActionSpec } from "../core/action-dsl";
-import { keyTokenToLabel, modifierTokenToSymbols } from "../core/rule-descriptions";
+import type { Action, ActionSpec } from "./action-dsl";
+import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
 import { isPointerButton, resolveButton } from "./binding-helpers";
 import { expandModifiers } from "./action-resolver";
 import { getTriggerKeys, resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "./binding";

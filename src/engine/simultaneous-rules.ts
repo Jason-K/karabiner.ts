@@ -1,4 +1,5 @@
 import type { Rule } from "karabiner.ts";
+import type { ActionSpec } from "./action-dsl";
 
 import { defineBindings, resolveModifiers, type Binding, type Case, type SimOrder } from "./binding";
 
@@ -7,16 +8,16 @@ export type SimultaneousOptions = {
   key_down_order?: "insensitive" | "strict" | "strict_inverse";
   key_up_order?: "insensitive" | "strict" | "strict_inverse";
   key_up_when?: "any" | "all";
-  to_after_key_up?: import("../core/action-dsl").ActionSpec[];
+  to_after_key_up?: ActionSpec[];
 };
 
 export type SimultaneousConfig = {
   keys: string[];
   description: string;
-  alone?: import("../core/action-dsl").ActionSpec[];
-  hold?: import("../core/action-dsl").ActionSpec[];
-  tapTap?: import("../core/action-dsl").ActionSpec[];
-  tapTapHold?: import("../core/action-dsl").ActionSpec[];
+  alone?: ActionSpec[];
+  hold?: ActionSpec[];
+  tapTap?: ActionSpec[];
+  tapTapHold?: ActionSpec[];
   thresholdMs?: number;
   simultaneousOptions?: SimultaneousOptions;
   simultaneousThresholdMs?: number;

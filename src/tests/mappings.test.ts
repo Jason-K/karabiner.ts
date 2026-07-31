@@ -184,6 +184,8 @@ test("equals key hold mappings stay declarative", () => {
         shell(CMDS.tpQuickDate),
       ]),
     ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 
   const equalSign = findTapHold("equal_sign");
@@ -196,6 +198,8 @@ test("equals key hold mappings stay declarative", () => {
         shell(CMDS.tpQuickDate),
       ]),
     ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 });
 

@@ -4,7 +4,7 @@ import { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "../data";
 import {
   getModComboAliasCanonicalKey,
   isModComboAlias,
-} from "../engine/action-resolver";
+} from "./action-resolver";
 
 
 function normalizeToken(token: string): string {

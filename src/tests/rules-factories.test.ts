@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID } from "../data/registry-app-ids";
-import { pythonScriptCommand } from "../core/scripts";
+import { pythonScriptCommand } from "../engine/scripts";
 import {
   capsLockBaseBindings,
   disabledHotkeys,
@@ -15,7 +15,7 @@ import {
 } from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
-import { VMOD } from "../core/mods";
+import { VMOD } from "../data/key-aliases";
 
 const buildCapsLockRule = () => defineBindings(capsLockBaseBindings);
 const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);

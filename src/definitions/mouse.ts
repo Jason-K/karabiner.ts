@@ -1,4 +1,4 @@
-import { toFromEvent } from "../core/beta";
+import { toFromEvent } from "../engine/beta";
 import { APP_ID, CMDS, DEVICES, PATHS, TIMINGS, URLS, VMOD } from "../data";
 import { mouseVars } from "../data/mouse";
 import {

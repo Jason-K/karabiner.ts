@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import type { ActionSpec } from "../core/action-dsl";
+import type { ActionSpec } from "../engine/action-dsl";
 import { APP_ID } from "../data/registry-app-ids";
 import { CMDS } from "../data/registry-cmds";
 import { PATHS } from "../data/registry-paths";
