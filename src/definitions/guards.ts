@@ -1,9 +1,9 @@
 import { APP_ID } from "../data";
 import {
   bind,
-  condApp,
   from,
   guard,
+  ifApp,
   key,
   to,
   when,
@@ -18,7 +18,7 @@ export const globalGuardBinding: Binding = bind(
 export const antinoteGuardBinding: Binding = bind(
   from("d", ["left_command"]),
   to(guard(key("d", ["left_command"]))),
-  when(condApp(APP_ID.antinote)),
+  when(ifApp(APP_ID.antinote)),
 );
 
 export const guardBindings: Binding[] = [

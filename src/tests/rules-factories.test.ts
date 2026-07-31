@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID } from "../data/registry-app-ids";
-import { pythonScriptCommand } from "../engine/scripts";
+import { map } from "../data/registry-combos";
+import { toPy } from "../engine/resolvers";
 import {
   capsLockBaseBindings,
   disabledHotkeys,
@@ -15,7 +16,7 @@ import {
 } from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
-import { VMOD } from "../data/key-aliases";
+import { VMOD } from "../data/settings-keys";
 
 const buildCapsLockRule = () => defineBindings(capsLockBaseBindings);
 const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
@@ -322,8 +323,13 @@ test("mouse bindings build device-scoped manipulators via defineBindings", () =>
   });
   assert.deepEqual(rules[0]?.manipulators[0]?.to, [
     {
-      key_code: "down_arrow",
-      modifiers: ["control"],
+      key_code: "vk_mission_control",
+      modifiers: undefined,
+      repeat: false,
+    },
+    {
+      key_code: "vk_none",
+      modifiers: undefined,
       repeat: false,
     },
   ]);
@@ -440,6 +446,30 @@ test("resolveActionToEvents expands vm aliases in key action", () => {
   ]);
 });
 
+test("resolveActionToEvents resolves map sequence into multiple events", () => {
+  const seqHk = map(
+    [
+      ["g", ["COC_"]],
+      ["a", ["command"]],
+    ],
+    "sequence test"
+  );
+  const events = resolveActionToEvents({
+    type: "map",
+    ref: seqHk,
+  });
+
+  assert.equal(events.length, 2);
+  assert.deepEqual(events[0], {
+    key_code: "g",
+    modifiers: ["command", "option", "control"],
+  });
+  assert.deepEqual(events[1], {
+    key_code: "a",
+    modifiers: ["command"],
+  });
+});
+
 test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   const vmCases: Array<[string, string[]]> = [
     ["CO__", ["command", "option"]],
@@ -469,20 +499,20 @@ test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   }
 });
 
-test("pythonScriptCommand builds uv run invocation", () => {
-  const bare = pythonScriptCommand("~/Scripts/foo.py");
+test("toPy builds uv run invocation", () => {
+  const bare = toPy("~/Scripts/foo.py");
   assert.match(bare, /uv run/);
   assert.match(bare, /\$HOME\/Scripts\/foo\.py/);
   assert.doesNotMatch(bare, /--python/);
 
-  const withVenv = pythonScriptCommand("~/Scripts/bar.py", {
+  const withVenv = toPy("~/Scripts/bar.py", {
     venv: "~/Scripts/.venv/shared_venv",
   });
   assert.match(withVenv, /--python/);
   assert.match(withVenv, /shared_venv\/bin\/python/);
   assert.match(withVenv, /\$HOME\/Scripts\/bar\.py/);
 
-  const withArgs = pythonScriptCommand("~/Scripts/baz.py", {
+  const withArgs = toPy("~/Scripts/baz.py", {
     args: ["--source", "clipboard"],
   });
   assert.match(withArgs, /'--source'/);

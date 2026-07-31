@@ -2,7 +2,7 @@ import type { ToEvent } from "karabiner.ts";
 import type { Action, ActionSpec } from "./action-dsl";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
 import { isPointerButton, resolveButton } from "./binding-helpers";
-import { expandModifiers } from "./action-resolver";
+import { expandModifiers } from "./resolvers";
 import { getTriggerKeys, resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "./binding";
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
@@ -41,8 +41,16 @@ export function describeAction(action: ActionSpec): string {
       return `Wrap selection in ${action.operation}`;
     case "key":
       return withActionDesc(describeKeyAction(action), action.actionDesc);
-    case "externalHk":
-      return withActionDesc(`externalHk '${action.ref.refDesc}'`, action.actionDesc);
+    case "button":
+      return withActionDesc(`Click button '${action.button}'`, action.actionDesc);
+    case "map": {
+      const descName =
+        typeof action.ref === "string"
+          ? action.ref
+          : action.ref?.refDesc ??
+            (Array.isArray(action.ref?.name) ? action.ref.name[0] : action.ref?.name);
+      return withActionDesc(`map '${descName}'`, action.actionDesc);
+    }
     case "url": {
       const url = action.url;
       if (typeof url === "string") {
@@ -123,10 +131,11 @@ const ACTION_SPEC_TYPES = new Set([
   "folder",
   "command",
   "actHere",
+  "button",
   "caseChange",
   "wrapString",
   "key",
-  "externalHk",
+  "map",
   "url",
   "shell",
   "python",

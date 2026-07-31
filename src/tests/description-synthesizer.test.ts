@@ -79,20 +79,20 @@ test("describeAction: actHere / caseChange / wrapString", () => {
   );
 });
 
-test("describeAction: externalHk", () => {
+test("describeAction: map", () => {
   const ref = {
-    type: "external_hk" as const,
+    type: "map" as const,
     name: "f",
     modifiers: ["command", "option"],
     refDesc: "Raycast Focus Mode",
   };
   assert.equal(
-    describeAction({ type: "externalHk", ref }),
-    "externalHk 'Raycast Focus Mode'",
+    describeAction({ type: "map", ref }),
+    "map 'Raycast Focus Mode'",
   );
   assert.equal(
-    describeAction({ type: "externalHk", ref, actionDesc: "toggle" }),
-    "externalHk 'Raycast Focus Mode' | toggle",
+    describeAction({ type: "map", ref, actionDesc: "toggle" }),
+    "map 'Raycast Focus Mode' | toggle",
   );
 });
 

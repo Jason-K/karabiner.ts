@@ -1,5 +1,5 @@
 import { APP_ID } from "../data";
-import { bind, condApp, from, noop, press, to, when, type Binding } from "../engine";
+import { bind, from, ifApp, noop, press, to, when, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
 export const disabledHotkeys: Binding[] = [
@@ -9,7 +9,7 @@ export const disabledHotkeys: Binding[] = [
   bind(
     from("d", ["left_command"]),
     to(press(noop())),
-    when(condApp(APP_ID.antinote)),
+    when(ifApp(APP_ID.antinote)),
   ),
 ];
 

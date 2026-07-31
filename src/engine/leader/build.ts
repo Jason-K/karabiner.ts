@@ -1,11 +1,14 @@
 import type { ToEvent } from 'karabiner.ts';
 import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
-import { setVarExpr } from "../conditions";
 import { formatRuleDescription } from "../rule-descriptions";
-import { cmd, layerIndicatorCommand } from '../scripts';
-import { openApp } from '../software';
 import { TIMINGS } from "../../data";
-import { resolveActionToEvents } from "../action-resolver";
+import {
+  resolveActionToEvents,
+  toApp,
+  toCmd,
+  toLayerIndicator,
+  toVarExpr,
+} from "../resolvers";
 import {
     buildLayerDebugLogCommand,
     getAllSublayerVars,
@@ -34,13 +37,13 @@ function buildSublayerManipulators(
     }
     // Legacy single action support (backward compatible)
     else if (config.openAppOpts) {
-      events.push(openApp(config.openAppOpts));
+      events.push(toApp(config.openAppOpts));
     } else if (config.toEvents) {
       events.push(...config.toEvents);
     } else if (config.path) {
-      events.push(cmd(`open '${config.path}'`));
+      events.push(toCmd(`open '${config.path}'`));
     } else if (config.command) {
-      events.push(cmd(config.command));
+      events.push(toCmd(config.command));
     } else if (config.stickyModifier) {
       // Toggle sticky modifier using a/s/d/f
       const modMap: Record<string, string> = {
@@ -62,7 +65,7 @@ function buildSublayerManipulators(
 
     // Increment usage counter if configured (Phase 3)
     if (config.usageCounterVar) {
-      events.push(setVarExpr(config.usageCounterVar, `{{ ${config.usageCounterVar} + 1 }}`));
+      events.push(toVarExpr(config.usageCounterVar, `{{ ${config.usageCounterVar} + 1 }}`));
     }
 
     // Clear the sublayer variable after action only if releaseLayer is true and this is not a sticky toggle
@@ -114,7 +117,7 @@ export function generateLayerRules(
     .toIfHeldDown([
       ...leaderHoldEvents,
       toSetVar(leaderVar, 1),
-      layerIndicatorCommand("show", indicatorRootLayer),
+      toLayerIndicator("show", indicatorRootLayer),
     ])
     .toAfterKeyUp([
       toSetVar(leaderVar, 0),
@@ -124,7 +127,7 @@ export function generateLayerRules(
       toStickyModifier("left_option", "off"),
       toStickyModifier("left_command", "off"),
       toStickyModifier("left_control", "off"),
-      layerIndicatorCommand("hide"),
+      toLayerIndicator("hide"),
     ])
     .toDelayedAction(
       [],
@@ -159,8 +162,8 @@ export function generateLayerRules(
           toSetVar(sublayerVar, 1),
           toSetVar(leaderVar, 0),
           // Record activation timestamp (Phase 3 expression support)
-          setVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
-          layerIndicatorCommand('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}`)
+          toVarExpr(sublayerActivateTimeVar, '{{ system.now.milliseconds }}'),
+          toLayerIndicator('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}`)
         ])
         .build()
     );
@@ -193,8 +196,8 @@ export function generateLayerRules(
           .to([
             toSetVar(nestedVar, 1),
             toSetVar(sublayerVar, 0),
-            setVarExpr(nestedActivateTimeVar, '{{ system.now.milliseconds }}'),
-            layerIndicatorCommand('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`)
+            toVarExpr(nestedActivateTimeVar, '{{ system.now.milliseconds }}'),
+            toLayerIndicator('show', `${indicatorRootLayer}_${layerKey.toUpperCase()}_${subLayer.layerKey.toUpperCase()}`)
           ])
           .build()
       );
@@ -238,7 +241,7 @@ export function generateLayerRules(
     }
 
     return [
-      cmd(buildLayerDebugLogCommand(`[leader-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
+      toCmd(buildLayerDebugLogCommand(`[leader-layer] swallowed unmapped key in ${stateName}`, debugLogPath)),
       toNone(),
     ];
   };

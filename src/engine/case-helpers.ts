@@ -1,6 +1,6 @@
 import type { Modifier } from "karabiner.ts";
 import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "./action-dsl";
-import type { AppRef, CommandRef, DeviceSpec, ExternalHkRef, PathRef, UrlRef, VarSpec } from "../data";
+import type { AppRef, CommandRef, DeviceSpec, MapRef, PathRef, UrlRef, VarSpec } from "../data";
 import type { Binding, Case, Condition, Phase, SimOrder, Trigger, TriggerModifiers } from "./binding";
 
 /** Known standard Karabiner key codes for auto-completion. */
@@ -692,13 +692,13 @@ export function key(
  * @example
  * combo(COMBOS.focusWinRight)
  */
-export function combo(
-  ref: ExternalHkRef,
+export function map(
+  ref: MapRef,
   options?: KeyOptions,
   actionDesc?: string,
 ): ActionSpec {
   return {
-    type: "externalHk",
+    type: "map",
     ref,
     options: {
       ...options,
@@ -891,6 +891,7 @@ export function condVar(
     ...(unless ? { unless } : {}),
   };
 }
+export const ifVar = condVar;
 
 /**
  * Creates an inverted variable condition (rule applies unless variable equals specified value).
@@ -904,6 +905,7 @@ export function condNotVar(
 ): Condition {
   return condVar(varSpec, equals, true);
 }
+export const unlessVar = condNotVar;
 
 /**
  * Creates an app condition (rule applies only when specified app is active/foremost).
@@ -924,6 +926,7 @@ export function condApp(
     ...(!isForemost ? { unless: true } : {}),
   };
 }
+export const ifApp = condApp;
 
 /**
  * Creates an inverted app condition (rule applies unless specified app is active).
@@ -936,6 +939,7 @@ export function condNotApp(
 ): Condition {
   return condApp(app, false);
 }
+export const unlessApp = condNotApp;
 
 /**
  * Creates a device condition (rule applies only to specified hardware device).
@@ -958,6 +962,10 @@ export function condDevice(
     device,
     ...(unless ? { unless } : {}),
   };
+}
+export const ifDevice = condDevice;
+export function unlessDevice(device: DeviceSpec): Condition {
+  return condDevice(device, true);
 }
 
 /**

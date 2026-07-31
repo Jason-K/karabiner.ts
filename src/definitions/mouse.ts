@@ -1,6 +1,6 @@
-import { toFromEvent } from "../engine/beta";
-import { APP_ID, CMDS, DEVICES, PATHS, TIMINGS, URLS, VMOD } from "../data";
-import { mouseVars } from "../data/mouse";
+import { toTrigger } from "../engine/resolvers";
+import { APP_ID, CMDS, COMBOS, DEVICES, PATHS, TIMINGS, URLS, VMOD } from "../data";
+import { mouseVars } from "../data/settings-mouse";
 import {
   bind,
   condApp,
@@ -8,8 +8,14 @@ import {
   condNotVar,
   condVar,
   from,
+  ifApp,
+  ifDevice,
+  ifVar,
+  unlessApp,
+  unlessVar,
   hold,
   key,
+  map,
   openUrl,
   options,
   press,
@@ -38,8 +44,7 @@ export const mouseBindings: Binding[] = [
     from("shift_button"),
     to(
       // override (right button held): immediate down_arrow
-      press(key("down_arrow", ["control"], { repeat: false }))
-        .when(condVar(mouseVars.rightButtonPressed, 1)),
+      press(map(COMBOS.showMissionControl)).when(ifVar(mouseVars.rightButtonPressed, 1)),
       release(key("up_arrow", ["control"])),
       hold([
         { pointing_button: "button1" },
@@ -245,7 +250,7 @@ export const mouseBindings: Binding[] = [
         condApp(APP_ID.onePiece),
         condApp(APP_ID.onePiecePreferences, false),
       ),
-      hold([toFromEvent()]),
+      hold([toTrigger()]),
     ),
     when(
       condDevice(DEVICES.g502X),

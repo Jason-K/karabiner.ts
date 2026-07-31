@@ -1,4 +1,5 @@
 import type { SubLayerConfig } from './types';
+import { normalizeShellPath, shellDoubleQuote } from '../utils';
 
 export function getSublayerVarName(prefix: string, layerKey: string): string {
   return `${prefix}_${layerKey}_sublayer`;
@@ -6,17 +7,6 @@ export function getSublayerVarName(prefix: string, layerKey: string): string {
 
 export function getNestedSublayerVarName(prefix: string, layerKey: string, nestedLayerKey: string): string {
   return `${prefix}_${layerKey}_${nestedLayerKey}_sublayer`;
-}
-
-function normalizeShellPath(inputPath: string): string {
-  if (inputPath.startsWith('~/')) {
-    return `$HOME/${inputPath.slice(2)}`;
-  }
-  return inputPath;
-}
-
-function shellDoubleQuote(input: string): string {
-  return `"${input.replace(/"/g, '\\"')}"`;
 }
 
 export function buildLayerDebugLogCommand(message: string, logPath: string): string {

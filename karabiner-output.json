@@ -301,7 +301,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show busycal popup'",
+        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show busycal popup'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -641,7 +641,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show popclip'",
+        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -840,7 +840,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show kitty quake terminal'",
+        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show kitty quake terminal'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1114,7 +1114,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'raycast here2this'",
+        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'raycast here2this'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -1157,7 +1157,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'show popclip'",
+        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2766,7 +2766,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the right'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the right'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2824,7 +2824,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the bottom'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the bottom'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2882,7 +2882,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\texternalHk 'highlight in skim'",
+        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'highlight in skim'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2963,7 +2963,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\texternalHk 'restore minimized windows'",
+        "ruleDescription": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'restore minimized windows'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3012,7 +3012,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun command 'get file path and print in word'\n\tOn Hold:\n\t\tAlways:\texternalHk 'show Popclip toolbar'",
+        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun command 'get file path and print in word'\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3078,11 +3078,12 @@
             "to_if_held_down": [
               {
                 "repeat": false,
-                "key_code": "p",
+                "key_code": "f9",
                 "modifiers": [
                   "command",
                   "option",
-                  "control"
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -3104,7 +3105,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the left'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the left'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3162,7 +3163,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\texternalHk 'focus window to the top'",
+        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the top'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3365,7 +3366,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\texternalHk 'underline in skim'",
+        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'underline in skim'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3715,7 +3716,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\texternalHk 'activate next tab in Zen'",
+        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate next tab in Zen'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -3792,7 +3793,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\texternalHk 'activate previous tab in Zen'",
+        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate previous tab in Zen'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4129,7 +4130,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tEmit ⌃ + '↓'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
+        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tmap 'show mission control'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -4139,10 +4140,11 @@
             "to": [
               {
                 "repeat": false,
-                "key_code": "down_arrow",
-                "modifiers": [
-                  "control"
-                ]
+                "key_code": "vk_mission_control"
+              },
+              {
+                "repeat": false,
+                "key_code": "vk_none"
               }
             ],
             "description": "Right button held",

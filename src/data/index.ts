@@ -6,7 +6,7 @@
 
 // INTERNAL SETTINGS
 export type { DeviceSpec, RefSpec, RefSpecType, VarSpec } from "./refs";
-export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./ui-labels";
+export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./settings-descriptions";
 
 // KARABINER SETTINGS
 export { DEFAULT_GLOBAL_SETTINGS } from "./settings-global";
@@ -29,9 +29,9 @@ export {
 // REGISTRIES FOR REFERENC IN DEFINITIONS/BINDINGS
 export { DEVICES } from "./registry-devices";
 export { KE_VAR_VALUES, KE_VARS, type VarRef } from "./registry-vars";
-export { VMOD, MODIFIER_KEY_CODES, isModifierKey } from "./key-aliases";
+export { VMOD, MODIFIER_KEY_CODES, isModifierKey } from "./settings-keys";
 export { APP_ID, PW_IDS, type AppRef } from "./registry-app-ids";
 export { CMDS, type CommandRef } from "./registry-cmds";
-export { COMBOS, type ExternalHkRef, type HkRef } from "./registry-combos";
+export { COMBOS, map, type Map, type HkInput, type MapRef } from "./registry-combos";
 export { HOME_DIR, PATHS, type PathRef } from "./registry-paths";
 export { URLS, type UrlRef } from "./registry-urls";

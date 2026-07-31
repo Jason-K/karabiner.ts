@@ -5,7 +5,7 @@ export type FolderOpener = "bloom" | "qspace" | "finder";
  * Generate a shell command to open a folder, using the given opener app.
  * Defaults to the system Finder when no opener is specified.
  */
-export const getOpenFolderCommand = (
+export const toFolder = (
   folderPath: string,
   opener: FolderOpener = "finder",
 ): string => {

@@ -1,9 +1,9 @@
 import type { ToEvent } from "karabiner.ts";
 import type { AppRef } from "../data/registry-app-ids";
 import type { CommandRef } from "../data/registry-cmds";
-import type { ModComboAlias, ModKey } from "../data/key-aliases";
+import type { ModComboAlias, ModKey } from "../data/settings-keys";
 import type { PathRef } from "../data/registry-paths";
-import type { ExternalHkRef, VarSpec } from "../data/refs";
+import type { MapRef, VarSpec } from "../data/refs";
 import type { UrlRef } from "../data/registry-urls";
 
 /** Ref accepted by the "app" action: a typed AppRef (bundle ID), a typed
@@ -13,6 +13,10 @@ export type AppTarget = AppRef | PathRef | string;
 export type ActionKeyModifier = ModKey | ModComboAlias;
 
 export type ActionSpec =
+  | {
+    type: "actHere";
+    action: string;
+  }
   | {
     type: "app";
     ref: AppTarget;
@@ -24,27 +28,34 @@ export type ActionSpec =
     index: number;
   }
   | {
-    type: "folder";
-    ref: PathRef;
+    type: "button";
+    button: string;
+    modifiers?: ActionKeyModifier[];
+    options?: {
+      repeat?: boolean;
+      halt?: boolean;
+      lazy?: boolean;
+    };
     actionDesc?: string;
-  }
-  | {
-    type: "actHere";
-    action: string;
   }
   | {
     type: "caseChange";
     operation: "lowercase" | "sentence_case" | "title_case" | "uppercase";
   }
+  | { type: "command"; ref: CommandRef; actionDesc?: string; }
+  | { type: "copy"; }
+  | { type: "cut"; }
   | {
-    type: "wrapString";
-    operation:
-    | "wrap_braces"
-    | "wrap_parentheses"
-    | "wrap_quotes"
-    | "wrap_brackets";
-    delaySeconds?: number;
+    type: "map";
+    ref: MapRef;
+    options?: {
+      repeat?: boolean;
+      halt?: boolean;
+      lazy?: boolean;
+    };
+    actionDesc?: string;
   }
+  | { type: "folder"; ref: PathRef; actionDesc?: string; }
   | {
     type: "key";
     key: string;
@@ -56,26 +67,30 @@ export type ActionSpec =
     };
     actionDesc?: string;
   }
+  | { type: "noop" }
   | {
-    type: "externalHk";
-    ref: ExternalHkRef;
-    options?: {
-      repeat?: boolean;
-      halt?: boolean;
-      lazy?: boolean;
-    };
+    type: "osascript";
+    scriptPath: string;
+    args?: string[];
+    actionDesc?: string;
+  }
+  | { type: "paste"; }
+  | {
+    type: "python";
+    scriptPath: string;
+    venv?: string;
+    args?: string[];
     actionDesc?: string;
   }
   | {
-    type: "url";
-    url: UrlRef | string;
-    background?: boolean;
-    actionDesc?: string;
+    type: "setVar";
+    var: VarSpec;
+    value?: number | string | boolean;
+    toggle?: boolean;
   }
   | {
-    type: "command";
-    ref: CommandRef;
-    actionDesc?: string;
+    type: "sequence";
+    actions: ActionSpec[];
   }
   // Accepts an arbitrary shell string OR a CommandRef. A CommandRef auto-resolves
   // .name for the event and describes via .refDesc, so registry commands need no
@@ -86,31 +101,19 @@ export type ActionSpec =
     actionDesc?: string;
   }
   | {
-    type: "python";
-    scriptPath: string;
-    venv?: string;
-    args?: string[];
+    type: "wrapString";
+    operation:
+    | "wrap_braces"
+    | "wrap_parentheses"
+    | "wrap_quotes"
+    | "wrap_brackets";
+    delaySeconds?: number;
+  }
+  | {
+    type: "url";
+    url: UrlRef | string;
+    background?: boolean;
     actionDesc?: string;
-  }
-  | {
-    type: "osascript";
-    scriptPath: string;
-    args?: string[];
-    actionDesc?: string;
-  }
-  | {
-    type: "cut" | "copy" | "paste";
-  }
-  | { type: "noop" }
-  | {
-    type: "setVar";
-    var: VarSpec;
-    value?: number | string | boolean;
-    toggle?: boolean;
-  }
-  | {
-    type: "sequence";
-    actions: ActionSpec[];
   };
 
 /**

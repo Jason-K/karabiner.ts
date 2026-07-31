@@ -1,4 +1,4 @@
-import type { FolderOpener } from "../engine/folder-opener";
+import type { FolderOpener } from "../engine/resolvers";
 
 export const FINDER_REPLACEMENT: FolderOpener = "qspace";
 

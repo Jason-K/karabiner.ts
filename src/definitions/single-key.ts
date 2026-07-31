@@ -6,7 +6,7 @@ import {
   bind,
   condApp,
   condNotVar,
-  combo,
+  map,
   from,
   hold,
   key,
@@ -36,7 +36,7 @@ const numBindings: Binding[] = [
 
 const letterBindings: Binding[] = [
   bind(from("a"), to(hold(key("f18", VMOD.COCS)))),
-  bind(from("c"), to(hold(combo(COMBOS.showBusyCal)))),
+  bind(from("c"), to(hold(map(COMBOS.showBusyCal)))),
   bind(from("d"), to(hold(key("f1", VMOD.CO_S)))),
   bind(from("f"), to(hold(actHere("qspace")))),
   bind(from("g"), to(hold(openApp(APP_ID.claude, "shell")))),
@@ -45,12 +45,12 @@ const letterBindings: Binding[] = [
   bind(from("k"), to(hold(openApp(APP_ID.kitty)))),
   bind(from("n"), to(hold(openUrl(URLS.newClientNote, true)))),
   bind(from("o"), to(hold(openUrl(URLS.csxOcrNoLinebreaks)))),
-  bind(from("p"), to(hold(combo(COMBOS.showPopclip)))),
+  bind(from("p"), to(hold(map(COMBOS.showPopclip)))),
   bind(from("q"), to(hold(openApp(APP_ID.qspace)))),
   bind(from("r"), to(hold(shell(CMDS.rayGetRecents)))),
   bind(from("s"), to(hold(openUrl(URLS.csxCaptureArea)))),
   bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxCaptureWindow)))),
-  bind(from("t"), to(hold(combo(COMBOS.showKittyQuakeTerm)))),
+  bind(from("t"), to(hold(map(COMBOS.showKittyQuakeTerm)))),
   bind(from("v"), to(hold(openUrl(URLS.rayClipboard)))),
   bind(from("x"), to(hold(actHere("copy")))),
   bind(from("y"), to(hold(actHere("copy")))),
@@ -86,8 +86,8 @@ const symbolBindings: Binding[] = [
       suppressCancelFallback: true,
     }),
   ),
-  bind(from("slash"), to(hold(combo(COMBOS.raycastHere2This)))),
-  bind(from("grave_accent_and_tilde"), to(hold(combo(COMBOS.showPopclip)))),
+  bind(from("slash"), to(hold(map(COMBOS.raycastHere2This)))),
+  bind(from("grave_accent_and_tilde"), to(hold(map(COMBOS.showPopclip)))),
 ];
 
 const nonCharBindings: Binding[] = [

@@ -1,4 +1,4 @@
-import { VMOD } from "../data/key-aliases";
+import { VMOD } from "../data/settings-keys";
 import {
   APP_ID,
   CMDS,
@@ -15,7 +15,7 @@ import {
   condApp,
   condNotVar,
   condVar,
-  combo,
+  map,
   from,
   hold,
   key,
@@ -39,27 +39,27 @@ const modNumBindings: Binding[] = [
 
 const modLetterBindings: Binding[] = [
   bind(from("a", ["shift"]), to(hold(openUrl(URLS.antinoteNewNoteInBackground)))),
-  bind(from("e", ["COCS"]), to(release(combo(COMBOS.focusWinRight)))),
-  bind(from("f", ["COCS"]), to(release(combo(COMBOS.focusWinBottom)))),
+  bind(from("e", ["COCS"]), to(release(map(COMBOS.focusWinRight)))),
+  bind(from("f", ["COCS"]), to(release(map(COMBOS.focusWinBottom)))),
   bind(
     from("h", ["left_command"]),
-    to(press(combo(COMBOS.skimHighlight))),
+    to(press(map(COMBOS.skimHighlight))),
     when(condApp(APP_ID.skim)),
   ),
   bind(
     from("k", ["right_option"]),
     to(hold(actHere("kitty"))),
   ),
-  bind(from("m", ["left_command"]), to(hold(combo(COMBOS.restoreMinimizedWindow)))),
+  bind(from("m", ["left_command"]), to(hold(map(COMBOS.restoreMinimizedWindow)))),
   bind(
     from("p", ["left_command"]),
     to(
       release(cmd(CMDS.wordPrint)).when(condApp(APP_ID.word)),
-      hold(combo(COMBOS.popclip)),
+      hold(map(COMBOS.showPopclip)),
     ),
   ),
-  bind(from("q", ["COCS"]), to(release(combo(COMBOS.focusWinLeft)))),
-  bind(from("r", ["COCS"]), to(release(combo(COMBOS.focusWinTop)))),
+  bind(from("q", ["COCS"]), to(release(map(COMBOS.focusWinLeft)))),
+  bind(from("r", ["COCS"]), to(release(map(COMBOS.focusWinTop)))),
   bind(from("s", VMOD.COCS), to(press(shell(CMDS.hsFormatSelection)))),
   bind(
     from("s", ["right_option"]),
@@ -81,7 +81,7 @@ const modLetterBindings: Binding[] = [
   ),
   bind(
     from("u", ["left_command"]),
-    to(press(combo(COMBOS.skimUnderline))),
+    to(press(map(COMBOS.skimUnderline))),
     when(condApp(APP_ID.skim)),
   ),
 ];
@@ -129,7 +129,7 @@ const modNonCharBindings: Binding[] = [
   ),
   bind(
     from("left_arrow", VMOD.C__S),
-    to(press(combo(COMBOS.zenNextTab))),
+    to(press(map(COMBOS.zenNextTab))),
     when(condApp(APP_ID.zen)),
   ),
   bind(
@@ -141,7 +141,7 @@ const modNonCharBindings: Binding[] = [
   ),
   bind(
     from("right_arrow", VMOD.C__S),
-    to(press(combo(COMBOS.zenPreviousTab))),
+    to(press(map(COMBOS.zenPreviousTab))),
     when(condApp(APP_ID.zen)),
   ),
   bind(from("spacebar", ["COCS"]), to(release(shell(CMDS.winMaxOrRestore)))),

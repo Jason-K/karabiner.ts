@@ -26,7 +26,7 @@ import {
 import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../data";
 import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, isModifierKey, TIMINGS } from "../data";
 import { karabinerDeviceId } from "./device-config";
-import { resolveActionToEvents, resolveModComboAlias } from "./action-resolver";
+import { resolveActionToEvents, resolveModComboAlias } from "./resolvers";
 import { isPointerButton, resolveButton } from "./binding-helpers";
 
 import {

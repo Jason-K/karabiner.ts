@@ -1,7 +1,7 @@
 import type { ToEvent } from 'karabiner.ts';
 
 import type { ActionSpec } from "../action-dsl";
-import type { OpenAppOpts } from '../software';
+import type { OpenAppOpts } from '../resolvers';
 
 export type LayerMappingConfig = {
   action?: ActionSpec;

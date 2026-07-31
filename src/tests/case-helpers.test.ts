@@ -12,7 +12,7 @@ import {
   copy,
   cut,
   doubleTap,
-  combo,
+  map,
   guard,
   from,
   hold,
@@ -44,7 +44,7 @@ test("to(), when(), options(), and timing() DSL helpers construct flexible bindi
   // 1. Single to() with when()
   const b1 = bind(
     from("h", ["left_command"]),
-    to(press(combo({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }))),
+    to(press(map({ type: "map", name: "test", modifiers: [], refDesc: "test" }))),
     when(condSkim),
   );
 
@@ -138,9 +138,9 @@ test("ActionSpec wrappers create expected typed actions", () => {
     options: { repeat: false },
   });
 
-  assert.deepEqual(combo({ type: "external_hk", name: "test", modifiers: [], refDesc: "test" }), {
-    type: "externalHk",
-    ref: { type: "external_hk", name: "test", modifiers: [], refDesc: "test" },
+  assert.deepEqual(map({ type: "map", name: "test", modifiers: [], refDesc: "test" }), {
+    type: "map",
+    ref: { type: "map", name: "test", modifiers: [], refDesc: "test" },
     options: { repeat: false },
   });
 
