@@ -1,6 +1,6 @@
 import { type PointingButton } from "karabiner.ts";
-import { DEVICES } from "./registry-devices";
-import type { VarSpec } from "./refs";
+import { DEVICES } from "../registries/devices";
+import type { VarSpec } from "../primitives/vars";
 
 // ── Button registry (replaces g502xButtons) ────────────────────────────────
 
@@ -66,19 +66,4 @@ export const defaultButtonNames: Record<string, string> = {
 
 // ── Mouse signaling variables ────────────────────────────────────────────────
 
-/** Mouse chord-modifier signaling variables. */
-export const mouseVars = {
-  rightButtonPressed: {
-    name: "right_button_pressed",
-    varDesc: "Right button held",
-  },
-  wheelDown: { name: "wheel_down", varDesc: "Wheel held down" },
-  leftButtonPressed: {
-    name: "left_button_pressed",
-    varDesc: "Left button held",
-  },
-  leftWithRightFirstTap: {
-    name: "left_with_right_first_tap",
-    varDesc: "Left+right first tap",
-  },
-} as const satisfies Record<string, VarSpec>;
+export { mouseVars } from "../registries/vars";

@@ -21,4 +21,3 @@ export const DEFAULT_MOUSE_MANIPULATOR_TIMINGS = {
   holdMs: 400,
   delayedMs: 300,
 } as const;
-

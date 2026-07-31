@@ -1,13 +1,12 @@
 import type { ToEvent } from "karabiner.ts";
 import { toKey, toPointingButton } from "karabiner.ts";
 
-import type { Action, ActionSpec } from "../action-dsl";
-import { FINDER_REPLACEMENT } from "../../data/settings-global";
+import type { Action, ActionSpec } from "../../data";
+import { FINDER_REPLACEMENT } from "../../data/constants/global";
 import { ensurePathQuotingInCommand } from "../utils";
 
 import {
   resolveAppTarget,
-  resolveName,
   toApp,
   toAppId,
   toAppPath,
@@ -48,12 +47,12 @@ function normalizeToEvent(event: ToEvent): ToEvent {
 export function resolveShellCommand(action: ActionSpec): string | null {
   switch (action.type) {
     case "folder":
-      return toFolder(resolveName(action.ref), FINDER_REPLACEMENT);
+      return toFolder(action.ref.path, FINDER_REPLACEMENT);
     case "actHere":
       return toHere2There(action.action);
     case "url": {
       const urlString =
-        typeof action.url === "string" ? action.url : resolveName(action.url);
+        typeof action.url === "string" ? action.url : action.url.url;
       return action.background
         ? `open -g '${urlString}'`
         : `open -u '${urlString}'`;
@@ -68,7 +67,7 @@ export function resolveShellCommand(action: ActionSpec): string | null {
     case "shell":
       return typeof action.command === "string"
         ? action.command
-        : resolveName(action.command);
+        : action.command.command;
     case "python":
       return toPy(action.scriptPath, {
         venv: action.venv,
@@ -161,13 +160,11 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
           );
         });
       }
-      const names = Array.isArray(action.ref?.name)
-        ? action.ref.name
-        : [action.ref?.name];
+      const keyCodes = [action.ref.keyCode];
       const modifiers = action.ref?.modifiers?.length
         ? expandModifiers(action.ref.modifiers)
         : undefined;
-      return names.map((n) => {
+      return keyCodes.map((n) => {
         if (typeof n === "string" && n.startsWith("vk_")) {
           if (modifiers?.length) {
             return toKey(n as any, modifiers as any, keyOpts);
@@ -195,7 +192,7 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
     case "sequence":
       return action.actions.flatMap(resolveActionToEvents);
     case "command":
-      return [toCmd(resolveName(action.ref))];
+      return [toCmd(action.ref.command)];
     case "setVar": {
       return [toVar(action.var.name, action.toggle ? "toggle" : action.value)];
     }
@@ -210,3 +207,5 @@ export function resolveActionToEvents(action: Action): ToEvent[] {
   const events = resolveActionToEventsRaw(action);
   return events.map(normalizeToEvent);
 }
+
+export * from "./resolve-map";

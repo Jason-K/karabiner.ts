@@ -1,11 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { HOME_DIR, PATHS, TIMINGS } from "../data";
-import { APP_ID } from "../data/registry-app-ids";
-import { CMDS } from "../data/registry-cmds";
-import { COMBOS } from "../data/registry-combos";
-import { URLS } from "../data/registry-urls";
+import { APP_ID, CMDS, COMBOS, HOME_DIR, PATHS, TIMINGS, URLS } from "../data";
 import { capsLockBindings, tapHoldBindings } from "../definitions";
 import { disabledHotkeys } from "../definitions/disable-hotkeys";
 
@@ -64,7 +60,7 @@ function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
 }
 
 test("rectangle focused-window orientation command uses focused display", () => {
-  const command = CMDS.winLeftOrTop.name;
+  const command = CMDS.winLeftOrTop.command;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /win and win:screen\(\)/);
@@ -83,7 +79,7 @@ test("rectangle focused-window orientation command uses focused display", () => 
 });
 
 test("rectangle max-or-restore command uses focused window coverage", () => {
-  const command = CMDS.winMaxOrRestore.name;
+  const command = CMDS.winMaxOrRestore.command;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /screen:frame\(\)/);
@@ -96,13 +92,13 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(APP_ID.outlook.name, "com.microsoft.Outlook");
-  assert.equal(PATHS.dirHome.name, HOME_DIR);
+  assert.equal(APP_ID.outlook.bundleId, "com.microsoft.Outlook");
+  assert.equal(PATHS.dirHome.path, HOME_DIR);
   assert.equal(
-    URLS.rayRecentFolders.name,
+    URLS.rayRecentFolders.url,
     "raycast-x://extensions/jason/recents/recentFolders",
   );
-  assert.equal(URLS.csxCaptureArea.name, "cleanshot://capture-area");
+  assert.equal(URLS.csxCaptureArea.url, "cleanshot://capture-area");
 });
 
 test("home-end navigation mappings stay declarative", () => {

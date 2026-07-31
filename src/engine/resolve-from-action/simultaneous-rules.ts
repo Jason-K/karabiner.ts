@@ -1,5 +1,5 @@
 import type { Rule } from "karabiner.ts";
-import type { ActionSpec } from "../action-dsl";
+import type { ActionSpec } from "../../data";
 
 import { defineBindings, resolveModifiers, type Binding, type Case, type SimOrder } from "../emit-modifiers/binding";
 

@@ -44,7 +44,7 @@ test("to(), when(), options(), and timing() DSL helpers construct flexible bindi
   // 1. Single to() with when()
   const b1 = bind(
     from("h", ["left_command"]),
-    to(press(map({ type: "map", name: "test", modifiers: [], refDesc: "test" }))),
+    to(press(map({ type: "map", keyCode: "test", modifiers: [], refDesc: "test" }))),
     when(condSkim),
   );
 
@@ -138,15 +138,15 @@ test("ActionSpec wrappers create expected typed actions", () => {
     options: { repeat: false },
   });
 
-  assert.deepEqual(map({ type: "map", name: "test", modifiers: [], refDesc: "test" }), {
+  assert.deepEqual(map({ type: "map", keyCode: "test", modifiers: [], refDesc: "test" }), {
     type: "map",
-    ref: { type: "map", name: "test", modifiers: [], refDesc: "test" },
+    ref: { type: "map", keyCode: "test", modifiers: [], refDesc: "test" },
     options: { repeat: false },
   });
 
-  assert.deepEqual(cmd({ type: "command", name: "test", refDesc: "test" }), {
+  assert.deepEqual(cmd({ type: "command", command: "test", refDesc: "test" }), {
     type: "command",
-    ref: { type: "command", name: "test", refDesc: "test" },
+    ref: { type: "command", command: "test", refDesc: "test" },
   });
 
   assert.deepEqual(shell("echo 1"), {
@@ -334,10 +334,10 @@ test("guard() produces a press case marked guard with the action", () => {
 });
 
 test("guard() accepts conditions", () => {
-  const g = guard(key("d"), condApp({ type: "app", name: "com.x", refDesc: "X" }));
+  const g = guard(key("d"), condApp({ type: "app", bundleId: "com.x", refDesc: "X" }));
   assert.equal((g as any).guard, true);
   assert.deepEqual(g.conditions ?? [], [
-    { app: { type: "app", name: "com.x", refDesc: "X" } },
+    { app: { type: "app", bundleId: "com.x", refDesc: "X" } },
   ]);
 });
 

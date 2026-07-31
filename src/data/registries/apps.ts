@@ -1,21 +1,24 @@
-import type { AppRef } from "./refs";
+import type { AppSpec } from "../primitives/apps";
 
 // ---------------------------------------------------------
 // Factory
 // ---------------------------------------------------------
 
-/** Create a registry entry for an application bundle.
- *  @param name    - bundle identifier (e.g. "com.apple.ActivityMonitor")
- *  @param refDesc - human label used in descriptions
+/** Create a registry entry for an application bundle or path.
+ *  @param bundleId - bundle identifier (e.g. "com.apple.ActivityMonitor") or list of bundle IDs
+ *  @param refDesc  - human label used in descriptions
+ *  @param path     - optional file path or list of file paths
  */
-const app = (name: string, refDesc: string) => ({
-  type: "app" as const,
-  name,
+const app = (
+  bundleId: string | string[],
+  refDesc: string,
+  path?: string | string[],
+): AppSpec => ({
+  type: "app",
+  bundleId,
+  ...(path ? { path } : {}),
   refDesc,
 });
-
-// TO DO: Karabiner allows foremost_application_if|unless conditions to be set based on bundle_identifiers|file_paths (https://karabiner-elements.pqrs.org/docs/json/complex-modifications-manipulator-definition/conditions/frontmost-application/)
-// APP_ID currently exports based on bundle ID; I want to also be able to export file paths, since some APPS have multiple APPS within the same bundle (e.g., 1Piece has /Applications/1Piece.app/Contents/Preferences/1Piece Preferences.app" and ))
 
 // ---------------------------------------------------------
 // Registry
@@ -30,10 +33,6 @@ export const APP_ID = {
   claude: app("com.anthropic.claudefordesktop", "Claude"),
   code: app("com.microsoft.VSCode", "Code"),
   excel: app("com.microsoft.Excel", "Microsoft Excel"),
-  // getFinderReplacementBundleId() is a constant ("com.jinghaoshe.qspace.pro",
-  // independent of the opener choice), so it is inlined here to keep data/
-  // free of core/ imports. No action references FinderReplacement today, so the
-  // old "__folder_opener__" sentinel + resolver special case were dead.
   FinderReplacement: app("com.jinghaoshe.qspace.pro", "QSpace"),
   helium: app("net.imput.helium", "Helium"),
   kitty: app("net.kovidgoyal.kitty", "Kitty"),
@@ -64,9 +63,9 @@ export const APP_ID = {
   zen: app("app.zen-browser.zen", "Zen"),
 } as const;
 
-export type { AppRef };
+export type { AppSpec };
 
-export const PW_IDS: AppRef[] = [
+export const PW_IDS: AppSpec[] = [
   APP_ID.securityAgent,
   APP_ID.settings,
   APP_ID.settingsPrivacySecurityExtension,

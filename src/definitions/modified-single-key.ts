@@ -1,4 +1,4 @@
-import { VMOD } from "../data/settings-keys";
+import { VMOD } from "../data";
 import {
   APP_ID,
   CMDS,

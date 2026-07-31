@@ -1,6 +1,5 @@
 import type { Modifier } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "../action-dsl";
-import type { AppRef, CommandRef, DeviceSpec, MapRef, PathRef, UrlRef, VarSpec } from "../../data";
+import type { Action, ActionKeyModifier, ActionSpec, AppTarget, AppSpec, CommandSpec, DeviceSpec, MapSpec, PathSpec, UrlSpec, VarSpec } from "../../data";
 import type { Binding, Case, Condition, Phase, SimOrder, Trigger, TriggerModifiers } from "./binding";
 
 /** Known standard Karabiner key codes for auto-completion. */
@@ -625,7 +624,7 @@ export function openApp(
  * openUrl(URLS.rectWinMaximize, true)
  */
 export function openUrl(
-  url: UrlRef | string,
+  url: UrlSpec | string,
   background?: boolean,
   actionDesc?: string,
 ): ActionSpec {
@@ -693,7 +692,7 @@ export function key(
  * combo(COMBOS.focusWinRight)
  */
 export function map(
-  ref: MapRef,
+  ref: MapSpec,
   options?: KeyOptions,
   actionDesc?: string,
 ): ActionSpec {
@@ -731,7 +730,7 @@ export function appHistory(index: number): ActionSpec {
  * @example
  * openFolder(PATHS.scriptNewDLs)
  */
-export function openFolder(ref: PathRef, actionDesc?: string): ActionSpec {
+export function openFolder(ref: PathSpec, actionDesc?: string): ActionSpec {
   return {
     type: "folder",
     ref,
@@ -745,7 +744,7 @@ export function openFolder(ref: PathRef, actionDesc?: string): ActionSpec {
  * @example
  * cmd(CMDS.wordPrint)
  */
-export function cmd(ref: CommandRef, actionDesc?: string): ActionSpec {
+export function cmd(ref: CommandSpec, actionDesc?: string): ActionSpec {
   return {
     type: "command",
     ref,
@@ -761,7 +760,7 @@ export function cmd(ref: CommandRef, actionDesc?: string): ActionSpec {
  * shell("osascript -e 'tell application \"Popclip\" to appear'")
  */
 export function shell(
-  command: string | CommandRef,
+  command: string | CommandSpec,
   actionDesc?: string,
 ): ActionSpec {
   return {
@@ -918,7 +917,7 @@ export const unlessVar = condNotVar;
  * condApp(APP_ID.word)
  */
 export function condApp(
-  app: AppRef | PathRef | (AppRef | PathRef)[],
+  app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[],
   isForemost = true,
 ): Condition {
   return {
@@ -935,7 +934,7 @@ export const ifApp = condApp;
  * condNotApp(APP_ID.excel)
  */
 export function condNotApp(
-  app: AppRef | PathRef | (AppRef | PathRef)[],
+  app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[],
 ): Condition {
   return condApp(app, false);
 }

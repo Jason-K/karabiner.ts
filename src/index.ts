@@ -23,7 +23,7 @@ import {
   DEVICES,
   PATHS,
   PREFERRED_PROFILE,
-  DEFAULT_PROFILE_TIMINGS,
+  DEFAULT_TIMINGS,
 } from "./data";
 import {
   capsLockBindings,
@@ -96,7 +96,7 @@ function resolveTargetProfileName(): string {
   }
 
   try {
-    const raw = readFileSync(PATHS.configKarabiner.name, "utf8");
+    const raw = readFileSync(PATHS.configKarabiner.path, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };
@@ -141,14 +141,14 @@ function updateGlobalSettings(configPath: string): void {
 }
 
 if (canWriteProfile) {
-  updateGlobalSettings(PATHS.configKarabiner.name);
+  updateGlobalSettings(PATHS.configKarabiner.path);
 }
 
 // Write rules: use real profile locally, dry-run in CI/non-macOS
 writeToProfile(
   canWriteProfile ? targetProfileName : "--dry-run",
   rules,
-  DEFAULT_PROFILE_TIMINGS,
+  DEFAULT_TIMINGS,
   {
     simple_modifications: [
       map("left_control").to("fn"),

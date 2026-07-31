@@ -1,4 +1,4 @@
 export * from "./binding";
-export * from "./binding-helpers";
+export * from "./validate-definitions";
 export * from "./case-helpers";
 export * from "./layer-emit";

@@ -5,16 +5,12 @@ import type {
   ToEvent,
 } from "karabiner.ts";
 import { ifApp, map, toKey, toPointingButton, toSetVar } from "karabiner.ts";
-import {
-  DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS,
-  DEFAULT_PROFILE_TIMINGS,
-  isModifierKey,
-  TIMINGS,
-} from "../../data";
+import { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_TIMINGS, TIMINGS } from "../../data";
+import { isModifierKey } from "../utils";
 
 /**
  * Helper to compute manipulator-level parameters ONLY for values that differ
- * from profile-level baseline parameters (`DEFAULT_PROFILE_TIMINGS`).
+ * from profile-level baseline parameters (`DEFAULT_TIMINGS`).
  */
 function resolveDiffParams(
   aloneMs?: number,
@@ -24,19 +20,19 @@ function resolveDiffParams(
   const params: Record<string, number> = {};
   if (
     aloneMs !== undefined &&
-    aloneMs !== DEFAULT_PROFILE_TIMINGS["basic.to_if_alone_timeout_milliseconds"]
+    aloneMs !== DEFAULT_TIMINGS["basic.to_if_alone_timeout_milliseconds"]
   ) {
     params["basic.to_if_alone_timeout_milliseconds"] = aloneMs;
   }
   if (
     holdMs !== undefined &&
-    holdMs !== DEFAULT_PROFILE_TIMINGS["basic.to_if_held_down_threshold_milliseconds"]
+    holdMs !== DEFAULT_TIMINGS["basic.to_if_held_down_threshold_milliseconds"]
   ) {
     params["basic.to_if_held_down_threshold_milliseconds"] = holdMs;
   }
   if (
     delayedMs !== undefined &&
-    delayedMs !== DEFAULT_PROFILE_TIMINGS["basic.to_delayed_action_delay_milliseconds"]
+    delayedMs !== DEFAULT_TIMINGS["basic.to_delayed_action_delay_milliseconds"]
   ) {
     params["basic.to_delayed_action_delay_milliseconds"] = delayedMs;
   }

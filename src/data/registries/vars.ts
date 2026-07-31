@@ -1,10 +1,10 @@
-import type { VarRef } from "./refs";
+import type { VarSpec } from "../primitives/vars";
 
 /** Built-in variables that Karabiner-Elements exposes via its variable system.
  *
- * Each entry is a {@link VarRef} (i.e. a `VarSpec`) that can be used directly
+ * Each entry is a {@link VarSpec} that can be used directly
  * in condition blocks (`{ var: KE_VARS.accessibilityType, equals: "AXTextArea" }`)
- * or passed anywhere a `VarSpec` / `VarRef` is accepted.
+ * or passed anywhere a `VarSpec` is accepted.
  *
  * Variable names are taken verbatim from the Karabiner EventViewer "variables"
  * namespace (visible in the EventViewer's Variables tab).
@@ -18,9 +18,7 @@ import type { VarRef } from "./refs";
  *  @param name    - the variable name as reported by Karabiner EventViewer
  *  @param varDesc - human label used in descriptions
  */
-const keVar = (name: string, varDesc: string): VarRef => ({ name, varDesc });
-
-// ── Accessibility ────────────────────────────────────────────────────────────
+const keVar = (name: string, varDesc: string): VarSpec => ({ name, varDesc });
 
 // ---------------------------------------------------------
 // Registry
@@ -140,30 +138,25 @@ export const KE_VARS = {
     "virtual_hid_devices_state.virtual_hid_pointing_ready",
     "Virtual HID pointing ready",
   ),
-} as const satisfies Record<string, VarRef>;
+} as const satisfies Record<string, VarSpec>;
 
 // ── Typed values for built-in string constants ────────────────────────────────
 
-/** Common expected values for the built-in Karabiner-Elements variables.
- *
- * Use these alongside {@link KE_VARS} entries in condition `equals` fields to
- * avoid hard-coding magic strings, e.g.:
- *
- * ```ts
- * { var: KE_VARS.accessibilityType, equals: KE_VAR_VALUES.axTextField }
- * ```
- */
 export const KE_VAR_VALUES = {
-  // accessibility role values
   axTextArea: "AXTextArea",
   axTextField: "AXTextField",
   axSecureTextField: "AXSecureTextField",
   axButton: "AXButton",
   axStaticText: "AXStaticText",
   axWebArea: "AXWebArea",
-
-  // subrole values
   axSecureTextFieldSubrole: "AXSecureTextField",
 } as const;
 
-export type { VarRef };
+export const mouseVars = {
+  rightButtonPressed: keVar("right_button_pressed", "Right button held"),
+  wheelDown: keVar("wheel_down", "Wheel held down"),
+  leftButtonPressed: keVar("left_button_pressed", "Left button held"),
+  leftWithRightFirstTap: keVar("left_with_right_first_tap", "Left+right first tap"),
+} as const satisfies Record<string, VarSpec>;
+
+export type { VarSpec };

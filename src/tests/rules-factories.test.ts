@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID } from "../data/registry-app-ids";
-import { map } from "../data/registry-combos";
+import { APP_ID, map, VMOD } from "../data";
 import { toPy } from "../engine/resolve-to-action";
 import {
   capsLockBaseBindings,
@@ -16,7 +15,6 @@ import {
 } from "../engine";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
 import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
-import { VMOD } from "../data/settings-keys";
 
 const buildCapsLockRule = () => defineBindings(capsLockBaseBindings);
 const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
@@ -300,7 +298,7 @@ test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   assert.deepEqual(appIfCond, {
     type: "frontmost_application_if",
     description: undefined,
-    bundle_identifiers: [APP_ID.onePiece.name],
+    bundle_identifiers: [APP_ID.onePiece.bundleId],
   });
 });
 
@@ -548,7 +546,7 @@ test("resolveActionToEvents: app with AppRef (type:\"app\") uses bundle_identifi
 });
 
 test("resolveActionToEvents: app with PathRef (type:\"path\") uses file_path", () => {
-  const ref = { type: "path" as const, name: "/Applications/Safari.app", refDesc: "Safari" };
+  const ref = { type: "path" as const, path: "/Applications/Safari.app", refDesc: "Safari" };
   const [event] = resolveActionToEvents({ type: "app", ref });
   assert.deepEqual((event as any)?.software_function?.open_application, {
     file_path: "/Applications/Safari.app",

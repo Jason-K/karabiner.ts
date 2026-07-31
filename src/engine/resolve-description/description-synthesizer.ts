@@ -1,7 +1,7 @@
 import type { ToEvent } from "karabiner.ts";
-import type { Action, ActionSpec } from "../action-dsl";
+import type { Action, ActionSpec } from "../../data";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
-import { isPointerButton, resolveButton } from "../emit-modifiers/binding-helpers";
+import { isPointerButton, resolveButton } from "../utils";
 import { expandModifiers } from "../resolve-to-action";
 import { getTriggerKeys, resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "../emit-modifiers/binding";
 
@@ -47,8 +47,7 @@ export function describeAction(action: ActionSpec): string {
       const descName =
         typeof action.ref === "string"
           ? action.ref
-          : action.ref?.refDesc ??
-            (Array.isArray(action.ref?.name) ? action.ref.name[0] : action.ref?.name);
+          : action.ref?.refDesc ?? action.ref?.keyCode;
       return withActionDesc(`map '${descName}'`, action.actionDesc);
     }
     case "url": {
@@ -56,12 +55,10 @@ export function describeAction(action: ActionSpec): string {
       if (typeof url === "string") {
         return withActionDesc(`Open '${url}'`, action.actionDesc);
       }
-      const isCleanShot = Array.isArray(url.name)
-        ? url.name[0].startsWith("cleanshot://")
-        : url.name.startsWith("cleanshot://");
-      const isRaycast = Array.isArray(url.name)
-        ? url.name[0].startsWith("raycast-x://extensions/")
-        : url.name.startsWith("raycast-x://extensions/");
+      const isCleanShot =
+        url.category === "cleanshot" || url.url.startsWith("cleanshot://");
+      const isRaycast =
+        url.category === "raycast" || url.url.startsWith("raycast-x://extensions/");
 
       const base = isCleanShot
         ? `${url.refDesc} using CSX`
@@ -167,7 +164,7 @@ type VarCondition = Extract<Condition, { var: unknown }>;
 
 function describeAppCondition(app: AppCondition["app"], unless?: boolean): string {
   const refs = Array.isArray(app) ? app : [app];
-  const names = refs.map((r) => r.refDesc).join("/");
+  const names = refs.map((r) => (typeof r === "string" ? r : r.refDesc)).join("/");
   return unless ? `Outside ${names}` : `In ${names}`;
 }
 

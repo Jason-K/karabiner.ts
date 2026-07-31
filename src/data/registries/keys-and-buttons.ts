@@ -23,11 +23,7 @@ export const VMOD = {
 export type ModComboAlias = keyof typeof VMOD;
 
 
-export const MODIFIER_KEY_CODES = new Set<string>(["left_shift", "right_shift", "left_command", "right_command", "left_control", "right_control", "left_option", "right_option", "fn", "caps_lock", "shift", "command", "control", "option"]);
-
-export function isModifierKey(key: string): boolean {
-    return MODIFIER_KEY_CODES.has(key);
-}
+export { MODIFIER_KEY_CODES, isModifierKey } from "../constants/keys";
 
 // -------------------
 // from karabiner.ts
@@ -139,11 +135,3 @@ export declare type FromKeyCode = FromAndToKeyCode | FromOnlyKeyCode;
 export declare type FromAndToKeyCode = ModifierKeyCode | ControlOrSymbolKeyCode | ArrowKeyCode | LetterKeyCode | NumberKeyCode | FunctionKeyCode | KeypadKeyCode | PcKeyboardKeyCode | OtherKeyCode;
 export declare type ConsumerKeyCode = FromAndToConsumerKeyCode | FromOnlyConsumerKeyCode | ToOnlyConsumerKeyCode;
 export declare type FromConsumerKeyCode = FromAndToConsumerKeyCode | FromOnlyConsumerKeyCode;
-
-
-
-
-
-
-
-

@@ -12,7 +12,7 @@ import {
   type SimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
-import type { Action, ActionKeyModifier, ActionSpec } from "../action-dsl";
+import type { Action, ActionKeyModifier, ActionSpec, AppSpec, DeviceSpec, PathSpec, VarSpec } from "../../data";
 import {
   simultaneousMultiTap,
   simultaneousTapHold,
@@ -23,12 +23,10 @@ import {
   varTapTapHold,
   varTapTapHoldFrom,
 } from "../resolve-from-action/tap-hold";
-import type { AppRef, DeviceSpec, PathRef, VarSpec } from "../../data";
-import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, isModifierKey, TIMINGS } from "../../data";
+import { DEFAULT_MOUSE_MANIPULATOR_TIMINGS, DEVICES, TIMINGS } from "../../data";
 import { karabinerDeviceId } from "../resolve-from-action/device-config";
 import { resolveActionToEvents, resolveModComboAlias } from "../resolve-to-action";
-import { isPointerButton, resolveButton } from "./binding-helpers";
-
+import { isModifierKey, isPointerButton, resolveButton } from "../utils";
 import {
   synthesizeManipulatorLabel,
   synthesizeRuleDescription,
@@ -43,7 +41,7 @@ export type Phase = "press" | "release" | "hold";
 /** External state condition. Realized as a Karabiner `conditions[]` entry. */
 export type Condition =
   | {
-    app: AppRef | PathRef | (AppRef | PathRef)[];
+    app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[];
     unless?: boolean;
     description?: string;
   }
@@ -111,39 +109,8 @@ export type Binding = {
   guardMs?: number; // double-tap guard timeout (default TIMINGS.timeoutDoubleTapMs)
 };
 
-export function resolveCondition(c: Condition): unknown {
-  if ("app" in c) {
-    const refs = Array.isArray(c.app) ? c.app : [c.app];
-    const bundleIds: string[] = [];
-    const filePaths: string[] = [];
-    for (const r of refs) {
-      const names = Array.isArray(r.name) ? r.name : [r.name];
-      if (r.type === "path") {
-        filePaths.push(...names);
-      } else {
-        bundleIds.push(...names);
-      }
-    }
-    const builder =
-      filePaths.length > 0 && bundleIds.length > 0
-        ? ifApp({ bundle_identifiers: bundleIds, file_paths: filePaths })
-        : filePaths.length > 0
-          ? ifApp({ file_paths: filePaths })
-          : ifApp(bundleIds);
-    return c.unless ? builder.unless().build() : builder.build();
-  }
-  if ("var" in c) {
-    return {
-      type: c.unless ? "variable_unless" : "variable_if",
-      name: c.var.name,
-      value: c.equals,
-    };
-  }
-  // device
-  return c.unless
-    ? ifDevice(karabinerDeviceId(c.device)).unless().build()
-    : ifDevice(karabinerDeviceId(c.device)).build();
-}
+import { resolveCondition } from "../resolve-conditions";
+export { resolveCondition };
 
 function resolveSimOrder(order?: SimOrder): SimultaneousOptions | undefined {
   if (!order) return undefined;

@@ -4,7 +4,7 @@ import {
   DEFAULT_GLOBAL_SETTINGS,
   DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS,
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
-  DEFAULT_PROFILE_TIMINGS,
+  DEFAULT_TIMINGS,
 } from "../data";
 import { bind, from, hold, key, timing, to } from "../engine";
 import { defineBindings } from "../engine/emit-modifiers/binding";
@@ -14,10 +14,10 @@ test("timing constants export expected defaults", () => {
   assert.equal(DEFAULT_GLOBAL_SETTINGS.show_in_menu_bar, true);
   assert.equal(DEFAULT_GLOBAL_SETTINGS.show_profile_name_in_menu_bar, false);
 
-  assert.equal(DEFAULT_PROFILE_TIMINGS["basic.simultaneous_threshold_milliseconds"], 50);
-  assert.equal(DEFAULT_PROFILE_TIMINGS["basic.to_if_alone_timeout_milliseconds"], 1000);
-  assert.equal(DEFAULT_PROFILE_TIMINGS["basic.to_if_held_down_threshold_milliseconds"], 400);
-  assert.equal(DEFAULT_PROFILE_TIMINGS["basic.to_delayed_action_delay_milliseconds"], 300);
+  assert.equal(DEFAULT_TIMINGS["basic.simultaneous_threshold_milliseconds"], 50);
+  assert.equal(DEFAULT_TIMINGS["basic.to_if_alone_timeout_milliseconds"], 1000);
+  assert.equal(DEFAULT_TIMINGS["basic.to_if_held_down_threshold_milliseconds"], 400);
+  assert.equal(DEFAULT_TIMINGS["basic.to_delayed_action_delay_milliseconds"], 300);
 
   assert.equal(DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.aloneMs, 1000);
   assert.equal(DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.holdMs, 400);
@@ -28,7 +28,7 @@ test("timing constants export expected defaults", () => {
   assert.equal(DEFAULT_MOUSE_MANIPULATOR_TIMINGS.delayedMs, 300);
 });
 
-test("manipulators omit parameters when matching DEFAULT_PROFILE_TIMINGS defaults", () => {
+test("manipulators omit parameters when matching DEFAULT_TIMINGS defaults", () => {
   const defaultBinding = bind(
     from("a"),
     to(hold(key("b"))),
@@ -41,7 +41,7 @@ test("manipulators omit parameters when matching DEFAULT_PROFILE_TIMINGS default
   assert.equal(manipulators[0].parameters, undefined);
 });
 
-test("manipulators include parameters when overriding DEFAULT_PROFILE_TIMINGS defaults", () => {
+test("manipulators include parameters when overriding DEFAULT_TIMINGS defaults", () => {
   const customBinding = bind(
     from("k", ["right_option"]),
     to(hold(key("b"))),

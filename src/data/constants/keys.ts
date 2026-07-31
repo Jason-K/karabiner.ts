@@ -42,5 +42,3 @@ export const MODIFIER_KEY_CODES = new Set<string>([
 export function isModifierKey(key: string): boolean {
   return MODIFIER_KEY_CODES.has(key);
 }
-
-

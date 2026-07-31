@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import type { ToEvent } from "karabiner.ts";
 
-import { PATHS } from "../../data/registry-paths";
+import { PATHS } from "../../data/registries/paths";
 import { normalizePathForShell, shellSingleQuote } from "../utils";
 
 export function toCmd(shell: string): ToEvent {
@@ -95,7 +95,7 @@ export function toPy(
   scriptPath: string,
   opts?: { venv?: string; args?: string[] },
 ): string {
-  const parts = [PATHS.binUV.name, "run"];
+  const parts = [PATHS.binUV.path, "run"];
   if (opts?.venv) {
     parts.push("--python", normalizePathForShell(`${opts.venv}/bin/python`));
   }
@@ -109,7 +109,7 @@ export function toPy(
 export function toTp(action: string): string {
   return pythonCommand(
     [
-      PATHS.scriptTextProcessorCLI.name,
+      PATHS.scriptTextProcessorCLI.path,
       action,
       "--source",
       "clipboard",
@@ -117,7 +117,7 @@ export function toTp(action: string): string {
       "paste",
     ],
     {
-      pythonBin: `${PATHS.binUV.name} --directory ${PATHS.dirTextProcessor.name} run python`,
+      pythonBin: `${PATHS.binUV.path} --directory ${PATHS.dirTextProcessor.path} run python`,
     },
   );
 }
@@ -127,5 +127,5 @@ export function toWithSleep(delaySeconds: number, shell: string): string {
 }
 
 export function toHere2There(action: string): string {
-  return `${PATHS.scriptHere2There.name} --action ${action}`;
+  return `${PATHS.scriptHere2There.path} --action ${action}`;
 }

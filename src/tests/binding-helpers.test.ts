@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assertUniqueTriggers, resolveButton } from "../engine/emit-modifiers/binding-helpers";
+import { assertUniqueTriggers } from "../engine/emit-modifiers/validate-definitions";
+import { resolveButton } from "../engine/utils/input-devices";
 import type { Binding } from "../engine/emit-modifiers/binding";
 
 function bareHold(key: string): Binding {

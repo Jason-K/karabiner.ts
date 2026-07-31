@@ -1,7 +1,7 @@
 import type { ToEvent } from "karabiner.ts";
 
-import type { AppTarget } from "../action-dsl";
-import { PATHS } from "../../data/registry-paths";
+import type { AppTarget } from "../../data";
+import { PATHS } from "../../data/registries/paths";
 import { shellSingleQuote } from "../utils";
 
 export interface OpenAppOpts {
@@ -41,21 +41,17 @@ export function toApp(opts: OpenAppOpts): ToEvent {
 }
 
 export function toAppId(bundleIdentifier: string): string {
-  return `${PATHS.binAppOpen.name} -b ${shellSingleQuote(bundleIdentifier)}`;
+  return `${PATHS.binAppOpen.path} -b ${shellSingleQuote(bundleIdentifier)}`;
 }
 
 export function toAppPath(filePath: string): string {
-  return `${PATHS.binAppOpen.name} ${shellSingleQuote(filePath)}`;
-}
-
-export function resolveName(ref: { name: string | string[] }): string {
-  return Array.isArray(ref.name) ? ref.name[0]! : ref.name;
+  return `${PATHS.binAppOpen.path} ${shellSingleQuote(filePath)}`;
 }
 
 /**
  * Resolve an AppTarget ref to the correct openApp() argument shape.
- * - AppRef  (type:"app")  → { bundleIdentifier }
- * - PathRef (type:"path") → { filePath }
+ * - AppSpec  (type:"app")  → { bundleIdentifier } or { filePath }
+ * - PathSpec (type:"path") → { filePath }
  * - raw string starting with "/" or ending with ".app" → { filePath }
  * - raw string otherwise → { bundleIdentifier } (treated as a bundle ID)
  */
@@ -68,7 +64,22 @@ export function resolveAppTarget(
       : { bundleIdentifier: ref };
   }
   if (ref.type === "path") {
-    return { filePath: resolveName(ref) };
+    const p = ref.path ?? (ref as any).name;
+    return { filePath: Array.isArray(p) ? p[0]! : p };
   }
-  return { bundleIdentifier: resolveName(ref) };
+  if (ref.path) {
+    const p = Array.isArray(ref.path) ? ref.path[0]! : ref.path;
+    return { filePath: p };
+  }
+  if (ref.bundleId) {
+    const b = Array.isArray(ref.bundleId) ? ref.bundleId[0]! : ref.bundleId;
+    return { bundleIdentifier: b };
+  }
+  if ((ref as any).name) {
+    const n = Array.isArray((ref as any).name) ? (ref as any).name[0]! : (ref as any).name;
+    return n.startsWith("/") || n.endsWith(".app")
+      ? { filePath: n }
+      : { bundleIdentifier: n };
+  }
+  throw new Error(`Invalid AppSpec: missing bundleId or path`);
 }

@@ -1,48 +1,48 @@
-import { PATHS } from "./registry-paths";
-import type { CommandRef } from "./refs";
-import { TIMINGS } from "./settings-timings";
-import { URLS } from "./registry-urls";
+import { PATHS } from "./paths";
+import type { CommandSpec } from "../primitives/commands";
+import { TIMINGS } from "../constants/timings";
+import { URLS } from "./urls";
 
 // ---------------------------------------------------------
 // Factory
 // ---------------------------------------------------------
 
 /** Create a registry entry for a shell command.
- *  @param name    - the shell command string to execute
- *  @param refDesc - human label used in descriptions
+ *  @param commandStr - the shell command string to execute
+ *  @param refDesc    - human label used in descriptions
  */
-const cmdEntry = (name: string, refDesc: string) => ({
-  type: "command" as const,
-  name,
+const cmdEntry = (commandStr: string, refDesc: string): CommandSpec => ({
+  type: "command",
+  command: commandStr,
   refDesc,
 });
 
 const subCommands = {
   // PRIVILEGES
-  revokePriv: `${PATHS.binPrivCLI.name} -r`,
-  addPriv: `${PATHS.binPrivCLI.name} -a`,
-  getPriv: `${PATHS.binPrivCLI.name} -r && sleep ${TIMINGS.privDelaySec} && ${PATHS.binPrivCLI.name} -a && sleep ${TIMINGS.privDelaySec}`,
+  revokePriv: `${PATHS.binPrivCLI.path} -r`,
+  addPriv: `${PATHS.binPrivCLI.path} -a`,
+  getPriv: `${PATHS.binPrivCLI.path} -r && sleep ${TIMINGS.privDelaySec} && ${PATHS.binPrivCLI.path} -a && sleep ${TIMINGS.privDelaySec}`,
 
   // 1PASSWORD
-  fillSecret: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control,shift>"`,
-  fillNameAndSecret: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control,shift>"`,
+  fillSecret: `'${PATHS.binSendKeys.path}' --initial-delay 0 --delay 0.005 --characters "<c:/:command,option,control,shift>"`,
+  fillNameAndSecret: `'${PATHS.binSendKeys.path}' --initial-delay 0 --delay 0.005 --characters "<c:a:command>Jason<c:tab><c:/:command,option,control,shift>"`,
 
   // UTILITIES
-  callSendKeys: `'${PATHS.binSendKeys.name}' --initial-delay 0 --delay 0.005`,
+  callSendKeys: `'${PATHS.binSendKeys.path}' --initial-delay 0 --delay 0.005`,
 
   // SCRIPTS
-  getWordDocPath: `osascript '${PATHS.scriptWordGetDocPath.name}'`,
+  getWordDocPath: `osascript '${PATHS.scriptWordGetDocPath.path}'`,
 
   // HAMMERSPOON
-  callHammerspoon: `'${PATHS.binHS.name}' -c`,
+  callHammerspoon: `'${PATHS.binHS.path}' -c`,
 
-  hsGetDisplayInfo: `'${PATHS.binHS.name}' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
+  hsGetDisplayInfo: `'${PATHS.binHS.path}' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame()`,
 
   // RAYCAST
   callRaycastExtension: `open -u raycast-x://extensions`,
 
   // TEXT PROCESSOR
-  callTextProcessor: `'${PATHS.binUV.name}' --directory '${PATHS.dirTextProcessor.name}' run python '${PATHS.scriptTextProcessorCLI.name}'`,
+  callTextProcessor: `'${PATHS.binUV.path}' --directory '${PATHS.dirTextProcessor.path}' run python '${PATHS.scriptTextProcessorCLI.path}'`,
 };
 
 const Passwords_Privileges = {
@@ -64,10 +64,10 @@ const Passwords_Privileges = {
 
 const Kill_Apps = {
   killForegroundApp: cmdEntry(
-    `${PATHS.binAppKill.name} --foreground`,
+    `${PATHS.binAppKill.path} --foreground`,
     "Kill foreground application",
   ),
-  killAllApps: cmdEntry(`${PATHS.binAppKill.name}`, "Kill all applications"),
+  killAllApps: cmdEntry(`${PATHS.binAppKill.path}`, "Kill all applications"),
 };
 
 const Hs_Functions = {
@@ -83,18 +83,18 @@ const Hs_Functions = {
 
 const Typinator_Scripts = {
   typinatorNewRule: cmdEntry(
-    `'${PATHS.binTypinatorVenv.name}' '${PATHS.scriptTypinatorNewRule.name}'`,
+    `'${PATHS.binTypinatorVenv.path}' '${PATHS.scriptTypinatorNewRule.path}'`,
     "Create new Typinator rule",
   ),
   scriptTypinatorLastRule: cmdEntry(
-    `osascript '${PATHS.scriptTypinatorLastRule.name}'`,
+    `osascript '${PATHS.scriptTypinatorLastRule.path}'`,
     "Edit last Typinator expansion",
   ),
 };
 
 const Spotify = {
   spotifyToggle: cmdEntry(
-    `if pgrep -x 'Spotify' > /dev/null; then open '${URLS.raySpotifyPlayPause}'; else '${PATHS.binAppOpen.name}' -b 'com.spotify.client'; fi; echo 'Spotify toggled'`,
+    `if pgrep -x 'Spotify' > /dev/null; then open '${URLS.raySpotifyPlayPause.url}'; else '${PATHS.binAppOpen.path}' -b 'com.spotify.client'; fi; echo 'Spotify toggled'`,
     "open Spotify or toggle play/pause",
   ),
 };
@@ -163,15 +163,15 @@ const Get_Recents = {
     "Get recent items from Raycast",
   ),
   getRecentDls: cmdEntry(
-    `${PATHS.scriptNewDLs.name} -a`,
+    `${PATHS.scriptNewDLs.path} -a`,
     "Get recent items from script",
   ),
   getRecentMods: cmdEntry(
-    `${PATHS.scriptNewDLs.name} -m`,
+    `${PATHS.scriptNewDLs.path} -m`,
     "Get recent mods from script",
   ),
   getNewFiles: cmdEntry(
-    `${PATHS.scriptNewDLs.name} -c`,
+    `${PATHS.scriptNewDLs.path} -c`,
     "Get new files from script",
   ),
 };
@@ -185,7 +185,7 @@ const App_Specific = {
 
 const Misc_Scripts = {
   screenshot_to_md: cmdEntry(
-    `'${PATHS.binSharedVenv.name}' '${PATHS.dirScripts.name}/ui/screenshot_to_md/shot_to_md.py'`,
+    `'${PATHS.binSharedVenv.path}' '${PATHS.dirScripts.path}/ui/screenshot_to_md/shot_to_md.py'`,
     "Take screenshot and convert to markdown",
   ),
   showPopclip: cmdEntry(
@@ -211,4 +211,4 @@ export const CMDS = {
   ...Misc_Scripts,
 } as const;
 
-export type { CommandRef };
+export type { CommandSpec };

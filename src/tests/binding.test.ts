@@ -34,8 +34,8 @@ test("resolveCondition app + path if -> frontmost_application_if (AppRef and Pat
 test("resolveCondition app unless -> frontmost_application_unless", () => {
   const c = resolveCondition({
     app: [
-      { type: "app", name: "a", refDesc: "A" },
-      { type: "app", name: "b", refDesc: "B" },
+      { type: "app", bundleId: "a", refDesc: "A" },
+      { type: "app", bundleId: "b", refDesc: "B" },
     ],
     unless: true,
   }) as any;
@@ -169,8 +169,8 @@ test("defineBindings remap: two press cases with different conditions -> two man
       description: "conditional",
       trigger: { keys: ["x"] },
       cases: [
-        { phase: "press", conditions: [{ app: { type: "app", name: "com.a", refDesc: "A" } }], do: [{ type: "key", key: "1" }] },
-        { phase: "press", conditions: [{ app: { type: "app", name: "com.b", refDesc: "B" } }], do: [{ type: "key", key: "2" }] },
+        { phase: "press", conditions: [{ app: { type: "app", bundleId: "com.a", refDesc: "A" } }], do: [{ type: "key", key: "1" }] },
+        { phase: "press", conditions: [{ app: { type: "app", bundleId: "com.b", refDesc: "B" } }], do: [{ type: "key", key: "2" }] },
       ],
     },
   ]);
@@ -232,7 +232,7 @@ test("defineBindings auto-derives rule description + slice-label when descriptio
   const rules = defineBindings([
     {
       trigger: { keys: ["x"] },
-      conditions: [{ app: { type: "app", name: "com.a", refDesc: "A" } }],
+      conditions: [{ app: { type: "app", bundleId: "com.a", refDesc: "A" } }],
       cases: [{ phase: "press", do: [{ type: "key", key: "y" }] }],
     },
   ]);

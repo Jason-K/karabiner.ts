@@ -1,4 +1,4 @@
-import type { DeviceSpec } from "./refs";
+import type { DeviceSpec } from "../primitives/devices";
 
 export const DEVICES = {
   appleNumericKeypad: {
@@ -22,3 +22,5 @@ export const DEVICES = {
     ignore: false,
   },
 } as const satisfies Record<string, DeviceSpec>;
+
+export type { DeviceSpec };

@@ -1,14 +1,15 @@
 import type { ToEvent } from "karabiner.ts";
-import type { AppRef } from "../data/registry-app-ids";
-import type { CommandRef } from "../data/registry-cmds";
-import type { ModComboAlias, ModKey } from "../data/settings-keys";
-import type { PathRef } from "../data/registry-paths";
-import type { MapRef, VarSpec } from "../data/refs";
-import type { UrlRef } from "../data/registry-urls";
+import type { AppSpec } from "./apps";
+import type { CommandSpec } from "./commands";
+import type { MapSpec } from "./maps";
+import type { PathSpec } from "./paths";
+import type { UrlSpec } from "./urls";
+import type { VarSpec } from "./vars";
+import type { ModComboAlias, ModKey } from "../constants/keys";
 
-/** Ref accepted by the "app" action: a typed AppRef (bundle ID), a typed
- * PathRef (file path to .app), or a raw string (bundle ID or /path/to/Foo.app). */
-export type AppTarget = AppRef | PathRef | string;
+/** Ref accepted by the "app" action: a typed AppSpec (bundle ID/path), a typed
+ * PathSpec (file path to .app), or a raw string (bundle ID or /path/to/Foo.app). */
+export type AppTarget = AppSpec | PathSpec | string;
 
 export type ActionKeyModifier = ModKey | ModComboAlias;
 
@@ -44,14 +45,14 @@ export type ActionSpec =
   }
   | {
     type: "command";
-    ref: CommandRef;
+    ref: CommandSpec;
     actionDesc?: string;
   }
   | { type: "copy"; }
   | { type: "cut"; }
   | {
     type: "map";
-    ref: MapRef;
+    ref: MapSpec;
     options?: {
       repeat?: boolean;
       halt?: boolean;
@@ -59,7 +60,7 @@ export type ActionSpec =
     };
     actionDesc?: string;
   }
-  | { type: "folder"; ref: PathRef; actionDesc?: string; }
+  | { type: "folder"; ref: PathSpec; actionDesc?: string; }
   | {
     type: "key";
     key: string;
@@ -96,12 +97,9 @@ export type ActionSpec =
     type: "sequence";
     actions: ActionSpec[];
   }
-  // Accepts an arbitrary shell string OR a CommandRef. A CommandRef auto-resolves
-  // .name for the event and describes via .refDesc, so registry commands need no
-  // manual `description` (paralleling how `url` accepts `UrlRef | string`).
   | {
     type: "shell";
-    command: string | CommandRef;
+    command: string | CommandSpec;
     actionDesc?: string;
   }
   | {
@@ -115,16 +113,9 @@ export type ActionSpec =
   }
   | {
     type: "url";
-    url: UrlRef | string;
+    url: UrlSpec | string;
     background?: boolean;
     actionDesc?: string;
   };
 
-/**
- * A case `do` entry: either a typed {@link ActionSpec} or a raw Karabiner
- * `ToEvent` passed through verbatim (mouse mappings author heterogeneous
- * events — pointing_button, shell_command, set_variable, from_event — that have
- * no natural ActionSpec representation). Raw ToEvents are resolved as-is and
- * described by shape.
- */
 export type Action = ActionSpec | ToEvent;

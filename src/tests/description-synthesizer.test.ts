@@ -1,11 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import type { ActionSpec } from "../engine/action-dsl";
-import { APP_ID } from "../data/registry-app-ids";
-import { CMDS } from "../data/registry-cmds";
-import { PATHS } from "../data/registry-paths";
-import { URLS } from "../data/registry-urls";
+import { APP_ID, CMDS, PATHS, URLS, type ActionSpec } from "../data";
 import type { Binding } from "../engine/emit-modifiers/binding";
 import {
   describeAction,
@@ -82,7 +78,7 @@ test("describeAction: actHere / caseChange / wrapString", () => {
 test("describeAction: map", () => {
   const ref = {
     type: "map" as const,
-    name: "f",
+    keyCode: "f",
     modifiers: ["command", "option"],
     refDesc: "Raycast Focus Mode",
   };
@@ -148,7 +144,7 @@ test("describeAction: setVar uses the var label", () => {
 
 const excelCond = {
   type: "app" as const,
-  name: "com.microsoft.Excel",
+  bundleId: "com.microsoft.Excel",
   refDesc: "Microsoft Excel",
 };
 const roleVar = {
@@ -165,7 +161,7 @@ test("describeConditionGroup: app if/unless + multi-app", () => {
   assert.equal(describeConditionGroup([{ app: excelCond }]), "In Microsoft Excel");
   assert.equal(describeConditionGroup([{ app: excelCond, unless: true }]), "Outside Microsoft Excel");
   assert.equal(
-    describeConditionGroup([{ app: [excelCond, { type: "app", name: "b", refDesc: "B" }] }]),
+    describeConditionGroup([{ app: [excelCond, { type: "app", bundleId: "b", refDesc: "B" }] }]),
     "In Microsoft Excel/B",
   );
 });
@@ -224,7 +220,7 @@ test("describeTrigger: pointer (button labels)", () => {
   );
 });
 
-const evaluateCmd = { type: "command" as const, name: "x", refDesc: "Evaluate selection" };
+const evaluateCmd = { type: "command" as const, command: "x", refDesc: "Evaluate selection" };
 
 test("synthesizeRuleDescription: simple unconditional remap", () => {
   const binding: Binding = {
@@ -269,7 +265,7 @@ test("synthesizeRuleDescription: multi-action case joined with ' then '", () => 
     cases: [
       {
         phase: "press",
-        conditions: [{ app: { type: "app", name: "w", refDesc: "Word" } }],
+        conditions: [{ app: { type: "app", bundleId: "w", refDesc: "Word" } }],
         do: [{ type: "osascript", scriptPath: "/a.scpt" }, { type: "shell", command: "elevate" }],
       },
     ],
@@ -298,12 +294,12 @@ test("synthesizeManipulatorLabel: undefined when unconditional", () => {
 
 test("synthesizeManipulatorLabel: condition-group label when conditional", () => {
   assert.equal(
-    synthesizeManipulatorLabel([{ app: { type: "app", name: "x", refDesc: "Excel" } }]),
+    synthesizeManipulatorLabel([{ app: { type: "app", bundleId: "x", refDesc: "Excel" } }]),
     "In Excel",
   );
   assert.equal(
     synthesizeManipulatorLabel([
-      { app: { type: "app", name: "x", refDesc: "Excel" }, unless: true },
+      { app: { type: "app", bundleId: "x", refDesc: "Excel" }, unless: true },
     ]),
     "Outside Excel",
   );

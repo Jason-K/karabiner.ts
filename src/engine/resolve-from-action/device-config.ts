@@ -2,6 +2,7 @@ export type SimpleModification = {
   from: { key_code: string };
   to: ReadonlyArray<{ key_code: string }>;
 };
+
 export type DeviceConfigSetting = {
   mouse_flip_vertical_wheel?: boolean;
   mouse_flip_horizontal_wheel?: boolean;
@@ -25,7 +26,7 @@ export type DeviceConfig = {
   settings?: DeviceConfigSetting;
 };
 
-import type { DeviceSpec } from "../../data/refs";
+import type { DeviceSpec } from "../../data";
 
 /**
  * Strip a `DeviceSpec` to the shape Karabiner accepts as a device identifier.
@@ -66,8 +67,6 @@ export function buildDeviceConfig(
   return config;
 }
 
-
-
 /**
  * Generate a unique key for a device identifier distinguishing pointing device vs keyboard.
  */
@@ -75,8 +74,8 @@ export function getDeviceKey(identifiers: DeviceConfig["identifiers"]): string {
   const type = identifiers.is_pointing_device
     ? "pointing"
     : identifiers.is_keyboard
-    ? "keyboard"
-    : "generic";
+      ? "keyboard"
+      : "generic";
   return `${identifiers.vendor_id}_${identifiers.product_id}_${type}`;
 }
 
