@@ -1,160 +1,43 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { generateModifierChordRules } from "../engine";
+import { capsLockBaseBindings, capsLockBindings } from "../definitions/caps-lock";
+import { defineBindings } from "../engine";
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
 }
 
-test("generateModifierChordRules produces one manipulator per variant plus base", () => {
-  const rule = toRule(
-    generateModifierChordRules({
-      ruleName: "Test chord rule",
-      base: {
-        key: "caps_lock",
-        description: "vmCOC_",
-        to: [
-          {
-            type: "key",
-            key: "left_command",
-            modifiers: ["left_control", "left_option"],
-          },
-        ],
-      },
-      variants: [
-        {
-          modifiers: ["left_shift"],
-          description: "vmCOCS",
-          to: [
-            {
-              type: "key",
-              key: "left_shift",
-              modifiers: ["left_command", "left_option", "left_control"],
-            },
-          ],
-        },
-      ],
-    }),
-  );
-  assert.equal(rule.manipulators.length, 2); // 1 base + 1 variant
+test("capsLockBindings produces rules for base and all 15 variants", () => {
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
+  assert.equal(rules.length, 16); // 1 base + 15 variants
 });
 
-test("generateModifierChordRules uses ruleName as rule description", () => {
-  const rule = toRule(
-    generateModifierChordRules({
-      ruleName:
-        "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
-      base: {
-        key: "caps_lock",
-        description: "vmCOC_",
-        to: [
-          {
-            type: "key",
-            key: "left_command",
-            modifiers: ["left_control", "left_option"],
-          },
-        ],
-      },
-      variants: [],
-    }),
-  );
-  assert.equal(
-    rule.description,
-    "[CAPS]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
-  );
-});
-
-test("generateModifierChordRules trackVar adds setVar and afterKeyUp events", () => {
-  const rule = toRule(
-    generateModifierChordRules({
-      ruleName: "Test",
-      base: {
-        key: "caps_lock",
-        description: "vmCOC_",
-        to: [
-          {
-            type: "key",
-            key: "left_command",
-            modifiers: ["left_control", "left_option"],
-          },
-        ],
-        trackVar: "caps_lock_pressed",
-      },
-      variants: [],
-    }),
-  );
-  const base: any = rule.manipulators[0];
+test("capsLockBindings base binding adds setVar and afterKeyUp for whileHoldVar", () => {
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
+  const baseRule: any = rules[0];
+  const baseManip: any = baseRule.manipulators[0];
   assert.ok(
-    base?.to?.some((e: any) => e.set_variable?.name === "caps_lock_pressed"),
+    baseManip?.to?.some((e: any) => e.set_variable?.name === "caps_lock_pressed"),
     "Expected set_variable in to events",
   );
   assert.ok(
-    base?.to_after_key_up?.some(
+    baseManip?.to_after_key_up?.some(
       (e: any) => e.set_variable?.name === "caps_lock_pressed",
     ),
     "Expected set_variable in to_after_key_up",
   );
 });
 
-test("generateModifierChordRules variant uses mandatory modifiers in from", () => {
-  const rule = toRule(
-    generateModifierChordRules({
-      ruleName: "Test",
-      base: {
-        key: "caps_lock",
-        description: "vmCOC_",
-        to: [
-          {
-            type: "key",
-            key: "left_command",
-            modifiers: ["left_control", "left_option"],
-          },
-        ],
-      },
-      variants: [
-        {
-          modifiers: ["left_shift"],
-          description: "vmCOCS",
-          to: [{ type: "key", key: "left_shift", modifiers: ["left_command"] }],
-        },
-      ],
-    }),
-  );
-  const variant: any = rule.manipulators[1];
-  assert.deepEqual(variant?.from?.modifiers?.mandatory, ["left_shift"]);
+test("capsLockBindings variant uses mandatory modifiers in from", () => {
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
+  const shiftVariant: any = rules[1].manipulators[0];
+  assert.deepEqual(shiftVariant?.from?.modifiers?.mandatory, ["left_shift"]);
 });
 
-test("generateModifierChordRules can emit vk_none for the full modifier chord", () => {
-  const rule = toRule(
-    generateModifierChordRules({
-      ruleName: "Test",
-      base: {
-        key: "caps_lock",
-        description: "vmCOC_",
-        to: [
-          {
-            type: "key",
-            key: "left_command",
-            modifiers: ["left_control", "left_option"],
-          },
-        ],
-      },
-      variants: [
-        {
-          modifiers: [
-            "left_command",
-            "left_option",
-            "left_control",
-            "left_shift",
-          ],
-          description: "vm____",
-          to: [{ type: "key", key: "vk_none" }],
-        },
-      ],
-    }),
-  );
-
-  const variant: any = rule.manipulators[1];
-  assert.equal(variant?.to?.[0]?.key_code, "vk_none");
+test("capsLockBindings can emit vk_none for the full modifier chord", () => {
+  const rules = defineBindings(capsLockBaseBindings).map(toRule);
+  const fullChordRule: any = rules[15].manipulators[0];
+  const vkNone = fullChordRule?.to?.find((e: any) => e.key_code)?.key_code;
+  assert.equal(vkNone, "vk_none");
 });

@@ -9,13 +9,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { map, toSetVar } from "karabiner.ts";
-import { toFromEvent } from "../core/beta";
-import { exprIf } from "../core/conditions";
+import { ifVarExpr, toTrigger } from "../engine/resolve-to-action";
 
 const mapAny = map as unknown as (...args: any[]) => any;
 
 test("to.from_event: pass-through for conditional remap", () => {
-  const manipulator = mapAny("left_option").to([toFromEvent()]).build()[0];
+  const manipulator = mapAny("left_option").to([toTrigger()]).build()[0];
 
   assert(manipulator.to, "manipulator should have 'to' events");
   assert.deepEqual(
@@ -45,8 +44,8 @@ test.skip("to_if_other_key_pressed: option-tab remap (cmd-tab alternative)", () 
 
   assert(
     manipulator.to?.[0] &&
-      typeof manipulator.to[0] === "object" &&
-      "key_code" in manipulator.to[0],
+    typeof manipulator.to[0] === "object" &&
+    "key_code" in manipulator.to[0],
     "base case: should have key_code",
   );
   assert(
@@ -122,7 +121,7 @@ test("from_event in event sequence (emit original + side effect)", () => {
    * (Enables detection of escape key activity for UI purposes)
    */
   const manipulator = mapAny("escape")
-    .to([toFromEvent(), toSetVar("escape_pressed", 1)])
+    .to([toTrigger(), toSetVar("escape_pressed", 1)])
     .build()[0];
 
   assert.deepEqual(manipulator.to?.[0], { from_event: true }, "first event: from_event");
@@ -179,8 +178,8 @@ test("correctness: from_event with expression conditions", () => {
    * This ensures beta features compose well together.
    */
   const manipulator = mapAny("left_option")
-    .condition(exprIf("layer_active == 1"))
-    .to([toFromEvent()])
+    .condition(ifVarExpr("layer_active == 1"))
+    .to([toTrigger()])
     .build()[0];
 
   assert(manipulator.conditions, "should preserve expression condition");

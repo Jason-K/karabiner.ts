@@ -1,5 +1,5 @@
 import { map, rule, toKey, toSetVar, toStickyModifier } from "karabiner.ts";
-import { formatRuleDescription } from "../core/rule-descriptions";
+import { formatRuleDescription } from "./resolve-description/rule-descriptions";
 
 export function generateEscapeRule(suppressionVars: string[] = []): any[] {
   const otherVars = [

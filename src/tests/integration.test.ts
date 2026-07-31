@@ -30,7 +30,7 @@ test("generated output includes all critical rule categories", () => {
 
   // Sample critical rules: tap-hold, special rules
   assert.ok(
-    descriptions.some((d: string) => d.endsWith("(on hold)")),
+    descriptions.some((d: string) => d.endsWith("(on hold)") || d.includes("On Hold:")),
     "Missing tap-hold rules",
   );
   assert.ok(
@@ -42,7 +42,7 @@ test("generated output includes all critical rule categories", () => {
     "Missing ESCAPE rule",
   );
   assert.ok(
-    descriptions.some((d: string) => d.startsWith("[←⌘]+[Q]")),
+    descriptions.some((d: string) => d.startsWith("[⌘]+[Q]")),
     "Missing CMD-Q rule",
   );
 });
@@ -51,15 +51,23 @@ test("generated output uses standardized rule descriptions", () => {
   const output = loadGeneratedOutput();
   const rules = output.complex_modifications.rules;
 
+  // Legacy format — still used by engine-adapter rules (tap-hold family, caps,
+  // cmd-q, enter/equals) until Phase 3 migrates them.
   const standardDescription =
     /^\[[^\]]+\](\+\[[^\]]+\])* {8}→ {4}.+ \(on (tap|hold|multi-tap)\)$/;
-  const mouseDeviceDescription =
-    /^[^:]+: .+ \((tap|hold)\)( \/ .+ \((tap|hold)\))*$/;
+  // Phase 2 auto-derived format: first line ends in ":" (key chord like [⏎]:
+  // or pointer like Click:), then a "---" divider line.
+  const synthesizedDescription = /^[^\n]+:\n---/;
+  // Mouse device descriptions are inherently varied (single tap, tap/hold,
+  // double-tap chords, app-conditional variants, etc.) and don't always
+  // end in a (tap|hold) suffix. Floor: "<device name>: <non-empty body>".
+  const mouseDeviceDescription = /^[^:]+: .+$/;
 
   rules.forEach((rule: any) => {
     assert.ok(
       standardDescription.test(rule.ruleDescription) ||
-        mouseDeviceDescription.test(rule.ruleDescription),
+      synthesizedDescription.test(rule.ruleDescription) ||
+      mouseDeviceDescription.test(rule.ruleDescription),
       `Rule description is not standardized: ${rule.ruleDescription}`,
     );
   });

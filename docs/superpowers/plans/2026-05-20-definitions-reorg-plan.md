@@ -198,14 +198,14 @@ In `src/definitions/apps/antinote.ts`, the imports were `../data` and `../engine
 
 ```ts
 // before
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
     generateDoubleTapGuardRule,
     type DoubleTapGuardConfig,
 } from "../engine/double-tap-guard-rules";
 
 // after
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import {
     generateDoubleTapGuardRule,
     type DoubleTapGuardConfig,
@@ -217,7 +217,7 @@ In `src/definitions/apps/skim.ts`, apply the same `..` → `../..` substitution:
 ```ts
 // before
 import { L } from "../core/mods";
-import { appRegistry } from "../data";
+import { Apps } from "../data";
 import {
     generateAppScopedRemapRules,
     type AppScopedRemapMapping,
@@ -225,7 +225,7 @@ import {
 
 // after
 import { L } from "../../core/mods";
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import {
     generateAppScopedRemapRules,
     type AppScopedRemapMapping,
@@ -237,7 +237,7 @@ import {
 Create the file with the OnePiece pointer-remap, lifted from `special-keys.ts`:
 
 ```ts
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import {
     generatePointerRemapRule,
     type PointerRemapConfig,
@@ -247,7 +247,7 @@ export const onePieceClickEnter: PointerRemapConfig = {
   button: "button1",
   description: "OnePiece left click -> enter",
   to: [{ type: "key", key: "return_or_enter" }],
-  ifApp: appRegistry.onePiece,
+  ifApp: Apps.onePiece,
 };
 
 export const buildOnePieceClickEnterRule = () =>
@@ -259,7 +259,7 @@ export const buildOnePieceClickEnterRule = () =>
 In `src/definitions/special-keys.ts`, delete:
 
 - The `import { generatePointerRemapRule, type PointerRemapConfig } from "../engine/pointer-remap-rules";` line
-- The `import { ..., appRegistry } from "../data";` import of `appRegistry` if no remaining code uses it — verify by searching the file; `enterKeyHoldMappings` and `equalsKeyHoldMappings` reference `appRegistry.excel`, so keep `appRegistry` in the import
+- The `import { ..., Apps } from "../data";` import of `Apps` if no remaining code uses it — verify by searching the file; `enterKeyHoldMappings` and `equalsKeyHoldMappings` reference `Apps.excel`, so keep `Apps` in the import
 - The `onePieceClickEnter` constant and the `buildOnePieceClickEnterRule` export at the bottom
 
 After deletion, `special-keys.ts` should only contain `enterKeyHoldMappings`, `equalsKeyHoldMappings`, `buildEnterRules`, and `buildEqualsRules`.
@@ -270,9 +270,9 @@ Create the file with the Word privileges rule, lifted from `security.ts`:
 
 ```ts
 import {
-    PATHS,
+    Paths,
     TIMINGS,
-    appRegistry,
+    Apps,
 } from "../../data";
 import {
     generateConditionalActionRules,
@@ -291,13 +291,13 @@ export const wordPrivilegesMapping: ConditionalActionMapping = {
       when: [
         {
           type: "frontmostApp",
-          bundleIds: [appRegistry.word],
+          bundleIds: [Apps.word],
         },
       ],
       actions: [
         {
           type: "osascript",
-          scriptPath: PATHS.wordDocumentPathAppleScript,
+          scriptPath: Paths.wordDocumentPathAppleScript,
         },
         {
           type: "shell",
@@ -320,7 +320,7 @@ In `src/definitions/security.ts`:
 - Remove `buildWordPrivilegesRule` export
 - Re-index any remaining array references — after deletion, `buildPasswordsQuickFillRule` should reference `securitySlashActionMappings[0]!` instead of `[1]!`
 
-After deletion, `security.ts` exports: `disabledShortcuts`, `securitySlashActionMappings` (now only the password quick-fill mapping), `buildDisableHideMinimizeRule`, `buildPasswordsQuickFillRule`. The `appRegistry.word` import and `PATHS.wordDocumentPathAppleScript` references should be gone.
+After deletion, `security.ts` exports: `disabledShortcuts`, `securitySlashActionMappings` (now only the password quick-fill mapping), `buildDisableHideMinimizeRule`, `buildPasswordsQuickFillRule`. The `Apps.word` import and `Paths.wordDocumentPathAppleScript` references should be gone.
 
 - [ ] **Step 7: Update `src/definitions/index.ts`**
 
@@ -376,7 +376,7 @@ Expected: all checks pass.
 Run: `diff karabiner-output.json /tmp/karabiner-baseline.json`
 Expected: empty.
 
-If non-empty: stop. The most likely cause is that `wordPrivilegesMapping` produces a different rule than `securitySlashActionMappings[0]` did — compare structures and fix until the rule emits identical JSON. The variants array, descriptions, and `appRegistry.word` reference must match exactly.
+If non-empty: stop. The most likely cause is that `wordPrivilegesMapping` produces a different rule than `securitySlashActionMappings[0]` did — compare structures and fix until the rule emits identical JSON. The variants array, descriptions, and `Apps.word` reference must match exactly.
 
 - [ ] **Step 10: Commit**
 
@@ -412,7 +412,7 @@ import {
     ACCESSIBILITY_VALUES,
     ACCESSIBILITY_VARIABLES,
     TIMINGS,
-    appRegistry,
+    Apps,
 } from "../data";
 import {
     generateConditionalActionRules,
@@ -444,9 +444,9 @@ export const disabledShortcuts: DisabledShortcutMapping[] = [
 const GET_PRIVILEGES =
   "/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI -a";
 const QUICK_FILL_APP_BUNDLE_IDENTIFIERS = [
-  appRegistry.securityAgent,
-  appRegistry.settings,
-  appRegistry.settingsPrivacySecurityExtension,
+  Apps.securityAgent,
+  Apps.settings,
+  Apps.settingsPrivacySecurityExtension,
 ];
 
 export const passwordsQuickFillMapping: ConditionalActionMapping = {
@@ -748,7 +748,7 @@ import {
     formatSelectionCommand,
     typinatorNewRuleCommand,
 } from "../core/scripts";
-import { PATHS } from "../data";
+import { Paths } from "../data";
 import {
     rectangleActionByFocusedWindowOrientationCommand,
     rectangleActionUrl,
@@ -788,7 +788,7 @@ export const hyperLauncherMappings: ModifierLauncherMapping[] = [
   {
     key: "f12",
     description: "Edit last Typinator rule",
-    action: { type: "shell", command: `/usr/bin/osascript ${PATHS.typinatorEditLastRule}` },
+    action: { type: "shell", command: `/usr/bin/osascript ${Paths.typinatorEditLastRule}` },
   },
   {
     key: "escape",
@@ -955,7 +955,7 @@ export const buildCmdQRule = () => generateDoubleTapGuardRule(cmdQGuard);
 Combine `right-option-launchers.ts` content with the `right_option+*` entries from `tap-hold.ts`:
 
 ```ts
-import { PATHS } from "../data/paths";
+import { Paths } from "../data/paths";
 import { TIMINGS } from "../data/timings";
 import { spotifyToggleCommand } from "../core/scripts";
 import type { TapHoldConfig } from "../engine";
@@ -998,7 +998,7 @@ export const rightOptionTapHoldMappings: Record<string, TapHoldConfig> = {
     hold: [
       {
         type: "osascript",
-        scriptPath: PATHS.typinatorEditLastRule,
+        scriptPath: Paths.typinatorEditLastRule,
       },
     ],
     timeoutMs: TIMINGS.mouseDefaultMs,
@@ -1276,7 +1276,7 @@ Remove this entry from `src/definitions/single-key.ts`:
 Add to `src/definitions/apps/antinote.ts`:
 
 ```ts
-import { appRegistry } from "../../data";
+import { Apps } from "../../data";
 import type { TapHoldConfig } from "../../engine";
 import {
     generateDoubleTapGuardRule,
@@ -1287,7 +1287,7 @@ export const antinoteDeleteGuard: DoubleTapGuardConfig = {
   key: "d",
   modifiers: ["left_command"],
   description: "Delete note",
-  ifApp: [appRegistry.antinote, appRegistry.antinoteLegacy],
+  ifApp: [Apps.antinote, Apps.antinoteLegacy],
 };
 
 export const antinoteTapHoldMappings: Record<string, TapHoldConfig> = {

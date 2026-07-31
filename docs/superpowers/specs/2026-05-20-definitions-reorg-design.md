@@ -98,7 +98,7 @@ Example — `hyper.ts`:
 ```ts
 import { HYPER } from "../core/mods";
 import { formatSelectionCommand, typinatorNewRuleCommand } from "../core/scripts";
-import { PATHS } from "../data";
+import { Paths } from "../data";
 import { generateModifierLauncherRules, type ModifierLauncherMapping } from "../engine/launcher-rules";
 import type { TapHoldConfig } from "../engine";
 

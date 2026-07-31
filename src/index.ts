@@ -10,54 +10,43 @@
  * 3. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
  *
  * Virtual Modifiers:
- * - vmCOC_: Command + Option + Control
- * - vmCOCS: Command + Option + Control + Shift
- * - vmCO_S: Command + Option + Shift
+ * - COC_: Command + Option + Control
+ * - COCS: Command + Option + Control + Shift
+ * - CO_S: Command + Option + Shift
  */
 
 import { map, writeToProfile } from "karabiner.ts";
-import { readFileSync } from "node:fs";
+import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import {
-  APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS,
-  DEFAULT_PROFILE_NAME,
-  DEVICE_IDENTIFIERS,
+  DEFAULT_GLOBAL_SETTINGS,
+  DEFAULT_PROFILE,
+  DEVICES,
   PATHS,
-  PREFERRED_PROFILE_NAME,
+  PREFERRED_PROFILE,
+  DEFAULT_PROFILE_TIMINGS,
 } from "./data";
 import {
-  buildAntinoteRules,
-  buildCapsLockRule,
-  buildCmdQRule,
-  buildCtrlEscapeMonitorRule,
-  buildDisableHideMinimizeRule,
-  buildEnterRules,
-  buildEqualsRules,
-  buildEscapeTapTapHoldRule,
-  buildHomeEndRule,
-  buildHyperLauncherRules,
-  buildLeftCommandRule,
-  buildOnePieceClickEnterRule,
-  buildPasswordsQuickFillRule,
-  buildRightOptionLauncherRules,
-  buildShiftRules,
-  buildSkimCommandRemapRule,
-  buildWordPrivilegesRule,
-  buildZenCommandRemapRule,
-  mouseDeviceMappings,
+  capsLockBindings,
+  disabledHotkeys,
+  guardBindings,
+  mouseBindings,
+  NUMPAD_REMAPS,
   simultaneousMappings,
-  tapHoldMappings,
+  tapHoldBindings,
 } from "./definitions";
 import type { DeviceConfig } from "./engine";
 import {
-  buildMouseRules,
+  assertUniqueTriggers,
+  buildDeviceConfig,
+  defineBindings,
   generateSimultaneousRules,
-  generateTapHoldRules,
   updateDeviceConfigurations,
 } from "./engine";
 
 // Generate tap-hold rules with automatic conflict prevention
-const tapHoldRules = generateTapHoldRules(tapHoldMappings);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, [], tapHoldMappings);
+const verifiedTapHoldBindings = assertUniqueTriggers(tapHoldBindings);
+const tapHoldRules = defineBindings(verifiedTapHoldBindings);
+const simultaneousRules = generateSimultaneousRules(simultaneousMappings, verifiedTapHoldBindings);
 
 // ============================================================================
 // SPECIAL RULES
@@ -69,73 +58,28 @@ let rules: any[] = [
   // All tap-hold rules generated from configuration
   ...tapHoldRules,
 
-  // LEFT COMMAND - Tap (pass-through), double-tap (last app), hold (f13)
-  buildLeftCommandRule(),
+  // GUARD - Various guard rules
+  ...defineBindings(guardBindings),
 
-  // ESCAPE - ESC (tap), kill foreground (hold), kill unresponsive (tap-tap-hold)
-  buildEscapeTapTapHoldRule(),
-
-  // LEFT CONTROL + ESCAPE - Activity Monitor (tap), Process Spy (hold)
-  buildCtrlEscapeMonitorRule(),
-
-  // Mouse mappings (declarative per-device rules)
-  ...buildMouseRules(mouseDeviceMappings),
-
-  // ONEPIECE - Left click submits with Enter inside the app
-  buildOnePieceClickEnterRule(),
+  // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
+  // flow through the same Binding[] + defineBindings engine as keys.
+  ...defineBindings(mouseBindings),
 
   // CAPS LOCK - Multiple behaviors
-  buildCapsLockRule(),
-
-  // HOME/END - Make them work properly on macOS
-  ...buildHomeEndRule(),
-
-  // vmCOC_ + _ - Grouped virtual-mod shortcuts
-  ...buildHyperLauncherRules(),
-
-  // ENTER/RETURN - Hold for quick format (except Excel), hold for F2 in Excel
-  ...buildEnterRules(),
-
-  // EQUALS - Hold for Quick Date (both keypad and regular)
-  ...buildEqualsRules(),
-
-  // CMD+Q double-tap protection (simplified - no optional any support in map())
-  buildCmdQRule(),
-
-  // Right_Option + __ - App launch or focus
-  ...buildRightOptionLauncherRules(),
+  ...defineBindings(capsLockBindings),
 
   // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
-  ...buildDisableHideMinimizeRule(),
-
-  // WORD - CMD+/ copy document name and elevate privileges
-  buildWordPrivilegesRule(),
-
-  // PASSWORDS - CMD+/ quick fill dialogue (in SecurityAgent only)
-  buildPasswordsQuickFillRule(),
-
-  // SKIM - CMD+H/U remapping
-  ...buildSkimCommandRemapRule(),
-
-  // ZEN - CMD+SHIFT+H/U remapping
-  ...buildZenCommandRemapRule(),
-
-  // ANTINOTE - CMD+D double-tap to delete note
-  ...buildAntinoteRules(),
-
-  // SHIFT - Shift key rules
-  ...buildShiftRules(),
+  ...defineBindings(disabledHotkeys),
 ];
+
 
 // ============================================================================
 // DEVICE-SPECIFIC SIMPLE MODIFICATIONS
 // ============================================================================
 
 const deviceConfigs: DeviceConfig[] = [
-  {
-    identifiers: DEVICE_IDENTIFIERS.appleNumericKeypad,
-    simple_modifications: [...APPLE_NUMERIC_KEYPAD_SIMPLE_MODIFICATIONS],
-  },
+  buildDeviceConfig(DEVICES.appleNumericKeypad, [...NUMPAD_REMAPS]),
+  buildDeviceConfig(DEVICES.g502X),
 ];
 
 // ============================================================================
@@ -148,11 +92,11 @@ const isDarwin = process.platform === "darwin";
 const canWriteProfile = isDarwin && !isCI;
 function resolveTargetProfileName(): string {
   if (!isDarwin) {
-    return PREFERRED_PROFILE_NAME;
+    return PREFERRED_PROFILE;
   }
 
   try {
-    const raw = readFileSync(PATHS.karabinerConfig, "utf8");
+    const raw = readFileSync(PATHS.configKarabiner.name, "utf8");
     const parsed = JSON.parse(raw) as {
       profiles?: Array<{ name?: string; selected?: boolean }>;
     };
@@ -163,7 +107,7 @@ function resolveTargetProfileName(): string {
       return explicit;
     }
 
-    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE_NAME)?.name;
+    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE)?.name;
     if (preferred) {
       return preferred;
     }
@@ -174,19 +118,37 @@ function resolveTargetProfileName(): string {
     }
 
     const first = profiles[0]?.name;
-    return first ?? DEFAULT_PROFILE_NAME;
+    return first ?? DEFAULT_PROFILE;
   } catch {
-    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE_NAME;
+    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE;
   }
 }
 
 const targetProfileName = resolveTargetProfileName();
 
+function updateGlobalSettings(configPath: string): void {
+  try {
+    const raw = readFileSync(configPath, "utf8");
+    const parsed = JSON.parse(raw);
+    parsed.global = { ...parsed.global, ...DEFAULT_GLOBAL_SETTINGS };
+    const tmpPath = `${configPath}.tmp`;
+    writeFileSync(tmpPath, JSON.stringify(parsed, null, 2));
+    renameSync(tmpPath, configPath);
+    console.log("✓ Global settings updated.");
+  } catch (error) {
+    console.error("Error updating global settings:", error);
+  }
+}
+
+if (canWriteProfile) {
+  updateGlobalSettings(PATHS.configKarabiner.name);
+}
+
 // Write rules: use real profile locally, dry-run in CI/non-macOS
 writeToProfile(
   canWriteProfile ? targetProfileName : "--dry-run",
   rules,
-  {},
+  DEFAULT_PROFILE_TIMINGS,
   {
     simple_modifications: [
       map("left_control").to("fn"),

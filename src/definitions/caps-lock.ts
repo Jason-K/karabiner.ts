@@ -1,201 +1,43 @@
-import { MOD_COMBO } from "../core/mods";
-import { formatRuleDescription } from "../core/rule-descriptions";
-import {
-  generateModifierChordRules,
-  type ModifierChordConfig,
-} from "../engine/modifier-chord-rules";
+import type { VarSpec } from "../data";
+import { vmod, type Binding } from "../engine";
 
-export const capsLockChordConfig: ModifierChordConfig = {
-  ruleName: formatRuleDescription(
-    "caps_lock",
-    "VM launcher / vmCOC_ / vmCOCS / vmCO_S",
-    "hold",
-  ),
-  base: {
-    // VMOD = CMD+OPT+CTRL+SHIFT
-    // CAPSLOCK = VMOD
-    // CAPSLOCK + MOD = VMOD-MODS (e.g., CAPS+SHIFT=CMD+OPT+CTRL; CAPS+CTRL+SHIFT=CMD+OPT)
-    key: "caps_lock",
-    description: "VM launcher / vmCOCS",
-    to: [
-      {
-        type: "key",
-        key: "left_command",
-        modifiers: MOD_COMBO.vm_OCS,
-      },
-    ],
-    toIfAlone: [
-      {
-        type: "key",
-        key: "f15",
-        modifiers: MOD_COMBO.vmCOCS,
-      },
-    ],
-    trackVar: "caps_lock_pressed",
-  },
-  variants: [
-    {
-      modifiers: ["left_shift"],
-      description: "vmCOC_",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: MOD_COMBO.vm_OC_,
-        },
-      ],
-    },
-    {
-      modifiers: ["left_control"],
-      description: "vmCO_S",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: MOD_COMBO.vm_O_S,
-        },
-      ],
-    },
-    {
-      modifiers: ["left_option"],
-      description: "vmC_CS",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: MOD_COMBO.vm__CS,
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command"],
-      description: "vm_OCS",
-      to: [
-        {
-          type: "key",
-          key: "left_option",
-          modifiers: MOD_COMBO.vm__CS,
-        },
-      ],
-    },
-    {
-      modifiers: ["left_control", "left_shift"],
-      description: "vmCO__",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: ["left_option"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_control", "left_option"],
-      description: "vmC__S",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: ["left_shift"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_control", "left_command"],
-      description: "vm_O_S",
-      to: [
-        {
-          type: "key",
-          key: "left_option",
-          modifiers: ["left_shift"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_option"],
-      description: "vm__CS",
-      to: [
-        {
-          type: "key",
-          key: "left_control",
-          modifiers: ["left_shift"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_shift"],
-      description: "vm_OC_",
-      to: [
-        {
-          type: "key",
-          key: "left_option",
-          modifiers: ["left_control"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_option", "left_shift"],
-      description: "vmC_C_",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-          modifiers: ["left_control"],
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_control", "left_shift"],
-      description: "vm_O__",
-      to: [
-        {
-          type: "key",
-          key: "left_option",
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_option", "left_shift"],
-      description: "vm__C_",
-      to: [
-        {
-          type: "key",
-          key: "left_control",
-        },
-      ],
-    },
-    {
-      modifiers: ["left_option", "left_control", "left_shift"],
-      description: "vmC___",
-      to: [
-        {
-          type: "key",
-          key: "left_command",
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_option", "left_control"],
-      description: "vm___S",
-      to: [
-        {
-          type: "key",
-          key: "left_shift",
-        },
-      ],
-    },
-    {
-      modifiers: ["left_command", "left_option", "left_control", "left_shift"],
-      description: "vm____",
-      to: [
-        {
-          type: "key",
-          key: "vk_none",
-        },
-      ],
-    },
-  ],
-};
+// CAPS LOCK — modifier-chord key.
+// - Tapped/released alone: emits f15 + left_command/option/control/shift
+//   (calls a Hammerspoon function via combo). Fires on release-if-uninterrupted.
+// - Held with no other modifiers down: emits left_command + option/control/shift
+//   (COCS modifier set) for the duration of the press.
+// - Held with optional modifiers physically down: emits the COCS set MINUS the
+//   physically-down modifiers.
 
-export const buildCapsLockRule = () =>
-  generateModifierChordRules(capsLockChordConfig);
+/**
+ * Caps-lock signaling variables. `pressed` is set to 1 while caps is held
+ * (`whileHoldVar`) so other bindings can avoid intercepting the modifier events
+ * caps emits — e.g. the `left_command` multi-tap rule must NOT fire while caps
+ * is held, or its `lazy` transform drops `cmd` from the caps hyper modifier.
+ */
+export const capsVars = {
+  pressed: { name: "caps_lock_pressed", varDesc: "Caps lock pressed" },
+} as const satisfies Record<string, VarSpec>;
+
+export const capsLockBindings: Binding[] = [
+  ...vmod("caps_lock", [], capsVars.pressed),
+  ...vmod("caps_lock", ["left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_control"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_option"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_control", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_control", "left_option"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_control", "left_command"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_option"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_option", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_control", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_option", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_option", "left_control", "left_shift"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_option", "left_control"], capsVars.pressed),
+  ...vmod("caps_lock", ["left_command", "left_option", "left_control", "left_shift"], capsVars.pressed),
+];
+
+export const capsLockBaseBindings: Binding[] = capsLockBindings.filter(
+  (b) => "keys" in b.trigger && b.trigger.keys.length === 1,
+);

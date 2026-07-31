@@ -1,32 +1,70 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { DEVICE_IDENTIFIERS, HOME_DIR, PATHS } from "../data";
-import { appRegistry } from "../data/apps";
-import { cleanShotRegistry } from "../data/cleanshot";
-import { folderRegistry } from "../data/folders";
-import { WIN_ACTIVATE_UNDER_CURSOR } from "../data/mouse";
-import { raycastRegistry } from "../data/raycast";
+import { HOME_DIR, PATHS, TIMINGS } from "../data";
+import { APP_ID } from "../data/registry-app-ids";
+import { CMDS } from "../data/registry-cmds";
+import { COMBOS } from "../data/registry-combos";
+import { URLS } from "../data/registry-urls";
+import { capsLockBindings, tapHoldBindings } from "../definitions";
+import { disabledHotkeys } from "../definitions/disable-hotkeys";
+
 import {
-  rectangleActionUrl,
-  rectangleMaxOrRestoreCommand,
-  rectangleOrientationBasedCommand,
-} from "../data/rectangle";
-import { tapHoldMappings } from "../definitions";
-import {
-  enterKeyHoldMappings,
-  equalsKeyHoldMappings,
-} from "../definitions/enter-equals";
-import { homeEndNavigationMappings } from "../definitions/home-end";
-import { mouseDeviceMappings } from "../definitions/mouse";
-import { rightOptionLaunchers } from "../definitions/right-option";
-import {
-  disabledShortcuts,
-  passwordsQuickFillMapping,
-} from "../definitions/system";
+  condApp,
+  condNotApp,
+  hold,
+  key,
+  noop,
+  openUrl,
+  press,
+  release,
+  resolveModifiers,
+  shell,
+  type Binding,
+  type Case,
+} from "../engine";
+
+const fillPassword = tapHoldBindings.find(
+  (b) =>
+    "keys" in b.trigger &&
+    b.trigger.keys.includes("slash") &&
+    Array.isArray(b.trigger.modifiers) &&
+    b.trigger.modifiers.includes("left_command"),
+)!;
+
+/** Find a tap-hold binding in the merged set by single key + modifiers. */
+function findTapHold(key: string, modifiers: string[] = []): Binding {
+  const { mandatory: expectedMandatory } = resolveModifiers(modifiers);
+  const expectedMandStr = expectedMandatory.sort().join(",");
+  const found = tapHoldBindings.find((b) => {
+    if (
+      !("keys" in b.trigger) ||
+      b.trigger.keys.length !== 1 ||
+      b.trigger.keys[0] !== key
+    ) {
+      return false;
+    }
+    const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
+    return (
+      mandatory.sort().join(",") === expectedMandStr && optional.length === 0
+    );
+  });
+  if (!found)
+    throw new Error(
+      `tap-hold binding not found: ${modifiers.join("+")}+${key}`,
+    );
+  return found;
+}
+
+/** Pull a phase's action list out of a binding. */
+function phaseDo(b: Binding, phase: "release" | "hold"): Case["do"] {
+  const c = b.cases.find((cc) => cc.phase === phase);
+  if (!c) throw new Error(`binding has no ${phase} case`);
+  return c.do;
+}
 
 test("rectangle focused-window orientation command uses focused display", () => {
-  const command = rectangleOrientationBasedCommand("left-half", "top-half");
+  const command = CMDS.winLeftOrTop.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /win and win:screen\(\)/);
@@ -45,7 +83,7 @@ test("rectangle focused-window orientation command uses focused display", () => 
 });
 
 test("rectangle max-or-restore command uses focused window coverage", () => {
-  const command = rectangleMaxOrRestoreCommand();
+  const command = CMDS.winMaxOrRestore.name;
 
   assert.match(command, /hs\.window\.focusedWindow\(\)/);
   assert.match(command, /screen:frame\(\)/);
@@ -58,384 +96,234 @@ test("rectangle max-or-restore command uses focused window coverage", () => {
 });
 
 test("registries centralize app folder and integration refs", () => {
-  assert.equal(appRegistry.outlook, "com.microsoft.Outlook");
-  assert.equal(folderRegistry.home, `${HOME_DIR}/`);
-  assert.equal(raycastRegistry.recentFolders, "jason/recents/recentFolders");
-  assert.equal(cleanShotRegistry.captureArea, "capture-area");
-});
-
-test("right-option launchers stay declarative", () => {
-  assert.equal(rightOptionLaunchers.length, 10);
-  assert.deepEqual(rightOptionLaunchers[0], {
-    key: "a",
-    description: "Antinote",
-    action: {
-      type: "app",
-      ref: "antinote",
-      mode: "focus",
-    },
-  });
-  assert.deepEqual(rightOptionLaunchers[4], {
-    key: "f",
-    description: "Home folder",
-    action: {
-      type: "folder",
-      ref: "home",
-    },
-  });
+  assert.equal(APP_ID.outlook.name, "com.microsoft.Outlook");
+  assert.equal(PATHS.dirHome.name, HOME_DIR);
+  assert.equal(
+    URLS.rayRecentFolders.name,
+    "raycast-x://extensions/jason/recents/recentFolders",
+  );
+  assert.equal(URLS.csxCaptureArea.name, "cleanshot://capture-area");
 });
 
 test("home-end navigation mappings stay declarative", () => {
-  assert.equal(homeEndNavigationMappings.length, 4);
-  assert.deepEqual(homeEndNavigationMappings[0], {
-    from: { key: "home" },
-    description: "Move to line start",
-    to: { key: "left_arrow", modifiers: ["left_command"] },
+  const home = findTapHold("home");
+  assert.deepEqual(home, {
+    trigger: { keys: ["home"] },
+    cases: [press(key("left_arrow", ["left_command"]))],
   });
-  assert.deepEqual(homeEndNavigationMappings[1], {
-    from: { key: "home", modifiers: ["left_shift"] },
-    description: "Select to line start",
-    to: { key: "left_arrow", modifiers: ["left_command", "left_shift"] },
+
+  const homeShift = findTapHold("home", ["shift"]);
+  assert.deepEqual(homeShift, {
+    trigger: { keys: ["home"], modifiers: ["shift"] },
+    cases: [press(key("left_arrow", ["left_command", "shift"]))],
+  });
+
+  const end = findTapHold("end");
+  assert.deepEqual(end, {
+    trigger: { keys: ["end"] },
+    cases: [press(key("right_arrow", ["left_command"]))],
+  });
+
+  const endShift = findTapHold("end", ["shift"]);
+  assert.deepEqual(endShift, {
+    trigger: { keys: ["end"], modifiers: ["shift"] },
+    cases: [press(key("right_arrow", ["left_command", "shift"]))],
   });
 });
 
 test("disabled shortcut mappings stay declarative", () => {
-  assert.equal(disabledShortcuts.length, 3);
-  assert.deepEqual(disabledShortcuts[0], {
-    key: "h",
-    modifiers: ["left_command"],
-    description: "Disabled hide shortcut",
+  assert.equal(disabledHotkeys.length, 4);
+  assert.deepEqual(disabledHotkeys[0], {
+    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    cases: [press(noop())],
   });
-  assert.deepEqual(disabledShortcuts[2], {
-    key: "m",
-    modifiers: ["left_command", "left_option"],
-    description: "Disabled minimize shortcut",
+  assert.deepEqual(disabledHotkeys[2], {
+    trigger: { keys: ["m"], modifiers: ["left_command", "option"] },
+    cases: [press(noop())],
   });
 });
 
 test("enter key hold mappings stay declarative", () => {
-  assert.equal(enterKeyHoldMappings.length, 2);
-  assert.deepEqual(enterKeyHoldMappings[0]?.variants[0], {
-    description: "Evaluate selection",
-    when: { app: "com.microsoft.Excel", unless: true },
-    alone: [
-      {
-        type: "key",
-        key: "keypad_enter",
-        options: { halt: true },
-      },
+  const keypadEnter = findTapHold("keypad_enter");
+  assert.deepEqual(keypadEnter, {
+    trigger: { keys: ["keypad_enter"] },
+    cases: [
+      release(key("keypad_enter", { halt: true })),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_ID.excel)),
+      hold(key("f2", { repeat: false })).when(
+        condApp(APP_ID.excel),
+      ),
     ],
-    hold: [
-      {
-        type: "shell",
-        command: "/opt/homebrew/bin/hs -c 'FormatCutSeed()'",
-      },
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
+  });
+
+  const returnOrEnter = findTapHold("return_or_enter");
+  assert.deepEqual(returnOrEnter, {
+    trigger: { keys: ["return_or_enter"] },
+    cases: [
+      release(key("return_or_enter", { halt: true })),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condNotApp(APP_ID.excel)),
+      hold(key("f2", { repeat: false })).when(
+        condApp(APP_ID.excel),
+      ),
     ],
-    timeoutMs: 400,
-    thresholdMs: 400,
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 });
 
 test("equals key hold mappings stay declarative", () => {
-  assert.equal(equalsKeyHoldMappings.length, 2);
-  assert.deepEqual(equalsKeyHoldMappings[1], {
-    key: "equal_sign",
-    variants: [
-      {
-        description: "Quick date",
-        alone: [
-          {
-            type: "key",
-            key: "keypad_equal_sign",
-            options: { halt: true },
-          },
-        ],
-        hold: [
-          {
-            type: "key",
-            key: "left_arrow",
-            modifiers: ["left_shift", "left_option"],
-          },
-          {
-            type: "key",
-            key: "c",
-            modifiers: ["left_command"],
-          },
-          {
-            type: "shell",
-            command: `${PATHS.uvBin} --directory ${PATHS.textProcessorDir} run python ${PATHS.textProcessorEntrypoint} quick_date --source clipboard --dest paste`,
-          },
-        ],
-        timeoutMs: 400,
-        thresholdMs: 400,
-      },
+  const keypadEqualSign = findTapHold("keypad_equal_sign");
+  assert.deepEqual(keypadEqualSign, {
+    trigger: { keys: ["keypad_equal_sign"] },
+    cases: [
+      release(key("keypad_equal_sign", { halt: true })),
+      hold([
+        key("left_arrow", ["option", "shift"]),
+        shell(CMDS.tpQuickDate),
+      ]),
     ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
+  });
+
+  const equalSign = findTapHold("equal_sign");
+  assert.deepEqual(equalSign, {
+    trigger: { keys: ["equal_sign"] },
+    cases: [
+      release(key("keypad_equal_sign", { halt: true })),
+      hold([
+        key("left_arrow", ["option", "shift"]),
+        shell(CMDS.tpQuickDate),
+      ]),
+    ],
+    timing: { aloneMs: 200, holdMs: 200 },
+    suppressCancelFallback: true,
   });
 });
 
 test("passwords quick fill mapping stays declarative", () => {
-  assert.equal(passwordsQuickFillMapping.key, "slash");
-  assert.deepEqual(passwordsQuickFillMapping.modifiers, ["left_command"]);
-  assert.equal(passwordsQuickFillMapping.description, "Quick fill password");
-  assert.equal(passwordsQuickFillMapping.variants.length, 2);
+  const trigger = fillPassword.trigger as {
+    keys: string[];
+    modifiers?: string[];
+  };
+  // Description is now auto-derived (Phase 2) — no hand-written override.
+  assert.equal(fillPassword.description, undefined);
+  assert.deepEqual(trigger.keys, ["slash"]);
+  assert.deepEqual(trigger.modifiers, ["left_command"]);
+  assert.equal(fillPassword.cases.length, 3);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {
-  assert.ok(tapHoldMappings.a);
-  assert.ok(tapHoldMappings["vmCOCS+q"]);
-  assert.ok(tapHoldMappings["vmCOCS+left_arrow"]);
-  assert.ok(tapHoldMappings["vmCOCS+right_arrow"]);
-  assert.ok(tapHoldMappings["vmCOCS+spacebar"]);
-  assert.ok(tapHoldMappings.tab);
-  assert.ok(tapHoldMappings["vmCOCS+tab"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_1"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_3"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_5"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_7"]);
-  assert.ok(tapHoldMappings["vmCOCS+keypad_9"]);
-  assert.ok(tapHoldMappings["right_option+s"]);
+  // Each findTapHold throws if the binding is absent.
+  findTapHold("a");
+  findTapHold("q", ["COCS"]);
+  findTapHold("left_arrow", ["COCS"]);
+  findTapHold("right_arrow", ["COCS"]);
+  findTapHold("spacebar", ["COCS"]);
+  findTapHold("tab");
+  findTapHold("tab", ["COCS"]);
+  findTapHold("keypad_1", ["COCS"]);
+  findTapHold("keypad_3", ["COCS"]);
+  findTapHold("keypad_5", ["COCS"]);
+  findTapHold("keypad_7", ["COCS"]);
+  findTapHold("keypad_9", ["COCS"]);
+  findTapHold("s", ["right_option"]);
 });
 
-test("new vmCOCS rectangle mappings stay declarative", () => {
-  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].alone, [
-    {
-      type: "shell",
-      command: rectangleOrientationBasedCommand("left-half", "top-half"),
-    },
+test("new COCS rectangle mappings stay declarative", () => {
+  const left = findTapHold("left_arrow", ["COCS"]);
+  assert.deepEqual(phaseDo(left, "release"), [
+    { type: "shell", command: CMDS.winLeftOrTop },
   ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+left_arrow"].hold, [
+  assert.deepEqual(phaseDo(left, "hold"), [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=previous-display",
+      url: URLS.rectAppPrevDisplay,
       background: true,
     },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOCS+spacebar"].alone, [
-    {
-      type: "shell",
-      command: rectangleMaxOrRestoreCommand(),
-    },
+  const spacebar = findTapHold("spacebar", ["COCS"]);
+  assert.deepEqual(phaseDo(spacebar, "release"), [
+    { type: "shell", command: CMDS.winMaxOrRestore },
   ]);
 
-  assert.deepEqual(tapHoldMappings["vmCOCS+keypad_9"].alone, [
+  const keypad9 = findTapHold("keypad_9", ["COCS"]);
+  assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",
-      url: "rectangle-pro://execute-action?name=top-right-eighth",
-      background: true,
-    },
-  ]);
-});
-
-test("vmCOCS+q and vmCOCS+w tap-hold mappings stay declarative", () => {
-  assert.equal(tapHoldMappings["vmCOCS+q"].description, "Rectangle Pro left");
-  assert.equal(tapHoldMappings["vmCOCS+w"].description, "Rectangle Pro right");
-
-  assert.deepEqual(tapHoldMappings["vmCOCS+q"].alone, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=left-half",
-      background: true,
-    },
-  ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+q"].hold, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=fill-left",
-      background: true,
-    },
-  ]);
-
-  assert.deepEqual(tapHoldMappings["vmCOCS+w"].alone, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=right-half",
-      background: true,
-    },
-  ]);
-  assert.deepEqual(tapHoldMappings["vmCOCS+w"].hold, [
-    {
-      type: "url",
-      url: "rectangle-pro://execute-action?name=fill-right",
+      url: URLS.rectWinTopRightEighth,
       background: true,
     },
   ]);
 });
 
-test("mouse device mappings are declarative and device-scoped", () => {
-  assert.equal(mouseDeviceMappings.length, 1);
-  assert.equal(mouseDeviceMappings[0]?.key, "logitech_g502_x");
-  assert.deepEqual(
-    mouseDeviceMappings[0]?.identifiers,
-    DEVICE_IDENTIFIERS.logitechG502X,
+test("caps lock base uses modWhileDown with left_ modifiers", () => {
+  const caps = capsLockBindings.find(
+    (b) =>
+      "keys" in b.trigger &&
+      b.trigger.keys[0] === "caps_lock" &&
+      !b.trigger.modifiers,
   );
-  assert.equal(mouseDeviceMappings[0]?.buttonMap.shift, "button5");
-  assert.equal(mouseDeviceMappings[0]?.mappings.length, 12);
-
-  const backMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "back",
-  );
-  assert.deepEqual(backMapping, {
-    type: "tapHold",
-    button: "back",
-    description: "[BACK] Back (tap) / Window switch (hold)",
-    alone: [{ pointing_button: "button4", repeat: false }],
-    hold: [{ key_code: "tab", modifiers: ["left_command"] }],
-    overrides: [
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-        ],
-        to: [
-          {
-            key_code: "close_bracket",
-            modifiers: ["left_command", "left_shift"],
-            repeat: true,
-          },
-        ],
-      },
-    ],
-    eventOptions: { halt: true, repeat: false },
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  assert.deepEqual(mouseDeviceMappings[0]?.mappings[0], {
-    type: "tapHold",
-    button: "shift",
-    description: "[SHIFT] Mission Control (tap) / Rectangle key (hold)",
-    alone: [
-      {
-        key_code: "up_arrow",
-        modifiers: ["left_control"],
-      },
-    ],
-    hold: [
-      //   WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        key_code: "left_control",
-        modifiers: ["left_option", "left_shift"],
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  assert.deepEqual(mouseDeviceMappings[0]?.mappings[1], {
-    type: "tapHold",
-    button: "wheel_left",
-    description: "[WHEEL LEFT] Rectangle fill-left (hold)",
-    hold: [
-      WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        shell_command: rectangleOrientationBasedCommand(
-          "fill-left",
-          "top-half",
-        ),
-      },
-    ],
-    overrides: [
-      {
-        when: [{ variable: "wheel_down", match: "if", value: 1 }],
-        to: [],
-      },
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-          { variable: "wheel_down", match: "if", value: 0 },
-        ],
-        to: [
-          {
-            key_code: "left_arrow",
-            modifiers: ["left_command", "left_control", "left_shift"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-    thresholdMs: 200,
-    timeoutMs: 200,
-  });
-
-  const middleMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "wheel",
-  );
-  assert.deepEqual(middleMapping, {
-    type: "tapHold",
-    button: "wheel",
-    description: "[WHEEL] Middle (tap) / Rectangle maximize (hold)",
-    variable: "wheel_down",
-    alone: [{ pointing_button: "button3", repeat: false }],
-    overrides: [
-      {
-        when: [
-          { app: appRegistry.zen },
-          { variable: "right_button_pressed", match: "if", value: 1 },
-        ],
-        to: [
-          {
-            pointing_button: "button1",
-            modifiers: ["left_option"],
-            repeat: false,
-          },
-        ],
-      },
-    ],
-    hold: [
-      WIN_ACTIVATE_UNDER_CURSOR,
-      {
-        shell_command: rectangleMaxOrRestoreCommand(),
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
-
-  const leftForwardMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "left_forward",
-  );
-
-  const leftBackMapping = mouseDeviceMappings[0]?.mappings.find(
-    (m) => m.type === "tapHold" && m.button === "left_back",
-  );
+  assert.ok(caps, "caps base binding exists");
+  assert.equal(caps!.modWhileDown, true, "caps base must set modWhileDown");
   assert.equal(
-    leftBackMapping?.description,
-    "[G7] Maximize window (tap) / Move window to next display (hold)",
+    caps!.whileHoldVar?.name,
+    "caps_lock_pressed",
+    "whileHoldVar preserved",
   );
-  const leftBackAlone =
-    leftBackMapping?.type === "tapHold" ? leftBackMapping.alone : undefined;
-  assert.ok(leftBackAlone);
-  assert.equal(leftBackAlone?.length, 1);
-  assert.deepEqual(leftBackAlone?.[0], {
-    shell_command: rectangleMaxOrRestoreCommand(),
-  });
-  const leftBackHold =
-    leftBackMapping?.type === "tapHold" ? leftBackMapping.hold : undefined;
-  assert.deepEqual(leftBackHold, [
-    WIN_ACTIVATE_UNDER_CURSOR,
-    {
-      shell_command: `open -g '${rectangleActionUrl("next-display")}'`,
-    },
-  ]);
-  assert.deepEqual(leftForwardMapping, {
-    type: "tapHold",
-    button: "left_forward",
-    description: "[G8] Popclip (tap) / Sidenote (hold)",
-    alone: [
-      {
-        shell_command: "osascript -e 'tell application \"Popclip\" to appear'",
-      },
-    ],
-    hold: [
-      {
-        key_code: "f10",
-        modifiers: ["left_command", "left_option", "left_shift"],
-        repeat: false,
-      },
-    ],
-    thresholdMs: 400,
-    timeoutMs: 400,
-  });
+  // base press case emits left_command + left_option/left_control/left_shift
+  const pressCase = caps!.cases.find((c) => c.phase === "press")!;
+  const pressKey = pressCase.do[0] as any;
+  assert.equal(pressKey.key, "left_command");
+  assert.deepEqual(pressKey.modifiers, ["left_option", "left_control", "left_shift"]);
+  // base release (tap combo) emits f15 + left_ COCS
+  const releaseCase = caps!.cases.find((c) => c.phase === "release")!;
+  const tapKey = releaseCase.do[0] as any;
+  assert.equal(tapKey.key, "f15");
+  assert.deepEqual(tapKey.modifiers, ["left_command", "left_option", "left_control", "left_shift"]);
 });
+
+test("caps lock full compensation table: every variant emits COCS minus the physically-held modifier", () => {
+  // Caps emits the COCS set (left_command/option/control/shift) MINUS the
+  // modifier(s) physically held with it. The base (no modifiers held) is
+  // included so all 16 rows are covered by a permanent, committed test — a
+  // regression flipping any single row fails with that row's held-modifier set.
+  const table: Array<{ held: string[]; emitKey: string; emitMods: string[] }> = [
+    { held: [], emitKey: "left_command", emitMods: ["left_option", "left_control", "left_shift"] },
+    { held: ["left_shift"], emitKey: "left_command", emitMods: ["left_option", "left_control"] },
+    { held: ["left_control"], emitKey: "left_command", emitMods: ["left_option", "left_shift"] },
+    { held: ["left_option"], emitKey: "left_command", emitMods: ["left_control", "left_shift"] },
+    { held: ["left_command"], emitKey: "left_option", emitMods: ["left_control", "left_shift"] },
+    { held: ["left_control", "left_shift"], emitKey: "left_command", emitMods: ["left_option"] },
+    { held: ["left_control", "left_option"], emitKey: "left_command", emitMods: ["left_shift"] },
+    { held: ["left_control", "left_command"], emitKey: "left_option", emitMods: ["left_shift"] },
+    { held: ["left_command", "left_option"], emitKey: "left_control", emitMods: ["left_shift"] },
+    { held: ["left_command", "left_shift"], emitKey: "left_option", emitMods: ["left_control"] },
+    { held: ["left_option", "left_shift"], emitKey: "left_command", emitMods: ["left_control"] },
+    { held: ["left_command", "left_control", "left_shift"], emitKey: "left_option", emitMods: [] },
+    { held: ["left_command", "left_option", "left_shift"], emitKey: "left_control", emitMods: [] },
+    { held: ["left_option", "left_control", "left_shift"], emitKey: "left_command", emitMods: [] },
+    { held: ["left_command", "left_option", "left_control"], emitKey: "left_shift", emitMods: [] },
+    { held: ["left_command", "left_option", "left_control", "left_shift"], emitKey: "vk_none", emitMods: [] },
+  ];
+  assert.equal(table.length, 16, "sanity: 16 compensation rows");
+  for (const row of table) {
+    const label = row.held.length ? `caps+${row.held.join("+")}` : "caps (base)";
+    const binding = capsLockBindings.find((b) => {
+      if (!("keys" in b.trigger) || b.trigger.keys[0] !== "caps_lock") return false;
+      const mods = (b.trigger.modifiers as string[] | undefined) ?? [];
+      return mods.length === row.held.length && row.held.every((m) => mods.includes(m));
+    });
+    assert.ok(binding, `missing binding for ${label}`);
+    // Base is a press+release (modWhileDown); variants are a single press case.
+    const pressCase = binding!.cases.find((c) => c.phase === "press");
+    assert.ok(pressCase, `no press case for ${label}`);
+    const out = pressCase!.do[0] as any;
+    assert.equal(out.key, row.emitKey, `${label}: emit key ${out.key} !== ${row.emitKey}`);
+    assert.deepEqual(out.modifiers ?? [], row.emitMods, `${label}: emit mods mismatch`);
+  }
+});
+

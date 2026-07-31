@@ -1,32 +1,88 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { pythonScriptCommand } from "../core/scripts";
-import { DEVICE_IDENTIFIERS, appRegistry } from "../data";
+import { APP_ID } from "../data/registry-app-ids";
+import { map } from "../data/registry-combos";
+import { toPy } from "../engine/resolve-to-action";
 import {
-  buildAntinoteRules,
-  buildCapsLockRule,
-  buildCmdQRule,
-  buildCtrlEscapeMonitorRule,
-  buildDisableHideMinimizeRule,
-  buildEnterRules,
-  buildEqualsRules,
-  buildEscapeTapTapHoldRule,
-  buildHomeEndRule,
-  buildHyperLauncherRules,
-  buildLeftCommandRule,
-  buildOnePieceClickEnterRule,
-  buildPasswordsQuickFillRule,
-  buildRightOptionLauncherRules,
-  buildSkimCommandRemapRule,
-  buildWordPrivilegesRule,
-  mouseDeviceMappings,
+  capsLockBaseBindings,
+  disabledHotkeys,
+  guardBindings,
+  mouseBindings,
 } from "../definitions";
 import {
-  buildMouseRules,
-  generateAppScopedRemapRules,
+  defineBindings,
   resolveActionToEvents,
 } from "../engine";
+import { singleKeyTapHoldBindings } from "../definitions/single-key";
+import { modifiedSingleKeyTapHoldBindings } from "../definitions/modified-single-key";
+import { VMOD } from "../data/settings-keys";
+
+const buildCapsLockRule = () => defineBindings(capsLockBaseBindings);
+const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
+const buildHotkeyGuards = () => defineBindings(guardBindings);
+
+
+const fillPassword = modifiedSingleKeyTapHoldBindings.find(
+  (b) =>
+    "keys" in b.trigger &&
+    b.trigger.keys.includes("slash") &&
+    Array.isArray(b.trigger.modifiers) &&
+    b.trigger.modifiers.includes("left_command")
+)!;
+
+const skimRemaps = modifiedSingleKeyTapHoldBindings.filter(
+  (b) => b.conditions?.some((c: any) => c.app === APP_ID.skim)
+);
+
+const buildLeftCommandRule = () =>
+  defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("left_command"))!])[0];
+
+const buildPasswordsQuickFillRule = () => defineBindings([fillPassword])[0];
+
+const buildSkimCommandRemapRule = () => defineBindings(skimRemaps);
+
+const buildAntinoteRules = () => [buildHotkeyGuards()[1]];
+
+const buildEscapeTapTapHoldRule = () =>
+  defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("escape"))!])[0];
+
+const buildCtrlEscapeMonitorRule = () =>
+  defineBindings([
+    modifiedSingleKeyTapHoldBindings.find(
+      (b) =>
+        "keys" in b.trigger &&
+        b.trigger.keys.includes("escape") &&
+        Array.isArray(b.trigger.modifiers) &&
+        b.trigger.modifiers.includes("control"),
+    )!,
+  ])[0];
+
+const buildHomeEndRule = () => {
+  const homeEndBindings = [
+    ...singleKeyTapHoldBindings.filter((b) => "keys" in b.trigger && (b.trigger.keys.includes("home") || b.trigger.keys.includes("end"))),
+    ...modifiedSingleKeyTapHoldBindings.filter((b) => "keys" in b.trigger && (b.trigger.keys.includes("home") || b.trigger.keys.includes("end"))),
+  ];
+  return defineBindings(homeEndBindings);
+};
+
+const buildEnterRules = () => {
+  const enterBindings = singleKeyTapHoldBindings.filter(
+    (b) => "keys" in b.trigger && (b.trigger.keys.includes("keypad_enter") || b.trigger.keys.includes("return_or_enter")),
+  );
+  return defineBindings(enterBindings);
+};
+
+const buildEqualsRules = () => {
+  const equalsBindings = singleKeyTapHoldBindings.filter(
+    (b) => "keys" in b.trigger && (b.trigger.keys.includes("keypad_equal_sign") || b.trigger.keys.includes("equal_sign")),
+  );
+  return defineBindings(equalsBindings);
+};
+
+const buildCmdQRule = () => buildHotkeyGuards()[0];
+
+const buildOnePieceClickEnterRule = () => defineBindings([mouseBindings[11]])[0];
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
@@ -38,10 +94,7 @@ function toRules(input: any[]): any[] {
 
 test("left command factory keeps dual manipulator behavior", () => {
   const rule = toRule(buildLeftCommandRule());
-  assert.equal(
-    rule.description,
-    "[←⌘]        →    Tap/double-tap/hold handler (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[⌘\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
@@ -74,56 +127,51 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
       },
     },
   });
+
+  // Verify to_if_held_down emits left_command so modifier holds are sustained
+  const keyCodesInHold = (rule.manipulators[1].to_if_held_down ?? [])
+    .filter((e: any) => typeof e.key_code === "string")
+    .map((e: any) => e.key_code);
+  assert.deepEqual(keyCodesInHold, ["left_command"], "expected left_command in to_if_held_down");
 });
 
 test("caps lock factory keeps full complement behavior variants", () => {
-  const rule = toRule(buildCapsLockRule());
-  assert.equal(
-    rule.description,
-    "[⇪]        →    VM launcher / vmCOC_ / vmCOCS / vmCO_S (on hold)",
-  );
-  assert.equal(rule.manipulators.length, 16);
+  const rules = toRules(buildCapsLockRule());
+  assert.equal(rules.length, 16);
+  assert.match(rules[0].description, /^\[⇪\]:\n---/);
 });
 
 test("cmd-q factory keeps double-tap protection structure", () => {
   const rule = toRule(buildCmdQRule());
-  assert.equal(rule.description, "[←⌘]+[Q]        →    Quit app (on multi-tap)");
+  assert.match(rule.description, /^\[⌘\]\+\[Q\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
-test("right-option app factory keeps full launcher set", () => {
-  const rules = toRules(buildRightOptionLauncherRules());
-  assert.equal(rules.length, 10);
-  assert.equal(rules[0]?.description, "[→⌥]+[A]        →    Antinote (on tap)");
-  assert.ok(rules.every((rule) => rule.manipulators.length === 1));
-});
-
 test("security disable shortcuts factory keeps all disabled combos", () => {
-  const rules = toRules(buildDisableHideMinimizeRule());
-  assert.equal(rules.length, 3);
-  assert.equal(
-    rules[0]?.description,
-    "[←⌘]+[H]        →    Disabled hide shortcut (on tap)",
-  );
+  const rules = toRules(buildDisabledHotkeys());
+  assert.equal(rules.length, 4);
+  assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
 test("word privileges factory keeps single guarded manipulator", () => {
-  const rule = toRule(buildWordPrivilegesRule());
-  assert.equal(
-    rule.description,
-    "[←⌘/]        →    Copy document name and elevate privileges (on tap)",
-  );
-  assert.equal(rule.manipulators.length, 1);
+  const rule = toRule(defineBindings([fillPassword])[0]);
+  assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
+  const wordManipulator = rule.manipulators[2];
+  assert.ok(wordManipulator);
+  assert.deepEqual(wordManipulator.conditions, [
+    {
+      type: "frontmost_application_if",
+      description: undefined,
+      bundle_identifiers: ["com.microsoft.Word"],
+    },
+  ]);
 });
 
 test("password quick-fill factory keeps secure/non-secure manipulators", () => {
   const rule = toRule(buildPasswordsQuickFillRule());
-  assert.equal(
-    rule.description,
-    "[←⌘]+[/]        →    Quick fill password (on tap)",
-  );
-  assert.equal(rule.manipulators.length, 2);
+  assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
+  assert.equal(rule.manipulators.length, 3);
 
   const roleConditions = rule.manipulators.map(
     (manipulator: any) =>
@@ -143,12 +191,21 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
           condition.name.includes("focused_ui_element.subrole"),
       ) as { name?: string } | undefined,
   );
+  const wordConditions = rule.manipulators.map(
+    (manipulator: any) =>
+      (manipulator.conditions ?? []).find(
+        (condition: any) =>
+          "name" in condition && typeof condition.name === "string", // &&
+        // condition.name.includes("Word"),
+      ) as { name?: string } | undefined,
+  );
 
   assert.deepEqual(
     roleConditions.map((condition: any) => condition?.name),
     [
       "accessibility.focused_ui_element.role_string",
       "accessibility.focused_ui_element.role_string",
+      undefined,
     ],
   );
   assert.deepEqual(
@@ -156,298 +213,276 @@ test("password quick-fill factory keeps secure/non-secure manipulators", () => {
     [
       "accessibility.focused_ui_element.subrole_string",
       "accessibility.focused_ui_element.subrole_string",
+      undefined,
     ],
   );
+
+  const wordCondition = rule.manipulators[2].conditions?.[0];
+  assert.deepEqual(wordCondition, {
+    type: "frontmost_application_if",
+    description: undefined,
+    bundle_identifiers: ["com.microsoft.Word"],
+  });
 });
 
 test("skim command remap factory keeps both remaps", () => {
   const rules = toRules(buildSkimCommandRemapRule());
   assert.equal(rules.length, 2);
-  assert.equal(
-    rules[0]?.description,
-    "[←⌘]+[H]        →    Skim command H remap (on tap)",
-  );
+  assert.match(rules[0]?.description, /^\[⌘\]\+\[H\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
 test("antinote delete factory keeps double-tap workflow", () => {
   const rule = toRule(buildAntinoteRules()[0]);
-  assert.equal(
-    rule.description,
-    "[←⌘]+[D]        →    Delete note (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[⌘\]\+\[D\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
 test("escape tap-tap-hold factory keeps expected two-stage behavior", () => {
   const rule = toRule(buildEscapeTapTapHoldRule());
-  assert.equal(
-    rule.description,
-    "[␛]        →    Escape / Kill app (on multi-tap)",
-  );
+  assert.match(rule.description, /^\[␛\]:\n---/);
   assert.equal(rule.manipulators.length, 2);
 });
 
 test("ctrl-escape monitor factory keeps single manipulator", () => {
   const rule = toRule(buildCtrlEscapeMonitorRule());
-  assert.equal(
-    rule.description,
-    "[←⌃]+[␛]        →    Activity Monitor / Process Spy (on hold)",
-  );
+  assert.match(rule.description, /^\[⌃\]\+\[␛\]:\n---/);
   assert.equal(rule.manipulators.length, 1);
 });
 
 test("home-end factory keeps four navigation mappings", () => {
   const rules = toRules(buildHomeEndRule());
   assert.equal(rules.length, 4);
-  assert.equal(
-    rules[0]?.description,
-    "[HOME]        →    Move to line start (on tap)",
-  );
+  assert.match(rules[0]?.description, /^\[HOME\]:\n---/);
   assert.ok(rules.every((rule) => rule.manipulators.length === 1));
 });
 
-test("vmCOC_ plus rules factory keeps grouped mappings", () => {
-  const rules = toRules(buildHyperLauncherRules());
-  assert.equal(rules.length, 5);
-  assert.deepEqual(
-    rules.map((rule) => rule.description),
-    [
-      "[vmCOCS]+[S]        →    Format selection (on tap)",
-      "[vmCOCS]+[T]        →    New Typinator rule (on tap)",
-      "[vmCOCS]+[;]        →    Open System Settings (on tap)",
-      "[vmCOCS]+[F12]        →    Edit last Typinator rule (on tap)",
-      "[vmCOCS]+[␛]        →    Open Activity Monitor (on tap)",
-    ],
+test("COC_ plus rules factory keeps grouped mappings", () => {
+  const hyperLauncherBindings = modifiedSingleKeyTapHoldBindings.filter(
+    (b) => Array.isArray(b.trigger.modifiers) && b.trigger.modifiers.join(",") === VMOD.COCS.join(",")
   );
-  assert.ok(rules.every((rule) => rule.manipulators.length === 1));
+  const rules = toRules(defineBindings(hyperLauncherBindings));
+  // "t" lives only in the tap-hold set now (launcher-t was removed to resolve
+  // the COCS+t duplication), so the launcher has 4 entries.
+  assert.equal(rules.length, 4);
+  // Launcher triggers carry the expanded COCS modifiers, so the synthesized
+  // trigger segment is the symbol chord (not the "COCS" alias literal).
+  assert.ok(
+    rules.every((r) => /^\[⌘⌥⌃⇧\]\+\[[^\]]+\]:\n---/.test(r.description)),
+  );
+  assert.ok(rules.every((r) => r.manipulators.length === 1));
 });
 
 test("enter rules factory keeps two keys across two contexts", () => {
   const rules = toRules(buildEnterRules());
-  assert.equal(rules.length, 4);
-  assert.equal(
+  assert.equal(rules.length, 2);
+  assert.match(
     rules[0]?.description,
-    "[⏎]        →    Evaluate selection (on hold)",
+    /^\[⏎\]:\n---/,
   );
 });
 
 test("onepiece click-enter factory keeps app-scoped left click remap", () => {
   const rule = toRule(buildOnePieceClickEnterRule());
+  assert.match(rule.description, /^Left click:\n---/);
+  assert.equal(rule.manipulators.length, 2);
+
   const manipulator: any = rule.manipulators[0];
-  assert.equal(
-    rule.description,
-    "[BUTTON1]        →    OnePiece left click -> enter (on tap)",
-  );
-  assert.equal(rule.manipulators.length, 1);
   assert.deepEqual(manipulator?.from, {
     pointing_button: "button1",
+    modifiers: { optional: [] },
   });
-  assert.deepEqual(manipulator?.to, [
-    { key_code: "return_or_enter", modifiers: undefined },
+  assert.deepEqual(manipulator?.to_if_alone, [
+    { key_code: "return_or_enter", modifiers: undefined, repeat: false },
   ]);
-  assert.deepEqual(manipulator?.conditions, [
-    {
-      type: "frontmost_application_if",
-      description: undefined,
-      bundle_identifiers: [appRegistry.onePiece],
-    },
-  ]);
+
+  const appIfCond = manipulator?.conditions.find((c: any) => c.type === "frontmost_application_if");
+  assert.deepEqual(appIfCond, {
+    type: "frontmost_application_if",
+    description: undefined,
+    bundle_identifiers: [APP_ID.onePiece.name],
+  });
 });
 
 test("equals rules factory keeps keypad and regular mappings", () => {
   const rules = toRules(buildEqualsRules());
   assert.equal(rules.length, 2);
-  assert.deepEqual(
-    rules.map((rule) => rule.description),
-    [
-      "[PAD =]        →    Quick date (on hold)",
-      "[=]        →    Quick date (on hold)",
-    ],
-  );
+  assert.match(rules[0]?.description, /^\[PAD =\]:\n---/);
+  assert.match(rules[1]?.description, /^\[=\]:\n---/);
 });
 
-test("mouse rules factory builds declarative per-device mappings", () => {
-  const rules = toRules(buildMouseRules(mouseDeviceMappings));
+test("mouse bindings build device-scoped manipulators via defineBindings", () => {
+  const rules = toRules(defineBindings(mouseBindings));
   assert.equal(rules.length, 12);
-  assert.equal(
-    rules[0]?.description,
-    "Logitech G502 X: [SHIFT] Mission Control (tap) / Rectangle key (hold)",
-  );
-  assert.equal(rules[0]?.manipulators.length, 1);
+
+  // Shift — override (right-button chord) prepended + base tap-hold. The alias
+  // auto-scopes to the G502X via nameScope, so device_if lands last.
+  assert.equal(rules[0]?.manipulators.length, 2);
   assert.deepEqual(rules[0]?.manipulators[0]?.from, {
     pointing_button: "button5",
   });
-
-  assert.equal(
-    rules[1]?.description,
-    "Logitech G502 X: [WHEEL LEFT] Rectangle fill-left (hold)",
-  );
-  assert.equal(rules[1]?.manipulators.length, 3);
-  const wheelLeftOverride: any = rules[1]?.manipulators[0];
-  assert.deepEqual(rules[1]?.manipulators[0]?.from, {
-    pointing_button: "button7",
-  });
-    assert.deepEqual(wheelLeftOverride?.to, [
-      {
-        key_code: "left_arrow",
-        modifiers: ["left_command", "left_control", "left_shift"],
-        repeat: false,
-      },
-    ]);
-  assert.deepEqual(rules[1]?.manipulators[0]?.conditions, [
+  assert.deepEqual(rules[0]?.manipulators[0]?.to, [
     {
-      type: "frontmost_application_if",
-      description: undefined,
-      bundle_identifiers: [appRegistry.browser],
+      key_code: "vk_mission_control",
+      modifiers: undefined,
+      repeat: false,
     },
     {
-      type: "variable_if",
-      name: "right_button_pressed",
-      value: 1,
-    },
-    {
-      type: "variable_if",
-      name: "wheel_down",
-      value: 0,
-    },
-    {
-      type: "device_if",
-      description: undefined,
-      identifiers: [
-        {
-          product_id: DEVICE_IDENTIFIERS.logitechG502X.product_id,
-          vendor_id: DEVICE_IDENTIFIERS.logitechG502X.vendor_id,
-        },
-      ],
-    },
-  ]);
-  assert.deepEqual(
-    rules[1]?.manipulators
-      ?.flatMap((manipulator: any) => manipulator?.conditions ?? [])
-      ?.find((condition: any) => condition?.type === "variable_unless"),
-    {
-      type: "variable_unless",
-      name: "wheel_down",
-      value: 1,
-    },
-  );
-
-  assert.equal(
-    rules[2]?.description,
-    "Logitech G502 X: [WHEEL RIGHT] Rectangle fill-right (hold)",
-  );
-  assert.equal(rules[2]?.manipulators.length, 2);
-  const wheelRightOverride: any = rules[2]?.manipulators[0];
-  assert.deepEqual(rules[2]?.manipulators[0]?.from, {
-    pointing_button: "button8",
-  });
-  assert.deepEqual(wheelRightOverride?.to, [
-    {
-      key_code: "right_arrow",
-      modifiers: ["left_command", "left_control", "left_shift"],
+      key_code: "vk_none",
+      modifiers: undefined,
       repeat: false,
     },
   ]);
+  const shiftConds = rules[0]?.manipulators[0]?.conditions ?? [];
+  assert.equal(
+    shiftConds.find((c: any) => c.type === "variable_if")?.name,
+    "right_button_pressed",
+  );
+  assert.ok(shiftConds.find((c: any) => c.type === "device_if"));
+  // device_if is the LAST condition (bespoke appended device scope last)
+  assert.equal(shiftConds[shiftConds.length - 1]?.type, "device_if");
+
+  // Wheel left — two overrides (reverse-declared) + base carrying wheel guards.
+  assert.equal(rules[1]?.manipulators.length, 3);
+  assert.deepEqual(rules[1]?.manipulators[0]?.from, {
+    pointing_button: "button7",
+  });
+  assert.deepEqual(rules[1]?.manipulators[0]?.to, [
+    {
+      key_code: "left_arrow",
+      modifiers: ["command", "control", "shift"],
+      repeat: false,
+    },
+  ]);
+  const wheelLeftBase = rules[1]?.manipulators[2];
+  assert.deepEqual(
+    (wheelLeftBase?.conditions ?? []).find(
+      (c: any) => c.type === "variable_unless" && c.name === "wheel_down",
+    ),
+    { type: "variable_unless", name: "wheel_down", value: 1 },
+  );
+
+  // Left-button double-tap (right-button held) — two condition-groups (Zen vs
+  // non-Zen), each a [secondTap, firstTap] pair = 4 manipulators. The delayed
+  // single tap routes to to_if_invoked; the shared firstTapPendingVar gates the
+  // second-tap manipulators.
+  const doubleTap = rules[10];
+  assert.equal(doubleTap?.manipulators.length, 4);
+  const firstTap = doubleTap?.manipulators.find((m: any) =>
+    (m.to ?? []).some((e: any) => e.set_variable?.name === "left_with_right_first_tap"),
+  );
+  assert.ok(firstTap, "first-tap (var-setting) manipulator present");
+  assert.deepEqual(firstTap?.from, {
+    pointing_button: "button1",
+    modifiers: { optional: ["any"] },
+  });
+  assert.ok(
+    (firstTap?.to_delayed_action?.to_if_invoked ?? []).some(
+      (e: any) => e.pointing_button === "button1",
+    ),
+    "delayed single tap routed to to_if_invoked",
+  );
 });
 
 test("resolveActionToEvents flattens sequence into multiple events", () => {
   const events = resolveActionToEvents({
     type: "sequence",
     actions: [
-      { type: "key", key: "c", modifiers: ["left_command"] },
+      { type: "key", key: "c", modifiers: ["command"] },
       { type: "shell", command: "echo hello" },
     ],
   });
   assert.equal(events.length, 2);
-  assert.deepEqual(events[0], { key_code: "c", modifiers: ["left_command"] });
+  assert.deepEqual(events[0], { key_code: "c", modifiers: ["command"] });
   assert.deepEqual(events[1], { shell_command: "echo hello" });
-});
-
-test("generateAppScopedRemapRules attaches ifApp condition to each rule", () => {
-  const rules = toRules(
-    generateAppScopedRemapRules([
-      {
-        from: { key: "h", modifiers: ["left_command"] },
-        description: "Test remap",
-        to: { key: "h", modifiers: ["left_command", "left_control"] },
-        ifApp: "com.example.App",
-      },
-    ]),
-  );
-  assert.equal(rules.length, 1);
-  assert.equal(rules[0]?.description, "[←⌘]+[H]        →    Test remap (on tap)");
-  const manipulator: any = rules[0]?.manipulators[0];
-  assert.ok(
-    manipulator?.conditions?.some(
-      (c: any) => c.type === "frontmost_application_if",
-    ),
-    "Missing frontmost_application_if condition",
-  );
 });
 
 test("resolveActionToEvents expands vm aliases in key action", () => {
   const vmCOCEvents = resolveActionToEvents({
     type: "key",
     key: "a",
-    modifiers: ["vmCOC_"],
+    modifiers: ["COC_"],
   });
   assert.deepEqual((vmCOCEvents[0] as any)?.key_code, "a");
   assert.deepEqual((vmCOCEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
+    "command",
+    "option",
+    "control",
   ]);
 
-  const vmCOCSEvents = resolveActionToEvents({
+  const COCSEvents = resolveActionToEvents({
     type: "key",
     key: "b",
-    modifiers: ["vmCOCS"],
+    modifiers: ["COCS"],
   });
-  assert.deepEqual((vmCOCSEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
-    "left_shift",
+  assert.deepEqual((COCSEvents[0] as any)?.modifiers, [
+    "command",
+    "option",
+    "control",
+    "shift",
   ]);
 
   const vmCOSEvents = resolveActionToEvents({
     type: "key",
     key: "c",
-    modifiers: ["vmCO_S"],
+    modifiers: ["CO_S"],
   });
   assert.deepEqual((vmCOSEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_shift",
+    "command",
+    "option",
+    "shift",
   ]);
 
   const mixedEvents = resolveActionToEvents({
     type: "key",
     key: "d",
-    modifiers: ["vmCOC_", "shift"],
+    modifiers: ["COC_", "shift"],
   });
   assert.deepEqual((mixedEvents[0] as any)?.modifiers, [
-    "left_command",
-    "left_option",
-    "left_control",
+    "command",
+    "option",
+    "control",
     "shift",
   ]);
 });
 
+test("resolveActionToEvents resolves map sequence into multiple events", () => {
+  const seqHk = map(
+    [
+      ["g", ["COC_"]],
+      ["a", ["command"]],
+    ],
+    "sequence test"
+  );
+  const events = resolveActionToEvents({
+    type: "map",
+    ref: seqHk,
+  });
+
+  assert.equal(events.length, 2);
+  assert.deepEqual(events[0], {
+    key_code: "g",
+    modifiers: ["command", "option", "control"],
+  });
+  assert.deepEqual(events[1], {
+    key_code: "a",
+    modifiers: ["command"],
+  });
+});
+
 test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   const vmCases: Array<[string, string[]]> = [
-    ["vmCO__", ["left_command", "left_option"]],
-    ["vmC_C_", ["left_command", "left_control"]],
-    ["vmC__S", ["left_command", "left_shift"]],
-    ["vm_OC_", ["left_option", "left_control"]],
-    ["vm_O_S", ["left_option", "left_shift"]],
-    ["vm__CS", ["left_control", "left_shift"]],
-    ["vmCOC_", ["left_command", "left_option", "left_control"]],
-    ["vmCO_S", ["left_command", "left_option", "left_shift"]],
-    ["vmC_CS", ["left_command", "left_control", "left_shift"]],
-    ["vm_OCS", ["left_option", "left_control", "left_shift"]],
-    ["vmCOCS", ["left_command", "left_option", "left_control", "left_shift"]],
+    ["CO__", ["command", "option"]],
+    ["C_C_", ["command", "control"]],
+    ["C__S", ["command", "shift"]],
+    ["_OC_", ["option", "control"]],
+    ["_O_S", ["option", "shift"]],
+    ["__CS", ["control", "shift"]],
+    ["COC_", ["command", "option", "control"]],
+    ["CO_S", ["command", "option", "shift"]],
+    ["C_CS", ["command", "control", "shift"]],
+    ["_OCS", ["option", "control", "shift"]],
+    ["COCS", ["command", "option", "control", "shift"]],
   ];
 
   for (const [alias, expected] of vmCases) {
@@ -464,20 +499,20 @@ test("resolveActionToEvents expands all vm aliases for 2+ combos", () => {
   }
 });
 
-test("pythonScriptCommand builds uv run invocation", () => {
-  const bare = pythonScriptCommand("~/Scripts/foo.py");
+test("toPy builds uv run invocation", () => {
+  const bare = toPy("~/Scripts/foo.py");
   assert.match(bare, /uv run/);
   assert.match(bare, /\$HOME\/Scripts\/foo\.py/);
   assert.doesNotMatch(bare, /--python/);
 
-  const withVenv = pythonScriptCommand("~/Scripts/bar.py", {
+  const withVenv = toPy("~/Scripts/bar.py", {
     venv: "~/Scripts/.venv/shared_venv",
   });
   assert.match(withVenv, /--python/);
   assert.match(withVenv, /shared_venv\/bin\/python/);
   assert.match(withVenv, /\$HOME\/Scripts\/bar\.py/);
 
-  const withArgs = pythonScriptCommand("~/Scripts/baz.py", {
+  const withArgs = toPy("~/Scripts/baz.py", {
     args: ["--source", "clipboard"],
   });
   assert.match(withArgs, /'--source'/);
@@ -492,8 +527,51 @@ test("resolveActionToEvents handles python action", () => {
   });
   assert.equal(events.length, 1);
   const shellCmd = (events[0] as any)?.shell_command as string;
-  assert.match(shellCmd, /uv run/);
+  assert.match(shellCmd, /uv"? run/);
   assert.match(shellCmd, /\$HOME\/Scripts\/foo\.py/);
   assert.match(shellCmd, /'--dest'/);
   assert.match(shellCmd, /'paste'/);
+});
+
+test("resolveActionToEvents returns no events for noop", () => {
+  assert.deepEqual(resolveActionToEvents({ type: "noop" } as any), []);
+});
+
+// ── app action: AppTarget variants ──────────────────────────────────────────
+
+test("resolveActionToEvents: app with AppRef (type:\"app\") uses bundle_identifier", () => {
+  const ref = { type: "app" as const, name: "com.apple.Safari", refDesc: "Safari" };
+  const [event] = resolveActionToEvents({ type: "app", ref });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    bundle_identifier: "com.apple.Safari",
+  });
+});
+
+test("resolveActionToEvents: app with PathRef (type:\"path\") uses file_path", () => {
+  const ref = { type: "path" as const, name: "/Applications/Safari.app", refDesc: "Safari" };
+  const [event] = resolveActionToEvents({ type: "app", ref });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "/Applications/Safari.app",
+  });
+});
+
+test("resolveActionToEvents: app with raw bundle ID string uses bundle_identifier", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "com.apple.Safari" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    bundle_identifier: "com.apple.Safari",
+  });
+});
+
+test("resolveActionToEvents: app with raw absolute path string uses file_path", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "/Applications/Safari.app" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "/Applications/Safari.app",
+  });
+});
+
+test("resolveActionToEvents: app with raw .app-suffixed string uses file_path", () => {
+  const [event] = resolveActionToEvents({ type: "app", ref: "Safari.app" });
+  assert.deepEqual((event as any)?.software_function?.open_application, {
+    file_path: "Safari.app",
+  });
 });

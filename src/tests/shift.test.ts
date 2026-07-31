@@ -1,19 +1,20 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-
-import { DESCRIPTION_SEPARATOR } from "../data";
-import { buildShiftRules } from "../definitions";
+import { singleKeyTapHoldBindings } from "../definitions/single-key";
+import { defineBindings } from "../engine/emit-modifiers/binding";
 
 const RAYCAST_CLIPBOARD_HISTORY_URL =
   "raycast-x://extensions/raycast/clipboard-history/clipboard-history";
-const DOUBLE_TAP_THRESHOLD_MS = 600;
+const DOUBLE_TAP_THRESHOLD_MS = 300;
 
 function toRule(input: any): any {
   return typeof input?.build === "function" ? input.build() : input;
 }
 
 function builtRules(): any[] {
-  return buildShiftRules().map(toRule);
+  const leftShift = singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("left_shift"));
+  const rightShift = singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("right_shift"));
+  return defineBindings([leftShift!, rightShift!]).map(toRule);
 }
 
 function manipulators(rule: any): any[] {
@@ -62,25 +63,21 @@ test("each shift rule has a second-tap and a first-tap manipulator", () => {
   }
 });
 
-test("left shift rule is labelled with the Raycast clipboard-history action", () => {
-  assert.equal(
-    builtRules()[0].description,
-    `[←⇧]${DESCRIPTION_SEPARATOR}Raycast clipboard history (on multi-tap)`,
-  );
+test("left shift rule description includes the Raycast clipboard-history action", () => {
+  assert.match(builtRules()[0].description, /On Double Tap:/);
+  assert.match(builtRules()[0].description, /clipboard manager/);
 });
 
-test("right shift rule is labelled with the Raycast clipboard-history action", () => {
-  assert.equal(
-    builtRules()[1].description,
-    `[→⇧]${DESCRIPTION_SEPARATOR}Raycast clipboard history (on multi-tap)`,
-  );
+test("right shift rule description includes the Raycast clipboard-history action", () => {
+  assert.match(builtRules()[1].description, /On Double Tap:/);
+  assert.match(builtRules()[1].description, /clipboard manager/);
 });
 
 test("double-tap of either shift key runs the Raycast clipboard-history command", () => {
   for (const rule of builtRules()) {
     const cmds = shellCommands(secondTapManip(rule));
     assert.ok(
-      cmds.some((c) => c === `open -u ${RAYCAST_CLIPBOARD_HISTORY_URL}`),
+      cmds.some((c) => c === `open -u '${RAYCAST_CLIPBOARD_HISTORY_URL}'`),
       `expected Raycast shell command, got ${JSON.stringify(cmds)}`,
     );
   }
@@ -105,13 +102,23 @@ test("left and right shift use distinct multi-tap state variables", () => {
   assert.notEqual(leftVar, rightVar);
 });
 
-test("double-tap threshold is 600 ms", () => {
+test("double-tap threshold is 300 ms", () => {
   for (const rule of builtRules()) {
     assert.equal(
       secondTapManip(rule).parameters[
-        "basic.to_if_held_down_threshold_milliseconds"
+      "basic.to_if_held_down_threshold_milliseconds"
       ],
       DOUBLE_TAP_THRESHOLD_MS,
     );
   }
+});
+
+test("holding shift past threshold maintains key_code in to_if_held_down", () => {
+  const [left, right] = builtRules();
+  const leftHeld = firstTapManip(left).to_if_held_down.find((e: any) => typeof e.key_code === "string");
+  const rightHeld = firstTapManip(right).to_if_held_down.find((e: any) => typeof e.key_code === "string");
+  assert.equal(leftHeld?.key_code, "left_shift");
+  assert.equal(leftHeld?.repeat, undefined);
+  assert.equal(rightHeld?.key_code, "right_shift");
+  assert.equal(rightHeld?.repeat, undefined);
 });
