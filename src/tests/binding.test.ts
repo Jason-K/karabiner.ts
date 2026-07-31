@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID, PATHS } from "../data";
-import { resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
+import { normalizeModifier, resolveCondition, triggerToFrom, resolveModifiers } from "../engine/binding";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
@@ -408,6 +408,82 @@ test("buildGuard: double-tap guard emits two-manipulator arm/fire pattern", () =
   assert.equal(firstPress.to_delayed_action.to_if_canceled[0].set_variable.name, varName);
   assert.deepEqual(firstPress.from.modifiers, { mandatory: ["left_command"] });
 });
+
+test("buildGuard: guardVar/guardMs overrides flow through", () => {
+  // The Binding.guardVar / guardMs options override the derived var name and
+  // default 300ms timeout. Previously untested passthrough paths.
+  const rules = defineBindings([
+    {
+      description: "override test",
+      trigger: { keys: ["q"], modifiers: ["left_command"] },
+      guardVar: "custom_guard",
+      guardMs: 500,
+      cases: [
+        {
+          phase: "press",
+          guard: true,
+          do: [{ type: "key", key: "q", modifiers: ["left_command"] }],
+        },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  const [secondPress, firstPress] = built.manipulatorSources;
+  // override var name used on both manipulators
+  assert.equal(secondPress.conditions[0].name, "custom_guard");
+  assert.equal(firstPress.conditions[0].name, "custom_guard");
+  // override timeout emitted as the first-press delayed-action delay
+  assert.deepEqual(firstPress.parameters, {
+    "basic.to_delayed_action_delay_milliseconds": 500,
+  });
+});
+
+test("buildGuard: throws on a guard mixed with another case (silent-drop footgun)", () => {
+  // A guard binding must be exactly one guard() case. Mixing guard with another
+  // case would silently drop the other case — fail loudly instead.
+  assert.throws(
+    () =>
+      defineBindings([
+        {
+          trigger: { keys: ["q"] },
+          cases: [
+            { phase: "press", guard: true, do: [{ type: "key", key: "q" }] },
+            { phase: "hold", do: [{ type: "key", key: "x" }] },
+          ],
+        },
+      ]),
+    /exactly one guard\(\) case/,
+  );
+});
+
+test("buildGuard: throws on multiple guard cases", () => {
+  assert.throws(
+    () =>
+      defineBindings([
+        {
+          trigger: { keys: ["q"] },
+          cases: [
+            { phase: "press", guard: true, do: [{ type: "key", key: "q" }] },
+            { phase: "press", guard: true, do: [{ type: "key", key: "y" }] },
+          ],
+        },
+      ]),
+    /exactly one guard\(\) case/,
+  );
+});
+
+test("normalizeModifier: strips side prefix and aliases command/control/option", () => {
+  // Bespoke deriveGuardVar convention: left_/right_ stripped, then
+  // command→cmd, control→ctrl, option→opt; everything else passes through.
+  assert.equal(normalizeModifier("left_command"), "cmd");
+  assert.equal(normalizeModifier("right_command"), "cmd");
+  assert.equal(normalizeModifier("left_control"), "ctrl");
+  assert.equal(normalizeModifier("left_option"), "opt");
+  assert.equal(normalizeModifier("left_shift"), "shift");
+  assert.equal(normalizeModifier("command"), "cmd");
+  assert.equal(normalizeModifier("fn"), "fn");
+});
+
 
 test("buildKeyTapHold: modWhileDown without whileHoldVar omits all var signaling", () => {
   // Reachable but previously untested path: modWhileDown with no whileHoldVar

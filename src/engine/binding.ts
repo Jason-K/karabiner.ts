@@ -381,23 +381,32 @@ export function defineBindings(bindings: Binding[]): Rule[] {
 }
 
 /**
+ * Normalize a Karabiner modifier token to its short form for use in derived
+ * variable names (e.g. `guard_cmd_q`): strip a leading `left_`/`right_` prefix,
+ * then alias `command→cmd`, `control→ctrl`, `option→opt`. Anything else (e.g.
+ * `shift`, `fn`) passes through unchanged. Single source of truth for the
+ * bespoke modifier-shortening convention; `deriveGuardVar` is its only caller
+ * today, but extracting it keeps the convention testable in isolation.
+ */
+export function normalizeModifier(mod: string): string {
+  return mod
+    .replace(/^(left|right)_/, "")
+    .replace("command", "cmd")
+    .replace("control", "ctrl")
+    .replace("option", "opt");
+}
+
+/**
  * Derive the double-tap guard variable name from the trigger, matching the
  * bespoke `deriveGuardVar` convention: `guard_<normalizedMod>_<key>`, where the
- * modifier is the first mandatory trigger modifier with its `left_`/`right_`
- * prefix stripped and `command→cmd`/`control→ctrl`/`option→opt` aliased. A
- * trigger with no modifiers uses `<mod> = "none"`.
+ * modifier is the first mandatory trigger modifier normalized via
+ * `normalizeModifier`. A trigger with no modifiers uses `<mod> = "none"`.
  */
 function deriveGuardVar(trigger: Trigger): string {
   const key = getTriggerKeys(trigger)[0] ?? "none";
   const mods = resolveModifiers(trigger.modifiers).mandatory;
   const firstMod = mods[0];
-  const normalized = firstMod
-    ? firstMod
-        .replace(/^(left|right)_/, "")
-        .replace("command", "cmd")
-        .replace("control", "ctrl")
-        .replace("option", "opt")
-    : "none";
+  const normalized = firstMod ? normalizeModifier(firstMod) : "none";
   return `guard_${normalized}_${key}`;
 }
 
@@ -414,11 +423,20 @@ function deriveGuardVar(trigger: Trigger): string {
  */
 function buildGuard(b: Binding, resolved: ResolvedCase[]): Manipulator[] {
   const key = getTriggerKeys(b.trigger)[0]!;
+  const guardCases = resolved.filter((c) => c.guard);
+  // A guard binding must be exactly one `guard()` case. Multiple guards or a
+  // guard mixed with other cases (tap/hold) would silently drop cases here —
+  // fail loudly at generation time instead of emitting wrong output (matches
+  // assertUniqueTriggers' throw-on-invalid-authoring convention).
+  if (guardCases.length !== 1 || resolved.length !== 1) {
+    throw new Error(
+      `A double-tap guard binding must have exactly one guard() case, but trigger "${JSON.stringify(b.trigger)}" has ${guardCases.length} guard case(s) among ${resolved.length} total case(s).`,
+    );
+  }
+  const guardCase = guardCases[0]!;
   const varName = b.guardVar ?? deriveGuardVar(b.trigger);
   const timeoutMs = b.guardMs ?? TIMINGS.timeoutDoubleTapMs;
-  // The guard case carries the combo to fire on the second press.
-  const guardCase = resolved.find((c) => c.guard);
-  const combo = guardCase?.do ?? [];
+  const combo = guardCase.do;
   const modifiersObj = fromModifiersObj(b.trigger);
   // Hoisted conditions attach to both manipulators, device_if last.
   const conds = deviceLast(resolved.flatMap((c) => c.conditions));
