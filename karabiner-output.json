@@ -2048,7 +2048,7 @@
         "conditions": []
       },
       {
-        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'\n\tOn Hold:\n\t\tAlways:\tEmit '⌘'\n\tOn Double Tap:\n\t\tAlways:\tGo back 1 apps",
+        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tGo back 1 apps",
         "manipulatorSources": [
           {
             "type": "basic",
@@ -2061,13 +2061,18 @@
                 "type": "variable_if",
                 "name": "multi_tap_left_command",
                 "value": 1
+              },
+              {
+                "type": "variable_unless",
+                "name": "caps_lock_pressed",
+                "value": 1
               }
             ],
             "parameters": {
               "basic.to_if_alone_timeout_milliseconds": 300,
               "basic.to_if_held_down_threshold_milliseconds": 300
             },
-            "description": "multi_tap_left_command second tap (tap-tap / tap-tap-hold)",
+            "description": "not Caps lock pressed",
             "to": [
               {
                 "lazy": true,
@@ -2128,7 +2133,7 @@
               "basic.to_if_held_down_threshold_milliseconds": 300,
               "basic.to_if_alone_timeout_milliseconds": 300
             },
-            "description": "multi_tap_left_command first tap (pass-through)",
+            "description": "not Caps lock pressed",
             "to": [
               {
                 "set_variable": {
@@ -2181,7 +2186,14 @@
                   }
                 }
               ]
-            }
+            },
+            "conditions": [
+              {
+                "type": "variable_unless",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ]
           }
         ],
         "allowEmptyManipulators": false,

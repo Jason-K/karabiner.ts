@@ -1,9 +1,11 @@
 import { APP_ID, CMDS, COMBOS, URLS, VMOD } from "../data";
+import { capsVars } from "./caps-lock";
 import {
   actHere,
   appHistory,
   bind,
   condApp,
+  condNotVar,
   combo,
   from,
   hold,
@@ -15,6 +17,7 @@ import {
   release,
   shell,
   to,
+  when,
   type Binding,
 } from "../engine";
 
@@ -137,6 +140,10 @@ const modifierKeyBindings: Binding[] = [
       hold(key("left_command")),
       release(appHistory(1)).withTapCount(2),
     ),
+    // Do not intercept left_command while caps lock is held: caps emits
+    // left_command as its hyper-modifier key_code, and this rule's lazy
+    // transform would otherwise drop cmd from the caps modifier set.
+    when(condNotVar(capsVars.pressed, 1)),
     options({
       multiTap: { allowPassThrough: true, mods: [] },
     }),

@@ -1,4 +1,5 @@
 import type { Modifier } from "karabiner.ts";
+import type { VarSpec } from "../data";
 import {
   bind,
   from,
@@ -25,6 +26,16 @@ import {
 
 const LEFT_COCS: Modifier[] = ["left_command", "left_option", "left_control", "left_shift"];
 
+/**
+ * Caps-lock signaling variables. `pressed` is set to 1 while caps is held
+ * (`whileHoldVar`) so other bindings can avoid intercepting the modifier events
+ * caps emits — e.g. the `left_command` multi-tap rule must NOT fire while caps
+ * is held, or its `lazy` transform drops `cmd` from the caps hyper modifier.
+ */
+export const capsVars = {
+  pressed: { name: "caps_lock_pressed", varDesc: "Caps lock pressed" },
+} as const satisfies Record<string, VarSpec>;
+
 export const capsLockBindings: Binding[] = [
   // (no modifiers) — COCS modifier set, minus nothing
   bind(
@@ -35,7 +46,7 @@ export const capsLockBindings: Binding[] = [
     ),
     options({
       modWhileDown: true,
-      whileHoldVar: { name: "caps_lock_pressed", varDesc: "Caps lock pressed" },
+      whileHoldVar: capsVars.pressed,
     }),
   ),
   // +shift
