@@ -1,4 +1,4 @@
-import type { FromEvent } from "karabiner.ts";
+import type { FromEvent } from "../../types/karabiner";
 import type { Trigger } from "../../data";
 import {
   getTriggerKeys,

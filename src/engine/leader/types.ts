@@ -1,4 +1,4 @@
-import type { ToEvent } from 'karabiner.ts';
+import type { ToEvent } from '../../types/karabiner';
 
 import type { ActionSpec } from "../../data";
 import type { OpenAppOpts } from '../resolve-to-action';

@@ -2,8 +2,8 @@
   "complex_modifications": {
     "rules": [
       {
-        "ruleDescription": "[8]:\n---\n\tOn Hold:\n\t\tAlways:\topen RingCentral",
-        "manipulatorSources": [
+        "description": "[8]:\n---\n\tOn Hold:\n\t\tAlways:\topen RingCentral",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -37,13 +37,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash all'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 0]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash all'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -73,13 +71,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↓'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 2]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↓'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -109,13 +105,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ←'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 4]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ←'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -145,13 +139,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 5]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Unstash'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -181,13 +173,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash →'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 6]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash →'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -217,13 +207,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↑'",
-        "manipulatorSources": [
+        "description": "[KEYPAD 8]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Stash ↑'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -253,13 +241,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F18'",
-        "manipulatorSources": [
+        "description": "[A]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F18'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -296,13 +282,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show busycal popup'",
-        "manipulatorSources": [
+        "description": "[C]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show busycal popup'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -338,13 +322,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[D]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F1'",
-        "manipulatorSources": [
+        "description": "[D]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F1'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -380,13 +362,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: qspace",
-        "manipulatorSources": [
+        "description": "[F]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: qspace",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -416,13 +396,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[G]:\n---\n\tOn Hold:\n\t\tAlways:\topen-shell Claude",
-        "manipulatorSources": [
+        "description": "[G]:\n---\n\tOn Hold:\n\t\tAlways:\topen-shell Claude",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -452,13 +430,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'call Raycast Here2There'",
-        "manipulatorSources": [
+        "description": "[H]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'call Raycast Here2There'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -488,13 +464,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[J]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'show recent downloads'",
-        "manipulatorSources": [
+        "description": "[J]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'show recent downloads'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -524,13 +498,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[K]:\n---\n\tOn Hold:\n\t\tAlways:\topen Kitty",
-        "manipulatorSources": [
+        "description": "[K]:\n---\n\tOn Hold:\n\t\tAlways:\topen Kitty",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -564,13 +536,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[N]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'new client note template'",
-        "manipulatorSources": [
+        "description": "[N]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'new client note template'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -600,13 +570,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[O]:\n---\n\tOn Hold:\n\t\tAlways:\tOCR text (no line breaks) using CSX",
-        "manipulatorSources": [
+        "description": "[O]:\n---\n\tOn Hold:\n\t\tAlways:\tOCR text (no line breaks) using CSX",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -636,13 +604,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
-        "manipulatorSources": [
+        "description": "[P]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -679,13 +645,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[Q]:\n---\n\tOn Hold:\n\t\tAlways:\topen QSpace",
-        "manipulatorSources": [
+        "description": "[Q]:\n---\n\tOn Hold:\n\t\tAlways:\topen QSpace",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -719,13 +683,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Get recent items from Raycast'",
-        "manipulatorSources": [
+        "description": "[R]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Get recent items from Raycast'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -755,13 +717,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture area using CSX",
-        "manipulatorSources": [
+        "description": "[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture area using CSX",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -791,13 +751,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]+[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture window using CSX",
-        "manipulatorSources": [
+        "description": "[⇧]+[S]:\n---\n\tOn Hold:\n\t\tAlways:\tCapture window using CSX",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -835,13 +793,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show kitty quake terminal'",
-        "manipulatorSources": [
+        "description": "[T]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show kitty quake terminal'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -877,13 +833,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
-        "manipulatorSources": [
+        "description": "[V]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'open Raycast clipboard manager'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -913,13 +867,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[X]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
-        "manipulatorSources": [
+        "description": "[X]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -949,13 +901,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[Y]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
-        "manipulatorSources": [
+        "description": "[Y]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: copy",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -985,13 +935,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'search directories using zoxide'",
-        "manipulatorSources": [
+        "description": "[Z]:\n---\n\tOn Hold:\n\t\tAlways:\tCall 'search directories using zoxide'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1021,13 +969,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
-        "manipulatorSources": [
+        "description": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1065,13 +1011,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
-        "manipulatorSources": [
+        "description": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1109,13 +1053,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'raycast here2this'",
-        "manipulatorSources": [
+        "description": "[/]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'raycast here2this'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1152,13 +1094,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
-        "manipulatorSources": [
+        "description": "[~]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1195,13 +1135,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
-        "manipulatorSources": [
+        "description": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1279,13 +1217,11 @@
             ],
             "description": "In Microsoft Excel"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
-        "manipulatorSources": [
+        "description": "[⏎]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⏎'\n\tOn Hold:\n\t\tOutside Microsoft Excel:\tRun 'Format substrings within selection'\n\t\tIn Microsoft Excel:\tEmit 'F2'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1363,13 +1299,11 @@
             ],
             "description": "In Microsoft Excel"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇥]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
-        "manipulatorSources": [
+        "description": "[⇥]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1401,13 +1335,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun 'Kill foreground application'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun 'Kill all applications'",
-        "manipulatorSources": [
+        "description": "[␛]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '␛'\n\tOn Hold:\n\t\tAlways:\tRun 'Kill foreground application'\n\tOn Double Tap Hold:\n\t\tAlways:\tRun 'Kill all applications'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1527,13 +1459,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '←'",
-        "manipulatorSources": [
+        "description": "[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '←'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1552,13 +1482,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '→'",
-        "manipulatorSources": [
+        "description": "[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + '→'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1577,13 +1505,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F1]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS DECREMENT'",
-        "manipulatorSources": [
+        "description": "[F1]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS DECREMENT'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1614,13 +1540,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F2]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS INCREMENT'",
-        "manipulatorSources": [
+        "description": "[F2]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'DISPLAY BRIGHTNESS INCREMENT'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1651,13 +1575,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F3]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
-        "manipulatorSources": [
+        "description": "[F3]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MISSION CONTROL'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1688,13 +1610,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F4]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'LAUNCHPAD'",
-        "manipulatorSources": [
+        "description": "[F4]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'LAUNCHPAD'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1725,13 +1645,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F5]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'F5'",
-        "manipulatorSources": [
+        "description": "[F5]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⌃ + 'F5'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1767,13 +1685,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F7]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'REWIND'",
-        "manipulatorSources": [
+        "description": "[F7]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'REWIND'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1804,13 +1720,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F8]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'PLAY OR PAUSE'",
-        "manipulatorSources": [
+        "description": "[F8]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'PLAY OR PAUSE'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1841,13 +1755,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F9]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'FASTFORWARD'",
-        "manipulatorSources": [
+        "description": "[F9]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'FASTFORWARD'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1878,13 +1790,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F10]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MUTE'",
-        "manipulatorSources": [
+        "description": "[F10]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'MUTE'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1915,13 +1825,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F11]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME DECREMENT'",
-        "manipulatorSources": [
+        "description": "[F11]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME DECREMENT'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1952,13 +1860,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[F12]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME INCREMENT'",
-        "manipulatorSources": [
+        "description": "[F12]:\n---\n\tOn Hold:\n\t\tAlways:\tEmit 'VOLUME INCREMENT'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -1989,13 +1895,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[FN]:\n---\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit ⌘⌥⌃ + 'F5'",
-        "manipulatorSources": [
+        "description": "[FN]:\n---\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit ⌘⌥⌃ + 'F5'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2039,13 +1943,11 @@
             ],
             "description": "not Caps lock pressed"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tGo back 1 apps",
-        "manipulatorSources": [
+        "description": "[⌘]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⌘'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tGo back 1 apps",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2191,13 +2093,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tCall 'open Raycast clipboard manager'",
-        "manipulatorSources": [
+        "description": "[⇧]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tCall 'open Raycast clipboard manager'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2339,13 +2239,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tCall 'open Raycast clipboard manager'",
-        "manipulatorSources": [
+        "description": "[⇧]:\n---\n\tOn Tap:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Hold:\n\t\tnot Caps lock pressed:\tEmit '⇧'\n\tOn Double Tap:\n\t\tnot Caps lock pressed:\tCall 'open Raycast clipboard manager'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2487,13 +2385,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom left 1/8'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[KEYPAD 1]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom left 1/8'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2533,13 +2429,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 3]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom right 1/8'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[KEYPAD 3]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to bottom right 1/8'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2579,13 +2473,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 5]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window ✥'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[KEYPAD 5]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window ✥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2625,13 +2517,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 7]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top left 1/8'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[KEYPAD 7]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top left 1/8'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2671,13 +2561,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[KEYPAD 9]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top right 1/8'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[KEYPAD 9]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'Window to top right 1/8'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2717,13 +2605,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
-        "manipulatorSources": [
+        "description": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2761,13 +2647,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the right'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[E]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the right'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2819,13 +2703,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the bottom'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[F]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the bottom'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2877,13 +2759,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'highlight in skim'",
-        "manipulatorSources": [
+        "description": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'highlight in skim'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2914,13 +2794,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
-        "manipulatorSources": [
+        "description": "[⌥>]+[K]:\n---\n\tOn Hold:\n\t\tAlways:\tContext action: kitty",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -2958,13 +2836,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'restore minimized windows'",
-        "manipulatorSources": [
+        "description": "[⌘]+[M]:\n---\n\tOn Hold:\n\t\tAlways:\tmap 'restore minimized windows'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3007,13 +2883,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[P]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun command 'get file path and print in word'\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
-        "manipulatorSources": [
+        "description": "[⌘]+[P]:\n---\n\tOn Tap:\n\t\tIn Word:\tRun command 'get file path and print in word'\n\tOn Hold:\n\t\tAlways:\tmap 'show showPopclip'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3100,13 +2974,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the left'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the left'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3158,13 +3030,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the top'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[R]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'focus window to the top'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3216,13 +3086,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Format selection using hsStringEval'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Format selection using hsStringEval'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3242,13 +3110,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥>]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'open Spotify or toggle play/pause'\n\tOn Hold:\n\t\tAlways:\tCall 'search Spotify'",
-        "manipulatorSources": [
+        "description": "[⌥>]+[S]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'open Spotify or toggle play/pause'\n\tOn Hold:\n\t\tAlways:\tCall 'search Spotify'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3278,13 +3144,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[T]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Create new Typinator rule'\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3317,13 +3181,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulatorSources": [
+        "description": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3361,13 +3223,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'underline in skim'",
-        "manipulatorSources": [
+        "description": "[⌘]+[U]:\n---\n\tOn Tap:\n\t\tIn Skim:\tmap 'underline in skim'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3398,13 +3258,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[,]:\n---\n\tOn Tap:\n\t\tAlways:\topen System Settings",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3428,13 +3286,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
-        "manipulatorSources": [
+        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3538,13 +3394,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '→'",
-        "manipulatorSources": [
+        "description": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '→'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3566,13 +3420,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
-        "manipulatorSources": [
+        "description": "[⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3614,13 +3466,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3644,13 +3494,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '←'",
-        "manipulatorSources": [
+        "description": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '←'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3672,13 +3520,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[←]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to left or top half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3711,13 +3557,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate next tab in Zen'",
-        "manipulatorSources": [
+        "description": "[⌘⇧]+[←]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate next tab in Zen'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3749,13 +3593,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[→]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Move window to right or bottom half'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display →'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3788,13 +3630,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate previous tab in Zen'",
-        "manipulatorSources": [
+        "description": "[⌘⇧]+[→]:\n---\n\tOn Tap:\n\t\tIn Zen:\tmap 'activate previous tab in Zen'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3826,13 +3666,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[_]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[␣]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3872,13 +3710,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3911,13 +3747,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[F12]:\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -3937,13 +3771,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + 'Q'",
-        "manipulatorSources": [
+        "description": "[⌘]+[Q]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘ + 'Q'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4024,13 +3856,11 @@
               ]
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tEmit ⌘ + 'D'",
-        "manipulatorSources": [
+        "description": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tEmit ⌘ + 'D'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4125,13 +3955,11 @@
             },
             "description": "In Antinote"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tmap 'show mission control'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
-        "manipulatorSources": [
+        "description": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tmap 'show mission control'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4221,13 +4049,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to left or top half'",
-        "manipulatorSources": [
+        "description": "Wheel left:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '←'\n\t\tWheel held down:\t\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to left or top half'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4343,13 +4169,11 @@
             ],
             "description": "not Wheel held down and not Right button held"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to right or bottom half'",
-        "manipulatorSources": [
+        "description": "Wheel right:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held and Wheel held down:\tEmit ⌘⌃⇧ + '→'\n\tOn Hold:\n\t\tnot Wheel held down and not Right button held:\tRun 'Move window to right or bottom half'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4441,13 +4265,11 @@
             ],
             "description": "not Wheel held down and not Right button held"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Wheel click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tClick Left click\n\t\ton Logitech G502 X:\tClick Middle click\n\tOn Hold:\n\t\ton Logitech G502 X:\tRun 'Maximize or restore window'",
-        "manipulatorSources": [
+        "description": "Wheel click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tClick Left click\n\t\ton Logitech G502 X:\tClick Middle click\n\tOn Hold:\n\t\ton Logitech G502 X:\tRun 'Maximize or restore window'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4545,13 +4367,11 @@
             ],
             "description": "on Logitech G502 X"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Left-back (G7):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\tAlways:\tOpen 'Display →'",
-        "manipulatorSources": [
+        "description": "Left-back (G7):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\tAlways:\tOpen 'Display →'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4591,13 +4411,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Show Popclip at cursor position'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
-        "manipulatorSources": [
+        "description": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Show Popclip at cursor position'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4643,13 +4461,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tOCR text (no line breaks) using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
-        "manipulatorSources": [
+        "description": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tOCR text (no line breaks) using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4689,13 +4505,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧ + ']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘ + '⇥'",
-        "manipulatorSources": [
+        "description": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧ + ']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘ + '⇥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4784,13 +4598,11 @@
             ],
             "description": "on Logitech G502 X"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧ + '['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃ + '↓'",
-        "manipulatorSources": [
+        "description": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧ + '['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃ + '↓'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4878,13 +4690,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Right click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X:\tClick Right click\n\tOn Hold:\n\t\ton Logitech G502 X:\t",
-        "manipulatorSources": [
+        "description": "Right click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X:\tClick Right click\n\tOn Hold:\n\t\ton Logitech G502 X:\t",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -4933,13 +4743,11 @@
             ],
             "description": "on Logitech G502 X"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tOpen 'Display →'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tOpen 'Display →'",
-        "manipulatorSources": [
+        "description": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tRun 'Maximize or restore window'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tOpen 'Display →'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tOpen 'Display →'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5285,13 +5093,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
-        "manipulatorSources": [
+        "description": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and not Right button held:\tPass through",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5420,13 +5226,11 @@
             ],
             "description": "on Logitech G502 X and not Right button held"
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃⇧ + '⌘'\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F15'",
-        "manipulatorSources": [
+        "description": "[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃⇧ + '⌘'\n\t\tAlways:\tEmit ⌘⌥⌃⇧ + 'F15'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5473,13 +5277,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5501,13 +5303,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⌃ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5534,13 +5334,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌃]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⌃]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5562,13 +5360,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌃]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌃]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5595,13 +5391,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⌥]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5623,13 +5417,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5656,13 +5448,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌥'",
-        "manipulatorSources": [
+        "description": "[⌘]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5684,13 +5474,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌥'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃⇧ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5717,13 +5505,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⌃⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5745,13 +5531,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌥ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5781,13 +5565,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌃⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⌃⌥]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5809,13 +5591,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌃]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌃]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5845,13 +5625,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌃⌘]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌥'",
-        "manipulatorSources": [
+        "description": "[⌃⌘]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5873,13 +5651,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌃]+[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌥'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌃]+[⌘]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5909,13 +5685,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌃'",
-        "manipulatorSources": [
+        "description": "[⌘⌥]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌃'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5937,13 +5711,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌃'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⌥]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⇧ + '⌃'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -5973,13 +5745,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌥'",
-        "manipulatorSources": [
+        "description": "[⌘⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6001,13 +5771,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌥'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6037,13 +5805,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌘'",
-        "manipulatorSources": [
+        "description": "[⌥⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6065,13 +5831,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌥]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌥]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌃ + '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6101,13 +5865,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌥'",
-        "manipulatorSources": [
+        "description": "[⌘⌃⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6127,13 +5889,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌥'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌥'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6166,13 +5926,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌃'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌃'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6192,13 +5950,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⌥]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌃'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⌥]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌃'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6231,13 +5987,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌥⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'",
-        "manipulatorSources": [
+        "description": "[⌥⌃⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6257,13 +6011,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌥]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌥]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⌘'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6296,13 +6048,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6322,13 +6072,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⌥]+[⌃]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⌥]+[⌃]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit '⇧'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6361,13 +6109,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥⌃⇧]+[⇪]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'VK NONE'",
-        "manipulatorSources": [
+        "description": "[⌘⌥⌃⇧]+[CAPS]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'VK NONE'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6388,13 +6134,11 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⇪]+[⌘]+[⌥]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'VK NONE'",
-        "manipulatorSources": [
+        "description": "[CAPS]+[⌘]+[⌥]+[⌃]+[⇧]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'VK NONE'",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6430,13 +6174,11 @@
               "to_if_canceled": []
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
-        "manipulatorSources": [
+        "description": "[⌘]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6448,13 +6190,11 @@
               }
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
-        "manipulatorSources": [
+        "description": "[⌘⌥]+[H]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6462,18 +6202,16 @@
               "modifiers": {
                 "mandatory": [
                   "left_command",
-                  "option"
+                  "left_option"
                 ]
               }
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘⌥]+[M]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
-        "manipulatorSources": [
+        "description": "[⌘⌥]+[M]:\n---\n\tOn Tap:\n\t\tAlways:\tNo operation",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6481,18 +6219,16 @@
               "modifiers": {
                 "mandatory": [
                   "left_command",
-                  "option"
+                  "left_option"
                 ]
               }
             }
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       },
       {
-        "ruleDescription": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tNo operation",
-        "manipulatorSources": [
+        "description": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tNo operation",
+        "manipulatorsList": [
           {
             "type": "basic",
             "from": {
@@ -6513,9 +6249,7 @@
               }
             ]
           }
-        ],
-        "allowEmptyManipulators": false,
-        "conditions": []
+        ]
       }
     ]
   }

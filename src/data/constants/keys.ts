@@ -1,4 +1,4 @@
-import type { Modifier } from "karabiner.ts";
+import type { Modifier } from "../../types/karabiner";
 
 // All valid Karabiner-native modifier keys and aliases (e.g. cmd, opt, ctrl, L.cmd, R.cmd)
 export type ModKey = Modifier | "cmd" | "opt" | "ctrl" | "L.cmd" | "R.cmd" | "L.opt" | "R.opt" | "L.ctrl" | "R.ctrl" | "L.shift" | "R.shift" | (string & {});

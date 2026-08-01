@@ -1,4 +1,4 @@
-import type { Condition, ToVariable, ToEvent } from "karabiner.ts";
+import type { Condition, ToVariable, ToEvent } from "../../types/karabiner";
 
 export function toVar(
   name: string,
@@ -30,4 +30,4 @@ export function unlessVarExpr(expression: string): Condition {
   return { type: "expression_unless", expression } as unknown as Condition;
 }
 
-export { withCondition } from "karabiner.ts";
+export { withCondition } from "../karabiner-helpers";

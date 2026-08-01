@@ -1,5 +1,5 @@
-import type { ToEvent } from 'karabiner.ts';
-import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from 'karabiner.ts';
+import type { ToEvent } from '../../types/karabiner';
+import { ifVar, map, rule, toKey, toNone, toSetVar, toStickyModifier } from '../karabiner-helpers';
 import { formatRuleDescription } from "../resolve-description/rule-descriptions";
 import { TIMINGS } from "../../data";
 import {

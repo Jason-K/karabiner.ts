@@ -1,4 +1,4 @@
-import { ifApp, ifDevice } from "karabiner.ts";
+import { ifApp, ifDevice } from "../karabiner-helpers";
 import type { Condition } from "../../data";
 import { karabinerDeviceId } from "../resolve-trigger/device-config";
 

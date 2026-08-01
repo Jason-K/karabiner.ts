@@ -1,9 +1,9 @@
-import {
-  mapSimultaneous,
-  type FromEvent,
-  type SimultaneousOptions as KarSimultaneousOptions,
-  type ToEvent,
-} from "karabiner.ts";
+import type {
+  FromEvent,
+  SimultaneousOptions as KarSimultaneousOptions,
+  ToEvent,
+} from "../../types/karabiner";
+import { mapSimultaneous } from "../karabiner-helpers";
 import type { Binding, SimOrder } from "../../data";
 import { varTapTapHoldFrom } from "./tap-hold";
 import { isPointerButton, resolveButton, resolveKeyAlias } from "../utils";

@@ -1,4 +1,4 @@
-import type { ToEvent } from "karabiner.ts";
+import type { ToEvent } from "../../types/karabiner";
 import type { AppSpec } from "./apps";
 import type { CommandSpec } from "./commands";
 import type { MapSpec } from "./maps";

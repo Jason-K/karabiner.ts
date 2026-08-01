@@ -130,11 +130,11 @@ test("home-end navigation mappings stay declarative", () => {
 test("disabled shortcut mappings stay declarative", () => {
   assert.equal(disabledHotkeys.length, 4);
   assert.deepEqual(disabledHotkeys[0], {
-    trigger: { keys: ["h"], modifiers: ["left_command"] },
+    trigger: { keys: ["h"], modifiers: ["L.cmd"] },
     cases: [press(noop())],
   });
   assert.deepEqual(disabledHotkeys[2], {
-    trigger: { keys: ["m"], modifiers: ["left_command", "option"] },
+    trigger: { keys: ["m"], modifiers: ["L.opt"] },
     cases: [press(noop())],
   });
 });

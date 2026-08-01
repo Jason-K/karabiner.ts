@@ -1,4 +1,4 @@
-import type { Modifier } from "karabiner.ts";
+import type { Modifier } from "../types/karabiner";
 import type { Binding, ModKey, VarSpec } from "../data";
 import { bind, options } from "./binding-wrappers";
 import { from } from "./from-action-wrappers";

@@ -1,4 +1,4 @@
-import type { Modifier } from "karabiner.ts";
+import type { Modifier } from "../../types/karabiner";
 import type { AppSpec, Map, MapSpec, PathSpec } from "../../data";
 import { VMOD, type ModComboAlias } from "../../data/constants/keys";
 import {

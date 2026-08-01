@@ -1,4 +1,5 @@
-import { rule, type Manipulator, type Rule } from "karabiner.ts";
+import type { Manipulator, Rule } from "../../types/karabiner";
+import { rule } from "../karabiner-helpers";
 import type { Binding } from "../../data";
 
 import {

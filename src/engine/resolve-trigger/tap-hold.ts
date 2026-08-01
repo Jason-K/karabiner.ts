@@ -3,8 +3,8 @@ import type {
   FromEvent,
   Modifier,
   ToEvent,
-} from "karabiner.ts";
-import { ifApp, map, toKey, toPointingButton, toSetVar } from "karabiner.ts";
+} from "../../types/karabiner";
+import { ifApp, map, toKey, toPointingButton, toSetVar } from "../karabiner-helpers";
 import { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_TIMINGS, TIMINGS } from "../../data";
 import { isModifierKey } from "../utils";
 

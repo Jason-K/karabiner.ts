@@ -1,5 +1,5 @@
-import type { ToEvent } from "karabiner.ts";
-import { toKey, toPointingButton } from "karabiner.ts";
+import type { ToEvent } from "../../types/karabiner";
+import { toKey, toPointingButton } from "../karabiner-helpers";
 
 import type { Action, ActionSpec } from "../../data";
 import { FINDER_REPLACEMENT } from "../../data/constants/global";

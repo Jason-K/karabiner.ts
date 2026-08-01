@@ -1,4 +1,4 @@
-import type { Manipulator } from "karabiner.ts";
+import type { Manipulator } from "../../types/karabiner";
 
 /**
  * Encloses a string in quotes (single or double), escaping internal quote characters.

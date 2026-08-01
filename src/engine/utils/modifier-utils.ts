@@ -1,4 +1,4 @@
-import type { Modifier } from "karabiner.ts";
+import type { Modifier } from "../../types/karabiner";
 import type { TriggerModifiers } from "../../data";
 import { MODKEY_CODES, VMOD, type ModComboAlias } from "../../data/constants/keys";
 

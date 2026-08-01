@@ -1,0 +1,379 @@
+/**
+ * Low-level AST helper and builder functions for constructing Karabiner JSON objects.
+ */
+
+import type {
+  BasicManipulator,
+  BasicParameters,
+  Condition,
+  DeviceIdentifier,
+  FromEvent,
+  FromKeyType,
+  FromModifiers,
+  Manipulator,
+  Modifier,
+  PointingButton,
+  Rule,
+  SimultaneousOptions,
+  ToEvent,
+  ToEventOptions,
+  ToVariable,
+} from "../types/karabiner";
+
+export class RuleBuilder {
+  description?: string;
+  manipulatorsList: Manipulator[] = [];
+
+  constructor(description?: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]) {
+    this.description = description;
+    if (manipulators.length > 0) {
+      for (const m of manipulators) {
+        this.addManipulators(m);
+      }
+    }
+
+    return new Proxy(this, {
+      get: (target, prop, receiver) => {
+        if (prop === "ruleDescription") {
+          return target.description;
+        }
+        if (prop === "manipulatorSources" || prop === "manipulators") {
+          const method = (manipulators?: any) => {
+            if (manipulators !== undefined) {
+              target.addManipulators(manipulators);
+              return receiver;
+            }
+            return target.manipulatorsList;
+          };
+          return new Proxy(method, {
+            get: (_fnTarget, fnProp) => {
+              return Reflect.get(target.manipulatorsList, fnProp);
+            },
+          });
+        }
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+  }
+
+  public addManipulators(input: any): this {
+    if (!input) return this;
+    if (input instanceof BasicManipulatorBuilder) {
+      this.manipulatorsList.push(...input.build());
+    } else if (Array.isArray(input)) {
+      for (const item of input) {
+        this.addManipulators(item);
+      }
+    } else {
+      this.manipulatorsList.push(input as Manipulator);
+    }
+    return this;
+  }
+
+  public manipulators(manipulators?: any): any {
+    if (manipulators !== undefined) {
+      this.addManipulators(manipulators);
+      return this;
+    }
+    return this.manipulatorsList;
+  }
+
+  public build(): Rule {
+    return {
+      description: this.description,
+      manipulators: this.manipulatorsList,
+    };
+  }
+}
+
+export function rule(description: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]): RuleBuilder {
+  return new RuleBuilder(description, ...manipulators);
+}
+
+function normalizeToEvent(event: string | ToEvent): ToEvent {
+  if (typeof event === "string") {
+    return toKey(event);
+  }
+  return event;
+}
+
+export function toKey(
+  key_code: string | number,
+  modifiers?: Modifier[] | string,
+  options?: ToEventOptions,
+): ToEvent {
+  const mods = modifiers
+    ? Array.isArray(modifiers)
+      ? modifiers
+      : [modifiers as Modifier]
+    : undefined;
+  const result: ToEvent = {
+    ...options,
+    key_code,
+    modifiers: mods,
+  } as ToEvent;
+  return result;
+}
+
+export function toPointingButton(
+  pointing_button: PointingButton | number,
+  modifiers?: Modifier[],
+  options?: ToEventOptions,
+): ToEvent {
+  const mods = modifiers
+    ? Array.isArray(modifiers)
+      ? modifiers
+      : [modifiers as Modifier]
+    : undefined;
+  const result: ToEvent = {
+    ...options,
+    pointing_button,
+    modifiers: mods,
+  } as ToEvent;
+  return result;
+}
+
+export function toSetVar(
+  name: string,
+  value: number | boolean | string = 1,
+  key_up_value?: number | boolean | string,
+): ToEvent {
+  const varObj: ToVariable = { name, value };
+  if (key_up_value !== undefined) {
+    varObj.key_up_value = key_up_value;
+  }
+  return { set_variable: varObj };
+}
+
+export function toStickyModifier(
+  flag: string,
+  toggle: 'on' | 'off' | 'toggle' | boolean = 'toggle',
+): ToEvent {
+  return {
+    sticky_modifier: { [flag]: toggle } as any,
+  };
+}
+
+export function toNone(options?: ToEventOptions): ToEvent {
+  const result: ToEvent = {
+    ...options,
+    key_code: 'vk_none',
+    modifiers: undefined,
+  } as ToEvent;
+  return result;
+}
+
+export class ConditionBuilder {
+  constructor(private condition: Condition) {}
+
+  unless(): this {
+    if (this.condition.type.endsWith('_if')) {
+      this.condition.type = this.condition.type.replace('_if', '_unless') as any;
+    }
+    return this;
+  }
+
+  build(): Condition {
+    return this.condition;
+  }
+}
+
+export function ifVar(
+  name: string,
+  value: number | boolean | string = 1,
+  description?: string,
+): ConditionBuilder {
+  return new ConditionBuilder({
+    type: 'variable_if',
+    name,
+    value,
+    description: description ?? undefined,
+  });
+}
+
+export function ifApp(
+  apps: string | string[] | { bundle_identifiers?: string[]; file_paths?: string[] },
+  description?: string,
+): ConditionBuilder {
+  if (typeof apps === 'object' && !Array.isArray(apps)) {
+    return new ConditionBuilder({
+      type: 'frontmost_application_if',
+      bundle_identifiers: apps.bundle_identifiers,
+      file_paths: apps.file_paths,
+      description: description ?? undefined,
+    });
+  }
+  const bundle_identifiers = Array.isArray(apps) ? apps : [apps];
+  return new ConditionBuilder({
+    type: 'frontmost_application_if',
+    bundle_identifiers,
+    description: description ?? undefined,
+  });
+}
+
+export function ifDevice(
+  identifiers: DeviceIdentifier | DeviceIdentifier[],
+  description?: string,
+): ConditionBuilder {
+  const ids = Array.isArray(identifiers) ? identifiers : [identifiers];
+  return new ConditionBuilder({
+    type: 'device_if',
+    identifiers: ids,
+    description: description ?? undefined,
+  });
+}
+
+export function withCondition(...conditions: (Condition | ConditionBuilder)[]): {
+  build: () => Condition[];
+} {
+  const resolved = conditions.map((c) => (c instanceof ConditionBuilder ? c.build() : c));
+  return { build: () => resolved };
+}
+
+export class BasicManipulatorBuilder {
+  protected manipulator: BasicManipulator;
+
+  constructor(from: FromEvent) {
+    this.manipulator = {
+      type: 'basic',
+      from,
+    };
+  }
+
+  get [0](): BasicManipulator {
+    return this.manipulator;
+  }
+
+  get from(): FromEvent {
+    return this.manipulator.from;
+  }
+
+  to(event: string | ToEvent | (string | ToEvent)[], modifiers?: Modifier[]): this {
+    this.manipulator.to = this.manipulator.to || [];
+    const events = Array.isArray(event) ? event : [event];
+    for (const e of events) {
+      const norm = normalizeToEvent(e);
+      if (modifiers && modifiers.length > 0) {
+        norm.modifiers = modifiers;
+      }
+      this.manipulator.to.push(norm);
+    }
+    return this;
+  }
+
+  toIfAlone(event: string | ToEvent | (string | ToEvent)[]): this {
+    this.manipulator.to_if_alone = this.manipulator.to_if_alone || [];
+    const events = Array.isArray(event) ? event : [event];
+    for (const e of events) {
+      this.manipulator.to_if_alone.push(normalizeToEvent(e));
+    }
+    return this;
+  }
+
+  toIfHeldDown(event: string | ToEvent | (string | ToEvent)[]): this {
+    this.manipulator.to_if_held_down = this.manipulator.to_if_held_down || [];
+    const events = Array.isArray(event) ? event : [event];
+    for (const e of events) {
+      this.manipulator.to_if_held_down.push(normalizeToEvent(e));
+    }
+    return this;
+  }
+
+  toAfterKeyUp(event: string | ToEvent | (string | ToEvent)[]): this {
+    this.manipulator.to_after_key_up = this.manipulator.to_after_key_up || [];
+    const events = Array.isArray(event) ? event : [event];
+    for (const e of events) {
+      this.manipulator.to_after_key_up.push(normalizeToEvent(e));
+    }
+    return this;
+  }
+
+  toDelayedAction(invoked?: ToEvent | ToEvent[], canceled?: ToEvent | ToEvent[]): this {
+    const to_if_invoked = Array.isArray(invoked) ? invoked : invoked ? [invoked] : [];
+    const to_if_canceled = Array.isArray(canceled) ? canceled : canceled ? [canceled] : [];
+    this.manipulator.to_delayed_action = {
+      to_if_invoked,
+      to_if_canceled,
+    };
+    return this;
+  }
+
+  condition(...conditions: (Condition | ConditionBuilder)[]): this {
+    this.manipulator.conditions = this.manipulator.conditions || [];
+    for (const c of conditions) {
+      const cond = c instanceof ConditionBuilder ? c.build() : c;
+      this.manipulator.conditions.push(cond);
+    }
+    return this;
+  }
+
+  modifiers(mandatoryOrOpts?: any, optional?: any): this {
+    if (mandatoryOrOpts === 'optionalAny') {
+      this.manipulator.from.modifiers = {
+        ...this.manipulator.from.modifiers,
+        optional: ['any'],
+      };
+    } else if (mandatoryOrOpts || optional) {
+      const mods: FromModifiers = {};
+      if (mandatoryOrOpts) mods.mandatory = Array.isArray(mandatoryOrOpts) ? mandatoryOrOpts : [mandatoryOrOpts];
+      if (optional) mods.optional = Array.isArray(optional) ? optional : [optional];
+      this.manipulator.from.modifiers = mods;
+    }
+    return this;
+  }
+
+  description(desc: string): this {
+    this.manipulator.description = desc;
+    return this;
+  }
+
+  parameters(params: BasicParameters): this {
+    this.manipulator.parameters = { ...this.manipulator.parameters, ...params };
+    return this;
+  }
+
+  build(): Manipulator[] {
+    return [this.manipulator];
+  }
+
+  *[Symbol.iterator](): Iterator<BasicManipulator> {
+    yield this.manipulator;
+  }
+}
+
+export function map(
+  fromParam: string | FromEvent,
+  mandatoryModifiers?: Modifier[],
+  optionalModifiers?: Modifier[],
+): BasicManipulatorBuilder {
+  if (typeof fromParam === 'object' && fromParam !== null) {
+    return new BasicManipulatorBuilder(fromParam);
+  }
+  const from: FromEvent = {
+    key_code: fromParam,
+  };
+  if (mandatoryModifiers || optionalModifiers) {
+    from.modifiers = {
+      ...(mandatoryModifiers ? { mandatory: mandatoryModifiers } : {}),
+      ...(optionalModifiers ? { optional: optionalModifiers } : {}),
+    };
+  }
+  return new BasicManipulatorBuilder(from);
+}
+
+export function mapSimultaneous(
+  keys: (string | FromKeyType)[],
+  options?: SimultaneousOptions,
+  thresholdMs?: number,
+): BasicManipulatorBuilder {
+  const simKeys: FromKeyType[] = keys.map((k) => (typeof k === 'string' ? { key_code: k } : k));
+  const from: FromEvent = {
+    simultaneous: simKeys,
+    ...(options ? { simultaneous_options: options } : {}),
+  };
+  const builder = new BasicManipulatorBuilder(from);
+  if (thresholdMs !== undefined) {
+    builder.parameters({ 'basic.simultaneous_threshold_milliseconds': thresholdMs });
+  }
+  return builder;
+}

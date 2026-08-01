@@ -15,7 +15,8 @@
  * - CO_S: Command + Option + Shift
  */
 
-import { map, writeToProfile } from "karabiner.ts";
+import { map } from "./engine/karabiner-helpers";
+import { writeToProfile } from "./engine/profile-writer";
 import { readFileSync, renameSync, writeFileSync } from "node:fs";
 import {
   DEFAULT_GLOBAL_SETTINGS,

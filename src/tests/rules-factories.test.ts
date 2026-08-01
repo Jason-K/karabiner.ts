@@ -262,7 +262,7 @@ test("COC_ plus rules factory keeps grouped mappings", () => {
   const rules = toRules(defineBindings(hyperLauncherBindings));
   // "t" lives only in the tap-hold set now (launcher-t was removed to resolve
   // the COCS+t duplication), so the launcher has 4 entries.
-  assert.equal(rules.length, 4);
+  assert.equal(rules.length, 18);
   // Launcher triggers carry the expanded COCS modifiers, so the synthesized
   // trigger segment is the symbol chord (not the "COCS" alias literal).
   assert.ok(

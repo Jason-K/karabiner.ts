@@ -1,4 +1,4 @@
-import { type PointingButton } from "karabiner.ts";
+import type { PointingButton } from "../../types/karabiner";
 import { DEVICES } from "../registries/devices";
 import type { VarSpec } from "../primitives/vars";
 

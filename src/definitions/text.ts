@@ -11,8 +11,8 @@
  * and system commands.
  */
 
-import type { ToEvent } from "karabiner.ts";
-import { toKey } from "karabiner.ts";
+import type { ToEvent } from "../types/karabiner";
+import { toKey } from "../engine/karabiner-helpers";
 
 // Text manipulation helpers intended to emulate common IDE actions
 // in editors that lack them (e.g., Word, simple text areas).

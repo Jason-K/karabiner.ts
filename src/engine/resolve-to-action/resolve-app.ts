@@ -1,4 +1,4 @@
-import type { ToEvent } from "karabiner.ts";
+import type { ToEvent } from "../../types/karabiner";
 
 import type { AppTarget } from "../../data";
 import { PATHS } from "../../data/registries/paths";

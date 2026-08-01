@@ -1,4 +1,5 @@
-import { ifDevice, type Manipulator } from "karabiner.ts";
+import type { Manipulator } from "../../../types/karabiner";
+import { ifDevice } from "../../karabiner-helpers";
 import { DEVICES, type Condition, type Trigger } from "../../../data";
 
 import type { ResolvedCase } from "../../resolve-cases";

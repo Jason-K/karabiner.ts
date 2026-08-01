@@ -1,4 +1,4 @@
-import type { ToEvent } from "karabiner.ts";
+import type { ToEvent } from "../../types/karabiner";
 import type { Action, ActionSpec, Binding, Condition, Phase, Trigger } from "../../data";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
 import { getTriggerKeys, isPointerButton, resolveButton, resolveModifiers } from "../utils";

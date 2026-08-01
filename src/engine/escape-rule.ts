@@ -1,4 +1,4 @@
-import { map, rule, toKey, toSetVar, toStickyModifier } from "karabiner.ts";
+import { map, rule, toKey, toSetVar, toStickyModifier } from "./karabiner-helpers";
 import { formatRuleDescription } from "./resolve-description/rule-descriptions";
 
 export function generateEscapeRule(suppressionVars: string[] = []): any[] {

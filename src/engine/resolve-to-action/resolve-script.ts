@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import type { ToEvent } from "karabiner.ts";
+import type { ToEvent } from "../../types/karabiner";
 
 import { PATHS } from "../../data/registries/paths";
 import { normalizePathForShell, shellSingleQuote } from "../utils";

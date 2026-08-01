@@ -5,16 +5,13 @@
     "build": "tsx src/index.ts && hs -c \"hs.reload()\"",
     "typecheck": "tsc -p tsconfig.json",
     "test": "tsx --test src/*.test.ts src/**/*.test.ts",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run build",
-    "update": "npm update karabiner.ts",
+    "check": "npm run typecheck && npm run lint && npm run test",
     "lint": "eslint src --ignore-pattern docs --max-warnings=0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^20",
     "eslint": "^9.39.1",
-    "karabiner.ts": "^1.36.0",
-    "karabiner.ts-greg-mods": "latest",
     "tsx": "^4",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.47.0"

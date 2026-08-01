@@ -1,4 +1,4 @@
-import type { Rule } from "karabiner.ts";
+import type { Rule } from "../../types/karabiner";
 import type { ActionSpec, Binding, Case, SimOrder } from "../../data";
 import { defineBindings, resolveModifiers } from "../emit-manipulators/binding";
 

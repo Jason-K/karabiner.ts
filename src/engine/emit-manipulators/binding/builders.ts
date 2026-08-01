@@ -1,11 +1,5 @@
-import {
-  map,
-  toPointingButton,
-  toSetVar,
-  type FromEvent,
-  type Manipulator,
-  type PointingButton,
-} from "karabiner.ts";
+import type { FromEvent, Manipulator, PointingButton } from "../../../types/karabiner";
+import { map, toPointingButton, toSetVar } from "../../karabiner-helpers";
 import {
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
   TIMINGS,

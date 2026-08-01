@@ -8,7 +8,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { map, toSetVar } from "karabiner.ts";
+import { map, toSetVar } from "../engine/karabiner-helpers";
 import { ifVarExpr, toTrigger } from "../engine/resolve-to-action";
 
 const mapAny = map as unknown as (...args: any[]) => any;

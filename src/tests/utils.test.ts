@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import type { Manipulator } from "karabiner.ts";
+import type { Manipulator } from "../types/karabiner";
 import {
   ensurePathQuotingInCommand,
   ensurePathQuotingInManipulators,
