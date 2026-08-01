@@ -20,43 +20,25 @@ import type {
   ToVariable,
 } from "../types/karabiner";
 
+/** Accepted manipulator input: a built manipulator, a nested array of them, or
+ * an unbuilt {@link BasicManipulatorBuilder}. */
+export type ManipulatorInput =
+  | Manipulator
+  | BasicManipulatorBuilder
+  | ManipulatorInput[];
+
 export class RuleBuilder {
   description?: string;
   manipulatorsList: Manipulator[] = [];
 
-  constructor(description?: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]) {
+  constructor(description?: string, ...manipulators: ManipulatorInput[]) {
     this.description = description;
-    if (manipulators.length > 0) {
-      for (const m of manipulators) {
-        this.addManipulators(m);
-      }
+    for (const m of manipulators) {
+      this.addManipulators(m);
     }
-
-    return new Proxy(this, {
-      get: (target, prop, receiver) => {
-        if (prop === "ruleDescription") {
-          return target.description;
-        }
-        if (prop === "manipulatorSources" || prop === "manipulators") {
-          const method = (manipulators?: any) => {
-            if (manipulators !== undefined) {
-              target.addManipulators(manipulators);
-              return receiver;
-            }
-            return target.manipulatorsList;
-          };
-          return new Proxy(method, {
-            get: (_fnTarget, fnProp) => {
-              return Reflect.get(target.manipulatorsList, fnProp);
-            },
-          });
-        }
-        return Reflect.get(target, prop, receiver);
-      },
-    });
   }
 
-  public addManipulators(input: any): this {
+  public addManipulators(input: ManipulatorInput | undefined | null): this {
     if (!input) return this;
     if (input instanceof BasicManipulatorBuilder) {
       this.manipulatorsList.push(...input.build());
@@ -65,39 +47,35 @@ export class RuleBuilder {
         this.addManipulators(item);
       }
     } else {
-      this.manipulatorsList.push(input as Manipulator);
+      this.manipulatorsList.push(input);
     }
     return this;
   }
 
-  public manipulators(manipulators?: any): any {
-    if (manipulators !== undefined) {
-      this.addManipulators(manipulators);
-      return this;
-    }
-    return this.manipulatorsList;
+  /** Append manipulators to this rule. */
+  public manipulators(manipulators: ManipulatorInput): this {
+    return this.addManipulators(manipulators);
   }
 
-  public build(): Rule & { ruleDescription?: string; manipulatorSources: Manipulator[] } {
+  /**
+   * Produce the plain Karabiner `Rule`.
+   *
+   * Only schema fields are emitted — this object is serialized straight into
+   * the user's `karabiner.json`, so any extra key would be dead weight there.
+   */
+  public build(): Rule {
     return {
       description: this.description,
-      ruleDescription: this.description,
       manipulators: this.manipulatorsList,
-      manipulatorSources: this.manipulatorsList,
     };
   }
 
-  public toJSON(): Record<string, any> {
-    return {
-      description: this.description,
-      ruleDescription: this.description,
-      manipulators: this.manipulatorsList,
-      manipulatorSources: this.manipulatorsList,
-    };
+  public toJSON(): Rule {
+    return this.build();
   }
 }
 
-export function rule(description: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]): RuleBuilder {
+export function rule(description: string, ...manipulators: ManipulatorInput[]): RuleBuilder {
   return new RuleBuilder(description, ...manipulators);
 }
 

@@ -7,6 +7,7 @@ import {
   DEFAULT_TIMINGS,
 } from "../data";
 import { bind, defineBindings, from, hold, key, timing, to } from "../engine";
+import type { BasicManipulator } from "../types/karabiner";
 
 test("timing constants export expected defaults", () => {
   assert.equal(DEFAULT_GLOBAL_SETTINGS.check_for_updates_on_startup, true);
@@ -33,8 +34,7 @@ test("manipulators omit parameters when matching DEFAULT_TIMINGS defaults", () =
     to(hold(key("b"))),
   );
   const [rule] = defineBindings([defaultBinding]);
-  const built = (rule as any).build();
-  const manipulators = built.manipulators;
+  const manipulators = rule!.manipulators as BasicManipulator[];
 
   // Manipulators matching profile defaults should not have a parameters block
   assert.equal(manipulators[0].parameters, undefined);
@@ -47,8 +47,7 @@ test("manipulators include parameters when overriding DEFAULT_TIMINGS defaults",
     timing({ holdMs: 200 }),
   );
   const [rule] = defineBindings([customBinding]);
-  const built = (rule as any).build();
-  const manipulators = built.manipulators;
+  const manipulators = rule!.manipulators as BasicManipulator[];
 
   assert.deepEqual(manipulators[0].parameters, {
     "basic.to_if_held_down_threshold_milliseconds": 200,

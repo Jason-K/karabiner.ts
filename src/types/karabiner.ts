@@ -43,10 +43,17 @@ export type FromModifiers = {
   optional?: Modifier[] | ['any'];
 };
 
+/** Ordering restriction shared by `key_down_order` and `key_up_order`. */
+export type SimultaneousKeyOrder = 'insensitive' | 'strict' | 'strict_inverse';
+
+/**
+ * `from.simultaneous_options`.
+ * @see docs/karabiner_docs/complex-modifications-manipulator-definition/from/simultaneous-options
+ */
 export type SimultaneousOptions = {
-  detect_key_down_unbroken_sequence?: boolean;
-  key_down_order?: 'insensitive' | 'strict' | 'strict_inverse';
-  key_up_order?: 'insensitive' | 'strict' | 'loose';
+  detect_key_down_uninterruptedly?: boolean;
+  key_down_order?: SimultaneousKeyOrder;
+  key_up_order?: SimultaneousKeyOrder;
   key_up_when?: 'any' | 'all';
   to_after_key_up?: ToEvent[];
 };
@@ -197,7 +204,6 @@ export type BasicParameters = {
   'basic.to_if_held_down_threshold_milliseconds'?: number;
   'basic.to_delayed_action_delay_milliseconds'?: number;
   'basic.simultaneous_threshold_milliseconds'?: number;
-  'basic.simultaneous_threshold_milliseconds?'?: number;
 };
 
 export type BasicManipulator = {

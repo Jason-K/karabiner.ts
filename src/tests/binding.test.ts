@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID, PATHS } from "../data";
-import { buildManipulators, defineBindings, normalizeModifier, resolveCondition, resolveModifiers, triggerToFrom } from "../engine/emit-manipulators/binding";
+import { buildManipulators, defineBindings, normalizeModifier, resolveCondition, resolveModifiers, triggerToFrom } from "../engine/emit-manipulators/compile-binding";
 import type { Binding } from "../data";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
@@ -83,10 +83,10 @@ test("defineBindings remap: one press case -> single manipulator with to", () =>
   ]);
   assert.equal(rules.length, 1);
   // Plan returns BasicRuleBuilder cast as Rule (codebase convention); inspect builder
-  // fields directly rather than calling .build(), which would drop ruleDescription/manipulatorSources.
+  // fields directly rather than calling .build(), which would drop description/manipulators.
   const built = rules[0] as any;
-  assert.equal(built.ruleDescription, "[HOME]        →    Move to line start (on tap)");
-  const m = built.manipulatorSources[0];
+  assert.equal(built.description, "[HOME]        →    Move to line start (on tap)");
+  const m = built.manipulators[0];
   assert.deepEqual(m.from, { key_code: "home", modifiers: { optional: [] } });
   assert.deepEqual(m.to, [{ key_code: "left_arrow", modifiers: ["left_command"] }]);
 });
@@ -100,7 +100,7 @@ test("defineBindings remap: noop case -> manipulator with no `to` key", () => {
     },
   ]);
   const built = rules[0] as any;
-  const m = built.manipulatorSources[0];
+  const m = built.manipulators[0];
   assert.equal("to" in m, false, "noop must omit the `to` key");
 });
 
@@ -130,14 +130,14 @@ test("defineBindings tap-hold: unconditional tap + conditional holds -> no compe
   ]);
   const built = rules[0] as any;
   // Exactly the two conditional groups — no third, unconditional manipulator.
-  assert.equal(built.manipulatorSources.length, 2);
+  assert.equal(built.manipulators.length, 2);
   assert.equal(
-    built.manipulatorSources.filter((m: any) => !m.conditions?.length).length,
+    built.manipulators.filter((m: any) => !m.conditions?.length).length,
     0,
     "no manipulator may lack a condition",
   );
   // Every manipulator still passes the key through on tap.
-  for (const m of built.manipulatorSources) {
+  for (const m of built.manipulators) {
     assert.ok(
       m.to_if_alone.some((e: any) => e.key_code === "return_or_enter"),
       "tap must still emit return_or_enter",
@@ -159,7 +159,7 @@ test("defineBindings tap-hold: unconditional tap kept when paired with a conditi
     },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.manipulatorSources.length, 2);
+  assert.equal(built.manipulators.length, 2);
 });
 
 test("defineBindings remap: two press cases with different conditions -> two manipulators", () => {
@@ -174,7 +174,7 @@ test("defineBindings remap: two press cases with different conditions -> two man
     },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.manipulatorSources.length, 2);
+  assert.equal(built.manipulators.length, 2);
 });
 
 test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-through", () => {
@@ -187,7 +187,7 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
     },
   ]);
   const built = rules[0] as any;
-  const m = built.manipulatorSources[0];
+  const m = built.manipulators[0];
   // default-alone pass-through: the key itself with halt:true.
   // Note: karabiner.ts' toKey() helper always sets `modifiers: undefined` as an own
   // property (it gets dropped by JSON.stringify, so the live output is unaffected).
@@ -222,8 +222,8 @@ test("defineBindings multiTap: escape tap/hold/doubleTapHold -> 2 var-dance mani
   ]);
   const built = rules[0] as any;
   // varTapTapHold emits [secondTap, firstTap]
-  assert.equal(built.manipulatorSources.length, 2);
-  const first = built.manipulatorSources.find((m: any) => m.to_if_alone?.some((e: any) => e.key_code === "escape"));
+  assert.equal(built.manipulators.length, 2);
+  const first = built.manipulators.find((m: any) => m.to_if_alone?.some((e: any) => e.key_code === "escape"));
   assert.ok(first, "first tap carries the escape alone action");
 });
 
@@ -236,8 +236,8 @@ test("defineBindings auto-derives rule description + slice-label when descriptio
     },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.ruleDescription, "[X]:\n---\n\tOn Tap:\n\t\tIn A:\tEmit 'Y'");
-  assert.equal(built.manipulatorSources[0].description, "In A");
+  assert.equal(built.description, "[X]:\n---\n\tOn Tap:\n\t\tIn A:\tEmit 'Y'");
+  assert.equal(built.manipulators[0].description, "In A");
 });
 
 test("defineBindings auto-derived description omits slice-label when unconditional", () => {
@@ -245,15 +245,15 @@ test("defineBindings auto-derived description omits slice-label when uncondition
     { trigger: { keys: ["x"] }, cases: [{ phase: "press", do: [{ type: "key", key: "y" }] }] },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.ruleDescription, "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'Y'");
-  assert.equal("description" in built.manipulatorSources[0], false);
+  assert.equal(built.description, "[X]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'Y'");
+  assert.equal("description" in built.manipulators[0], false);
 });
 
 test("defineBindings: device-specific button alias auto-scopes via nameScope", () => {
   const rules = defineBindings([
     { trigger: { pointer: "shift_button" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
   ]);
-  const m = (rules[0] as any).manipulatorSources[0];
+  const m = (rules[0] as any).manipulators[0];
   const devCond = m.conditions?.find((c: any) => c.type === "device_if");
   assert.deepEqual(devCond?.identifiers, [{ product_id: 49305, vendor_id: 1133, is_pointing_device: true }]);
 });
@@ -262,7 +262,7 @@ test("defineBindings: global button alias adds no device condition", () => {
   const rules = defineBindings([
     { trigger: { pointer: "left" }, cases: [{ phase: "press", do: [{ type: "noop" }] }] },
   ]);
-  const m = (rules[0] as any).manipulatorSources[0];
+  const m = (rules[0] as any).manipulators[0];
   assert.equal(m.conditions?.some((c: any) => c.type === "device_if") ?? false, false);
 });
 
@@ -275,7 +275,7 @@ test("buildTapHold: whileHoldVar sets var on down + suppressCancelFallback empti
       cases: [{ phase: "release", do: [{ type: "key", key: "x" }] }],
     },
   ]);
-  const m = (rules[0] as any).manipulatorSources[0];
+  const m = (rules[0] as any).manipulators[0];
   assert.ok(m.to?.some((e: any) => e.set_variable?.name === "x_down"));
   assert.deepEqual(m.to_delayed_action?.to_if_canceled, []);
 });
@@ -319,7 +319,7 @@ test("defineBindings: trigger with optional modifier resolves correctly", () => 
       cases: [{ phase: "press", do: [{ type: "key", key: "tab" }] }],
     },
   ]);
-  const m = (rules[0] as any).manipulatorSources[0];
+  const m = (rules[0] as any).manipulators[0];
   assert.deepEqual(m.from.modifiers, { optional: ["left_shift"] });
 });
 
@@ -353,8 +353,8 @@ test("buildKeyTapHold: modWhileDown emits plain map().to().toIfAlone() (no delay
     },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.manipulatorSources.length, 1, "modWhileDown emits a single manipulator");
-  const m = built.manipulatorSources[0];
+  assert.equal(built.manipulators.length, 1, "modWhileDown emits a single manipulator");
+  const m = built.manipulators[0];
   // NO delayed action, NO held-down
   assert.equal("to_delayed_action" in m, false, "modWhileDown must not emit to_delayed_action");
   assert.equal("to_if_held_down" in m, false, "modWhileDown must not emit to_if_held_down");
@@ -386,8 +386,8 @@ test("buildGuard: double-tap guard emits two-manipulator arm/fire pattern", () =
     },
   ]);
   const built = rules[0] as any;
-  assert.equal(built.manipulatorSources.length, 2, "guard emits two manipulators");
-  const [secondPress, firstPress] = built.manipulatorSources;
+  assert.equal(built.manipulators.length, 2, "guard emits two manipulators");
+  const [secondPress, firstPress] = built.manipulators;
   // var name derived: guard_cmd_q
   const varName = "guard_cmd_q";
   // SECOND press: var=1, fires the real combo in `to`, resets var
@@ -427,7 +427,7 @@ test("buildGuard: guardVar/guardMs overrides flow through", () => {
     },
   ]);
   const built = rules[0] as any;
-  const [secondPress, firstPress] = built.manipulatorSources;
+  const [secondPress, firstPress] = built.manipulators;
   // override var name used on both manipulators
   assert.equal(secondPress.conditions[0].name, "custom_guard");
   assert.equal(firstPress.conditions[0].name, "custom_guard");
@@ -498,7 +498,7 @@ test("buildKeyTapHold: modWhileDown without whileHoldVar omits all var signaling
       ],
     },
   ]);
-  const m = (rules[0] as any).manipulatorSources[0];
+  const m = (rules[0] as any).manipulators[0];
   assert.equal("to_after_key_up" in m, false, "no whileHoldVar ⇒ no to_after_key_up");
   assert.equal(
     (m.to ?? []).some((e: any) => "set_variable" in e),
