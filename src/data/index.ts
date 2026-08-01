@@ -11,6 +11,8 @@ export type {
   Map,
   MapSpec,
   PathSpec,
+  ProfileSpec,
+  SimpleModificationPair,
   UrlSpec,
   VarSpec,
   VarValueSpec,
@@ -76,5 +78,6 @@ export {
 export { APP_ID, PW_IDS } from "./registries/apps";
 export { CMDS } from "./registries/commands";
 export { COMBOS, map, type ComboOpts, type HkInput } from "./registries/combos";
+export { PROFILES, getProfileSpec } from "./registries/profiles";
 export { HOME_DIR, PATHS } from "./registries/paths";
 export { URLS } from "./registries/urls";

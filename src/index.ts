@@ -25,6 +25,7 @@ import {
   PATHS,
   PREFERRED_PROFILE,
   DEFAULT_TIMINGS,
+  getProfileSpec,
 } from "./data";
 import {
   capsLockBindings,
@@ -145,16 +146,15 @@ if (canWriteProfile) {
   updateGlobalSettings(PATHS.configKarabiner.path);
 }
 
+const activeProfile = getProfileSpec(targetProfileName);
+
 // Write rules: use real profile locally, dry-run in CI/non-macOS
 writeToProfile(
   canWriteProfile ? targetProfileName : "--dry-run",
   rules,
   DEFAULT_TIMINGS,
   {
-    simple_modifications: [
-      map("left_control").to("fn"),
-      map("fn").to("left_control"),
-    ],
+    simple_modifications: activeProfile.simpleModifications as any[],
   },
 );
 

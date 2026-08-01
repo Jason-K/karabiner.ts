@@ -78,10 +78,21 @@ export class RuleBuilder {
     return this.manipulatorsList;
   }
 
-  public build(): Rule {
+  public build(): Rule & { ruleDescription?: string; manipulatorSources: Manipulator[] } {
     return {
       description: this.description,
+      ruleDescription: this.description,
       manipulators: this.manipulatorsList,
+      manipulatorSources: this.manipulatorsList,
+    };
+  }
+
+  public toJSON(): Record<string, any> {
+    return {
+      description: this.description,
+      ruleDescription: this.description,
+      manipulators: this.manipulatorsList,
+      manipulatorSources: this.manipulatorsList,
     };
   }
 }

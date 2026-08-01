@@ -16,4 +16,4 @@ export const tapHoldBindings: Binding[] = [
 ];
 
 export { simultaneousMappings } from "./simultaneous";
-export { NUMPAD_REMAPS } from "./simple-modifications";
+export { NUMPAD_REMAPS, SWAP_CTRL_FN } from "./simple-modifications";

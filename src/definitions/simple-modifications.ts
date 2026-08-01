@@ -22,3 +22,14 @@ export const NUMPAD_REMAPS = [
   { from: { key_code: "left_control" }, to: [{ key_code: "fn" }] },
   { from: { key_code: "fn" }, to: [{ key_code: "left_control" }] },
 ] as const;
+
+export const SWAP_CTRL_FN = [
+  {
+    from: { key_code: "fn" },
+    to: [{ key_code: "left_control" }],
+  },
+  {
+    from: { key_code: "left_control" },
+    to: [{ key_code: "fn" }],
+  },
+] as const;
