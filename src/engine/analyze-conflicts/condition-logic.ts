@@ -2,81 +2,18 @@
  * Condition-predicate reasoning for conflict analysis.
  *
  * Two rules that share an input domain only actually conflict when their
- * condition predicates can both hold at once. Both helpers here are deliberately
- * *conservative*: they answer "provably disjoint" and "provably implies", and
- * default to "don't know" (treated as a possible conflict / no implication)
- * rather than guessing. That keeps false negatives out of the disjointness test
- * and false positives out of the shadowing test.
+ * condition predicates can both hold at once. The per-kind rules for identity
+ * and contradiction live in the condition handler registry, so adding a
+ * condition type cannot silently weaken this analysis — the registry requires
+ * a `contradicts` implementation for every kind.
+ *
+ * Both helpers are deliberately conservative: they answer "provably disjoint"
+ * and "provably implies", defaulting to "don't know". That keeps false
+ * negatives out of the disjointness test and false positives out of shadowing.
  */
 
 import type { Condition } from "../../data";
-
-type AppCondition = Extract<Condition, { app: unknown }>;
-type VarCondition = Extract<Condition, { var: unknown }>;
-type DeviceCondition = Extract<Condition, { device: unknown }>;
-
-const isApp = (c: Condition): c is AppCondition => "app" in c;
-const isVar = (c: Condition): c is VarCondition => "var" in c;
-const isDevice = (c: Condition): c is DeviceCondition => "device" in c;
-
-/** Canonical key for an app condition's target set, ignoring polarity. */
-function appTargetKey(c: AppCondition): string {
-  const refs = Array.isArray(c.app) ? c.app : [c.app];
-  return refs
-    .map((ref) => {
-      if (typeof ref === "string") return ref;
-      const target = ref.type === "app" ? (ref.bundleId ?? ref.path) : ref.path;
-      return Array.isArray(target) ? [...target].sort().join(",") : String(target);
-    })
-    .sort()
-    .join("|");
-}
-
-/** Structural identity for a condition, used for the implication test. */
-export function conditionKey(c: Condition): string {
-  if (isApp(c)) return `app:${appTargetKey(c)}:${c.unless ? "unless" : "if"}`;
-  if (isVar(c)) {
-    return `var:${c.var.name}=${String(c.equals)}:${c.unless ? "unless" : "if"}`;
-  }
-  const d = c as DeviceCondition;
-  return `device:${d.device.vendor_id}:${d.device.product_id}:${d.unless ? "unless" : "if"}`;
-}
-
-/**
- * `true` when conditions `a` and `b` can never both hold.
- *
- * Recognised contradictions:
- * - same variable, different required values
- * - same variable and value, opposite polarity
- * - same application target, opposite polarity
- * - different devices required (one event has one source device)
- */
-function contradicts(a: Condition, b: Condition): boolean {
-  if (isVar(a) && isVar(b) && a.var.name === b.var.name) {
-    const sameValue = a.equals === b.equals;
-    const samePolarity = Boolean(a.unless) === Boolean(b.unless);
-    if (sameValue) return !samePolarity;
-    // Different values: contradictory only when both demand a specific value.
-    return samePolarity && !a.unless;
-  }
-
-  if (isApp(a) && isApp(b)) {
-    if (appTargetKey(a) !== appTargetKey(b)) {
-      // Two different apps cannot both be frontmost.
-      return !a.unless && !b.unless;
-    }
-    return Boolean(a.unless) !== Boolean(b.unless);
-  }
-
-  if (isDevice(a) && isDevice(b) && !a.unless && !b.unless) {
-    return (
-      a.device.vendor_id !== b.device.vendor_id ||
-      a.device.product_id !== b.device.product_id
-    );
-  }
-
-  return false;
-}
+import { conditionKey, conditionsContradict } from "../resolve-conditions";
 
 /** `true` when the two condition groups can never be satisfied simultaneously. */
 export function conditionsProvablyDisjoint(
@@ -85,7 +22,7 @@ export function conditionsProvablyDisjoint(
 ): boolean {
   for (const ca of a ?? []) {
     for (const cb of b ?? []) {
-      if (contradicts(ca, cb)) return true;
+      if (conditionsContradict(ca, cb)) return true;
     }
   }
   return false;

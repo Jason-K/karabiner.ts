@@ -8,20 +8,25 @@ import { PATHS } from "../../data/registries/paths";
 import { normalizePathForShell, shellSingleQuote } from "../utils";
 
 export function toCmd(shell: string): ToEvent {
-  return { shell_command: shell } as ToEvent;
+  return { shell_command: shell };
 }
 
+/**
+ * Send a datagram to a user-provided UNIX socket server. Lower latency than
+ * `toCmd`, which has to spawn a shell.
+ */
 export function toUserCommand(payload: unknown, endpoint?: string): ToEvent {
   return {
     send_user_command: {
       payload,
-      endpoint,
+      ...(endpoint ? { endpoint } : {}),
     },
-  } as unknown as ToEvent;
+  };
 }
 
+/** Re-emit the triggering event unchanged (`to.from_event`). */
 export function toTrigger(): ToEvent {
-  return { from_event: true } as unknown as ToEvent;
+  return { from_event: true };
 }
 
 const ENABLE_LAYER_INDICATOR_USER_COMMAND = true;

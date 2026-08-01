@@ -88,21 +88,6 @@ export {
   resolveModComboAlias,
 } from "../utils";
 
-export function expandModifiers(modifiers: string[]): string[] {
-  const expanded: string[] = [];
-  const seen = new Set<string>();
-  for (const mod of modifiers) {
-    for (const raw of resolveModComboAlias(mod) ?? [mod]) {
-      const m = resolveKeyAlias(raw);
-      if (!seen.has(m)) {
-        seen.add(m);
-        expanded.push(m);
-      }
-    }
-  }
-  return expanded;
-}
-
 export {
   ensurePathQuoting,
   ensurePathQuotingInCommand,

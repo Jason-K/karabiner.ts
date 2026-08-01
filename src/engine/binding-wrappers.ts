@@ -7,6 +7,7 @@ import type {
   TriggerModifiers,
 } from "../data";
 import type { WhenWrapper } from "./condition-wrappers";
+import { conditionKind } from "./resolve-conditions";
 import { from, type FromInput, triggerKeys, triggerPointer } from "./from-action-wrappers";
 import { CaseBuilder, type ToWrapper } from "./to-action-wrappers";
 
@@ -40,12 +41,14 @@ function isCase(val: any): boolean {
   );
 }
 
-function isCondition(val: any): boolean {
-  return (
-    typeof val === "object" &&
-    val !== null &&
-    ("app" in val || "var" in val || "device" in val)
-  );
+function isCondition(val: unknown): val is Condition {
+  if (typeof val !== "object" || val === null) return false;
+  try {
+    conditionKind(val as Condition);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function isTriggerModifiers(val: any): val is TriggerModifiers {

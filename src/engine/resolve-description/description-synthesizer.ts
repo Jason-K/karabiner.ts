@@ -1,99 +1,18 @@
 import type { ToEvent } from "../../types/karabiner";
-import type { Action, ActionSpec, Binding, Condition, Phase, Trigger } from "../../data";
+import type { Action, Binding, Condition, Phase, Trigger } from "../../data";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
-import { getTriggerKeys, isPointerButton, resolveButton, resolveModifiers } from "../utils";
-import { expandModifiers } from "../resolve-to-action";
+import {
+  expandModifiers,
+  getTriggerKeys,
+  isPointerButton,
+  resolveButton,
+  resolveModifiers,
+} from "../utils";
+import { describeAction, isActionSpec } from "../resolve-to-action/action-handlers";
+import { describeCondition } from "../resolve-conditions";
 
+export { describeAction };
 
-/** Append ` | actionDesc` when the action carries a nuance label. */
-function withActionDesc(base: string, actionDesc?: string): string {
-  return actionDesc ? `${base} | ${actionDesc}` : base;
-}
-
-function describeKeyAction(action: Extract<ActionSpec, { type: "key" }>): string {
-  const keyLabel = keyTokenToLabel(action.key);
-  const mods = action.modifiers?.length
-    ? expandModifiers(action.modifiers as string[]).map(modifierTokenToSymbols).join("")
-    : "";
-  return mods ? `Emit ${mods} + '${keyLabel}'` : `Emit '${keyLabel}'`;
-}
-
-/** Single-line human description for one action (spec §5 templates). */
-export function describeAction(action: ActionSpec): string {
-  switch (action.type) {
-    case "app": {
-      const verb =
-        action.mode === "shell" ? "open-shell" : "open";
-      const label = typeof action.ref === "string" ? action.ref : action.ref.refDesc;
-      return withActionDesc(`${verb} ${label}`, action.actionDesc);
-    }
-    case "appHistory":
-      return `Go back ${action.index} apps`;
-    case "folder":
-      return withActionDesc(`open '${action.ref.refDesc}'`, action.actionDesc);
-    case "command":
-      return withActionDesc(`Run command '${action.ref.refDesc}'`, action.actionDesc);
-    case "actHere":
-      return `Context action: ${action.action}`;
-    case "caseChange":
-      return `Change case to ${action.operation}`;
-    case "wrapString":
-      return `Wrap selection in ${action.operation}`;
-    case "key":
-      return withActionDesc(describeKeyAction(action), action.actionDesc);
-    case "button":
-      return withActionDesc(`Click button '${action.button}'`, action.actionDesc);
-    case "map": {
-      const descName =
-        typeof action.ref === "string"
-          ? action.ref
-          : action.ref?.refDesc ?? action.ref?.keyCode;
-      return withActionDesc(`map '${descName}'`, action.actionDesc);
-    }
-    case "url": {
-      const url = action.url;
-      if (typeof url === "string") {
-        return withActionDesc(`Open '${url}'`, action.actionDesc);
-      }
-      const isCleanShot =
-        url.category === "cleanshot" || url.url.startsWith("cleanshot://");
-      const isRaycast =
-        url.category === "raycast" || url.url.startsWith("raycast-x://extensions/");
-
-      const base = isCleanShot
-        ? `${url.refDesc} using CSX`
-        : isRaycast
-          ? `Call '${url.refDesc}'`
-          : `Open '${url.refDesc}'`;
-      return withActionDesc(base, action.actionDesc);
-    }
-    case "shell":
-      return withActionDesc(
-        `Run '${typeof action.command === "string" ? action.command : action.command.refDesc}'`,
-        action.actionDesc,
-      );
-    case "python":
-      return withActionDesc(`Run python '${action.scriptPath}'`, action.actionDesc);
-    case "osascript":
-      return withActionDesc(`Run osascript '${action.scriptPath}'`, action.actionDesc);
-    case "cut":
-      return "Cut selection";
-    case "copy":
-      return "Copy selection";
-    case "paste":
-      return "Paste selection";
-    case "noop":
-      return "No operation";
-    case "sequence":
-      return action.actions.map(describeAction).join(" then ");
-    case "setVar":
-      return `Set ${action.var.varDesc}`;
-    default: {
-      const _exhaustive: never = action;
-      return _exhaustive;
-    }
-  }
-}
 
 /** Describe a raw Karabiner `ToEvent` passed through verbatim in `do` (mouse
  * mappings). Best-effort labels by event shape; never throws. */
@@ -122,65 +41,15 @@ function describeToEvent(event: ToEvent): string {
   return "Raw event";
 }
 
-const ACTION_SPEC_TYPES = new Set([
-  "app",
-  "appHistory",
-  "folder",
-  "command",
-  "actHere",
-  "button",
-  "caseChange",
-  "wrapString",
-  "key",
-  "map",
-  "url",
-  "shell",
-  "python",
-  "osascript",
-  "cut",
-  "copy",
-  "paste",
-  "noop",
-  "setVar",
-  "sequence",
-]);
-
-function isActionSpec(action: Action): action is ActionSpec {
-  return (
-    typeof action === "object" &&
-    action !== null &&
-    "type" in action &&
-    ACTION_SPEC_TYPES.has((action as any).type)
-  );
-}
-
 /** Describe a `do` entry that may be a typed ActionSpec or a raw ToEvent. */
 function describeDoAction(action: Action): string {
   return isActionSpec(action) ? describeAction(action) : describeToEvent(action);
 }
 
-type AppCondition = Extract<Condition, { app: unknown }>;
-type VarCondition = Extract<Condition, { var: unknown }>;
-
-function describeAppCondition(app: AppCondition["app"], unless?: boolean): string {
-  const refs = Array.isArray(app) ? app : [app];
-  const names = refs.map((r) => (typeof r === "string" ? r : r.refDesc)).join("/");
-  return unless ? `Outside ${names}` : `In ${names}`;
-}
-
 /** Human label for one condition group (spec §6). Empty group -> "Always". */
 export function describeConditionGroup(conditions: Condition[] | undefined): string {
   if (!conditions?.length) return "Always";
-  const parts = conditions.map((c) => {
-    if ("app" in c) return describeAppCondition(c.app, c.unless);
-    if ("var" in c) {
-      const v: VarCondition = c;
-      return v.unless ? `not ${v.var.varDesc}` : v.var.varDesc;
-    }
-    const d = c as Extract<Condition, { device: unknown }>;
-    return d.unless ? `not on ${d.device.deviceDesc}` : `on ${d.device.deviceDesc}`;
-  });
-  return parts.join(" and ");
+  return conditions.map(describeCondition).join(" and ");
 }
 
 /**
