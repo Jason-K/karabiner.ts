@@ -17,8 +17,9 @@ import {
   tapHoldBindings,
 } from "./definitions";
 import type { Binding } from "./data";
-import type { DeviceConfig } from "./engine";
+import type { AnalysisReport, DeviceConfig } from "./engine";
 import {
+  assertNoConflicts,
   buildDeviceConfig,
   defineBindings,
   generateSimultaneousRules,
@@ -47,10 +48,20 @@ export const DEVICE_CONFIGS: DeviceConfig[] = [
   buildDeviceConfig(DEVICES.g502X),
 ];
 
-/** Compile every binding set into the final ordered rule list. */
-export function buildRules(): Rule[] {
-  return [
+/**
+ * Compile every binding set into the final ordered rule list.
+ *
+ * Conflict analysis runs first and throws on any rule that a preceding rule
+ * makes unreachable, so an unfireable binding fails the build rather than
+ * sitting silently dead in the config.
+ *
+ * @throws {import('./engine').RuleConflictError} on unreachable rules.
+ */
+export function buildRules(): { rules: Rule[]; analysis: AnalysisReport } {
+  const analysis = assertNoConflicts(BINDING_SETS);
+  const rules = [
     ...generateSimultaneousRules(simultaneousMappings, tapHoldBindings),
     ...BINDING_SETS.flatMap(({ bindings }) => defineBindings(bindings)),
   ];
+  return { rules, analysis };
 }

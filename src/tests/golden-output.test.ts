@@ -29,7 +29,7 @@ function serialize(rules: Rule[]): string {
 }
 
 test("compiled rules match the committed karabiner-output.json golden file", () => {
-  const actual = serialize(buildRules());
+  const actual = serialize(buildRules().rules);
 
   if (process.env.UPDATE_GOLDEN) {
     writeFileSync(GOLDEN_PATH, actual);

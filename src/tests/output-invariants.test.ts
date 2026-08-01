@@ -12,7 +12,7 @@ import type { BasicManipulator, Manipulator, Rule } from "../types/karabiner";
  * specific rules exist belong in the golden file, not here.
  */
 
-const rules: Rule[] = buildRules();
+const { rules } = buildRules();
 
 function allManipulators(): Array<{ rule: Rule; manipulator: Manipulator }> {
   return rules.flatMap((rule) =>

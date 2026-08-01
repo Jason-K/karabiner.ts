@@ -1,5 +1,6 @@
 // Compiler internals & DSL primitives
 
+export * from "./analyze-conflicts";
 export * from "./config-writer";
 export * from "./utils";
 export * from "./resolve-to-action";

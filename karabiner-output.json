@@ -6225,31 +6225,6 @@
             }
           }
         ]
-      },
-      {
-        "description": "[⌘]+[D]:\n---\n\tOn Tap:\n\t\tIn Antinote:\tNo operation",
-        "manipulators": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "d",
-              "modifiers": {
-                "mandatory": [
-                  "left_command"
-                ]
-              }
-            },
-            "description": "In Antinote",
-            "conditions": [
-              {
-                "type": "frontmost_application_if",
-                "bundle_identifiers": [
-                  "com.chabomakers.Antinote"
-                ]
-              }
-            ]
-          }
-        ]
       }
     ]
   }

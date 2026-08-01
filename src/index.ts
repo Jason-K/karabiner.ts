@@ -31,9 +31,8 @@ import {
   resolveProfileName,
   writeKarabinerConfig,
 } from "./engine";
-import type { Rule } from "./types/karabiner";
 
-const rules: Rule[] = buildRules();
+const { rules, analysis } = buildRules();
 
 // ============================================================================
 // WRITE
@@ -45,7 +44,15 @@ const dryRun = !isDarwin || isCI;
 
 const configPath = PATHS.configKarabiner.path;
 
+function reportConflictWarnings(): void {
+  for (const warning of analysis.warnings) {
+    console.warn(`⚠ [${warning.kind}] ${warning.message}`);
+  }
+}
+
 function main(): void {
+  reportConflictWarnings();
+
   // One read of karabiner.json for the whole build; one atomic write back.
   const config = dryRun ? undefined : readKarabinerConfig(configPath);
 
