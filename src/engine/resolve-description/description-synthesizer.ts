@@ -1,9 +1,9 @@
 import type { ToEvent } from "karabiner.ts";
-import type { Action, ActionSpec } from "../../data";
+import type { Action, ActionSpec, Binding, Condition, Phase, Trigger } from "../../data";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./rule-descriptions";
-import { isPointerButton, resolveButton } from "../utils";
+import { getTriggerKeys, isPointerButton, resolveButton, resolveModifiers } from "../utils";
 import { expandModifiers } from "../resolve-to-action";
-import { getTriggerKeys, resolveModifiers, type Binding, type Condition, type Phase, type Trigger } from "../emit-modifiers/binding";
+
 
 /** Append ` | actionDesc` when the action carries a nuance label. */
 function withActionDesc(base: string, actionDesc?: string): string {

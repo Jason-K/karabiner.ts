@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APP_ID, PATHS } from "../data";
-import { normalizeModifier, resolveCondition, triggerToFrom, resolveModifiers } from "../engine/emit-modifiers/binding";
+import { buildManipulators, defineBindings, normalizeModifier, resolveCondition, resolveModifiers, triggerToFrom } from "../engine/emit-manipulators/binding";
+import type { Binding } from "../data";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
@@ -66,8 +67,6 @@ test("triggerToFrom simultaneous chord", () => {
   assert.deepEqual(from.simultaneous, [{ key_code: "j" }, { key_code: "k" }]);
   assert.deepEqual(from.modifiers, { optional: ["any"] });
 });
-
-import { defineBindings } from "../engine/emit-modifiers/binding";
 
 test("defineBindings remap: one press case -> single manipulator with to", () => {
   const rules = defineBindings([
@@ -327,12 +326,12 @@ test("defineBindings: trigger with optional modifier resolves correctly", () => 
 test("Binding type accepts modWhileDown option", () => {
   // Type-level check: modWhileDown is an accepted Binding field. Compiles only
   // if the flag exists on the type. Default-omitted binding must still typecheck.
-  const withFlag: import("../engine/emit-modifiers/binding").Binding = {
+  const withFlag: Binding = {
     trigger: { keys: ["caps_lock"] },
     modWhileDown: true,
     cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
   };
-  const withoutFlag: import("../engine/emit-modifiers/binding").Binding = {
+  const withoutFlag: Binding = {
     trigger: { keys: ["caps_lock"] },
     cases: [{ phase: "press", do: [{ type: "key", key: "left_command" }] }],
   };
@@ -509,5 +508,18 @@ test("buildKeyTapHold: modWhileDown without whileHoldVar omits all var signaling
   // held modifier (press) + tap combo (release) still present
   assert.equal(m.to[0].key_code, "f16");
   assert.equal(m.to_if_alone[0].key_code, "f17");
+});
+
+test("manipulator generation resolves R.cmd and L.cmd to right_command and left_command", () => {
+  const manips = buildManipulators({
+    trigger: { keys: ["R.cmd"] },
+    cases: [
+      { phase: "press", do: [{ type: "key", key: "c", modifiers: ["L.cmd"] }] },
+    ],
+  });
+  const m = manips[0] as any;
+  assert.equal(m.from.key_code, "right_command");
+  assert.equal(m.to[0].key_code, "c");
+  assert.deepEqual(m.to[0].modifiers, ["left_command"]);
 });
 

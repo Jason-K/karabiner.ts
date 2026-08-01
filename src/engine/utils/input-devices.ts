@@ -1,5 +1,11 @@
+import type { Trigger } from "../../data";
 import { buttons, defaultButtonNames, type ButtonSpec } from "../../data/constants/mouse";
-import { getTriggerKeys, resolveModifiers, type Trigger } from "../emit-modifiers/binding";
+import { resolveModifiers } from "./modifier-utils";
+
+export function getTriggerKeys(trigger: Trigger): string[] {
+  return "keys" in trigger ? trigger.keys : [trigger.pointer];
+}
+
 
 /**
  * Generate a deterministic signature string for an I/O trigger or action chord.

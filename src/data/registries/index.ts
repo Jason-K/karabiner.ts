@@ -3,36 +3,20 @@ export { CMDS } from "./commands";
 export { COMBOS, map, type ComboOpts, type HkInput } from "./combos";
 export { DEVICES } from "./devices";
 export {
-  MODIFIER_KEY_CODES,
+  MODKEY_CODES,
   VMOD,
-  type ArrowKeyAlias,
-  type ArrowKeyCode,
-  type ConsumerKeyCode,
-  type ControlOrSymbolKeyAlias,
-  type ControlOrSymbolKeyCode,
-  type FromAndToConsumerKeyCode,
-  type FromAndToKeyCode,
-  type FromConsumerKeyCode,
-  type FromKeyCode,
-  type FromKeyType,
-  type FromOnlyConsumerKeyCode,
-  type FromOnlyKeyCode,
-  type FunctionKeyCode,
   type KeyCode,
-  type KeypadKeyCode,
-  type LetterKeyCode,
   type ModComboAlias,
   type ModKey,
-  type ModifierKeyAlias,
-  type ModifierKeyCode,
-  type NumberKeyCode,
-  type OtherKeyCode,
-  type PcKeyboardKeyCode,
-  type PointingButton,
-  type StickyModifierKeyCode,
-  type ToOnlyConsumerKeyCode,
-  type ToOnlyKeyCode,
-} from "./keys-and-buttons";
+  type StandardKeyCode,
+} from "../constants/keys";
+export {
+  buttons,
+  defaultButtonNames,
+  type ButtonSpec,
+  type KnownPointerButton,
+  type PointerButtonAlias,
+} from "../constants/mouse";
 export { HOME_DIR, PATHS } from "./paths";
 export { URLS } from "./urls";
 export { KE_VARS, KE_VAR_VALUES, mouseVars } from "./vars";

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { singleKeyTapHoldBindings } from "../definitions/single-key";
-import { defineBindings } from "../engine/emit-modifiers/binding";
+import { defineBindings } from "../engine";
 
 const RAYCAST_CLIPBOARD_HISTORY_URL =
   "raycast-x://extensions/raycast/clipboard-history/clipboard-history";

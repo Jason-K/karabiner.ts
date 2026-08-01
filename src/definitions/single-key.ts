@@ -26,12 +26,12 @@ import {
 
 const numBindings: Binding[] = [
   bind(from("8"), to(hold(openApp(APP_ID.ringCentral)))),
-  bind(from("keypad_0"), to(hold(openUrl(URLS.rectWinsUnstashAll, true)))),
-  bind(from("keypad_2"), to(hold(openUrl(URLS.rectWinStashDown, true)))),
-  bind(from("keypad_4"), to(hold(openUrl(URLS.rectWinStashLeft, true)))),
-  bind(from("keypad_5"), to(hold(openUrl(URLS.rectWinsUnstash, true)))),
-  bind(from("keypad_6"), to(hold(openUrl(URLS.rectWinStashRight, true)))),
-  bind(from("keypad_8"), to(hold(openUrl(URLS.rectWinStashUp, true)))),
+  bind(from("keypad_0"), to(hold(openUrl(URLS.winsUnstashAll, true)))),
+  bind(from("keypad_2"), to(hold(openUrl(URLS.winStashDown, true)))),
+  bind(from("keypad_4"), to(hold(openUrl(URLS.winStashLeft, true)))),
+  bind(from("keypad_5"), to(hold(openUrl(URLS.winsUnstash, true)))),
+  bind(from("keypad_6"), to(hold(openUrl(URLS.winStashRight, true)))),
+  bind(from("keypad_8"), to(hold(openUrl(URLS.winStashUp, true)))),
 ];
 
 const letterBindings: Binding[] = [
@@ -47,7 +47,7 @@ const letterBindings: Binding[] = [
   bind(from("o"), to(hold(openUrl(URLS.csxOcrNoLinebreaks)))),
   bind(from("p"), to(hold(map(COMBOS.showPopclip)))),
   bind(from("q"), to(hold(openApp(APP_ID.qspace)))),
-  bind(from("r"), to(hold(shell(CMDS.rayGetRecents)))),
+  bind(from("r"), to(hold(shell(CMDS.getRecentRaycast)))),
   bind(from("s"), to(hold(openUrl(URLS.csxCaptureArea)))),
   bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxCaptureWindow)))),
   bind(from("t"), to(hold(map(COMBOS.showKittyQuakeTerm)))),

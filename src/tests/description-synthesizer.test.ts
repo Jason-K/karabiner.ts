@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID, CMDS, PATHS, URLS, type ActionSpec } from "../data";
-import type { Binding } from "../engine/emit-modifiers/binding";
+import { APP_ID, CMDS, PATHS, URLS, type ActionSpec, type Binding } from "../data";
 import {
   describeAction,
   describeConditionGroup,
@@ -52,12 +51,12 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Capture area using CSX",
   );
   assert.equal(
-    describeAction({ type: "command", ref: CMDS.fillPassword }),
+    describeAction({ type: "command", ref: CMDS.fillPw }),
     "Run command 'Fill password'",
   );
   // shell accepts a CommandRef too — describes via refDesc (not the raw command).
   assert.equal(
-    describeAction({ type: "shell", command: CMDS.fillPassword }),
+    describeAction({ type: "shell", command: CMDS.fillPw }),
     "Run 'Fill password'",
   );
   assert.equal(

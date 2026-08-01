@@ -1,6 +1,12 @@
 import type { Modifier } from "karabiner.ts";
 import type { AppSpec, Map, MapSpec, PathSpec } from "../../data";
 import { VMOD, type ModComboAlias } from "../../data/constants/keys";
+import {
+  getModComboAliasCanonicalKey,
+  isModComboAlias,
+  resolveKeyAlias,
+  resolveModComboAlias,
+} from "../utils";
 
 export type ComboOpts = {
   app?: AppSpec | PathSpec | string;
@@ -76,33 +82,18 @@ export function mapSpec(
   };
 }
 
-const VMOD_ALIAS_LOWER = new Map<string, ModComboAlias>(
-  Object.keys(VMOD).map((key) => [
-    key.toLowerCase(),
-    key as ModComboAlias,
-  ]),
-);
-
-export function getModComboAliasCanonicalKey(
-  alias: string,
-): ModComboAlias | undefined {
-  return VMOD_ALIAS_LOWER.get(alias.toLowerCase());
-}
-
-export function resolveModComboAlias(alias: string): Modifier[] | undefined {
-  const canonical = getModComboAliasCanonicalKey(alias);
-  return canonical ? [...VMOD[canonical]] : undefined;
-}
-
-export function isModComboAlias(alias: string): boolean {
-  return Boolean(getModComboAliasCanonicalKey(alias));
-}
+export {
+  getModComboAliasCanonicalKey,
+  isModComboAlias,
+  resolveModComboAlias,
+} from "../utils";
 
 export function expandModifiers(modifiers: string[]): string[] {
   const expanded: string[] = [];
   const seen = new Set<string>();
   for (const mod of modifiers) {
-    for (const m of resolveModComboAlias(mod) ?? [mod]) {
+    for (const raw of resolveModComboAlias(mod) ?? [mod]) {
+      const m = resolveKeyAlias(raw);
       if (!seen.has(m)) {
         seen.add(m);
         expanded.push(m);

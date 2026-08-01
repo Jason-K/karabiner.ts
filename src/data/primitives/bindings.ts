@@ -1,0 +1,153 @@
+import type { Action, ActionSpec } from "./actions";
+import type { AppSpec } from "./apps";
+import type { DeviceSpec } from "./devices";
+import type { PathSpec } from "./paths";
+import type { VarSpec } from "./vars";
+
+/**
+ * When in the key lifecycle the case's action fires.
+ * Maps directly to a Karabiner output event channel (`to`, `to_if_alone`, `to_after_key_up`).
+ */
+export type Phase = "press" | "release" | "hold";
+
+/**
+ * External state condition specification.
+ * Evaluates external context (frontmost app, variable state, or hardware device) before triggering.
+ *
+ * @example
+ * ```ts
+ * const appCond: Condition = { app: "com.apple.finder" };
+ * const varCond: Condition = { var: mouseVars.rightButtonPressed, equals: 1 };
+ * ```
+ */
+export type Condition =
+  | {
+      /** Application bundle ID or path condition. */
+      app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[];
+      /** If true, condition evaluates to true when application is NOT frontmost. */
+      unless?: boolean;
+      /** Optional description override. */
+      description?: string;
+    }
+  | {
+      /** Karabiner state variable condition. */
+      var: VarSpec;
+      /** Target value required for variable match. */
+      equals: string | number | boolean;
+      /** If true, condition evaluates to true when variable value does NOT match. */
+      unless?: boolean;
+      /** Optional description override. */
+      description?: string;
+    }
+  | {
+      /** Input hardware device condition. */
+      device: DeviceSpec;
+      /** If true, condition evaluates to true when input is NOT from specified device. */
+      unless?: boolean;
+      /** Optional description override. */
+      description?: string;
+    };
+
+/**
+ * Simultaneous key chord order requirements and uninterrupted detection settings.
+ */
+export type SimOrder = {
+  /** Enforcement mode for key press down order (`"insensitive"`, `"strict"`, `"strict_inverse"`). */
+  down?: "insensitive" | "strict" | "strict_inverse";
+  /** Enforcement mode for key release up order. */
+  up?: "insensitive" | "strict" | "strict_inverse";
+  /** Key release criteria (`"any"` or `"all"`). */
+  upWhen?: "any" | "all";
+  /** Require uninterrupted key sequence. */
+  detectUninterrupted?: boolean;
+};
+
+/**
+ * Trigger modifier key specification: array of modifier names or object specifying mandatory/optional modifiers.
+ */
+export type TriggerModifiers =
+  | string[]
+  | { mandatory?: string[]; optional?: string[] };
+
+/**
+ * Trigger input specification representing what key or mouse button was pressed.
+ * 1 key = single key trigger; 2+ keys = simultaneous chord trigger.
+ */
+export type Trigger =
+  | { keys: string[]; modifiers?: TriggerModifiers; order?: SimOrder }
+  | { pointer: string; modifiers?: TriggerModifiers };
+
+/**
+ * One (state + timing) -> action pairing within a binding rule.
+ */
+export type Case = {
+  /** Tap count requirement (default 1; 2 = double-tap, 3 = triple-tap). */
+  tapCount?: number;
+  /** Key lifecycle phase (`"press"`, `"release"`, `"hold"`). Default is `"press"`. */
+  phase?: Phase;
+  /** Conditions specific to this case. */
+  conditions?: Condition[];
+  /** Array of actions to execute when case matches. */
+  do: Action[];
+  /** Optional action fragment description line verbatim. */
+  description?: string;
+  /** Suppress trigger fallback (emit only explicit `do` actions). */
+  suppress?: boolean;
+  /** Multi-tap: route tap1 release as a delayed single tap instead of immediate. */
+  delayed?: boolean;
+  /** Double-tap guard: require two presses within timeout before firing. */
+  guard?: boolean;
+};
+
+/**
+ * Complete Karabiner binding specification.
+ * One `Binding` object represents one rule definition.
+ *
+ * @example
+ * ```ts
+ * const myBinding: Binding = {
+ *   trigger: { keys: ["a"], modifiers: ["command"] },
+ *   cases: [{ phase: "press", do: [{ type: "copy" }] }],
+ * };
+ * ```
+ */
+export type Binding = {
+  /** Rule description label (auto-derived by synthesizer if absent). */
+  description?: string;
+  /** Input trigger specification. */
+  trigger: Trigger;
+  /** Timing configuration parameters (ms). */
+  timing?: {
+    aloneMs?: number;
+    holdMs?: number;
+    heldThresholdMs?: number;
+    delayedMs?: number;
+    simultaneousMs?: number;
+  };
+  /** Hoisted conditions applied to all cases within this binding. */
+  conditions?: Condition[];
+  /** Array of case pairings defining rule behavior across key phases and states. */
+  cases: Case[];
+  /** Event processing options (halt on match, repeat on hold). */
+  eventOptions?: { halt?: boolean; repeat?: boolean };
+  /** Multi-tap configuration settings. */
+  multiTap?: {
+    allowPassThrough?: boolean;
+    mods?: string[];
+    firstTapPendingVar?: VarSpec;
+  };
+  /** Actions executed after key release (`to_after_key_up`). */
+  afterKeyUp?: ActionSpec[];
+  /** Tap-hold signaling variable set to 1 while key is held down and 0 on key release. */
+  whileHoldVar?: VarSpec;
+  /** Suppress trigger fallback across binding. */
+  suppress?: boolean;
+  /** Clear `to_if_canceled` fallback channel. */
+  suppressCancelFallback?: boolean;
+  /** Assert modifier while key is held down without hold threshold delay. */
+  modWhileDown?: boolean;
+  /** Variable name override for double-tap guard protection. */
+  guardVar?: string;
+  /** Timeout for double-tap guard protection in milliseconds. */
+  guardMs?: number;
+};

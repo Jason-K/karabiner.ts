@@ -6,7 +6,7 @@ import {
   expandDeviceConfigs,
   getDeviceKey,
   karabinerDeviceId,
-} from "../engine/resolve-from-action/device-config";
+} from "../engine/resolve-trigger/device-config";
 
 test("karabinerDeviceId extracts vendor, product, and device type flags", () => {
   const keyboardId = karabinerDeviceId(DEVICES.appleNumericKeypad);

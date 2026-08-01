@@ -6,8 +6,7 @@ import {
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
   DEFAULT_TIMINGS,
 } from "../data";
-import { bind, from, hold, key, timing, to } from "../engine";
-import { defineBindings } from "../engine/emit-modifiers/binding";
+import { bind, defineBindings, from, hold, key, timing, to } from "../engine";
 
 test("timing constants export expected defaults", () => {
   assert.equal(DEFAULT_GLOBAL_SETTINGS.check_for_updates_on_startup, true);

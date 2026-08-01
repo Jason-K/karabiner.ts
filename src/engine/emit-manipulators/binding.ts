@@ -1,0 +1,75 @@
+import { rule, type Manipulator, type Rule } from "karabiner.ts";
+import type { Binding } from "../../data";
+
+import {
+  distributeUnconditionalTap,
+  groupByConditions,
+  resolveCases,
+} from "../resolve-cases";
+import { synthesizeRuleDescription } from "../resolve-description/description-synthesizer";
+import { fromModifiersObj, triggerToFrom } from "../resolve-trigger";
+import { getTriggerKeys, isPointerButton } from "../utils";
+
+import {
+  buildGuard,
+  buildMultiTap,
+  buildRemap,
+  buildSimultaneousTapHold,
+  buildTapHold,
+  stampDeviceScope,
+} from "./binding/index";
+
+export type {
+  Binding,
+  Case,
+  Condition,
+  Phase,
+  SimOrder,
+  Trigger,
+  TriggerModifiers,
+} from "../../data";
+export {
+  getTriggerKeys,
+  normalizeModifier,
+  resolveKeyAlias,
+  resolveModifiers,
+} from "../utils";
+export { resolveCondition } from "../resolve-conditions";
+export { fromModifiersObj, triggerToFrom };
+
+export function buildManipulators(b: Binding): Manipulator[] {
+  const resolved = resolveCases(b.cases, b.conditions);
+  if (resolved.some((c) => c.guard)) {
+    const manipulators = buildGuard(b, resolved);
+    stampDeviceScope(manipulators, b.trigger);
+    return manipulators;
+  }
+  const hasMultiTap =
+    resolved.some((c) => c.tapCount >= 2) || b.multiTap !== undefined;
+  const keys = getTriggerKeys(b.trigger);
+  const isSim = keys.length > 1;
+  const isPointer = keys.length === 1 && isPointerButton(keys[0]!);
+  let manipulators: Manipulator[];
+  if (hasMultiTap) manipulators = buildMultiTap(b, resolved, isSim);
+  else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
+  else {
+    manipulators = distributeUnconditionalTap(
+      groupByConditions(resolved),
+    ).flatMap((g) =>
+      g.hasRelease || g.hasHold
+        ? buildTapHold(b, g)
+        : buildRemap(b, g, isPointer),
+    );
+  }
+  stampDeviceScope(manipulators, b.trigger);
+  return manipulators;
+}
+
+export function defineBindings(bindings: Binding[]): Rule[] {
+  return bindings.map(
+    (b) =>
+      rule(b.description ?? synthesizeRuleDescription(b)).manipulators(
+        buildManipulators(b),
+      ) as unknown as Rule,
+  );
+}

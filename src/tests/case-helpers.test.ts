@@ -34,8 +34,8 @@ import {
   when,
   options,
   timing,
-} from "../engine/emit-modifiers/case-helpers";
-import { defineBindings } from "../engine/emit-modifiers/binding";
+  defineBindings,
+} from "../engine";
 
 test("to(), when(), options(), and timing() DSL helpers construct flexible bindings", () => {
   const condSkim = condApp(APP_ID.skim);
@@ -95,9 +95,9 @@ test("phase helpers produce expected Case objects", () => {
   assert.equal(h.phase, "hold");
   assert.deepEqual(h.do, [{ type: "app", ref: APP_ID.ringCentral }]);
 
-  const r = release(openUrl(URLS.rectWinMaximize, true));
+  const r = release(openUrl(URLS.winMaximize, true));
   assert.equal(r.phase, "release");
-  assert.deepEqual(r.do, [{ type: "url", url: URLS.rectWinMaximize, background: true }]);
+  assert.deepEqual(r.do, [{ type: "url", url: URLS.winMaximize, background: true }]);
 
   const dt = doubleTap({ type: "noop" });
   assert.equal(dt.phase, "press");
@@ -125,9 +125,9 @@ test("ActionSpec wrappers create expected typed actions", () => {
     ref: APP_ID.ringCentral,
   });
 
-  assert.deepEqual(openUrl(URLS.rectWinMaximize, true), {
+  assert.deepEqual(openUrl(URLS.winMaximize, true), {
     type: "url",
-    url: URLS.rectWinMaximize,
+    url: URLS.winMaximize,
     background: true,
   });
 
@@ -211,7 +211,7 @@ test("defineBindings integration with case & action helpers", () => {
       trigger: { keys: ["8"] },
       cases: [
         hold(openApp(APP_ID.ringCentral)),
-        release(openUrl(URLS.rectWinsUnstashAll)),
+        release(openUrl(URLS.winsUnstashAll)),
       ],
     },
   ]);

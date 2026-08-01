@@ -31,7 +31,6 @@ export function emitLayerDefinitions(
   try {
     const home = HOME_DIR;
     const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home, prefix);
-    const finalPath = outputPaths[0];
 
     if (debugMode) {
       console.log(`[LayerEmit Debug] Starting emission to: ${outputPaths.join(', ')}`);

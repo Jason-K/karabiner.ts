@@ -21,7 +21,7 @@ const buildDisabledHotkeys = () => defineBindings(disabledHotkeys);
 const buildHotkeyGuards = () => defineBindings(guardBindings);
 
 
-const fillPassword = modifiedSingleKeyTapHoldBindings.find(
+const fillPw = modifiedSingleKeyTapHoldBindings.find(
   (b) =>
     "keys" in b.trigger &&
     b.trigger.keys.includes("slash") &&
@@ -36,7 +36,7 @@ const skimRemaps = modifiedSingleKeyTapHoldBindings.filter(
 const buildLeftCommandRule = () =>
   defineBindings([singleKeyTapHoldBindings.find((b) => "keys" in b.trigger && b.trigger.keys.includes("left_command"))!])[0];
 
-const buildPasswordsQuickFillRule = () => defineBindings([fillPassword])[0];
+const buildPasswordsQuickFillRule = () => defineBindings([fillPw])[0];
 
 const buildSkimCommandRemapRule = () => defineBindings(skimRemaps);
 
@@ -136,7 +136,7 @@ test("left command factory keeps pass-through lcmd and app switch on second tap 
 test("caps lock factory keeps full complement behavior variants", () => {
   const rules = toRules(buildCapsLockRule());
   assert.equal(rules.length, 16);
-  assert.match(rules[0].description, /^\[⇪\]:\n---/);
+  assert.match(rules[0].description, /^\[CAPS\]:\n---/);
 });
 
 test("cmd-q factory keeps double-tap protection structure", () => {
@@ -153,7 +153,7 @@ test("security disable shortcuts factory keeps all disabled combos", () => {
 });
 
 test("word privileges factory keeps single guarded manipulator", () => {
-  const rule = toRule(defineBindings([fillPassword])[0]);
+  const rule = toRule(defineBindings([fillPw])[0]);
   assert.match(rule.description, /^\[⌘\]\+\[\/\]:\n---/);
   const wordManipulator = rule.manipulators[2];
   assert.ok(wordManipulator);

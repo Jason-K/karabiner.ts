@@ -67,3 +67,14 @@ export const defaultButtonNames: Record<string, string> = {
 // ── Mouse signaling variables ────────────────────────────────────────────────
 
 export { mouseVars } from "../registries/vars";
+
+/** Known mouse button aliases for auto-completion. */
+export type KnownPointerButton =
+  | "button1" | "button2" | "button3" | "button4" | "button5"
+  | "shift_button" | "wheel" | "wheelLeft" | "wheelRight"
+  | "leftBack" | "leftForward" | "middleBack"
+  | "left" | "right" | "back" | "forward";
+
+/** Pointer button string type with IntelliSense auto-completion for known mouse button aliases. */
+export type PointerButtonAlias = KnownPointerButton | (string & {});
+

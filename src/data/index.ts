@@ -13,10 +13,18 @@ export type {
   PathSpec,
   UrlSpec,
   VarSpec,
+  VarValueSpec,
   Action,
   ActionKeyModifier,
   ActionSpec,
   AppTarget,
+  Binding,
+  Case,
+  Condition,
+  Phase,
+  SimOrder,
+  Trigger,
+  TriggerModifiers,
 } from "./primitives";
 
 // SETTINGS
@@ -37,8 +45,23 @@ export {
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
   TIMINGS,
 } from "./constants/timings";
-export { VMOD, MODIFIER_KEY_CODES, type ModComboAlias, type ModKey } from "./constants/keys";
-export { buttons, defaultButtonNames, mouseVars, type ButtonSpec, type DeviceName } from "./constants/mouse";
+export {
+  VMOD,
+  MODKEY_CODES,
+  type KeyCode,
+  type ModComboAlias,
+  type ModKey,
+  type StandardKeyCode,
+} from "./constants/keys";
+export {
+  buttons,
+  defaultButtonNames,
+  mouseVars,
+  type ButtonSpec,
+  type DeviceName,
+  type KnownPointerButton,
+  type PointerButtonAlias,
+} from "./constants/mouse";
 
 // REGISTRIES
 export { DEVICES } from "./registries/devices";

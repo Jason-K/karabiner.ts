@@ -104,11 +104,11 @@ const SCRIPT_FILES = {
     `${ENV_DIRS.dirScripts.path}/strings/text_processor/interfaces/cli.py`,
     "Text Processor CLI entrypoint",
   ),
-  scriptTypinatorLastRule: path(
+  lastTypinatorRule: path(
     `${ENV_DIRS.dirScripts.path}/apps/Typinator/Edit_Last_Typinator_Expansion.applescript`,
     "edit the last Typinator rule",
   ),
-  scriptTypinatorNewRule: path(
+  scriptnewTypinatorRule: path(
     `${ENV_DIRS.dirScripts.path}/apps/Typinator/new_rule/new_rule.py`,
     "create a new Typinator rule",
   ),

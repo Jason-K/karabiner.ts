@@ -20,7 +20,7 @@ import {
   type Case,
 } from "../engine";
 
-const fillPassword = tapHoldBindings.find(
+const fillPw = tapHoldBindings.find(
   (b) =>
     "keys" in b.trigger &&
     b.trigger.keys.includes("slash") &&
@@ -200,15 +200,15 @@ test("equals key hold mappings stay declarative", () => {
 });
 
 test("passwords quick fill mapping stays declarative", () => {
-  const trigger = fillPassword.trigger as {
+  const trigger = fillPw.trigger as {
     keys: string[];
     modifiers?: string[];
   };
   // Description is now auto-derived (Phase 2) — no hand-written override.
-  assert.equal(fillPassword.description, undefined);
+  assert.equal(fillPw.description, undefined);
   assert.deepEqual(trigger.keys, ["slash"]);
   assert.deepEqual(trigger.modifiers, ["left_command"]);
-  assert.equal(fillPassword.cases.length, 3);
+  assert.equal(fillPw.cases.length, 3);
 });
 
 test("tap-hold mappings keep expected anchor keys", () => {
@@ -250,7 +250,7 @@ test("new COCS rectangle mappings stay declarative", () => {
   assert.deepEqual(phaseDo(keypad9, "release"), [
     {
       type: "url",
-      url: URLS.rectWinTopRightEighth,
+      url: URLS.winTopRightEighth,
       background: true,
     },
   ]);

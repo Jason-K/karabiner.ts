@@ -18,6 +18,8 @@ import {
   map,
   from,
   hold,
+  ifKeVar,
+  unlessKeVar,
   key,
   openApp,
   openUrl,
@@ -30,57 +32,57 @@ import {
 } from "../engine";
 
 const modNumBindings: Binding[] = [
-  bind(from("keypad_1", ["COCS"]), to(release(openUrl(URLS.rectWinBottomLeftEighth, true)))),
-  bind(from("keypad_3", ["COCS"]), to(release(openUrl(URLS.rectWinBottomRightEighth, true)))),
-  bind(from("keypad_5", ["COCS"]), to(release(openUrl(URLS.rectWinMaximize, true)))),
-  bind(from("keypad_7", ["COCS"]), to(release(openUrl(URLS.rectWinTopLeftEighth, true)))),
-  bind(from("keypad_9", ["COCS"]), to(release(openUrl(URLS.rectWinTopRightEighth, true)))),
+  bind(from("keypad_1", VMOD.COCS), to(release(openUrl(URLS.winBottomLeftEighth, true)))),
+  bind(from("keypad_3", VMOD.COCS), to(release(openUrl(URLS.winBottomRightEighth, true)))),
+  bind(from("keypad_5", VMOD.COCS), to(release(openUrl(URLS.winMaximize, true)))),
+  bind(from("keypad_7", VMOD.COCS), to(release(openUrl(URLS.winTopLeftEighth, true)))),
+  bind(from("keypad_9", VMOD.COCS), to(release(openUrl(URLS.winTopRightEighth, true)))),
 ];
 
 const modLetterBindings: Binding[] = [
   bind(from("a", ["shift"]), to(hold(openUrl(URLS.antinoteNewNoteInBackground)))),
-  bind(from("e", ["COCS"]), to(release(map(COMBOS.focusWinRight)))),
-  bind(from("f", ["COCS"]), to(release(map(COMBOS.focusWinBottom)))),
+  bind(from("e", VMOD.COCS), to(release(map(COMBOS.focusWinRight)))),
+  bind(from("f", VMOD.COCS), to(release(map(COMBOS.focusWinBottom)))),
   bind(
-    from("h", ["left_command"]),
+    from("h", ["L.cmd"]),
     to(press(map(COMBOS.skimHighlight))),
     when(condApp(APP_ID.skim)),
   ),
   bind(
-    from("k", ["right_option"]),
+    from("k", ["R.opt"]),
     to(hold(actHere("kitty"))),
   ),
-  bind(from("m", ["left_command"]), to(hold(map(COMBOS.restoreMinimizedWindow)))),
+  bind(from("m", ["L.cmd"]), to(hold(map(COMBOS.restoreMinimizedWindow)))),
   bind(
-    from("p", ["left_command"]),
+    from("p", ["L.cmd"]),
     to(
       release(cmd(CMDS.wordPrint)).when(condApp(APP_ID.word)),
       hold(map(COMBOS.showPopclip)),
     ),
   ),
-  bind(from("q", ["COCS"]), to(release(map(COMBOS.focusWinLeft)))),
-  bind(from("r", ["COCS"]), to(release(map(COMBOS.focusWinTop)))),
+  bind(from("q", VMOD.COCS), to(release(map(COMBOS.focusWinLeft)))),
+  bind(from("r", VMOD.COCS), to(release(map(COMBOS.focusWinTop)))),
   bind(from("s", VMOD.COCS), to(press(shell(CMDS.hsFormatSelection)))),
   bind(
-    from("s", ["right_option"]),
+    from("s", ["R.opt"]),
     to(
       release(shell(CMDS.spotifyToggle)),
       hold(openUrl(URLS.raySpotifySearch)),
     ),
   ),
   bind(
-    from("t", ["COCS"]),
+    from("t", VMOD.COCS),
     to(
-      release(shell(CMDS.typinatorNewRule)),
-      hold(shell(CMDS.scriptTypinatorLastRule)),
+      release(shell(CMDS.newTypinatorRule)),
+      hold(shell(CMDS.lastTypinatorRule)),
     ),
   ),
   bind(
-    from("t", ["right_option"]),
-    to(hold(shell(CMDS.scriptTypinatorLastRule))),
+    from("t", ["R.opt"]),
+    to(hold(shell(CMDS.lastTypinatorRule))),
   ),
   bind(
-    from("u", ["left_command"]),
+    from("u", ["L.cmd"]),
     to(press(map(COMBOS.skimUnderline))),
     when(condApp(APP_ID.skim)),
   ),
@@ -89,19 +91,19 @@ const modLetterBindings: Binding[] = [
 const modSymbolBindings: Binding[] = [
   bind(from("comma", VMOD.COCS), to(press(openApp(APP_ID.systemSettings)))),
   bind(
-    from("slash", ["left_command"]),
+    from("slash", ["L.cmd"]),
     to(
       // AUTHENTICATION DIALOG fill password.
-      press(cmd(CMDS.fillPassword)).when(
+      press(cmd(CMDS.fillPw)).when(
         condApp(PW_IDS),
-        condVar(KE_VARS.accessibilityType, KE_VAR_VALUES.axTextField),
-        condVar(KE_VARS.accessibilitySubtype, KE_VAR_VALUES.axSecureTextField),
+        ifKeVar(KE_VAR_VALUES.axTextField),
+        ifKeVar(KE_VAR_VALUES.axSecureTextFieldSubrole),
       ),
       // AUTHENTICATION DIALOG: fill username and password.
-      press(cmd(CMDS.fillUsernameAndPassword)).when(
+      press(cmd(CMDS.fillUnPw)).when(
         condApp(PW_IDS),
-        condVar(KE_VARS.accessibilityType, KE_VAR_VALUES.axTextField),
-        condNotVar(KE_VARS.accessibilitySubtype, KE_VAR_VALUES.axSecureTextField),
+        ifKeVar(KE_VAR_VALUES.axTextField),
+        unlessKeVar(KE_VAR_VALUES.axSecureTextFieldSubrole),
       ),
       // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
       press(shell(CMDS.getWordDocPathAndPrivileges)).when(condApp(APP_ID.word)),
@@ -110,7 +112,7 @@ const modSymbolBindings: Binding[] = [
 ];
 
 const modNonCharBindings: Binding[] = [
-  bind(from("end", ["shift"]), to(press(key("right_arrow", ["left_command", "shift"])))),
+  bind(from("end", ["shift"]), to(press(key("right_arrow", ["L.cmd", "shift"])))),
   bind(
     from("escape", ["control"]),
     to(
@@ -119,9 +121,9 @@ const modNonCharBindings: Binding[] = [
     ),
   ),
   bind(from("escape", VMOD.COCS), to(press(openApp(APP_ID.activityMonitor)))),
-  bind(from("home", ["shift"]), to(press(key("left_arrow", ["left_command", "shift"])))),
+  bind(from("home", ["shift"]), to(press(key("left_arrow", ["L.cmd", "shift"])))),
   bind(
-    from("left_arrow", ["COCS"]),
+    from("left_arrow", VMOD.COCS),
     to(
       release(shell(CMDS.winLeftOrTop)),
       hold(openUrl(URLS.rectAppPrevDisplay, true)),
@@ -133,7 +135,7 @@ const modNonCharBindings: Binding[] = [
     when(condApp(APP_ID.zen)),
   ),
   bind(
-    from("right_arrow", ["COCS"]),
+    from("right_arrow", VMOD.COCS),
     to(
       release(shell(CMDS.winRightOrBottom)),
       hold(openUrl(URLS.rectAppNextDisplay, true)),
@@ -144,9 +146,9 @@ const modNonCharBindings: Binding[] = [
     to(press(map(COMBOS.zenPreviousTab))),
     when(condApp(APP_ID.zen)),
   ),
-  bind(from("spacebar", ["COCS"]), to(release(shell(CMDS.winMaxOrRestore)))),
+  bind(from("spacebar", VMOD.COCS), to(release(shell(CMDS.winMaxOrRestore)))),
   bind(
-    from("tab", ["COCS"]),
+    from("tab", VMOD.COCS),
     to(
       release(openUrl(URLS.rectAppNextDisplay, true)),
       hold(openUrl(URLS.rectAppPrevDisplay, true)),
@@ -155,7 +157,7 @@ const modNonCharBindings: Binding[] = [
 ];
 
 const modFunctionKeyBindings: Binding[] = [
-  bind(from("f12", VMOD.COCS), to(press(shell(CMDS.scriptTypinatorLastRule)))),
+  bind(from("f12", VMOD.COCS), to(press(shell(CMDS.lastTypinatorRule)))),
 ];
 
 export const modifiedSingleKeyTapHoldBindings: Binding[] = [

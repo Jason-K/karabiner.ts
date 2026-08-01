@@ -2,7 +2,7 @@ export const DESCRIPTION_SEPARATOR = "        →    ";
 
 export const KEY_SYMBOLS: Record<string, string> = {
   backslash: "\\",
-  caps_lock: "⇪",
+  caps_lock: "CAPS",
   close_bracket: "]",
   comma: ",",
   delete_or_backspace: "⌫",
@@ -38,8 +38,8 @@ export const KEY_SYMBOLS: Record<string, string> = {
   right_shift: "⇧",
   semicolon: ";",
   slash: "/",
-  space: "_",
-  spacebar: "_",
+  space: "␣",
+  spacebar: "␣",
   tab: "⇥",
   up_arrow: "↑",
   alt: "⌥",

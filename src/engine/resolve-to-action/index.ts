@@ -3,7 +3,7 @@ import { toKey, toPointingButton } from "karabiner.ts";
 
 import type { Action, ActionSpec } from "../../data";
 import { FINDER_REPLACEMENT } from "../../data/constants/global";
-import { ensurePathQuotingInCommand } from "../utils";
+import { ensurePathQuotingInCommand, resolveKeyAlias } from "../utils";
 
 import {
   resolveAppTarget,
@@ -118,7 +118,7 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
           : undefined;
       return [
         toKey(
-          action.key as any,
+          resolveKeyAlias(action.key) as any,
           modifiers?.length ? (modifiers as any) : undefined,
           opts,
         ),
@@ -144,7 +144,7 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
           action.options && Object.keys(action.options).length
             ? (action.options as any)
             : undefined;
-        return [toKey(action.ref as any, [], opts)];
+        return [toKey(resolveKeyAlias(action.ref) as any, [], opts)];
       }
       const opts = { ...action.ref?.options, ...action.options };
       const keyOpts = Object.keys(opts).length ? (opts as any) : undefined;
@@ -154,7 +154,7 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
             ? expandModifiers(c.modifiers)
             : undefined;
           return toKey(
-            c.key as any,
+            resolveKeyAlias(c.key) as any,
             modifiers?.length ? (modifiers as any) : undefined,
             keyOpts,
           );
@@ -165,14 +165,15 @@ function resolveActionToEventsRaw(action: Action): ToEvent[] {
         ? expandModifiers(action.ref.modifiers)
         : undefined;
       return keyCodes.map((n) => {
-        if (typeof n === "string" && n.startsWith("vk_")) {
+        const resolved = resolveKeyAlias(n);
+        if (typeof resolved === "string" && resolved.startsWith("vk_")) {
           if (modifiers?.length) {
-            return toKey(n as any, modifiers as any, keyOpts);
+            return toKey(resolved as any, modifiers as any, keyOpts);
           }
-          return keyOpts ? toKey(n as any, keyOpts) : toKey(n as any);
+          return keyOpts ? toKey(resolved as any, keyOpts) : toKey(resolved as any);
         }
         return toKey(
-          n as any,
+          resolved as any,
           modifiers?.length ? (modifiers as any) : undefined,
           keyOpts,
         );

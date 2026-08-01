@@ -48,11 +48,11 @@ const subCommands = {
 const Passwords_Privileges = {
   // PASSWORDS AND PRIVILEGES
   getPrivileges: cmdEntry(`${subCommands.getPriv}`, "Get privileges"),
-  fillPassword: cmdEntry(
+  fillPw: cmdEntry(
     `${subCommands.getPriv} && ${subCommands.fillSecret}`,
     "Fill password",
   ),
-  fillUsernameAndPassword: cmdEntry(
+  fillUnPw: cmdEntry(
     `${subCommands.getPriv} && ${subCommands.fillNameAndSecret}`,
     "Fill username and password",
   ),
@@ -82,12 +82,12 @@ const Hs_Functions = {
 };
 
 const Typinator_Scripts = {
-  typinatorNewRule: cmdEntry(
-    `'${PATHS.binTypinatorVenv.path}' '${PATHS.scriptTypinatorNewRule.path}'`,
+  newTypinatorRule: cmdEntry(
+    `'${PATHS.binTypinatorVenv.path}' '${PATHS.scriptnewTypinatorRule.path}'`,
     "Create new Typinator rule",
   ),
-  scriptTypinatorLastRule: cmdEntry(
-    `osascript '${PATHS.scriptTypinatorLastRule.path}'`,
+  lastTypinatorRule: cmdEntry(
+    `osascript '${PATHS.lastTypinatorRule.path}'`,
     "Edit last Typinator expansion",
   ),
 };
@@ -158,11 +158,11 @@ const Windows = {
 };
 
 const Get_Recents = {
-  rayGetRecents: cmdEntry(
+  getRecentRaycast: cmdEntry(
     `${subCommands.callRaycastExtension}/jason/recents/recentCustom`,
     "Get recent items from Raycast",
   ),
-  getRecentDls: cmdEntry(
+  getRecentAdditions: cmdEntry(
     `${PATHS.scriptNewDLs.path} -a`,
     "Get recent items from script",
   ),
@@ -170,7 +170,7 @@ const Get_Recents = {
     `${PATHS.scriptNewDLs.path} -m`,
     "Get recent mods from script",
   ),
-  getNewFiles: cmdEntry(
+  getRecentCreations: cmdEntry(
     `${PATHS.scriptNewDLs.path} -c`,
     "Get new files from script",
   ),

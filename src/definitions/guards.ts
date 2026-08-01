@@ -11,13 +11,13 @@ import {
 } from "../engine";
 
 export const globalGuardBinding: Binding = bind(
-  from("q", ["left_command"]),
-  to(guard(key("q", ["left_command"]))),
+  from("q", ["L.cmd"]),
+  to(guard(key("q", ["L.cmd"]))),
 );
 
 export const antinoteGuardBinding: Binding = bind(
-  from("d", ["left_command"]),
-  to(guard(key("d", ["left_command"]))),
+  from("d", ["L.cmd"]),
+  to(guard(key("d", ["L.cmd"]))),
   when(ifApp(APP_ID.antinote)),
 );
 

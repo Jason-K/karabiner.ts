@@ -1,4 +1,4 @@
-import type { Binding } from "./binding";
+import type { Binding } from "../../data";
 import { ioSignature } from "../utils/input-devices";
 
 /**

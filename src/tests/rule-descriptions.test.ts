@@ -20,6 +20,6 @@ test('formats plain keys with short labels', () => {
 test('formats multi-step layer chords as bracketed sequences', () => {
   assert.equal(
     formatRuleDescription(["spacebar", "a", "w"], "Work layer", "tap"),
-    "[_]+[A]+[W]        →    Work layer (on tap)",
+    "[␣]+[A]+[W]        →    Work layer (on tap)",
   );
 });

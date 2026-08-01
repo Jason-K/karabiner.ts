@@ -4,13 +4,17 @@ import type { Manipulator } from "karabiner.ts";
 import {
   ensurePathQuotingInCommand,
   ensurePathQuotingInManipulators,
+  isModifierKey,
   isPathToken,
   normalizePathForShell,
   normalizeShellPath,
+  resolveKeyAlias,
+  resolveModifiers,
   shellDoubleQuote,
   shellSingleQuote,
   tokenizeShellCommand,
 } from "../engine/utils";
+import { vmod } from "../engine";
 
 test("shellSingleQuote quotes strings and escapes internal single quotes", () => {
   assert.equal(shellSingleQuote("hello"), "'hello'");
@@ -75,3 +79,42 @@ test("ensurePathQuotingInManipulators updates shell_command in manipulators", ()
     'osascript "/Users/jason/script.applescript"'
   );
 });
+
+test("resolveKeyAlias maps cmd, L, R side prefixes to standard Karabiner keys", () => {
+  assert.equal(resolveKeyAlias("cmd"), "command");
+  assert.equal(resolveKeyAlias("R.cmd"), "right_command");
+  assert.equal(resolveKeyAlias("L.cmd"), "left_command");
+  assert.equal(resolveKeyAlias("R_cmd"), "right_command");
+  assert.equal(resolveKeyAlias("L_cmd"), "left_command");
+  assert.equal(resolveKeyAlias("R.opt"), "right_option");
+  assert.equal(resolveKeyAlias("L.opt"), "left_option");
+  assert.equal(resolveKeyAlias("R.ctrl"), "right_control");
+  assert.equal(resolveKeyAlias("L.ctrl"), "left_control");
+  assert.equal(resolveKeyAlias("R.shift"), "right_shift");
+  assert.equal(resolveKeyAlias("L.shift"), "left_shift");
+  assert.equal(resolveKeyAlias("R.command"), "right_command");
+  assert.equal(resolveKeyAlias("L.command"), "left_command");
+});
+
+test("isModifierKey handles key aliases", () => {
+  assert.equal(isModifierKey("R.cmd"), true);
+  assert.equal(isModifierKey("L.cmd"), true);
+  assert.equal(isModifierKey("cmd"), true);
+  assert.equal(isModifierKey("R.opt"), true);
+  assert.equal(isModifierKey("L.shift"), true);
+  assert.equal(isModifierKey("a"), false);
+});
+
+test("resolveModifiers expands key aliases", () => {
+  assert.deepEqual(resolveModifiers(["R.cmd", "L.shift"]), {
+    mandatory: ["right_command", "left_shift"],
+    optional: [],
+  });
+});
+
+test("vmod accepts ModKey aliases in subtractiveModifiers", () => {
+  const bindingsAlias = vmod("caps_lock", ["L.shift", "L.ctrl"]);
+  const bindingsCanonical = vmod("caps_lock", ["left_shift", "left_control"]);
+  assert.deepEqual(bindingsAlias, bindingsCanonical);
+});
+

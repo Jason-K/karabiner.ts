@@ -4,6 +4,16 @@ export type { UrlSpec } from "./urls";
 export type { PathSpec } from "./paths";
 export type { CommandSpec } from "./commands";
 export type { MapSpec, Map } from "./maps";
-export type { VarSpec } from "./vars";
+export type { VarSpec, VarValueSpec } from "./vars";
 export type { DeviceSpec } from "./devices";
 export type { Action, ActionKeyModifier, ActionSpec, AppTarget } from "./actions";
+export type {
+  Binding,
+  Case,
+  Condition,
+  Phase,
+  SimOrder,
+  Trigger,
+  TriggerModifiers,
+} from "./bindings";
+

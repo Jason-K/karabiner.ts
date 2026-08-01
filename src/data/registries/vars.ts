@@ -1,4 +1,4 @@
-import type { VarSpec } from "../primitives/vars";
+import type { VarSpec, VarValueSpec } from "../primitives/vars";
 
 /** Built-in variables that Karabiner-Elements exposes via its variable system.
  *
@@ -19,6 +19,17 @@ import type { VarSpec } from "../primitives/vars";
  *  @param varDesc - human label used in descriptions
  */
 const keVar = (name: string, varDesc: string): VarSpec => ({ name, varDesc });
+
+/** Create a registry entry for a value comparison against a variable.
+ *  @param ref     - reference to the VarSpec variable
+ *  @param value   - the value to be used in condition comparison
+ *  @param varDesc - human label used in descriptions
+ */
+export const keVarValue = (
+  ref: VarSpec,
+  value: string | number | boolean,
+  varDesc: string,
+): VarValueSpec => ({ ref, value, varDesc });
 
 // ---------------------------------------------------------
 // Registry
@@ -143,14 +154,42 @@ export const KE_VARS = {
 // ── Typed values for built-in string constants ────────────────────────────────
 
 export const KE_VAR_VALUES = {
-  axTextArea: "AXTextArea",
-  axTextField: "AXTextField",
-  axSecureTextField: "AXSecureTextField",
-  axButton: "AXButton",
-  axStaticText: "AXStaticText",
-  axWebArea: "AXWebArea",
-  axSecureTextFieldSubrole: "AXSecureTextField",
-} as const;
+  axTextArea: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXTextArea",
+    "Focused UI element role is text area",
+  ),
+  axTextField: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXTextField",
+    "Focused UI element role is text field",
+  ),
+  axSecureTextField: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXSecureTextField",
+    "Focused UI element role is secure text field",
+  ),
+  axButton: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXButton",
+    "Focused UI element role is button",
+  ),
+  axStaticText: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXStaticText",
+    "Focused UI element role is static text",
+  ),
+  axWebArea: keVarValue(
+    KE_VARS.accessibilityType,
+    "AXWebArea",
+    "Focused UI element role is web area",
+  ),
+  axSecureTextFieldSubrole: keVarValue(
+    KE_VARS.accessibilitySubtype,
+    "AXSecureTextField",
+    "Focused UI element subrole is secure text field",
+  ),
+} as const satisfies Record<string, VarValueSpec>;
 
 export const mouseVars = {
   rightButtonPressed: keVar("right_button_pressed", "Right button held"),
@@ -159,4 +198,4 @@ export const mouseVars = {
   leftWithRightFirstTap: keVar("left_with_right_first_tap", "Left+right first tap"),
 } as const satisfies Record<string, VarSpec>;
 
-export type { VarSpec };
+export type { VarSpec, VarValueSpec };

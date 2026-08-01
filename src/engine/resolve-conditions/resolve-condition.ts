@@ -1,6 +1,7 @@
 import { ifApp, ifDevice } from "karabiner.ts";
-import type { Condition } from "../emit-modifiers/binding";
-import { karabinerDeviceId } from "../resolve-from-action/device-config";
+import type { Condition } from "../../data";
+import { karabinerDeviceId } from "../resolve-trigger/device-config";
+
 
 /**
  * Resolve a high-level Condition specification (app, var, device) into a

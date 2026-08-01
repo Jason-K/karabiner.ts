@@ -1,7 +1,7 @@
 import type { Rule } from "karabiner.ts";
-import type { ActionSpec } from "../../data";
+import type { ActionSpec, Binding, Case, SimOrder } from "../../data";
+import { defineBindings, resolveModifiers } from "../emit-manipulators/binding";
 
-import { defineBindings, resolveModifiers, type Binding, type Case, type SimOrder } from "../emit-modifiers/binding";
 
 export type SimultaneousOptions = {
   detect_key_down_uninterruptedly?: boolean;

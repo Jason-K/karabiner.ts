@@ -144,374 +144,374 @@ const rectangleUrls = {
     "Last space",
     "rectangle",
   ),
-  rectWinBottomHalf: url(
+  winBottomHalf: url(
     "rectangle-pro://execute-action?name=bottom-half",
     "Window to ⬓",
     "rectangle",
   ),
-  rectWinBottomLeft: url(
+  winBottomLeft: url(
     "rectangle-pro://execute-action?name=bottom-left",
     "Window ◱",
     "rectangle",
   ),
-  rectWinBottomLeftSixth: url(
+  winBottomLeftSixth: url(
     "rectangle-pro://execute-action?name=bottom-left-sixth",
     "Window ↓← 1/6",
     "rectangle",
   ),
-  rectWinBottomLeftThird: url(
+  winBottomLeftThird: url(
     "rectangle-pro://execute-action?name=bottom-left-third",
     "Window ↓← 1/3",
     "rectangle",
   ),
-  rectWinBottomRight: url(
+  winBottomRight: url(
     "rectangle-pro://execute-action?name=bottom-right",
     "Window ◲",
     "rectangle",
   ),
-  rectWinBottomRightSixth: url(
+  winBottomRightSixth: url(
     "rectangle-pro://execute-action?name=bottom-right-sixth",
     "Window ↓→ 1/6",
     "rectangle",
   ),
-  rectWinBottomRightThird: url(
+  winBottomRightThird: url(
     "rectangle-pro://execute-action?name=bottom-right-third",
     "Window ↓→ 1/3",
     "rectangle",
   ),
-  rectWinCenter: url(
+  winCenter: url(
     "rectangle-pro://execute-action?name=center",
     "Center window",
     "rectangle",
   ),
-  rectWinCenterThird: url(
+  winCenterThird: url(
     "rectangle-pro://execute-action?name=center-third",
     "Window center 1/3",
     "rectangle",
   ),
-  rectWinCenterTwoThirds: url(
+  winCenterTwoThirds: url(
     "rectangle-pro://execute-action?name=center-two-thirds",
     "Window center 2/3",
     "rectangle",
   ),
-  rectWinClose: url(
+  winClose: url(
     "rectangle-pro://execute-action?name=close",
     "Close window",
     "rectangle",
   ),
-  rectWinFillBottomLeft: url(
+  winFillBottomLeft: url(
     "rectangle-pro://execute-action?name=fill-bottom-left",
     "Window fill ◲",
     "rectangle",
   ),
-  rectWinFillBottomRight: url(
+  winFillBottomRight: url(
     "rectangle-pro://execute-action?name=fill-bottom-right",
     "Window fill ◲",
     "rectangle",
   ),
-  rectWinFillLeft: url(
+  winFillLeft: url(
     "rectangle-pro://execute-action?name=fill-left",
     "Window fill ←",
     "rectangle",
   ),
-  rectWinFillRight: url(
+  winFillRight: url(
     "rectangle-pro://execute-action?name=fill-right",
     "Window fill →",
     "rectangle",
   ),
-  rectWinFillTopLeft: url(
+  winFillTopLeft: url(
     "rectangle-pro://execute-action?name=fill-top-left",
     "Window fill ◰",
     "rectangle",
   ),
-  rectWinFillTopRight: url(
+  winFillTopRight: url(
     "rectangle-pro://execute-action?name=fill-top-right",
     "Window fill ◱",
     "rectangle",
   ),
-  rectWinFirstFourth: url(
+  winFirstFourth: url(
     "rectangle-pro://execute-action?name=first-fourth",
     "Window to ◰",
     "rectangle",
   ),
-  rectWinFirstSixth: url(
+  winFirstSixth: url(
     "rectangle-pro://execute-action?name=first-sixth",
     "Window first 1/6",
     "rectangle",
   ),
-  rectWinFirstThird: url(
+  winFirstThird: url(
     "rectangle-pro://execute-action?name=first-third",
     "Window first 1/3",
     "rectangle",
   ),
-  rectWinFirstThreeFourths: url(
+  winFirstThreeFourths: url(
     "rectangle-pro://execute-action?name=first-three-fourths",
     "Window first 3/4",
     "rectangle",
   ),
-  rectWinFirstTwoThirds: url(
+  winFirstTwoThirds: url(
     "rectangle-pro://execute-action?name=first-two-thirds",
     "Window first 2/3",
     "rectangle",
   ),
-  rectWinLarger: url(
+  winLarger: url(
     "rectangle-pro://execute-action?name=larger",
     "Make window larger",
     "rectangle",
   ),
-  rectWinLast: url(
+  winLast: url(
     "rectangle-pro://execute-action?name=last",
     "Go to last window",
     "rectangle",
   ),
-  rectWinLastFourth: url(
+  winLastFourth: url(
     "rectangle-pro://execute-action?name=last-fourth",
     "Window ◲",
     "rectangle",
   ),
-  rectWinLastSixth: url(
+  winLastSixth: url(
     "rectangle-pro://execute-action?name=last-sixth",
     "Window last 1/6",
     "rectangle",
   ),
-  rectWinLastThird: url(
+  winLastThird: url(
     "rectangle-pro://execute-action?name=last-third",
     "Window last 1/3",
     "rectangle",
   ),
-  rectWinLastThreeFourths: url(
+  winLastThreeFourths: url(
     "rectangle-pro://execute-action?name=last-three-fourths",
     "Window last 3/4",
     "rectangle",
   ),
-  rectWinLastTwoThirds: url(
+  winLastTwoThirds: url(
     "rectangle-pro://execute-action?name=last-two-thirds",
     "Window last 2/3",
     "rectangle",
   ),
-  rectWinLeftHalf: url(
+  winLeftHalf: url(
     "rectangle-pro://execute-action?name=left-half",
     "Window ◨",
     "rectangle",
   ),
-  rectWinMaximize: url(
+  winMaximize: url(
     "rectangle-pro://execute-action?name=maximize",
     "Window ✥",
     "rectangle",
   ),
-  rectWinMaximizeHeight: url(
+  winMaximizeHeight: url(
     "rectangle-pro://execute-action?name=maximize-height",
     "Max window height",
     "rectangle",
   ),
-  rectWinMinimize: url(
+  winMinimize: url(
     "rectangle-pro://execute-action?name=minimize",
     "Window ⇣",
     "rectangle",
   ),
-  rectWinMoveDown: url(
+  winMoveDown: url(
     "rectangle-pro://execute-action?name=move-down",
     "Move window ↓",
     "rectangle",
   ),
-  rectWinMoveLeft: url(
+  winMoveLeft: url(
     "rectangle-pro://execute-action?name=move-left",
     "Move window ←",
     "rectangle",
   ),
-  rectWinMoveRight: url(
+  winMoveRight: url(
     "rectangle-pro://execute-action?name=move-right",
     "Move window →",
     "rectangle",
   ),
-  rectWinMoveUp: url(
+  winMoveUp: url(
     "rectangle-pro://execute-action?name=move-up",
     "Move window ↑",
     "rectangle",
   ),
-  rectWinNudgeDown: url(
+  winNudgeDown: url(
     "rectangle-pro://execute-action?name=nudge-down",
     "Nudge window ↓",
     "rectangle",
   ),
-  rectWinNudgeLeft: url(
+  winNudgeLeft: url(
     "rectangle-pro://execute-action?name=nudge-left",
     "Nudge window ←",
     "rectangle",
   ),
-  rectWinNudgeRight: url(
+  winNudgeRight: url(
     "rectangle-pro://execute-action?name=nudge-right",
     "Nudge window →",
     "rectangle",
   ),
-  rectWinNudgeUp: url(
+  winNudgeUp: url(
     "rectangle-pro://execute-action?name=nudge-up",
     "Nudge window ↑",
     "rectangle",
   ),
-  rectWinPin: url("rectangle-pro://execute-action?name=pin", "Pin window", "rectangle"),
-  rectWinRestore: url(
+  winPin: url("rectangle-pro://execute-action?name=pin", "Pin window", "rectangle"),
+  winRestore: url(
     "rectangle-pro://execute-action?name=restore",
     "Restore window",
     "rectangle",
   ),
-  rectWinRightHalf: url(
+  winRightHalf: url(
     "rectangle-pro://execute-action?name=right-half",
     "Window ◧",
     "rectangle",
   ),
-  rectWinSecondFourth: url(
+  winSecondFourth: url(
     "rectangle-pro://execute-action?name=second-fourth",
     "Window ◳",
     "rectangle",
   ),
-  rectWinSmaller: url(
+  winSmaller: url(
     "rectangle-pro://execute-action?name=smaller",
     "Make window smaller",
     "rectangle",
   ),
-  rectWinSnapBottomLeft: url(
+  winSnapBottomLeft: url(
     "rectangle-pro://execute-action?name=snap-bottom-left",
     "Snap window ◱",
     "rectangle",
   ),
-  rectWinSnapBottomRight: url(
+  winSnapBottomRight: url(
     "rectangle-pro://execute-action?name=snap-bottom-right",
     "Snap window to ◲",
     "rectangle",
   ),
-  rectWinSnapTopLeft: url(
+  winSnapTopLeft: url(
     "rectangle-pro://execute-action?name=snap-top-left",
     "Snap window to ◰",
     "rectangle",
   ),
-  rectWinSnapTopRight: url(
+  winSnapTopRight: url(
     "rectangle-pro://execute-action?name=snap-top-right",
     "Snap window to ◳",
     "rectangle",
   ),
-  rectWinsReflowPin: url(
+  winsReflowPin: url(
     "rectangle-pro://execute-action?name=reflow-pin",
     "Reflow pin",
     "rectangle",
   ),
-  rectWinsStashAllButFront: url(
+  winsStashAllButFront: url(
     "rectangle-pro://execute-action?name=stash-all-but-front",
     "Stash all but front",
     "rectangle",
   ),
-  rectWinStashAll: url(
+  winStashAll: url(
     "rectangle-pro://execute-action?name=stash-all",
     "Stash all",
     "rectangle",
   ),
-  rectWinStashDown: url(
+  winStashDown: url(
     "rectangle-pro://execute-action?name=stash-down",
     "Stash ↓",
     "rectangle",
   ),
-  rectWinStashLeft: url(
+  winStashLeft: url(
     "rectangle-pro://execute-action?name=stash-left",
     "Stash ←",
     "rectangle",
   ),
-  rectWinStashRight: url(
+  winStashRight: url(
     "rectangle-pro://execute-action?name=stash-right",
     "Stash →",
     "rectangle",
   ),
-  rectWinStashUp: url(
+  winStashUp: url(
     "rectangle-pro://execute-action?name=stash-up",
     "Stash ↑",
     "rectangle",
   ),
-  rectWinsTile2x2: url("rectangle-pro://execute-action?name=tile2x2", "Tile ⊞", "rectangle"),
-  rectWinsTile2x3: url(
+  winsTile2x2: url("rectangle-pro://execute-action?name=tile2x2", "Tile ⊞", "rectangle"),
+  winsTile2x3: url(
     "rectangle-pro://execute-action?name=tile2x3",
     "Tile 2x3",
     "rectangle",
   ),
-  rectWinsToggleStashed: url(
+  winsToggleStashed: url(
     "rectangle-pro://execute-action?name=toggle-stashed",
     "Toggle stashed",
     "rectangle",
   ),
-  rectWinsUnstash: url(
+  winsUnstash: url(
     "rectangle-pro://execute-action?name=unstash",
     "Unstash",
     "rectangle",
   ),
-  rectWinsUnstashAll: url(
+  winsUnstashAll: url(
     "rectangle-pro://execute-action?name=unstash-all",
     "Unstash all",
     "rectangle",
   ),
-  rectWinThirdFourth: url(
+  winThirdFourth: url(
     "rectangle-pro://execute-action?name=third-fourth",
     "Window to ◳",
     "rectangle",
   ),
-  rectWinTopCenterSixth: url(
+  winTopCenterSixth: url(
     "rectangle-pro://execute-action?name=top-center-sixth",
     "Window to top center 1/6",
     "rectangle",
   ),
-  rectWinTopHalf: url(
+  winTopHalf: url(
     "rectangle-pro://execute-action?name=top-half",
     "Window ⬒",
     "rectangle",
   ),
-  rectWinTopLeft: url(
+  winTopLeft: url(
     "rectangle-pro://execute-action?name=top-left",
     "Window to ◰",
     "rectangle",
   ),
-  rectWinTopLeftSixth: url(
+  winTopLeftSixth: url(
     "rectangle-pro://execute-action?name=top-left-sixth",
     "Window to ↑← 1/6",
     "rectangle",
   ),
-  rectWinTopLeftThird: url(
+  winTopLeftThird: url(
     "rectangle-pro://execute-action?name=top-left-third",
     "Window to ↑← 1/3",
     "rectangle",
   ),
-  rectWinTopRight: url(
+  winTopRight: url(
     "rectangle-pro://execute-action?name=top-right",
     "Window to ◳",
     "rectangle",
   ),
-  rectWinTopRightSixth: url(
+  winTopRightSixth: url(
     "rectangle-pro://execute-action?name=top-right-sixth",
     "Window to ↑→ 1/6",
     "rectangle",
   ),
-  rectWinTopRightThird: url(
+  winTopRightThird: url(
     "rectangle-pro://execute-action?name=top-right-third",
     "Window to ↑→ 1/3",
     "rectangle",
   ),
-  rectWinUpperCenter: url(
+  winUpperCenter: url(
     "rectangle-pro://execute-action?name=upper-center",
     "Window to upper center",
     "rectangle",
   ),
-  rectWinBottomRightEighth: url(
+  winBottomRightEighth: url(
     "rectangle-pro://execute-action?name=bottom-right-eighth",
     "Window to bottom right 1/8",
     "rectangle",
   ),
-  rectWinBottomLeftEighth: url(
+  winBottomLeftEighth: url(
     "rectangle-pro://execute-action?name=bottom-left-eighth",
     "Window to bottom left 1/8",
     "rectangle",
   ),
-  rectWinTopRightEighth: url(
+  winTopRightEighth: url(
     "rectangle-pro://execute-action?name=top-right-eighth",
     "Window to top right 1/8",
     "rectangle",
   ),
-  rectWinTopLeftEighth: url(
+  winTopLeftEighth: url(
     "rectangle-pro://execute-action?name=top-left-eighth",
     "Window to top left 1/8",
     "rectangle",

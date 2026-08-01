@@ -4,11 +4,39 @@ import {
   type SimultaneousOptions as KarSimultaneousOptions,
   type ToEvent,
 } from "karabiner.ts";
+import type { Binding, SimOrder } from "../../data";
 import { varTapTapHoldFrom } from "./tap-hold";
-import { isPointerButton, resolveButton } from "../utils";
+import { isPointerButton, resolveButton, resolveKeyAlias } from "../utils";
+import { resolveActionToEvents } from "../resolve-to-action";
+
+export function resolveSimOrder(order?: SimOrder): KarSimultaneousOptions | undefined {
+  if (!order) return undefined;
+  const o: Record<string, unknown> = {};
+  if (order.down) o.key_down_order = order.down;
+  if (order.up) o.key_up_order = order.up;
+  if (order.upWhen) o.key_up_when = order.upWhen;
+  if (order.detectUninterrupted)
+    o.detect_key_down_uninterruptedly = order.detectUninterrupted;
+  return Object.keys(o).length ? (o as KarSimultaneousOptions) : undefined;
+}
+
+export function resolveSimKarOptions(b: Binding): KarSimultaneousOptions | undefined {
+  const order = resolveSimOrder(
+    "order" in b.trigger ? b.trigger.order : undefined,
+  );
+  const afterKeyUp = b.afterKeyUp?.flatMap(resolveActionToEvents);
+  if (!order && !afterKeyUp?.length) return undefined;
+  return {
+    ...(order ?? {}),
+    ...(afterKeyUp?.length ? { to_after_key_up: afterKeyUp } : {}),
+  };
+}
+
 
 function mapSimKey(k: string): any {
-  return isPointerButton(k) ? { pointing_button: resolveButton(k).button } : k;
+  return isPointerButton(k)
+    ? { pointing_button: resolveButton(k).button }
+    : resolveKeyAlias(k);
 }
 
 // Internal: builds a raw FromEvent with from.simultaneous for the multi-tap path.
@@ -21,7 +49,7 @@ function buildSimultaneousFromEvent(
     simultaneous: keys.map((k) =>
       isPointerButton(k)
         ? ({ pointing_button: resolveButton(k).button } as any)
-        : ({ key_code: k } as any),
+        : ({ key_code: resolveKeyAlias(k) } as any),
     ),
     simultaneous_options: karOptions,
     modifiers: { optional: ["any"] },
