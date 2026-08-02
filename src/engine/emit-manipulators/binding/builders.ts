@@ -3,13 +3,13 @@ import type {
   Manipulator,
   Modifier,
   PointingButton,
+  ToEvent,
 } from "../../../types/karabiner";
 import { map, toKey, toPointingButton, toSetVar } from "../../karabiner-helpers";
 import {
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
   TIMINGS,
   type ActionKeyModifier,
-  type ActionSpec,
   type Binding,
   type Condition,
   type Phase,
@@ -277,22 +277,24 @@ export function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
     return buildModWhileDown(b, g, key);
   }
   const { mandatory } = resolveModifiers(b.trigger.modifiers);
-  const defaultAlone: ActionSpec[] = [
-    {
-      type: "key",
-      key,
-      modifiers: mandatory as ActionKeyModifier[],
-      options: { halt: true },
-    },
-  ];
-  const alone = g.hasRelease
-    ? g.releaseDo
-    : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+  // No tap case was specified, so the default is "re-emit the key as pressed".
+  // `to.from_event` can't be used here: it only replays the original event
+  // from the immediate `to` channel. to_if_alone / to_if_held_down /
+  // to_delayed_action fire later (after the alone-timeout or a key-up), by
+  // which point the original from-event is no longer available to replay, so
+  // from_event silently emits nothing there. Explicit key_code + modifiers it is.
+  const defaultEvents: ToEvent[] = resolveActionToEvents({
+    type: "key",
+    key,
+    modifiers: mandatory as ActionKeyModifier[],
+    options: { halt: true },
+  });
+  const alone = g.hasRelease ? g.releaseDo : defaultEvents;
   const hold = g.hasHold
     ? g.holdDo
     : isModifierKey(key)
       ? []
-      : defaultAlone.flatMap((a) => resolveActionToEvents(a));
+      : defaultEvents;
   const manipulators = tapHold({
     key,
     alone,
