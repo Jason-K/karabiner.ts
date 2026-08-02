@@ -32,8 +32,6 @@ import {
   writeKarabinerConfig,
 } from "./engine";
 
-const { rules, analysis } = buildRules();
-
 // ============================================================================
 // WRITE
 // ============================================================================
@@ -44,14 +42,15 @@ const dryRun = !isDarwin || isCI;
 
 const configPath = PATHS.configKarabiner.path;
 
-function reportConflictWarnings(): void {
+function main(): void {
+  // Compiling inside main() keeps conflict errors on the same reporting path as
+  // write errors — at module scope a RuleConflictError escaped the handler below
+  // and surfaced as a raw stack trace.
+  const { rules, analysis } = buildRules();
+
   for (const warning of analysis.warnings) {
     console.warn(`⚠ [${warning.kind}] ${warning.message}`);
   }
-}
-
-function main(): void {
-  reportConflictWarnings();
 
   // One read of karabiner.json for the whole build; one atomic write back.
   const config = dryRun ? undefined : readKarabinerConfig(configPath);
