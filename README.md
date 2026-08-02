@@ -1,67 +1,176 @@
 # Karabiner Config
 
-Personal Karabiner-Elements configuration written in TypeScript with `karabiner.ts`.
+Personal Karabiner-Elements configuration, written in TypeScript and compiled to
+`~/.config/karabiner/karabiner.json`.
 
-## Architecture
+This project was originally built on the upstream `karabiner.ts` package. It has
+since diverged far enough to be self-contained — there is no runtime dependency
+on upstream, and `src/types/karabiner.ts` carries its own copy of the
+Karabiner-Elements JSON schema.
 
-The config is split by responsibility:
+## What this is
 
-- `src/core/` — low-level builders and shared primitives (`ActionSpec`, mods, conditions, scripts, tap-hold, mouse helpers, leader internals)
-- `src/data/` — registries and constants (apps, folders, raycast, cleanshot, devices, paths, timings, UI labels)
-- `src/definitions/` — data configs that express behaviours as `Binding[]` (the standardized surface) and hand them to the engine; this is the user edit surface
-- `src/engine/` — rule generation; the only layer that constructs manipulators. `binding.ts` defines the `Binding`/`Case`/`Condition` schema and `defineBindings`, the single entry point every generator routes through
-- `src/tests/` — unit + integration regression coverage
-- `src/index.ts` — orchestrates the pipeline and writes the profile
+A compiler. You write bindings in a small typed DSL; it emits Karabiner JSON:
 
-Every behaviour is a `Binding` (or a typed config that an engine adapter translates into one) plus a single `defineBindings`/generator call. No definition file imports from `karabiner.ts` directly or iterates over its own mappings. All output events flow through one path: `ActionSpec` → `resolveActionToEvents` (in `src/engine/action-resolver.ts`) → karabiner.ts `ToEvent[]`.
-
-> **Standardization in progress:** the `Binding` schema + `defineBindings` is the target definition surface. `home-end.ts` is migrated as the reference; the other definition files still use their legacy generator adapters (`generateTapHoldRules`, etc.), which are thin wrappers over `defineBindings`. See `docs/superpowers/specs/2026-07-21-engine-consolidation-design.md`.
-
-## Upstream Integration
-
-- Imports resolve from the installed `karabiner.ts` package, not from mirrored source paths.
-- Local beta compatibility helpers live in `src/core/beta.ts`.
-- `karabiner.ts-upstream/` and `docs/upstream/` are read-only reference and diff surfaces used by sync workflows.
-
-See `docs/UPSTREAM_SYNC.md` for the sync workflow.
-
-## Key Files
-
-- `src/core/action-dsl.ts` — the `ActionSpec` union used for every output event
-- `src/engine/binding.ts` — the standardized `Binding` schema and `defineBindings`, the single entry point every generator routes through
-- `src/engine/action-resolver.ts` — single compiler from `ActionSpec` to Karabiner `ToEvent`s
-- `src/core/leader/build.ts` — generic leader-layer compiler (used by the space leader, ready for additional leaders)
-- `src/data/apps.ts`, `raycast.ts`, `cleanshot.ts`, `paths.ts` — registries referenced by definitions
-- `src/index.ts` — orchestration entry point
-
-## Common Commands
-
-```bash
-npm run typecheck
-npm test
-npm run build
-npm run check
+```
+src/definitions/   Binding[]        what should this key do?
+        ↓
+src/engine/        Manipulator[]    how does that become Karabiner JSON?
+        ↓
+karabiner.json
 ```
 
-## Practical Rule
+Everything under `src/engine/` is a pure transformation. `src/index.ts` is the
+only module that touches the filesystem, the clock, or the environment.
 
-If a file answers "what should this key do?", it belongs in `src/definitions/`.
+## Quick start
 
-If a file answers "how do we turn that declaration into Karabiner JSON?", it belongs in `src/engine/`.
+```bash
+npm run generate     # compile and write karabiner.json (no Hammerspoon reload)
+npm run build        # generate, then reload Hammerspoon
+npm run check        # typecheck + lint + tests
+```
 
-If a file is a low-level builder, a shared helper, or part of the leader runtime, it belongs in `src/core/`.
+To change a binding, edit a file in `src/definitions/` and run `npm run build`.
 
-If a file is a plain registry or constant table consumed across layers, it belongs in `src/data/`.
+## Layout
+
+| Path | Role |
+| --- | --- |
+| `src/definitions/` | **The edit surface.** One `Binding[]` per concern: single keys, modified keys, caps lock, mouse, guards, disabled hotkeys, chords. |
+| `src/data/` | Registries and constants. `primitives/` are the type definitions; `registries/` are the lookup tables (apps, commands, paths, URLs, devices, hotkey combos); `constants/` are fixed values (keys, timings, mouse buttons). |
+| `src/engine/` | Rule generation. The only layer that constructs manipulators. |
+| `src/types/` | The Karabiner-Elements JSON schema, plus shared type utilities. |
+| `src/config.ts` | Assembles every binding set into the ordered rule list. Pure. |
+| `src/index.ts` | Build entry point: resolve profile, compile, write. |
+| `src/explain.ts` | `--explain` CLI (see below). |
+| `src/tests/` | Engine tests over synthetic fixtures, plus output invariants and the golden file. |
+
+Inside `src/engine/`, each pass gets a directory:
+
+| Path | Pass |
+| --- | --- |
+| `resolve-trigger/` | `Trigger` → `from` event (keys, chords, tap-hold, devices) |
+| `resolve-to-action/` | `ActionSpec` → `to` events. `action-handlers.ts` is the registry. |
+| `resolve-conditions/` | `Condition` → Karabiner condition. `condition-handlers.ts` is the registry. |
+| `resolve-cases/` | Group cases by condition into manipulators |
+| `resolve-description/` | Synthesize human-readable rule descriptions |
+| `emit-manipulators/` | Assemble the final `Manipulator[]` / `Rule[]` |
+| `analyze-conflicts/` | Detect rules that other rules make unreachable |
+| `config-writer.ts` | The single atomic writer for `karabiner.json` |
+
+## Authoring a binding
+
+```ts
+bind(
+  from("q"),                                    // trigger
+  to(
+    release(key("q", { halt: true })),          // tap
+    hold(openApp(APP_ID.qspace)),               // hold
+  ),
+  when(condApp(APP_ID.finder)),                 // conditions (optional)
+  options({ timing: { holdMs: 200 } }),         // options (optional)
+);
+```
+
+- `from(key, modifiers?)` — a single key, or `from([a, b])` for a chord.
+- `to(...cases)` — `press()`, `release()` / `tap()`, `hold()`, `doubleTap()`,
+  `guard()`. Chain `.when(...)` on a case to scope it.
+- Actions: `key()`, `map()`, `openApp()`, `openUrl()`, `shell()`, `openFolder()`,
+  `setVar()`, `sequence()`, `noop()`, and the rest of `ActionSpec`.
+- Conditions: `condApp()`, `condVar()`, `condDevice()` and their `not` variants.
+
+Descriptions are derived automatically from the trigger, conditions, and
+actions — you only set `description` to override.
+
+## Conflict detection
+
+Karabiner evaluates complex modifications top-down and stops at the first
+manipulator that matches. A rule is therefore **dead** if an earlier rule
+matches strictly more inputs under strictly weaker conditions.
+
+`buildRules()` runs `assertNoConflicts()` before emitting anything, so an
+unreachable binding fails the build rather than sitting silently dead in your
+config. Conflicts are classified, not merely detected:
+
+| Kind | Meaning | Result |
+| --- | --- | --- |
+| `duplicate` | Same input domain, same conditions | **build fails** |
+| `shadowed` | An earlier, broader rule covers this one entirely | **build fails** |
+| `chord-member` | A single-key rule precedes a chord using that key | warning |
+| `narrowing` | Overlapping inputs, more specific rule ordered first | fine, not reported |
+
+`chord-member` is a warning rather than an error because reachability there
+depends on press timing and the simultaneous threshold, which static analysis
+cannot decide.
+
+Two rules that share a trigger but have provably disjoint conditions — `var == 1`
+against `var != 1`, or two different frontmost apps — are **not** a conflict. This
+is why plain signature-equality checking is not enough.
+
+## Debugging a binding
+
+```bash
+npm run explain -- q            # every rule that can claim q, in order
+npm run explain -- cmd+q
+npm run explain -- L.cmd+d      # sided modifiers
+npm run explain -- j,k          # a chord
+npm run explain -- --conflicts  # full conflict report
+```
+
+The first *reachable* rule in the list is the one that fires.
+
+## Safety
+
+`karabiner.json` is also owned by the Karabiner-Elements GUI, so the writer is
+careful:
+
+- One read, one in-memory build, one atomic temp-file + `rename` write.
+- A timestamped backup in `backups/` before every write (10 retained).
+- Any failure throws and exits non-zero — a build that could not write must not
+  look successful, because `npm run build` reloads Hammerspoon next.
+
+## Tests
+
+- **Engine tests** (`binding.test.ts`, `case-helpers.test.ts`,
+  `action-handlers.test.ts`, `condition-handlers.test.ts`,
+  `analyze-conflicts.test.ts`, …) use synthetic fixtures defined in the test.
+  They never import from `src/definitions/`, so editing your keymap cannot
+  break them.
+- **`output-invariants.test.ts`** asserts properties that hold for any keymap:
+  to-event well-formedness, no conditions reading variables nothing writes,
+  parameter ranges.
+- **`golden-output.test.ts`** diffs the compiled config against the committed
+  `karabiner-output.json`. When a change is intentional:
+
+  ```bash
+  UPDATE_GOLDEN=1 npm test
+  ```
+
+  then review the `karabiner-output.json` diff before committing.
+
+## Extending the engine
+
+Adding a Karabiner feature is two edits, and the compiler checks the second:
+
+**A new `to` action** — add the variant to `ActionSpec` in
+`src/data/primitives/actions.ts`, then add its entry to `ACTION_HANDLERS` in
+`src/engine/resolve-to-action/action-handlers.ts`. The `satisfies ActionHandlers`
+annotation fails the build naming the tag you missed. Add a builder function in
+`to-action-wrappers.ts` if you want a nicer call site.
+
+**A new condition** — add the variant to `Condition` in
+`src/data/primitives/bindings.ts`, extend `conditionKind()`, then add its entry
+to `CONDITION_HANDLERS` in `src/engine/resolve-conditions/condition-handlers.ts`.
+That entry must supply `contradicts`, so a new condition type cannot be added
+without stating how conflict analysis should treat it.
 
 ## Documentation
 
-- `docs/DECLARATIVE_CONFIG_PLAN.md` — current architecture, engine-function inventory, and the definition-file contract
-- `docs/COMMAND_SERVER_GUIDE.md` — when to use the user command server vs shell commands, plus migration, performance, testing, and troubleshooting
-- `docs/INTEGRATION_SUMMARY.md` — upstream integration strategy and ownership boundaries
-- `docs/UPSTREAM_SYNC.md` — how to update the upstream mirror safely
-- `docs/INSIGHTS.md` — Karabiner manipulator pattern notes (variable conditions, evaluation order, timing parameters)
+- `docs/TS_BEST_PRACTICES_REVIEW.md` — architecture review and improvement plan
+- `docs/karabiner_docs/` — mirrored Karabiner-Elements JSON reference
+- `docs/INSIGHTS.md` — manipulator pattern notes (variable conditions,
+  evaluation order, timing parameters)
 - `docs/FUTURE_FEATURES.md` — tracked unimplemented Karabiner capabilities
-- `docs/BETA_IMPLEMENTATION_SUMMARY.md` — historical snapshot of the v15.6–v15.9 beta features adoption
-- `docs/superpowers/` — design specs and execution plans for in-flight or recently completed refactors
-- `docs/karabiner_docs/` - Karabiner Elements documentation and examples
-- `docs/karabiner_docs/complex-modifications-manipulator-definition/_index.md` - anatomy of a Karabiner JSON rule with links to definitions of each element.
+- `docs/COMMAND_SERVER_GUIDE.md` — user command server vs shell commands
+- `docs/superpowers/` — design specs and execution plans

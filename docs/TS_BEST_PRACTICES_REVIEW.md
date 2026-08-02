@@ -4,6 +4,14 @@ Date: 2026-08-01
 Scope: full tree (`src/`, `scripts/`, config), ~12.3k LOC TypeScript.
 Baseline measured at review time: `typecheck` clean · `lint` clean · **`test` 185 pass / 5 fail / 5 skipped**.
 
+> **Status: all 14 recommendations implemented.** The findings below are kept as
+> written at review time — they record what was wrong and why, which is the part
+> worth preserving. Where a finding describes current behaviour in the present
+> tense, read it as "before". The suggested order of work at the end doubles as
+> the changelog. Current state: `npm run check` passes (typecheck + lint + 211
+> tests), generated output is byte-identical apart from the one dead rule the
+> conflict analyzer found.
+
 This document has two parts:
 
 - **Part 1** — the TS practices that actually apply to *this* kind of project (a compiler from a hand-authored DSL to a foreign JSON schema).

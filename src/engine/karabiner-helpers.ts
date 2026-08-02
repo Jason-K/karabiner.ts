@@ -330,6 +330,15 @@ export class BasicManipulatorBuilder {
   }
 }
 
+/**
+ * Low-level manipulator builder: start a `basic` manipulator from a key code or
+ * a `from` event.
+ *
+ * Not the same `map` as the `map()` action wrapper in `to-action-wrappers.ts`,
+ * which emits a hotkey combo from the `COMBOS` registry. This one is engine
+ * internals and is reachable only by importing `karabiner-helpers` directly —
+ * it is not re-exported from the engine barrel.
+ */
 export function map(
   fromParam: string | FromEvent,
   mandatoryModifiers?: Modifier[],

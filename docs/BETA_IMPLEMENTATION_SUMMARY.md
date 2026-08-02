@@ -1,3 +1,7 @@
+> **Stale paths.** Written against the old `src/core/` layout. The architecture
+> it describes is still broadly accurate, but file paths are not — see
+> [README](../README.md) for the current layout.
+
 # Karabiner Beta Features Implementation Summary
 
 **Date:** March 19, 2026

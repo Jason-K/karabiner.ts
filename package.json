@@ -10,10 +10,11 @@
   "scripts": {
     "build": "tsx src/index.ts && hs -c \"hs.reload()\"",
     "generate": "tsx src/index.ts",
+    "explain": "tsx src/explain.ts",
     "typecheck": "tsc -p tsconfig.json",
     "test": "tsx --test 'src/**/*.test.ts'",
     "check": "npm run typecheck && npm run lint && npm run test",
-    "lint": "eslint src --max-warnings=84"
+    "lint": "eslint src --max-warnings=81"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

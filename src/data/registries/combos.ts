@@ -39,5 +39,8 @@ export const COMBOS = {
   ...HK_REGISTRY,
 } satisfies Record<string, MapSpec>;
 
-export { mapSpec, mapSpec as map };
+// Deliberately NOT re-exported as `map`: the engine barrel already exports a
+// `map()` action wrapper, and definitions import from both barrels. One `map`
+// in scope, not two.
+export { mapSpec };
 export type { MapSpec, Map, ComboOpts, HkInput };

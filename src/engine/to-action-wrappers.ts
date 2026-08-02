@@ -63,20 +63,10 @@ export class CaseBuilder implements Case {
     return this;
   }
 
-  /** Alias for `withTapCount`. */
-  taps(count: number): this {
-    return this.withTapCount(count);
-  }
-
   /** Mark action as delayed (multi-tap). */
-  delayedAction(isDelayed = true): this {
+  withDelayed(isDelayed = true): this {
     this.delayed = isDelayed;
     return this;
-  }
-
-  /** Alias for `delayedAction`. */
-  withDelayed(isDelayed = true): this {
-    return this.delayedAction(isDelayed);
   }
 
   /** Enable double-tap guard protection on this case. */
@@ -86,25 +76,15 @@ export class CaseBuilder implements Case {
   }
 
   /** Set optional action fragment description. */
-  desc(text: string): this {
+  describe(text: string): this {
     this.description = text;
     return this;
   }
 
-  /** Alias for `desc`. */
-  describe(text: string): this {
-    return this.desc(text);
-  }
-
   /** Suppress trigger fallback (emit only explicit `do`). */
-  suppressFallback(suppress = true): this {
+  withSuppress(suppress = true): this {
     this.suppress = suppress;
     return this;
-  }
-
-  /** Alias for `suppressFallback`. */
-  withSuppress(suppress = true): this {
-    return this.suppressFallback(suppress);
   }
 }
 
@@ -140,21 +120,21 @@ export function doubleTap(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
 ): CaseBuilder {
-  return press(actions, conditions).taps(2);
+  return press(actions, conditions).withTapCount(2);
 }
 
 export function doubleTapHold(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
 ): CaseBuilder {
-  return hold(actions, conditions).taps(2);
+  return hold(actions, conditions).withTapCount(2);
 }
 
 export function delayedSingleTap(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
 ): CaseBuilder {
-  return release(actions, conditions).delayedAction(true);
+  return release(actions, conditions).withDelayed(true);
 }
 
 export function guard(

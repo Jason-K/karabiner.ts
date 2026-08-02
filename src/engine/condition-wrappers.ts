@@ -19,18 +19,7 @@ export function when(...conditions: (Condition | Condition[])[]): WhenWrapper {
   };
 }
 
-/** Primitive helper to assert a condition is positive (`if`). */
-export function actIf(cond: Condition): Condition {
-  const { unless: _unless, ...rest } = cond as any;
-  return rest;
-}
-
-/** Primitive helper to assert a condition is inverted (`unless`). */
-export function actUnless(cond: Condition): Condition {
-  return { ...cond, unless: true };
-}
-
-function isVarValueSpec(val: any): val is VarValueSpec {
+function isVarValueSpec(val: unknown): val is VarValueSpec {
   return (
     typeof val === "object" &&
     val !== null &&
@@ -104,7 +93,6 @@ export function unlessKeVar(
 export const condVar = ifUserVar;
 export const ifVar = ifUserVar;
 export const condNotVar = unlessUserVar;
-export const unlessVar = unlessUserVar;
 
 export function condApp(
   app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[],
@@ -138,7 +126,3 @@ export function condDevice(
   };
 }
 export const ifDevice = condDevice;
-
-export function unlessDevice(device: DeviceSpec): Condition {
-  return condDevice(device, true);
-}

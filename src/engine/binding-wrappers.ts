@@ -34,12 +34,54 @@ export type BindingOptions = BindingOptionsSpec & {
   modifiers?: TriggerModifiers;
 };
 
-function isCase(val: any): boolean {
+/**
+ * Every key `BindingOptionsSpec` accepts.
+ *
+ * `satisfies Record<keyof BindingOptionsSpec, true>` makes this exhaustive: add
+ * a field to `Binding` and the compiler demands it be listed here. That is what
+ * lets {@link bind} reject a misspelled option instead of silently dropping it —
+ * `BindingOptionsSpec` is fully optional, so *any* object literal satisfies it
+ * and the type system alone cannot catch `timings:` for `timing:`.
+ */
+const BINDING_OPTION_KEYS = {
+  description: true,
+  timing: true,
+  conditions: true,
+  eventOptions: true,
+  multiTap: true,
+  afterKeyUp: true,
+  whileHoldVar: true,
+  suppress: true,
+  suppressCancelFallback: true,
+  modWhileDown: true,
+  guardVar: true,
+  guardMs: true,
+} satisfies Record<keyof BindingOptionsSpec, true>;
+
+function isCase(val: unknown): val is Case {
   return (
     typeof val === "object" &&
     val !== null &&
     ("do" in val || "phase" in val || val instanceof CaseBuilder)
   );
+}
+
+/**
+ * Validate a bare options object, which is the one `BindArg` variant the type
+ * system cannot check. Throws naming the offending key.
+ */
+function assertKnownOptions(value: object): BindingOptionsSpec {
+  const unknown = Object.keys(value).filter(
+    (k) => !(k in BINDING_OPTION_KEYS),
+  );
+  if (unknown.length) {
+    throw new Error(
+      `bind(): unknown option${unknown.length > 1 ? "s" : ""} ${unknown
+        .map((k) => `"${k}"`)
+        .join(", ")}. Valid options: ${Object.keys(BINDING_OPTION_KEYS).sort().join(", ")}.`,
+    );
+  }
+  return value as BindingOptionsSpec;
 }
 
 function isCondition(val: unknown): val is Condition {
@@ -100,28 +142,32 @@ export function bind(
     }
 
     if (Array.isArray(arg)) {
-      if (arg.length > 0) {
-        const first = arg[0];
-        if (isCondition(first)) {
-          hoistedConditions.push(...(arg as Condition[]));
-        } else {
-          cases.push(...(arg as Case[]));
-        }
+      // Classify every element, not just the first: a mixed array would
+      // otherwise be silently filed under whatever `arg[0]` happened to be.
+      const conditions = arg.filter(isCondition);
+      const caseItems = arg.filter(isCase);
+      if (conditions.length + caseItems.length !== arg.length) {
+        throw new Error(
+          `bind(): array argument contains ${arg.length - conditions.length - caseItems.length} ` +
+            "entr(y|ies) that are neither a case nor a condition.",
+        );
       }
+      hoistedConditions.push(...conditions);
+      cases.push(...caseItems);
       continue;
     }
 
     if (isCase(arg)) {
-      cases.push(arg as Case);
+      cases.push(arg);
       continue;
     }
 
     if (isCondition(arg)) {
-      hoistedConditions.push(arg as Condition);
+      hoistedConditions.push(arg);
       continue;
     }
 
-    mergedOptions = { ...mergedOptions, ...(arg as BindingOptionsSpec) };
+    mergedOptions = { ...mergedOptions, ...assertKnownOptions(arg) };
   }
 
   const finalConditions = [

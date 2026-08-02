@@ -1,6 +1,6 @@
 export { APP_ID, PW_IDS } from "./apps";
 export { CMDS } from "./commands";
-export { COMBOS, map, type ComboOpts, type HkInput } from "./combos";
+export { COMBOS, mapSpec, type ComboOpts, type HkInput } from "./combos";
 export { DEVICES } from "./devices";
 export {
   MODKEY_CODES,
