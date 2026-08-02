@@ -119,7 +119,7 @@ export function analyzable(
  * differing only in whether the extra keys are expressed as `from.modifiers` or
  * as chord members.
  *
- * `vmod()` emits both encodings on purpose, so that whichever way Karabiner
+ * A binding may emit both encodings on purpose, so that whichever way Karabiner
  * reports the combination one of them matches. Ordering between such a pair is
  * not a conflict.
  */

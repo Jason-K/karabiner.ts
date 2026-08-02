@@ -4,8 +4,8 @@
  * A rule is the unit the Karabiner-Elements GUI shows and the user enables or
  * disables; a manipulator is the unit that actually fires. One binding per rule
  * — the previous behaviour — put the same physical trigger in several GUI rows
- * (`⌘+H` twice, caps lock thirty-one times) and left the user guessing which
- * row owned the key.
+ * (`⌘+H` twice, the caps lock layer several hundred times) and left the user
+ * guessing which row owned the key.
  *
  * So: every binding that resolves to the same trigger is emitted into one rule,
  * conditioned manipulators above unconditional ones, and the rules themselves

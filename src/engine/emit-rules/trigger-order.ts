@@ -93,8 +93,8 @@ export type TriggerSortKey = {
  * Reduce a trigger to the tuple the order above is defined on.
  *
  * A chord expresses its modifiers as extra members rather than as
- * `from.modifiers` — `vmod()` deliberately emits both encodings of the same
- * physical input — so every member after the first that is a modifier key is
+ * `from.modifiers`, and a binding may deliberately emit both encodings of the
+ * same physical input — so every member after the first that is a modifier key is
  * folded into `modifiers`. That makes `[⌘⌥⌃⇧]+[CAPS]` and
  * `[CAPS]+[⌘]+[⌥]+[⌃]+[⇧]` produce the same key, which is what keeps the pair
  * adjacent in the output instead of drifting apart.

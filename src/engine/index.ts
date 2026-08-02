@@ -15,4 +15,4 @@ export * from "./to-action-wrappers";
 export * from "./condition-wrappers";
 export * from "./from-action-wrappers";
 export * from "./binding-wrappers";
-export * from "./virtual-modifiers";
+export * from "./caps-layer";

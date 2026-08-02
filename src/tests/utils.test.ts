@@ -14,7 +14,6 @@ import {
   shellSingleQuote,
   tokenizeShellCommand,
 } from "../engine/utils";
-import { vmod } from "../engine";
 
 test("shellSingleQuote quotes strings and escapes internal single quotes", () => {
   assert.equal(shellSingleQuote("hello"), "'hello'");
@@ -110,11 +109,5 @@ test("resolveModifiers expands key aliases", () => {
     mandatory: ["right_command", "left_shift"],
     optional: [],
   });
-});
-
-test("vmod accepts ModKey aliases in subtractiveModifiers", () => {
-  const bindingsAlias = vmod("caps_lock", ["L.shift", "L.ctrl"]);
-  const bindingsCanonical = vmod("caps_lock", ["left_shift", "left_control"]);
-  assert.deepEqual(bindingsAlias, bindingsCanonical);
 });
 
