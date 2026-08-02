@@ -144,7 +144,12 @@ export function tapHoldFrom({
       filteredHold.forEach((e: ToEvent) => m.toIfHeldDown(withEventOptions(e)));
     }
 
-    const cancelEvents = opts.cancel ?? cancel ?? alone ?? [];
+    // Default to emitting nothing on cancel: Karabiner fires to_if_canceled
+    // whenever the key is released before to_delayed_action_delay_milliseconds
+    // elapses, including after the hold threshold has already fired the hold
+    // action — falling back to `alone` here would re-echo the trigger key on
+    // release even though the hold action already ran.
+    const cancelEvents = opts.cancel ?? cancel ?? [];
     const invokedEvents = opts.invoked ?? invoked ?? [];
     m.toDelayedAction(invokedEvents, cancelEvents);
     return m;

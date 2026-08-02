@@ -69,7 +69,6 @@ const symbolBindings: Binding[] = [
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
-      suppressCancelFallback: true,
     }),
   ),
   bind(
@@ -83,7 +82,6 @@ const symbolBindings: Binding[] = [
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
-      suppressCancelFallback: true,
     }),
   ),
   bind(from("slash"), to(hold(map(COMBOS.raycastHere2This)))),
@@ -100,7 +98,6 @@ const nonCharBindings: Binding[] = [
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
-      suppressCancelFallback: true,
     }),
   ),
   bind(
@@ -112,7 +109,6 @@ const nonCharBindings: Binding[] = [
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
-      suppressCancelFallback: true,
     }),
   ),
   bind(from("tab"), to(hold(key("mission_control", { halt: true, repeat: true })))),
