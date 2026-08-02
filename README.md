@@ -55,7 +55,8 @@ Inside `src/engine/`, each pass gets a directory:
 | `resolve-conditions/` | `Condition` → Karabiner condition. `condition-handlers.ts` is the registry. |
 | `resolve-cases/` | Group cases by condition into manipulators |
 | `resolve-description/` | Synthesize human-readable rule descriptions |
-| `emit-manipulators/` | Assemble the final `Manipulator[]` / `Rule[]` |
+| `emit-manipulators/` | Assemble the final `Manipulator[]` for one binding |
+| `emit-rules/` | Group bindings into rules and order them (see below) |
 | `analyze-conflicts/` | Detect rules that other rules make unreachable |
 | `config-writer.ts` | The single atomic writer for `karabiner.json` |
 
@@ -83,15 +84,50 @@ bind(
 Descriptions are derived automatically from the trigger, conditions, and
 actions — you only set `description` to override.
 
+## Rule emission
+
+A *manipulator* is what fires; a *rule* is what the Karabiner-Elements GUI shows
+and the user enables or disables. The two are not one-to-one, and how bindings
+are folded into rules is what makes the generated list navigable.
+
+**One trigger, one rule.** Every binding that resolves to the same trigger — same
+keys, same mandatory modifiers — is emitted into a single rule, whichever
+definition file it came from. Optional modifiers do not split a rule: a pointer
+binding scoped to "no modifier" and one scoped to "any modifier" are one entry.
+The merged rule's description folds every binding's cases into one label.
+
+Inside a rule, conditional manipulators come before unconditional ones, so an
+`Always:` fallback cannot swallow events meant for an `In Skim:` case.
+
+**Rules are ordered by their trigger**, not by declaration order:
+
+1. more mandatory modifiers before fewer — `⌘⌥⌃⇧+A` ▸ `⌘⌥⌃+A` ▸ `⌘+A` ▸ `A`
+2. at equal count, ⌘ before ⌥ before ⌃ before ⇧ — `⌘⌥+A` ▸ `⌘⌃+A` ▸ `⌥⌃+A`
+3. key triggers before pointer-button triggers
+4. keys alphabetically, digits compared numerically — `⌘+A` ▸ `⌘+Z`, `F2` ▸ `F10`
+5. finally the modifiers' sides — unsided, then left, then right
+
+This is also Karabiner's evaluation order, so it is load-bearing rather than
+cosmetic: the specific `⌘⌥+H` is reached before the general `⌘+H`, which is
+reached before bare `H`. Chords generated from `simultaneousMappings` stay ahead
+of everything, because a single-key rule can consume a chord's first key-down and
+trigger order alone cannot express that.
+
+**Merging unrelated triggers.** `options({ ruleGroup: { id, description } })` puts
+several distinct triggers in one rule under one hand-written label. `vmod()` uses
+it so that caps lock and its fifteen modifier variants are one row instead of
+thirty-one near-identical ones.
+
 ## Conflict detection
 
 Karabiner evaluates complex modifications top-down and stops at the first
 manipulator that matches. A rule is therefore **dead** if an earlier rule
 matches strictly more inputs under strictly weaker conditions.
 
-`buildRules()` runs `assertNoConflicts()` before emitting anything, so an
-unreachable binding fails the build rather than sitting silently dead in your
-config. Conflicts are classified, not merely detected:
+`buildRules()` checks every ordered pair before emitting anything — over the
+*planned* order above, not the declaration order — so an unreachable binding
+fails the build rather than sitting silently dead in your config. Conflicts are
+classified, not merely detected:
 
 | Kind | Meaning | Result |
 | --- | --- | --- |

@@ -56,6 +56,7 @@ const BINDING_OPTION_KEYS = {
   modWhileDown: true,
   guardVar: true,
   guardMs: true,
+  ruleGroup: true,
 } satisfies Record<keyof BindingOptionsSpec, true>;
 
 function isCase(val: unknown): val is Case {

@@ -9,6 +9,7 @@ export * from "./resolve-trigger";
 export * from "./resolve-conditions";
 export * from "./resolve-cases";
 export * from "./emit-manipulators";
+export * from "./emit-rules";
 export * from "./leader";
 export * from "./to-action-wrappers";
 export * from "./condition-wrappers";
