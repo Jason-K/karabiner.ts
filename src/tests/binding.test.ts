@@ -188,10 +188,10 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
   ]);
   const built = rules[0] as any;
   const m = built.manipulators[0];
-  // default-alone pass-through: no tap case was given, so instead of
-  // duplicating the trigger key/modifiers it replays the original event
-  // via `to.from_event`.
-  assert.deepEqual(m.to_if_alone, [{ from_event: true, halt: true }]);
+  // default-alone pass-through: the key itself with halt:true.
+  // Note: karabiner.ts' toKey() helper always sets `modifiers: undefined` as an own
+  // property (it gets dropped by JSON.stringify, so the live output is unaffected).
+  assert.deepEqual(m.to_if_alone, [{ halt: true, key_code: "a", modifiers: undefined }]);
   // to_if_held_down gets halt:true by default too: it cancels the subsequent
   // to_delayed_action so a release after a genuine hold doesn't replay the
   // to_if_canceled fallback below.
@@ -209,7 +209,7 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
   // from re-firing once a hold has already committed.
   assert.deepEqual(m.to_delayed_action, {
     to_if_invoked: [],
-    to_if_canceled: [{ from_event: true, halt: true }],
+    to_if_canceled: [{ halt: true, key_code: "a", modifiers: undefined }],
   });
 });
 

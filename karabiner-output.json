@@ -23479,7 +23479,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "e",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23557,7 +23563,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "f",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23625,7 +23637,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23663,7 +23681,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23701,7 +23725,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23739,7 +23769,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23777,7 +23813,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23859,7 +23901,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "q",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -23909,7 +23957,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "r",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -24015,7 +24069,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "spacebar",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -24371,8 +24431,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "m",
+                "modifiers": [
+                  "left_command"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24390,8 +24453,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "m",
+                  "modifiers": [
+                    "left_command"
+                  ]
                 }
               ]
             }
@@ -24419,7 +24485,10 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "from_event": true
+                "key_code": "p",
+                "modifiers": [
+                  "left_command"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -24452,8 +24521,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "p",
+                "modifiers": [
+                  "left_command"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24473,8 +24545,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "p",
+                  "modifiers": [
+                    "left_command"
+                  ]
                 }
               ]
             }
@@ -24724,8 +24799,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "k",
+                "modifiers": [
+                  "right_option"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24738,8 +24816,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "k",
+                  "modifiers": [
+                    "right_option"
+                  ]
                 }
               ]
             }
@@ -24796,8 +24877,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "t",
+                "modifiers": [
+                  "right_option"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24810,8 +24894,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "t",
+                  "modifiers": [
+                    "right_option"
+                  ]
                 }
               ]
             }
@@ -24880,8 +24967,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "a",
+                "modifiers": [
+                  "shift"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24894,8 +24984,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "shift"
+                  ]
                 }
               ]
             }
@@ -24969,8 +25062,11 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "s",
+                "modifiers": [
+                  "shift"
+                ]
               }
             ],
             "to_if_held_down": [
@@ -24983,8 +25079,11 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "s",
+                  "modifiers": [
+                    "shift"
+                  ]
                 }
               ]
             }
@@ -25004,8 +25103,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "8"
               }
             ],
             "to_if_held_down": [
@@ -25022,8 +25121,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "8"
                 }
               ]
             }
@@ -25043,8 +25142,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "a"
               }
             ],
             "to_if_held_down": [
@@ -25064,8 +25163,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "a"
                 }
               ]
             }
@@ -25085,8 +25184,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "c"
               }
             ],
             "to_if_held_down": [
@@ -25105,8 +25204,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "c"
                 }
               ]
             }
@@ -25126,8 +25225,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "d"
               }
             ],
             "to_if_held_down": [
@@ -25146,8 +25245,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "d"
                 }
               ]
             }
@@ -25364,8 +25463,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f"
               }
             ],
             "to_if_held_down": [
@@ -25378,8 +25477,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f"
                 }
               ]
             }
@@ -25399,8 +25498,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f1"
               }
             ],
             "to_if_held_down": [
@@ -25414,8 +25513,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f1"
                 }
               ]
             }
@@ -25435,8 +25534,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f2"
               }
             ],
             "to_if_held_down": [
@@ -25450,8 +25549,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f2"
                 }
               ]
             }
@@ -25471,8 +25570,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f3"
               }
             ],
             "to_if_held_down": [
@@ -25486,8 +25585,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f3"
                 }
               ]
             }
@@ -25507,8 +25606,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f4"
               }
             ],
             "to_if_held_down": [
@@ -25522,8 +25621,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f4"
                 }
               ]
             }
@@ -25543,8 +25642,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f5"
               }
             ],
             "to_if_held_down": [
@@ -25563,8 +25662,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f5"
                 }
               ]
             }
@@ -25584,8 +25683,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f7"
               }
             ],
             "to_if_held_down": [
@@ -25599,8 +25698,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f7"
                 }
               ]
             }
@@ -25620,8 +25719,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f8"
               }
             ],
             "to_if_held_down": [
@@ -25635,8 +25734,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f8"
                 }
               ]
             }
@@ -25656,8 +25755,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f9"
               }
             ],
             "to_if_held_down": [
@@ -25671,8 +25770,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f9"
                 }
               ]
             }
@@ -25692,8 +25791,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f10"
               }
             ],
             "to_if_held_down": [
@@ -25707,8 +25806,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f10"
                 }
               ]
             }
@@ -25728,8 +25827,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f11"
               }
             ],
             "to_if_held_down": [
@@ -25743,8 +25842,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f11"
                 }
               ]
             }
@@ -25764,8 +25863,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "f12"
               }
             ],
             "to_if_held_down": [
@@ -25779,8 +25878,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "f12"
                 }
               ]
             }
@@ -25800,8 +25899,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "fn"
               }
             ],
             "to_if_held_down": [
@@ -25820,8 +25919,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "fn"
                 }
               ]
             },
@@ -25849,8 +25948,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "g"
               }
             ],
             "to_if_held_down": [
@@ -25863,8 +25962,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "g"
                 }
               ]
             }
@@ -25884,8 +25983,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "grave_accent_and_tilde"
               }
             ],
             "to_if_held_down": [
@@ -25905,8 +26004,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "grave_accent_and_tilde"
                 }
               ]
             }
@@ -25926,8 +26025,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "h"
               }
             ],
             "to_if_held_down": [
@@ -25940,8 +26039,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "h"
                 }
               ]
             }
@@ -25984,8 +26083,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "j"
               }
             ],
             "to_if_held_down": [
@@ -25998,8 +26097,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "j"
                 }
               ]
             }
@@ -26019,8 +26118,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "k"
               }
             ],
             "to_if_held_down": [
@@ -26037,8 +26136,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "k"
                 }
               ]
             }
@@ -26058,8 +26157,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_0"
               }
             ],
             "to_if_held_down": [
@@ -26072,8 +26171,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_0"
                 }
               ]
             }
@@ -26093,8 +26192,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_2"
               }
             ],
             "to_if_held_down": [
@@ -26107,8 +26206,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_2"
                 }
               ]
             }
@@ -26128,8 +26227,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_4"
               }
             ],
             "to_if_held_down": [
@@ -26142,8 +26241,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_4"
                 }
               ]
             }
@@ -26163,8 +26262,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_5"
               }
             ],
             "to_if_held_down": [
@@ -26177,8 +26276,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_5"
                 }
               ]
             }
@@ -26198,8 +26297,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_6"
               }
             ],
             "to_if_held_down": [
@@ -26212,8 +26311,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_6"
                 }
               ]
             }
@@ -26233,8 +26332,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "keypad_8"
               }
             ],
             "to_if_held_down": [
@@ -26247,8 +26346,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "keypad_8"
                 }
               ]
             }
@@ -26710,8 +26809,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "n"
               }
             ],
             "to_if_held_down": [
@@ -26724,8 +26823,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "n"
                 }
               ]
             }
@@ -26745,8 +26844,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "o"
               }
             ],
             "to_if_held_down": [
@@ -26759,8 +26858,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "o"
                 }
               ]
             }
@@ -26780,8 +26879,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "p"
               }
             ],
             "to_if_held_down": [
@@ -26801,8 +26900,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "p"
                 }
               ]
             }
@@ -26822,8 +26921,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "q"
               }
             ],
             "to_if_held_down": [
@@ -26840,8 +26939,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "q"
                 }
               ]
             }
@@ -26861,8 +26960,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "r"
               }
             ],
             "to_if_held_down": [
@@ -26875,8 +26974,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "r"
                 }
               ]
             }
@@ -27138,8 +27237,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "s"
               }
             ],
             "to_if_held_down": [
@@ -27152,8 +27251,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "s"
                 }
               ]
             }
@@ -27173,8 +27272,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "slash"
               }
             ],
             "to_if_held_down": [
@@ -27194,8 +27293,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "slash"
                 }
               ]
             }
@@ -27215,8 +27314,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "t"
               }
             ],
             "to_if_held_down": [
@@ -27235,8 +27334,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "t"
                 }
               ]
             }
@@ -27256,8 +27355,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "tab"
               }
             ],
             "to_if_held_down": [
@@ -27271,8 +27370,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "tab"
                 }
               ]
             }
@@ -27292,8 +27391,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "v"
               }
             ],
             "to_if_held_down": [
@@ -27306,8 +27405,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "v"
                 }
               ]
             }
@@ -27327,8 +27426,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "x"
               }
             ],
             "to_if_held_down": [
@@ -27341,8 +27440,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "x"
                 }
               ]
             }
@@ -27362,8 +27461,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "y"
               }
             ],
             "to_if_held_down": [
@@ -27376,8 +27475,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "y"
                 }
               ]
             }
@@ -27397,8 +27496,8 @@
             },
             "to_if_alone": [
               {
-                "from_event": true,
-                "halt": true
+                "halt": true,
+                "key_code": "z"
               }
             ],
             "to_if_held_down": [
@@ -27411,8 +27510,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "from_event": true,
-                  "halt": true
+                  "halt": true,
+                  "key_code": "z"
                 }
               ]
             }

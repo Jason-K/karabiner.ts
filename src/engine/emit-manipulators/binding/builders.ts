@@ -276,20 +276,19 @@ export function buildKeyTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   if (b.modWhileDown) {
     return buildModWhileDown(b, g, key);
   }
-  const { mandatory, optional } = resolveModifiers(b.trigger.modifiers);
+  const { mandatory } = resolveModifiers(b.trigger.modifiers);
   // No tap case was specified, so the default is "re-emit the key as pressed".
-  // `from` only matches on an exact mandatory-modifier state (no `optional`
-  // list), so replaying it via `to.from_event` is equivalent to hardcoding
-  // key_code + mandatory modifiers, without duplicating the trigger key.
-  const defaultEvents: ToEvent[] =
-    optional.length === 0
-      ? [{ from_event: true, halt: true }]
-      : resolveActionToEvents({
-          type: "key",
-          key,
-          modifiers: mandatory as ActionKeyModifier[],
-          options: { halt: true },
-        });
+  // `to.from_event` can't be used here: it only replays the original event
+  // from the immediate `to` channel. to_if_alone / to_if_held_down /
+  // to_delayed_action fire later (after the alone-timeout or a key-up), by
+  // which point the original from-event is no longer available to replay, so
+  // from_event silently emits nothing there. Explicit key_code + modifiers it is.
+  const defaultEvents: ToEvent[] = resolveActionToEvents({
+    type: "key",
+    key,
+    modifiers: mandatory as ActionKeyModifier[],
+    options: { halt: true },
+  });
   const alone = g.hasRelease ? g.releaseDo : defaultEvents;
   const hold = g.hasHold
     ? g.holdDo
