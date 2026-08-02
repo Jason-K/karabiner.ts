@@ -53,20 +53,20 @@ test("expandDeviceConfigs automatically generates keyboard ignore block for poin
   assert.equal(expanded.length, 2);
 
   // Original pointing device config
-  assert.deepEqual(expanded[0].identifiers, {
+  assert.deepEqual(expanded[0]!.identifiers, {
     vendor_id: 1133,
     product_id: 49305,
     is_pointing_device: true,
   });
-  assert.equal(expanded[0].settings?.mouse_flip_vertical_wheel, true);
+  assert.equal(expanded[0]!.settings?.mouse_flip_vertical_wheel, true);
 
   // Automatically generated keyboard companion config with ignore: true
-  assert.deepEqual(expanded[1].identifiers, {
+  assert.deepEqual(expanded[1]!.identifiers, {
     vendor_id: 1133,
     product_id: 49305,
     is_keyboard: true,
   });
-  assert.deepEqual(expanded[1].settings, { ignore: true });
+  assert.deepEqual(expanded[1]!.settings, { ignore: true });
 });
 
 test("expandDeviceConfigs does not duplicate keyboard config if explicitly provided", () => {

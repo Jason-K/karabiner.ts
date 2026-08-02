@@ -1,12 +1,19 @@
-import type { Rule } from "../../types/karabiner";
+import type { Rule, SimultaneousKeyOrder } from "../../types/karabiner";
 import type { ActionSpec, Binding, Case, SimOrder } from "../../data";
-import { defineBindings, resolveModifiers } from "../emit-manipulators/binding";
+import { defineBindings, resolveModifiers } from "../emit-manipulators/compile-binding";
 
-
+/**
+ * Authoring-facing mirror of Karabiner's `from.simultaneous_options`.
+ *
+ * Identical to {@link import('../../types/karabiner').SimultaneousOptions}
+ * except that `to_after_key_up` takes high-level {@link ActionSpec}s rather
+ * than resolved `ToEvent`s — the adapter below splits it off onto
+ * `binding.afterKeyUp` and the engine re-merges it after resolution.
+ */
 export type SimultaneousOptions = {
   detect_key_down_uninterruptedly?: boolean;
-  key_down_order?: "insensitive" | "strict" | "strict_inverse";
-  key_up_order?: "insensitive" | "strict" | "strict_inverse";
+  key_down_order?: SimultaneousKeyOrder;
+  key_up_order?: SimultaneousKeyOrder;
   key_up_when?: "any" | "all";
   to_after_key_up?: ActionSpec[];
 };
@@ -27,7 +34,7 @@ export type SimultaneousConfig = {
  * Map the user-facing `SimultaneousOptions` (Karabiner JSON shape) to the
  * `SimOrder` slice stored on a Binding's `trigger.order`. The `to_after_key_up`
  * field is split off — it becomes `binding.afterKeyUp` (resolved ActionSpec[])
- * in the adapter, then re-merged into `karOptions` by `binding.ts` when the
+ * in the adapter, then re-merged into `karOptions` by `compile-binding.ts` when the
  * simultaneous core primitive is called.
  */
 function resolveOrder(simOpts: SimultaneousOptions | undefined): SimOrder | undefined {
@@ -52,17 +59,20 @@ export function generateSimultaneousRules(
     if (config.hold) cases.push({ phase: "hold", do: config.hold });
     if (config.tapTap) cases.push({ tapCount: 2, phase: "release", do: config.tapTap });
     if (config.tapTapHold) cases.push({ tapCount: 2, phase: "hold", do: config.tapTapHold });
+
+    const order = resolveOrder(config.simultaneousOptions);
     return {
       trigger: {
         keys: config.keys,
-        ...(resolveOrder(config.simultaneousOptions)
-          ? { order: resolveOrder(config.simultaneousOptions) }
-          : {}),
+        ...(order ? { order } : {}),
       },
       timing: {
-        aloneMs: config.thresholdMs,
-        heldThresholdMs: config.thresholdMs,
-        simultaneousMs: config.simultaneousThresholdMs,
+        ...(config.thresholdMs !== undefined
+          ? { aloneMs: config.thresholdMs, heldThresholdMs: config.thresholdMs }
+          : {}),
+        ...(config.simultaneousThresholdMs !== undefined
+          ? { simultaneousMs: config.simultaneousThresholdMs }
+          : {}),
       },
       ...(config.simultaneousOptions?.to_after_key_up
         ? { afterKeyUp: config.simultaneousOptions.to_after_key_up }

@@ -31,14 +31,24 @@ test("expression helpers emit expression conditions", () => {
 });
 
 test("beta helpers serialize send_user_command and from_event", () => {
+  // `endpoint` is omitted rather than set to undefined, so it never reaches
+  // the emitted JSON as a key at all.
   assert.deepEqual(toUserCommand({ command: "show_layer", layer: "space" }), {
     send_user_command: {
       payload: {
         command: "show_layer",
         layer: "space",
       },
-      endpoint: undefined,
     },
   });
+  assert.deepEqual(
+    toUserCommand({ command: "hide_layer" }, "/tmp/receiver.sock"),
+    {
+      send_user_command: {
+        payload: { command: "hide_layer" },
+        endpoint: "/tmp/receiver.sock",
+      },
+    },
+  );
   assert.deepEqual(toTrigger(), { from_event: true });
 });

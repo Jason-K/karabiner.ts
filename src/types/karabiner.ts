@@ -43,10 +43,17 @@ export type FromModifiers = {
   optional?: Modifier[] | ['any'];
 };
 
+/** Ordering restriction shared by `key_down_order` and `key_up_order`. */
+export type SimultaneousKeyOrder = 'insensitive' | 'strict' | 'strict_inverse';
+
+/**
+ * `from.simultaneous_options`.
+ * @see docs/karabiner_docs/complex-modifications-manipulator-definition/from/simultaneous-options
+ */
 export type SimultaneousOptions = {
-  detect_key_down_unbroken_sequence?: boolean;
-  key_down_order?: 'insensitive' | 'strict' | 'strict_inverse';
-  key_up_order?: 'insensitive' | 'strict' | 'loose';
+  detect_key_down_uninterruptedly?: boolean;
+  key_down_order?: SimultaneousKeyOrder;
+  key_up_order?: SimultaneousKeyOrder;
   key_up_when?: 'any' | 'all';
   to_after_key_up?: ToEvent[];
 };
@@ -98,6 +105,67 @@ export type ToStickyModifier = Partial<
   >
 >;
 
+/**
+ * `to.select_input_source`. Every field is a regular expression.
+ * @see docs/karabiner_docs/complex-modifications-manipulator-definition/to/select-input-source
+ */
+export type ToSelectInputSource = {
+  /** Language regex, e.g. `"^en$"`. */
+  language?: string;
+  /** Input source id regex, e.g. `"^com\\.apple\\.keylayout\\.US$"`. */
+  input_source_id?: string;
+  /** Input mode id regex. */
+  input_mode_id?: string;
+};
+
+/**
+ * `software_function.open_application`. At least one target must be given;
+ * Karabiner resolves them in the order listed here.
+ */
+export type SoftwareFunctionOpenApplication =
+  | { bundle_identifier: string }
+  | { file_path: string }
+  | { frontmost_application_history_index: number };
+
+/**
+ * `to.software_function` — functions implemented in software rather than by
+ * emitting HID events. Exactly one member is set per event.
+ * @see docs/karabiner_docs/complex-modifications-manipulator-definition/to/software_function
+ */
+export type ToSoftwareFunction =
+  | {
+      /** Software-synthesized double click at a fixed location. */
+      cg_event_double_click: {
+        /** CGMouseButton: 0 left, 1 right, 2 middle, 3+ other. */
+        button: number;
+      };
+    }
+  | { iokit_power_management_sleep_system: { delay_milliseconds?: number } }
+  | { open_application: SoftwareFunctionOpenApplication }
+  | {
+      set_mouse_cursor_position: {
+        x: number | string;
+        y: number | string;
+        /** Screen index for the position origin. */
+        screen?: number;
+      };
+    };
+
+/**
+ * `to.send_user_command` — datagram to a user-provided UNIX socket server.
+ * Lower latency than `shell_command` because no process is spawned.
+ * @see docs/karabiner_docs/complex-modifications-manipulator-definition/to/send-user-command
+ */
+export type ToSendUserCommand = {
+  /** Arbitrary JSON payload handed to the receiver. */
+  payload: unknown;
+  /**
+   * Socket path. Defaults to
+   * `/Library/Application Support/org.pqrs/tmp/user/{UID}/user_command_receiver.sock`.
+   */
+  endpoint?: string;
+};
+
 export type ToEventOptions = {
   modifiers?: Modifier[];
   lazy?: boolean;
@@ -111,14 +179,14 @@ export type ToEvent = (
   | { consumer_key_code: string | number }
   | { pointing_button: PointingButton | number }
   | { shell_command: string }
-  | { select_input_source: any }
+  | { select_input_source: ToSelectInputSource }
   | { set_variable: ToVariable }
   | { set_notification_message: { id: string; text: string } }
   | { mouse_key: ToMouseKey }
   | { sticky_modifier: ToStickyModifier }
-  | { software_function: any }
+  | { software_function: ToSoftwareFunction }
   | { generic_desktop: number }
-  | { send_user_command: any }
+  | { send_user_command: ToSendUserCommand }
   | { from_event: boolean }
 ) &
   ToEventOptions;
@@ -197,7 +265,6 @@ export type BasicParameters = {
   'basic.to_if_held_down_threshold_milliseconds'?: number;
   'basic.to_delayed_action_delay_milliseconds'?: number;
   'basic.simultaneous_threshold_milliseconds'?: number;
-  'basic.simultaneous_threshold_milliseconds?'?: number;
 };
 
 export type BasicManipulator = {

@@ -19,7 +19,6 @@ import {
   key,
   noop,
   openApp,
-  openFolder,
   openUrl,
   paste,
   press,
@@ -219,7 +218,7 @@ test("defineBindings integration with case & action helpers", () => {
   assert.equal(rules.length, 1);
   const built = rules[0] as any;
   // Hold & release sharing conditions are grouped into 1 tap-hold manipulator
-  assert.equal(built.manipulatorSources.length, 1);
+  assert.equal(built.manipulators.length, 1);
 
   // Distinct condition cases produce distinct manipulators
   const rulesWithConds = defineBindings([
@@ -233,7 +232,7 @@ test("defineBindings integration with case & action helpers", () => {
     },
   ]);
   const builtWithConds = rulesWithConds[0] as any;
-  assert.equal(builtWithConds.manipulatorSources.length, 2);
+  assert.equal(builtWithConds.manipulators.length, 2);
 });
 
 test("Trigger and Bind wrappers create expected Binding and Trigger objects", () => {
@@ -315,7 +314,7 @@ test("defineBindings supports mixed key and pointer button simultaneous triggers
 
   assert.equal(rules.length, 1);
   const rule = rules[0] as any;
-  const manip = rule.manipulatorSources[0];
+  const manip = rule.manipulators[0];
   assert.deepEqual(manip.from.simultaneous, [
     { key_code: "spacebar" },
     { pointing_button: "button2" },

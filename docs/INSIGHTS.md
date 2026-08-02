@@ -128,7 +128,7 @@ The record key is the label — used for rule descriptions and variable naming. 
 
 ## Leader Layer Architecture
 
-`generateLayerRules` (`src/core/leader/build.ts`) is fully generic. Space is not a special case — it is simply the `leaderKey` wired at the call site in `src/index.ts`. The builder has no knowledge of space.
+`generateLayerRules` (`src/engine/leader/build.ts`) is fully generic. Space is not a special case — it is simply the `leaderKey` wired at the call site in `src/index.ts`. The builder has no knowledge of space.
 
 `generateLayerRules(layerConfigs, options)` accepts:
 
@@ -171,7 +171,7 @@ Both can coexist in the same `rules` array in `src/index.ts`. Variable namespaci
 ### Module Structure
 
 ```text
-src/core/leader/
+src/engine/leader/
 ├── types.ts    — LayerMappingConfig, NestedLayerConfig, SubLayerConfig, LayerRuleOptions
 ├── runtime.ts  — Variable naming helpers, escape reset construction, all-sublayer-var derivation
 ├── build.ts    — generateLayerRules() — the single assembly entry point

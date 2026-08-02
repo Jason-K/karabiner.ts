@@ -20,43 +20,25 @@ import type {
   ToVariable,
 } from "../types/karabiner";
 
+/** Accepted manipulator input: a built manipulator, a nested array of them, or
+ * an unbuilt {@link BasicManipulatorBuilder}. */
+export type ManipulatorInput =
+  | Manipulator
+  | BasicManipulatorBuilder
+  | ManipulatorInput[];
+
 export class RuleBuilder {
-  description?: string;
+  description: string | undefined;
   manipulatorsList: Manipulator[] = [];
 
-  constructor(description?: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]) {
+  constructor(description?: string, ...manipulators: ManipulatorInput[]) {
     this.description = description;
-    if (manipulators.length > 0) {
-      for (const m of manipulators) {
-        this.addManipulators(m);
-      }
+    for (const m of manipulators) {
+      this.addManipulators(m);
     }
-
-    return new Proxy(this, {
-      get: (target, prop, receiver) => {
-        if (prop === "ruleDescription") {
-          return target.description;
-        }
-        if (prop === "manipulatorSources" || prop === "manipulators") {
-          const method = (manipulators?: any) => {
-            if (manipulators !== undefined) {
-              target.addManipulators(manipulators);
-              return receiver;
-            }
-            return target.manipulatorsList;
-          };
-          return new Proxy(method, {
-            get: (_fnTarget, fnProp) => {
-              return Reflect.get(target.manipulatorsList, fnProp);
-            },
-          });
-        }
-        return Reflect.get(target, prop, receiver);
-      },
-    });
   }
 
-  public addManipulators(input: any): this {
+  public addManipulators(input: ManipulatorInput | undefined | null): this {
     if (!input) return this;
     if (input instanceof BasicManipulatorBuilder) {
       this.manipulatorsList.push(...input.build());
@@ -65,39 +47,35 @@ export class RuleBuilder {
         this.addManipulators(item);
       }
     } else {
-      this.manipulatorsList.push(input as Manipulator);
+      this.manipulatorsList.push(input);
     }
     return this;
   }
 
-  public manipulators(manipulators?: any): any {
-    if (manipulators !== undefined) {
-      this.addManipulators(manipulators);
-      return this;
-    }
-    return this.manipulatorsList;
+  /** Append manipulators to this rule. */
+  public manipulators(manipulators: ManipulatorInput): this {
+    return this.addManipulators(manipulators);
   }
 
-  public build(): Rule & { ruleDescription?: string; manipulatorSources: Manipulator[] } {
+  /**
+   * Produce the plain Karabiner `Rule`.
+   *
+   * Only schema fields are emitted — this object is serialized straight into
+   * the user's `karabiner.json`, so any extra key would be dead weight there.
+   */
+  public build(): Rule {
     return {
-      description: this.description,
-      ruleDescription: this.description,
+      ...(this.description !== undefined ? { description: this.description } : {}),
       manipulators: this.manipulatorsList,
-      manipulatorSources: this.manipulatorsList,
     };
   }
 
-  public toJSON(): Record<string, any> {
-    return {
-      description: this.description,
-      ruleDescription: this.description,
-      manipulators: this.manipulatorsList,
-      manipulatorSources: this.manipulatorsList,
-    };
+  public toJSON(): Rule {
+    return this.build();
   }
 }
 
-export function rule(description: string, ...manipulators: (Manipulator | Manipulator[] | BasicManipulatorBuilder)[]): RuleBuilder {
+export function rule(description: string, ...manipulators: ManipulatorInput[]): RuleBuilder {
   return new RuleBuilder(description, ...manipulators);
 }
 
@@ -166,12 +144,7 @@ export function toStickyModifier(
 }
 
 export function toNone(options?: ToEventOptions): ToEvent {
-  const result: ToEvent = {
-    ...options,
-    key_code: 'vk_none',
-    modifiers: undefined,
-  } as ToEvent;
-  return result;
+  return { ...options, key_code: 'vk_none' };
 }
 
 export class ConditionBuilder {
@@ -189,6 +162,11 @@ export class ConditionBuilder {
   }
 }
 
+/** Spread helper: emit `description` only when one was supplied. */
+function withDescription(description?: string): { description?: string } {
+  return description !== undefined ? { description } : {};
+}
+
 export function ifVar(
   name: string,
   value: number | boolean | string = 1,
@@ -198,7 +176,7 @@ export function ifVar(
     type: 'variable_if',
     name,
     value,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 
@@ -209,16 +187,16 @@ export function ifApp(
   if (typeof apps === 'object' && !Array.isArray(apps)) {
     return new ConditionBuilder({
       type: 'frontmost_application_if',
-      bundle_identifiers: apps.bundle_identifiers,
-      file_paths: apps.file_paths,
-      description: description ?? undefined,
+      ...(apps.bundle_identifiers ? { bundle_identifiers: apps.bundle_identifiers } : {}),
+      ...(apps.file_paths ? { file_paths: apps.file_paths } : {}),
+      ...withDescription(description),
     });
   }
   const bundle_identifiers = Array.isArray(apps) ? apps : [apps];
   return new ConditionBuilder({
     type: 'frontmost_application_if',
     bundle_identifiers,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 
@@ -230,7 +208,7 @@ export function ifDevice(
   return new ConditionBuilder({
     type: 'device_if',
     identifiers: ids,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 
@@ -352,6 +330,15 @@ export class BasicManipulatorBuilder {
   }
 }
 
+/**
+ * Low-level manipulator builder: start a `basic` manipulator from a key code or
+ * a `from` event.
+ *
+ * Not the same `map` as the `map()` action wrapper in `to-action-wrappers.ts`,
+ * which emits a hotkey combo from the `COMBOS` registry. This one is engine
+ * internals and is reachable only by importing `karabiner-helpers` directly —
+ * it is not re-exported from the engine barrel.
+ */
 export function map(
   fromParam: string | FromEvent,
   mandatoryModifiers?: Modifier[],

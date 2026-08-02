@@ -1,3 +1,7 @@
+> **Stale paths.** Written against the old `src/core/` layout. The architecture
+> it describes is still broadly accurate, but file paths are not — see
+> [README](../README.md) for the current layout.
+
 # Declarative Config Architecture
 
 ## Goal

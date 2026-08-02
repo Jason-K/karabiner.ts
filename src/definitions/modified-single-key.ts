@@ -4,7 +4,6 @@ import {
   CMDS,
   COMBOS,
   KE_VAR_VALUES,
-  KE_VARS,
   PW_IDS,
   URLS,
 } from "../data";
@@ -13,8 +12,6 @@ import {
   bind,
   cmd,
   condApp,
-  condNotVar,
-  condVar,
   map,
   from,
   hold,

@@ -1,7 +1,11 @@
-import { APP_ID } from "../data";
-import { bind, from, ifApp, noop, press, to, when, type Binding } from "../engine";
+import { bind, from, noop, press, to, type Binding } from "../engine";
 
 // Disabled shortcuts swallow the chord entirely (noop = no `to` events).
+//
+// ⌘D in Antinote is deliberately absent here: `antinoteGuardBinding` in
+// guards.ts claims the same trigger under the same condition and is emitted
+// first, so a disable entry could never fire. Antinote's ⌘D is guarded
+// (double-press to confirm), not disabled.
 export const disabledHotkeys: Binding[] = [
   bind(from("h", ["L.cmd"]),
     to(press(noop()))),
@@ -9,10 +13,5 @@ export const disabledHotkeys: Binding[] = [
     to(press(noop()))),
   bind(from("m", ["L.cmd", "L.opt"]),
     to(press(noop()))),
-  bind(
-    from("d", ["L.cmd"]),
-    to(press(noop())),
-    when(ifApp(APP_ID.antinote)),
-  ),
 ];
 

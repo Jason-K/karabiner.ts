@@ -39,5 +39,5 @@ export interface ProfileSpec {
   /**
    * Profile-level simple modifications (key-to-key remaps applied at profile level).
    */
-  simpleModifications?: readonly SimpleModificationPair[] | any[];
+  simpleModifications?: readonly SimpleModificationPair[];
 }

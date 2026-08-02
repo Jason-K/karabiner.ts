@@ -73,6 +73,30 @@ export function isModifierKey(key: string): boolean {
 }
 
 /**
+ * Expand a modifier list, resolving virtual-modifier aliases (`"COCS"`) to their
+ * component modifiers and key aliases (`"L.cmd"`) to Karabiner names, preserving
+ * order and dropping duplicates.
+ *
+ * The result is asserted to be `Modifier[]`: every path either comes from
+ * {@link VMOD} (already `Modifier[]`) or from {@link resolveKeyAlias}, which
+ * emits Karabiner modifier names. This is the one place that assertion is made.
+ */
+export function expandModifiers(modifiers: string[]): Modifier[] {
+  const expanded: string[] = [];
+  const seen = new Set<string>();
+  for (const mod of modifiers) {
+    for (const raw of resolveModComboAlias(mod) ?? [mod]) {
+      const resolved = resolveKeyAlias(raw);
+      if (!seen.has(resolved)) {
+        seen.add(resolved);
+        expanded.push(resolved);
+      }
+    }
+  }
+  return expanded as Modifier[];
+}
+
+/**
  * Resolve a trigger's modifier specification into expanded arrays of mandatory
  * and optional Karabiner modifier names.
  */

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { assertUniqueTriggers } from "../engine/emit-manipulators/validate-definitions";
+import { analyzeConflicts } from "../engine";
 import { resolveButton } from "../engine/utils/input-devices";
 import type { Binding } from "../data";
 
@@ -16,14 +16,21 @@ function moddedTapHold(key: string, mod: string): Binding {
   };
 }
 
-test("assertUniqueTriggers: passes for distinct triggers", () => {
-  const bs = [bareHold("a"), bareHold("b")];
-  assert.equal(assertUniqueTriggers(bs), bs);
+// Duplicate-trigger detection lives in analyze-conflicts now; see
+// analyze-conflicts.test.ts for the full classification matrix.
+test("conflict analysis: distinct triggers produce no errors", () => {
+  const report = analyzeConflicts([
+    { name: "s", bindings: [bareHold("a"), bareHold("b")] },
+  ]);
+  assert.deepEqual(report.errors, []);
 });
 
-test("assertUniqueTriggers: throws on duplicate (order-independent mods)", () => {
-  const dup = [moddedTapHold("q", "COCS"), moddedTapHold("q", "COCS")];
-  assert.throws(() => assertUniqueTriggers(dup), /Duplicate trigger/);
+test("conflict analysis: duplicate trigger is reported (order-independent mods)", () => {
+  const report = analyzeConflicts([
+    { name: "s", bindings: [moddedTapHold("q", "COCS"), moddedTapHold("q", "COCS")] },
+  ]);
+  assert.equal(report.errors.length, 1);
+  assert.equal(report.errors[0]?.kind, "duplicate");
 });
 
 test("resolveButton: alias + nameScope + raw fallback", () => {

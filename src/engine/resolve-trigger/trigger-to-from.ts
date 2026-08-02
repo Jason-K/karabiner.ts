@@ -1,5 +1,11 @@
-import type { FromEvent } from "../../types/karabiner";
+import type {
+  FromEvent,
+  FromKeyType,
+  FromModifiers,
+  Modifier,
+} from "../../types/karabiner";
 import type { Trigger } from "../../data";
+import { resolveSimOrder } from "./simultaneous-core";
 import {
   getTriggerKeys,
   isPointerButton,
@@ -12,52 +18,39 @@ import {
  * Build the `from.modifiers` object for a manipulator's `from` event from a
  * trigger's resolved modifiers.
  */
-export function fromModifiersObj(
-  trigger: Trigger,
-): Record<string, string[]> {
+export function fromModifiersObj(trigger: Trigger): FromModifiers {
   const { mandatory, optional } = resolveModifiers(trigger.modifiers);
-  const modifiersObj: Record<string, string[]> = {};
-  if (mandatory.length) modifiersObj.mandatory = mandatory;
-  if (optional.length) modifiersObj.optional = optional;
+  const modifiersObj: FromModifiers = {};
+  if (mandatory.length) modifiersObj.mandatory = mandatory as Modifier[];
+  if (optional.length) modifiersObj.optional = optional as Modifier[];
   else if (!mandatory.length) modifiersObj.optional = [];
   return modifiersObj;
+}
+
+/** Map one trigger key (or pointer alias) to its `from` key matcher. */
+function triggerKeyToFromKey(key: string): FromKeyType {
+  return isPointerButton(key)
+    ? { pointing_button: resolveButton(key).button }
+    : { key_code: resolveKeyAlias(key) };
 }
 
 /**
  * Convert a high-level Trigger specification into a Karabiner `FromEvent` matcher object.
  */
 export function triggerToFrom(trigger: Trigger): FromEvent {
-  const { mandatory, optional } = resolveModifiers(trigger.modifiers);
   const keys = getTriggerKeys(trigger);
   if (keys.length > 1) {
+    const options = resolveSimOrder(
+      "order" in trigger ? trigger.order : undefined,
+    );
     return {
-      simultaneous: keys.map((k) =>
-        isPointerButton(k)
-          ? { pointing_button: resolveButton(k).button }
-          : { key_code: resolveKeyAlias(k) },
-      ),
-      simultaneous_options:
-        "order" in trigger && trigger.order
-          ? {
-            ...(trigger.order.down ? { key_down_order: trigger.order.down } : {}),
-            ...(trigger.order.up ? { key_up_order: trigger.order.up } : {}),
-            ...(trigger.order.upWhen ? { key_up_when: trigger.order.upWhen } : {}),
-            ...(trigger.order.detectUninterrupted
-              ? { detect_key_down_uninterruptedly: trigger.order.detectUninterrupted }
-              : {}),
-          }
-          : undefined,
+      simultaneous: keys.map(triggerKeyToFromKey),
+      ...(options ? { simultaneous_options: options } : {}),
       modifiers: { optional: ["any"] },
-    } as unknown as FromEvent;
+    };
   }
-  const k = keys[0]!;
-  const from: Record<string, unknown> = isPointerButton(k)
-    ? { pointing_button: resolveButton(k).button }
-    : { key_code: resolveKeyAlias(k) };
-  const modifiersObj: Record<string, string[]> = {};
-  if (mandatory.length) modifiersObj.mandatory = mandatory;
-  if (optional.length) modifiersObj.optional = optional;
-  else if (!mandatory.length) modifiersObj.optional = [];
-  from.modifiers = modifiersObj;
-  return from as FromEvent;
+  return {
+    ...triggerKeyToFromKey(keys[0]!),
+    modifiers: fromModifiersObj(trigger),
+  };
 }

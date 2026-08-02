@@ -18,7 +18,7 @@ import {
   buildSimultaneousTapHold,
   buildTapHold,
   stampDeviceScope,
-} from "./binding/index";
+} from "./binding";
 
 export type {
   Binding,
@@ -67,10 +67,9 @@ export function buildManipulators(b: Binding): Manipulator[] {
 }
 
 export function defineBindings(bindings: Binding[]): Rule[] {
-  return bindings.map(
-    (b) =>
-      rule(b.description ?? synthesizeRuleDescription(b)).manipulators(
-        buildManipulators(b),
-      ) as unknown as Rule,
+  return bindings.map((b) =>
+    rule(b.description ?? synthesizeRuleDescription(b))
+      .manipulators(buildManipulators(b))
+      .build(),
   );
 }

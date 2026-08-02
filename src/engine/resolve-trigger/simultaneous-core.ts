@@ -1,8 +1,11 @@
 import type {
   FromEvent,
+  FromKeyType,
+  Manipulator,
   SimultaneousOptions as KarSimultaneousOptions,
   ToEvent,
 } from "../../types/karabiner";
+import type { AcceptUndefined } from "../../types/util";
 import { mapSimultaneous } from "../karabiner-helpers";
 import type { Binding, SimOrder } from "../../data";
 import { varTapTapHoldFrom } from "./tap-hold";
@@ -11,13 +14,13 @@ import { resolveActionToEvents } from "../resolve-to-action";
 
 export function resolveSimOrder(order?: SimOrder): KarSimultaneousOptions | undefined {
   if (!order) return undefined;
-  const o: Record<string, unknown> = {};
+  const o: KarSimultaneousOptions = {};
   if (order.down) o.key_down_order = order.down;
   if (order.up) o.key_up_order = order.up;
   if (order.upWhen) o.key_up_when = order.upWhen;
   if (order.detectUninterrupted)
     o.detect_key_down_uninterruptedly = order.detectUninterrupted;
-  return Object.keys(o).length ? (o as KarSimultaneousOptions) : undefined;
+  return Object.keys(o).length ? o : undefined;
 }
 
 export function resolveSimKarOptions(b: Binding): KarSimultaneousOptions | undefined {
@@ -33,7 +36,8 @@ export function resolveSimKarOptions(b: Binding): KarSimultaneousOptions | undef
 }
 
 
-function mapSimKey(k: string): any {
+/** `mapSimultaneous` accepts either a bare key-code string or a `FromKeyType`. */
+function mapSimKey(k: string): string | FromKeyType {
   return isPointerButton(k)
     ? { pointing_button: resolveButton(k).button }
     : resolveKeyAlias(k);
@@ -46,14 +50,14 @@ function buildSimultaneousFromEvent(
   karOptions?: KarSimultaneousOptions,
 ): FromEvent {
   return {
-    simultaneous: keys.map((k) =>
+    simultaneous: keys.map((k): FromKeyType =>
       isPointerButton(k)
-        ? ({ pointing_button: resolveButton(k).button } as any)
-        : ({ key_code: resolveKeyAlias(k) } as any),
+        ? { pointing_button: resolveButton(k).button }
+        : { key_code: resolveKeyAlias(k) },
     ),
-    simultaneous_options: karOptions,
+    ...(karOptions ? { simultaneous_options: karOptions } : {}),
     modifiers: { optional: ["any"] },
-  } as any;
+  };
 }
 
 export type SimultaneousTapHoldCoreOpts = {
@@ -73,7 +77,7 @@ export function simultaneousTapHold({
   thresholdMs = 300,
   karOptions,
   simultaneousThresholdMs,
-}: SimultaneousTapHoldCoreOpts): any[] {
+}: AcceptUndefined<SimultaneousTapHoldCoreOpts>): Manipulator[] {
   const mappedKeys = keys.map(mapSimKey);
   const builder = mapSimultaneous(
     mappedKeys as any[],
@@ -116,7 +120,7 @@ export function simultaneousMultiTap({
   thresholdMs = 300,
   karOptions,
   simultaneousThresholdMs,
-}: SimultaneousMultiTapCoreOpts): any[] {
+}: AcceptUndefined<SimultaneousMultiTapCoreOpts>): Manipulator[] {
   const from = buildSimultaneousFromEvent(keys, karOptions);
   const firstTapPendingVar = `sim_tap_${label}`;
 

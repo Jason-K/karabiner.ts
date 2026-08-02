@@ -1,4 +1,7 @@
-import type { ToEvent } from "../../types/karabiner";
+import type {
+  SoftwareFunctionOpenApplication,
+  ToEvent,
+} from "../../types/karabiner";
 
 import type { AppTarget } from "../../data";
 import { PATHS } from "../../data/registries/paths";
@@ -12,32 +15,46 @@ export interface OpenAppOpts {
   exclusionFilePaths?: string[];
 }
 
+/**
+ * Build a `software_function.open_application` event.
+ *
+ * Karabiner resolves the target by priority: bundle identifier, then file path,
+ * then frontmost-application history index.
+ */
 export function toApp(opts: OpenAppOpts): ToEvent {
-  const openAppConfig: Record<string, unknown> = {};
+  const target: SoftwareFunctionOpenApplication | undefined = opts.bundleIdentifier
+    ? { bundle_identifier: opts.bundleIdentifier }
+    : opts.filePath
+      ? { file_path: opts.filePath }
+      : opts.historyIndex !== undefined
+        ? { frontmost_application_history_index: opts.historyIndex }
+        : undefined;
 
-  if (opts.bundleIdentifier) {
-    openAppConfig.bundle_identifier = opts.bundleIdentifier;
-  }
-  if (opts.filePath) {
-    openAppConfig.file_path = opts.filePath;
-  }
-  if (opts.historyIndex !== undefined) {
-    openAppConfig.frontmost_application_history_index = opts.historyIndex;
-  }
-  if (opts.exclusionBundleIdentifiers) {
-    openAppConfig.frontmost_application_history_exclusion_bundle_identifiers =
-      opts.exclusionBundleIdentifiers;
-  }
-  if (opts.exclusionFilePaths) {
-    openAppConfig.frontmost_application_history_exclusion_file_paths =
-      opts.exclusionFilePaths;
+  if (!target) {
+    throw new Error(
+      "toApp() needs a bundleIdentifier, filePath, or historyIndex to open.",
+    );
   }
 
   return {
     software_function: {
-      open_application: openAppConfig,
+      open_application: {
+        ...target,
+        ...(opts.exclusionBundleIdentifiers
+          ? {
+              frontmost_application_history_exclusion_bundle_identifiers:
+                opts.exclusionBundleIdentifiers,
+            }
+          : {}),
+        ...(opts.exclusionFilePaths
+          ? {
+              frontmost_application_history_exclusion_file_paths:
+                opts.exclusionFilePaths,
+            }
+          : {}),
+      },
     },
-  } as ToEvent;
+  };
 }
 
 export function toAppId(bundleIdentifier: string): string {

@@ -1,13 +1,12 @@
 /**
- * Karabiner-Elements Configuration
+ * Karabiner-Elements configuration — build entry point.
  *
- * This configuration file uses karabiner.ts to generate Karabiner-Elements rules
- * in a type-safe, maintainable way. The configuration is organized into several
- * major sections:
+ * Pipeline:
+ *   definitions (Binding[]) → engine (Manipulator[]) → karabiner.json
  *
- * 1. Tap-Hold Keys: Single keys that perform different actions when tapped vs held
- * 2. Caps Lock: Multiple modifier behaviors based on how it's pressed
- * 3. Special Rules: CMD+Q protection, HOME/END fixes, app-specific behaviors
+ * This is the only module allowed to touch the filesystem, the clock, or the
+ * environment. Everything under `src/engine/` is a pure transformation, which
+ * is what keeps it testable without mocks.
  *
  * Virtual Modifiers:
  * - COC_: Command + Option + Control
@@ -15,166 +14,88 @@
  * - CO_S: Command + Option + Shift
  */
 
-import { map } from "./engine/karabiner-helpers";
-import { writeToProfile } from "./engine/profile-writer";
-import { readFileSync, renameSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
+import { join } from "node:path";
+
 import {
   DEFAULT_GLOBAL_SETTINGS,
   DEFAULT_PROFILE,
-  DEVICES,
+  DEFAULT_TIMINGS,
   PATHS,
   PREFERRED_PROFILE,
-  DEFAULT_TIMINGS,
   getProfileSpec,
 } from "./data";
+import { buildRules, DEVICE_CONFIGS } from "./config";
 import {
-  capsLockBindings,
-  disabledHotkeys,
-  guardBindings,
-  mouseBindings,
-  NUMPAD_REMAPS,
-  simultaneousMappings,
-  tapHoldBindings,
-} from "./definitions";
-import type { DeviceConfig } from "./engine";
-import {
-  assertUniqueTriggers,
-  buildDeviceConfig,
-  defineBindings,
-  generateSimultaneousRules,
-  updateDeviceConfigurations,
+  readKarabinerConfig,
+  resolveProfileName,
+  writeKarabinerConfig,
 } from "./engine";
 
-// Generate tap-hold rules with automatic conflict prevention
-const verifiedTapHoldBindings = assertUniqueTriggers(tapHoldBindings);
-const tapHoldRules = defineBindings(verifiedTapHoldBindings);
-const simultaneousRules = generateSimultaneousRules(simultaneousMappings, verifiedTapHoldBindings);
-
 // ============================================================================
-// SPECIAL RULES
+// WRITE
 // ============================================================================
 
-let rules: any[] = [
-  // Simultaneous chord rules — must come before tap-hold rules
-  ...simultaneousRules,
-  // All tap-hold rules generated from configuration
-  ...tapHoldRules,
-
-  // GUARD - Various guard rules
-  ...defineBindings(guardBindings),
-
-  // Mouse mappings — all G502X bindings (tap-hold/remap + left-button double-tap)
-  // flow through the same Binding[] + defineBindings engine as keys.
-  ...defineBindings(mouseBindings),
-
-  // CAPS LOCK - Multiple behaviors
-  ...defineBindings(capsLockBindings),
-
-  // DISABLE - CMD+H / CMD+OPT+H / CMD+M / CMD+OPT+M (empty to events = disabled)
-  ...defineBindings(disabledHotkeys),
-];
-
-
-// ============================================================================
-// DEVICE-SPECIFIC SIMPLE MODIFICATIONS
-// ============================================================================
-
-const deviceConfigs: DeviceConfig[] = [
-  buildDeviceConfig(DEVICES.appleNumericKeypad, [...NUMPAD_REMAPS]),
-  buildDeviceConfig(DEVICES.g502X),
-];
-
-// ============================================================================
-// WRITE TO PROFILE
-// ============================================================================
-
-// Detect CI/Linux environment and avoid writing to ~/.config/karabiner
 const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
 const isDarwin = process.platform === "darwin";
-const canWriteProfile = isDarwin && !isCI;
-function resolveTargetProfileName(): string {
-  if (!isDarwin) {
-    return PREFERRED_PROFILE;
+const dryRun = !isDarwin || isCI;
+
+const configPath = PATHS.configKarabiner.path;
+
+function main(): void {
+  // Compiling inside main() keeps conflict errors on the same reporting path as
+  // write errors — at module scope a RuleConflictError escaped the handler below
+  // and surfaced as a raw stack trace.
+  const { rules, analysis } = buildRules();
+
+  for (const warning of analysis.warnings) {
+    console.warn(`⚠ [${warning.kind}] ${warning.message}`);
   }
 
-  try {
-    const raw = readFileSync(PATHS.configKarabiner.path, "utf8");
-    const parsed = JSON.parse(raw) as {
-      profiles?: Array<{ name?: string; selected?: boolean }>;
-    };
-    const profiles = parsed.profiles ?? [];
+  // One read of karabiner.json for the whole build; one atomic write back.
+  const config = dryRun ? undefined : readKarabinerConfig(configPath);
 
-    const explicit = process.env.KARABINER_PROFILE_NAME?.trim();
-    if (explicit) {
-      return explicit;
-    }
+  const profileName = config
+    ? resolveProfileName(config, {
+        explicit: process.env.KARABINER_PROFILE_NAME?.trim() || undefined,
+        preferred: PREFERRED_PROFILE,
+        fallback: DEFAULT_PROFILE,
+      })
+    : PREFERRED_PROFILE;
 
-    const preferred = profiles.find((profile) => profile.name === PREFERRED_PROFILE)?.name;
-    if (preferred) {
-      return preferred;
-    }
+  const result = writeKarabinerConfig(
+    {
+      profileName,
+      rules,
+      parameters: DEFAULT_TIMINGS,
+      simpleModifications: getProfileSpec(profileName).simpleModifications,
+      devices: DEVICE_CONFIGS,
+      globalSettings: DEFAULT_GLOBAL_SETTINGS,
+    },
+    { configPath, dryRun, ...(config ? { config } : {}) },
+  );
 
-    const selected = profiles.find((profile) => profile.selected)?.name;
-    if (selected) {
-      return selected;
-    }
-
-    const first = profiles[0]?.name;
-    return first ?? DEFAULT_PROFILE;
-  } catch {
-    return process.env.KARABINER_PROFILE_NAME?.trim() || DEFAULT_PROFILE;
+  if (result.dryRun) {
+    console.log(
+      `[dry-run] Generated ${result.ruleCount} rules for profile '${result.profileName}'`,
+    );
+  } else {
+    console.log(
+      `✓ Wrote ${result.ruleCount} rules to profile '${result.profileName}' in ${configPath}`,
+    );
+    console.log(`  backup: ${result.backupPath}`);
   }
+
+  // Workspace copy for inspection and golden-file diffing.
+  const outPath = join(process.cwd(), "karabiner-output.json");
+  writeFileSync(outPath, `${JSON.stringify({ complex_modifications: { rules } }, null, 2)}\n`);
+  console.log(`✓ Wrote workspace copy: ${outPath}`);
 }
 
-const targetProfileName = resolveTargetProfileName();
-
-function updateGlobalSettings(configPath: string): void {
-  try {
-    const raw = readFileSync(configPath, "utf8");
-    const parsed = JSON.parse(raw);
-    parsed.global = { ...parsed.global, ...DEFAULT_GLOBAL_SETTINGS };
-    const tmpPath = `${configPath}.tmp`;
-    writeFileSync(tmpPath, JSON.stringify(parsed, null, 2));
-    renameSync(tmpPath, configPath);
-    console.log("✓ Global settings updated.");
-  } catch (error) {
-    console.error("Error updating global settings:", error);
-  }
+try {
+  main();
+} catch (error) {
+  console.error("✗ Build failed:", error instanceof Error ? error.message : error);
+  if (error instanceof Error && error.cause) console.error("  cause:", error.cause);
+  process.exitCode = 1;
 }
-
-if (canWriteProfile) {
-  updateGlobalSettings(PATHS.configKarabiner.path);
-}
-
-const activeProfile = getProfileSpec(targetProfileName);
-
-// Write rules: use real profile locally, dry-run in CI/non-macOS
-writeToProfile(
-  canWriteProfile ? targetProfileName : "--dry-run",
-  rules,
-  DEFAULT_TIMINGS,
-  {
-    simple_modifications: activeProfile.simpleModifications as any[],
-  },
-);
-
-// Wait for writeToProfile to complete, then add device configurations (local only)
-setTimeout(() => {
-  if (canWriteProfile) {
-    updateDeviceConfigurations(targetProfileName, deviceConfigs);
-  }
-}, 1000);
-
-// Also write generated rules to workspace for inspection
-import("fs").then((fs) => {
-  import("path").then((path) => {
-    try {
-      const outPath = path.join(process.cwd(), "karabiner-output.json");
-      const payload = { complex_modifications: { rules } };
-      fs.writeFileSync(outPath, JSON.stringify(payload, null, 2));
-      console.log(`✓ Wrote workspace copy: ${outPath}`);
-    } catch (e) {
-      console.error("✗ Failed to write workspace karabiner-output.json", e);
-    }
-  });
-});

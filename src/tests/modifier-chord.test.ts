@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { capsLockBaseBindings, capsLockBindings } from "../definitions/caps-lock";
+import { capsLockBaseBindings } from "../definitions/caps-lock";
 import { defineBindings } from "../engine";
 
 function toRule(input: any): any {

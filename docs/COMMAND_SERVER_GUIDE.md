@@ -218,7 +218,7 @@ end
 
 #### Step 4: Add a TypeScript helper
 
-Edit `src/core/scripts.ts`:
+Edit `src/engine/resolve-to-action/resolve-script.ts`:
 
 ```typescript
 export function myNewFunction(param1: string, param2?: number): ToEvent {
@@ -275,7 +275,7 @@ Most use cases work well with fire-and-forget (the current model).
 The declarative mouse infrastructure lives in:
 
 - `src/data/mouse.ts` — button alias tables and device IDs
-- `src/core/mouse.ts` — alias resolution (e.g. `g502xButtons`) and generic tap-hold/double-tap helpers
+- `src/definitions/mouse.ts` — alias resolution (e.g. `g502xButtons`) and generic tap-hold/double-tap helpers
 - `src/definitions/mouse.ts` — per-device tap-hold and double-tap mappings (the user edit surface)
 - `src/engine/mouse-rules.ts` — `generateMouseRules` compiles those mappings into device-guarded Karabiner rules
 

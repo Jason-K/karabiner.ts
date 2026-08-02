@@ -1,3 +1,7 @@
+> **Historical.** This project no longer depends on upstream `karabiner.ts`; the
+> dependency was severed in commit 082ac57 and the schema now lives in
+> `src/types/karabiner.ts`. Kept for provenance. See [README](../README.md).
+
 # Integration Conflict Report (upstream vs local)
 
 Date: Thu Jul 16 12:08:47 PDT 2026

@@ -1,6 +1,5 @@
 import type { PointingButton } from "../../types/karabiner";
-import { DEVICES } from "../registries/devices";
-import type { VarSpec } from "../primitives/vars";
+import { type DEVICES } from "../registries/devices";
 
 // ── Button registry (replaces g502xButtons) ────────────────────────────────
 

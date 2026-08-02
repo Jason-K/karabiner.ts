@@ -73,8 +73,8 @@ export function tokenizeShellCommand(cmdStr: string): string[] {
   let inDouble = false;
 
   for (let i = 0; i < cmdStr.length; i++) {
-    const char = cmdStr[i];
-    const prevChar = i > 0 ? cmdStr[i - 1] : "";
+    const char = cmdStr[i]!;
+    const prevChar = i > 0 ? cmdStr[i - 1]! : "";
 
     if (char === "'" && !inDouble && prevChar !== "\\") {
       inSingle = !inSingle;
