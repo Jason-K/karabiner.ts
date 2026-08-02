@@ -187,7 +187,9 @@ export const mouseBindings: Binding[] = [
   ),
   // -------------------------------------------------------------
   // RIGHT — Right click (tap) / Zen chord modifier (hold).
-  // whileHoldVar signals right_button_pressed.
+  // whileHoldVar signals right_button_pressed; suppressCancelFallback drops
+  // the stray click on a canceled hold (halt on to_if_held_down can't be used
+  // here — it would also cancel the to_after_key_up that clears the var).
   // -------------------------------------------------------------
   bind(
     from("right"),
@@ -198,6 +200,7 @@ export const mouseBindings: Binding[] = [
     when(condDevice(DEVICES.g502X)),
     options({
       whileHoldVar: mouseVars.rightButtonPressed,
+      suppressCancelFallback: true,
     }),
   ),
   // -------------------------------------------------------------

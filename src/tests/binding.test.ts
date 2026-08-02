@@ -192,18 +192,24 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
   // Note: karabiner.ts' toKey() helper always sets `modifiers: undefined` as an own
   // property (it gets dropped by JSON.stringify, so the live output is unaffected).
   assert.deepEqual(m.to_if_alone, [{ halt: true, key_code: "a", modifiers: undefined }]);
+  // to_if_held_down gets halt:true by default too: it cancels the subsequent
+  // to_delayed_action so a release after a genuine hold doesn't replay the
+  // to_if_canceled fallback below.
   assert.deepEqual(m.to_if_held_down, [
     {
+      halt: true,
       repeat: false,
       key_code: "f18",
       modifiers: ["command", "option", "control"],
     },
   ]);
-  // to_if_canceled defaults to empty: falling back to the alone events would
-  // re-echo the trigger key on release even after the hold action already fired.
+  // to_if_canceled mirrors to_if_alone: this is what lets a fast-typed next
+  // key commit the previous key as "tap" immediately instead of waiting out
+  // the full alone-timeout. halt:true on to_if_held_down (above) prevents it
+  // from re-firing once a hold has already committed.
   assert.deepEqual(m.to_delayed_action, {
     to_if_invoked: [],
-    to_if_canceled: [],
+    to_if_canceled: [{ halt: true, key_code: "a", modifiers: undefined }],
   });
 });
 

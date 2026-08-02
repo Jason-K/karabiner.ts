@@ -19417,7 +19417,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "right_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             },
             "to": [
               {
@@ -19600,7 +19610,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "down_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             },
             "to": [
               {
@@ -21099,7 +21119,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+                }
+              ]
             },
             "to": [
               {
@@ -21195,7 +21219,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+                }
+              ]
             },
             "to": [
               {
@@ -21291,7 +21319,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                }
+              ]
             },
             "to": [
               {
@@ -21387,7 +21419,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+                }
+              ]
             },
             "to": [
               {
@@ -21483,7 +21519,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+                }
+              ]
             },
             "to": [
               {
@@ -21902,12 +21942,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             },
             "to": [
               {
@@ -22441,7 +22486,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "left_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             },
             "to": [
               {
@@ -22543,7 +22598,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "up_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             },
             "to": [
               {
@@ -22626,12 +22691,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             },
             "to": [
               {
@@ -22900,7 +22970,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             },
             "to": [
               {
@@ -22941,12 +23015,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                }
+              ]
             },
             "to": [
               {
@@ -22987,12 +23066,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                }
+              ]
             },
             "to": [
               {
@@ -23406,7 +23490,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "right_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -23480,7 +23574,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "down_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -23544,7 +23648,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
+                }
+              ]
             }
           }
         ]
@@ -23584,7 +23692,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
+                }
+              ]
             }
           }
         ]
@@ -23624,7 +23736,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
+                }
+              ]
             }
           }
         ]
@@ -23664,7 +23780,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
+                }
+              ]
             }
           }
         ]
@@ -23704,7 +23824,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
+                }
+              ]
             }
           }
         ]
@@ -23732,12 +23856,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             }
           }
         ]
@@ -23783,7 +23912,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "left_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -23829,7 +23968,17 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "up_arrow",
+                  "modifiers": [
+                    "command",
+                    "option",
+                    "control"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -23857,12 +24006,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             }
           }
         ]
@@ -23926,7 +24080,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             }
           }
         ]
@@ -23954,12 +24112,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                }
+              ]
             }
           }
         ]
@@ -23987,12 +24150,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
+                }
+              ]
             }
           }
         ]
@@ -24272,6 +24440,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "m",
                 "modifiers": [
@@ -24282,7 +24451,15 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "m",
+                  "modifiers": [
+                    "left_command"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24316,7 +24493,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
+                }
+              ]
             },
             "conditions": [
               {
@@ -24349,6 +24530,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
@@ -24361,7 +24543,15 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "p",
+                  "modifiers": [
+                    "left_command"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24618,12 +24808,21 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action kitty"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "k",
+                  "modifiers": [
+                    "right_option"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24648,12 +24847,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'raycast-x://extensions/mattisssa/spotify-player/search'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "if pgrep -x 'Spotify' > \"/dev/null;\" then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
+                }
+              ]
             }
           }
         ]
@@ -24682,12 +24886,21 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "osascript '/Users/jason/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "t",
+                  "modifiers": [
+                    "right_option"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24716,6 +24929,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.itone.ProcessSpy"
@@ -24725,7 +24939,15 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "software_function": {
+                    "open_application": {
+                      "bundle_identifier": "com.apple.ActivityMonitor"
+                    }
+                  }
+                }
+              ]
             }
           }
         ]
@@ -24754,12 +24976,21 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'antinote://new-note'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24840,12 +25071,21 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'cleanshot://capture-window'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "s",
+                  "modifiers": [
+                    "shift"
+                  ]
+                }
+              ]
             }
           }
         ]
@@ -24869,6 +25109,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.ringcentral.glip"
@@ -24878,7 +25119,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "8"
+                }
+              ]
             }
           }
         ]
@@ -24902,6 +25148,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f18",
                 "modifiers": [
@@ -24914,7 +25161,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "a"
+                }
+              ]
             }
           }
         ]
@@ -24938,6 +25190,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "7",
                 "modifiers": [
@@ -24949,7 +25202,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "c"
+                }
+              ]
             }
           }
         ]
@@ -24973,6 +25231,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f1",
                 "modifiers": [
@@ -24984,7 +25243,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "d"
+                }
+              ]
             }
           }
         ]
@@ -25036,6 +25300,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
@@ -25044,12 +25309,19 @@
                 ]
               },
               {
+                "halt": true,
                 "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "keypad_equal_sign"
+                }
+              ]
             }
           }
         ]
@@ -25197,12 +25469,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action qspace"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f"
+                }
+              ]
             }
           }
         ]
@@ -25226,13 +25504,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "display_brightness_decrement"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f1"
+                }
+              ]
             }
           }
         ]
@@ -25256,13 +25540,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "display_brightness_increment"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f2"
+                }
+              ]
             }
           }
         ]
@@ -25286,13 +25576,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "mission_control"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f3"
+                }
+              ]
             }
           }
         ]
@@ -25316,13 +25612,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "launchpad"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f4"
+                }
+              ]
             }
           }
         ]
@@ -25346,6 +25648,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f5",
                 "modifiers": [
@@ -25357,7 +25660,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f5"
+                }
+              ]
             }
           }
         ]
@@ -25381,13 +25689,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "rewind"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f7"
+                }
+              ]
             }
           }
         ]
@@ -25411,13 +25725,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "play_or_pause"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f8"
+                }
+              ]
             }
           }
         ]
@@ -25441,13 +25761,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "fastforward"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f9"
+                }
+              ]
             }
           }
         ]
@@ -25471,13 +25797,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "mute"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f10"
+                }
+              ]
             }
           }
         ]
@@ -25501,13 +25833,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "volume_decrement"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f11"
+                }
+              ]
             }
           }
         ]
@@ -25531,13 +25869,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": true,
                 "key_code": "volume_increment"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "f12"
+                }
+              ]
             }
           }
         ]
@@ -25561,6 +25905,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f5",
                 "modifiers": [
@@ -25572,7 +25917,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "fn"
+                }
+              ]
             },
             "conditions": [
               {
@@ -25604,12 +25954,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "\"/Users/jason/.local/bin/open-app\" -b 'com.anthropic.claudefordesktop'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "g"
+                }
+              ]
             }
           }
         ]
@@ -25633,6 +25989,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
@@ -25645,7 +26002,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "grave_accent_and_tilde"
+                }
+              ]
             }
           }
         ]
@@ -25669,12 +26031,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'raycast-x://extensions/Jason/here-to-there/activeToTarget'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "h"
+                }
+              ]
             }
           }
         ]
@@ -25721,12 +26089,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'raycast-x://extensions/jason/recents/recentDownloads'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "j"
+                }
+              ]
             }
           }
         ]
@@ -25750,6 +26124,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "net.kovidgoyal.kitty"
@@ -25759,7 +26134,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "k"
+                }
+              ]
             }
           }
         ]
@@ -25783,12 +26163,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash-all'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_0"
+                }
+              ]
             }
           }
         ]
@@ -25812,12 +26198,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-down'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_2"
+                }
+              ]
             }
           }
         ]
@@ -25841,12 +26233,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-left'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_4"
+                }
+              ]
             }
           }
         ]
@@ -25870,12 +26268,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=unstash'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_5"
+                }
+              ]
             }
           }
         ]
@@ -25899,12 +26303,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-right'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_6"
+                }
+              ]
             }
           }
         ]
@@ -25928,12 +26338,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'rectangle-pro://execute-action?name=stash-up'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "keypad_8"
+                }
+              ]
             }
           }
         ]
@@ -25962,12 +26378,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "keypad_enter"
+                }
+              ]
             },
             "conditions": [
               {
@@ -26000,13 +26423,20 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f2"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "keypad_enter"
+                }
+              ]
             },
             "conditions": [
               {
@@ -26044,6 +26474,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
@@ -26052,12 +26483,19 @@
                 ]
               },
               {
+                "halt": true,
                 "shell_command": "'/Users/jason/.local/bin/uv' --directory '/Users/jason/Scripts/strings/text_processor' run python '/Users/jason/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "keypad_equal_sign"
+                }
+              ]
             }
           }
         ]
@@ -26377,12 +26815,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -g 'sidenotes://add-note-with-text/DATE%3A%20%0ACLIENT%3A%20%0ATOPIC%3A%20%0A%0A'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "n"
+                }
+              ]
             }
           }
         ]
@@ -26406,12 +26850,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "o"
+                }
+              ]
             }
           }
         ]
@@ -26435,6 +26885,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f9",
                 "modifiers": [
@@ -26447,7 +26898,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "p"
+                }
+              ]
             }
           }
         ]
@@ -26471,6 +26927,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "software_function": {
                   "open_application": {
                     "bundle_identifier": "com.jinghaoshe.qspace.pro"
@@ -26480,7 +26937,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "q"
+                }
+              ]
             }
           }
         ]
@@ -26504,12 +26966,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u raycast-x://extensions/jason/recents/recentCustom"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "r"
+                }
+              ]
             }
           }
         ]
@@ -26538,12 +27006,19 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'FormatCutSeed()'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "return_or_enter"
+                }
+              ]
             },
             "conditions": [
               {
@@ -26576,13 +27051,20 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f2"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "repeat": false,
+                  "key_code": "return_or_enter"
+                }
+              ]
             },
             "conditions": [
               {
@@ -26761,12 +27243,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'cleanshot://capture-area'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "s"
+                }
+              ]
             }
           }
         ]
@@ -26790,6 +27278,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "h",
                 "modifiers": [
@@ -26802,7 +27291,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "slash"
+                }
+              ]
             }
           }
         ]
@@ -26826,6 +27320,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f11",
                 "modifiers": [
@@ -26837,7 +27332,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "t"
+                }
+              ]
             }
           }
         ]
@@ -26868,7 +27368,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "tab"
+                }
+              ]
             }
           }
         ]
@@ -26892,12 +27397,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'raycast-x://extensions/raycast/clipboard-history/clipboard-history'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "v"
+                }
+              ]
             }
           }
         ]
@@ -26921,12 +27432,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "x"
+                }
+              ]
             }
           }
         ]
@@ -26950,12 +27467,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "\"/Users/jason/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "y"
+                }
+              ]
             }
           }
         ]
@@ -26979,12 +27502,18 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'raycast-x://extensions/mrpunkin/raycast-zoxide/search-directories'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "halt": true,
+                  "key_code": "z"
+                }
+              ]
             }
           }
         ]
@@ -27372,7 +27901,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "return_or_enter"
+                }
+              ]
             },
             "conditions": [
               {
@@ -27594,7 +28128,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "pointing_button": "button3",
+                  "repeat": false
+                }
+              ]
             },
             "conditions": [
               {
@@ -27682,7 +28221,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "pointing_button": "button4",
+                  "repeat": false
+                }
+              ]
             },
             "conditions": [
               {
@@ -27756,9 +28300,11 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "pointing_button": "button1"
               },
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "left_control",
                 "modifiers": [
@@ -27769,7 +28315,15 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "repeat": false,
+                  "key_code": "up_arrow",
+                  "modifiers": [
+                    "control"
+                  ]
+                }
+              ]
             },
             "conditions": [
               {
@@ -27856,7 +28410,12 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "pointing_button": "button5",
+                  "repeat": false
+                }
+              ]
             },
             "conditions": [
               {
@@ -27960,6 +28519,7 @@
             },
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -28056,6 +28616,7 @@
             },
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
               }
             ],
@@ -28107,12 +28668,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "'/Users/jason/Scripts/.venv/shared_venv/bin/python' '/Users/jason/Scripts/ui/screenshot_to_md/shot_to_md.py'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
+                }
+              ]
             },
             "conditions": [
               {
@@ -28147,6 +28713,7 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "repeat": false,
                 "key_code": "f10",
                 "modifiers": [
@@ -28158,7 +28725,11 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "osascript -e 'tell application \"Popclip\" to appear'"
+                }
+              ]
             },
             "conditions": [
               {
@@ -28193,12 +28764,17 @@
             ],
             "to_if_held_down": [
               {
+                "halt": true,
                 "shell_command": "open -u 'rectangle-pro://execute-action?name=next-display'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": []
+              "to_if_canceled": [
+                {
+                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
+                }
+              ]
             },
             "conditions": [
               {
