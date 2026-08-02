@@ -119,7 +119,15 @@ obvious way, by having caps hold ⌘⌥⌃⇧ down for the duration of its press
 fixes the emitted set at caps' key-down, so pressing ⇧ afterwards changes
 nothing. Reading the state at the *translated* key means every key needs its own
 manipulator; `capsLayer()` in `src/engine/caps-layer.ts` generates them, one per
-(key × layer state), and `CAPS_LAYER_KEYS` is the list it covers.
+(key × layer state). `CAPS_LAYER_KEYS` is the list it covers: letters, digits,
+symbols, F1–F24, the navigation block and the keypad. The hand-written parts of
+that list carry a `satisfies StandardKeyCode[]`, because Karabiner rejects a
+whole config over one unknown key code rather than skipping the key.
+
+The keypad is covered despite `DEVICE_CONFIGS` remapping several of its keys
+per-device: simple modifications run *before* complex modifications, so a
+remapped key reaches the layer already rewritten and the layer only ever sees
+the post-remap code.
 
 Two mechanisms carry the state, and the split is deliberate:
 
@@ -151,9 +159,11 @@ caps + E  →  focusWinRight        (not ⌘⌥⌃⇧+E, which nothing would cat
 
 Matching is side-insensitive, so `VMOD.COCS` and `["L.cmd","L.opt","L.ctrl","L.shift"]`
 both adopt. Adoption is additive — the source binding is untouched and still
-fires from a real modifier press — and it extends coverage: an adopted key need
-not be in `CAPS_LAYER_KEYS`, which is how the `⌘⌥⌃⇧+keypad_N` window rules reach
-the layer. Add a `⌘⌥⌃+X` binding and it becomes caps+⇧+X automatically.
+fires from a real modifier press — and it extends coverage past
+`CAPS_LAYER_KEYS`, so a binding on a key the grid does not list still reaches
+the layer. Where an adopted key *is* in the grid, the adoption replaces the
+generated emit rather than joining it. Add a `⌘⌥⌃+X` binding and it becomes
+caps+⇧+X automatically.
 
 An adopted binding keeps every case it had — tap, hold, double-tap and
 double-tap-hold all survive the change of trigger, and a multi-tap gets its own

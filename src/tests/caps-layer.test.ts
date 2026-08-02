@@ -205,14 +205,21 @@ test("nothing in the layer depends on press order", () => {
   }
 });
 
-test("the layer covers letters, digits, symbols, function and navigation keys", () => {
-  for (const key of ["a", "z", "0", "9", "slash", "f1", "f24", "spacebar", "escape", "page_down", "up_arrow"]) {
+test("the layer covers letters, digits, symbols, function, navigation and keypad keys", () => {
+  const covered = [
+    "a", "z", "0", "9", "slash", "f1", "f24", "spacebar", "escape",
+    "page_down", "up_arrow",
+    // Simple modifications run before complex ones, so a per-device keypad
+    // remap has already been applied by the time the layer sees the key.
+    "keypad_0", "keypad_9", "keypad_enter", "keypad_asterisk", "keypad_equal_sign",
+  ];
+  for (const key of covered) {
     assert.ok(CAPS_LAYER_KEYS.includes(key), `${key} is not covered by the layer`);
   }
   assert.equal(
-    CAPS_LAYER_KEYS.some((k) => k.startsWith("keypad_")),
-    false,
-    "keypad keys are remapped per-device and are deliberately left to that",
+    new Set(CAPS_LAYER_KEYS).size,
+    CAPS_LAYER_KEYS.length,
+    "a duplicated key would emit two manipulators per state",
   );
 });
 
@@ -373,11 +380,27 @@ test("each layer state adopts the combination it emits, and only that one", () =
 
 test("adoption extends coverage to keys outside the generated grid", () => {
   const source = bind(
+    from("international1", ["command", "option", "control", "shift"]),
+    to(press(shell("x"))),
+  );
+  assert.equal(CAPS_LAYER_KEYS.includes("international1"), false, "sanity: not in the grid");
+  assert.equal(allFor(adopting(source), "international1", null).length, 1);
+});
+
+test("adopting a key that is also in the grid does not emit it twice", () => {
+  const source = bind(
     from("keypad_1", ["command", "option", "control", "shift"]),
     to(press(shell("x"))),
   );
-  assert.equal(CAPS_LAYER_KEYS.includes("keypad_1"), false, "sanity: not in the grid");
-  assert.equal(allFor(adopting(source), "keypad_1", null).length, 1);
+  assert.ok(CAPS_LAYER_KEYS.includes("keypad_1"), "sanity: in the grid");
+
+  const ms = defineBindings(
+    capsLayer({ ...CONFIG, keys: ["keypad_1"], adopt: [source] }),
+  ).flatMap((rule) => rule.manipulators as Manipulator[]) as BasicManipulator[];
+
+  const [m, ...rest] = allFor(ms, "keypad_1", null);
+  assert.deepEqual(rest, [], "the adoption replaces the generated emit, it does not join it");
+  assert.equal(m?.to?.some((e) => "shell_command" in e), true);
 });
 
 test("a fully conditional adoption keeps the emitted combination as a fallback", () => {

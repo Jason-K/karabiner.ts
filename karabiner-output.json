@@ -2559,6 +2559,798 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_0",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_0",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_2",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_4",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_6",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_8",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_asterisk",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_asterisk",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_enter",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_equal_sign",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_hyphen",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_hyphen",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_num_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_num_lock",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_period",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_period",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_plus",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_plus",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_command"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_slash",
+                "modifiers": [
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "l",
               "modifiers": {
                 "mandatory": [
@@ -6387,6 +7179,798 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_0",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_0",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_2",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_4",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_6",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_8",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_asterisk",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_asterisk",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_enter",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_equal_sign",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_hyphen",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_hyphen",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_num_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_num_lock",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_period",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_period",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_plus",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_plus",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_option"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_slash",
+                "modifiers": [
+                  "left_command",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "l",
               "modifiers": {
                 "mandatory": [
@@ -10215,6 +11799,798 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_0",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_0",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_2",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_4",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_6",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_8",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_asterisk",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_asterisk",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_enter",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_equal_sign",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_hyphen",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_hyphen",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_num_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_num_lock",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_period",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_period",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_plus",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_plus",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_control"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_slash",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "l",
               "modifiers": {
                 "mandatory": [
@@ -14032,6 +16408,798 @@
               {
                 "repeat": true,
                 "key_code": "k",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_0",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_0",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_1",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_1",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_2",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_3",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_3",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_4",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_4",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_5",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_5",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_6",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_7",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_7",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_8",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_8",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_9",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_9",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_asterisk",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_asterisk",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_enter",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_equal_sign",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_hyphen",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_hyphen",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_num_lock",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_num_lock",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_period",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_period",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_plus",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_plus",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_slash",
+              "modifiers": {
+                "mandatory": [
+                  "left_shift"
+                ],
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_slash",
                 "modifiers": [
                   "left_command",
                   "left_option",
@@ -17877,6 +21045,48 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_0",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_0",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "keypad_1",
               "modifiers": {
                 "optional": [
@@ -17931,6 +21141,48 @@
               }
             ],
             "description": "Caps lock pressed"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_2",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_2",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
           },
           {
             "type": "basic",
@@ -17993,6 +21245,48 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_4",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_4",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "keypad_5",
               "modifiers": {
                 "optional": [
@@ -18047,6 +21341,48 @@
               }
             ],
             "description": "Caps lock pressed"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_6",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_6",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
           },
           {
             "type": "basic",
@@ -18109,6 +21445,48 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "keypad_8",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_8",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "keypad_9",
               "modifiers": {
                 "optional": [
@@ -18163,6 +21541,342 @@
               }
             ],
             "description": "Caps lock pressed"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_asterisk",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_asterisk",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_enter",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_enter",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_equal_sign",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_equal_sign",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_hyphen",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_hyphen",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_num_lock",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_num_lock",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_period",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_period",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_plus",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_plus",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "keypad_slash",
+              "modifiers": {
+                "optional": [
+                  "right_command",
+                  "right_option",
+                  "right_control",
+                  "right_shift",
+                  "fn",
+                  "caps_lock"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "repeat": true,
+                "key_code": "keypad_slash",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
+              }
+            ]
           },
           {
             "type": "basic",

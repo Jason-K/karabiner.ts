@@ -50,6 +50,7 @@ import type {
   Binding,
   Case,
   Condition,
+  StandardKeyCode,
   Trigger,
   TriggerModifiers,
   VarSpec,
@@ -121,6 +122,8 @@ export const CAPS_LAYER_STATES: readonly CapsLayerState[] = [
 const LETTERS = [..."abcdefghijklmnopqrstuvwxyz"];
 const DIGITS = [..."0123456789"];
 
+// Hand-written lists are checked against the key-code union: a typo here would
+// otherwise reach Karabiner, which rejects the whole config rather than the key.
 const SYMBOLS = [
   "hyphen",
   "equal_sign",
@@ -134,7 +137,7 @@ const SYMBOLS = [
   "comma",
   "period",
   "slash",
-];
+] satisfies StandardKeyCode[];
 
 const FUNCTION_KEYS = Array.from({ length: 24 }, (_, i) => `f${i + 1}`);
 
@@ -154,14 +157,36 @@ const NAVIGATION = [
   "down_arrow",
   "left_arrow",
   "right_arrow",
-];
+] satisfies StandardKeyCode[];
+
+const KEYPAD = [
+  "keypad_0",
+  "keypad_1",
+  "keypad_2",
+  "keypad_3",
+  "keypad_4",
+  "keypad_5",
+  "keypad_6",
+  "keypad_7",
+  "keypad_8",
+  "keypad_9",
+  "keypad_period",
+  "keypad_slash",
+  "keypad_asterisk",
+  "keypad_hyphen",
+  "keypad_plus",
+  "keypad_equal_sign",
+  "keypad_enter",
+  "keypad_num_lock",
+] satisfies StandardKeyCode[];
 
 /**
  * Every key the layer translates.
  *
- * Keypad keys are excluded on purpose: they are remapped per-device in
- * `DEVICE_CONFIGS`, and a layer manipulator ahead of that would claim them
- * before the device scoping applied.
+ * The keypad is in here despite `DEVICE_CONFIGS` remapping several of its keys
+ * per-device: simple modifications are applied *before* complex modifications,
+ * so a remapped key reaches the layer already rewritten and the layer only ever
+ * sees the post-remap code. There is nothing to race.
  */
 export const CAPS_LAYER_KEYS: readonly string[] = [
   ...LETTERS,
@@ -169,6 +194,7 @@ export const CAPS_LAYER_KEYS: readonly string[] = [
   ...SYMBOLS,
   ...FUNCTION_KEYS,
   ...NAVIGATION,
+  ...KEYPAD,
 ];
 
 export type CapsLayerConfig = {
