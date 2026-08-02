@@ -227,6 +227,62 @@ test("defineBindings multiTap: escape tap/hold/doubleTapHold -> 2 var-dance mani
   assert.ok(first, "first tap carries the escape alone action");
 });
 
+test("buildMultiTap: the trigger's modifiers reach every manipulator's from", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["a"], modifiers: ["command", "option", "control", "shift"] },
+      cases: [
+        { phase: "release", do: [{ type: "shell", command: "tap" }] },
+        { tapCount: 2, phase: "release", do: [{ type: "shell", command: "double" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulators.length, 2);
+  for (const m of built.manipulators) {
+    // Building `from` from the key code alone dropped these, leaving a
+    // manipulator on bare `a` that claimed every press of the key.
+    assert.deepEqual(m.from.modifiers, {
+      mandatory: ["command", "option", "control", "shift"],
+    });
+  }
+});
+
+test("buildMultiTap: multiTap.mods still overrides the trigger's modifiers", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["left_shift"] },
+      multiTap: { mods: [] },
+      cases: [
+        { phase: "release", do: [{ type: "key", key: "left_shift" }] },
+        { tapCount: 2, phase: "release", do: [{ type: "shell", command: "x" }] },
+      ],
+    },
+  ]);
+  for (const m of (rules[0] as any).manipulators) {
+    assert.deepEqual(m.from.modifiers, {}, "mods: [] means no modifiers at all");
+  }
+});
+
+test("buildMultiTap: a press case lands on every tap manipulator's to", () => {
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["a"] },
+      cases: [
+        { phase: "press", do: [{ type: "setVar", var: { name: "seen", varDesc: "Seen" }, value: 1 }] },
+        { phase: "release", do: [{ type: "shell", command: "tap" }] },
+        { tapCount: 2, phase: "release", do: [{ type: "shell", command: "double" }] },
+      ],
+    },
+  ]);
+  for (const m of (rules[0] as any).manipulators) {
+    assert.ok(
+      m.to?.some((e: any) => e.set_variable?.name === "seen"),
+      "press fires on key-down whichever tap the manipulator represents",
+    );
+  }
+});
+
 test("defineBindings auto-derives rule description + slice-label when description absent", () => {
   const rules = defineBindings([
     {

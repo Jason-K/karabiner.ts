@@ -1,4 +1,4 @@
-import type { Action, ActionSpec } from "./actions";
+import type { Action } from "./actions";
 import type { AppSpec } from "./apps";
 import type { DeviceSpec } from "./devices";
 import type { PathSpec } from "./paths";
@@ -141,8 +141,14 @@ export type Binding = {
     mods?: string[];
     firstTapPendingVar?: VarSpec;
   };
-  /** Actions executed after key release (`to_after_key_up`). */
-  afterKeyUp?: ActionSpec[];
+  /**
+   * Actions executed after key release (`to_after_key_up`).
+   *
+   * Accepts raw `ToEvent`s as well as {@link ActionSpec}s, because a per-event
+   * `conditions` gate — the only way to make a key-up emission depend on what
+   * happened during the hold — has no `ActionSpec` spelling.
+   */
+  afterKeyUp?: Action[];
   /** Tap-hold signaling variable set to 1 while key is held down and 0 on key release. */
   whileHoldVar?: VarSpec;
   /** Suppress trigger fallback across binding. */
@@ -161,8 +167,8 @@ export type Binding = {
    *
    * Bindings that resolve to the *same* trigger are merged automatically; this
    * is the escape hatch for the case where several distinct triggers are one
-   * feature and deserve one row in the GUI. `vmod()` uses it so that caps lock
-   * and its fifteen modifier variants appear once rather than thirty-one times.
+   * feature and deserve one row in the GUI. `capsLayer()` uses it so that the
+   * caps lock layer appears once rather than once per key it translates.
    *
    * `description` is the merged rule's label — mechanically merging the
    * variants' own descriptions produces an unreadable wall of near-duplicates,

@@ -172,6 +172,15 @@ export type ToEventOptions = {
   repeat?: boolean;
   halt?: boolean;
   hold_down_milliseconds?: number;
+  /**
+   * Gate this single event on a condition (Karabiner-Elements 15.3.7+).
+   *
+   * Distinct from the manipulator's own `conditions`: those decide whether the
+   * manipulator matches at all, at key-down. These are evaluated when the first
+   * event of the surrounding channel is *emitted*, which is the only way to make
+   * a `to_after_key_up` event depend on what happened during the hold.
+   */
+  conditions?: Condition[];
 };
 
 export type ToEvent = (
