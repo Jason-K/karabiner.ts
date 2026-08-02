@@ -165,22 +165,30 @@ test("a ruleGroup merges distinct triggers into one labelled rule", () => {
   assert.deepEqual(firstManipulator!.from.modifiers?.mandatory, ["command"]);
 });
 
-test("caps lock and every modifier variant occupy a single rule", () => {
+test("the whole caps lock layer occupies a single rule", () => {
   const { rules } = buildRules();
   const triggersCapsLock = (m: Manipulator) =>
-    isBasic(m) && JSON.stringify(m.from).includes("caps_lock");
+    isBasic(m) && (m.from as { key_code?: string }).key_code === "caps_lock";
   const caps = rules.filter((r) => r.manipulators.some(triggersCapsLock));
 
   assert.equal(caps.length, 1, "caps lock must not spread across several GUI rows");
-  assert.equal(
-    caps[0]!.manipulators.length,
-    caps[0]!.manipulators.filter(triggersCapsLock).length,
-    "the merged rule holds caps-lock variants and nothing else",
-  );
   assert.ok(
     caps[0]!.manipulators.length > 1,
-    "the merged rule should still carry every variant",
+    "the merged rule should still carry every translation",
   );
+
+  // Everything in the rule is either the layer key or gated on it — nothing
+  // unrelated may be swept into the group, least of all its catch-all.
+  for (const m of caps[0]!.manipulators) {
+    if (triggersCapsLock(m)) continue;
+    assert.ok(
+      isBasic(m) &&
+        m.conditions?.some(
+          (c) => c.type === "variable_if" && c.name === "caps_lock_pressed",
+        ),
+      `manipulator ${JSON.stringify(isBasic(m) ? m.from : m)} is in the caps rule but not gated on the layer`,
+    );
+  }
 });
 
 test("no two emitted rules claim the same trigger", () => {

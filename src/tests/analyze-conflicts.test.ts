@@ -18,6 +18,7 @@ import {
   noop,
   press,
   RuleConflictError,
+  sameInputDomain,
   to,
   toInputDomain,
   when,
@@ -241,4 +242,39 @@ test("assertNoConflicts returns the report when the configuration is clean", () 
 
   assert.equal(report.bindings.length, 2);
   assert.deepEqual(report.errors, []);
+});
+
+test("conflict analysis: a from.any catch-all covers every key trigger of its kind", () => {
+  const anyKey = toInputDomain({ any: "key_code", modifiers: { optional: ["any"] } });
+  const oneKey = toInputDomain({ keys: ["a"] });
+  const chord = toInputDomain({ keys: ["a", "b"] });
+  const button = toInputDomain({ pointer: "button1" });
+
+  assert.equal(inputDomainContains(anyKey, oneKey), true);
+  assert.equal(inputDomainContains(anyKey, chord), true, "it consumes the chord's first key-down");
+  assert.equal(inputDomainContains(anyKey, button), false, "a key catch-all is not a button one");
+  assert.equal(
+    inputDomainContains(oneKey, anyKey),
+    false,
+    "containment is directional: one key does not cover the catch-all",
+  );
+  assert.equal(inputDomainsIntersect(anyKey, oneKey), true);
+  assert.equal(sameInputDomain(anyKey, oneKey), false);
+});
+
+test("conflict analysis: a conditional catch-all does not shadow the rules after it", () => {
+  const layerVar = { name: "layer_held", varDesc: "Layer held" };
+  const report = analyzeConflicts([
+    set("layer", [
+      {
+        trigger: { any: "key_code", modifiers: { optional: ["any"] } },
+        conditions: [{ var: layerVar, equals: 1 }],
+        cases: [{ phase: "press", do: [{ type: "noop" }] }],
+      },
+    ]),
+    set("keys", [
+      { trigger: { keys: ["a"] }, cases: [{ phase: "press", do: [{ type: "key", key: "b" }] }] },
+    ]),
+  ]);
+  assert.deepEqual(report.errors, [], "the catch-all is the narrower rule, not the shadowing one");
 });

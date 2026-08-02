@@ -84,6 +84,104 @@ bind(
 Descriptions are derived automatically from the trigger, conditions, and
 actions — you only set `description` to override.
 
+## The caps lock layer
+
+Caps lock is a modifier layer. It emits nothing while held; every non-modifier
+key pressed during the hold comes out with ⌘⌥⌃⇧ *minus* whichever single
+left-side modifier is also held:
+
+| Held | Emitted | Example |
+| --- | --- | --- |
+| caps | ⌘⌥⌃⇧ + key | caps+A → ⌘⌥⌃⇧A |
+| caps + ⇧ | ⌘⌥⌃ + key | caps+⇧+A → ⌘⌥⌃A |
+| caps + ⌃ | ⌘⌥⇧ + key | caps+⌃+A → ⌘⌥⇧A |
+| caps + ⌥ | ⌘⌃⇧ + key | caps+⌥+A → ⌘⌃⇧A |
+| caps + ⌘ | ⌥⌃⇧ + key | caps+⌘+A → ⌥⌃⇧A |
+
+Tapping caps — releasing it without any key having gone through the layer —
+emits ⌘⌥⌃⇧+F15 instead. Right-side modifiers and `fn` are not layer selectors;
+they pass through untouched, and pressing one does not count as using the layer.
+Holding *two* of the four selectors is deliberately unhandled: no state claims
+the event and the key falls through unchanged.
+
+A `from.any` catch-all sits last in the layer and is what makes "unhandled" safe.
+Anything no state claimed — two selectors at once, or a key outside
+`CAPS_LAYER_KEYS` — still marks the layer used and is re-sent verbatim with
+`to.from_event`. Without it, an unhandled hold would leave the tap armed and fire
+⌘⌥⌃⇧+F15 on release, on top of whatever the fall-through produced. The modifier
+keys are claimed just ahead of it for the same reason in reverse: `from.any`
+matches them too, and `caps → ⇧ → release` has to stay a tap.
+
+**Order does not matter.** `caps → ⇧ → A`, `⇧ → caps → A` and pressing caps and
+⇧ together all produce ⌘⌥⌃A. Only the modifier state at the moment the
+non-modifier key goes down is read — which is why the layer cannot be built the
+obvious way, by having caps hold ⌘⌥⌃⇧ down for the duration of its press. That
+fixes the emitted set at caps' key-down, so pressing ⇧ afterwards changes
+nothing. Reading the state at the *translated* key means every key needs its own
+manipulator; `capsLayer()` in `src/engine/caps-layer.ts` generates them, one per
+(key × layer state). `CAPS_LAYER_KEYS` is the list it covers: letters, digits,
+symbols, F1–F24, the navigation block and the keypad. The hand-written parts of
+that list carry a `satisfies StandardKeyCode[]`, because Karabiner rejects a
+whole config over one unknown key code rather than skipping the key.
+
+The keypad is covered despite `DEVICE_CONFIGS` remapping several of its keys
+per-device: simple modifications run *before* complex modifications, so a
+remapped key reaches the layer already rewritten and the layer only ever sees
+the post-remap code.
+
+Two mechanisms carry the state, and the split is deliberate:
+
+- **The layer flag** is a Karabiner variable (`caps_lock_pressed`). It has to be
+  — the key emits nothing, so there is no modifier flag to match on. A second
+  variable (`caps_lock_used`) distinguishes a tap from a hold that translated
+  something; it is read back on key-up through a per-event `to.conditions` gate,
+  because `to_if_alone` is cancelled by *any* intervening key-down, a modifier
+  press included.
+- **The layer selectors** are `from.modifiers.mandatory`, not variables.
+  Karabiner matches mandatory modifiers against the held set regardless of press
+  order, and *removes* them from the emitted event — order-independence and
+  modifier consumption both come free. A variable could give neither: the
+  physical ⇧ would still be down, so the emitted key would carry a ⇧ the layer
+  is supposed to have eaten.
+
+**Existing rules are adopted, not shadowed.** Karabiner does not feed its own
+output back through complex modifications, so a layer that merely *emits*
+⌘⌥⌃⇧+E could never reach a rule bound to ⌘⌥⌃⇧+E — the combination never arrives
+as an input event. So the generator joins against the rest of the configuration
+at compile time: any binding whose trigger is exactly the combination a layer
+state emits is adopted, and caps+E runs that binding's actions directly.
+
+```
+bind(from("e", VMOD.COCS), to(release(map(COMBOS.focusWinRight))))
+        ↓  adopted into the base layer
+caps + E  →  focusWinRight        (not ⌘⌥⌃⇧+E, which nothing would catch)
+```
+
+Matching is side-insensitive, so `VMOD.COCS` and `["L.cmd","L.opt","L.ctrl","L.shift"]`
+both adopt. Adoption is additive — the source binding is untouched and still
+fires from a real modifier press — and it extends coverage past
+`CAPS_LAYER_KEYS`, so a binding on a key the grid does not list still reaches
+the layer. Where an adopted key *is* in the grid, the adoption replaces the
+generated emit rather than joining it. Add a `⌘⌥⌃+X` binding and it becomes
+caps+⇧+X automatically.
+
+An adopted binding keeps every case it had — tap, hold, double-tap and
+double-tap-hold all survive the change of trigger, and a multi-tap gets its own
+pending-tap variable so it cannot resolve the original's pending first tap.
+Where a tap-hold defines only one of the two phases, the other is filled with
+the layer's own combination rather than a bare key, matching what the source
+binding did under real modifiers.
+
+Three cases are left to emit the combination instead:
+
+- **Nothing adopted that key** — the ordinary path, `caps+A → ⌘⌥⌃⇧A`.
+- **Every adoption is conditional** — the emitted combination is kept as a
+  fallback below them, so caps+key still does something when no condition holds.
+- **The binding uses `guard()`** — `buildGuard()` requires the guard to be the
+  binding's only case, so the layer's bookkeeping cannot be injected into it.
+  A confirm-before-fire guard is written against one specific combination
+  anyway.
+
 ## Rule emission
 
 A *manipulator* is what fires; a *rule* is what the Karabiner-Elements GUI shows
@@ -109,14 +207,18 @@ Inside a rule, conditional manipulators come before unconditional ones, so an
 
 This is also Karabiner's evaluation order, so it is load-bearing rather than
 cosmetic: the specific `⌘⌥+H` is reached before the general `⌘+H`, which is
-reached before bare `H`. Chords generated from `simultaneousMappings` stay ahead
-of everything, because a single-key rule can consume a chord's first key-down and
-trigger order alone cannot express that.
+reached before bare `H`.
+
+Two things sort ahead of everything, because trigger order cannot express them:
+
+- **Chords** generated from `simultaneousMappings`, because a single-key rule can
+  consume a chord's first key-down.
+- **The caps lock layer**, because its manipulators carry no mandatory modifiers
+  and would otherwise tie with — and lose to — the plain rule for the same key.
 
 **Merging unrelated triggers.** `options({ ruleGroup: { id, description } })` puts
-several distinct triggers in one rule under one hand-written label. `vmod()` uses
-it so that caps lock and its fifteen modifier variants are one row instead of
-thirty-one near-identical ones.
+several distinct triggers in one rule under one hand-written label. `capsLayer()`
+uses it so that the caps lock layer is one row instead of one per key it covers.
 
 ## Conflict detection
 

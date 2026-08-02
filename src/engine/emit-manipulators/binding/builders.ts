@@ -1,5 +1,10 @@
-import type { FromEvent, Manipulator, PointingButton } from "../../../types/karabiner";
-import { map, toPointingButton, toSetVar } from "../../karabiner-helpers";
+import type {
+  FromEvent,
+  Manipulator,
+  Modifier,
+  PointingButton,
+} from "../../../types/karabiner";
+import { map, toKey, toPointingButton, toSetVar } from "../../karabiner-helpers";
 import {
   DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
   TIMINGS,
@@ -24,7 +29,6 @@ import {
   tapHold,
   tapHoldFrom,
   triggerToFrom,
-  varTapTapHold,
   varTapTapHoldFrom,
 } from "../../resolve-trigger";
 import { resolveActionToEvents } from "../../resolve-to-action";
@@ -163,7 +167,30 @@ export function buildMultiTap(
           : undefined,
         ...shared,
       })
-      : varTapTapHold({ key, mods: b.multiTap?.mods as any, ...shared });
+      : varTapTapHoldFrom({
+        // The trigger's own modifiers, not just its key: building `from` from
+        // the key code alone dropped them, so a multi-tap bound to `⌘⌥⌃⇧+A`
+        // compiled down to one on bare `A` that claimed every press of the key.
+        // `multiTap.mods` stays an explicit override for the call sites that
+        // want to say "no modifiers at all".
+        from: triggerToFrom(b.trigger),
+        passThrough: b.multiTap?.allowPassThrough
+          ? toKey(key, [], { lazy: true })
+          : undefined,
+        ...(b.multiTap?.mods ? { mods: b.multiTap.mods as Modifier[] } : {}),
+        ...shared,
+      });
+    // A press case fires on key-down whichever tap the manipulator represents,
+    // so it belongs on all of them. Previously they were dropped silently.
+    const pressDo = g.cases
+      .filter((c) => c.tapCount === 1 && c.phase === "press")
+      .flatMap((c) => c.do);
+    if (pressDo.length) {
+      groupManips.forEach((m: any) => {
+        m.to = m.to || [];
+        m.to.push(...pressDo);
+      });
+    }
     const conds = deviceLast(g.conditions);
     if (conds.length) {
       groupManips.forEach((m: any) => {
@@ -315,6 +342,10 @@ export function buildRemap(
   isPointer: boolean,
 ): Manipulator | Manipulator[] {
   const label = synthesizeManipulatorLabel(g.rawConditions);
+  // A press-only binding still has a key-up edge, and `afterKeyUp` is the only
+  // channel that can fire on it. Dropping it here (the previous behaviour) made
+  // the field silently do nothing outside chords.
+  const afterKeyUp = b.afterKeyUp?.flatMap((a) => resolveActionToEvents(a)) ?? [];
   if (isPointer) {
     const pointerKey = getTriggerKeys(b.trigger)[0]!;
     const { button } = resolveButton(pointerKey);
@@ -328,6 +359,7 @@ export function buildRemap(
     }
     const m: Record<string, unknown> = { type: "basic", from };
     if (g.pressDo.length) m.to = g.pressDo;
+    if (afterKeyUp.length) m.to_after_key_up = afterKeyUp;
     if (label) m.description = label;
     const conds = deviceLast(g.conditions);
     if (conds.length) m.conditions = conds;
@@ -337,5 +369,6 @@ export function buildRemap(
   if (label) builder.description(label);
   for (const cond of deviceLast(g.conditions)) builder.condition(cond as any);
   for (const e of g.pressDo) builder.to(e);
+  for (const e of afterKeyUp) builder.toAfterKeyUp(e);
   return builder.build();
 }

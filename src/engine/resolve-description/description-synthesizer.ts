@@ -69,6 +69,7 @@ export function describeTrigger(trigger: Trigger): string {
   const segments: string[] = [];
   if (mandSymbols) segments.push(`[${mandSymbols}]`);
   if (optSymbols) segments.push(`(${optSymbols})?`);
+  if ("any" in trigger) segments.push(`[ANY ${trigger.any.replace(/_/g, " ")}]`);
   for (const k of keys) {
     if (isPointerButton(k)) {
       segments.push(resolveButton(k).desc);

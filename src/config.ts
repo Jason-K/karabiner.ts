@@ -8,7 +8,7 @@
 
 import { DEVICES } from "./data";
 import {
-  capsLockBindings,
+  buildCapsLockBindings,
   disabledHotkeys,
   guardBindings,
   mouseBindings,
@@ -39,9 +39,29 @@ export const BINDING_SETS: ReadonlyArray<{ name: string; bindings: Binding[] }> 
   { name: "tap-hold", bindings: tapHoldBindings },
   { name: "guards", bindings: guardBindings },
   { name: "mouse", bindings: mouseBindings },
-  { name: "caps-lock", bindings: capsLockBindings },
   { name: "disabled-hotkeys", bindings: disabledHotkeys },
 ];
+
+/**
+ * The caps lock layer, planned separately so it can be emitted ahead of
+ * everything else.
+ *
+ * Trigger order cannot express this. A layer manipulator for `q` has no
+ * mandatory modifiers — the layer key emits none — so it would sort level with
+ * the plain `q` tap-hold rule and lose the tiebreak, and the plain rule would
+ * consume the key before the layer ever saw it. Every layer manipulator is
+ * conditioned on `caps_lock_pressed`, so putting them first costs nothing when
+ * caps is not held.
+ *
+ * It is built from {@link BINDING_SETS} rather than alongside them: any binding
+ * triggered by the combination a layer state emits (`⌘⌥⌃⇧+E` for the base
+ * layer) is adopted into the layer, because Karabiner never re-reads its own
+ * output and an emitted `⌘⌥⌃⇧+E` would otherwise reach nothing.
+ */
+export const CAPS_LAYER_SET: { name: string; bindings: Binding[] } = {
+  name: "caps-layer",
+  bindings: buildCapsLockBindings(BINDING_SETS.flatMap((s) => s.bindings)),
+};
 
 /** Device-scoped settings and simple modifications. */
 export const DEVICE_CONFIGS: DeviceConfig[] = [
@@ -51,7 +71,7 @@ export const DEVICE_CONFIGS: DeviceConfig[] = [
 
 /** The rule layout the build emits: grouping, ordering and descriptions. */
 export function rulePlan(): RulePlan[] {
-  return planRules(BINDING_SETS);
+  return [...planRules([CAPS_LAYER_SET]), ...planRules(BINDING_SETS)];
 }
 
 /** Every binding in the order Karabiner will evaluate it. */
