@@ -1,4 +1,4 @@
-import { APP_ID, CMDS, COMBOS, URLS, VMOD } from "../data";
+import { APP_ID, CMDS, COMBOS, URLS, VM } from "../data";
 import { capsVars } from "./caps-lock";
 import {
   actHere,
@@ -35,9 +35,9 @@ const numBindings: Binding[] = [
 ];
 
 const letterBindings: Binding[] = [
-  bind(from("a"), to(hold(key("f18", VMOD.COCS)))),
+  bind(from("a"), to(hold(key("f18", VM.COCS)))),
   bind(from("c"), to(hold(map(COMBOS.showBusyCal)))),
-  bind(from("d"), to(hold(key("f1", VMOD.CO_S)))),
+  bind(from("d"), to(hold(key("f1", VM.CO_S)))),
   bind(from("f"), to(hold(actHere("qspace")))),
   bind(from("g"), to(hold(openApp(APP_ID.claude, "shell")))),
   bind(from("h"), to(hold(openUrl(URLS.rayHere2There)))),
@@ -48,8 +48,8 @@ const letterBindings: Binding[] = [
   bind(from("p"), to(hold(map(COMBOS.showPopclip)))),
   bind(from("q"), to(hold(openApp(APP_ID.qspace)))),
   bind(from("r"), to(hold(shell(CMDS.getRecentRaycast)))),
-  bind(from("s"), to(hold(openUrl(URLS.csxCaptureArea)))),
-  bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxCaptureWindow)))),
+  bind(from("s"), to(hold(openUrl(URLS.csxArea)))),
+  bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxWindow)))),
   bind(from("t"), to(hold(map(COMBOS.showKittyQuakeTerm)))),
   bind(from("v"), to(hold(openUrl(URLS.rayClipboard)))),
   bind(from("x"), to(hold(actHere("copy")))),
@@ -63,7 +63,7 @@ const symbolBindings: Binding[] = [
     to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", VMOD._O_S),
+        key("left_arrow", VM._O_S),
         shell(CMDS.tpQuickDate),
       ]),
     ),
@@ -77,7 +77,7 @@ const symbolBindings: Binding[] = [
     to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", VMOD._O_S),
+        key("left_arrow", VM._O_S),
         shell(CMDS.tpQuickDate),
       ]),
     ),

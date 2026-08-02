@@ -326,7 +326,7 @@ function allFor(
 }
 
 test("a binding on the combination a layer emits runs instead of the combination", () => {
-  // Unsided ⌘⌥⌃⇧, the way VMOD.COCS spells it — matching is side-insensitive.
+  // Unsided ⌘⌥⌃⇧, the way VM.COCS spells it — matching is side-insensitive.
   const source = bind(
     from("a", ["command", "option", "control", "shift"]),
     to(press(shell("echo adopted"))),

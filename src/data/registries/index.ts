@@ -4,7 +4,7 @@ export { COMBOS, mapSpec, type ComboOpts, type HkInput } from "./combos";
 export { DEVICES } from "./devices";
 export {
   MODKEY_CODES,
-  VMOD,
+  VM,
   type KeyCode,
   type ModComboAlias,
   type ModKey,

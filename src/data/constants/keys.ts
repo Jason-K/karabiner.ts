@@ -6,7 +6,7 @@ export type ModKey = Modifier | "cmd" | "opt" | "ctrl" | "L.cmd" | "R.cmd" | "L.
 // Expansion map for ActionSpec key modifiers — consumed by action-resolver.ts
 // Virtual modifiers use fixed slots in COCS order:
 // Cmd, Opt, Ctrl, Shift. Missing modifiers are represented by "_".
-export const VMOD = {
+export const VM = {
   CO__: ["command", "option"],
   C_C_: ["command", "control"],
   C__S: ["command", "shift"],
@@ -20,7 +20,7 @@ export const VMOD = {
   COCS: ["command", "option", "control", "shift"],
 } as const satisfies Record<string, Modifier[]>;
 
-export type ModComboAlias = keyof typeof VMOD;
+export type ModComboAlias = keyof typeof VM;
 
 export const MODKEY_CODES = new Set<string>([
   "left_shift",

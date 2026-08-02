@@ -128,7 +128,7 @@ const rectangleUrls = {
     "Display ←",
     "rectangle",
   ),
-  rectFullscreen: url(
+  winFullscreen: url(
     "rectangle-pro://execute-action?name=fullscreen",
     "Fullscreen",
     "rectangle",
@@ -519,8 +519,8 @@ const rectangleUrls = {
 };
 
 const CsxUrls = {
-  csxCaptureArea: url("cleanshot://capture-area", "Capture area", "cleanshot"),
-  csxCaptureFullscreen: url(
+  csxArea: url("cleanshot://capture-area", "Capture area", "cleanshot"),
+  csxScreen: url(
     "cleanshot://capture-fullscreen",
     "Capture fullscreen",
     "cleanshot",
@@ -531,17 +531,13 @@ const CsxUrls = {
     "OCR text (no line breaks)",
     "cleanshot",
   ),
-  csxCaptureWindow: url("cleanshot://capture-window", "Capture window", "cleanshot"),
-  csxRecordScreen: url("cleanshot://record-screen", "Record screen", "cleanshot"),
+  csxWindow: url("cleanshot://capture-window", "Capture window", "cleanshot"),
+  csxRecord: url("cleanshot://record-screen", "Record screen", "cleanshot"),
 };
 
 const AntiNoteUrls = {
   antinote: url("antinote://", "Open AntiNote"),
   antinoteNewNote: url("antinote://new-note", "Create new note"),
-  antinoteNewNoteInBackground: url(
-    "antinote://new-note?background=true",
-    "Create new note in background",
-  ),
 };
 
 // EXPORTS

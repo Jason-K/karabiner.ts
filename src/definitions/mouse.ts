@@ -1,5 +1,5 @@
 import { toTrigger } from "../engine/resolve-to-action";
-import { APP_ID, CMDS, COMBOS, DEVICES, TIMINGS, URLS, VMOD } from "../data";
+import { APP_ID, CMDS, COMBOS, DEVICES, TIMINGS, URLS, VM } from "../data";
 import { mouseVars } from "../data";
 import {
   bind,
@@ -57,7 +57,7 @@ export const mouseBindings: Binding[] = [
       // overrides declared in REVERSE of the bespoke prepend order so the
       // emitted manipulator order matches (groupByConditions is first-seen).
       // Zen + right-button + wheel-up → prev workspace
-      press(key("left_arrow", VMOD.C_CS)).when(
+      press(key("left_arrow", VM.C_CS)).when(
         condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
         condVar(mouseVars.wheelDown, 0),
@@ -81,7 +81,7 @@ export const mouseBindings: Binding[] = [
   bind(
     from("wheelRight"),
     to(
-      press(key("right_arrow", VMOD.C_CS)).when(
+      press(key("right_arrow", VM.C_CS)).when(
         condApp(APP_ID.zen),
         condVar(mouseVars.rightButtonPressed, 1),
         condVar(mouseVars.wheelDown, 0),
@@ -133,7 +133,7 @@ export const mouseBindings: Binding[] = [
     from("leftForward"),
     to(
       release(shell(CMDS.showPopclip)),
-      hold(key("f10", VMOD.CO_S, { repeat: false })),
+      hold(key("f10", VM.CO_S, { repeat: false })),
     ),
   ),
   // -------------------------------------------------------------

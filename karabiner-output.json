@@ -24939,7 +24939,7 @@
         ]
       },
       {
-        "description": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note in background'",
+        "description": "[⇧]+[A]:\n---\n\tOn Hold:\n\t\tAlways:\tOpen 'Create new note'",
         "manipulators": [
           {
             "type": "basic",
@@ -24962,7 +24962,7 @@
             ],
             "to_if_held_down": [
               {
-                "shell_command": "open -u 'antinote://new-note?background=true'"
+                "shell_command": "open -u 'antinote://new-note'"
               }
             ],
             "to_delayed_action": {

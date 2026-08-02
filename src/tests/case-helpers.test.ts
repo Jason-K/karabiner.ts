@@ -254,10 +254,10 @@ test("Trigger and Bind wrappers create expected Binding and Trigger objects", ()
     cases: [hold(openApp(APP_ID.ringCentral))],
   });
 
-  const b3 = bindKeys("s", hold(openUrl(URLS.csxCaptureWindow)), ["shift"]);
+  const b3 = bindKeys("s", hold(openUrl(URLS.csxWindow)), ["shift"]);
   assert.deepEqual(b3, {
     trigger: { keys: ["s"], modifiers: ["shift"] },
-    cases: [hold(openUrl(URLS.csxCaptureWindow))],
+    cases: [hold(openUrl(URLS.csxWindow))],
   });
 });
 

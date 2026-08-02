@@ -48,7 +48,7 @@ export {
   TIMINGS,
 } from "./constants/timings";
 export {
-  VMOD,
+  VM,
   MODKEY_CODES,
   type KeyCode,
   type ModComboAlias,

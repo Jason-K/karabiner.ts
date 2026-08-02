@@ -1,9 +1,9 @@
 import type { Modifier } from "../../types/karabiner";
 import type { TriggerModifiers } from "../../data";
-import { MODKEY_CODES, VMOD, type ModComboAlias } from "../../data/constants/keys";
+import { MODKEY_CODES, VM, type ModComboAlias } from "../../data/constants/keys";
 
 const VMOD_ALIAS_LOWER = new Map<string, ModComboAlias>(
-  Object.keys(VMOD).map((key) => [
+  Object.keys(VM).map((key) => [
     key.toLowerCase(),
     key as ModComboAlias,
   ]),
@@ -17,7 +17,7 @@ export function getModComboAliasCanonicalKey(
 
 export function resolveModComboAlias(alias: string): Modifier[] | undefined {
   const canonical = getModComboAliasCanonicalKey(alias);
-  return canonical ? [...VMOD[canonical]] : undefined;
+  return canonical ? [...VM[canonical]] : undefined;
 }
 
 export function isModComboAlias(alias: string): boolean {
@@ -78,7 +78,7 @@ export function isModifierKey(key: string): boolean {
  * order and dropping duplicates.
  *
  * The result is asserted to be `Modifier[]`: every path either comes from
- * {@link VMOD} (already `Modifier[]`) or from {@link resolveKeyAlias}, which
+ * {@link VM} (already `Modifier[]`) or from {@link resolveKeyAlias}, which
  * emits Karabiner modifier names. This is the one place that assertion is made.
  */
 export function expandModifiers(modifiers: string[]): Modifier[] {

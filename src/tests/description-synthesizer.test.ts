@@ -47,7 +47,7 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Call 'open Raycast clipboard manager'",
   );
   assert.equal(
-    describeAction({ type: "url", url: URLS.csxCaptureArea }),
+    describeAction({ type: "url", url: URLS.csxArea }),
     "Capture area using CSX",
   );
   assert.equal(
