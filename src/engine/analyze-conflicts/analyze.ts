@@ -81,23 +81,37 @@ function describeConditions(conditions: readonly Condition[]): string {
   return conditions.length ? `${conditions.length} condition(s)` : "unconditional";
 }
 
+/** A binding plus its provenance, before its input domain has been computed. */
+export type BindingEntry = { set: string; index: number; binding: Binding };
+
+/**
+ * Tag already-ordered bindings with their input domains.
+ *
+ * The emitted rule order is not the declaration order — `planRules()` sorts and
+ * merges — so the build hands the analyzer the flattened emit order rather than
+ * the binding sets, and provenance travels with each entry.
+ */
+export function analyzableEntries(
+  entries: readonly BindingEntry[],
+): AnalyzedBinding[] {
+  return entries.map(({ set, index, binding }) => ({
+    set,
+    index,
+    binding,
+    domain: toInputDomain(binding.trigger),
+    conditions: binding.conditions ?? [],
+  }));
+}
+
 /** Flatten named binding sets into analysis records, preserving emit order. */
 export function analyzable(
   sets: ReadonlyArray<{ name: string; bindings: readonly Binding[] }>,
 ): AnalyzedBinding[] {
-  const out: AnalyzedBinding[] = [];
-  for (const { name, bindings } of sets) {
-    bindings.forEach((binding, index) => {
-      out.push({
-        set: name,
-        index,
-        binding,
-        domain: toInputDomain(binding.trigger),
-        conditions: binding.conditions ?? [],
-      });
-    });
-  }
-  return out;
+  return analyzableEntries(
+    sets.flatMap(({ name, bindings }) =>
+      bindings.map((binding, index) => ({ set: name, index, binding })),
+    ),
+  );
 }
 
 /**
@@ -221,7 +235,17 @@ export type AnalysisReport = {
 export function analyzeConflicts(
   sets: ReadonlyArray<{ name: string; bindings: readonly Binding[] }>,
 ): AnalysisReport {
-  const bindings = analyzable(sets);
+  return analyzeOrdered(analyzable(sets));
+}
+
+/** Classify every ordered pair in an already-flattened evaluation order. */
+export function analyzeConflictsInOrder(
+  entries: readonly BindingEntry[],
+): AnalysisReport {
+  return analyzeOrdered(analyzableEntries(entries));
+}
+
+function analyzeOrdered(bindings: AnalyzedBinding[]): AnalysisReport {
   const conflicts: Conflict[] = [];
 
   for (let i = 0; i < bindings.length; i++) {
@@ -270,18 +294,28 @@ export class RuleConflictError extends Error {
 export function assertNoConflicts(
   sets: ReadonlyArray<{ name: string; bindings: readonly Binding[] }>,
 ): AnalysisReport {
-  const report = analyzeConflicts(sets);
+  return throwOnErrors(analyzeConflicts(sets));
+}
+
+/** {@link assertNoConflicts} over an already-flattened evaluation order. */
+export function assertNoConflictsInOrder(
+  entries: readonly BindingEntry[],
+): AnalysisReport {
+  return throwOnErrors(analyzeConflictsInOrder(entries));
+}
+
+function throwOnErrors(report: AnalysisReport): AnalysisReport {
   if (report.errors.length) throw new RuleConflictError(report.errors);
   return report;
 }
 
 /** Every rule whose input domain can match the given trigger, in evaluation order. */
 export function rulesMatching(
-  sets: ReadonlyArray<{ name: string; bindings: readonly Binding[] }>,
+  bindings: readonly AnalyzedBinding[],
   trigger: Trigger,
 ): AnalyzedBinding[] {
   const query = toInputDomain(trigger);
-  return analyzable(sets).filter(
+  return bindings.filter(
     (b) =>
       inputDomainsIntersect(b.domain, query) ||
       (b.domain.kind === "chord" &&

@@ -17,22 +17,23 @@ import {
   tapHoldBindings,
 } from "./definitions";
 import type { Binding } from "./data";
-import type { AnalysisReport, DeviceConfig } from "./engine";
+import type { AnalysisReport, DeviceConfig, PlannedBinding, RulePlan } from "./engine";
 import {
-  assertNoConflicts,
+  assertNoConflictsInOrder,
   buildDeviceConfig,
-  defineBindings,
+  emitRules,
   generateSimultaneousRules,
+  planRules,
 } from "./engine";
 import type { Rule } from "./types/karabiner";
 
 /**
- * Every binding set, in the order its rules are emitted.
+ * Every binding set.
  *
- * Order is load-bearing: Karabiner evaluates complex modifications top-down and
- * stops at the first manipulator whose `from` and conditions match. Chords must
- * precede the single-key rules for their member keys, and narrowly-conditioned
- * rules must precede the unconditional rules they refine.
+ * Declaration order here is only a tiebreaker: `planRules()` decides the order
+ * rules are actually emitted in, from the triggers themselves (most modifiers
+ * first, then ⌘ ⌥ ⌃ ⇧, then alphabetical). Two bindings that resolve to the same
+ * trigger stay in the order they appear here, whichever sets they came from.
  */
 export const BINDING_SETS: ReadonlyArray<{ name: string; bindings: Binding[] }> = [
   { name: "tap-hold", bindings: tapHoldBindings },
@@ -48,20 +49,35 @@ export const DEVICE_CONFIGS: DeviceConfig[] = [
   buildDeviceConfig(DEVICES.g502X),
 ];
 
+/** The rule layout the build emits: grouping, ordering and descriptions. */
+export function rulePlan(): RulePlan[] {
+  return planRules(BINDING_SETS);
+}
+
+/** Every binding in the order Karabiner will evaluate it. */
+export function orderedBindings(): PlannedBinding[] {
+  return rulePlan().flatMap((plan) => plan.bindings);
+}
+
 /**
  * Compile every binding set into the final ordered rule list.
  *
- * Conflict analysis runs first and throws on any rule that a preceding rule
- * makes unreachable, so an unfireable binding fails the build rather than
- * sitting silently dead in the config.
+ * Conflict analysis runs first, over the planned order rather than the
+ * declaration order, and throws on any rule that a preceding rule makes
+ * unreachable — so an unfireable binding fails the build rather than sitting
+ * silently dead in the config.
  *
  * @throws {import('./engine').RuleConflictError} on unreachable rules.
  */
 export function buildRules(): { rules: Rule[]; analysis: AnalysisReport } {
-  const analysis = assertNoConflicts(BINDING_SETS);
+  const plans = rulePlan();
+  const analysis = assertNoConflictsInOrder(plans.flatMap((p) => p.bindings));
   const rules = [
+    // Chords stay ahead of everything: a single-key rule for one of a chord's
+    // members can consume the chord's first key-down, and trigger order alone
+    // cannot express that dependency.
     ...generateSimultaneousRules(simultaneousMappings, tapHoldBindings),
-    ...BINDING_SETS.flatMap(({ bindings }) => defineBindings(bindings)),
+    ...emitRules(plans),
   ];
   return { rules, analysis };
 }

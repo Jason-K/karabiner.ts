@@ -14,9 +14,10 @@
  *   npm run explain -- --conflicts       # full conflict report
  */
 
-import { BINDING_SETS } from "./config";
+import { BINDING_SETS, orderedBindings } from "./config";
 import {
-  analyzeConflicts,
+  analyzableEntries,
+  analyzeConflictsInOrder,
   describeBinding,
   describeConditionGroup,
   from,
@@ -61,7 +62,7 @@ function formatMatch(match: AnalyzedBinding, index: number): string {
 /** Human-readable report of every rule that can claim `query`. */
 export function explainTrigger(query: string): string {
   const trigger = parseTriggerQuery(query);
-  const matches = rulesMatching(BINDING_SETS, trigger);
+  const matches = rulesMatching(analyzableEntries(orderedBindings()), trigger);
 
   if (!matches.length) {
     return `No rule claims "${query}". The key passes through unmodified.`;
@@ -78,7 +79,7 @@ export function explainTrigger(query: string): string {
 
 /** Human-readable conflict report across the whole configuration. */
 export function explainConflicts(): string {
-  const report = analyzeConflicts(BINDING_SETS);
+  const report = analyzeConflictsInOrder(orderedBindings());
   const lines = [
     `Analyzed ${report.bindings.length} bindings across ${BINDING_SETS.length} sets.`,
     `  errors:   ${report.errors.length}`,

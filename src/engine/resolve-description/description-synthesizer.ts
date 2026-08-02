@@ -79,6 +79,8 @@ export function describeTrigger(trigger: Trigger): string {
   return `${segments.join("+")}:`;
 }
 
+const BUCKET_ORDER = ["On Tap", "On Hold", "On Double Tap", "On Double Tap Hold"];
+
 function bucketFor(tapCount: number, phase: Phase): string {
   if (tapCount === 1 && (phase === "press" || phase === "release")) return "On Tap";
   if (tapCount === 1 && phase === "hold") return "On Hold";
@@ -95,29 +97,45 @@ function bucketFor(tapCount: number, phase: Phase): string {
  * overrides the derived action line verbatim.
  */
 export function synthesizeRuleDescription(binding: Binding): string {
-  const buckets = new Map<string, number[]>();
-  for (const label of ["On Tap", "On Hold", "On Double Tap", "On Double Tap Hold"]) {
-    buckets.set(label, []);
-  }
-  binding.cases.forEach((c, i) => {
-    buckets.get(bucketFor(c.tapCount ?? 1, c.phase ?? "press"))!.push(i);
-  });
+  return synthesizeMergedRuleDescription([binding]);
+}
 
-  const sections: string[] = [];
-  for (const [label, idxs] of buckets) {
-    if (!idxs.length) continue;
-    const lines = idxs.map((i) => {
-      const c = binding.cases[i]!;
+/**
+ * The same layout for the several bindings that share one emitted rule.
+ *
+ * Bindings that share a trigger become one GUI entry, so their cases have to
+ * share one description too: the header comes from the first binding's trigger
+ * and every binding's cases are folded into the same phase sections, in
+ * evaluation order. With a single binding this is exactly
+ * {@link synthesizeRuleDescription}.
+ */
+export function synthesizeMergedRuleDescription(
+  bindings: readonly Binding[],
+): string {
+  const first = bindings[0];
+  if (!first) return "";
+
+  const buckets = new Map<string, string[]>();
+  for (const label of BUCKET_ORDER) buckets.set(label, []);
+
+  for (const binding of bindings) {
+    for (const c of binding.cases) {
       const condLabel = describeConditionGroup([
         ...(binding.conditions ?? []),
         ...(c.conditions ?? []),
       ]);
       const actionLine = c.description ?? c.do.map(describeDoAction).join(" then ");
-      return `\t\t${condLabel}:\t${actionLine}`;
-    });
-    sections.push(`\t${label}:\n${lines.join("\n")}`);
+      buckets
+        .get(bucketFor(c.tapCount ?? 1, c.phase ?? "press"))!
+        .push(`\t\t${condLabel}:\t${actionLine}`);
+    }
   }
-  return `${describeTrigger(binding.trigger)}\n---\n${sections.join("\n")}`;
+
+  const sections = [...buckets]
+    .filter(([, lines]) => lines.length > 0)
+    .map(([label, lines]) => `\t${label}:\n${lines.join("\n")}`);
+
+  return `${describeTrigger(first.trigger)}\n---\n${sections.join("\n")}`;
 }
 
 /**
