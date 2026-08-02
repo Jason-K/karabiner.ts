@@ -216,10 +216,79 @@ test("the layer covers letters, digits, symbols, function and navigation keys", 
   );
 });
 
-test("one manipulator per key per state, plus the layer key itself", () => {
+test("one manipulator per key per state, plus the layer key, modifiers and catch-all", () => {
+  const translations = CONFIG.keys.length * CAPS_LAYER_STATES.length;
+  const modifierPassThroughs = 9; // left/right × ⌘⌥⌃⇧, plus fn
   assert.equal(
     manipulators().length,
-    CONFIG.keys.length * CAPS_LAYER_STATES.length + 1,
+    translations + modifierPassThroughs + 2, // + the layer key + the catch-all
+  );
+});
+
+// ── Unhandled input ─────────────────────────────────────────────────────────
+
+/** The `from.any` backstop, which must be the last manipulator in the layer. */
+function catchAll(ms = manipulators()): BasicManipulator {
+  const found = ms.filter((m) => "any" in m.from);
+  assert.equal(found.length, 1, "the layer needs exactly one catch-all");
+  assert.equal(ms.indexOf(found[0]!), ms.length - 1, "the catch-all must be evaluated last");
+  return found[0]!;
+}
+
+test("a key no layer state claims still marks the layer used, and passes through", () => {
+  const m = catchAll();
+  assert.deepEqual(m.from, { any: "key_code", modifiers: { optional: ["any"] } });
+  assert.deepEqual(m.conditions, [
+    { type: "variable_if", name: PRESSED.name, value: 1 },
+  ]);
+  assert.deepEqual(
+    (m.to?.[0] as { set_variable?: unknown }).set_variable,
+    { name: USED.name, value: 1 },
+    "without this, two selectors held at once would leave the tap armed and fire it on release",
+  );
+  assert.deepEqual(
+    m.to?.[1],
+    { from_event: true },
+    "'falls through unchanged' has to stay literally true",
+  );
+});
+
+test("modifier keys pass through the layer without marking it used", () => {
+  const ms = manipulators();
+  const modifiers = [
+    "left_command", "left_option", "left_control", "left_shift",
+    "right_command", "right_option", "right_control", "right_shift",
+    "fn",
+  ];
+
+  for (const mod of modifiers) {
+    const m = ms.find((x) => (x.from as { key_code?: string }).key_code === mod);
+    assert.ok(m, `${mod} must be claimed before the catch-all reaches it`);
+    assert.deepEqual(m.to, [{ from_event: true }], `${mod}: pass through untouched`);
+    assert.equal(
+      m.to?.some(
+        (e) =>
+          (e as { set_variable?: { name: string } }).set_variable?.name === USED.name,
+      ),
+      false,
+      `${mod}: a modifier press must not cancel the tap — caps → ⇧ → release is still a tap`,
+    );
+    assert.ok(
+      ms.indexOf(m) < ms.indexOf(catchAll(ms)),
+      `${mod} must be ordered before the catch-all`,
+    );
+  }
+});
+
+test("no layer state claims two selectors at once, so the catch-all handles them", () => {
+  const withTwoSelectors = manipulators().filter((m) => {
+    const mandatory = m.from.modifiers?.mandatory ?? [];
+    return mandatory.length > 1;
+  });
+  assert.deepEqual(
+    withTwoSelectors,
+    [],
+    "two selectors are deliberately unmapped; the catch-all is what keeps that from arming the tap",
   );
 });
 

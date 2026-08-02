@@ -38,6 +38,9 @@ function triggerKeyToFromKey(key: string): FromKeyType {
  * Convert a high-level Trigger specification into a Karabiner `FromEvent` matcher object.
  */
 export function triggerToFrom(trigger: Trigger): FromEvent {
+  if ("any" in trigger) {
+    return { any: trigger.any, modifiers: fromModifiersObj(trigger) };
+  }
   const keys = getTriggerKeys(trigger);
   if (keys.length > 1) {
     const options = resolveSimOrder(

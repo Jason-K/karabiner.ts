@@ -56,7 +56,7 @@ import type {
 } from "../data";
 import { bind, options } from "./binding-wrappers";
 import { ifUserVar, when } from "./condition-wrappers";
-import { from } from "./from-action-wrappers";
+import { anyInput, from } from "./from-action-wrappers";
 import { key, press, setVar, to } from "./to-action-wrappers";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./resolve-description/rule-descriptions";
 import {
@@ -268,6 +268,65 @@ function layerKeyBinding(
         setVar(config.usedVar, 0),
       ],
     }),
+  );
+}
+
+/**
+ * Modifier keys pressed while the layer is held, passed through untouched.
+ *
+ * These exist only to stop {@link layerCatchAll} claiming them. `from.any`
+ * matches modifier keys too, and a modifier going down must not count as "the
+ * layer translated something" — `caps → ⇧ → release` is still a tap. Karabiner's
+ * own pass-through-mode example orders the modifiers ahead of the catch-all for
+ * exactly this reason.
+ */
+function modifierPassThroughs(
+  config: CapsLayerConfig,
+  ruleGroup: { id: string; description: string },
+): Binding[] {
+  const modifierKeys: Modifier[] = [
+    "left_command",
+    "left_option",
+    "left_control",
+    "left_shift",
+    ...PASSTHROUGH_MODIFIERS.filter((m) => m !== "caps_lock"),
+  ];
+  return modifierKeys.map((m) =>
+    bind(
+      from(m, { optional: ["any"] }),
+      to(press({ from_event: true } satisfies ToEvent)),
+      when(ifUserVar(config.pressedVar, 1)),
+      options({ ruleGroup }),
+    ),
+  );
+}
+
+/**
+ * The backstop: any key the layer did not translate still counts as using it.
+ *
+ * Without this, an input no state claims — two selectors held at once, or a key
+ * outside the covered set — would leave `used` at 0, and releasing the layer key
+ * would fire the tap output on top of whatever the fall-through produced.
+ * `from_event` re-sends the event as-is, so "falls through unchanged" stays
+ * literally true; the only added effect is the bookkeeping.
+ *
+ * Ordered last in the rule by {@link CAPS_LAYER_STATES}' own ordering plus the
+ * catch-all tiebreak in `compareTriggerSortKeys()`.
+ */
+function layerCatchAll(
+  config: CapsLayerConfig,
+  ruleGroup: { id: string; description: string },
+): Binding {
+  return bind(
+    anyInput("key_code"),
+    to(
+      press([
+        setVar(config.usedVar, 1),
+        { from_event: true } satisfies ToEvent,
+      ]),
+    ),
+    when(ifUserVar(config.pressedVar, 1)),
+    options({ ruleGroup }),
   );
 }
 
@@ -531,5 +590,7 @@ export function capsLayer(config: CapsLayerConfig): Binding[] {
     ...[...qualified, ...base].flatMap((state) =>
       stateBindings(config, ruleGroup, state, gridKeys, adoptable),
     ),
+    ...modifierPassThroughs(config, ruleGroup),
+    layerCatchAll(config, ruleGroup),
   ];
 }

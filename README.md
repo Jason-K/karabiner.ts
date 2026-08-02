@@ -100,8 +100,17 @@ left-side modifier is also held:
 
 Tapping caps — releasing it without any key having gone through the layer —
 emits ⌘⌥⌃⇧+F15 instead. Right-side modifiers and `fn` are not layer selectors;
-they pass through untouched. Holding *two* of the four selectors is deliberately
-unhandled: no manipulator claims the event and the key falls through unchanged.
+they pass through untouched, and pressing one does not count as using the layer.
+Holding *two* of the four selectors is deliberately unhandled: no state claims
+the event and the key falls through unchanged.
+
+A `from.any` catch-all sits last in the layer and is what makes "unhandled" safe.
+Anything no state claimed — two selectors at once, or a key outside
+`CAPS_LAYER_KEYS` — still marks the layer used and is re-sent verbatim with
+`to.from_event`. Without it, an unhandled hold would leave the tap armed and fire
+⌘⌥⌃⇧+F15 on release, on top of whatever the fall-through produced. The modifier
+keys are claimed just ahead of it for the same reason in reverse: `from.any`
+matches them too, and `caps → ⇧ → release` has to stay a tap.
 
 **Order does not matter.** `caps → ⇧ → A`, `⇧ → caps → A` and pressing caps and
 ⇧ together all produce ⌘⌥⌃A. Only the modifier state at the moment the

@@ -76,6 +76,19 @@ export function triggerPointer(
   };
 }
 
+/**
+ * Every event of one kind — Karabiner's `from.any`.
+ *
+ * Claims the event before any later rule sees it, so pair it with a condition
+ * and let {@link compareTriggerSortKeys} put it last in its rule.
+ */
+export function anyInput(
+  kind: "key_code" | "consumer_key_code" | "pointing_button" = "key_code",
+  modifiers: TriggerModifiers = { optional: ["any"] },
+): Trigger {
+  return { any: kind, modifiers };
+}
+
 export type FromInput =
   | Trigger
   | KeyCode

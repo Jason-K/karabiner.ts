@@ -87,6 +87,8 @@ export type TriggerSortKey = {
   keys: string[];
   /** Side of each entry in `modifiers`, in the same order. */
   sides: number[];
+  /** `true` for a `from.any` trigger, which must be evaluated last. */
+  catchAll: boolean;
 };
 
 /**
@@ -121,6 +123,7 @@ export function triggerSortKey(trigger: Trigger): TriggerSortKey {
       isPointerButton(k) ? resolveButton(k).button : resolveKeyAlias(k),
     ),
     sides: ranks.map((r) => r.side),
+    catchAll: "any" in trigger,
   };
 }
 
@@ -130,6 +133,11 @@ export function compareTriggerSortKeys(a: TriggerSortKey, b: TriggerSortKey): nu
   }
   const byModifier = compareNumbers(a.modifiers, b.modifiers);
   if (byModifier !== 0) return byModifier;
+
+  // A catch-all claims every event of its kind, so anything it shares a rule
+  // with has to be evaluated before it — including keys it would otherwise tie
+  // with on an empty key list.
+  if (a.catchAll !== b.catchAll) return a.catchAll ? 1 : -1;
 
   if (a.pointer !== b.pointer) return a.pointer ? 1 : -1;
 
@@ -157,6 +165,6 @@ export function compareTriggers(a: Trigger, b: Trigger): number {
  * encodings of one physical combination share a signature.
  */
 export function ruleGroupSignature(trigger: Trigger): string {
-  const { modifiers, pointer, keys, sides } = triggerSortKey(trigger);
-  return JSON.stringify([modifiers, pointer, keys, sides]);
+  const { modifiers, pointer, keys, sides, catchAll } = triggerSortKey(trigger);
+  return JSON.stringify([modifiers, pointer, keys, sides, catchAll]);
 }

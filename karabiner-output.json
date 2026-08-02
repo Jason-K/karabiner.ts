@@ -17475,6 +17475,30 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "fn",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "g",
               "modifiers": {
                 "optional": [
@@ -18235,6 +18259,102 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "left_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_control",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_option",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "left_shift",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "m",
               "modifiers": {
                 "optional": [
@@ -18887,6 +19007,102 @@
           {
             "type": "basic",
             "from": {
+              "key_code": "right_command",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_control",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_option",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "key_code": "right_shift",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "from_event": true
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
               "key_code": "s",
               "modifiers": {
                 "optional": [
@@ -19452,6 +19668,36 @@
                   "left_control",
                   "left_shift"
                 ]
+              }
+            ]
+          },
+          {
+            "type": "basic",
+            "from": {
+              "any": "key_code",
+              "modifiers": {
+                "optional": [
+                  "any"
+                ]
+              }
+            },
+            "description": "Caps lock pressed",
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "caps_lock_pressed",
+                "value": 1
+              }
+            ],
+            "to": [
+              {
+                "set_variable": {
+                  "name": "caps_lock_used",
+                  "value": 1
+                }
+              },
+              {
+                "from_event": true
               }
             ]
           }

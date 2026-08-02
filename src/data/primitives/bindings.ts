@@ -75,7 +75,18 @@ export type TriggerModifiers =
  */
 export type Trigger =
   | { keys: string[]; modifiers?: TriggerModifiers; order?: SimOrder }
-  | { pointer: string; modifiers?: TriggerModifiers };
+  | { pointer: string; modifiers?: TriggerModifiers }
+  /**
+   * Every event of one kind — Karabiner's `from.any`.
+   *
+   * A catch-all claims the event before any later rule sees it, so it is only
+   * ever correct behind a condition and ordered last. `capsLayer()` uses one to
+   * notice that a key went through the layer without being translated.
+   */
+  | {
+      any: "key_code" | "consumer_key_code" | "pointing_button";
+      modifiers?: TriggerModifiers;
+    };
 
 /**
  * One (state + timing) -> action pairing within a binding rule.

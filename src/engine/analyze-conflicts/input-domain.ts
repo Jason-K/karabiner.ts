@@ -30,9 +30,12 @@ export type ModifierDomain = {
 };
 
 export type InputDomain = {
-  /** `chord` triggers match a simultaneous press; the others match one event. */
-  kind: "key" | "pointer" | "chord";
-  /** Resolved key codes / button ids. Sorted for chords (order-insensitive). */
+  /**
+   * `chord` triggers match a simultaneous press; `any` matches every event of
+   * one kind; the others match one event.
+   */
+  kind: "key" | "pointer" | "chord" | "any";
+  /** Resolved key codes / button ids. Sorted for chords, empty for `any`. */
   keys: readonly string[];
   modifiers: ModifierDomain;
 };
@@ -43,6 +46,19 @@ function resolveTriggerKey(key: string): string {
 }
 
 export function toInputDomain(trigger: Trigger): InputDomain {
+  if ("any" in trigger) {
+    const { mandatory, optional } = resolveModifiers(trigger.modifiers);
+    return {
+      kind: "any",
+      keys: [trigger.any],
+      modifiers: {
+        mandatory: new Set(mandatory),
+        allowed: optional.includes("any")
+          ? "any"
+          : new Set([...mandatory, ...optional]),
+      },
+    };
+  }
   const rawKeys = getTriggerKeys(trigger);
   const keys = rawKeys.map(resolveTriggerKey);
   const { mandatory, optional } = resolveModifiers(trigger.modifiers);
@@ -97,19 +113,51 @@ export function modifierDomainsIntersect(
 
 function sameKeys(a: InputDomain, b: InputDomain): boolean {
   return (
-    a.keys.length === b.keys.length && a.keys.every((k, i) => k === b.keys[i])
+    a.kind === b.kind &&
+    a.keys.length === b.keys.length &&
+    a.keys.every((k, i) => k === b.keys[i])
   );
+}
+
+/** Which domain kinds a `from.any` of each type claims. */
+const ANY_CLAIMS: Record<string, ReadonlySet<InputDomain["kind"]>> = {
+  // A catch-all on key codes also claims a chord: it consumes the chord's
+  // first key-down before the simultaneous match can complete.
+  key_code: new Set<InputDomain["kind"]>(["key", "chord"]),
+  consumer_key_code: new Set<InputDomain["kind"]>(["key"]),
+  pointing_button: new Set<InputDomain["kind"]>(["pointer"]),
+};
+
+/**
+ * Key-space containment, which unlike key-space *equality* is directional: a
+ * `from.any` covers every specific trigger of its kind, never the reverse.
+ */
+function keySpaceContains(outer: InputDomain, inner: InputDomain): boolean {
+  if (outer.kind === "any") {
+    return inner.kind === "any"
+      ? outer.keys[0] === inner.keys[0]
+      : (ANY_CLAIMS[outer.keys[0] ?? ""]?.has(inner.kind) ?? false);
+  }
+  if (inner.kind === "any") return false;
+  return sameKeys(outer, inner);
+}
+
+function keySpacesIntersect(a: InputDomain, b: InputDomain): boolean {
+  if (a.kind === "any" || b.kind === "any") {
+    return keySpaceContains(a, b) || keySpaceContains(b, a);
+  }
+  return sameKeys(a, b);
 }
 
 /** `true` when every input event `inner` matches is also matched by `outer`. */
 export function inputDomainContains(outer: InputDomain, inner: InputDomain): boolean {
-  if (!sameKeys(outer, inner)) return false;
+  if (!keySpaceContains(outer, inner)) return false;
   return modifierDomainContains(outer.modifiers, inner.modifiers);
 }
 
 /** `true` when the two domains can both match the same input event. */
 export function inputDomainsIntersect(a: InputDomain, b: InputDomain): boolean {
-  if (!sameKeys(a, b)) return false;
+  if (!keySpacesIntersect(a, b)) return false;
   return modifierDomainsIntersect(a.modifiers, b.modifiers);
 }
 
@@ -129,5 +177,6 @@ export function describeInputDomain(domain: InputDomain): string {
   const keys = domain.keys.join("+");
   const base = mods.length ? `${mods.join("+")}+${keys}` : keys;
   const anySuffix = domain.modifiers.allowed === "any" ? " (+any modifiers)" : "";
+  if (domain.kind === "any") return `any ${keys}${anySuffix}`;
   return domain.kind === "chord" ? `${base} (chord)${anySuffix}` : `${base}${anySuffix}`;
 }

@@ -3,6 +3,8 @@ import { buttons, defaultButtonNames, type ButtonSpec } from "../../data/constan
 import { resolveModifiers } from "./modifier-utils";
 
 export function getTriggerKeys(trigger: Trigger): string[] {
+  // A catch-all trigger names no key, so it contributes none.
+  if ("any" in trigger) return [];
   return "keys" in trigger ? trigger.keys : [trigger.pointer];
 }
 
