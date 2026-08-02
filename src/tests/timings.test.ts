@@ -37,7 +37,7 @@ test("manipulators omit parameters when matching DEFAULT_TIMINGS defaults", () =
   const manipulators = rule!.manipulators as BasicManipulator[];
 
   // Manipulators matching profile defaults should not have a parameters block
-  assert.equal(manipulators[0].parameters, undefined);
+  assert.equal(manipulators[0]!.parameters, undefined);
 });
 
 test("manipulators include parameters when overriding DEFAULT_TIMINGS defaults", () => {
@@ -49,7 +49,7 @@ test("manipulators include parameters when overriding DEFAULT_TIMINGS defaults",
   const [rule] = defineBindings([customBinding]);
   const manipulators = rule!.manipulators as BasicManipulator[];
 
-  assert.deepEqual(manipulators[0].parameters, {
+  assert.deepEqual(manipulators[0]!.parameters, {
     "basic.to_if_held_down_threshold_milliseconds": 200,
   });
 });

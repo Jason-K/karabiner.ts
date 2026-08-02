@@ -18,7 +18,7 @@ function getDefaultOutputPaths(home: string, prefix: string): string[] {
     return existingDirCandidates;
   }
 
-  return [candidates[0]];
+  return candidates.slice(0, 1);
 }
 
 export function emitLayerDefinitions(
@@ -47,7 +47,7 @@ export function emitLayerDefinitions(
       widthHintPx: 235,
     };
 
-    layers.forEach(({ layerKey, layerName, mappings, subLayers }) => {
+    layers.forEach(({ layerKey, mappings, subLayers }) => {
       const layerId = `${prefix}_${layerKey.toUpperCase()}`;
       const keys = Object.entries(mappings).map(([key, config]) => ({
         key: key.toUpperCase(),

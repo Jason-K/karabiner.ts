@@ -116,13 +116,18 @@ export type Binding = {
   description?: string;
   /** Input trigger specification. */
   trigger: Trigger;
-  /** Timing configuration parameters (ms). */
+  /**
+   * Timing configuration parameters (ms).
+   *
+   * Fields accept an explicit `undefined` so callers can forward an optional
+   * value directly (`aloneMs: config.thresholdMs`) without first testing it.
+   */
   timing?: {
-    aloneMs?: number;
-    holdMs?: number;
-    heldThresholdMs?: number;
-    delayedMs?: number;
-    simultaneousMs?: number;
+    aloneMs?: number | undefined;
+    holdMs?: number | undefined;
+    heldThresholdMs?: number | undefined;
+    delayedMs?: number | undefined;
+    simultaneousMs?: number | undefined;
   };
   /** Hoisted conditions applied to all cases within this binding. */
   conditions?: Condition[];

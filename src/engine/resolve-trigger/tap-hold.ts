@@ -4,7 +4,14 @@ import type {
   Modifier,
   ToEvent,
 } from "../../types/karabiner";
-import { ifApp, map, toKey, toPointingButton, toSetVar } from "../karabiner-helpers";
+import type { AcceptUndefined } from "../../types/util";
+import {
+  ifApp,
+  map,
+  toKey,
+  toSetVar,
+  type ConditionBuilder,
+} from "../karabiner-helpers";
 import { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_TIMINGS, TIMINGS } from "../../data";
 import { isModifierKey } from "../utils";
 
@@ -52,7 +59,6 @@ interface TapHoldOpts {
   };
   timeoutMs?: number;
   thresholdMs?: number;
-  description?: string;
   cancel?: ToEvent[];
   invoked?: ToEvent[];
   variable?: string;
@@ -88,12 +94,11 @@ export function tapHoldFrom({
   eventOptions,
   timeoutMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.aloneMs,
   thresholdMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.holdMs,
-  description,
   cancel,
   invoked,
   variable,
   appOverrides,
-}: TapHoldFromOpts) {
+}: AcceptUndefined<TapHoldFromOpts>) {
   const builders: any[] = [];
 
   const withEventOptions = (event: ToEvent): ToEvent => {
@@ -105,13 +110,13 @@ export function tapHoldFrom({
   };
 
   const makeBuilder = (opts: {
-    alone?: ToEvent[];
-    hold?: ToEvent[];
-    timeoutMs?: number;
-    thresholdMs?: number;
-    cancel?: ToEvent[];
-    invoked?: ToEvent[];
-    cond?: any;
+    alone?: ToEvent[] | undefined;
+    hold?: ToEvent[] | undefined;
+    timeoutMs?: number | undefined;
+    thresholdMs?: number | undefined;
+    cancel?: ToEvent[] | undefined;
+    invoked?: ToEvent[] | undefined;
+    cond?: ConditionBuilder | undefined;
   }) => {
     const finalTimeout = opts.timeoutMs ?? timeoutMs;
     const finalThreshold = opts.thresholdMs ?? thresholdMs;
@@ -181,12 +186,11 @@ export function tapHold({
   eventOptions,
   timeoutMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.aloneMs,
   thresholdMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.holdMs,
-  description,
   cancel,
   invoked,
   variable,
   appOverrides,
-}: TapHoldOpts) {
+}: AcceptUndefined<TapHoldOpts>) {
   return tapHoldFrom({
     from: { key_code: key as any },
     alone,
@@ -194,7 +198,6 @@ export function tapHold({
     eventOptions,
     timeoutMs,
     thresholdMs,
-    description,
     cancel,
     invoked,
     variable,
@@ -208,6 +211,8 @@ export function tapHold({
 interface VarTapTapHoldOpts extends Omit<TapHoldOpts, "alone" | "hold"> {
   key: string;
   firstTapPendingVar: string;
+  /** Manipulator description; falls back to a label derived from the variable. */
+  description?: string;
   // Fires immediately using the first tap's to_if_alone path; blocks double-tap detection
   immediateSingleTapEvents?: ToEvent[];
   // Fires based on to_delayed_action.to_if_invoked, allowing double tap
@@ -215,7 +220,6 @@ interface VarTapTapHoldOpts extends Omit<TapHoldOpts, "alone" | "hold"> {
   holdEvents?: ToEvent[];
   doubleTapEvents?: ToEvent[];
   doubleTapHoldEvents?: ToEvent[];
-  holdMods?: Modifier[];
   allowPassThrough?: boolean;
   mods?: Modifier[];
 }
@@ -228,13 +232,12 @@ export function varTapTapHoldFrom({
   holdEvents,
   doubleTapEvents,
   doubleTapHoldEvents,
-  holdMods,
   thresholdMs = TIMINGS.timeoutDoubleTapMs,
   description,
   allowPassThrough,
   mods,
   passThrough,
-}: VarTapTapHoldFromOpts) {
+}: AcceptUndefined<VarTapTapHoldFromOpts>) {
   const fromEvent = cloneFromEvent(from) as any;
   const modifiers =
     mods !== undefined
@@ -243,15 +246,10 @@ export function varTapTapHoldFrom({
         : { mandatory: mods }
       : (fromEvent.modifiers ?? { optional: ["any"] });
 
-  const fromKeyCode = fromEvent.key_code;
-  const isFromMod = typeof fromKeyCode === "string" && isModifierKey(fromKeyCode);
-
-  const effectiveHoldEvents = (holdEvents ?? []).filter((e: any) => {
-    if (isFromMod && e.key_code === fromKeyCode) {
-      return false;
-    }
-    return true;
-  });
+  // NOTE: a filter dropping hold events that re-emit the trigger's own modifier
+  // key used to be computed here and then never used — `to_if_held_down` below
+  // wires the unfiltered `holdEvents`. Removed because it had no effect; if that
+  // suppression is wanted, apply it at the `to_if_held_down` site instead.
 
   const secondTapParams: Record<string, number> = {
     "basic.to_if_alone_timeout_milliseconds": thresholdMs,
@@ -360,12 +358,11 @@ export function varTapTapHold({
   holdEvents,
   doubleTapEvents,
   doubleTapHoldEvents,
-  holdMods,
   thresholdMs = TIMINGS.timeoutDoubleTapMs,
   description,
   allowPassThrough,
   mods,
-}: VarTapTapHoldOpts) {
+}: AcceptUndefined<VarTapTapHoldOpts>) {
   return varTapTapHoldFrom({
     from: { key_code: key as any },
     passThrough: allowPassThrough
@@ -377,7 +374,6 @@ export function varTapTapHold({
     holdEvents,
     doubleTapEvents,
     doubleTapHoldEvents,
-    holdMods,
     thresholdMs,
     description,
     allowPassThrough,

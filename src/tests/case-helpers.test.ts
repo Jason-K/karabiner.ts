@@ -19,7 +19,6 @@ import {
   key,
   noop,
   openApp,
-  openFolder,
   openUrl,
   paste,
   press,

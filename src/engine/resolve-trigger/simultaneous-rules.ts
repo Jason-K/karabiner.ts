@@ -59,17 +59,20 @@ export function generateSimultaneousRules(
     if (config.hold) cases.push({ phase: "hold", do: config.hold });
     if (config.tapTap) cases.push({ tapCount: 2, phase: "release", do: config.tapTap });
     if (config.tapTapHold) cases.push({ tapCount: 2, phase: "hold", do: config.tapTapHold });
+
+    const order = resolveOrder(config.simultaneousOptions);
     return {
       trigger: {
         keys: config.keys,
-        ...(resolveOrder(config.simultaneousOptions)
-          ? { order: resolveOrder(config.simultaneousOptions) }
-          : {}),
+        ...(order ? { order } : {}),
       },
       timing: {
-        aloneMs: config.thresholdMs,
-        heldThresholdMs: config.thresholdMs,
-        simultaneousMs: config.simultaneousThresholdMs,
+        ...(config.thresholdMs !== undefined
+          ? { aloneMs: config.thresholdMs, heldThresholdMs: config.thresholdMs }
+          : {}),
+        ...(config.simultaneousThresholdMs !== undefined
+          ? { simultaneousMs: config.simultaneousThresholdMs }
+          : {}),
       },
       ...(config.simultaneousOptions?.to_after_key_up
         ? { afterKeyUp: config.simultaneousOptions.to_after_key_up }

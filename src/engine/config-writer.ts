@@ -26,6 +26,7 @@ import type {
   Profile,
   Rule,
 } from "../types/karabiner";
+import type { AcceptUndefined } from "../types/util";
 import type { SimpleModificationPair } from "../data/primitives/profiles";
 import type { DeviceConfig } from "./resolve-trigger/device-config";
 import { expandDeviceConfigs, getDeviceKey } from "./resolve-trigger/device-config";
@@ -141,7 +142,7 @@ function mergeDevices(
  */
 export function applyConfigUpdate(
   config: KarabinerConfig,
-  update: ConfigUpdate,
+  update: AcceptUndefined<ConfigUpdate>,
 ): KarabinerConfig {
   const profiles = config.profiles ?? [];
   const index = profiles.findIndex((p) => p.name === update.profileName);
@@ -302,8 +303,8 @@ export type WriteConfigResult = {
  * would otherwise look successful.
  */
 export function writeKarabinerConfig(
-  update: ConfigUpdate,
-  options: WriteConfigOptions,
+  update: AcceptUndefined<ConfigUpdate>,
+  options: AcceptUndefined<WriteConfigOptions>,
 ): WriteConfigResult {
   const ruleCount = update.rules.length;
 
@@ -314,6 +315,7 @@ export function writeKarabinerConfig(
   const parsed = options.config ?? readKarabinerConfig(options.configPath);
 
   // Build the complete next config before touching the filesystem, so a
+  // ProfileNotFoundError leaves the existing file untouched.
   // ProfileNotFoundError leaves the existing file untouched.
   const next = applyConfigUpdate(parsed, update);
 

@@ -6,6 +6,7 @@ import type {
   PointerButtonAlias,
   TriggerModifiers,
 } from "../data";
+import type { AcceptUndefined } from "../types/util";
 import type { WhenWrapper } from "./condition-wrappers";
 import { conditionKind } from "./resolve-conditions";
 import { from, type FromInput, triggerKeys, triggerPointer } from "./from-action-wrappers";
@@ -25,7 +26,7 @@ export function options(opts: BindingOptionsSpec): OptionsWrapper {
   };
 }
 
-export function timing(opts: Binding["timing"]): OptionsWrapper {
+export function timing(opts: AcceptUndefined<NonNullable<Binding["timing"]>>): OptionsWrapper {
   return options({ timing: opts });
 }
 

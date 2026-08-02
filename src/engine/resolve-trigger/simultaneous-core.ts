@@ -1,9 +1,11 @@
 import type {
   FromEvent,
   FromKeyType,
+  Manipulator,
   SimultaneousOptions as KarSimultaneousOptions,
   ToEvent,
 } from "../../types/karabiner";
+import type { AcceptUndefined } from "../../types/util";
 import { mapSimultaneous } from "../karabiner-helpers";
 import type { Binding, SimOrder } from "../../data";
 import { varTapTapHoldFrom } from "./tap-hold";
@@ -75,7 +77,7 @@ export function simultaneousTapHold({
   thresholdMs = 300,
   karOptions,
   simultaneousThresholdMs,
-}: SimultaneousTapHoldCoreOpts): any[] {
+}: AcceptUndefined<SimultaneousTapHoldCoreOpts>): Manipulator[] {
   const mappedKeys = keys.map(mapSimKey);
   const builder = mapSimultaneous(
     mappedKeys as any[],
@@ -118,7 +120,7 @@ export function simultaneousMultiTap({
   thresholdMs = 300,
   karOptions,
   simultaneousThresholdMs,
-}: SimultaneousMultiTapCoreOpts): any[] {
+}: AcceptUndefined<SimultaneousMultiTapCoreOpts>): Manipulator[] {
   const from = buildSimultaneousFromEvent(keys, karOptions);
   const firstTapPendingVar = `sim_tap_${label}`;
 

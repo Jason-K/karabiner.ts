@@ -1,12 +1,4 @@
-import type { Modifier } from "../../types/karabiner";
 import type { AppSpec, Map, MapSpec, PathSpec } from "../../data";
-import { VMOD, type ModComboAlias } from "../../data/constants/keys";
-import {
-  getModComboAliasCanonicalKey,
-  isModComboAlias,
-  resolveKeyAlias,
-  resolveModComboAlias,
-} from "../utils";
 
 export type ComboOpts = {
   app?: AppSpec | PathSpec | string;
@@ -32,7 +24,7 @@ export function normalizeCombo(input: HkInput): Map {
   };
 }
 
-/* eslint-disable no-redeclare */
+ 
 export function mapSpec(
   key: string,
   modifiers: string[],
@@ -50,7 +42,7 @@ export function mapSpec(
   refDescOrOpts?: string | ComboOpts,
   optsParam?: ComboOpts,
 ): MapSpec {
-  /* eslint-enable no-redeclare */
+   
   if (Array.isArray(keyOrCombos)) {
     const combos = keyOrCombos.map(normalizeCombo);
     const refDesc = modifiersOrRefDesc as string;

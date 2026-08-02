@@ -127,18 +127,20 @@ export function formatRuleDescription(
   const segments: string[] = [];
   const modifierSymbols: string[] = [];
 
-    let index = 0;
-    while (index < tokens.length && isModifierToken(tokens[index])) {
-      modifierSymbols.push(modifierTokenToSymbols(tokens[index]));
-      index += 1;
-    }
+  // Leading modifier tokens collapse into a single bracketed symbol group.
+  let index = 0;
+  for (const token of tokens) {
+    if (!isModifierToken(token)) break;
+    modifierSymbols.push(modifierTokenToSymbols(token));
+    index += 1;
+  }
 
   if (modifierSymbols.length > 0) {
     segments.push(`[${modifierSymbols.join("")}]`);
   }
 
-  for (; index < tokens.length; index += 1) {
-    segments.push(`[${keyTokenToLabel(tokens[index])}]`);
+  for (const token of tokens.slice(index)) {
+    segments.push(`[${keyTokenToLabel(token)}]`);
   }
 
   if (segments.length === 0) {

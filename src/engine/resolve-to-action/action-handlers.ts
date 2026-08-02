@@ -71,6 +71,13 @@ function urlString(url: OfType<"url">["url"]): string {
   return typeof url === "string" ? url : url.url;
 }
 
+function pythonCommandFor(a: OfType<"python">): string {
+  return toPy(a.scriptPath, {
+    ...(a.venv !== undefined ? { venv: a.venv } : {}),
+    ...(a.args !== undefined ? { args: a.args } : {}),
+  });
+}
+
 export const ACTION_HANDLERS = {
   actHere: {
     toEvents: (a) => [toCmd(toHere2There(a.action))],
@@ -187,9 +194,9 @@ export const ACTION_HANDLERS = {
   },
 
   python: {
-    toEvents: (a) => [toCmd(toPy(a.scriptPath, { venv: a.venv, args: a.args }))],
+    toEvents: (a) => [toCmd(pythonCommandFor(a))],
     describe: (a) => withDesc(`Run python '${a.scriptPath}'`, a.actionDesc),
-    shellCommand: (a) => toPy(a.scriptPath, { venv: a.venv, args: a.args }),
+    shellCommand: pythonCommandFor,
   },
 
   sequence: {

@@ -57,10 +57,11 @@ test("conditionKind throws on an unrecognised shape rather than guessing", () =>
 // ---------------------------------------------------------------------------
 
 test("app condition compiles to frontmost_application_if with bundle identifiers", () => {
+  // No `description` key at all when none was supplied — exactOptionalPropertyTypes
+  // keeps undefined-valued keys out of the emitted Karabiner JSON.
   assert.deepEqual(resolveCondition({ app }), {
     type: "frontmost_application_if",
     bundle_identifiers: ["com.example.a"],
-    description: undefined,
   });
 });
 

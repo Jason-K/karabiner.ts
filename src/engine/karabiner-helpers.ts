@@ -28,7 +28,7 @@ export type ManipulatorInput =
   | ManipulatorInput[];
 
 export class RuleBuilder {
-  description?: string;
+  description: string | undefined;
   manipulatorsList: Manipulator[] = [];
 
   constructor(description?: string, ...manipulators: ManipulatorInput[]) {
@@ -65,7 +65,7 @@ export class RuleBuilder {
    */
   public build(): Rule {
     return {
-      description: this.description,
+      ...(this.description !== undefined ? { description: this.description } : {}),
       manipulators: this.manipulatorsList,
     };
   }
@@ -144,12 +144,7 @@ export function toStickyModifier(
 }
 
 export function toNone(options?: ToEventOptions): ToEvent {
-  const result: ToEvent = {
-    ...options,
-    key_code: 'vk_none',
-    modifiers: undefined,
-  } as ToEvent;
-  return result;
+  return { ...options, key_code: 'vk_none' };
 }
 
 export class ConditionBuilder {
@@ -167,6 +162,11 @@ export class ConditionBuilder {
   }
 }
 
+/** Spread helper: emit `description` only when one was supplied. */
+function withDescription(description?: string): { description?: string } {
+  return description !== undefined ? { description } : {};
+}
+
 export function ifVar(
   name: string,
   value: number | boolean | string = 1,
@@ -176,7 +176,7 @@ export function ifVar(
     type: 'variable_if',
     name,
     value,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 
@@ -187,16 +187,16 @@ export function ifApp(
   if (typeof apps === 'object' && !Array.isArray(apps)) {
     return new ConditionBuilder({
       type: 'frontmost_application_if',
-      bundle_identifiers: apps.bundle_identifiers,
-      file_paths: apps.file_paths,
-      description: description ?? undefined,
+      ...(apps.bundle_identifiers ? { bundle_identifiers: apps.bundle_identifiers } : {}),
+      ...(apps.file_paths ? { file_paths: apps.file_paths } : {}),
+      ...withDescription(description),
     });
   }
   const bundle_identifiers = Array.isArray(apps) ? apps : [apps];
   return new ConditionBuilder({
     type: 'frontmost_application_if',
     bundle_identifiers,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 
@@ -208,7 +208,7 @@ export function ifDevice(
   return new ConditionBuilder({
     type: 'device_if',
     identifiers: ids,
-    description: description ?? undefined,
+    ...withDescription(description),
   });
 }
 

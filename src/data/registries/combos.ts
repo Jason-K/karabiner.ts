@@ -26,9 +26,18 @@ const HK_REGISTRY = {
   zenPreviousTab: mapSpec("close_bracket", VMOD.C__S, "activate previous tab in Zen", { app: APP_ID.zen, activeAppOnly: true, options: { repeat: false } }),
 };
 
-export const COMBOS: { [key: string]: MapSpec } = {
+/**
+ * Named hotkey combinations, referenced from definitions as `COMBOS.<name>`.
+ *
+ * `satisfies` rather than a `Record<string, MapSpec>` annotation: the annotation
+ * erased the key literals, so `COMBOS.typoName` type-checked and every lookup
+ * was `MapSpec | undefined`. With `satisfies` the entries are still checked
+ * against `MapSpec`, but the keys stay literal — a misspelled combo name is now
+ * a compile error, and a correct one needs no non-null assertion.
+ */
+export const COMBOS = {
   ...HK_REGISTRY,
-};
+} satisfies Record<string, MapSpec>;
 
 export { mapSpec, mapSpec as map };
 export type { MapSpec, Map, ComboOpts, HkInput };
