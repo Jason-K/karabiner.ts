@@ -19417,17 +19417,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "right_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -19610,17 +19600,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "down_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21119,11 +21099,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21219,11 +21195,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21319,11 +21291,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21419,11 +21387,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21519,11 +21483,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -21947,11 +21907,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -22485,17 +22441,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "left_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -22597,17 +22543,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "up_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -22695,11 +22631,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -22968,11 +22900,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -23018,11 +22946,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -23068,11 +22992,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "to": [
               {
@@ -23486,17 +23406,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "right_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23570,17 +23480,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "down_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23644,11 +23544,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-left-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23688,11 +23584,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=bottom-right-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23732,11 +23624,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=maximize'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23776,11 +23664,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-left-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23820,11 +23704,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=top-right-eighth'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23857,11 +23737,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=left-half]] or [[rectangle-pro://execute-action?name=top-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23907,17 +23783,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "left_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -23963,17 +23829,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "up_arrow",
-                  "modifiers": [
-                    "command",
-                    "option",
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24006,11 +23862,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local url = (screenFrame.w >= screenFrame.h) and [[rectangle-pro://execute-action?name=right-half]] or [[rectangle-pro://execute-action?name=bottom-half]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24074,11 +23926,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24111,11 +23959,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/Users/jason/.venv/typinator/bin/python' '/Users/jason/Scripts/apps/Typinator/new_rule/new_rule.py'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24148,11 +23992,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -g 'rectangle-pro://execute-action?name=app-next-display'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24442,15 +24282,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "m",
-                  "modifiers": [
-                    "left_command"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24484,11 +24316,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "osascript '/Users/jason/Scripts/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -24533,15 +24361,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "p",
-                  "modifiers": [
-                    "left_command"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24803,15 +24623,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "k",
-                  "modifiers": [
-                    "right_option"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24841,11 +24653,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "if pgrep -x 'Spotify' > \"/dev/null;\" then open 'raycast-x://extensions/mattisssa/spotify-player/togglePlayPause'; else '/Users/jason/.local/bin/open-app' -b 'com.spotify.client'; fi; echo 'Spotify toggled'"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24879,15 +24687,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "t",
-                  "modifiers": [
-                    "right_option"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24925,15 +24725,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "software_function": {
-                    "open_application": {
-                      "bundle_identifier": "com.apple.ActivityMonitor"
-                    }
-                  }
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -24967,15 +24759,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "a",
-                  "modifiers": [
-                    "shift"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25061,15 +24845,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "s",
-                  "modifiers": [
-                    "shift"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25102,12 +24878,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "8"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25143,12 +24914,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "a"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25183,12 +24949,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "c"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25223,12 +24984,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "d"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25446,12 +25202,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25481,12 +25232,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f1"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25516,12 +25262,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f2"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25551,12 +25292,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f3"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25586,12 +25322,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f4"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25626,12 +25357,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f5"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25661,12 +25387,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f7"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25696,12 +25417,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f8"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25731,12 +25447,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f9"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25766,12 +25477,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f10"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25801,12 +25507,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f11"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25836,12 +25537,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "f12"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25876,12 +25572,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "fn"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -25918,12 +25609,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "g"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25959,12 +25645,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "grave_accent_and_tilde"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -25993,12 +25674,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "h"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26050,12 +25726,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "j"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26088,12 +25759,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "k"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26122,12 +25788,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_0"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26156,12 +25817,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_2"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26190,12 +25846,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_4"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26224,12 +25875,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_5"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26258,12 +25904,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_6"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26292,12 +25933,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "keypad_8"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26746,12 +26382,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "n"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26780,12 +26411,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "o"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26821,12 +26447,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "p"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26859,12 +26480,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "q"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -26893,12 +26509,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "r"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27155,12 +26766,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "s"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27196,12 +26802,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "slash"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27236,12 +26837,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "t"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27272,12 +26868,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "tab"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27306,12 +26897,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "v"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27340,12 +26926,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "x"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27374,12 +26955,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "y"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27408,12 +26984,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "z"
-                }
-              ]
+              "to_if_canceled": []
             }
           }
         ]
@@ -27801,12 +27372,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "return_or_enter"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28028,12 +27594,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "pointing_button": "button3",
-                  "repeat": false
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28121,12 +27682,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "pointing_button": "button4",
-                  "repeat": false
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28213,15 +27769,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "repeat": false,
-                  "key_code": "up_arrow",
-                  "modifiers": [
-                    "control"
-                  ]
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28308,12 +27856,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "pointing_button": "button5",
-                  "repeat": false
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28569,11 +28112,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28619,11 +28158,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "osascript -e 'tell application \"Popclip\" to appear'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {
@@ -28663,11 +28198,7 @@
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "shell_command": "'/opt/homebrew/bin/hs' -c 'local win = hs.window.focusedWindow(); local screen = (win and win:screen()) or hs.screen.mainScreen(); local screenFrame = screen:frame(); local winFrame = win and win:frame() or screenFrame; local positionTolerance = 24; local widthCoverage = screenFrame.w > 0 and (winFrame.w / screenFrame.w) or 0; local heightCoverage = screenFrame.h > 0 and (winFrame.h / screenFrame.h) or 0; local leftAligned = math.abs(winFrame.x - screenFrame.x) <= positionTolerance; local topAligned = math.abs(winFrame.y - screenFrame.y) <= positionTolerance; local isMaximized = leftAligned and topAligned and widthCoverage >= 0.97 and heightCoverage >= 0.9; local url = isMaximized and [[rectangle-pro://execute-action?name=restore]] or [[rectangle-pro://execute-action?name=maximize]]; hs.urlevent.openURL(url)'"
-                }
-              ]
+              "to_if_canceled": []
             },
             "conditions": [
               {

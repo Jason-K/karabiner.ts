@@ -191,8 +191,6 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
   // default-alone pass-through: the key itself with halt:true.
   // Note: karabiner.ts' toKey() helper always sets `modifiers: undefined` as an own
   // property (it gets dropped by JSON.stringify, so the live output is unaffected).
-  // The existing tap-hold-rules.ts produces the same shape — this is the byte-identical
-  // behavior the plan must preserve.
   assert.deepEqual(m.to_if_alone, [{ halt: true, key_code: "a", modifiers: undefined }]);
   assert.deepEqual(m.to_if_held_down, [
     {
@@ -201,9 +199,11 @@ test("defineBindings tapHold: hold case -> to_if_held_down + default-alone pass-
       modifiers: ["command", "option", "control"],
     },
   ]);
+  // to_if_canceled defaults to empty: falling back to the alone events would
+  // re-echo the trigger key on release even after the hold action already fired.
   assert.deepEqual(m.to_delayed_action, {
     to_if_invoked: [],
-    to_if_canceled: [{ halt: true, key_code: "a", modifiers: undefined }],
+    to_if_canceled: [],
   });
 });
 
