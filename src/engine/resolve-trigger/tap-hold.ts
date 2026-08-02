@@ -141,15 +141,23 @@ export function tapHoldFrom({
       const filteredHold = isFromMod
         ? opts.hold.filter((e: any) => e.key_code !== fromKeyCode)
         : opts.hold;
-      filteredHold.forEach((e: ToEvent) => m.toIfHeldDown(withEventOptions(e)));
+      // halt:true (unless the event already sets it) cancels the subsequent
+      // to_delayed_action once the hold has fired, so a release after a
+      // genuine hold doesn't also replay the cancel-fallback below. Skipped
+      // when `variable` is set: halt would also cancel to_after_key_up, which
+      // whileHoldVar relies on to clear its tracking variable on release.
+      const holdEvent = variable
+        ? withEventOptions
+        : (e: ToEvent) => withEventOptions({ halt: true, ...e } as ToEvent);
+      filteredHold.forEach((e: ToEvent) => m.toIfHeldDown(holdEvent(e)));
     }
 
-    // Default to emitting nothing on cancel: Karabiner fires to_if_canceled
-    // whenever the key is released before to_delayed_action_delay_milliseconds
-    // elapses, including after the hold threshold has already fired the hold
-    // action — falling back to `alone` here would re-echo the trigger key on
-    // release even though the hold action already ran.
-    const cancelEvents = opts.cancel ?? cancel ?? [];
+    // Fall back to the alone events on cancel: this is what lets Karabiner
+    // commit to "this was a tap" as soon as the next key is pressed, instead
+    // of waiting out the full alone-timeout — load-bearing for typing
+    // responsiveness. The halt:true above (default on to_if_held_down) stops
+    // this from re-firing once a hold has already committed.
+    const cancelEvents = opts.cancel ?? cancel ?? alone ?? [];
     const invokedEvents = opts.invoked ?? invoked ?? [];
     m.toDelayedAction(invokedEvents, cancelEvents);
     return m;
