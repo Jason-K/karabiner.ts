@@ -3,8 +3,8 @@ import {
   APP_ID,
   CMDS,
   COMBOS,
-  KE_VAR_VALUES,
   PW_IDS,
+  STATES,
   URLS,
 } from "../data";
 import {
@@ -90,14 +90,14 @@ const modSymbolBindings: Binding[] = [
       // AUTHENTICATION DIALOG fill password.
       press(cmd(CMDS.fillPw)).when(
         condApp(PW_IDS),
-        ifKeVar(KE_VAR_VALUES.axTextField),
-        ifKeVar(KE_VAR_VALUES.axSecureTextFieldSubrole),
+        ifKeVar(STATES.isTextField),
+        ifKeVar(STATES.isSecureInputSubrole),
       ),
       // AUTHENTICATION DIALOG: fill username and password.
       press(cmd(CMDS.fillUnPw)).when(
         condApp(PW_IDS),
-        ifKeVar(KE_VAR_VALUES.axTextField),
-        unlessKeVar(KE_VAR_VALUES.axSecureTextFieldSubrole),
+        ifKeVar(STATES.isTextField),
+        unlessKeVar(STATES.isSecureInputSubrole),
       ),
       // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
       press(shell(CMDS.getWordDocPathAndPrivileges)).when(condApp(APP_ID.word)),

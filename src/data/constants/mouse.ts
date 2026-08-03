@@ -63,10 +63,6 @@ export const defaultButtonNames: Record<string, string> = {
   button3: "Middle click",
 };
 
-// ── Mouse signaling variables ────────────────────────────────────────────────
-
-export { mouseVars } from "../registries/vars";
-
 /** Known mouse button aliases for auto-completion. */
 export type KnownPointerButton =
   | "button1" | "button2" | "button3" | "button4" | "button5"

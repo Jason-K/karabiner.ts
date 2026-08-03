@@ -28245,7 +28245,7 @@
         ]
       },
       {
-        "description": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tmap 'show mission control'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tClick Left click then Emit ⌥⇧ + '⌃'",
+        "description": "Shift button:\n---\n\tOn Tap:\n\t\tRight button held:\tmap 'show mission control'\n\t\tAlways:\tEmit ⌃ + '↑'\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⌃⇧ + '⌃'",
         "manipulators": [
           {
             "type": "basic",
@@ -28301,14 +28301,12 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "pointing_button": "button1"
-              },
-              {
-                "halt": true,
+                "lazy": true,
                 "repeat": false,
                 "key_code": "left_control",
                 "modifiers": [
                   "option",
+                  "control",
                   "shift"
                 ]
               }

@@ -10,6 +10,6 @@ export {
 } from "./devices";
 export { DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT } from "./global";
 export { VM, MODKEY_CODES, type ModComboAlias, type ModKey } from "./keys";
-export { buttons, defaultButtonNames, mouseVars, type ButtonSpec, type DeviceName } from "./mouse";
+export { buttons, defaultButtonNames, type ButtonSpec, type DeviceName } from "./mouse";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./profiles";
 export { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_MOUSE_MANIPULATOR_TIMINGS, TIMINGS } from "./timings";

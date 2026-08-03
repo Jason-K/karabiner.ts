@@ -58,7 +58,6 @@ export {
 export {
   buttons,
   defaultButtonNames,
-  mouseVars,
   type ButtonSpec,
   type DeviceName,
   type KnownPointerButton,
@@ -67,7 +66,7 @@ export {
 
 // REGISTRIES
 export { DEVICES } from "./registries/devices";
-export { KE_VAR_VALUES, KE_VARS } from "./registries/vars";
+export { VARS, STATES } from "./registries/vars";
 export {
   ACCESSIBILITY_ROLES,
   INPUT_SOURCES,

@@ -1,14 +1,10 @@
 import { toTrigger } from "../engine/resolve-to-action";
-import { APP_ID, CMDS, COMBOS, DEVICES, TIMINGS, URLS, VM } from "../data";
-import { mouseVars } from "../data";
+import { APP_ID, CMDS, COMBOS, DEVICES, TIMINGS, URLS, VARS, VM } from "../data";
 import {
   bind,
   condApp,
   condDevice,
-  condNotVar,
-  condVar,
   from,
-  ifVar,
   hold,
   key,
   map,
@@ -17,6 +13,7 @@ import {
   press,
   release,
   shell,
+  state,
   timing,
   to,
   when,
@@ -40,12 +37,9 @@ export const mouseBindings: Binding[] = [
     from("shift_button"),
     to(
       // override (right button held): immediate down_arrow
-      press(map(COMBOS.showMissionControl)).when(ifVar(mouseVars.rightButtonPressed, 1)),
+      press(map(COMBOS.showMissionControl)).when(state(VARS.rButtonDown)),
       release(key("up_arrow", ["control"])),
-      hold([
-        { pointing_button: "button1" },
-        key("left_control", ["option", "shift"]),
-      ]),
+      hold(key("left_control", VM._OCS, { lazy: true })),
     ),
   ),
   // -------------------------------------------------------------
@@ -58,16 +52,13 @@ export const mouseBindings: Binding[] = [
       // emitted manipulator order matches (groupByConditions is first-seen).
       // Zen + right-button + wheel-up → prev workspace
       press(key("left_arrow", VM.C_CS)).when(
-        condApp(APP_ID.zen),
-        condVar(mouseVars.rightButtonPressed, 1),
-        condVar(mouseVars.wheelDown, 0),
+        state([APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]),
       ),
       // wheel held down → swallow (the wheel-as-button mapping handles it)
-      press([]).when(condVar(mouseVars.wheelDown, 1)),
+      press([]).when(state("wheelDown")),
       // base hold — wheel guards on the base only (matches bespoke injection)
       hold(shell(CMDS.winLeftOrTop)).when(
-        condNotVar(mouseVars.wheelDown, 1),
-        condNotVar(mouseVars.rightButtonPressed, 1),
+        state([VARS.wheelDown, false], [VARS.rButtonDown, false]),
       ),
     ),
     timing({
@@ -82,13 +73,10 @@ export const mouseBindings: Binding[] = [
     from("wheelRight"),
     to(
       press(key("right_arrow", VM.C_CS)).when(
-        condApp(APP_ID.zen),
-        condVar(mouseVars.rightButtonPressed, 1),
-        condVar(mouseVars.wheelDown, 0),
+        state([APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]),
       ),
       hold(shell(CMDS.winRightOrBottom)).when(
-        condNotVar(mouseVars.wheelDown, 1),
-        condNotVar(mouseVars.rightButtonPressed, 1),
+        state([VARS.wheelDown, false], [VARS.rButtonDown, false]),
       ),
     ),
     timing({
@@ -104,16 +92,13 @@ export const mouseBindings: Binding[] = [
     to(
       press([
         { pointing_button: "button1", modifiers: ["option"], repeat: false },
-      ]).when(
-        condApp(APP_ID.zen),
-        condVar(mouseVars.rightButtonPressed, 1),
-      ),
+      ]).when(state(APP_ID.zen, VARS.rButtonDown)),
       release([{ pointing_button: "button3", repeat: false }]),
       hold(shell(CMDS.winMaxOrRestore)),
     ),
     when(condDevice(DEVICES.g502X)),
     options({
-      whileHoldVar: mouseVars.wheelDown,
+      whileHoldVar: VARS.wheelDown,
     }),
   ),
   // -------------------------------------------------------------
@@ -154,10 +139,7 @@ export const mouseBindings: Binding[] = [
     to(
       press(
         key("close_bracket", ["left_command", "shift"], { repeat: true }),
-      ).when(
-        condApp(APP_ID.zen),
-        condVar(mouseVars.rightButtonPressed, 1),
-      ),
+      ).when(state(APP_ID.zen, VARS.rButtonDown)),
       release([{ pointing_button: "button4", repeat: false }]),
       hold(key("tab", ["left_command"])),
     ),
@@ -174,10 +156,7 @@ export const mouseBindings: Binding[] = [
     to(
       press(
         key("open_bracket", ["left_command", "shift"], { repeat: true }),
-      ).when(
-        condApp(APP_ID.zen),
-        condVar(mouseVars.rightButtonPressed, 1),
-      ),
+      ).when(state(APP_ID.zen, VARS.rButtonDown)),
       release([{ pointing_button: "button5", repeat: false }]),
       hold(key("down_arrow", ["control"], { repeat: false })),
     ),
@@ -199,7 +178,7 @@ export const mouseBindings: Binding[] = [
     ),
     when(condDevice(DEVICES.g502X)),
     options({
-      whileHoldVar: mouseVars.rightButtonPressed,
+      whileHoldVar: VARS.rButtonDown,
       suppressCancelFallback: true,
     }),
   ),
@@ -229,12 +208,9 @@ export const mouseBindings: Binding[] = [
         .when(condApp(APP_ID.zen, false))
         .withTapCount(2),
     ),
-    when(
-      condDevice(DEVICES.g502X),
-      condVar(mouseVars.rightButtonPressed, 1),
-    ),
+    when(state(DEVICES.g502X, VARS.rButtonDown)),
     options({
-      multiTap: { firstTapPendingVar: mouseVars.leftWithRightFirstTap },
+      multiTap: { firstTapPendingVar: VARS.lButtonTapCount },
     }),
   ),
   // -------------------------------------------------------------
@@ -249,12 +225,9 @@ export const mouseBindings: Binding[] = [
       ),
       hold([toTrigger()]),
     ),
-    when(
-      condDevice(DEVICES.g502X),
-      condNotVar(mouseVars.rightButtonPressed, 1),
-    ),
+    when(state(DEVICES.g502X, [VARS.rButtonDown, false])),
     options({
-      whileHoldVar: mouseVars.leftButtonPressed,
+      whileHoldVar: VARS.lButtonDown,
       timing: { holdMs: 0 },
     }),
   ),

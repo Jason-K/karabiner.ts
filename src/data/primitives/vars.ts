@@ -37,7 +37,7 @@ export interface VarSpec {
  * @example
  * ```ts
  * const rightButtonHeld: VarValueSpec = {
- *   ref: mouseVars.rightButtonPressed,
+ *   ref: VARS.rButtonDown,
  *   value: 1,
  *   varDesc: "Right mouse button held down",
  * };

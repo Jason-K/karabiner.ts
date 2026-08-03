@@ -29,6 +29,13 @@ export class CaseBuilder implements Case {
   declare delayed?: boolean;
   declare guard?: boolean;
 
+  /**
+   * Constructs a new `CaseBuilder` instance.
+   *
+   * @param phase - Key lifecycle phase ("press", "release", or "hold").
+   * @param actions - Action or list of actions to execute.
+   * @param conditions - Optional condition or list of conditions required for this case.
+   */
   constructor(
     phase: Phase,
     actions: Action | Action[],
@@ -48,7 +55,17 @@ export class CaseBuilder implements Case {
     }
   }
 
-  /** Add one or more conditions to this case. */
+  /**
+   * Add one or more conditions to this case.
+   *
+   * @param conditions - Conditions or condition arrays to attach to this case.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * press(key("a")).when({ app: "com.apple.finder" })
+   * ```
+   */
   when(...conditions: (Condition | Condition[])[]): this {
     const flat = conditions.flat();
     if (flat.length > 0) {
@@ -57,37 +74,100 @@ export class CaseBuilder implements Case {
     return this;
   }
 
-  /** Set tap count requirement (e.g. 2 for double tap). */
+  /**
+   * Set tap count requirement (e.g. 2 for double tap).
+   *
+   * @param count - Tap count threshold required to trigger this case.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * press(key("space")).withTapCount(2)
+   * ```
+   */
   withTapCount(count: number): this {
     this.tapCount = count;
     return this;
   }
 
-  /** Mark action as delayed (multi-tap). */
+  /**
+   * Mark action as delayed (multi-tap).
+   *
+   * @param isDelayed - Whether execution is delayed until multi-tap window expires.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * release(key("b")).withDelayed(true)
+   * ```
+   */
   withDelayed(isDelayed = true): this {
     this.delayed = isDelayed;
     return this;
   }
 
-  /** Enable double-tap guard protection on this case. */
+  /**
+   * Enable double-tap guard protection on this case.
+   *
+   * @param isGuarded - Whether double-tap guard protection is enabled.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * press(shell("rm -rf ~/temp")).guardProtection()
+   * ```
+   */
   guardProtection(isGuarded = true): this {
     this.guard = isGuarded;
     return this;
   }
 
-  /** Set optional action fragment description. */
+  /**
+   * Set optional action fragment description.
+   *
+   * @param text - Human-readable description text for the case.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * press(key("c", ["cmd"])).describe("Copy selection")
+   * ```
+   */
   describe(text: string): this {
     this.description = text;
     return this;
   }
 
-  /** Suppress trigger fallback (emit only explicit `do`). */
+  /**
+   * Suppress trigger fallback (emit only explicit `do`).
+   *
+   * @param suppress - Whether to suppress trigger fallback.
+   * @returns `this` for method chaining.
+   *
+   * @example
+   * ```ts
+   * press(noop()).withSuppress(true)
+   * ```
+   */
   withSuppress(suppress = true): this {
     this.suppress = suppress;
     return this;
   }
 }
 
+/**
+ * Creates a case for key press phase.
+ *
+ * @param actions - Action or list of actions to execute on press.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` for chaining options.
+ *
+ * @example
+ * ```ts
+ * press(key("a"))
+ * press([key("c", ["cmd"])], { app: "com.apple.finder" })
+ * ```
+ */
 export function press(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -95,6 +175,18 @@ export function press(
   return new CaseBuilder("press", actions, conditions);
 }
 
+/**
+ * Creates a case for key release phase.
+ *
+ * @param actions - Action or list of actions to execute on release.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` for chaining options.
+ *
+ * @example
+ * ```ts
+ * release(key("b"))
+ * ```
+ */
 export function release(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -102,6 +194,18 @@ export function release(
   return new CaseBuilder("release", actions, conditions);
 }
 
+/**
+ * Alias for `release()`. Creates a case for key tap (release).
+ *
+ * @param actions - Action or list of actions to execute on tap.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` for chaining options.
+ *
+ * @example
+ * ```ts
+ * tap(key("space"))
+ * ```
+ */
 export function tap(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -109,6 +213,18 @@ export function tap(
   return release(actions, conditions);
 }
 
+/**
+ * Creates a case for key hold phase.
+ *
+ * @param actions - Action or list of actions to execute when held down.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` for chaining options.
+ *
+ * @example
+ * ```ts
+ * hold(key("left_shift"))
+ * ```
+ */
 export function hold(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -116,6 +232,18 @@ export function hold(
   return new CaseBuilder("hold", actions, conditions);
 }
 
+/**
+ * Creates a double-tap press case.
+ *
+ * @param actions - Action or list of actions to execute on double tap.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` initialized with tap count 2.
+ *
+ * @example
+ * ```ts
+ * doubleTap(openApp("Terminal"))
+ * ```
+ */
 export function doubleTap(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -123,6 +251,18 @@ export function doubleTap(
   return press(actions, conditions).withTapCount(2);
 }
 
+/**
+ * Creates a double-tap hold case.
+ *
+ * @param actions - Action or list of actions to execute on double tap and hold.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` initialized with hold phase and tap count 2.
+ *
+ * @example
+ * ```ts
+ * doubleTapHold(key("tab", ["cmd"]))
+ * ```
+ */
 export function doubleTapHold(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -130,6 +270,18 @@ export function doubleTapHold(
   return hold(actions, conditions).withTapCount(2);
 }
 
+/**
+ * Creates a delayed single tap case (useful in multi-tap configurations).
+ *
+ * @param actions - Action or list of actions to execute on delayed single tap.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` initialized with release phase and delayed true.
+ *
+ * @example
+ * ```ts
+ * delayedSingleTap(key("escape"))
+ * ```
+ */
 export function delayedSingleTap(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -137,6 +289,18 @@ export function delayedSingleTap(
   return release(actions, conditions).withDelayed(true);
 }
 
+/**
+ * Creates a guarded press case requiring double-tap confirmation.
+ *
+ * @param actions - Action or list of actions to execute under double-tap guard protection.
+ * @param conditions - Optional condition or list of conditions.
+ * @returns A `CaseBuilder` with double-tap guard protection enabled.
+ *
+ * @example
+ * ```ts
+ * guard(shell("killall Finder"))
+ * ```
+ */
 export function guard(
   actions: Action | Action[],
   conditions?: Condition | Condition[],
@@ -149,6 +313,17 @@ export type ToWrapper = {
   cases: Case[];
 };
 
+/**
+ * Wraps one or more cases or case arrays into a `ToWrapper` object.
+ *
+ * @param cases - Cases or arrays of cases to include.
+ * @returns A `ToWrapper` container holding all flattened cases.
+ *
+ * @example
+ * ```ts
+ * to(press(key("a")), release(key("b")))
+ * ```
+ */
 export function to(...cases: (Case | Case[])[]): ToWrapper {
   return {
     kind: "to",
@@ -156,6 +331,20 @@ export function to(...cases: (Case | Case[])[]): ToWrapper {
   };
 }
 
+/**
+ * Creates an action spec to open or switch to an application.
+ *
+ * @param ref - Target application spec, bundle identifier, or name.
+ * @param mode - Optional launch mode ("open" using macOS `open` or "shell" execution).
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "app".
+ *
+ * @example
+ * ```ts
+ * openApp("com.apple.finder")
+ * openApp(APP_ID.browser, "open", "Launch Zen Browser")
+ * ```
+ */
 export function openApp(
   ref: AppTarget,
   mode?: "open" | "shell",
@@ -169,6 +358,20 @@ export function openApp(
   };
 }
 
+/**
+ * Creates an action spec to open a URL in the browser.
+ *
+ * @param url - URL string or `UrlSpec` reference.
+ * @param background - Whether to open URL in background without bringing application to focus.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "url".
+ *
+ * @example
+ * ```ts
+ * openUrl("https://github.com")
+ * openUrl(URL_ID.docs, true, "Open documentation in background")
+ * ```
+ */
 export function openUrl(
   url: UrlSpec | string,
   background?: boolean,
@@ -184,6 +387,22 @@ export function openUrl(
 
 export type KeyOptions = { repeat?: boolean; halt?: boolean; lazy?: boolean };
 
+/**
+ * Creates an action spec for a key press event.
+ *
+ * @param keyName - Target key code or alias (e.g. "a", "spacebar", "left_command").
+ * @param modifiersOrOptions - Optional array of modifier keys or a `KeyOptions` configuration.
+ * @param options - Key options (`repeat`, `halt`, `lazy`) when modifiers are provided as 2nd parameter.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "key".
+ *
+ * @example
+ * ```ts
+ * key("c", ["cmd"])
+ * key("spacebar", { repeat: false })
+ * key("tab", ["cmd", "shift"], { lazy: true }, "Switch reverse tab")
+ * ```
+ */
 export function key(
   keyName: KeyCode,
   modifiersOrOptions?: ActionKeyModifier[] | KeyOptions,
@@ -215,6 +434,65 @@ export function key(
   };
 }
 
+/**
+ * Creates an action spec for a mouse button press event.
+ *
+ * @param buttonName - Target mouse button name or alias (e.g. "button1", "button2").
+ * @param modifiersOrOptions - Optional array of modifier keys or a `KeyOptions` configuration.
+ * @param options - Key options (`repeat`, `halt`, `lazy`) when modifiers are provided as 2nd parameter.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "button".
+ *
+ * @example
+ * ```ts
+ * button("button1")
+ * button("button2", ["cmd"])
+ * ```
+ */
+export function button(
+  buttonName: string,
+  modifiersOrOptions?: ActionKeyModifier[] | KeyOptions,
+  options?: KeyOptions,
+  actionDesc?: string,
+): ActionSpec {
+  let modifiers: ActionKeyModifier[] | undefined;
+  let opts: KeyOptions | undefined;
+
+  if (Array.isArray(modifiersOrOptions)) {
+    modifiers = modifiersOrOptions.map((m) => resolveKeyAlias(m as string)) as ActionKeyModifier[];
+    opts = options;
+  } else {
+    opts = modifiersOrOptions;
+    modifiers = undefined;
+  }
+
+  const finalOptions: KeyOptions = {
+    ...opts,
+    repeat: opts?.repeat ?? false,
+  };
+
+  return {
+    type: "button",
+    button: buttonName,
+    ...(modifiers?.length ? { modifiers } : {}),
+    options: finalOptions,
+    ...(actionDesc ? { actionDesc } : {}),
+  };
+}
+
+/**
+ * Creates an action spec for a map reference.
+ *
+ * @param ref - `MapSpec` target reference.
+ * @param options - Optional key options (`repeat`, `halt`, `lazy`).
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "map".
+ *
+ * @example
+ * ```ts
+ * map(MAP_ID.navigation, { repeat: true })
+ * ```
+ */
 export function map(
   ref: MapSpec,
   options?: KeyOptions,
@@ -231,14 +509,49 @@ export function map(
   };
 }
 
+/**
+ * Creates an in-place context action spec.
+ *
+ * @param action - Action identifier string.
+ * @returns An `ActionSpec` of type "actHere".
+ *
+ * @example
+ * ```ts
+ * actHere("toggle_sidebar")
+ * ```
+ */
 export function actHere(action: string): ActionSpec {
   return { type: "actHere", action };
 }
 
+/**
+ * Creates an action spec to navigate application history.
+ *
+ * @param index - Delta index in the app history stack.
+ * @returns An `ActionSpec` of type "appHistory".
+ *
+ * @example
+ * ```ts
+ * appHistory(-1)
+ * ```
+ */
 export function appHistory(index: number): ActionSpec {
   return { type: "appHistory", index };
 }
 
+/**
+ * Creates an action spec to open a folder path.
+ *
+ * @param ref - `PathSpec` or directory path string.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "folder".
+ *
+ * @example
+ * ```ts
+ * openFolder(PATH_ID.downloads)
+ * openFolder("~/Documents", "Open Documents folder")
+ * ```
+ */
 export function openFolder(ref: PathSpec, actionDesc?: string): ActionSpec {
   return {
     type: "folder",
@@ -247,6 +560,18 @@ export function openFolder(ref: PathSpec, actionDesc?: string): ActionSpec {
   };
 }
 
+/**
+ * Creates an action spec from a registered command reference.
+ *
+ * @param ref - `CommandSpec` reference.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "command".
+ *
+ * @example
+ * ```ts
+ * cmd(COMMAND_ID.raycastClipboard)
+ * ```
+ */
 export function cmd(ref: CommandSpec, actionDesc?: string): ActionSpec {
   return {
     type: "command",
@@ -255,6 +580,19 @@ export function cmd(ref: CommandSpec, actionDesc?: string): ActionSpec {
   };
 }
 
+/**
+ * Creates an action spec to run a shell command.
+ *
+ * @param command - Shell command string or `CommandSpec`.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "shell".
+ *
+ * @example
+ * ```ts
+ * shell("echo 'Hello World'")
+ * shell("open -a Terminal .", "Open terminal in current dir")
+ * ```
+ */
 export function shell(
   command: string | CommandSpec,
   actionDesc?: string,
@@ -266,6 +604,20 @@ export function shell(
   };
 }
 
+/**
+ * Creates an action spec to execute a Python script.
+ *
+ * @param scriptPath - File path to the Python script.
+ * @param options - Argument array or configuration object containing `venv`, `args`, or `actionDesc`.
+ * @param actionDesc - Optional human-readable description when `options` is passed as an argument array.
+ * @returns An `ActionSpec` of type "python".
+ *
+ * @example
+ * ```ts
+ * python("~/scripts/main.py", ["--verbose"])
+ * python("~/scripts/main.py", { venv: "~/.venv", args: ["--arg"] }, "Run python script")
+ * ```
+ */
 export function python(
   scriptPath: string,
   options?: { venv?: string; args?: string[]; actionDesc?: string } | string[],
@@ -286,6 +638,19 @@ export function python(
   };
 }
 
+/**
+ * Creates an action spec to execute an AppleScript or JOSA script (`osascript`).
+ *
+ * @param scriptPath - Path to the script file.
+ * @param args - Optional positional command line arguments.
+ * @param actionDesc - Optional human-readable description for the action.
+ * @returns An `ActionSpec` of type "osascript".
+ *
+ * @example
+ * ```ts
+ * osascript("~/scripts/dialog.scpt", ["Hello"])
+ * ```
+ */
 export function osascript(
   scriptPath: string,
   args?: string[],
@@ -299,10 +664,34 @@ export function osascript(
   };
 }
 
+/**
+ * Creates a no-op (no operation) action spec.
+ *
+ * @returns An `ActionSpec` of type "noop".
+ *
+ * @example
+ * ```ts
+ * noop()
+ * ```
+ */
 export function noop(): ActionSpec {
   return { type: "noop" };
 }
 
+/**
+ * Creates an action spec to set or toggle a Karabiner variable.
+ *
+ * @param varSpec - Variable specification target.
+ * @param value - Value to set for the variable (defaults to 1).
+ * @param toggle - If true, toggles variable between 0 and 1.
+ * @returns An `ActionSpec` of type "setVar".
+ *
+ * @example
+ * ```ts
+ * setVar(VARS.rButtonDown, 1)
+ * setVar(VAR_ID.leaderActive, 1, true)
+ * ```
+ */
 export function setVar(
   varSpec: VarSpec,
   value: number | string | boolean = 1,
@@ -316,18 +705,60 @@ export function setVar(
   };
 }
 
+/**
+ * Creates a clipboard cut action spec (⌘+X).
+ *
+ * @returns An `ActionSpec` of type "cut".
+ *
+ * @example
+ * ```ts
+ * cut()
+ * ```
+ */
 export function cut(): ActionSpec {
   return { type: "cut" };
 }
 
+/**
+ * Creates a clipboard copy action spec (⌘+C).
+ *
+ * @returns An `ActionSpec` of type "copy".
+ *
+ * @example
+ * ```ts
+ * copy()
+ * ```
+ */
 export function copy(): ActionSpec {
   return { type: "copy" };
 }
 
+/**
+ * Creates a clipboard paste action spec (⌘+V).
+ *
+ * @returns An `ActionSpec` of type "paste".
+ *
+ * @example
+ * ```ts
+ * paste()
+ * ```
+ */
 export function paste(): ActionSpec {
   return { type: "paste" };
 }
 
+/**
+ * Creates an action spec that executes multiple action specs in sequential order.
+ *
+ * @param actions - Sequence of action specs to run.
+ * @returns An `ActionSpec` of type "sequence".
+ *
+ * @example
+ * ```ts
+ * sequence(copy(), openApp("Notes"), paste())
+ * ```
+ */
 export function sequence(...actions: ActionSpec[]): ActionSpec {
   return { type: "sequence", actions };
 }
+

@@ -423,7 +423,7 @@ jq 'del(.complex_modifications.rules[] | .ruleDescription) | del(.complex_modifi
   - `button: "shift"` → `trigger: { pointer: "shift" }` (alias auto-scopes to G502X).
   - `button: "back"/"forward"/"wheel"/"right"/"left"` (global aliases) → `trigger: { pointer: "back" }` PLUS `conditions: [{ device: DEVICE_IDENTIFIERS.logitechG502X }]` (explicit device scope, per spec §4).
   - `alone` → `{ phase: "release", do: alone }`; `hold` → `{ phase: "hold", do: hold }`. (`do` events are raw `ToEvent`s — keep verbatim.)
-  - `variable: "right_button_pressed"` → `whileHoldVar: mouseVars.rightButtonPressed` (see Step 2).
+  - `variable: "right_button_pressed"` → `whileHoldVar: mouseVars.rButtonDown` (see Step 2).
   - `overrides: [{when, to}]` → additional cases `{ phase: <match base phase>, conditions: <when converted>, do: to }`, declared BEFORE the base cases (override precedence via groupByConditions order). `when` conditions convert via: `{app}`→`{app, unless?}`; `{variable, match, value}`→`{var: {name: variable, varDesc: variable}, equals: value, unless: match==="unless"}`.
   - wheel-left/right guards (`variable_unless(wheel_down/right_button_pressed)`) → add to the binding's hoisted `conditions` (as `unless` var conditions) OR to each case — match today's per-manipulator injection by hoisting them on the binding.
   - `thresholdMs`/`timeoutMs` → `timing: { aloneMs: timeoutMs, heldThresholdMs: thresholdMs }`.
@@ -436,10 +436,10 @@ jq 'del(.complex_modifications.rules[] | .ruleDescription) | del(.complex_modifi
 - [ ] **Step 2: Mouse signaling `VarSpec`s** — add to `src/data/mouse.ts`:
 ```ts
 export const mouseVars = {
-  rightButtonPressed: { name: "right_button_pressed", varDesc: "Right button held" },
+  rButtonDown: { name: "right_button_pressed", varDesc: "Right button held" },
   wheelDown:          { name: "wheel_down",            varDesc: "Wheel held down" },
-  leftButtonPressed:  { name: "left_button_pressed",   varDesc: "Left button held" },
-  leftWithRightFirstTap: { name: "left_with_right_first_tap", varDesc: "Left+right first tap" },
+  lButtonDown:  { name: "left_button_pressed",   varDesc: "Left button held" },
+  lButtonTapCount: { name: "left_with_right_first_tap", varDesc: "Left+right first tap" },
 } as const satisfies Record<string, import("./refs").VarSpec>;
 ```
 
@@ -453,7 +453,7 @@ export const mouseVars = {
     cases: [
       { phase: "release", do: [{ key_code: "up_arrow", modifiers: ["left_control"] }] },
       { phase: "hold", do: [ WIN_ACTIVATE_UNDER_CURSOR, { key_code: "left_control", modifiers: ["left_option", "left_shift"] } ] },
-      { phase: "hold", conditions: [{ var: mouseVars.rightButtonPressed, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
+      { phase: "hold", conditions: [{ var: mouseVars.rButtonDown, equals: 1 }], do: [{ key_code: "down_arrow", modifiers: ["left_control"], repeat: false }] },
     ],
   },
   ```

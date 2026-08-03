@@ -79,7 +79,10 @@ bind(
   `guard()`. Chain `.when(...)` on a case to scope it.
 - Actions: `key()`, `map()`, `openApp()`, `openUrl()`, `shell()`, `openFolder()`,
   `setVar()`, `sequence()`, `noop()`, and the rest of `ActionSpec`.
-- Conditions: `condApp()`, `condVar()`, `condDevice()` and their `not` variants.
+- Conditions: `state()`, `unless()`, `ifState()`, `condApp()`, `condVar()`, `condDevice()`.
+  - `state(spec1, spec2, ...)` — Flexible builder (assumes true by default; accepts tuple overrides like `[VARS.wheelDown, 0]`).
+  - `unless(spec1, spec2, ...)` — Enforces all listed variables, apps, or devices to be false/inactive/negated.
+  - `ifState(spec1, spec2, ...)` — Enforces all listed variables, apps, or devices to be true/active.
 
 Descriptions are derived automatically from the trigger, conditions, and
 actions — you only set `description` to override.

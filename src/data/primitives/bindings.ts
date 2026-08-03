@@ -17,36 +17,36 @@ export type Phase = "press" | "release" | "hold";
  * @example
  * ```ts
  * const appCond: Condition = { app: "com.apple.finder" };
- * const varCond: Condition = { var: mouseVars.rightButtonPressed, equals: 1 };
+ * const varCond: Condition = { var: VARS.rButtonDown, equals: 1 };
  * ```
  */
 export type Condition =
   | {
-      /** Application bundle ID or path condition. */
-      app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[];
-      /** If true, condition evaluates to true when application is NOT frontmost. */
-      unless?: boolean;
-      /** Optional description override. */
-      description?: string;
-    }
+    /** Application bundle ID or path condition. */
+    app: AppSpec | PathSpec | string | (AppSpec | PathSpec | string)[];
+    /** If true, condition evaluates to true when application is NOT frontmost. */
+    unless?: boolean;
+    /** Optional description override. */
+    description?: string;
+  }
   | {
-      /** Karabiner state variable condition. */
-      var: VarSpec;
-      /** Target value required for variable match. */
-      equals: string | number | boolean;
-      /** If true, condition evaluates to true when variable value does NOT match. */
-      unless?: boolean;
-      /** Optional description override. */
-      description?: string;
-    }
+    /** Karabiner state variable condition. */
+    var: VarSpec;
+    /** Target value required for variable match. */
+    equals: string | number | boolean;
+    /** If true, condition evaluates to true when variable value does NOT match. */
+    unless?: boolean;
+    /** Optional description override. */
+    description?: string;
+  }
   | {
-      /** Input hardware device condition. */
-      device: DeviceSpec;
-      /** If true, condition evaluates to true when input is NOT from specified device. */
-      unless?: boolean;
-      /** Optional description override. */
-      description?: string;
-    };
+    /** Input hardware device condition. */
+    device: DeviceSpec;
+    /** If true, condition evaluates to true when input is NOT from specified device. */
+    unless?: boolean;
+    /** Optional description override. */
+    description?: string;
+  };
 
 /**
  * Simultaneous key chord order requirements and uninterrupted detection settings.
@@ -84,9 +84,9 @@ export type Trigger =
    * notice that a key went through the layer without being translated.
    */
   | {
-      any: "key_code" | "consumer_key_code" | "pointing_button";
-      modifiers?: TriggerModifiers;
-    };
+    any: "key_code" | "consumer_key_code" | "pointing_button";
+    modifiers?: TriggerModifiers;
+  };
 
 /**
  * One (state + timing) -> action pairing within a binding rule.

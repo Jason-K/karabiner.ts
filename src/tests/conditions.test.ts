@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { APP_ID, STATES, VARS } from "../data";
+import { state, unless } from "../engine/condition-wrappers";
 import {
   ifVarExpr,
   toTrigger,
@@ -52,3 +54,71 @@ test("beta helpers serialize send_user_command and from_event", () => {
   );
   assert.deepEqual(toTrigger(), { from_event: true });
 });
+
+test("state builder checks STATES registry keys, VarValueSpec, and VarSpec", () => {
+  const condString = state("rButtonDown");
+  assert.deepEqual(condString, {
+    var: VARS.rButtonDown,
+    equals: 1,
+    description: "Button 2 is pressed",
+  });
+
+  const condSpec = state(STATES.wheelDown);
+  assert.deepEqual(condSpec, {
+    var: VARS.wheelDown,
+    equals: 1,
+    description: "Wheel is held down",
+  });
+
+  const condUnless = state("rButtonDown", false);
+  assert.deepEqual(condUnless, {
+    var: VARS.rButtonDown,
+    equals: 1,
+    unless: true,
+    description: "Button 2 is pressed",
+  });
+
+  const condVarSpec = state(VARS.lButtonDown, 1);
+  assert.deepEqual(condVarSpec, {
+    var: VARS.lButtonDown,
+    equals: 1,
+  });
+});
+
+test("state builder supports arrays, tuples, apps, and rest parameters", () => {
+  const condsArray = state([APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]);
+  assert.deepEqual(condsArray, [
+    { app: APP_ID.zen },
+    { var: VARS.rButtonDown, equals: 1 },
+    { var: VARS.wheelDown, equals: 0 },
+  ]);
+
+  const condsRest = state(APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]);
+  assert.deepEqual(condsRest, [
+    { app: APP_ID.zen },
+    { var: VARS.rButtonDown, equals: 1 },
+    { var: VARS.wheelDown, equals: 0 },
+  ]);
+
+  const condTupleSingle = state([VARS.wheelDown, 0]);
+  assert.deepEqual(condTupleSingle, { var: VARS.wheelDown, equals: 0 });
+});
+
+test("unless builder enforces negation across all items", () => {
+  const negatedSingle = unless(VARS.rButtonDown);
+  assert.deepEqual(negatedSingle, {
+    var: VARS.rButtonDown,
+    equals: 1,
+    unless: true,
+  });
+
+  const negatedMultiple = unless(VARS.rButtonDown, VARS.wheelDown, APP_ID.zen);
+  assert.deepEqual(negatedMultiple, [
+    { var: VARS.rButtonDown, equals: 1, unless: true },
+    { var: VARS.wheelDown, equals: 1, unless: true },
+    { app: APP_ID.zen, unless: true },
+  ]);
+});
+
+
+

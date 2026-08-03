@@ -19,7 +19,7 @@ export {
 } from "../constants/mouse";
 export { HOME_DIR, PATHS } from "./paths";
 export { URLS } from "./urls";
-export { KE_VARS, KE_VAR_VALUES, mouseVars } from "./vars";
+export { VARS, STATES } from "./vars";
 export { PROFILES, getProfileSpec } from "./profiles";
 export {
   ACCESSIBILITY_ROLES,

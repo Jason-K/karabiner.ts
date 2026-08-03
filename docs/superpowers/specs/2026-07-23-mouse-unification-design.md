@@ -99,7 +99,7 @@ export type Binding = {
 };
 ```
 
-`buildTapHold` passes `variable: b.whileHoldVar?.name` through. The mouse's signaling variables become `VarSpec`s (describable): `rightButtonPressed`, `wheelDown`, `leftButtonPressed`, `leftWithRightFirstTap`. Existing `Condition.var` reads them (e.g. an override case `{ var: rightButtonPressed, equals: 1 }`). `setVar` covers ad-hoc signaling in non-tap-hold bindings; `whileHoldVar` covers the tap-hold case. Both kept rather than distorting the tap-hold model.
+`buildTapHold` passes `variable: b.whileHoldVar?.name` through. The mouse's signaling variables become `VarSpec`s (describable): `rButtonDown`, `wheelDown`, `lButtonDown`, `lButtonTapCount`. Existing `Condition.var` reads them (e.g. an override case `{ var: rButtonDown, equals: 1 }`). `setVar` covers ad-hoc signaling in non-tap-hold bindings; `whileHoldVar` covers the tap-hold case. Both kept rather than distorting the tap-hold model.
 
 ## 6. Suppression
 
@@ -123,7 +123,7 @@ The left-button `doubleTap` mapping (right-button-held + left: single tap / sing
 ```ts
 {
   trigger: { pointer: "left" },
-  conditions: [{ var: rightButtonPressed, equals: 1 }],   // only while right button is held
+  conditions: [{ var: rButtonDown, equals: 1 }],   // only while right button is held
   multiTap: { allowPassThrough: false },
   cases: [
     // single tap (Zen / non-Zen variants), single-tap-hold, double-tap — each a
