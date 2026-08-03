@@ -1,7 +1,7 @@
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import type { SubLayerConfig } from '../leader/types';
-import { HOME_DIR } from "../../data";
 
 function getDefaultOutputPaths(home: string, prefix: string): string[] {
   const filename = `${prefix}_layers.json`;
@@ -29,7 +29,7 @@ export function emitLayerDefinitions(
   debugMode: boolean = false,
 ): void {
   try {
-    const home = HOME_DIR;
+    const home = process.env.HOME ?? os.homedir();
     const outputPaths = outputPath ? [outputPath] : getDefaultOutputPaths(home, prefix);
 
     if (debugMode) {

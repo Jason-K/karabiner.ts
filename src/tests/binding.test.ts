@@ -16,7 +16,7 @@ test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
 
 test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
   const c = resolveCondition({
-    app: PATHS.dirGApps,
+    app: PATHS.appsDir,
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.file_paths, ["/Applications"]);
@@ -25,7 +25,7 @@ test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
 
 test("resolveCondition app + path if -> frontmost_application_if (AppRef and PathRef)", () => {
   const c = resolveCondition({
-    app: [APPS.excel, PATHS.dirGApps],
+    app: [APPS.excel, PATHS.appsDir],
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);

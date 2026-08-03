@@ -40,7 +40,7 @@ const isCI = process.env.CI === "true" || process.env.GITHUB_ACTIONS === "true";
 const isDarwin = process.platform === "darwin";
 const dryRun = !isDarwin || isCI;
 
-const configPath = PATHS.configKarabiner.path;
+const configPath = PATHS.configKE.path;
 
 function main(): void {
   // Compiling inside main() keeps conflict errors on the same reporting path as
@@ -57,10 +57,10 @@ function main(): void {
 
   const profileName = config
     ? resolveProfileName(config, {
-        explicit: process.env.KARABINER_PROFILE_NAME?.trim() || undefined,
-        preferred: PREFERRED_PROFILE,
-        fallback: DEFAULT_PROFILE,
-      })
+      explicit: process.env.KARABINER_PROFILE_NAME?.trim() || undefined,
+      preferred: PREFERRED_PROFILE,
+      fallback: DEFAULT_PROFILE,
+    })
     : PREFERRED_PROFILE;
 
   const result = writeKarabinerConfig(

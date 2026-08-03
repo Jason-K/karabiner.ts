@@ -94,7 +94,7 @@ export const mouseBindings: Binding[] = [
         { pointing_button: "button1", modifiers: ["option"], repeat: false },
       ]).when(state(APPS.zen, VARS.rButtonDown)),
       release([{ pointing_button: "button3", repeat: false }]),
-      hold(shell(CMDS.winMaxOrRestore)),
+      hold(shell(CMDS.winMaxToggle)),
     ),
     when(condDevice(DEVICES.g502X)),
     options({
@@ -107,7 +107,7 @@ export const mouseBindings: Binding[] = [
   bind(
     from("leftBack"),
     to(
-      release(shell(CMDS.winMaxOrRestore)),
+      release(shell(CMDS.winMaxToggle)),
       hold(url(URLS.rectDisplayNext)),
     ),
   ),
@@ -128,7 +128,7 @@ export const mouseBindings: Binding[] = [
     from("middleBack"),
     to(
       release([url(URLS.csxOcrNoLinebreaks)]),
-      hold([shell(CMDS.screenshot_to_md)]),
+      hold([shell(CMDS.ocrToMd)]),
     ),
   ),
   // -------------------------------------------------------------
@@ -201,7 +201,7 @@ export const mouseBindings: Binding[] = [
         .when(condApp(APPS.zen))
         .withTapCount(2),
       // Non-Zen — tap = maximize (delayed), double = next display
-      release(shell(CMDS.winMaxOrRestore))
+      release(shell(CMDS.winMaxToggle))
         .when(condApp(APPS.zen, false))
         .withDelayed(),
       release(url(URLS.rectDisplayNext))

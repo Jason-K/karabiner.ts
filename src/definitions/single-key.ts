@@ -93,7 +93,7 @@ const nonCharBindings: Binding[] = [
     from("keypad_enter"),
     to(
       release(key("keypad_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APPS.excel, false)),
+      hold(shell(CMDS.evalSelectionPart)).when(condApp(APPS.excel, false)),
       hold(key("f2")).when(condApp(APPS.excel)),
     ),
     options({
@@ -104,7 +104,7 @@ const nonCharBindings: Binding[] = [
     from("return_or_enter"),
     to(
       release(key("return_or_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APPS.excel, false)),
+      hold(shell(CMDS.evalSelectionPart)).when(condApp(APPS.excel, false)),
       hold(key("f2")).when(condApp(APPS.excel)),
     ),
     options({

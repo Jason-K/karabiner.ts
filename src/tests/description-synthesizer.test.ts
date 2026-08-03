@@ -31,13 +31,13 @@ test("describeAction: appHistory / folder / raycast / cleanShot / command", () =
     "Go back 2 apps",
   );
   assert.equal(
-    describeAction({ type: "folder", ref: PATHS.dirDls }),
+    describeAction({ type: "folder", ref: PATHS.dlsDir }),
     "open 'DLs'",
   );
   assert.equal(
     describeAction({
       type: "folder",
-      ref: PATHS.dirDls,
+      ref: PATHS.dlsDir,
       actionDesc: "new tab",
     }),
     "open 'DLs' | new tab",

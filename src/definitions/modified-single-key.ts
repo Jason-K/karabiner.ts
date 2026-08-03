@@ -55,7 +55,7 @@ const modLetterBindings: Binding[] = [
   ),
   bind(from("q", VM.COCS), to(release(map(COMBOS.focusWinLeft)))),
   bind(from("r", VM.COCS), to(release(map(COMBOS.focusWinTop)))),
-  bind(from("s", VM.COCS), to(press(shell(CMDS.hsFormatSelection)))),
+  bind(from("s", VM.COCS), to(press(shell(CMDS.evalSelection)))),
   bind(
     from("s", ["R.opt"]),
     to(
@@ -90,8 +90,6 @@ const modSymbolBindings: Binding[] = [
       press(cmd(CMDS.fillPw)).when(state(PW_IDS, STATES.isTextField, STATES.isSecureInputSubrole)),
       // AUTHENTICATION DIALOG: fill username and password.
       press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, STATES.isTextField, [STATES.isSecureInputSubrole, 0])),
-      // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
-      press(shell(CMDS.getWordDocPathAndPrivileges)).when(state(APPS.word)),
     ),
   ),
 ];
@@ -131,7 +129,7 @@ const modNonCharBindings: Binding[] = [
     to(press(map(COMBOS.zenPreviousTab))),
     when(condApp(APPS.zen)),
   ),
-  bind(from("spacebar", VM.COCS), to(release(shell(CMDS.winMaxOrRestore)))),
+  bind(from("spacebar", VM.COCS), to(release(shell(CMDS.winMaxToggle)))),
   bind(
     from("tab", VM.COCS),
     to(

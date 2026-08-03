@@ -114,7 +114,7 @@ export function toPy(
 export function toTp(action: string): string {
   return pythonCommand(
     [
-      PATHS.scriptTextProcessorCLI.path,
+      PATHS.stringThings.path,
       action,
       "--source",
       "clipboard",
@@ -122,7 +122,7 @@ export function toTp(action: string): string {
       "paste",
     ],
     {
-      pythonBin: `${PATHS.binUV.path} --directory ${PATHS.dirTextProcessor.path} run python`,
+      pythonBin: `${PATHS.binUV.path} --directory ${PATHS.stringThingsDir.path} run python`,
     },
   );
 }
@@ -132,5 +132,5 @@ export function toWithSleep(delaySeconds: number, shell: string): string {
 }
 
 export function toHere2There(action: string): string {
-  return `${PATHS.scriptHere2There.path} --action ${action}`;
+  return `${PATHS.here2there.path} --action ${action}`;
 }

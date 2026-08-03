@@ -80,5 +80,5 @@ export { APPS, PW_IDS } from "./registries/apps";
 export { CMDS } from "./registries/commands";
 export { COMBOS, mapSpec, type ComboOpts, type HkInput } from "./registries/combos";
 export { PROFILES, getProfileSpec } from "./registries/profiles";
-export { HOME_DIR, PATHS } from "./registries/paths";
+export { PATHS } from "./registries/paths";
 export { URLS } from "./registries/urls";
