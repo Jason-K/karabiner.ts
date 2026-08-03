@@ -8,7 +8,7 @@ import type { VarSpec } from "./vars";
 import type { ModComboAlias, ModKey } from "../constants/keys";
 
 /**
- * Target reference accepted by application actions (`openApp`).
+ * Target reference accepted by application actions (`app`).
  * Accepts a typed {@link AppSpec}, a typed {@link PathSpec}, or a raw bundle ID / application file path string.
  */
 export type AppTarget = AppSpec | PathSpec | string;

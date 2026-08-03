@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID, STATES, VARS } from "../data";
+import { APPS, STATES, VARS } from "../data";
 import { state, unless } from "../engine/condition-wrappers";
 import {
   ifVarExpr,
@@ -86,16 +86,16 @@ test("state builder checks STATES registry keys, VarValueSpec, and VarSpec", () 
 });
 
 test("state builder supports arrays, tuples, apps, and rest parameters", () => {
-  const condsArray = state([APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]);
+  const condsArray = state([APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]);
   assert.deepEqual(condsArray, [
-    { app: APP_ID.zen },
+    { app: APPS.zen },
     { var: VARS.rButtonDown, equals: 1 },
     { var: VARS.wheelDown, equals: 0 },
   ]);
 
-  const condsRest = state(APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]);
+  const condsRest = state(APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0]);
   assert.deepEqual(condsRest, [
-    { app: APP_ID.zen },
+    { app: APPS.zen },
     { var: VARS.rButtonDown, equals: 1 },
     { var: VARS.wheelDown, equals: 0 },
   ]);
@@ -112,11 +112,11 @@ test("unless builder enforces negation across all items", () => {
     unless: true,
   });
 
-  const negatedMultiple = unless(VARS.rButtonDown, VARS.wheelDown, APP_ID.zen);
+  const negatedMultiple = unless(VARS.rButtonDown, VARS.wheelDown, APPS.zen);
   assert.deepEqual(negatedMultiple, [
     { var: VARS.rButtonDown, equals: 1, unless: true },
     { var: VARS.wheelDown, equals: 1, unless: true },
-    { app: APP_ID.zen, unless: true },
+    { app: APPS.zen, unless: true },
   ]);
 });
 

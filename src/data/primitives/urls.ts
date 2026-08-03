@@ -2,7 +2,7 @@ import type { BaseSpec } from "./base";
 
 /**
  * Registry specification for URLs and custom URI schemes.
- * Used for web browsing and deep-link launcher actions (`openUrl`).
+ * Used for web browsing and deep-link launcher actions (`url`).
  *
  * @example
  * ```ts

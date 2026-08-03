@@ -66,7 +66,7 @@ export function toAppPath(filePath: string): string {
 }
 
 /**
- * Resolve an AppTarget ref to the correct openApp() argument shape.
+ * Resolve an AppTarget ref to the correct app() argument shape.
  * - AppSpec  (type:"app")  → { bundleIdentifier } or { filePath }
  * - PathSpec (type:"path") → { filePath }
  * - raw string starting with "/" or ending with ".app" → { filePath }

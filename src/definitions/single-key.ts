@@ -1,4 +1,4 @@
-import { APP_ID, CMDS, COMBOS, URLS, VM } from "../data";
+import { APPS, CMDS, COMBOS, URLS, VM } from "../data";
 import { capsVars } from "./caps-lock";
 import {
   actHere,
@@ -10,8 +10,8 @@ import {
   from,
   hold,
   key,
-  openApp,
-  openUrl,
+  app,
+  url,
   options,
   press,
   release,
@@ -25,13 +25,13 @@ import {
 //   tap passes the key through (the engine's default-alone behavior).
 
 const numBindings: Binding[] = [
-  bind(from("8"), to(hold(openApp(APP_ID.ringCentral)))),
-  bind(from("keypad_0"), to(hold(openUrl(URLS.winsUnstashAll, true)))),
-  bind(from("keypad_2"), to(hold(openUrl(URLS.winStashDown, true)))),
-  bind(from("keypad_4"), to(hold(openUrl(URLS.winStashLeft, true)))),
-  bind(from("keypad_5"), to(hold(openUrl(URLS.winsUnstash, true)))),
-  bind(from("keypad_6"), to(hold(openUrl(URLS.winStashRight, true)))),
-  bind(from("keypad_8"), to(hold(openUrl(URLS.winStashUp, true)))),
+  bind(from("8"), to(hold(app(APPS.ringCentral)))),
+  bind(from("keypad_0"), to(hold(url(URLS.winsUnstashAll, true)))),
+  bind(from("keypad_2"), to(hold(url(URLS.winStashDown, true)))),
+  bind(from("keypad_4"), to(hold(url(URLS.winStashLeft, true)))),
+  bind(from("keypad_5"), to(hold(url(URLS.winsUnstash, true)))),
+  bind(from("keypad_6"), to(hold(url(URLS.winStashRight, true)))),
+  bind(from("keypad_8"), to(hold(url(URLS.winStashUp, true)))),
 ];
 
 const letterBindings: Binding[] = [
@@ -39,22 +39,22 @@ const letterBindings: Binding[] = [
   bind(from("c"), to(hold(map(COMBOS.showBusyCal)))),
   bind(from("d"), to(hold(key("f1", VM.CO_S)))),
   bind(from("f"), to(hold(actHere("qspace")))),
-  bind(from("g"), to(hold(openApp(APP_ID.claude, "shell")))),
-  bind(from("h"), to(hold(openUrl(URLS.rayHere2There)))),
-  bind(from("j"), to(hold(openUrl(URLS.rayRecentDownloads)))),
-  bind(from("k"), to(hold(openApp(APP_ID.kitty)))),
-  bind(from("n"), to(hold(openUrl(URLS.newClientNote, true)))),
-  bind(from("o"), to(hold(openUrl(URLS.csxOcrNoLinebreaks)))),
+  bind(from("g"), to(hold(app(APPS.claude, "shell")))),
+  bind(from("h"), to(hold(url(URLS.rayHere2There)))),
+  bind(from("j"), to(hold(url(URLS.rayRecentDownloads)))),
+  bind(from("k"), to(hold(app(APPS.kitty)))),
+  bind(from("n"), to(hold(url(URLS.newClientNote, true)))),
+  bind(from("o"), to(hold(url(URLS.csxOcrNoLinebreaks)))),
   bind(from("p"), to(hold(map(COMBOS.showPopclip)))),
-  bind(from("q"), to(hold(openApp(APP_ID.qspace)))),
+  bind(from("q"), to(hold(app(APPS.qspace)))),
   bind(from("r"), to(hold(shell(CMDS.getRecentRaycast)))),
-  bind(from("s"), to(hold(openUrl(URLS.csxArea)))),
-  bind(from("s", ["shift"]), to(hold(openUrl(URLS.csxWindow)))),
+  bind(from("s"), to(hold(url(URLS.csxArea)))),
+  bind(from("s", ["shift"]), to(hold(url(URLS.csxWindow)))),
   bind(from("t"), to(hold(map(COMBOS.showKittyQuakeTerm)))),
-  bind(from("v"), to(hold(openUrl(URLS.rayClipboard)))),
+  bind(from("v"), to(hold(url(URLS.rayClipboard)))),
   bind(from("x"), to(hold(actHere("copy")))),
   bind(from("y"), to(hold(actHere("copy")))),
-  bind(from("z"), to(hold(openUrl(URLS.rayZoxideSearchDirs)))),
+  bind(from("z"), to(hold(url(URLS.rayZoxideSearchDirs)))),
 ];
 
 const symbolBindings: Binding[] = [
@@ -93,8 +93,8 @@ const nonCharBindings: Binding[] = [
     from("keypad_enter"),
     to(
       release(key("keypad_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
-      hold(key("f2")).when(condApp(APP_ID.excel)),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APPS.excel, false)),
+      hold(key("f2")).when(condApp(APPS.excel)),
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
@@ -104,8 +104,8 @@ const nonCharBindings: Binding[] = [
     from("return_or_enter"),
     to(
       release(key("return_or_enter", { halt: true })),
-      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APP_ID.excel, false)),
-      hold(key("f2")).when(condApp(APP_ID.excel)),
+      hold(shell(CMDS.hsFormatCutSeed)).when(condApp(APPS.excel, false)),
+      hold(key("f2")).when(condApp(APPS.excel)),
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
@@ -167,7 +167,7 @@ const modifierKeyBindings: Binding[] = [
     to(
       release(key("left_shift")),
       hold(key("left_shift")),
-      release(openUrl(URLS.rayClipboard)).withTapCount(2),
+      release(url(URLS.rayClipboard)).withTapCount(2),
     ),
     when(condNotVar(capsVars.pressed, 1)),
     options({
@@ -179,7 +179,7 @@ const modifierKeyBindings: Binding[] = [
     to(
       release(key("right_shift")),
       hold(key("right_shift")),
-      release(openUrl(URLS.rayClipboard)).withTapCount(2),
+      release(url(URLS.rayClipboard)).withTapCount(2),
     ),
     when(condNotVar(capsVars.pressed, 1)),
     options({

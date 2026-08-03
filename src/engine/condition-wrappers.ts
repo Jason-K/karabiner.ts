@@ -34,7 +34,7 @@ export type WhenWrapper = {
  * @example
  * ```ts
  * when(ifApp("com.apple.finder"), state("rButtonDown"))
- * when(unless(VARS.wheelDown), state(APP_ID.zen))
+ * when(unless(VARS.wheelDown), state(APPS.zen))
  * ```
  */
 export function when(...conditions: (Condition | Condition[])[]): WhenWrapper {
@@ -451,7 +451,7 @@ export type StateItem =
  * @example
  * ```ts
  * state([VARS.wheelDown, 0])
- * state([APP_ID.zen, false])
+ * state([APPS.zen, false])
  * ```
  */
 export function state(
@@ -466,7 +466,7 @@ export function state(
  *
  * @example
  * ```ts
- * state(APP_ID.zen)
+ * state(APPS.zen)
  * state("rButtonDown")
  * state(VARS.rButtonDown, 1)
  * ```
@@ -483,7 +483,7 @@ export function state(
  *
  * @example
  * ```ts
- * state([APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0]])
+ * state([APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0]])
  * ```
  */
 export function state(
@@ -499,7 +499,7 @@ export function state(
  *
  * @example
  * ```ts
- * state(APP_ID.zen, VARS.rButtonDown, [VARS.wheelDown, 0])
+ * state(APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0])
  * ```
  */
 export function state(
@@ -563,7 +563,7 @@ export function unless(
  *
  * @example
  * ```ts
- * unless(VARS.rButtonDown, VARS.wheelDown, APP_ID.zen)
+ * unless(VARS.rButtonDown, VARS.wheelDown, APPS.zen)
  * ```
  */
 export function unless(
@@ -580,7 +580,7 @@ export function unless(
  * @example
  * ```ts
  * unless("rButtonDown")
- * unless(APP_ID.zen)
+ * unless(APPS.zen)
  * ```
  */
 export function unless(
