@@ -1,6 +1,6 @@
 import { VM } from "../data";
 import {
-  APP_ID,
+  APPS,
   CMDS,
   COMBOS,
   PW_IDS,
@@ -16,8 +16,8 @@ import {
   from,
   hold,
   key,
-  openApp,
-  openUrl,
+  app,
+  url,
   press,
   release,
   shell,
@@ -28,28 +28,28 @@ import {
 } from "../engine";
 
 const modNumBindings: Binding[] = [
-  bind(from("keypad_1", VM.COCS), to(release(openUrl(URLS.winBottomLeftEighth, true)))),
-  bind(from("keypad_3", VM.COCS), to(release(openUrl(URLS.winBottomRightEighth, true)))),
-  bind(from("keypad_5", VM.COCS), to(release(openUrl(URLS.winMaximize, true)))),
-  bind(from("keypad_7", VM.COCS), to(release(openUrl(URLS.winTopLeftEighth, true)))),
-  bind(from("keypad_9", VM.COCS), to(release(openUrl(URLS.winTopRightEighth, true)))),
+  bind(from("keypad_1", VM.COCS), to(release(url(URLS.winBottomLeftEighth, true)))),
+  bind(from("keypad_3", VM.COCS), to(release(url(URLS.winBottomRightEighth, true)))),
+  bind(from("keypad_5", VM.COCS), to(release(url(URLS.winMaximize, true)))),
+  bind(from("keypad_7", VM.COCS), to(release(url(URLS.winTopLeftEighth, true)))),
+  bind(from("keypad_9", VM.COCS), to(release(url(URLS.winTopRightEighth, true)))),
 ];
 
 const modLetterBindings: Binding[] = [
-  bind(from("a", ["shift"]), to(hold(openUrl(URLS.antinoteNewNote)))),
+  bind(from("a", ["shift"]), to(hold(url(URLS.antinoteNewNote)))),
   bind(from("e", VM.COCS), to(release(map(COMBOS.focusWinRight)))),
   bind(from("f", VM.COCS), to(release(map(COMBOS.focusWinBottom)))),
   bind(
     from("h", ["L.cmd"]),
     to(press(map(COMBOS.skimHighlight))),
-    when(condApp(APP_ID.skim)),
+    when(condApp(APPS.skim)),
   ),
   bind(from("k", ["R.opt"]), to(hold(actHere("kitty")))),
   bind(from("m", ["L.cmd"]), to(hold(map(COMBOS.restoreMinimizedWindow)))),
   bind(
     from("p", ["L.cmd"]),
     to(
-      release(cmd(CMDS.wordPrint)).when(state(APP_ID.word)),
+      release(cmd(CMDS.wordPrint)).when(state(APPS.word)),
       hold(map(COMBOS.showPopclip)),
     ),
   ),
@@ -60,7 +60,7 @@ const modLetterBindings: Binding[] = [
     from("s", ["R.opt"]),
     to(
       release(shell(CMDS.spotifyToggle)),
-      hold(openUrl(URLS.raySpotifySearch)),
+      hold(url(URLS.raySpotifySearch)),
     ),
   ),
   bind(
@@ -77,12 +77,12 @@ const modLetterBindings: Binding[] = [
   bind(
     from("u", ["L.cmd"]),
     to(press(map(COMBOS.skimUnderline))),
-    when(state(APP_ID.skim)),
+    when(state(APPS.skim)),
   ),
 ];
 
 const modSymbolBindings: Binding[] = [
-  bind(from("comma", VM.COCS), to(press(openApp(APP_ID.systemSettings)))),
+  bind(from("comma", VM.COCS), to(press(app(APPS.systemSettings)))),
   bind(
     from("slash", ["L.cmd"]),
     to(
@@ -91,7 +91,7 @@ const modSymbolBindings: Binding[] = [
       // AUTHENTICATION DIALOG: fill username and password.
       press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, STATES.isTextField, [STATES.isSecureInputSubrole, 0])),
       // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
-      press(shell(CMDS.getWordDocPathAndPrivileges)).when(state(APP_ID.word)),
+      press(shell(CMDS.getWordDocPathAndPrivileges)).when(state(APPS.word)),
     ),
   ),
 ];
@@ -101,42 +101,42 @@ const modNonCharBindings: Binding[] = [
   bind(
     from("escape", ["control"]),
     to(
-      release(openApp(APP_ID.activityMonitor)),
-      hold(openApp(APP_ID.processSpy)),
+      release(app(APPS.activityMonitor)),
+      hold(app(APPS.processSpy)),
     ),
   ),
-  bind(from("escape", VM.COCS), to(press(openApp(APP_ID.activityMonitor)))),
+  bind(from("escape", VM.COCS), to(press(app(APPS.activityMonitor)))),
   bind(from("home", ["shift"]), to(press(key("left_arrow", ["L.cmd", "shift"])))),
   bind(
     from("left_arrow", VM.COCS),
     to(
       release(shell(CMDS.winLeftOrTop)),
-      hold(openUrl(URLS.rectAppPrevDisplay, true)),
+      hold(url(URLS.rectAppPrevDisplay, true)),
     ),
   ),
   bind(
     from("left_arrow", VM.C__S),
     to(press(map(COMBOS.zenNextTab))),
-    when(condApp(APP_ID.zen)),
+    when(condApp(APPS.zen)),
   ),
   bind(
     from("right_arrow", VM.COCS),
     to(
       release(shell(CMDS.winRightOrBottom)),
-      hold(openUrl(URLS.rectAppNextDisplay, true)),
+      hold(url(URLS.rectAppNextDisplay, true)),
     ),
   ),
   bind(
     from("right_arrow", VM.C__S),
     to(press(map(COMBOS.zenPreviousTab))),
-    when(condApp(APP_ID.zen)),
+    when(condApp(APPS.zen)),
   ),
   bind(from("spacebar", VM.COCS), to(release(shell(CMDS.winMaxOrRestore)))),
   bind(
     from("tab", VM.COCS),
     to(
-      release(openUrl(URLS.rectAppNextDisplay, true)),
-      hold(openUrl(URLS.rectAppPrevDisplay, true)),
+      release(url(URLS.rectAppNextDisplay, true)),
+      hold(url(URLS.rectAppPrevDisplay, true)),
     ),
   ),
 ];

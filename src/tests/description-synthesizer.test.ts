@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID, CMDS, PATHS, URLS, type ActionSpec, type Binding } from "../data";
+import { APPS, CMDS, PATHS, URLS, type ActionSpec, type Binding } from "../data";
 import {
   describeAction,
   describeConditionGroup,
@@ -12,15 +12,15 @@ import {
 
 test("describeAction: app variants by mode + actionDesc", () => {
   assert.equal(
-    describeAction({ type: "app", ref: APP_ID.excel }),
+    describeAction({ type: "app", ref: APPS.excel }),
     "open Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APP_ID.excel, mode: "shell" }),
+    describeAction({ type: "app", ref: APPS.excel, mode: "shell" }),
     "open-shell Microsoft Excel",
   );
   assert.equal(
-    describeAction({ type: "app", ref: APP_ID.excel, actionDesc: "force" }),
+    describeAction({ type: "app", ref: APPS.excel, actionDesc: "force" }),
     "open Microsoft Excel | force",
   );
 });

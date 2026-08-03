@@ -24,7 +24,7 @@ const app = (
 // Registry
 // ---------------------------------------------------------
 
-export const APP_ID = {
+export const APPS = {
   activityMonitor: app("com.apple.ActivityMonitor", "Activity Monitor"),
   antinote: app("com.chabomakers.Antinote", "Antinote"),
   brewUpdater: app("org.gpgtools.pinentry-mac", "Brew auto-updater"),
@@ -66,9 +66,9 @@ export const APP_ID = {
 export type { AppSpec };
 
 export const PW_IDS: AppSpec[] = [
-  APP_ID.securityAgent,
-  APP_ID.settings,
-  APP_ID.settingsPrivacySecurityExtension,
-  APP_ID.brewUpdater,
-  APP_ID.taphouse,
+  APPS.securityAgent,
+  APPS.settings,
+  APPS.settingsPrivacySecurityExtension,
+  APPS.brewUpdater,
+  APPS.taphouse,
 ];

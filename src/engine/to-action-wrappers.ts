@@ -171,9 +171,9 @@ export class CaseBuilder implements Case {
  * Recognized action builders:
  * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
  * - `button()` — mouse button press action
- * - `openApp()` — launch or focus application
- * - `openUrl()` — open URL in browser (supports background)
- * - `openFolder()` — open file directory
+ * - `app()` — launch or focus application
+ * - `url()` — open URL in browser (supports background)
+ * - `folder()` — open file directory
  * - `cmd()` — run registered command spec
  * - `shell()` — run shell command
  * - `python()` — execute python script with virtual environment support
@@ -209,9 +209,9 @@ export function press(
  * Recognized action builders:
  * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
  * - `button()` — mouse button press action
- * - `openApp()` — launch or focus application
- * - `openUrl()` — open URL in browser (supports background)
- * - `openFolder()` — open file directory
+ * - `app()` — launch or focus application
+ * - `url()` — open URL in browser (supports background)
+ * - `folder()` — open file directory
  * - `cmd()` — run registered command spec
  * - `shell()` — run shell command
  * - `python()` — execute python script with virtual environment support
@@ -244,7 +244,7 @@ export function release(
  * Alias for `release()`. Creates a case for key tap (release).
  *
  * Recognized action builders:
- * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ * - `key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`,
  *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
  *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
@@ -270,9 +270,9 @@ export function tap(
  * Recognized action builders:
  * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
  * - `button()` — mouse button press action
- * - `openApp()` — launch or focus application
- * - `openUrl()` — open URL in browser (supports background)
- * - `openFolder()` — open file directory
+ * - `app()` — launch or focus application
+ * - `url()` — open URL in browser (supports background)
+ * - `folder()` — open file directory
  * - `cmd()` — run registered command spec
  * - `shell()` — run shell command
  * - `python()` — execute python script with virtual environment support
@@ -305,7 +305,7 @@ export function hold(
  * Creates a double-tap press case.
  *
  * Recognized action builders:
- * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ * - `key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`,
  *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
  *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
@@ -315,7 +315,7 @@ export function hold(
  *
  * @example
  * ```ts
- * doubleTap(openApp("Terminal"))
+ * doubleTap(app("Terminal"))
  * ```
  */
 export function doubleTap(
@@ -329,7 +329,7 @@ export function doubleTap(
  * Creates a double-tap hold case.
  *
  * Recognized action builders:
- * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ * - `key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`,
  *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
  *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
@@ -353,7 +353,7 @@ export function doubleTapHold(
  * Creates a delayed single tap case (useful in multi-tap configurations).
  *
  * Recognized action builders:
- * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ * - `key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`,
  *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
  *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
@@ -391,7 +391,7 @@ function isConditionLike(val: unknown): boolean {
  * If actions are omitted, automatically defaults to emitting the trigger event.
  *
  * Recognized action builders:
- * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ * - `key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`,
  *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
  *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
@@ -439,9 +439,9 @@ export type ToWrapper = {
  * Recognized action builders (passed into case wrappers):
  * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
  * - `button()` — mouse button press action
- * - `openApp()` — launch or focus application
- * - `openUrl()` — open URL in browser (supports background)
- * - `openFolder()` — open file directory
+ * - `app()` — launch or focus application
+ * - `url()` — open URL in browser (supports background)
+ * - `folder()` — open file directory
  * - `cmd()` — run registered command spec
  * - `shell()` — run shell command
  * - `python()` — execute python script with virtual environment support
@@ -460,7 +460,7 @@ export type ToWrapper = {
  * @example
  * ```ts
  * to(press(key("a", ["cmd"])))
- * to(press(openApp("com.apple.finder")), release(key("b")))
+ * to(press(app("com.apple.finder")), release(key("b")))
  * to(press(noop()))
  * ```
  */
@@ -481,11 +481,11 @@ export function to(...cases: (Case | Case[])[]): ToWrapper {
  *
  * @example
  * ```ts
- * openApp("com.apple.finder")
- * openApp(APP_ID.browser, "open", "Launch Zen Browser")
+ * app("com.apple.finder")
+ * app(APPS.browser, "open", "Launch Zen Browser")
  * ```
  */
-export function openApp(
+export function app(
   ref: AppTarget,
   mode?: "open" | "shell",
   actionDesc?: string,
@@ -508,18 +508,18 @@ export function openApp(
  *
  * @example
  * ```ts
- * openUrl("https://github.com")
- * openUrl(URL_ID.docs, true, "Open documentation in background")
+ * url("https://github.com")
+ * url(URL_ID.docs, true, "Open documentation in background")
  * ```
  */
-export function openUrl(
-  url: UrlSpec | string,
+export function url(
+  ref: UrlSpec | string,
   background?: boolean,
   actionDesc?: string,
 ): ActionSpec {
   return {
     type: "url",
-    url,
+    url: ref,
     ...(background !== undefined ? { background } : {}),
     ...(actionDesc ? { actionDesc } : {}),
   };
@@ -692,11 +692,11 @@ export function appHistory(index: number): ActionSpec {
  *
  * @example
  * ```ts
- * openFolder(PATH_ID.downloads)
- * openFolder("~/Documents", "Open Documents folder")
+ * folder(PATH_ID.downloads)
+ * folder("~/Documents", "Open Documents folder")
  * ```
  */
-export function openFolder(ref: PathSpec, actionDesc?: string): ActionSpec {
+export function folder(ref: PathSpec, actionDesc?: string): ActionSpec {
   return {
     type: "folder",
     ref,
@@ -899,7 +899,7 @@ export function paste(): ActionSpec {
  *
  * @example
  * ```ts
- * sequence(copy(), openApp("Notes"), paste())
+ * sequence(copy(), app("Notes"), paste())
  * ```
  */
 export function sequence(...actions: ActionSpec[]): ActionSpec {

@@ -153,7 +153,7 @@ export type BindArg =
  * Constructs a Karabiner `Binding` from a trigger and a flexible list of cases, conditions, and options.
  *
  * Recognized wrappers & primitives accepted by `bind()`:
- * - Action wrappers: `to(...)` containing case wrappers (`press()`, `release()`, `tap()`, `hold()`, `doubleTap()`, `doubleTapHold()`, `delayedSingleTap()`, `guard()`) and action builders (`key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`, `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`, `map()`, `noop()`, `actHere()`, `appHistory()`)
+ * - Action wrappers: `to(...)` containing case wrappers (`press()`, `release()`, `tap()`, `hold()`, `doubleTap()`, `doubleTapHold()`, `delayedSingleTap()`, `guard()`) and action builders (`key()`, `button()`, `app()`, `url()`, `folder()`, `cmd()`, `shell()`, `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`, `map()`, `noop()`, `actHere()`, `appHistory()`)
  * - Condition wrappers: `when(...)` containing condition builders (`state()`, `unless()`, `ifApp()`, `condApp()`, `unlessApp()`, `ifDevice()`, `ifUserVar()`, `unlessUserVar()`, etc.)
  * - Option wrappers: `options(...)` and `timing(...)` (or inline object literal options matching `BindingOptionsSpec`)
  *

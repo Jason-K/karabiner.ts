@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { APP_ID, URLS } from "../data";
+import { APPS, URLS } from "../data";
 import {
   bind,
   bindKeys,
@@ -18,8 +18,8 @@ import {
   hold,
   key,
   noop,
-  openApp,
-  openUrl,
+  app,
+  url,
   paste,
   press,
   python,
@@ -37,8 +37,8 @@ import {
 } from "../engine";
 
 test("to(), when(), options(), and timing() DSL helpers construct flexible bindings", () => {
-  const condSkim = condApp(APP_ID.skim);
-  const condExcel = condApp(APP_ID.excel);
+  const condSkim = condApp(APPS.skim);
+  const condExcel = condApp(APPS.excel);
 
   // 1. Single to() with when()
   const b1 = bind(
@@ -56,7 +56,7 @@ test("to(), when(), options(), and timing() DSL helpers construct flexible bindi
     from("left_arrow", ["COCS"]),
     to(
       release(shell("cmd1")),
-      hold(openUrl("https://example.com", true)),
+      hold(url("https://example.com", true)),
     ),
     timing({ aloneMs: 250, heldThresholdMs: 300 }),
   );
@@ -90,11 +90,11 @@ test("phase helpers produce expected Case objects", () => {
   assert.equal(p.phase, "press");
   assert.deepEqual(p.do, [{ type: "noop" }]);
 
-  const h = hold(openApp(APP_ID.ringCentral));
+  const h = hold(app(APPS.ringCentral));
   assert.equal(h.phase, "hold");
-  assert.deepEqual(h.do, [{ type: "app", ref: APP_ID.ringCentral }]);
+  assert.deepEqual(h.do, [{ type: "app", ref: APPS.ringCentral }]);
 
-  const r = release(openUrl(URLS.winMaximize, true));
+  const r = release(url(URLS.winMaximize, true));
   assert.equal(r.phase, "release");
   assert.deepEqual(r.do, [{ type: "url", url: URLS.winMaximize, background: true }]);
 
@@ -104,14 +104,14 @@ test("phase helpers produce expected Case objects", () => {
 });
 
 test("fluent chaining methods on CaseBuilder", () => {
-  const caseObj = hold(openApp(APP_ID.ringCentral))
+  const caseObj = hold(app(APPS.ringCentral))
     .when(condVar({ name: "flag", varDesc: "flag" }, 1))
     .withDelayed()
     .withSuppress()
     .describe("custom case desc");
 
   assert.equal(caseObj.phase, "hold");
-  assert.deepEqual(caseObj.do, [{ type: "app", ref: APP_ID.ringCentral }]);
+  assert.deepEqual(caseObj.do, [{ type: "app", ref: APPS.ringCentral }]);
   assert.deepEqual(caseObj.conditions, [{ var: { name: "flag", varDesc: "flag" }, equals: 1 }]);
   assert.equal(caseObj.delayed, true);
   assert.equal(caseObj.suppress, true);
@@ -119,12 +119,12 @@ test("fluent chaining methods on CaseBuilder", () => {
 });
 
 test("ActionSpec wrappers create expected typed actions", () => {
-  assert.deepEqual(openApp(APP_ID.ringCentral), {
+  assert.deepEqual(app(APPS.ringCentral), {
     type: "app",
-    ref: APP_ID.ringCentral,
+    ref: APPS.ringCentral,
   });
 
-  assert.deepEqual(openUrl(URLS.winMaximize, true), {
+  assert.deepEqual(url(URLS.winMaximize, true), {
     type: "url",
     url: URLS.winMaximize,
     background: true,
@@ -182,17 +182,17 @@ test("Condition wrappers create expected condition objects", () => {
     equals: 1,
   });
 
-  assert.deepEqual(condApp(APP_ID.excel), {
-    app: APP_ID.excel,
+  assert.deepEqual(condApp(APPS.excel), {
+    app: APPS.excel,
   });
 
-  assert.deepEqual(condApp(APP_ID.excel, false), {
-    app: APP_ID.excel,
+  assert.deepEqual(condApp(APPS.excel, false), {
+    app: APPS.excel,
     unless: true,
   });
 
-  assert.deepEqual(condNotApp(APP_ID.excel), {
-    app: APP_ID.excel,
+  assert.deepEqual(condNotApp(APPS.excel), {
+    app: APPS.excel,
     unless: true,
   });
 
@@ -209,8 +209,8 @@ test("defineBindings integration with case & action helpers", () => {
       description: "test binding",
       trigger: { keys: ["8"] },
       cases: [
-        hold(openApp(APP_ID.ringCentral)),
-        release(openUrl(URLS.winsUnstashAll)),
+        hold(app(APPS.ringCentral)),
+        release(url(URLS.winsUnstashAll)),
       ],
     },
   ]);
@@ -248,16 +248,16 @@ test("Trigger and Bind wrappers create expected Binding and Trigger objects", ()
     cases: [press(noop())],
   });
 
-  const b2 = bindKeys("8", hold(openApp(APP_ID.ringCentral)));
+  const b2 = bindKeys("8", hold(app(APPS.ringCentral)));
   assert.deepEqual(b2, {
     trigger: { keys: ["8"] },
-    cases: [hold(openApp(APP_ID.ringCentral))],
+    cases: [hold(app(APPS.ringCentral))],
   });
 
-  const b3 = bindKeys("s", hold(openUrl(URLS.csxWindow)), ["shift"]);
+  const b3 = bindKeys("s", hold(url(URLS.csxWindow)), ["shift"]);
   assert.deepEqual(b3, {
     trigger: { keys: ["s"], modifiers: ["shift"] },
-    cases: [hold(openUrl(URLS.csxWindow))],
+    cases: [hold(url(URLS.csxWindow))],
   });
 });
 
@@ -308,7 +308,7 @@ test("defineBindings supports mixed key and pointer button simultaneous triggers
   const rules = defineBindings([
     bind(
       from(["spacebar", "right"], ["left_command"]),
-      press(openApp(APP_ID.excel)),
+      press(app(APPS.excel)),
     ),
   ]);
 

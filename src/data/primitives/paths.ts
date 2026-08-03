@@ -2,7 +2,7 @@ import type { BaseSpec } from "./base";
 
 /**
  * Registry specification for local filesystem paths.
- * Represents file paths and directory locations used in folder launch actions (`openFolder`) and shell scripts.
+ * Represents file paths and directory locations used in folder launch actions (`folder`) and shell scripts.
  *
  * @example
  * ```ts

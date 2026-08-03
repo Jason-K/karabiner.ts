@@ -1,4 +1,4 @@
-import { APP_ID } from "../data";
+import { APPS } from "../data";
 import {
   bind,
   from,
@@ -15,7 +15,7 @@ export const globalGuardBinding: Binding = bind(
 
 export const antinoteGuardBinding: Binding = bind(
   from("d", ["L.cmd"]),
-  to(guard(ifApp(APP_ID.antinote))),
+  to(guard(ifApp(APPS.antinote))),
 );
 
 export const guardBindings: Binding[] = [

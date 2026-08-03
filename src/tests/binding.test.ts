@@ -1,13 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { APP_ID, PATHS } from "../data";
+import { APPS, PATHS } from "../data";
 import { buildManipulators, defineBindings, normalizeModifier, resolveCondition, resolveModifiers, triggerToFrom } from "../engine/emit-manipulators/compile-binding";
 import type { Binding } from "../data";
 
 test("resolveCondition app if -> frontmost_application_if (AppRef)", () => {
   const c = resolveCondition({
-    app: APP_ID.excel,
+    app: APPS.excel,
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
@@ -25,7 +25,7 @@ test("resolveCondition path if -> frontmost_application_if (PathRef)", () => {
 
 test("resolveCondition app + path if -> frontmost_application_if (AppRef and PathRef)", () => {
   const c = resolveCondition({
-    app: [APP_ID.excel, PATHS.dirGApps],
+    app: [APPS.excel, PATHS.dirGApps],
   }) as any;
   assert.equal(c.type, "frontmost_application_if");
   assert.deepEqual(c.bundle_identifiers, ["com.microsoft.Excel"]);
@@ -117,12 +117,12 @@ test("defineBindings tap-hold: unconditional tap + conditional holds -> no compe
         { phase: "release", do: [{ type: "key", key: "return_or_enter", options: { halt: true } }] },
         {
           phase: "hold",
-          conditions: [{ app: APP_ID.excel, unless: true }],
+          conditions: [{ app: APPS.excel, unless: true }],
           do: [{ type: "shell", command: "format-cut-seed" }],
         },
         {
           phase: "hold",
-          conditions: [{ app: APP_ID.excel }],
+          conditions: [{ app: APPS.excel }],
           do: [{ type: "key", key: "f2", options: { repeat: false } }],
         },
       ],
@@ -153,7 +153,7 @@ test("defineBindings tap-hold: unconditional tap kept when paired with a conditi
     {
       trigger: { keys: ["x"] },
       cases: [
-        { phase: "press", conditions: [{ app: APP_ID.excel }], do: [{ type: "key", key: "down_arrow" }] },
+        { phase: "press", conditions: [{ app: APPS.excel }], do: [{ type: "key", key: "down_arrow" }] },
         { phase: "release", do: [{ type: "key", key: "up_arrow" }] },
       ],
     },

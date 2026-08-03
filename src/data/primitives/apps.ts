@@ -2,7 +2,7 @@ import type { BaseSpec } from "./base";
 
 /**
  * Registry specification for macOS application bundles.
- * Used for application targeting in condition blocks (`ifApp`/`unlessApp`) and launch actions (`openApp`).
+ * Used for application targeting in condition blocks (`ifApp`/`unlessApp`) and launch actions (`app`).
  *
  * @example
  * ```ts

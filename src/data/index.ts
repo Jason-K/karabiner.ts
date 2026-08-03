@@ -76,7 +76,7 @@ export {
   type AccessibilityRole,
   type InputSourceId,
 } from "./registries/var-states";
-export { APP_ID, PW_IDS } from "./registries/apps";
+export { APPS, PW_IDS } from "./registries/apps";
 export { CMDS } from "./registries/commands";
 export { COMBOS, mapSpec, type ComboOpts, type HkInput } from "./registries/combos";
 export { PROFILES, getProfileSpec } from "./registries/profiles";

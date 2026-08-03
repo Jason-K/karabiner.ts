@@ -9,7 +9,7 @@ import {
   from,
   hold,
   key,
-  openApp,
+  app,
   RuleConflictError,
   to,
 } from "../engine";
@@ -67,7 +67,7 @@ test("a duplicate bare tap-hold trigger is rejected, not silently shadowed", () 
 test("duplicate detection covers every binding set, not just tap-hold", () => {
   // The old validator only ever saw tapHoldBindings; guards, mouse, caps-lock
   // and disabled-hotkeys were compiled unchecked.
-  const shared = bind(from("d", ["L.cmd"]), to(hold(openApp("com.example.app"))));
+  const shared = bind(from("d", ["L.cmd"]), to(hold(app("com.example.app"))));
 
   const report = analyzeConflicts([
     { name: "guards", bindings: [shared] },
