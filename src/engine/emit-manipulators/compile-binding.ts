@@ -2,11 +2,7 @@ import type { Manipulator, Rule } from "../../types/karabiner";
 import { rule } from "../karabiner-helpers";
 import type { Binding } from "../../data";
 
-import {
-  distributeUnconditionalTap,
-  groupByConditions,
-  resolveCases,
-} from "../resolve-cases";
+import { groupByConditions, resolveCases } from "../resolve-cases";
 import { synthesizeRuleDescription } from "../resolve-description/description-synthesizer";
 import { fromModifiersObj, triggerToFrom } from "../resolve-trigger";
 import { getTriggerKeys, isPointerButton } from "../utils";
@@ -54,9 +50,7 @@ export function buildManipulators(b: Binding): Manipulator[] {
   if (hasMultiTap) manipulators = buildMultiTap(b, resolved, isSim);
   else if (isSim) manipulators = buildSimultaneousTapHold(b, resolved);
   else {
-    manipulators = distributeUnconditionalTap(
-      groupByConditions(resolved),
-    ).flatMap((g) =>
+    manipulators = groupByConditions(resolved).flatMap((g) =>
       g.hasRelease || g.hasHold
         ? buildTapHold(b, g)
         : buildRemap(b, g, isPointer),

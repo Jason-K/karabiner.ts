@@ -162,6 +162,106 @@ test("defineBindings tap-hold: unconditional tap kept when paired with a conditi
   assert.equal(built.manipulators.length, 2);
 });
 
+test("defineBindings tap-hold: conditional taps inherit the unconditional hold", () => {
+  // The G9 (middle-back) shape: two mutually exclusive tap cases plus one
+  // unconditional hold. Karabiner runs the first matching manipulator and stops,
+  // so a hold emitted as its own third manipulator can never be reached — the
+  // two tap manipulators between them claim every state. The hold has to be
+  // folded into both instead, and the now-covered fallback dropped.
+  const held = { var: { name: "l", varDesc: "L" }, equals: 1 } as const;
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      cases: [
+        { phase: "release", conditions: [{ ...held, unless: true }], do: [{ type: "key", key: "1" }] },
+        { phase: "release", conditions: [held], do: [{ type: "key", key: "2" }] },
+        { phase: "hold", do: [{ type: "key", key: "3" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulators.length, 2, "the covered fallback must be dropped");
+  for (const m of built.manipulators) {
+    assert.ok(m.conditions?.length, "no manipulator may lack a condition");
+    assert.equal(m.to_if_held_down[0].key_code, "3", "each tap group carries the hold");
+  }
+  assert.deepEqual(
+    built.manipulators.map((m: any) => m.to_if_alone[0].key_code),
+    ["1", "2"],
+  );
+});
+
+test("defineBindings tap-hold: a conditional hold inherits the unconditional tap", () => {
+  // The mirror of the case above — the phases swapped. Shadowing is a property
+  // of manipulator matching, not of any one phase, so the fold has to work in
+  // both directions. Here the two groups do NOT cover the domain between them
+  // (In Excel / In Word leaves every other app uncovered), so the unconditional
+  // fallback stays, last.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      cases: [
+        { phase: "release", do: [{ type: "key", key: "1" }] },
+        { phase: "hold", conditions: [{ app: APPS.excel }], do: [{ type: "key", key: "2" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulators.length, 2);
+  const [conditional, fallback] = built.manipulators;
+  assert.ok(conditional.conditions?.length, "the narrower group is emitted first");
+  assert.equal(conditional.to_if_held_down[0].key_code, "2");
+  assert.equal(conditional.to_if_alone[0].key_code, "1", "hold group inherits the tap");
+  assert.equal(fallback.conditions, undefined);
+  assert.equal(fallback.to_if_alone[0].key_code, "1");
+});
+
+test("defineBindings tap-hold: a press-only override inherits nothing", () => {
+  // The mouse chord idiom: while the right button is held, the button does one
+  // immediate thing *instead of* its usual tap/hold. `to` resolves the input on
+  // key-down, before any tap/hold arbitration, so stapling the broader group's
+  // to_if_alone / to_if_held_down onto it would put the usual gesture back.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      cases: [
+        { phase: "press", conditions: [{ app: APPS.excel }], do: [{ type: "key", key: "1" }] },
+        { phase: "release", do: [{ type: "key", key: "2" }] },
+        { phase: "hold", do: [{ type: "key", key: "3" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulators.length, 2);
+  const [override, base] = built.manipulators;
+  assert.deepEqual(override.to.map((e: any) => e.key_code), ["1"]);
+  assert.equal(override.to_if_alone, undefined);
+  assert.equal(override.to_if_held_down, undefined);
+  assert.equal(base.to_if_alone[0].key_code, "2");
+  assert.equal(base.to_if_held_down[0].key_code, "3");
+});
+
+test("defineBindings tap-hold: a broader group is never emitted ahead of a narrower one", () => {
+  // Declaration order puts the unconditional group first, where it would swallow
+  // every press before the conditional group is reached.
+  const rules = defineBindings([
+    {
+      trigger: { keys: ["x"] },
+      cases: [
+        { phase: "hold", do: [{ type: "key", key: "1" }] },
+        { phase: "release", conditions: [{ app: APPS.excel }], do: [{ type: "key", key: "2" }] },
+      ],
+    },
+  ]);
+  const built = rules[0] as any;
+  assert.equal(built.manipulators.length, 2);
+  assert.ok(
+    built.manipulators[0].conditions?.length,
+    "the conditional manipulator must come first",
+  );
+  assert.equal(built.manipulators[1].conditions, undefined);
+});
+
 test("defineBindings remap: two press cases with different conditions -> two manipulators", () => {
   const rules = defineBindings([
     {

@@ -90,6 +90,18 @@ export type Trigger =
 
 /**
  * One (state + timing) -> action pairing within a binding rule.
+ *
+ * Cases of the same binding that share a condition set compile into one
+ * manipulator, and a case whose conditions are *implied* by another's is
+ * inherited into it: given `release(A).when(X)`, `release(B).when(not X)` and an
+ * unconditional `hold(C)`, both emitted manipulators carry `C`. They have to —
+ * Karabiner runs only the first manipulator whose `from` and conditions match,
+ * so a phase left in a broader manipulator behind them would never fire.
+ *
+ * Two ways to opt out. Declare the phase explicitly — an empty `do` suppresses
+ * it — or make the narrower case `press`-only, which marks it an immediate
+ * override that inherits nothing (see `definitions/mouse.ts`, where a chord
+ * replaces a button's whole tap/hold gesture).
  */
 export type Case = {
   /** Tap count requirement (default 1; 2 = double-tap, 3 = triple-tap). */
