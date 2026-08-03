@@ -54,6 +54,39 @@ test("ensurePathQuotingInCommand preserves single set of quotes", () => {
   );
 });
 
+test("ensurePathQuotingInCommand places $HOME and ${HOME} outside single quotes", () => {
+  assert.equal(
+    ensurePathQuotingInCommand(
+      "osascript '$HOME/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
+    ),
+    "osascript $HOME'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
+  );
+  assert.equal(
+    ensurePathQuotingInCommand(
+      "osascript '${HOME}/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
+    ),
+    "osascript ${HOME}'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
+  );
+  assert.equal(
+    ensurePathQuotingInCommand(
+      "osascript $HOME/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript"
+    ),
+    "osascript $HOME'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
+  );
+  assert.equal(
+    ensurePathQuotingInCommand(
+      "'$HOME/Scripts/.venv/shared_venv/bin/python' '$HOME/Scripts/ui/ocrToMd/shot_to_md.py'"
+    ),
+    "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/ocrToMd/shot_to_md.py'"
+  );
+  assert.equal(
+    ensurePathQuotingInCommand(
+      "'$HOME/path/to/$HOME/file'"
+    ),
+    "$HOME'/path/to/'$HOME'/file'"
+  );
+});
+
 test("ensurePathQuotingInManipulators normalizes paths across manipulator event fields", () => {
   const manipulator: Manipulator = {
     type: "basic",

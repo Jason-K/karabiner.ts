@@ -1,11 +1,7 @@
--- Get the filename of the active Microsoft Word document (without extension)
--- and copy it to the clipboard
-
 tell application "Microsoft Word"
     try
         if (count of documents) > 0 then
             set docName to name of active document
-            -- Remove file extension
             set AppleScript's text item delimiters to "."
             set nameItems to text items of docName
             if (count of nameItems) > 1 then
@@ -14,7 +10,13 @@ tell application "Microsoft Word"
                 set nameWithoutExt to docName
             end if
             set AppleScript's text item delimiters to ""
+
+            -- Strip .merged_\d+ suffix and replace underscores via shell
+            set nameWithoutExt to do shell script "printf '%s' " & quoted form of nameWithoutExt & " | sed 's/\\.merged_[0-9]*$//' | tr '_' ' '"
+
             set the clipboard to nameWithoutExt
         end if
+    on error errMsg
+        display alert "Error: " & errMsg
     end try
 end tell

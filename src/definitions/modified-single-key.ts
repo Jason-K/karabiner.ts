@@ -90,6 +90,7 @@ const modSymbolBindings: Binding[] = [
       press(cmd(CMDS.fillPw)).when(state(PW_IDS, STATES.isTextField, STATES.isSecureInputSubrole)),
       // AUTHENTICATION DIALOG: fill username and password.
       press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, STATES.isTextField, [STATES.isSecureInputSubrole, 0])),
+      press(cmd(CMDS.wordGetPath)).when(state(APPS.word))
     ),
   ),
 ];
@@ -108,7 +109,7 @@ const modNonCharBindings: Binding[] = [
   bind(
     from("left_arrow", VM.COCS),
     to(
-      release(shell(CMDS.winLeftOrTop)),
+      release(shell(CMDS.winLOrTop)),
       hold(url(URLS.rectAppPrevDisplay, true)),
     ),
   ),
@@ -120,7 +121,7 @@ const modNonCharBindings: Binding[] = [
   bind(
     from("right_arrow", VM.COCS),
     to(
-      release(shell(CMDS.winRightOrBottom)),
+      release(shell(CMDS.winROrBottom)),
       hold(url(URLS.rectAppNextDisplay, true)),
     ),
   ),

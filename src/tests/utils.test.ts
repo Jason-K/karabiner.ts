@@ -30,8 +30,8 @@ test("normalizeShellPath expands ~/ to $HOME/", () => {
   assert.equal(normalizeShellPath("/var/log"), "/var/log");
 });
 
-test("normalizePathForShell normalizes and double-quotes paths", () => {
-  assert.equal(normalizePathForShell("~/script.py"), '"$HOME/script.py"');
+test("normalizePathForShell normalizes and quotes paths", () => {
+  assert.equal(normalizePathForShell("~/script.py"), "$HOME'/script.py'");
   assert.equal(normalizePathForShell("/usr/local/bin/node"), '"/usr/local/bin/node"');
 });
 
@@ -110,4 +110,17 @@ test("resolveModifiers expands key aliases", () => {
     optional: [],
   });
 });
+
+test("HOME constant is exported and equals $HOME", async () => {
+  const data = await import("../data");
+  const registries = await import("../data/registries");
+  const paths = await import("../data/registries/paths");
+  const constants = await import("../data/constants");
+
+  assert.equal(data.HOME, "$HOME");
+  assert.equal(registries.HOME, "$HOME");
+  assert.equal(paths.HOME, "$HOME");
+  assert.equal(constants.HOME, "$HOME");
+});
+
 

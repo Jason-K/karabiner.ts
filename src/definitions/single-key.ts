@@ -47,7 +47,7 @@ const letterBindings: Binding[] = [
   bind(from("o"), to(hold(url(URLS.csxOcrNoLinebreaks)))),
   bind(from("p"), to(hold(map(COMBOS.showPopclip)))),
   bind(from("q"), to(hold(app(APPS.qspace)))),
-  bind(from("r"), to(hold(shell(CMDS.getRecentRaycast)))),
+  bind(from("r"), to(hold(shell(CMDS.recentFiles)))),
   bind(from("s"), to(hold(url(URLS.csxArea)))),
   bind(from("s", ["shift"]), to(hold(url(URLS.csxWindow)))),
   bind(from("t"), to(hold(map(COMBOS.showKittyQuakeTerm)))),
@@ -64,7 +64,7 @@ const symbolBindings: Binding[] = [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
         key("left_arrow", VM._O_S),
-        shell(CMDS.tpQuickDate),
+        shell(CMDS.quickDate),
       ]),
     ),
     options({
@@ -77,7 +77,7 @@ const symbolBindings: Binding[] = [
       release(key("keypad_equal_sign", { halt: true })),
       hold([
         key("left_arrow", VM._O_S),
-        shell(CMDS.tpQuickDate),
+        shell(CMDS.quickDate),
       ]),
     ),
     options({
@@ -116,7 +116,7 @@ const nonCharBindings: Binding[] = [
     from("escape"),
     to(
       release(key("escape")),
-      hold(shell(CMDS.killForegroundApp)),
+      hold(shell(CMDS.killForeground)),
       hold(shell(CMDS.killAllApps)).withTapCount(2),
     ),
     options({

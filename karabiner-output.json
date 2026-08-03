@@ -20132,7 +20132,7 @@
                 }
               },
               {
-                "shell_command": "osascript '$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ]
           },
@@ -23010,20 +23010,20 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "'$HOME/.venv/typinator/bin/python' '$HOME/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                "shell_command": "$HOME'/.venv/typinator/bin/python' $HOME'/Scripts/apps/Typinator/new_rule/new_rule.py'"
               }
             ],
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "osascript '$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "'$HOME/.venv/typinator/bin/python' '$HOME/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                  "shell_command": "$HOME'/.venv/typinator/bin/python' $HOME'/Scripts/apps/Typinator/new_rule/new_rule.py'"
                 }
               ]
             },
@@ -23607,7 +23607,7 @@
             },
             "to": [
               {
-                "shell_command": "osascript '$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ]
           }
@@ -24107,20 +24107,20 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "'$HOME/.venv/typinator/bin/python' '$HOME/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                "shell_command": "$HOME'/.venv/typinator/bin/python' $HOME'/Scripts/apps/Typinator/new_rule/new_rule.py'"
               }
             ],
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "osascript '$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "'$HOME/.venv/typinator/bin/python' '$HOME/Scripts/apps/Typinator/new_rule/new_rule.py'"
+                  "shell_command": "$HOME'/.venv/typinator/bin/python' $HOME'/Scripts/apps/Typinator/new_rule/new_rule.py'"
                 }
               ]
             }
@@ -24479,7 +24479,7 @@
             },
             "to_if_alone": [
               {
-                "shell_command": "osascript '$HOME/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
+                "shell_command": "osascript $HOME'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
               }
             ],
             "to_if_held_down": [
@@ -24495,7 +24495,7 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "shell_command": "osascript '$HOME/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
+                  "shell_command": "osascript $HOME'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript' && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 -c \"<c:p:command>\""
                 }
               ]
             },
@@ -24642,7 +24642,7 @@
         ]
       },
       {
-        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
+        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun command 'get file path in word'",
         "manipulators": [
           {
             "type": "basic",
@@ -24735,7 +24735,7 @@
             ],
             "to": [
               {
-                "shell_command": "osascript '$HOME/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript' && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
+                "shell_command": "osascript $HOME'/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript'"
               }
             ]
           }
@@ -24801,7 +24801,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "\"$HOME/Scripts/active_process/take_action_here/take_action_here.sh\" --action kitty"
+                "shell_command": "$HOME'/Scripts/active_process/take_action_here/take_action_here.sh' --action kitty"
               }
             ],
             "to_delayed_action": {
@@ -24879,7 +24879,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "osascript '$HOME/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
+                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
               }
             ],
             "to_delayed_action": {
@@ -25302,7 +25302,7 @@
               },
               {
                 "halt": true,
-                "shell_command": "'/Users/jason/.local/bin/uv' --directory '$HOME/Scripts/strings/text_processor' run python '$HOME/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory $HOME'/Scripts/strings/text_processor' run python $HOME'/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -25462,7 +25462,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "\"$HOME/Scripts/active_process/take_action_here/take_action_here.sh\" --action qspace"
+                "shell_command": "$HOME'/Scripts/active_process/take_action_here/take_action_here.sh' --action qspace"
               }
             ],
             "to_delayed_action": {
@@ -26476,7 +26476,7 @@
               },
               {
                 "halt": true,
-                "shell_command": "'/Users/jason/.local/bin/uv' --directory '$HOME/Scripts/strings/text_processor' run python '$HOME/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
+                "shell_command": "'/Users/jason/.local/bin/uv' --directory $HOME'/Scripts/strings/text_processor' run python $HOME'/Scripts/strings/text_processor/interfaces/cli.py' quick_date --source cut --dest paste"
               }
             ],
             "to_delayed_action": {
@@ -27425,7 +27425,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "\"$HOME/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
+                "shell_command": "$HOME'/Scripts/active_process/take_action_here/take_action_here.sh' --action copy"
               }
             ],
             "to_delayed_action": {
@@ -27460,7 +27460,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "\"$HOME/Scripts/active_process/take_action_here/take_action_here.sh\" --action copy"
+                "shell_command": "$HOME'/Scripts/active_process/take_action_here/take_action_here.sh' --action copy"
               }
             ],
             "to_delayed_action": {
@@ -28641,7 +28641,7 @@
         ]
       },
       {
-        "description": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tAlways:\tOCR text (no line breaks) using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
+        "description": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tLeft button held:\tOCR text (no line breaks) using CSX\n\t\tLeft button held:\tOCR text using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
         "manipulators": [
           {
             "type": "basic",
@@ -28656,12 +28656,6 @@
                 "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
               }
             ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "shell_command": "'$HOME/Scripts/.venv/shared_venv/bin/python' '$HOME/Scripts/ui/ocrToMd/shot_to_md.py'"
-              }
-            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -28669,6 +28663,83 @@
                   "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
                 }
               ]
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "left_button_pressed",
+                "value": true
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133,
+                    "is_pointing_device": true
+                  }
+                ]
+              }
+            ],
+            "description": "Left button held"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button9",
+              "modifiers": {
+                "optional": []
+              }
+            },
+            "to_if_alone": [
+              {
+                "shell_command": "open -u 'cleanshot://capture-text'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": [
+                {
+                  "shell_command": "open -u 'cleanshot://capture-text'"
+                }
+              ]
+            },
+            "conditions": [
+              {
+                "type": "variable_if",
+                "name": "left_button_pressed",
+                "value": 1
+              },
+              {
+                "type": "device_if",
+                "identifiers": [
+                  {
+                    "product_id": 49305,
+                    "vendor_id": 1133,
+                    "is_pointing_device": true
+                  }
+                ]
+              }
+            ],
+            "description": "Left button held"
+          },
+          {
+            "type": "basic",
+            "from": {
+              "pointing_button": "button9",
+              "modifiers": {
+                "optional": []
+              }
+            },
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/ocrToMd/shot_to_md.py'"
+              }
+            ],
+            "to_delayed_action": {
+              "to_if_invoked": [],
+              "to_if_canceled": []
             },
             "conditions": [
               {

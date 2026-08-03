@@ -10,9 +10,32 @@ export function wrapQuotes(str: string, useSingle: boolean = false): string {
   return `"${str.replace(/"/g, '\\"')}"`;
 }
 
+/** Helper to format path strings containing $HOME or ${HOME} so the env var is outside quotes. */
+export function formatPathWithHome(pathStr: string): string {
+  let clean = pathStr;
+  if (clean.startsWith("~/")) {
+    clean = `$HOME/${clean.slice(2)}`;
+  }
+  if (!clean.includes("$HOME") && !clean.includes("${HOME}")) {
+    return wrapQuotes(clean, true);
+  }
+  let quoted = `'${clean.replace(/'/g, "'\"'\"'")}'`;
+  quoted = quoted
+    .replace(/\$HOME/g, "'$HOME'")
+    .replace(/\$\{HOME\}/g, "'${HOME}'")
+    .replace(/^''/, "")
+    .replace(/''$/, "")
+    .replace(/''/g, "");
+  return quoted;
+}
+
 /** Encloses a string in single quotes, escaping internal single quotes. */
 export function shellSingleQuote(str: string): string {
-  return wrapQuotes(str, true);
+  const norm = normalizeShellPath(str);
+  if (norm.includes("$HOME") || norm.includes("${HOME}")) {
+    return formatPathWithHome(norm);
+  }
+  return wrapQuotes(norm, true);
 }
 
 /** Encloses a string in double quotes, escaping internal double quotes. */
@@ -28,9 +51,13 @@ export function normalizeShellPath(inputPath: string): string {
   return inputPath;
 }
 
-/** Normalizes and double-quotes a file-system path for shell execution. */
+/** Normalizes and quotes a file-system path for shell execution. */
 export function normalizePathForShell(path: string): string {
-  return shellDoubleQuote(normalizeShellPath(path));
+  const norm = normalizeShellPath(path);
+  if (norm.includes("$HOME") || norm.includes("${HOME}")) {
+    return formatPathWithHome(norm);
+  }
+  return shellDoubleQuote(norm);
 }
 
 /** Checks whether a shell command token represents a file-system path. */
@@ -119,13 +146,17 @@ export function ensurePathQuotingInCommand(commandStr: string): string {
     const leadingQuotes = leadingMatch ? leadingMatch[0] : "";
     const trailingQuotes = trailingMatch ? trailingMatch[0] : "";
 
-    const inner = token.slice(
+    let inner = token.slice(
       leadingQuotes.length,
       token.length - trailingQuotes.length
     );
 
-    if (!isPathToken(inner)) {
+    if (!isPathToken(inner) && !isPathToken(token)) {
       return token;
+    }
+
+    if (inner.includes("$HOME") || inner.includes("${HOME}") || inner.startsWith("~/")) {
+      return formatPathWithHome(inner);
     }
 
     if (

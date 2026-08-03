@@ -31,7 +31,7 @@ export type {
 
 // SETTINGS
 export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./constants/descriptions";
-export { DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT } from "./constants/global";
+export { DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME } from "./constants/global";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./constants/profiles";
 export {
   KB_MODIFY_EVENTS,

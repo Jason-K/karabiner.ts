@@ -57,7 +57,7 @@ export const mouseBindings: Binding[] = [
       // wheel held down → swallow (the wheel-as-button mapping handles it)
       press([]).when(state("wheelDown")),
       // base hold — wheel guards on the base only (matches bespoke injection)
-      hold(shell(CMDS.winLeftOrTop)).when(
+      hold(shell(CMDS.winLOrTop)).when(
         state([VARS.wheelDown, false], [VARS.rButtonDown, false]),
       ),
     ),
@@ -75,7 +75,7 @@ export const mouseBindings: Binding[] = [
       press(key("right_arrow", VM.C_CS)).when(
         state([APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]),
       ),
-      hold(shell(CMDS.winRightOrBottom)).when(
+      hold(shell(CMDS.winROrBottom)).when(
         state([VARS.wheelDown, false], [VARS.rButtonDown, false]),
       ),
     ),
@@ -127,7 +127,8 @@ export const mouseBindings: Binding[] = [
   bind(
     from("middleBack"),
     to(
-      release([url(URLS.csxOcrNoLinebreaks)]),
+      release([url(URLS.csxOcrNoLinebreaks)]).when(state([VARS.lButtonDown, true])),
+      release([url(URLS.csxOcr)]).when(state(VARS.lButtonDown)),
       hold([shell(CMDS.ocrToMd)]),
     ),
   ),

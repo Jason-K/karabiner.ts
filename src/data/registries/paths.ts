@@ -1,4 +1,7 @@
 import type { PathSpec } from "../primitives/paths";
+import { HOME } from "../constants/global";
+
+export { HOME };
 
 // ---------------------------------------------------------
 // Factory
@@ -87,7 +90,7 @@ const SCRIPT_FILES = {
     "create a new Typinator rule",
   ),
   getDocPath: path(
-    `${ENV_DIRS.scriptsDir.path}/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript`,
+    `${HOME}/Scripts/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript`,
     "get path to active word document",
   ),
 };
