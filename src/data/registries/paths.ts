@@ -1,7 +1,7 @@
 import type { PathSpec } from "../primitives/paths";
-import { HOME } from "../constants/global";
+import { HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "../constants/global";
 
-export { HOME };
+export { HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER };
 
 // ---------------------------------------------------------
 // Factory

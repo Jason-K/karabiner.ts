@@ -4,6 +4,7 @@ import type { Manipulator } from "../types/karabiner";
 import {
   ensurePathQuotingInCommand,
   ensurePathQuotingInManipulators,
+  formatPathWithEnvVars,
   isModifierKey,
   isPathToken,
   normalizePathForShell,
@@ -14,6 +15,26 @@ import {
   shellSingleQuote,
   tokenizeShellCommand,
 } from "../engine/utils";
+
+test("formatPathWithEnvVars formats env vars outside single quotes", () => {
+  assert.equal(
+    formatPathWithEnvVars("$XDG_CONFIG_HOME/karabiner/karabiner.json"),
+    "$XDG_CONFIG_HOME'/karabiner/karabiner.json'"
+  );
+  assert.equal(
+    formatPathWithEnvVars("${XDG_DATA_HOME}/chezmoi"),
+    "${XDG_DATA_HOME}'/chezmoi'"
+  );
+  // Custom envVars with and without leading "$"
+  assert.equal(
+    formatPathWithEnvVars("$MY_VAR/path/$OTHER_VAR/file", ["MY_VAR", "$OTHER_VAR"]),
+    "$MY_VAR'/path/'$OTHER_VAR'/file'"
+  );
+  assert.equal(
+    formatPathWithEnvVars("${MY_VAR}/path/${OTHER_VAR}/file", ["$MY_VAR", "OTHER_VAR"]),
+    "${MY_VAR}'/path/'${OTHER_VAR}'/file'"
+  );
+});
 
 test("shellSingleQuote quotes strings and escapes internal single quotes", () => {
   assert.equal(shellSingleQuote("hello"), "'hello'");

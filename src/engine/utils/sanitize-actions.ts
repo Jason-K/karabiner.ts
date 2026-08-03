@@ -1,4 +1,7 @@
 import type { Manipulator } from "../../types/karabiner";
+import { DEFAULT_ENV_VARS } from "../../data/constants/global";
+
+export { DEFAULT_ENV_VARS };
 
 /**
  * Encloses a string in quotes (single or double), escaping internal quote characters.
@@ -10,30 +13,60 @@ export function wrapQuotes(str: string, useSingle: boolean = false): string {
   return `"${str.replace(/"/g, '\\"')}"`;
 }
 
-/** Helper to format path strings containing $HOME or ${HOME} so the env var is outside quotes. */
-export function formatPathWithHome(pathStr: string): string {
+/**
+ * Formats path strings containing environment variables so that variable references
+ * (e.g. $HOME, ${HOME}, $XDG_CONFIG_HOME) remain outside single quotes for shell expansion.
+ * Accepts environment variable names with or without the preceding `$`.
+ */
+export function formatPathWithEnvVars(
+  pathStr: string,
+  envVars: string[] = DEFAULT_ENV_VARS
+): string {
   let clean = pathStr;
   if (clean.startsWith("~/")) {
     clean = `$HOME/${clean.slice(2)}`;
   }
-  if (!clean.includes("$HOME") && !clean.includes("${HOME}")) {
+
+  const names = envVars.map((v) => (v.startsWith("$") ? v.slice(1) : v));
+
+  const hasEnvVar = names.some(
+    (name) => clean.includes(`$${name}`) || clean.includes(`\${${name}}`)
+  );
+
+  if (!hasEnvVar) {
     return wrapQuotes(clean, true);
   }
+
   let quoted = `'${clean.replace(/'/g, "'\"'\"'")}'`;
+
+  for (const name of names) {
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const dollarRegex = new RegExp(`\\$${escapedName}\\b`, "g");
+    const bracedRegex = new RegExp(`\\$\\{${escapedName}\\}`, "g");
+
+    quoted = quoted
+      .replace(dollarRegex, "'$$" + name + "'")
+      .replace(bracedRegex, "'$${" + name + "}'");
+  }
+
   quoted = quoted
-    .replace(/\$HOME/g, "'$HOME'")
-    .replace(/\$\{HOME\}/g, "'${HOME}'")
     .replace(/^''/, "")
     .replace(/''$/, "")
     .replace(/''/g, "");
+
   return quoted;
+}
+
+/** Helper to format path strings containing $HOME or ${HOME} so the env var is outside quotes. */
+export function formatPathWithHome(pathStr: string): string {
+  return formatPathWithEnvVars(pathStr, ["HOME"]);
 }
 
 /** Encloses a string in single quotes, escaping internal single quotes. */
 export function shellSingleQuote(str: string): string {
   const norm = normalizeShellPath(str);
-  if (norm.includes("$HOME") || norm.includes("${HOME}")) {
-    return formatPathWithHome(norm);
+  if (DEFAULT_ENV_VARS.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
+    return formatPathWithEnvVars(norm);
   }
   return wrapQuotes(norm, true);
 }
@@ -54,8 +87,8 @@ export function normalizeShellPath(inputPath: string): string {
 /** Normalizes and quotes a file-system path for shell execution. */
 export function normalizePathForShell(path: string): string {
   const norm = normalizeShellPath(path);
-  if (norm.includes("$HOME") || norm.includes("${HOME}")) {
-    return formatPathWithHome(norm);
+  if (DEFAULT_ENV_VARS.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
+    return formatPathWithEnvVars(norm);
   }
   return shellDoubleQuote(norm);
 }
@@ -69,8 +102,7 @@ export function isPathToken(token: string): boolean {
     clean.startsWith("/") ||
     clean.startsWith("~/") ||
     clean === "~" ||
-    clean.startsWith("$HOME/") ||
-    clean.startsWith("${HOME}/") ||
+    clean.startsWith("$") ||
     clean.startsWith("./") ||
     clean.startsWith("../")
   ) {
@@ -131,7 +163,10 @@ export function tokenizeShellCommand(cmdStr: string): string[] {
  * Ensures that any file-system paths in a shell command string are enclosed in a single set of quotes,
  * removing duplicate/nested quoting and adding missing quotes to unquoted paths.
  */
-export function ensurePathQuotingInCommand(commandStr: string): string {
+export function ensurePathQuotingInCommand(
+  commandStr: string,
+  envVars: string[] = DEFAULT_ENV_VARS
+): string {
   if (!commandStr) return commandStr;
 
   const tokens = tokenizeShellCommand(commandStr);
@@ -146,7 +181,7 @@ export function ensurePathQuotingInCommand(commandStr: string): string {
     const leadingQuotes = leadingMatch ? leadingMatch[0] : "";
     const trailingQuotes = trailingMatch ? trailingMatch[0] : "";
 
-    let inner = token.slice(
+    const inner = token.slice(
       leadingQuotes.length,
       token.length - trailingQuotes.length
     );
@@ -155,8 +190,13 @@ export function ensurePathQuotingInCommand(commandStr: string): string {
       return token;
     }
 
-    if (inner.includes("$HOME") || inner.includes("${HOME}") || inner.startsWith("~/")) {
-      return formatPathWithHome(inner);
+    const names = envVars.map((v) => (v.startsWith("$") ? v.slice(1) : v));
+    const hasEnvVar = names.some(
+      (name) => inner.includes(`$${name}`) || inner.includes(`\${${name}}`)
+    );
+
+    if (hasEnvVar || inner.startsWith("~/")) {
+      return formatPathWithEnvVars(inner, envVars);
     }
 
     if (
@@ -187,10 +227,11 @@ export function transformShellCommands<T>(
     return node.map((item) => transformShellCommands(item, transformer)) as unknown as T;
   }
 
-  const result: any = { ...node };
+  const record = node as Record<string, unknown>;
+  const result: Record<string, unknown> = { ...record };
   for (const key of Object.keys(result)) {
     if (key === "shell_command" && typeof result[key] === "string") {
-      result[key] = transformer(result[key]);
+      result[key] = transformer(result[key] as string);
     } else if (result[key] && typeof result[key] === "object") {
       result[key] = transformShellCommands(result[key], transformer);
     }

@@ -8,7 +8,7 @@ export {
   pointing_motion_wheels_multiplier,
   pointing_motion_xy_multiplier,
 } from "./devices";
-export { DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME } from "./global";
+export { DEFAULT_ENV_VARS, DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./global";
 export { VM, MODKEY_CODES, type ModComboAlias, type ModKey } from "./keys";
 export { buttons, defaultButtonNames, type ButtonSpec, type DeviceName } from "./mouse";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./profiles";

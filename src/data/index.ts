@@ -31,7 +31,7 @@ export type {
 
 // SETTINGS
 export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./constants/descriptions";
-export { DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME } from "./constants/global";
+export { DEFAULT_ENV_VARS, DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./constants/global";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./constants/profiles";
 export {
   KB_MODIFY_EVENTS,

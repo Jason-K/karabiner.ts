@@ -17,7 +17,7 @@ export {
   type KnownPointerButton,
   type PointerButtonAlias,
 } from "../constants/mouse";
-export { HOME, PATHS } from "./paths";
+export { HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER, PATHS } from "./paths";
 export { URLS } from "./urls";
 export { VARS } from "./vars";
 export { PROFILES, getProfileSpec } from "./profiles";
