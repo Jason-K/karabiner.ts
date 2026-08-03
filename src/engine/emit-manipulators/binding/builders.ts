@@ -45,6 +45,25 @@ import {
 import { attachConditions, deviceLast, stampLabel } from "./stamping";
 
 /**
+ * Derive default ToEvents matching the trigger event when guard() actions are omitted.
+ */
+export function deriveTriggerToEvents(trigger: Trigger): ToEvent[] {
+  const mods = resolveModifiers(trigger.modifiers).mandatory;
+  const modsArr: Modifier[] | undefined = mods.length > 0 ? (mods as Modifier[]) : undefined;
+
+  if ("pointer" in trigger && trigger.pointer) {
+    return [toPointingButton(trigger.pointer as PointingButton, modsArr)];
+  }
+
+  const rawKeys = getTriggerKeys(trigger);
+  if (rawKeys.length > 0) {
+    return rawKeys.map((k) => toKey(resolveKeyAlias(k), modsArr, { repeat: false }));
+  }
+
+  return [];
+}
+
+/**
  * Derive the double-tap guard variable name from the trigger.
  */
 export function deriveGuardVar(trigger: Trigger): string {
@@ -72,7 +91,12 @@ export function buildGuard(b: Binding, resolved: ResolvedCase[]): Manipulator[] 
   const guardCase = guardCases[0]!;
   const varName = b.guardVar ?? deriveGuardVar(b.trigger);
   const timeoutMs = b.guardMs ?? TIMINGS.timeoutDoubleTapMs;
-  const combo = guardCase.do;
+  const combo = guardCase.do.length > 0 ? guardCase.do : deriveTriggerToEvents(b.trigger);
+  if (combo.length === 0) {
+    throw new Error(
+      `A double-tap guard binding without explicit actions must specify a valid key or pointer trigger.`,
+    );
+  }
   const modifiersObj = fromModifiersObj(b.trigger);
   const conds = deviceLast(resolved.flatMap((c) => c.conditions));
 

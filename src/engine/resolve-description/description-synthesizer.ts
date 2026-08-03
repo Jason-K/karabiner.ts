@@ -10,6 +10,7 @@ import {
 } from "../utils";
 import { describeAction, isActionSpec } from "../resolve-to-action/action-handlers";
 import { describeCondition } from "../resolve-conditions";
+import { deriveTriggerToEvents } from "../emit-manipulators/binding/builders";
 
 export { describeAction };
 
@@ -24,7 +25,7 @@ function describeToEvent(event: ToEvent): string {
       Array.isArray(e.modifiers) && e.modifiers.length
         ? expandModifiers(e.modifiers as string[]).map(modifierTokenToSymbols).join("")
         : "";
-    return mods ? `Emit ${mods}+'${keyLabel}'` : `Emit '${keyLabel}'`;
+    return mods ? `Emit ${mods} + '${keyLabel}'` : `Emit '${keyLabel}'`;
   }
   if ("pointing_button" in e) {
     return `Click ${resolveButton(e.pointing_button as string).desc}`;
@@ -125,7 +126,13 @@ export function synthesizeMergedRuleDescription(
         ...(binding.conditions ?? []),
         ...(c.conditions ?? []),
       ]);
-      const actionLine = c.description ?? c.do.map(describeDoAction).join(" then ");
+      const doActions =
+        c.do.length > 0
+          ? c.do
+          : c.guard
+            ? deriveTriggerToEvents(binding.trigger)
+            : [];
+      const actionLine = c.description ?? doActions.map(describeDoAction).join(" then ");
       buckets
         .get(bucketFor(c.tapCount ?? 1, c.phase ?? "press"))!
         .push(`\t\t${condLabel}:\t${actionLine}`);

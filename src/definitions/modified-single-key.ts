@@ -15,8 +15,6 @@ import {
   map,
   from,
   hold,
-  ifKeVar,
-  unlessKeVar,
   key,
   openApp,
   openUrl,
@@ -26,6 +24,7 @@ import {
   to,
   when,
   type Binding,
+  state,
 } from "../engine";
 
 const modNumBindings: Binding[] = [
@@ -44,13 +43,13 @@ const modLetterBindings: Binding[] = [
     from("h", ["L.cmd"]),
     to(press(map(COMBOS.skimHighlight))),
     when(condApp(APP_ID.skim)),
-  ), bind(from("k", ["R.opt"]), to(hold(actHere("kitty"))),
   ),
+  bind(from("k", ["R.opt"]), to(hold(actHere("kitty")))),
   bind(from("m", ["L.cmd"]), to(hold(map(COMBOS.restoreMinimizedWindow)))),
   bind(
     from("p", ["L.cmd"]),
     to(
-      release(cmd(CMDS.wordPrint)).when(condApp(APP_ID.word)),
+      release(cmd(CMDS.wordPrint)).when(state(APP_ID.word)),
       hold(map(COMBOS.showPopclip)),
     ),
   ),
@@ -78,7 +77,7 @@ const modLetterBindings: Binding[] = [
   bind(
     from("u", ["L.cmd"]),
     to(press(map(COMBOS.skimUnderline))),
-    when(condApp(APP_ID.skim)),
+    when(state(APP_ID.skim)),
   ),
 ];
 
@@ -88,19 +87,11 @@ const modSymbolBindings: Binding[] = [
     from("slash", ["L.cmd"]),
     to(
       // AUTHENTICATION DIALOG fill password.
-      press(cmd(CMDS.fillPw)).when(
-        condApp(PW_IDS),
-        ifKeVar(STATES.isTextField),
-        ifKeVar(STATES.isSecureInputSubrole),
-      ),
+      press(cmd(CMDS.fillPw)).when(state(PW_IDS, STATES.isTextField, STATES.isSecureInputSubrole)),
       // AUTHENTICATION DIALOG: fill username and password.
-      press(cmd(CMDS.fillUnPw)).when(
-        condApp(PW_IDS),
-        ifKeVar(STATES.isTextField),
-        unlessKeVar(STATES.isSecureInputSubrole),
-      ),
+      press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, STATES.isTextField, [STATES.isSecureInputSubrole, 0])),
       // MICROSOFT WORD: get the path to the active document and elevate privileges for upload to Merus
-      press(shell(CMDS.getWordDocPathAndPrivileges)).when(condApp(APP_ID.word)),
+      press(shell(CMDS.getWordDocPathAndPrivileges)).when(state(APP_ID.word)),
     ),
   ),
 ];

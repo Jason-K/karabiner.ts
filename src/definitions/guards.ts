@@ -4,21 +4,18 @@ import {
   from,
   guard,
   ifApp,
-  key,
   to,
-  when,
   type Binding,
 } from "../engine";
 
 export const globalGuardBinding: Binding = bind(
   from("q", ["L.cmd"]),
-  to(guard(key("q", ["L.cmd"]))),
+  to(guard()),
 );
 
 export const antinoteGuardBinding: Binding = bind(
   from("d", ["L.cmd"]),
-  to(guard(key("d", ["L.cmd"]))),
-  when(ifApp(APP_ID.antinote)),
+  to(guard(ifApp(APP_ID.antinote))),
 );
 
 export const guardBindings: Binding[] = [

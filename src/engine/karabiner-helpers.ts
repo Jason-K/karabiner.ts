@@ -17,6 +17,7 @@ import type {
   SimultaneousOptions,
   ToEvent,
   ToEventOptions,
+  ToStickyModifier,
   ToVariable,
 } from "../types/karabiner";
 
@@ -139,7 +140,7 @@ export function toStickyModifier(
   toggle: 'on' | 'off' | 'toggle' | boolean = 'toggle',
 ): ToEvent {
   return {
-    sticky_modifier: { [flag]: toggle } as any,
+    sticky_modifier: { [flag]: toggle } as ToStickyModifier,
   };
 }
 
@@ -152,7 +153,7 @@ export class ConditionBuilder {
 
   unless(): this {
     if (this.condition.type.endsWith('_if')) {
-      this.condition.type = this.condition.type.replace('_if', '_unless') as any;
+      this.condition.type = this.condition.type.replace('_if', '_unless') as Condition["type"];
     }
     return this;
   }
@@ -296,7 +297,10 @@ export class BasicManipulatorBuilder {
     return this;
   }
 
-  modifiers(mandatoryOrOpts?: any, optional?: any): this {
+  modifiers(
+    mandatoryOrOpts?: Modifier | Modifier[] | 'optionalAny',
+    optional?: Modifier | Modifier[],
+  ): this {
     if (mandatoryOrOpts === 'optionalAny') {
       this.manipulator.from.modifiers = {
         ...this.manipulator.from.modifiers,

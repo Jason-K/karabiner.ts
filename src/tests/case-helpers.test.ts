@@ -332,11 +332,18 @@ test("guard() produces a press case marked guard with the action", () => {
   assert.deepEqual(action.modifiers, ["left_command"]);
 });
 
-test("guard() accepts conditions", () => {
-  const g = guard(key("d"), condApp({ type: "app", bundleId: "com.x", refDesc: "X" }));
+test("guard() without arguments produces a press case marked guard with empty actions", () => {
+  const g = guard();
+  assert.equal(g.phase, "press");
   assert.equal((g as any).guard, true);
-  assert.deepEqual(g.conditions ?? [], [
-    { app: { type: "app", bundleId: "com.x", refDesc: "X" } },
-  ]);
+  assert.equal(g.do.length, 0);
+});
+
+test("guard() accepts condition as single parameter", () => {
+  const cond = condApp({ type: "app", bundleId: "com.x", refDesc: "X" });
+  const g = guard(cond);
+  assert.equal((g as any).guard, true);
+  assert.equal(g.do.length, 0);
+  assert.deepEqual(g.conditions ?? [], [cond]);
 });
 

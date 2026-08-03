@@ -8,20 +8,33 @@ import type {
 } from "../data";
 import { STATES, VARS } from "../data";
 
+/**
+ * Container wrapping one or more `Condition` objects created by {@link when}.
+ */
 export type WhenWrapper = {
   kind: "when";
   conditions: Condition[];
 };
 
 /**
- * Wraps one or more conditions into a `WhenWrapper` container.
+ * Wraps one or more conditions into a `WhenWrapper` container for consumption by `bind()`.
  *
- * @param conditions - Conditions or arrays of conditions to combine.
+ * Recognized condition wrappers & builders:
+ * - `state(...)` / `condState(...)` / `ifState(...)` — evaluates state specs, registry keys (`STATES`, `VARS`), apps, devices, or `[target, value]` tuples
+ * - `unless(...)` / `condUnless(...)` — enforces state specs, registry keys, apps, or devices to be false/negated
+ * - `ifApp(...)` / `condApp(...)` — matches frontmost application(s)
+ * - `unlessApp(...)` / `condNotApp(...)` — matches when application(s) are NOT frontmost
+ * - `ifDevice(...)` / `condDevice(...)` — matches hardware device specifications
+ * - `ifUserVar(...)` / `ifKeVar(...)` / `condVar(...)` / `ifVar(...)` — matches Karabiner variable values
+ * - `unlessUserVar(...)` / `unlessKeVar(...)` / `condNotVar(...)` — matches when variable values do NOT match
+ *
+ * @param conditions - Conditions, condition arrays, or condition helper calls to combine.
  * @returns A `WhenWrapper` object.
  *
  * @example
  * ```ts
  * when(ifApp("com.apple.finder"), state("rButtonDown"))
+ * when(unless(VARS.wheelDown), state(APP_ID.zen))
  * ```
  */
 export function when(...conditions: (Condition | Condition[])[]): WhenWrapper {
@@ -216,8 +229,11 @@ export function unlessKeVar(
   return unlessUserVar(varOrValueSpec, equals);
 }
 
+/** Alias for {@link ifUserVar}. */
 export const condVar = ifUserVar;
+/** Alias for {@link ifUserVar}. */
 export const ifVar = ifUserVar;
+/** Alias for {@link unlessUserVar}. */
 export const condNotVar = unlessUserVar;
 
 /**
@@ -241,6 +257,8 @@ export function condApp(
     ...(!isForemost ? { unless: true } : {}),
   };
 }
+
+/** Alias for {@link condApp}. */
 export const ifApp = condApp;
 
 /**
@@ -259,6 +277,8 @@ export function condNotApp(
 ): Condition {
   return condApp(app, false);
 }
+
+/** Alias for {@link condNotApp}. */
 export const unlessApp = condNotApp;
 
 /**
@@ -286,6 +306,8 @@ export function condDevice(
     ...(unless ? { unless } : {}),
   };
 }
+
+/** Alias for {@link condDevice}. */
 export const ifDevice = condDevice;
 
 function resolveSingleState(target: unknown, valOverride?: unknown): Condition {
@@ -382,6 +404,9 @@ function resolveStateItem(item: unknown): Condition {
   return resolveSingleState(item, undefined);
 }
 
+/**
+ * Inputs accepted as targets for state conditions (registry keys, specs, app/device/path specs, or raw strings).
+ */
 export type StateSpecInput =
   | keyof typeof STATES
   | keyof typeof VARS
@@ -393,15 +418,24 @@ export type StateSpecInput =
   | Condition
   | string;
 
+/**
+ * Tuple representation `[target, value]` for overriding expected state values.
+ */
 export type StateTuple =
   | [StateSpecInput, string | number | boolean]
   | readonly [StateSpecInput, string | number | boolean]
   | (StateSpecInput | string | number | boolean)[];
 
+/**
+ * Explicit variable or app condition specification object.
+ */
 export type StateObject =
   | { var: StateSpecInput; value?: string | number | boolean; equals?: string | number | boolean; unless?: boolean }
   | { app: StateSpecInput; value?: string | number | boolean; unless?: boolean };
 
+/**
+ * Supported state items in {@link state} and {@link unless} conditions.
+ */
 export type StateItem =
   | StateSpecInput
   | StateTuple
@@ -500,7 +534,9 @@ export function state(
   return resolveStateItem(arg1);
 }
 
+/** Alias for {@link state}. */
 export const condState = state;
+/** Alias for {@link state}. */
 export const ifState = state;
 
 /**
@@ -563,4 +599,6 @@ export function unless(
   return resolveSingleState(arg1, false);
 }
 
+/** Alias for {@link unless}. */
 export const condUnless = unless;
+

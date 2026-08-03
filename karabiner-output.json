@@ -24642,7 +24642,7 @@
         ]
       },
       {
-        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
+        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun 'Get privileges and path to active Word document'",
         "manipulators": [
           {
             "type": "basic",
@@ -24654,16 +24654,12 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and Focused UI subrole",
+            "description": "In Security Agent and Focused UI role and Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
+                  "com.apple.SecurityAgent"
                 ]
               },
               {
@@ -24693,16 +24689,12 @@
                 ]
               }
             },
-            "description": "In Security Agent/System Settings/System Settings, security/Brew auto-updater/Taphouse and Focused UI role and not Focused UI subrole",
+            "description": "In Security Agent and Focused UI role and Focused UI subrole",
             "conditions": [
               {
                 "type": "frontmost_application_if",
                 "bundle_identifiers": [
-                  "com.apple.SecurityAgent",
-                  "com.apple.systempreferences",
-                  "com.apple.settings.PrivacySecurity.extension",
-                  "org.gpgtools.pinentry-mac",
-                  "com.multimodalsolutions.taphouse"
+                  "com.apple.SecurityAgent"
                 ]
               },
               {
@@ -24711,9 +24703,9 @@
                 "value": "AXTextField"
               },
               {
-                "type": "variable_unless",
+                "type": "variable_if",
                 "name": "accessibility.focused_ui_element.subrole_string",
-                "value": "AXSecureTextField"
+                "value": 0
               }
             ],
             "to": [

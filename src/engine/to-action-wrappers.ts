@@ -58,12 +58,22 @@ export class CaseBuilder implements Case {
   /**
    * Add one or more conditions to this case.
    *
+   * Recognized condition wrappers & builders:
+   * - `state(...)` / `condState(...)` / `ifState(...)` — evaluates state specs, registry keys (`STATES`, `VARS`), apps, devices, or `[target, value]` tuples
+   * - `unless(...)` / `condUnless(...)` — enforces state specs, registry keys, apps, or devices to be false/negated
+   * - `ifApp(...)` / `condApp(...)` — matches frontmost application(s)
+   * - `unlessApp(...)` / `condNotApp(...)` — matches when application(s) are NOT frontmost
+   * - `ifDevice(...)` / `condDevice(...)` — matches hardware device specifications
+   * - `ifUserVar(...)` / `ifKeVar(...)` / `condVar(...)` / `ifVar(...)` — matches Karabiner variable values
+   * - `unlessUserVar(...)` / `unlessKeVar(...)` / `condNotVar(...)` — matches when variable values do NOT match
+   *
    * @param conditions - Conditions or condition arrays to attach to this case.
    * @returns `this` for method chaining.
    *
    * @example
    * ```ts
-   * press(key("a")).when({ app: "com.apple.finder" })
+   * press(key("a")).when(ifApp("com.apple.finder"))
+   * press(key("b")).when(state(VARS.rButtonDown))
    * ```
    */
   when(...conditions: (Condition | Condition[])[]): this {
@@ -158,6 +168,24 @@ export class CaseBuilder implements Case {
 /**
  * Creates a case for key press phase.
  *
+ * Recognized action builders:
+ * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
+ * - `button()` — mouse button press action
+ * - `openApp()` — launch or focus application
+ * - `openUrl()` — open URL in browser (supports background)
+ * - `openFolder()` — open file directory
+ * - `cmd()` — run registered command spec
+ * - `shell()` — run shell command
+ * - `python()` — execute python script with virtual environment support
+ * - `osascript()` — run AppleScript/JOSA script
+ * - `setVar()` — set or toggle Karabiner variable
+ * - `cut()` / `copy()` / `paste()` — clipboard shortcut actions
+ * - `sequence()` — run multiple action specs sequentially
+ * - `map()` — trigger mapped combo spec
+ * - `noop()` — no-op (swallows trigger without emitting output)
+ * - `actHere()` — in-place context action spec
+ * - `appHistory()` — navigate app history stack
+ *
  * @param actions - Action or list of actions to execute on press.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` for chaining options.
@@ -178,6 +206,24 @@ export function press(
 /**
  * Creates a case for key release phase.
  *
+ * Recognized action builders:
+ * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
+ * - `button()` — mouse button press action
+ * - `openApp()` — launch or focus application
+ * - `openUrl()` — open URL in browser (supports background)
+ * - `openFolder()` — open file directory
+ * - `cmd()` — run registered command spec
+ * - `shell()` — run shell command
+ * - `python()` — execute python script with virtual environment support
+ * - `osascript()` — run AppleScript/JOSA script
+ * - `setVar()` — set or toggle Karabiner variable
+ * - `cut()` / `copy()` / `paste()` — clipboard shortcut actions
+ * - `sequence()` — run multiple action specs sequentially
+ * - `map()` — trigger mapped combo spec
+ * - `noop()` — no-op (swallows trigger without emitting output)
+ * - `actHere()` — in-place context action spec
+ * - `appHistory()` — navigate app history stack
+ *
  * @param actions - Action or list of actions to execute on release.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` for chaining options.
@@ -196,6 +242,11 @@ export function release(
 
 /**
  * Alias for `release()`. Creates a case for key tap (release).
+ *
+ * Recognized action builders:
+ * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
+ *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
  * @param actions - Action or list of actions to execute on tap.
  * @param conditions - Optional condition or list of conditions.
@@ -216,6 +267,24 @@ export function tap(
 /**
  * Creates a case for key hold phase.
  *
+ * Recognized action builders:
+ * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
+ * - `button()` — mouse button press action
+ * - `openApp()` — launch or focus application
+ * - `openUrl()` — open URL in browser (supports background)
+ * - `openFolder()` — open file directory
+ * - `cmd()` — run registered command spec
+ * - `shell()` — run shell command
+ * - `python()` — execute python script with virtual environment support
+ * - `osascript()` — run AppleScript/JOSA script
+ * - `setVar()` — set or toggle Karabiner variable
+ * - `cut()` / `copy()` / `paste()` — clipboard shortcut actions
+ * - `sequence()` — run multiple action specs sequentially
+ * - `map()` — trigger mapped combo spec
+ * - `noop()` — no-op (swallows trigger without emitting output)
+ * - `actHere()` — in-place context action spec
+ * - `appHistory()` — navigate app history stack
+ *
  * @param actions - Action or list of actions to execute when held down.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` for chaining options.
@@ -234,6 +303,11 @@ export function hold(
 
 /**
  * Creates a double-tap press case.
+ *
+ * Recognized action builders:
+ * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
+ *   `map()`, `noop()`, `actHere()`, `appHistory()`
  *
  * @param actions - Action or list of actions to execute on double tap.
  * @param conditions - Optional condition or list of conditions.
@@ -254,6 +328,11 @@ export function doubleTap(
 /**
  * Creates a double-tap hold case.
  *
+ * Recognized action builders:
+ * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
+ *   `map()`, `noop()`, `actHere()`, `appHistory()`
+ *
  * @param actions - Action or list of actions to execute on double tap and hold.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` initialized with hold phase and tap count 2.
@@ -273,6 +352,11 @@ export function doubleTapHold(
 /**
  * Creates a delayed single tap case (useful in multi-tap configurations).
  *
+ * Recognized action builders:
+ * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
+ *   `map()`, `noop()`, `actHere()`, `appHistory()`
+ *
  * @param actions - Action or list of actions to execute on delayed single tap.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` initialized with release phase and delayed true.
@@ -289,39 +373,95 @@ export function delayedSingleTap(
   return release(actions, conditions).withDelayed(true);
 }
 
+function isConditionLike(val: unknown): boolean {
+  if (typeof val !== "object" || val === null) return false;
+  if (Array.isArray(val)) return val.length > 0 && isConditionLike(val[0]);
+  const obj = val as Record<string, unknown>;
+  return (
+    "app" in obj ||
+    "var" in obj ||
+    "device" in obj ||
+    (typeof obj.type === "string" &&
+      (obj.type.endsWith("_if") || obj.type.endsWith("_unless")))
+  );
+}
+
 /**
  * Creates a guarded press case requiring double-tap confirmation.
+ * If actions are omitted, automatically defaults to emitting the trigger event.
  *
- * @param actions - Action or list of actions to execute under double-tap guard protection.
+ * Recognized action builders:
+ * - `key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`,
+ *   `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`,
+ *   `map()`, `noop()`, `actHere()`, `appHistory()`
+ *
+ * @param actionsOrConditions - Optional action(s) to execute under guard protection, or condition(s) if actions are omitted.
  * @param conditions - Optional condition or list of conditions.
  * @returns A `CaseBuilder` with double-tap guard protection enabled.
  *
  * @example
  * ```ts
- * guard(shell("killall Finder"))
+ * guard() // Emits the trigger event on confirmation
+ * guard(shell("killall Finder")) // Emits shell command on confirmation
+ * guard(ifApp("com.apple.finder")) // Guarded trigger with condition
  * ```
  */
 export function guard(
-  actions: Action | Action[],
+  actionsOrConditions?: Action | Action[] | Condition | Condition[],
   conditions?: Condition | Condition[],
 ): CaseBuilder {
-  return press(actions, conditions).guardProtection(true);
+  if (isConditionLike(actionsOrConditions)) {
+    return press([], actionsOrConditions as Condition | Condition[]).guardProtection(true);
+  }
+  return press((actionsOrConditions as Action | Action[]) ?? [], conditions).guardProtection(true);
 }
 
+/**
+ * Container wrapping one or more `Case` objects created by {@link to}.
+ */
 export type ToWrapper = {
   kind: "to";
   cases: Case[];
 };
 
 /**
- * Wraps one or more cases or case arrays into a `ToWrapper` object.
+ * Wraps one or more cases or case arrays into a `ToWrapper` container.
  *
- * @param cases - Cases or arrays of cases to include.
+ * Recognized case wrappers:
+ * - `press(actions)` — executes on key press phase
+ * - `release(actions)` / `tap(actions)` — executes on key release phase
+ * - `hold(actions)` — executes on key hold phase
+ * - `doubleTap(actions)` — requires double tap to trigger
+ * - `doubleTapHold(actions)` — requires double tap and hold to trigger
+ * - `delayedSingleTap(actions)` — delayed single tap execution for multi-tap
+ * - `guard(actions)` — guarded execution requiring double-tap confirmation
+ *
+ * Recognized action builders (passed into case wrappers):
+ * - `key()` — key press action with optional modifiers and options (`repeat`, `halt`, `lazy`)
+ * - `button()` — mouse button press action
+ * - `openApp()` — launch or focus application
+ * - `openUrl()` — open URL in browser (supports background)
+ * - `openFolder()` — open file directory
+ * - `cmd()` — run registered command spec
+ * - `shell()` — run shell command
+ * - `python()` — execute python script with virtual environment support
+ * - `osascript()` — run AppleScript/JOSA script
+ * - `setVar()` — set or toggle Karabiner variable
+ * - `cut()` / `copy()` / `paste()` — clipboard shortcut actions
+ * - `sequence()` — run multiple action specs sequentially
+ * - `map()` — trigger mapped combo spec
+ * - `noop()` — no-op (swallows trigger without emitting output)
+ * - `actHere()` — in-place context action spec
+ * - `appHistory()` — navigate app history stack
+ *
+ * @param cases - Cases, case arrays, or `CaseBuilder` instances to include.
  * @returns A `ToWrapper` container holding all flattened cases.
  *
  * @example
  * ```ts
- * to(press(key("a")), release(key("b")))
+ * to(press(key("a", ["cmd"])))
+ * to(press(openApp("com.apple.finder")), release(key("b")))
+ * to(press(noop()))
  * ```
  */
 export function to(...cases: (Case | Case[])[]): ToWrapper {
@@ -385,7 +525,11 @@ export function openUrl(
   };
 }
 
+/**
+ * Configuration options for key and mouse press actions (`repeat`, `halt`, `lazy`).
+ */
 export type KeyOptions = { repeat?: boolean; halt?: boolean; lazy?: boolean };
+
 
 /**
  * Creates an action spec for a key press event.

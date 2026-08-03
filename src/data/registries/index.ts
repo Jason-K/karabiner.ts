@@ -19,12 +19,14 @@ export {
 } from "../constants/mouse";
 export { HOME_DIR, PATHS } from "./paths";
 export { URLS } from "./urls";
-export { VARS, STATES } from "./vars";
+export { VARS } from "./vars";
 export { PROFILES, getProfileSpec } from "./profiles";
 export {
   ACCESSIBILITY_ROLES,
   INPUT_SOURCES,
+  STATES,
   VAR_STATE,
+  varState,
   type AccessibilityRole,
   type InputSourceId,
 } from "./var-states";

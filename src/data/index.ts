@@ -66,11 +66,13 @@ export {
 
 // REGISTRIES
 export { DEVICES } from "./registries/devices";
-export { VARS, STATES } from "./registries/vars";
+export { VARS } from "./registries/vars";
 export {
   ACCESSIBILITY_ROLES,
   INPUT_SOURCES,
+  STATES,
   VAR_STATE,
+  varState,
   type AccessibilityRole,
   type InputSourceId,
 } from "./registries/var-states";

@@ -113,7 +113,7 @@ const SCRIPT_FILES = {
     "create a new Typinator rule",
   ),
   scriptWordGetDocPath: path(
-    `${ENV_DIRS.dirScripts.path}/apps/karabiner/karabiner.ts/scripts/applescripts/get-word-document-path.applescript`,
+    `${ENV_DIRS.dirScripts.path}/apps/karabiner/snaplink.ts/scripts/applescripts/get-word-document-path.applescript`,
     "get path to active word document",
   ),
 };

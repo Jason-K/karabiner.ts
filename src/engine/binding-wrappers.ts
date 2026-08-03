@@ -14,11 +14,25 @@ import { CaseBuilder, type ToWrapper } from "./to-action-wrappers";
 
 export type BindingOptionsSpec = Partial<Omit<Binding, "trigger" | "cases">>;
 
+/**
+ * Container wrapping binding options to be merged into a `Binding`.
+ */
 export type OptionsWrapper = {
   kind: "options";
   opts: BindingOptionsSpec;
 };
 
+/**
+ * Wraps binding options into an `OptionsWrapper` for consumption by `bind()`.
+ *
+ * @param opts - Partial binding options (e.g. `description`, `timing`, `suppress`, `ruleGroup`).
+ * @returns An `OptionsWrapper` object.
+ *
+ * @example
+ * ```ts
+ * options({ description: "Toggle app window", suppress: true })
+ * ```
+ */
 export function options(opts: BindingOptionsSpec): OptionsWrapper {
   return {
     kind: "options",
@@ -26,10 +40,24 @@ export function options(opts: BindingOptionsSpec): OptionsWrapper {
   };
 }
 
+/**
+ * Creates an `OptionsWrapper` specifying custom timing parameters for a binding.
+ *
+ * @param opts - Timing configuration object specifying delays, hold thresholds, and repeat parameters.
+ * @returns An `OptionsWrapper` containing the timing configuration.
+ *
+ * @example
+ * ```ts
+ * timing({ holdMs: 200, tapMs: 150 })
+ * ```
+ */
 export function timing(opts: AcceptUndefined<NonNullable<Binding["timing"]>>): OptionsWrapper {
   return options({ timing: opts });
 }
 
+/**
+ * Binding options specification combined with optional trigger modifiers.
+ */
 export type BindingOptions = BindingOptionsSpec & {
   modifiers?: TriggerModifiers;
 };
@@ -95,7 +123,7 @@ function isCondition(val: unknown): val is Condition {
   }
 }
 
-function isTriggerModifiers(val: any): val is TriggerModifiers {
+function isTriggerModifiers(val: unknown): val is TriggerModifiers {
   return (
     Array.isArray(val) ||
     (typeof val === "object" &&
@@ -104,6 +132,13 @@ function isTriggerModifiers(val: any): val is TriggerModifiers {
   );
 }
 
+/**
+ * Flexible argument types accepted by {@link bind}.
+ *
+ * Supports action wrappers (`ToWrapper`), condition wrappers (`WhenWrapper`),
+ * option wrappers (`OptionsWrapper`), single or array of `Case` items,
+ * single or array of `Condition` items, and inline `BindingOptionsSpec` objects.
+ */
 export type BindArg =
   | ToWrapper
   | WhenWrapper
@@ -114,6 +149,28 @@ export type BindArg =
   | Condition[]
   | BindingOptionsSpec;
 
+/**
+ * Constructs a Karabiner `Binding` from a trigger and a flexible list of cases, conditions, and options.
+ *
+ * Recognized wrappers & primitives accepted by `bind()`:
+ * - Action wrappers: `to(...)` containing case wrappers (`press()`, `release()`, `tap()`, `hold()`, `doubleTap()`, `doubleTapHold()`, `delayedSingleTap()`, `guard()`) and action builders (`key()`, `button()`, `openApp()`, `openUrl()`, `openFolder()`, `cmd()`, `shell()`, `python()`, `osascript()`, `setVar()`, `cut()`, `copy()`, `paste()`, `sequence()`, `map()`, `noop()`, `actHere()`, `appHistory()`)
+ * - Condition wrappers: `when(...)` containing condition builders (`state()`, `unless()`, `ifApp()`, `condApp()`, `unlessApp()`, `ifDevice()`, `ifUserVar()`, `unlessUserVar()`, etc.)
+ * - Option wrappers: `options(...)` and `timing(...)` (or inline object literal options matching `BindingOptionsSpec`)
+ *
+ * @param trigger - The input trigger specification (key code, pointer button, trigger object, or array of inputs).
+ * @param args - Combination of action cases (`press()`, `to()`), conditions (`when()`, `ifApp()`), and options (`options()`, `timing()`, or object literal options).
+ * @returns A fully constructed `Binding` object.
+ *
+ * @example
+ * ```ts
+ * bind(
+ *   from("a"),
+ *   to(press(key("b", ["cmd"]))),
+ *   when(ifApp("com.apple.finder")),
+ *   options({ description: "Map 'a' to Cmd+B in Finder" })
+ * );
+ * ```
+ */
 export function bind(
   trigger: FromInput,
   ...args: BindArg[]
@@ -184,6 +241,25 @@ export function bind(
   };
 }
 
+/**
+ * Creates a key-triggered Karabiner `Binding`.
+ *
+ * @param keys - Key code or array of key codes acting as the trigger.
+ * @param cases - Action case or array of cases to execute when triggered.
+ * @param modifiersOrOptions - Optional trigger modifiers (e.g. `["cmd", "opt"]`) or `BindingOptions`.
+ * @param options - Additional binding options if modifiers were supplied as the 3rd argument.
+ * @returns A fully constructed `Binding` object for key triggers.
+ *
+ * @example
+ * ```ts
+ * bindKeys(
+ *   "j",
+ *   press(key("down_arrow")),
+ *   ["cmd"],
+ *   { description: "Cmd+J triggers Down Arrow" }
+ * );
+ * ```
+ */
 export function bindKeys(
   keys: KeyCode | KeyCode[],
   cases: Case | Case[],
@@ -205,6 +281,25 @@ export function bindKeys(
   return bind(triggerKeys(keys, modifiers), cases, restOpts);
 }
 
+/**
+ * Creates a pointer button-triggered Karabiner `Binding`.
+ *
+ * @param pointer - Pointer button alias (e.g. `"button1"`, `"right"`, `"left"`).
+ * @param cases - Action case or array of cases to execute when triggered.
+ * @param modifiersOrOptions - Optional trigger modifiers or `BindingOptions`.
+ * @param options - Additional binding options if modifiers were supplied as the 3rd argument.
+ * @returns A fully constructed `Binding` object for pointer button triggers.
+ *
+ * @example
+ * ```ts
+ * bindPointer(
+ *   "button4",
+ *   press(key("bracket_left", ["cmd"])),
+ *   undefined,
+ *   { description: "Mouse button 4 triggers Cmd+[" }
+ * );
+ * ```
+ */
 export function bindPointer(
   pointer: PointerButtonAlias,
   cases: Case | Case[],
@@ -225,3 +320,4 @@ export function bindPointer(
   const { modifiers: _m, ...restOpts } = opts ?? {};
   return bind(triggerPointer(pointer, modifiers), cases, restOpts);
 }
+
