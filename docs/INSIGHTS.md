@@ -9,12 +9,54 @@ Generic lessons about Karabiner-Elements manipulator semantics. These rules appl
 - Don't use `variable_unless` to "stop a manipulator from setting a variable twice" — that prevents the manipulator from running at all, and on the second press the variable will never be re-asserted.
 - For per-event branching, attach a condition to the individual `to` event (`toKeyCond("left_command", [], {}, [{ type: "variable_if", name: "x", value: 1 }])`), not to the manipulator.
 
-## Manipulators Are Evaluated Bottom-to-Top
+## Manipulators Are Evaluated Top-to-Bottom, and Only One Ever Fires
 
-Karabiner walks a rule's `manipulators` array from the **last** entry to the first when matching an event. The first matching manipulator wins.
+Karabiner walks a rule's `manipulators` array from the **first** entry to the last, and "the input event is manipulated only [by] the first matched manipulator" — a manipulator matches when its `from` matches and all its `conditions` hold. Every later manipulator on that same input is ignored entirely.
 
-- For double-tap detection, list the variable-guarded "second press" manipulator **after** the variable-setting "first press" manipulator. The bottom-to-top scan then evaluates the double-tap manipulator first; if its variable guard passes, it fires.
-- This ordering is the canonical Karabiner pattern (see `change_double_press_of_q_to_escape` in the upstream examples).
+- For double-tap detection, list the variable-guarded "second press" manipulator **before** the variable-setting "first press" manipulator, so the scan reaches the guarded one first. This is what `buildGuard` emits, and it matches `change_double_press_of_q_to_escape` upstream.
+- More generally: a manipulator with *fewer* conditions must never precede one with more on the same trigger. The broader one matches everything the narrower one wanted.
+
+Reference: `docs/karabiner_docs/complex-modifications-manipulator-evaluation-priority/index.md`.
+
+## One Trigger, One Manipulator — Fold All Phases Into It
+
+Corollary of the above, and the single most expensive mistake to make in this engine.
+
+`to` (press), `to_if_alone` (tap/release) and `to_if_held_down` (hold) are **output channels of one manipulator**, not independent rules. So splitting a trigger's cases into one manipulator per condition set is only safe while those condition sets are *disjoint*. The moment one set is broader than another, every phase in the broader manipulator is dead in every state the narrower one claims.
+
+The failure is silent and looks phase-specific, which is what makes it hard to spot. Given:
+
+```jsonc
+// from: button9, three manipulators
+{ "conditions": ["left button held"],     "to_if_alone":     ["OCR"] }
+{ "conditions": ["NOT left button held"], "to_if_alone":     ["OCR, no linebreaks"] }
+{ "conditions": [],                       "to_if_held_down": ["OCR to markdown"] }  // never fires
+```
+
+the hold never runs — not because hold is special, but because the two tap manipulators partition the domain between them and the third is never reached. Swap the phases (conditional holds, unconditional tap) and the tap is the one that dies. It is a manipulator-matching property, identical for all three phases.
+
+**The fix is to fold, not to reorder.** Each emitted manipulator must carry the complete gesture that applies under its own conditions:
+
+```jsonc
+{ "conditions": ["left button held"],     "to_if_alone": ["OCR"],               "to_if_held_down": ["OCR to markdown"] }
+{ "conditions": ["NOT left button held"], "to_if_alone": ["OCR, no linebreaks"], "to_if_held_down": ["OCR to markdown"] }
+```
+
+In this engine that lives in `groupByConditions` (`src/engine/resolve-cases/resolve-cases.ts`), which folds phases *down the condition lattice*: a condition group inherits every phase slot it does not declare from the groups whose conditions it implies. Three rules make it work:
+
+1. **Inheritance** — nearest (most-conditioned) donor wins, so a two-condition group beats an unconditional one.
+2. **Specificity ordering** — a group is moved ahead of any already-placed group whose conditions it strictly implies. Groups where neither implies the other keep declaration order.
+3. **Covered-fallback elimination** — a fallback sitting behind a *complementary* pair (`In Excel` / `Outside Excel`, `held` / `not held`) is unreachable and gets dropped. This needs `conditionsComplementary`, not `conditionsContradict`: contradiction only rules out "both", so `In Word` / `In Excel` contradict while leaving every other app uncovered, and dropping a fallback behind them would break the key. When coverage cannot be proven, keep the fallback — an unreachable manipulator is inert, a missing one is a dead key.
+
+### The `press`-Only Escape Hatch
+
+A condition group that declares nothing but `press` cases inherits nothing. `to` fires on key-down and resolves the input there and then, before any tap/hold arbitration, so it expresses "under these conditions this trigger does one immediate thing *instead of* its usual gesture" — the mouse chord idiom in `src/definitions/mouse.ts` (right button held + wheel/back/forward). Folding release and hold into those would staple the normal gesture back on top.
+
+To opt a press-only group *into* a phase, declare it. To suppress an inherited phase, declare it empty: `hold([])`, `release([])`.
+
+### Diagnosing It
+
+Symptom: one phase of a multi-condition binding never fires, while the others work. Before reaching for timing parameters, dump the compiled manipulators and check for two entries with the same `from` where the earlier one's `conditions` are a subset of the later one's. That subset relation *is* the bug.
 
 ## Timing Parameters Belong on the First-Press Manipulator
 

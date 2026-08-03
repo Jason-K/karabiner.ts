@@ -24485,9 +24485,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "key_code": "p",
+                "repeat": false,
+                "key_code": "f9",
                 "modifiers": [
-                  "left_command"
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
                 ]
               }
             ],
@@ -27891,6 +27895,11 @@
                 "key_code": "return_or_enter"
               }
             ],
+            "to_if_held_down": [
+              {
+                "from_event": true
+              }
+            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -28656,6 +28665,12 @@
                 "shell_command": "open -u 'cleanshot://capture-text?linebreaks=false'"
               }
             ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/screenshot_to_md/shot_to_md.py'"
+              }
+            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -28696,6 +28711,12 @@
                 "shell_command": "open -u 'cleanshot://capture-text'"
               }
             ],
+            "to_if_held_down": [
+              {
+                "halt": true,
+                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/screenshot_to_md/shot_to_md.py'"
+              }
+            ],
             "to_delayed_action": {
               "to_if_invoked": [],
               "to_if_canceled": [
@@ -28722,37 +28743,6 @@
               }
             ],
             "description": "Left button held"
-          },
-          {
-            "type": "basic",
-            "from": {
-              "pointing_button": "button9",
-              "modifiers": {
-                "optional": []
-              }
-            },
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/screenshot_to_md/shot_to_md.py'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": []
-            },
-            "conditions": [
-              {
-                "type": "device_if",
-                "identifiers": [
-                  {
-                    "product_id": 49305,
-                    "vendor_id": 1133,
-                    "is_pointing_device": true
-                  }
-                ]
-              }
-            ]
           }
         ]
       },

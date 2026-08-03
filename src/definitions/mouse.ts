@@ -49,7 +49,8 @@ export const mouseBindings: Binding[] = [
     from("wheelLeft"),
     to(
       // overrides declared in REVERSE of the bespoke prepend order so the
-      // emitted manipulator order matches (groupByConditions is first-seen).
+      // emitted manipulator order matches (groupByConditions keeps declaration
+      // order between condition sets that neither implies the other).
       // Zen + right-button + wheel-up → prev workspace
       press(key("left_arrow", VM.C_CS)).when(
         state([APPS.zen, VARS.rButtonDown, [VARS.wheelDown, 0]]),

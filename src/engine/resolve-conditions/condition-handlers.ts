@@ -185,6 +185,27 @@ export function conditionKey(c: Condition): string {
   return `${kind}:${handlerFor(kind).targetKey(c as never)}:${polarity}`;
 }
 
+/**
+ * `true` when exactly one of the two conditions holds in any state: the same
+ * test with opposite polarity.
+ *
+ * Stronger than {@link conditionsContradict}, which only rules out "both" —
+ * `In Word` and `In Excel` contradict, but leave every other app uncovered.
+ * Complementary conditions also rule out "neither", so the pair exhausts the
+ * input domain between them and a fallback behind both is unreachable.
+ */
+export function conditionsComplementary(a: Condition, b: Condition): boolean {
+  const kind = conditionKind(a);
+  if (kind !== conditionKind(b)) return false;
+  const handler = handlerFor(kind);
+  if (handler.targetKey(a as never) !== handler.targetKey(b as never))
+    return false;
+  return (
+    Boolean((a as { unless?: boolean }).unless) !==
+    Boolean((b as { unless?: boolean }).unless)
+  );
+}
+
 /** `true` when two conditions can never both hold. */
 export function conditionsContradict(a: Condition, b: Condition): boolean {
   const kind = conditionKind(a);
