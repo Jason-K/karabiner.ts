@@ -28641,7 +28641,7 @@
         ]
       },
       {
-        "description": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tLeft button held:\tOCR text (no line breaks) using CSX\n\t\tLeft button held:\tOCR text using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
+        "description": "Middle-back (G9):\n---\n\tOn Tap:\n\t\tnot Left button held:\tOCR text (no line breaks) using CSX\n\t\tLeft button held:\tOCR text using CSX\n\tOn Hold:\n\t\tAlways:\tRun 'Take screenshot and convert to markdown'",
         "manipulators": [
           {
             "type": "basic",
@@ -28666,9 +28666,9 @@
             },
             "conditions": [
               {
-                "type": "variable_if",
+                "type": "variable_unless",
                 "name": "left_button_pressed",
-                "value": true
+                "value": 1
               },
               {
                 "type": "device_if",
@@ -28681,7 +28681,7 @@
                 ]
               }
             ],
-            "description": "Left button held"
+            "description": "not Left button held"
           },
           {
             "type": "basic",
@@ -28734,7 +28734,7 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/ocrToMd/shot_to_md.py'"
+                "shell_command": "$HOME'/Scripts/.venv/shared_venv/bin/python' $HOME'/Scripts/ui/screenshot_to_md/shot_to_md.py'"
               }
             ],
             "to_delayed_action": {

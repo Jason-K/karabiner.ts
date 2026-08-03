@@ -179,7 +179,7 @@ const App_Specific = {
 
 const Misc_Scripts = {
   ocrToMd: cmdEntry(
-    `'${PATHS.binSharedVenv.path}' '${PATHS.scriptsDir.path}/ui/ocrToMd/shot_to_md.py'`,
+    `'${PATHS.binSharedVenv.path}' '${PATHS.scriptsDir.path}/ui/screenshot_to_md/shot_to_md.py'`,
     "Take screenshot and convert to markdown",
   ),
 };

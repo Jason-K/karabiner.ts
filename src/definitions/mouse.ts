@@ -127,7 +127,7 @@ export const mouseBindings: Binding[] = [
   bind(
     from("middleBack"),
     to(
-      release([url(URLS.csxOcrNoLinebreaks)]).when(state([VARS.lButtonDown, true])),
+      release([url(URLS.csxOcrNoLinebreaks)]).when(state([VARS.lButtonDown, false])),
       release([url(URLS.csxOcr)]).when(state(VARS.lButtonDown)),
       hold([shell(CMDS.ocrToMd)]),
     ),
