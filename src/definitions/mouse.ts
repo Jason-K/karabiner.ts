@@ -18,6 +18,7 @@ import {
   to,
   when,
   type Binding,
+  button,
 } from "../engine";
 
 /**
@@ -119,7 +120,7 @@ export const mouseBindings: Binding[] = [
     from("leftForward"),
     to(
       release(shell(CMDS.showPopclip)),
-      hold(key("f10", VM.CO_S, { repeat: false })),
+      hold(map(COMBOS.showSidenotes)),
     ),
   ),
   // -------------------------------------------------------------
@@ -139,11 +140,9 @@ export const mouseBindings: Binding[] = [
   bind(
     from("back"),
     to(
-      press(
-        key("close_bracket", ["left_command", "shift"], { repeat: true }),
-      ).when(state(APPS.zen, VARS.rButtonDown)),
-      release([{ pointing_button: "button4", repeat: false }]),
-      hold(key("tab", ["left_command"])),
+      press(key("close_bracket", VM.C__S, { repeat: true })).when(state(APPS.zen, VARS.rButtonDown)),
+      release(button("button4", { repeat: false })),
+      hold(key("tab", ["L.cmd"])),
     ),
     when(condDevice(DEVICES.g502X)),
     options({
@@ -156,10 +155,8 @@ export const mouseBindings: Binding[] = [
   bind(
     from("forward"),
     to(
-      press(
-        key("open_bracket", ["left_command", "shift"], { repeat: true }),
-      ).when(state(APPS.zen, VARS.rButtonDown)),
-      release([{ pointing_button: "button5", repeat: false }]),
+      press(key("open_bracket", VM.C__S, { repeat: true })).when(state(APPS.zen, VARS.rButtonDown)),
+      release(button("button5", { repeat: false })),
       hold(key("down_arrow", ["control"], { repeat: false })),
     ),
     options({
@@ -175,7 +172,7 @@ export const mouseBindings: Binding[] = [
   bind(
     from("right"),
     to(
-      release([{ pointing_button: "button2", repeat: false }]),
+      release(button("button2", { repeat: false })),
       hold([]),
     ),
     when(condDevice(DEVICES.g502X)),
@@ -194,10 +191,10 @@ export const mouseBindings: Binding[] = [
     from("left"),
     to(
       // Zen — tap = cmd+click (delayed), hold = option+click, double = next display
-      release([{ pointing_button: "button1", modifiers: ["left_command"], repeat: false }])
+      release(button("button1", ["left_command"], { repeat: false }))
         .when(condApp(APPS.zen))
         .withDelayed(),
-      hold([{ pointing_button: "button1", modifiers: ["option"], repeat: false }])
+      hold(button("button1", ["option"], { repeat: false }))
         .when(condApp(APPS.zen)),
       release(url(URLS.rectDisplayNext))
         .when(condApp(APPS.zen))
@@ -221,10 +218,7 @@ export const mouseBindings: Binding[] = [
   bind(
     from("left"),
     to(
-      release(key("return_or_enter")).when(
-        condApp(APPS.onePiece),
-        condApp(APPS.onePiecePreferences, false),
-      ),
+      release(key("return_or_enter")).when(state(APPS.onePiece, [APPS.onePiecePreferences, false])),
       hold([toTrigger()]),
     ),
     when(state(DEVICES.g502X, [VARS.rButtonDown, false])),

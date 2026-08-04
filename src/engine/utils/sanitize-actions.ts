@@ -1,7 +1,7 @@
 import type { Manipulator } from "../../types/karabiner";
-import { DEFAULT_ENV_VARS } from "../../data/constants/global";
+import { SHELL_ENV } from "../../data/constants/global";
 
-export { DEFAULT_ENV_VARS };
+export { SHELL_ENV };
 
 /**
  * Encloses a string in quotes (single or double), escaping internal quote characters.
@@ -20,7 +20,7 @@ export function wrapQuotes(str: string, useSingle: boolean = false): string {
  */
 export function formatPathWithEnvVars(
   pathStr: string,
-  envVars: string[] = DEFAULT_ENV_VARS
+  envVars: string[] = SHELL_ENV
 ): string {
   let clean = pathStr;
   if (clean.startsWith("~/")) {
@@ -65,7 +65,7 @@ export function formatPathWithHome(pathStr: string): string {
 /** Encloses a string in single quotes, escaping internal single quotes. */
 export function shellSingleQuote(str: string): string {
   const norm = normalizeShellPath(str);
-  if (DEFAULT_ENV_VARS.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
+  if (SHELL_ENV.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
     return formatPathWithEnvVars(norm);
   }
   return wrapQuotes(norm, true);
@@ -87,7 +87,7 @@ export function normalizeShellPath(inputPath: string): string {
 /** Normalizes and quotes a file-system path for shell execution. */
 export function normalizePathForShell(path: string): string {
   const norm = normalizeShellPath(path);
-  if (DEFAULT_ENV_VARS.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
+  if (SHELL_ENV.some((v) => norm.includes(`$${v.replace(/^\$/, "")}`))) {
     return formatPathWithEnvVars(norm);
   }
   return shellDoubleQuote(norm);
@@ -165,7 +165,7 @@ export function tokenizeShellCommand(cmdStr: string): string[] {
  */
 export function ensurePathQuotingInCommand(
   commandStr: string,
-  envVars: string[] = DEFAULT_ENV_VARS
+  envVars: string[] = SHELL_ENV
 ): string {
   if (!commandStr) return commandStr;
 

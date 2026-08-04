@@ -7,7 +7,7 @@ import type {
 } from "../../../types/karabiner";
 import { map, toKey, toPointingButton, toSetVar } from "../../karabiner-helpers";
 import {
-  DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
+  MOUSE_TIMINGS,
   TIMINGS,
   type ActionKeyModifier,
   type Binding,
@@ -349,8 +349,8 @@ export function buildPointerTapHold(b: Binding, g: CaseGroup): Manipulator[] {
   };
   const alone = g.hasRelease ? g.releaseDo : undefined;
   const hold = g.hasHold ? g.holdDo : undefined;
-  const timeoutMs = b.timing?.aloneMs ?? DEFAULT_MOUSE_MANIPULATOR_TIMINGS.aloneMs;
-  const thresholdMs = b.timing?.holdMs ?? b.timing?.heldThresholdMs ?? DEFAULT_MOUSE_MANIPULATOR_TIMINGS.holdMs;
+  const timeoutMs = b.timing?.aloneMs ?? MOUSE_TIMINGS.aloneMs;
+  const thresholdMs = b.timing?.holdMs ?? b.timing?.heldThresholdMs ?? MOUSE_TIMINGS.holdMs;
   return tapHoldFrom({
     from: from as FromEvent,
     alone,

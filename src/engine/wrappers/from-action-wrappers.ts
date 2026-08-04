@@ -5,8 +5,8 @@ import {
   type SimOrder,
   type Trigger,
   type TriggerModifiers,
-} from "../data";
-import { resolveKeyAlias } from "./utils";
+} from "../../data";
+import { resolveKeyAlias } from "../utils";
 
 function isPointerButton(input: string): boolean {
   return (

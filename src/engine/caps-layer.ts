@@ -55,10 +55,10 @@ import type {
   TriggerModifiers,
   VarSpec,
 } from "../data";
-import { bind, options } from "./binding-wrappers";
-import { ifUserVar, when } from "./condition-wrappers";
-import { anyInput, from } from "./from-action-wrappers";
-import { key, press, setVar, to } from "./to-action-wrappers";
+import { bind, options } from "./wrappers";
+import { ifUserVar, when } from "./wrappers";
+import { anyInput, from } from "./wrappers";
+import { key, press, setVar, to } from "./wrappers";
 import { keyTokenToLabel, modifierTokenToSymbols } from "./resolve-description/rule-descriptions";
 import {
   getTriggerKeys,

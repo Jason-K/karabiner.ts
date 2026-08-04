@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { APPS, STATES, VARS } from "../data";
-import { state, unless } from "../engine/condition-wrappers";
+import { state, unless } from "../engine/wrappers/condition-wrappers";
 import {
   ifVarExpr,
   toTrigger,

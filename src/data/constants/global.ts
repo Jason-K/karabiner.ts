@@ -9,7 +9,7 @@ export const TP_CLI = "$TP_CLI";
 export const TMPDIR = "$TMPDIR";
 export const USER = "$USER";
 
-export const DEFAULT_ENV_VARS: string[] = [
+export const SHELL_ENV: string[] = [
   "HOME",
   "HOMEBREW_PREFIX",
   "SHARED_VENV",
@@ -30,7 +30,7 @@ export const DEFAULT_ENV_VARS: string[] = [
   "ZDOTDIR",
 ];
 
-export const DEFAULT_GLOBAL_SETTINGS = {
+export const GLOBAL_SETTINGS = {
   check_for_updates_on_startup: true,
   show_in_menu_bar: true,
   show_profile_name_in_menu_bar: false,

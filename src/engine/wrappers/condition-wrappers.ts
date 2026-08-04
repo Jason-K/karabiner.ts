@@ -5,8 +5,8 @@ import type {
   PathSpec,
   VarSpec,
   VarValueSpec,
-} from "../data";
-import { STATES, VARS } from "../data";
+} from "../../data";
+import { STATES, VARS } from "../../data";
 
 /**
  * Container wrapping one or more `Condition` objects created by {@link when}.

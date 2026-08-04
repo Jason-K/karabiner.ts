@@ -12,7 +12,7 @@ import {
   toSetVar,
   type ConditionBuilder,
 } from "../karabiner-helpers";
-import { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_TIMINGS, TIMINGS } from "../../data";
+import { KB_TIMINGS, DEFAULT_TIMINGS, TIMINGS } from "../../data";
 import { isModifierKey } from "../utils";
 
 /**
@@ -92,8 +92,8 @@ export function tapHoldFrom({
   alone,
   hold,
   eventOptions,
-  timeoutMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.aloneMs,
-  thresholdMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.holdMs,
+  timeoutMs = KB_TIMINGS.aloneMs,
+  thresholdMs = KB_TIMINGS.holdMs,
   cancel,
   invoked,
   variable,
@@ -197,8 +197,8 @@ export function tapHold({
   alone,
   hold,
   eventOptions,
-  timeoutMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.aloneMs,
-  thresholdMs = DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS.holdMs,
+  timeoutMs = KB_TIMINGS.aloneMs,
+  thresholdMs = KB_TIMINGS.holdMs,
   cancel,
   invoked,
   variable,

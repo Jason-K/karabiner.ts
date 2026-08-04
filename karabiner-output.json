@@ -23067,7 +23067,14 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
+                "repeat": false,
+                "key_code": "tab",
+                "modifiers": [
+                  "left_command",
+                  "left_option",
+                  "left_control",
+                  "left_shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -24128,7 +24135,7 @@
         ]
       },
       {
-        "description": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'\n\tOn Hold:\n\t\tAlways:\tOpen 'App to display ←'",
+        "description": "[⌘⌥⌃⇧]+[⇥]:\n---\n\tOn Tap:\n\t\tAlways:\tOpen 'App to display →'",
         "manipulators": [
           {
             "type": "basic",
@@ -24151,7 +24158,13 @@
             "to_if_held_down": [
               {
                 "halt": true,
-                "shell_command": "open -g 'rectangle-pro://execute-action?name=app-prev-display'"
+                "key_code": "tab",
+                "modifiers": [
+                  "command",
+                  "option",
+                  "control",
+                  "shift"
+                ]
               }
             ],
             "to_delayed_action": {
@@ -24646,7 +24659,7 @@
         ]
       },
       {
-        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill password'\n\t\tIn Security Agent and Focused UI role and Focused UI subrole:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun command 'get file path in word'",
+        "description": "[⌘]+[/]:\n---\n\tOn Tap:\n\t\tIn Security Agent and UI element subrole is:\tRun command 'Fill password'\n\t\tIn Security Agent and UI element subrole is:\tRun command 'Fill username and password'\n\t\tIn Word:\tRun command 'get file path in word'",
         "manipulators": [
           {
             "type": "basic",
@@ -24658,7 +24671,7 @@
                 ]
               }
             },
-            "description": "In Security Agent and Focused UI role and Focused UI subrole",
+            "description": "In Security Agent and UI element subrole is",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -24668,18 +24681,13 @@
               },
               {
                 "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_if",
                 "name": "accessibility.focused_ui_element.subrole_string",
                 "value": "AXSecureTextField"
               }
             ],
             "to": [
               {
-                "shell_command": "\"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:/:command,option,control,shift>\""
+                "shell_command": "'/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI' -r && sleep 0.2 && '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI' -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters '<c:/:command,option,control,shift> <c:/:command,option,control,shift>'"
               }
             ]
           },
@@ -24693,7 +24701,7 @@
                 ]
               }
             },
-            "description": "In Security Agent and Focused UI role and Focused UI subrole",
+            "description": "In Security Agent and UI element subrole is",
             "conditions": [
               {
                 "type": "frontmost_application_if",
@@ -24703,18 +24711,13 @@
               },
               {
                 "type": "variable_if",
-                "name": "accessibility.focused_ui_element.role_string",
-                "value": "AXTextField"
-              },
-              {
-                "type": "variable_if",
                 "name": "accessibility.focused_ui_element.subrole_string",
                 "value": 0
               }
             ],
             "to": [
               {
-                "shell_command": "\"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -r && sleep 0.2 && \"/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI\" -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters \"<c:a:command>Jason<c:tab><c:/:command,option,control,shift>\""
+                "shell_command": "'/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI' -r && sleep 0.2 && '/Applications/Privileges.app/Contents/MacOS/PrivilegesCLI' -a && sleep 0.2 && '/opt/homebrew/bin/SendKeys' --initial-delay 0 --delay 0.005 --characters '<c:a:command>Jason<c:tab><c:/:command,option,control,shift>'"
               }
             ]
           },
@@ -24859,49 +24862,6 @@
         ]
       },
       {
-        "description": "[⌥>]+[T]:\n---\n\tOn Hold:\n\t\tAlways:\tRun 'Edit last Typinator expansion'",
-        "manipulators": [
-          {
-            "type": "basic",
-            "from": {
-              "key_code": "t",
-              "modifiers": {
-                "mandatory": [
-                  "right_option"
-                ]
-              }
-            },
-            "to_if_alone": [
-              {
-                "halt": true,
-                "key_code": "t",
-                "modifiers": [
-                  "right_option"
-                ]
-              }
-            ],
-            "to_if_held_down": [
-              {
-                "halt": true,
-                "shell_command": "osascript $HOME'/Scripts/apps/Typinator/Edit_Last_Typinator_Expansion.applescript'"
-              }
-            ],
-            "to_delayed_action": {
-              "to_if_invoked": [],
-              "to_if_canceled": [
-                {
-                  "halt": true,
-                  "key_code": "t",
-                  "modifiers": [
-                    "right_option"
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      },
-      {
         "description": "[⌃]+[␛]:\n---\n\tOn Tap:\n\t\tAlways:\topen Activity Monitor\n\tOn Hold:\n\t\tAlways:\topen Process Spy",
         "manipulators": [
           {
@@ -24992,7 +24952,7 @@
         ]
       },
       {
-        "description": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '→'",
+        "description": "[⇧]+[END]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'select text to the right of cursor'",
         "manipulators": [
           {
             "type": "basic",
@@ -25009,7 +24969,7 @@
                 "repeat": false,
                 "key_code": "right_arrow",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
@@ -25018,7 +24978,7 @@
         ]
       },
       {
-        "description": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit ⌘⇧ + '←'",
+        "description": "[⇧]+[HOME]:\n---\n\tOn Tap:\n\t\tAlways:\tmap 'select text to the left of cursor'",
         "manipulators": [
           {
             "type": "basic",
@@ -25035,7 +24995,7 @@
                 "repeat": false,
                 "key_code": "left_arrow",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
@@ -25273,7 +25233,7 @@
         ]
       },
       {
-        "description": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "description": "[=]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tmap 'select word backward' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulators": [
           {
             "type": "basic",
@@ -26447,7 +26407,7 @@
         ]
       },
       {
-        "description": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tEmit ⌥⇧ + '←' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
+        "description": "[PAD =]:\n---\n\tOn Tap:\n\t\tAlways:\tEmit 'PAD ='\n\tOn Hold:\n\t\tAlways:\tmap 'select word backward' then Run 'Insert today's date in yyyy-mm-dd format at the cursor.'",
         "manipulators": [
           {
             "type": "basic",
@@ -27515,7 +27475,7 @@
         ]
       },
       {
-        "description": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tRun 'Maximize or restore window'\n\t\ton Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick Left click\n\t\ton Logitech G502 X and not Right button held:\tPass through\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tOpen 'Display →'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tOpen 'Display →'",
+        "description": "Left click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick button 'button1'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tRun 'Maximize or restore window'\n\t\ton Logitech G502 X and not Right button held and In 1Piece and Outside 1Piece Preferences:\tEmit '⏎'\n\tOn Hold:\n\t\ton Logitech G502 X and Right button held and In Zen:\tClick button 'button1'\n\t\ton Logitech G502 X and not Right button held:\tPass through\n\tOn Double Tap:\n\t\ton Logitech G502 X and Right button held and In Zen:\tOpen 'Display →'\n\t\ton Logitech G502 X and Right button held and Outside Zen:\tOpen 'Display →'",
         "manipulators": [
           {
             "type": "basic",
@@ -27639,21 +27599,21 @@
                 }
               },
               {
+                "repeat": false,
                 "pointing_button": "button1",
                 "modifiers": [
                   "option"
-                ],
-                "repeat": false
+                ]
               }
             ],
             "to_delayed_action": {
               "to_if_invoked": [
                 {
+                  "repeat": false,
                   "pointing_button": "button1",
                   "modifiers": [
                     "left_command"
-                  ],
-                  "repeat": false
+                  ]
                 },
                 {
                   "set_variable": {
@@ -27998,7 +27958,7 @@
         ]
       },
       {
-        "description": "Right click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X:\tClick Right click\n\tOn Hold:\n\t\ton Logitech G502 X:\t",
+        "description": "Right click:\n---\n\tOn Tap:\n\t\ton Logitech G502 X:\tClick button 'button2'\n\tOn Hold:\n\t\ton Logitech G502 X:\t",
         "manipulators": [
           {
             "type": "basic",
@@ -28026,8 +27986,8 @@
             ],
             "to_if_alone": [
               {
-                "pointing_button": "button2",
-                "repeat": false
+                "repeat": false,
+                "pointing_button": "button2"
               }
             ],
             "to_delayed_action": {
@@ -28153,7 +28113,7 @@
         ]
       },
       {
-        "description": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧ + ']'\n\t\ton Logitech G502 X:\tClick button4\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘ + '⇥'",
+        "description": "Back button:\n---\n\tOn Tap:\n\t\ton Logitech G502 X and In Zen and Right button held:\tEmit ⌘⇧ + ']'\n\t\ton Logitech G502 X:\tClick button 'button4'\n\tOn Hold:\n\t\ton Logitech G502 X:\tEmit ⌘ + '⇥'",
         "manipulators": [
           {
             "type": "basic",
@@ -28165,7 +28125,7 @@
                 "repeat": true,
                 "key_code": "close_bracket",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
@@ -28224,8 +28184,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "pointing_button": "button4",
-                  "repeat": false
+                  "repeat": false,
+                  "pointing_button": "button4"
                 }
               ]
             },
@@ -28340,7 +28300,7 @@
         ]
       },
       {
-        "description": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧ + '['\n\t\tAlways:\tClick button5\n\tOn Hold:\n\t\tAlways:\tEmit ⌃ + '↓'",
+        "description": "Forward button:\n---\n\tOn Tap:\n\t\tIn Zen and Right button held:\tEmit ⌘⇧ + '['\n\t\tAlways:\tClick button 'button5'\n\tOn Hold:\n\t\tAlways:\tEmit ⌃ + '↓'",
         "manipulators": [
           {
             "type": "basic",
@@ -28352,7 +28312,7 @@
                 "repeat": true,
                 "key_code": "open_bracket",
                 "modifiers": [
-                  "left_command",
+                  "command",
                   "shift"
                 ]
               }
@@ -28411,8 +28371,8 @@
               "to_if_invoked": [],
               "to_if_canceled": [
                 {
-                  "pointing_button": "button5",
-                  "repeat": false
+                  "repeat": false,
+                  "pointing_button": "button5"
                 }
               ]
             },
@@ -28747,7 +28707,7 @@
         ]
       },
       {
-        "description": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Show Popclip at cursor position'\n\tOn Hold:\n\t\tAlways:\tEmit ⌘⌥⇧ + 'F10'",
+        "description": "Left-forward (G8):\n---\n\tOn Tap:\n\t\tAlways:\tRun 'Show Popclip at cursor position'\n\tOn Hold:\n\t\tAlways:\tmap 'show sidenotes'",
         "manipulators": [
           {
             "type": "basic",

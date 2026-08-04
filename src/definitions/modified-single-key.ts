@@ -15,7 +15,6 @@ import {
   map,
   from,
   hold,
-  key,
   app,
   url,
   press,
@@ -71,10 +70,6 @@ const modLetterBindings: Binding[] = [
     ),
   ),
   bind(
-    from("t", ["R.opt"]),
-    to(hold(shell(CMDS.lastTypinatorRule))),
-  ),
-  bind(
     from("u", ["L.cmd"]),
     to(press(map(COMBOS.skimUnderline))),
     when(state(APPS.skim)),
@@ -87,16 +82,16 @@ const modSymbolBindings: Binding[] = [
     from("slash", ["L.cmd"]),
     to(
       // AUTHENTICATION DIALOG fill password.
-      press(cmd(CMDS.fillPw)).when(state(PW_IDS, STATES.isTextField, STATES.isSecureInputSubrole)),
+      press(cmd(CMDS.fillPw)).when(state(PW_IDS, STATES.isSecureInputSubrole)),
       // AUTHENTICATION DIALOG: fill username and password.
-      press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, STATES.isTextField, [STATES.isSecureInputSubrole, 0])),
+      press(cmd(CMDS.fillUnPw)).when(state(PW_IDS, [STATES.isSecureInputSubrole, 0])),
       press(cmd(CMDS.wordGetPath)).when(state(APPS.word))
     ),
   ),
 ];
 
 const modNonCharBindings: Binding[] = [
-  bind(from("end", ["shift"]), to(press(key("right_arrow", ["L.cmd", "shift"])))),
+  bind(from("end", ["shift"]), to(press(map(COMBOS.selectEnd)))),
   bind(
     from("escape", ["control"]),
     to(
@@ -105,7 +100,7 @@ const modNonCharBindings: Binding[] = [
     ),
   ),
   bind(from("escape", VM.COCS), to(press(app(APPS.activityMonitor)))),
-  bind(from("home", ["shift"]), to(press(key("left_arrow", ["L.cmd", "shift"])))),
+  bind(from("home", ["shift"]), to(press(map(COMBOS.selectHome)))),
   bind(
     from("left_arrow", VM.COCS),
     to(
@@ -131,13 +126,7 @@ const modNonCharBindings: Binding[] = [
     when(condApp(APPS.zen)),
   ),
   bind(from("spacebar", VM.COCS), to(release(shell(CMDS.winMaxToggle)))),
-  bind(
-    from("tab", VM.COCS),
-    to(
-      release(url(URLS.rectAppNextDisplay, true)),
-      hold(url(URLS.rectAppPrevDisplay, true)),
-    ),
-  ),
+  bind(from("tab", VM.COCS), to(release(url(URLS.rectAppNextDisplay, true)))),
 ];
 
 const modFunctionKeyBindings: Binding[] = [

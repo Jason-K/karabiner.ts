@@ -4,8 +4,6 @@ import {
   actHere,
   appHistory,
   bind,
-  condApp,
-  condNotVar,
   map,
   from,
   hold,
@@ -19,6 +17,9 @@ import {
   to,
   when,
   type Binding,
+  unlessApp,
+  ifApp,
+  condNotVar,
 } from "../engine";
 
 //   SINGLE KEY TAP/HOLD RULES — one binding per key; hold fires the action,
@@ -63,7 +64,7 @@ const symbolBindings: Binding[] = [
     to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", VM._O_S),
+        map(COMBOS.selectWordLeft),
         shell(CMDS.quickDate),
       ]),
     ),
@@ -76,7 +77,7 @@ const symbolBindings: Binding[] = [
     to(
       release(key("keypad_equal_sign", { halt: true })),
       hold([
-        key("left_arrow", VM._O_S),
+        map(COMBOS.selectWordLeft),
         shell(CMDS.quickDate),
       ]),
     ),
@@ -93,8 +94,8 @@ const nonCharBindings: Binding[] = [
     from("keypad_enter"),
     to(
       release(key("keypad_enter", { halt: true })),
-      hold(shell(CMDS.evalSelectionPart)).when(condApp(APPS.excel, false)),
-      hold(key("f2")).when(condApp(APPS.excel)),
+      hold(shell(CMDS.evalSelectionPart)).when(unlessApp(APPS.excel)),
+      hold(key("f2")).when(ifApp(APPS.excel)),
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
@@ -104,8 +105,8 @@ const nonCharBindings: Binding[] = [
     from("return_or_enter"),
     to(
       release(key("return_or_enter", { halt: true })),
-      hold(shell(CMDS.evalSelectionPart)).when(condApp(APPS.excel, false)),
-      hold(key("f2")).when(condApp(APPS.excel)),
+      hold(shell(CMDS.evalSelectionPart)).when(unlessApp(APPS.excel)),
+      hold(key("f2")).when(ifApp(APPS.excel)),
     ),
     options({
       timing: { aloneMs: 200, holdMs: 200 },
@@ -132,7 +133,7 @@ const functionKeyBindings: Binding[] = [
   bind(from("f2"), to(hold(key("display_brightness_increment", { repeat: true })))),
   bind(from("f3"), to(hold(key("mission_control")))),
   bind(from("f4"), to(hold(key("launchpad")))),
-  bind(from("f5"), to(hold(key("f5", ["COC_"])))),
+  bind(from("f5"), to(hold(key("f5", VM.COC_)))),
   bind(from("f7"), to(hold(key("rewind", { repeat: true })))),
   bind(from("f8"), to(hold(key("play_or_pause")))),
   bind(from("f9"), to(hold(key("fastforward", { repeat: true })))),
@@ -144,7 +145,7 @@ const functionKeyBindings: Binding[] = [
 const modifierKeyBindings: Binding[] = [
   bind(
     from("fn"),
-    to(hold(key("f5", ["COC_"]))),
+    to(hold(key("f5", VM.COC_))),
     when(condNotVar(capsVars.pressed, 1)),
   ),
   bind(

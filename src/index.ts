@@ -18,7 +18,7 @@ import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 import {
-  DEFAULT_GLOBAL_SETTINGS,
+  GLOBAL_SETTINGS,
   DEFAULT_PROFILE,
   DEFAULT_TIMINGS,
   PATHS,
@@ -70,7 +70,7 @@ function main(): void {
       parameters: DEFAULT_TIMINGS,
       simpleModifications: getProfileSpec(profileName).simpleModifications,
       devices: DEVICE_CONFIGS,
-      globalSettings: DEFAULT_GLOBAL_SETTINGS,
+      globalSettings: GLOBAL_SETTINGS,
     },
     { configPath, dryRun, ...(config ? { config } : {}) },
   );

@@ -8,8 +8,8 @@ export {
   pointing_motion_wheels_multiplier,
   pointing_motion_xy_multiplier,
 } from "./devices";
-export { DEFAULT_ENV_VARS, DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./global";
+export { SHELL_ENV, GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./global";
 export { VM, MODKEY_CODES, type ModComboAlias, type ModKey } from "./keys";
 export { BUTTONS, BUTTON_DESCS, type ButtonSpec, type DeviceName } from "./mouse";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./profiles";
-export { DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS, DEFAULT_MOUSE_MANIPULATOR_TIMINGS, TIMINGS } from "./timings";
+export { KB_TIMINGS, MOUSE_TIMINGS, TIMINGS } from "./timings";

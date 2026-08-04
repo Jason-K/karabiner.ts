@@ -12,8 +12,8 @@ import type {
   Phase,
   UrlSpec,
   VarSpec,
-} from "../data";
-import { resolveKeyAlias } from "./utils";
+} from "../../data";
+import { resolveKeyAlias } from "../utils";
 
 /**
  * Fluent builder for `Case` items in Karabiner bindings.

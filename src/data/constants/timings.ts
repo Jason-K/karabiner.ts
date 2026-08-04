@@ -10,13 +10,13 @@ export const TIMINGS = {
   privDelaySec: 0.2,
 } as const;
 
-export const DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS = {
+export const KB_TIMINGS = {
   aloneMs: 1000,
   holdMs: 400,
   delayedMs: 300,
 } as const;
 
-export const DEFAULT_MOUSE_MANIPULATOR_TIMINGS = {
+export const MOUSE_TIMINGS = {
   aloneMs: 1000,
   holdMs: 400,
   delayedMs: 300,

@@ -52,37 +52,37 @@ export const STATES = {
   isTextArea: varState(
     VARS.elementType,
     "AXTextArea",
-    "Focused UI element role is text area",
+    "Focused element is a text area",
   ),
   isTextField: varState(
     VARS.elementType,
     "AXTextField",
-    "Focused UI element role is text field",
+    "Focused element is a text field",
   ),
   isSecureInput: varState(
     VARS.elementType,
     "AXSecureTextField",
-    "Focused UI element role is secure text field",
+    "Focused element is a secure text field",
   ),
   isSecureInputSubrole: varState(
     VARS.elementSubtype,
     "AXSecureTextField",
-    "Focused UI element subrole is secure text field",
+    "Focused element is a secure text field",
   ),
   isButton: varState(
     VARS.elementType,
     "AXButton",
-    "Focused UI element role is button",
+    "Focused element is a button",
   ),
   isStaticText: varState(
     VARS.elementType,
     "AXStaticText",
-    "Focused UI element role is static text",
+    "Focused element is static text",
   ),
   isWebArea: varState(
     VARS.elementType,
     "AXWebArea",
-    "Focused UI element role is web area",
+    "Focused element is a web area",
   ),
 
   // ── User / Mouse States ──────────────────────────────────────────────────

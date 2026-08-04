@@ -31,7 +31,7 @@ export type {
 
 // SETTINGS
 export { DESCRIPTION_SEPARATOR, KEY_SYMBOLS } from "./constants/descriptions";
-export { DEFAULT_ENV_VARS, DEFAULT_GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./constants/global";
+export { SHELL_ENV, GLOBAL_SETTINGS, FINDER_REPLACEMENT, HOME, HOMEBREW_PREFIX, SHARED_VENV, TP_CLI, TMPDIR, USER } from "./constants/global";
 export { DEFAULT_PROFILE, DEFAULT_TIMINGS, PREFERRED_PROFILE } from "./constants/profiles";
 export {
   KB_MODIFY_EVENTS,
@@ -43,8 +43,8 @@ export {
   pointing_motion_xy_multiplier,
 } from "./constants/devices";
 export {
-  DEFAULT_KEYBOARD_MANIPULATOR_TIMINGS,
-  DEFAULT_MOUSE_MANIPULATOR_TIMINGS,
+  KB_TIMINGS,
+  MOUSE_TIMINGS,
   TIMINGS,
 } from "./constants/timings";
 export {

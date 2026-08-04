@@ -5,10 +5,10 @@ import type {
   KeyCode,
   PointerButtonAlias,
   TriggerModifiers,
-} from "../data";
-import type { AcceptUndefined } from "../types/util";
+} from "../../data";
+import type { AcceptUndefined } from "../../types/util";
 import type { WhenWrapper } from "./condition-wrappers";
-import { conditionKind } from "./resolve-conditions";
+import { conditionKind } from "../resolve-conditions";
 import { from, type FromInput, triggerKeys, triggerPointer } from "./from-action-wrappers";
 import { CaseBuilder, type ToWrapper } from "./to-action-wrappers";
 
@@ -207,7 +207,7 @@ export function bind(
       if (conditions.length + caseItems.length !== arg.length) {
         throw new Error(
           `bind(): array argument contains ${arg.length - conditions.length - caseItems.length} ` +
-            "entr(y|ies) that are neither a case nor a condition.",
+          "entr(y|ies) that are neither a case nor a condition.",
         );
       }
       hoistedConditions.push(...conditions);

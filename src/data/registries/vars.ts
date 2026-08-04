@@ -20,17 +20,17 @@ export const VARS = {
   /** Role of the focused UI element (e.g. "AXTextArea", "AXTextField"). */
   elementType: varId(
     "accessibility.focused_ui_element.role_string",
-    "Focused UI role",
+    "UI element role is",
   ),
   /** Subrole of the focused UI element (e.g. "AXSecureTextField"). */
   elementSubtype: varId(
     "accessibility.focused_ui_element.subrole_string",
-    "Focused UI subrole",
+    "UI element subrole is",
   ),
   /** Title / label of the focused UI element. */
   elementTitle: varId(
     "accessibility.focused_ui_element.title_string",
-    "Focused UI visible text",
+    "UI element title is",
   ),
   /** X position of the focused element's window. */
   winPosX: varId(
