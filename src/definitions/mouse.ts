@@ -24,7 +24,7 @@ import {
  * G502X mouse mappings authored as plain `Binding[]` literals and consumed by
  * `defineBindings` (the same engine as keys). Device-specific button aliases
  * (shift, forward, wheelLeft, wheelRight, middleBack, leftForward, leftBack)
- * auto-scope to the G502X via the `buttons` registry `nameScope`; the global
+ * auto-scope to the G502X via the `BUTTONS` registry `nameScope`; the global
  * buttons used here (back, wheel, right, left) carry an explicit `device`
  * condition.
  */

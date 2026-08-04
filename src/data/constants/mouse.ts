@@ -11,7 +11,7 @@ export type ButtonSpec = {
   desc: string;
 };
 
-export const buttons = {
+export const BUTTONS = {
   // Physically standard (most pointing devices) → global. Bindings that must
   // restrict them add an explicit `device` condition.
   left: { button: "button1", nameScope: "global", desc: "Left click" },

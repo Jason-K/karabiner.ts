@@ -1,5 +1,5 @@
 import type { Trigger } from "../../data";
-import { buttons, defaultButtonNames, type ButtonSpec } from "../../data/constants/mouse";
+import { BUTTONS, defaultButtonNames, type ButtonSpec } from "../../data/constants/mouse";
 import { resolveModifiers } from "./modifier-utils";
 
 export function getTriggerKeys(trigger: Trigger): string[] {
@@ -31,12 +31,12 @@ export function resolveButton(pointer: string): {
   nameScope?: ButtonSpec["nameScope"];
   desc: string;
 } {
-  const spec = (buttons as Record<string, ButtonSpec>)[pointer];
+  const spec = (BUTTONS as Record<string, ButtonSpec>)[pointer];
   if (spec)
     return { button: spec.button, nameScope: spec.nameScope, desc: spec.desc };
   return { button: pointer, desc: defaultButtonNames[pointer] ?? pointer };
 }
 
 export function isPointerButton(pointer: string): boolean {
-  return pointer in buttons || /^button\d+$/.test(pointer);
+  return pointer in BUTTONS || /^button\d+$/.test(pointer);
 }

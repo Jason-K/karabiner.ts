@@ -56,7 +56,7 @@ export {
   type StandardKeyCode,
 } from "./constants/keys";
 export {
-  buttons,
+  BUTTONS,
   defaultButtonNames,
   type ButtonSpec,
   type DeviceName,

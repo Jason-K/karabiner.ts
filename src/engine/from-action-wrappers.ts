@@ -1,5 +1,5 @@
 import {
-  buttons,
+  BUTTONS,
   type KeyCode,
   type PointerButtonAlias,
   type SimOrder,
@@ -10,7 +10,7 @@ import { resolveKeyAlias } from "./utils";
 
 function isPointerButton(input: string): boolean {
   return (
-    input in buttons ||
+    input in BUTTONS ||
     /^button\d+$/.test(input) ||
     [
       "shift_button",
