@@ -12,7 +12,7 @@ export {
 } from "../constants/keys";
 export {
   BUTTONS,
-  defaultButtonNames,
+  BUTTON_DESCS,
   type ButtonSpec,
   type KnownPointerButton,
   type PointerButtonAlias,

@@ -57,7 +57,7 @@ export const BUTTONS = {
   },
 } as const satisfies Record<string, ButtonSpec>;
 
-export const defaultButtonNames: Record<string, string> = {
+export const BUTTON_DESCS: Record<string, string> = {
   button1: "Left click",
   button2: "Right click",
   button3: "Middle click",

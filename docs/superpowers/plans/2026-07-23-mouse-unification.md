@@ -34,7 +34,7 @@
 - **Modify `src/engine/action-resolver.ts`** — resolve `setVar`.
 - **Modify `src/engine/binding.ts`** — `Condition.device` arm; pointer-alias resolution in `triggerToFrom`; `nameScope`-derived device condition in `buildManipulators`; `whileHoldVar`/`suppress`/`suppressCancelFallback` in `buildTapHold`/`buildRemap`.
 - **Modify `src/engine/description-synthesizer.ts`** — `setVar` action label; `device` condition label; pointer button label.
-- **Rewrite `src/data/mouse.ts`** — `buttons` registry + `defaultButtonNames` (replace the `Mouse*` config types; keep `WIN_ACTIVATE_UNDER_CURSOR`).
+- **Rewrite `src/data/mouse.ts`** — `buttons` registry + `BUTTON_DESCS` (replace the `Mouse*` config types; keep `WIN_ACTIVATE_UNDER_CURSOR`).
 - **Rewrite `src/definitions/mouse.ts`** — `mouseBindings: Binding[]` (the 12 G502X mappings as literals).
 - **Modify `src/definitions/index.ts`** + **`src/index.ts`** — export + consume `mouseBindings` via `defineBindings`.
 - **Delete** `src/core/mouse.ts`, `src/engine/mouse-rules.ts`, `src/tests/mouse.test.ts`.
@@ -217,11 +217,11 @@ git -c commit.gpgsign=false commit -m "feat(conditions): implement Condition.dev
 The core of the unification's trigger model. Adds the registry; `triggerToFrom` resolves aliases; `buildManipulators` derives the device condition; the synthesizer labels buttons.
 
 **Files:**
-- Modify: `src/data/mouse.ts` (add `buttons` + `defaultButtonNames` alongside the old types for now), `src/engine/binding.ts` (`triggerToFrom`, `buildManipulators`), `src/engine/description-synthesizer.ts` (`describeTrigger`)
+- Modify: `src/data/mouse.ts` (add `buttons` + `BUTTON_DESCS` alongside the old types for now), `src/engine/binding.ts` (`triggerToFrom`, `buildManipulators`), `src/engine/description-synthesizer.ts` (`describeTrigger`)
 - Test: `src/tests/binding-helpers.test.ts` or a new `src/tests/mouse-binding.test.ts`
 
 **Interfaces:**
-- Produces: `buttons` registry, `defaultButtonNames`, `resolveButton(pointer)` helper; `Trigger.pointer` aliases resolve + derive device conditions.
+- Produces: `buttons` registry, `BUTTON_DESCS`, `resolveButton(pointer)` helper; `Trigger.pointer` aliases resolve + derive device conditions.
 
 - [ ] **Step 1: Add the registry** to `src/data/mouse.ts` (keep the old `Mouse*` types for now — deleted in Task 8):
 ```ts
@@ -251,7 +251,7 @@ export const buttons = {
   leftBack:    { button: "button11", nameScope: ["logitechG502X"],        desc: "Left-back (G7)" },
 } as const satisfies Record<string, ButtonSpec>;
 
-export const defaultButtonNames: Record<string, string> = {
+export const BUTTON_DESCS: Record<string, string> = {
   button1: "Left click", button2: "Right click", button3: "Middle click",
 };
 
@@ -259,7 +259,7 @@ export const defaultButtonNames: Record<string, string> = {
 export function resolveButton(pointer: string): { button: string; nameScope?: ButtonSpec["nameScope"]; desc: string } {
   const spec = (buttons as Record<string, ButtonSpec>)[pointer];
   if (spec) return { button: spec.button, nameScope: spec.nameScope, desc: spec.desc };
-  return { button: pointer, desc: defaultButtonNames[pointer] ?? pointer };
+  return { button: pointer, desc: BUTTON_DESCS[pointer] ?? pointer };
 }
 ```
 (Use `import("./devices").DEVICE_IDENTIFIERS` inline for `DeviceName` to avoid a cycle, or import normally — `data/mouse.ts` already imports from `./refs`; a `./devices` import is fine.)
@@ -303,12 +303,12 @@ import { resolveButton } from "../data/mouse";
     return symbols ? `[${symbols}]+${desc}:` : `${desc}:`;
   }
 ```
-(Replaces the `"Click:"`/`"Pointer <x>:"` heuristic; now uses `ButtonSpec.desc`/`defaultButtonNames`. Update the existing `describeTrigger: pointer` tests: `{ pointer: "button1" }` → `"Left click:"`; `{ pointer: "button1", modifiers: ["left_command"] }` → `"[←⌘]+Left click:"`.)
+(Replaces the `"Click:"`/`"Pointer <x>:"` heuristic; now uses `ButtonSpec.desc`/`BUTTON_DESCS`. Update the existing `describeTrigger: pointer` tests: `{ pointer: "button1" }` → `"Left click:"`; `{ pointer: "button1", modifiers: ["left_command"] }` → `"[←⌘]+Left click:"`.)
 
 - [ ] **Step 5: Tests** — add to `binding-helpers.test.ts` (or a new test file):
 ```ts
 test("resolveButton: alias + nameScope + raw fallback", () => {
-  const { buttons, resolveButton, defaultButtonNames } = require("../data/mouse");
+  const { buttons, resolveButton, BUTTON_DESCS } = require("../data/mouse");
   assert.equal(resolveButton("shift").button, "button5");
   assert.deepEqual(resolveButton("shift").nameScope, ["logitechG502X"]);
   assert.equal(resolveButton("left").nameScope, "global");
@@ -523,7 +523,7 @@ With all 12 mappings in `mouseBindings`, the old code is dead.
 
 - [ ] **Step 1: Delete files** — `rm src/core/mouse.ts src/engine/mouse-rules.ts src/tests/mouse.test.ts`.
 
-- [ ] **Step 2: Remove old types** from `src/data/mouse.ts` (`MouseCondition`, `MouseOverride`, `MouseTapHoldMapping`, `MouseSimultaneousMapping`, `MouseDoubleTapMapping`, `mouseRemap`, `MouseMapping`, `MouseDeviceConfig`, `MouseIdentifiers`). Keep `WIN_ACTIVATE_UNDER_CURSOR`, `buttons`, `defaultButtonNames`, `resolveButton`, `mouseVars`, `ButtonSpec`, `DeviceName`.
+- [ ] **Step 2: Remove old types** from `src/data/mouse.ts` (`MouseCondition`, `MouseOverride`, `MouseTapHoldMapping`, `MouseSimultaneousMapping`, `MouseDoubleTapMapping`, `mouseRemap`, `MouseMapping`, `MouseDeviceConfig`, `MouseIdentifiers`). Keep `WIN_ACTIVATE_UNDER_CURSOR`, `buttons`, `BUTTON_DESCS`, `resolveButton`, `mouseVars`, `ButtonSpec`, `DeviceName`.
 
 - [ ] **Step 3: Drop re-exports** — `src/engine/index.ts` remove `export * from "./mouse-rules"`; `src/definitions/index.ts` remove `buildMouseRules`/`mouseDeviceMappings` (replace with `mouseBindings`).
 

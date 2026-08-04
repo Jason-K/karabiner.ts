@@ -52,7 +52,7 @@ export const buttons = {
 } as const satisfies Record<string, ButtonSpec>;
 
 // Fallback labels for RAW pointing_buttons referenced without an alias.
-export const defaultButtonNames: Record<string, string> = {
+export const BUTTON_DESCS: Record<string, string> = {
   button1: "Left click", button2: "Right click", button3: "Middle click",
   // …add as needed; unknown raw buttons fall back to the button id itself.
 };
@@ -144,7 +144,7 @@ Phase mapping (the `press` phase is the `to`/key-down channel): `immediateSingle
 
 Mouse rule descriptions auto-derive via the Phase 2 synthesizer.
 
-- **Button labels**: the synthesizer renders a `pointer` trigger using `ButtonSpec.desc` (resolved via the alias name), falling back to `defaultButtonNames` for raw `pointing_button`s, then to the button id. So `[Left click]:` rather than `[button1]:`.
+- **Button labels**: the synthesizer renders a `pointer` trigger using `ButtonSpec.desc` (resolved via the alias name), falling back to `BUTTON_DESCS` for raw `pointing_button`s, then to the button id. So `[Left click]:` rather than `[button1]:`.
 - **Device**: the bespoke engine's `${device.name}: ` prefix is dropped from the rule description; the device appears as the manipulator's `device_if` and surfaces in the slice-label (the synthesizer renders a device condition as `on <deviceDesc>` / `not on <deviceDesc>` once `Condition.device` is implemented).
 - `integration.test.ts`'s standardization regex already accepts the synthesized format; mouse rules will conform.
 
@@ -155,7 +155,7 @@ Mouse rule descriptions auto-derive via the Phase 2 synthesizer.
 - `defineBindings` / `buildManipulators`: for a pointer binding, add the `nameScope`-derived `device_if` condition(s) to each manipulator.
 - `buildTapHold` / `buildRemap`: forward `whileHoldVar` (→ `variable`); honor `Binding.suppress` / `Case.suppress` (no trigger fallback) and `Binding.suppressCancelFallback` (clear `to_if_canceled`).
 - `resolveCondition`: implement the `device` arm (`ifDevice`).
-- `description-synthesizer`: render `Condition.device` (`on <deviceDesc>` / `not on <deviceDesc>`); render a `pointer` trigger via `ButtonSpec.desc` / `defaultButtonNames`.
+- `description-synthesizer`: render `Condition.device` (`on <deviceDesc>` / `not on <deviceDesc>`); render a `pointer` trigger via `ButtonSpec.desc` / `BUTTON_DESCS`.
 
 ## 11. Files deleted / dissolved
 
